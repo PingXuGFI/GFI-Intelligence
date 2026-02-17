@@ -1,11 +1,6 @@
 import streamlit as st
 
-st.set_page_config(
-    page_title="GFI Flow Intelligence",
-    page_icon="🛡️",
-    layout="wide"
-)
-
+st.set_page_config(page_title="GFI Flow Intelligence", page_icon="🛡️", layout="wide")
 st.title("GFI Flow Intelligence")
 st.caption("Independent Diagnostic Reports · Confidential · Non-Political")
 
