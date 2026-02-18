@@ -65,7 +65,7 @@ st.markdown("<div style='height:10px;'></div>", unsafe_allow_html=True)
 
 # Banner as a clean visual only (no extra text around it)
 try:
-    st.image(BANNER_IMG, use_container_width=800)
+    st.image(BANNER_IMG, use_container_width=600)
 except:
     pass
 
