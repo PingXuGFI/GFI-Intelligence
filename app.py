@@ -8,9 +8,10 @@ from datetime import datetime
 # PAGE CONFIGURATION
 # ============================================================================
 st.set_page_config(
-    page_title="Hidden Profit Leak Report™",
+    page_title="GFI Hidden Profit Leak Report™",
     layout="wide",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="collapsed",
+    page_icon="🔍"
 )
 
 # ============================================================================
@@ -121,19 +122,28 @@ if 'risk_score' not in st.session_state:
     st.session_state.risk_score = 0
 
 # ============================================================================
-# HERO SECTION
+# HERO SECTION WITH LOGO
 # ============================================================================
-st.markdown("""
-<div class="hero-section">
-    <h1>🔍 Hidden Profit Leak Report™</h1>
-    <h2 style="margin-top: 1rem; font-weight: 300;">
-        Discover Where Your Company Is Silently Losing Money
-    </h2>
-    <p style="font-size: 1.2rem; margin-top: 1.5rem; opacity: 0.95;">
-        12-minute assessment → Uncover $50K-$2M in hidden operational costs
-    </p>
-</div>
-""", unsafe_allow_html=True)
+col_logo, col_hero = st.columns([1, 3])
+
+with col_logo:
+    st.image("GFILOGO.png", width=200)
+
+with col_hero:
+    st.markdown("""
+    <div style="padding: 1rem 0;">
+        <h1 style="color: #1e40af; margin-bottom: 0.5rem;">Hidden Profit Leak Report™</h1>
+        <h2 style="margin-top: 0.5rem; font-weight: 300; color: #475569;">
+            Discover Where Your Company Is Silently Losing Money
+        </h2>
+        <p style="font-size: 1.2rem; margin-top: 1rem; color: #64748b;">
+            12-minute assessment → Uncover $50K-$2M in hidden operational costs
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+# Banner image below hero
+st.image("banner.png", use_container_width=True)
 
 # ============================================================================
 # MAIN CONTENT
@@ -822,16 +832,29 @@ with tab3:
     """, unsafe_allow_html=True)
 
 # ============================================================================
-# FOOTER
+# FOOTER WITH LOGO
 # ============================================================================
 st.markdown("---")
-st.markdown("""
-<div style="text-align: center; color: #64748b; padding: 2rem;">
-    <p style="font-size: 1.1rem;"><strong>Hidden Profit Leak Report™</strong></p>
-    <p>Powered by the GFI Framework</p>
-    <p style="margin-top: 1rem;">Created by Ping Xu | Boston, MA</p>
-    <p style="font-size: 0.9rem; margin-top: 1.5rem; color: #94a3b8;">
-        © 2026 All Rights Reserved | <a href="mailto:support@example.com">Contact Support</a>
-    </p>
-</div>
-""", unsafe_allow_html=True)
+
+footer_col1, footer_col2 = st.columns([1, 3])
+
+with footer_col1:
+    st.image("GFILOGO.png", width=120)
+
+with footer_col2:
+    st.markdown("""
+    <div style="padding-top: 1rem;">
+        <p style="font-size: 1.1rem; font-weight: 600; color: #1e40af;">
+            GFI: Flow Intelligence
+        </p>
+        <p style="color: #64748b; margin-top: 0.5rem;">
+            Powered by the GFI Framework
+        </p>
+        <p style="margin-top: 0.5rem; color: #64748b;">
+            Created by Ping Xu | Boston, MA
+        </p>
+        <p style="font-size: 0.9rem; margin-top: 1rem; color: #94a3b8;">
+            © 2026 All Rights Reserved | <a href="mailto:support@gfi.com" style="color: #3b82f6;">Contact Support</a>
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
