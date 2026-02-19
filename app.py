@@ -724,3 +724,127 @@ The GFI framework synthesizes insights from:
         """
 ### 🔬 The GFI Diagnostic Model
 
+Total Friction Cost = Direct Cost + Opportunity Cost
+Direct Cost = (Process Delay × People) × Hourly Rate
+Opportunity Cost = Direct Cost × Value Multiplier
+    """
+    )
+
+# ============================================================================
+# TAB 3: CASE LIBRARY
+# ============================================================================
+with tabs[2]:
+    st.header("📚 Case Library: Institutional Friction in Action")
+    st.markdown("*Illustrative diagnostics and interventions*")
+
+    with st.expander("📘 Case #001: The 'Frozen Pivot' in Mid-Sized SaaS", expanded=True):
+        st.markdown(
+            """
+- Overlapping governance pathways → no single decision owner  
+- Release delayed → compounded rework and market loss  
+- Intervention: single decision owner + sprint cadence  
+"""
+        )
+
+# ============================================================================
+# TAB 4: FOUNDER & ARCHITECT
+# ============================================================================
+with tabs[3]:
+    st.header("👤 Founder & Architect")
+    st.markdown(
+        """
+**Ping Xu**  
+Creator, Governance Fitness Index (GFI)  
+Founder, GFI Flow Intelligence  
+Massachusetts, USA
+"""
+    )
+
+# ============================================================================
+# TAB 5: BENCHMARK DATA
+# ============================================================================
+with tabs[4]:
+    st.header("📈 Industry Benchmark Data")
+    st.markdown("*Illustrative scaffold — replace with real pilot aggregates as data accumulates.*")
+
+    benchmark_data = pd.DataFrame(
+        {
+            "Industry": [
+                "Technology/SaaS",
+                "Finance",
+                "Healthcare",
+                "Manufacturing",
+                "Professional Services",
+                "Retail",
+                "Public Sector / Agency",
+            ],
+            "Avg_Friction_Hours": [180, 220, 280, 160, 200, 140, 240],
+            "Avg_Hourly_Cost": [75, 68, 62, 52, 85, 45, 58],
+            "Typical_Multiplier": [6.5, 4.0, 3.5, 2.5, 5.0, 3.0, 4.0],
+        }
+    )
+    benchmark_data["Avg_Annual_Cost"] = (
+        benchmark_data["Avg_Friction_Hours"]
+        * benchmark_data["Avg_Hourly_Cost"]
+        * (1 + benchmark_data["Typical_Multiplier"])
+    )
+
+    fig = px.bar(
+        benchmark_data,
+        x="Industry",
+        y="Avg_Annual_Cost",
+        color="Avg_Annual_Cost",
+        color_continuous_scale="Reds",
+        title="Average Annual Friction Cost by Industry (per employee) — Illustrative",
+        labels={"Avg_Annual_Cost": "Annual Cost ($)"},
+    )
+    fig.update_layout(height=420, showlegend=False, template="plotly_white")
+    st.plotly_chart(fig, use_container_width=True)
+
+# ============================================================================
+# FOOTER
+# ============================================================================
+st.markdown("---")
+st.markdown(
+    """
+<div style="text-align: center; color: #64748b; padding: 2rem;">
+    <p><strong>GFI — Governance Fitness Index</strong> | GFI Flow Intelligence</p>
+    <p>© 2026 Ping Xu | Massachusetts, USA</p>
+    <p style="font-size: 0.9rem; margin-top: 0.75rem;">
+        Framework Version 2.1 | Diagnostic Engine Updated 2026
+    </p>
+</div>
+""",
+    unsafe_allow_html=True,
+)
+
+# ============================================================================
+# SUPABASE TABLE SCHEMA (Create Once)
+# ============================================================================
+# In Supabase SQL Editor, run:
+#
+# create table if not exists public.gfi_leads (
+#   id bigserial primary key,
+#   created_at timestamptz not null,
+#   name text not null,
+#   email text not null,
+#   org text not null,
+#   role text,
+#   industry text,
+#   org_size text,
+#   pd_hours double precision,
+#   affected_people integer,
+#   hourly_rate double precision,
+#   multiplier double precision,
+#   total_delay double precision,
+#   weeks_lost double precision,
+#   efficiency_loss double precision,
+#   direct_leak double precision,
+#   opp_loss double precision,
+#   total_friction double precision,
+#   risk_level text,
+#   rec_tier text
+# );
+#
+# create index if not exists idx_gfi_leads_email on public.gfi_leads (email);
+# create index if not exists idx_gfi_leads_created_at on public.gfi_leads (created_at);
