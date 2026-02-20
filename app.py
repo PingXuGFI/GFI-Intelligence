@@ -1,944 +1,386 @@
 
 import streamlit as st
-import pandas as pd
-import plotly.graph_objects as go
-from datetime import datetime
+from pathlib import Path
 
-# ============================================================================
-# Page Configuration
-# ============================================================================
+# ============================================================
+# Page config
+# ============================================================
 st.set_page_config(
-    page_title="GFI — Pre/Post Transformation Execution Intelligence™",
+    page_title="GFI Flow Intelligence | 中文 / EN",
+    page_icon="🔷",
     layout="wide",
     initial_sidebar_state="collapsed",
-    page_icon="🔍"
 )
 
-# ============================================================================
-# STRIPE Payment Links
-# ============================================================================
-STRIPE_LINK_999 = "https://buy.stripe.com/8x25kFbp0dM4gQl0fB3VC00"
-STRIPE_LINK_4999 = "https://buy.stripe.com/7sYcN764GdM4arX0fB3VC01"
+# ============================================================
+# Config
+# ============================================================
+LOGO_PATHS = ["GFILOGO.png", "assets/GFILOGO.png", "images/GFILOGO.png"]
+CN_SITE = "https://gfi-intel-cn.streamlit.app/"
+EN_SITE = "https://gfi-intelligence.streamlit.app/"
+CN_FORM = "https://forms.gle/KmFdjdu97bC43CYL6"  # 你给的中文快筛
+CONTACT_EMAIL = "pingshyu@gmail.com"
 
-# ============================================================================
-# Custom CSS Styles
-# ============================================================================
-st.markdown("""
+# Stripe (optional - keep placeholders or paste yours)
+STRIPE_999 = "https://buy.stripe.com/8x25kFbp0dM4gQl0fB3VC00"
+STRIPE_4999 = "https://buy.stripe.com/7sYcN764GdM4arX0fB3VC01"
+
+
+# ============================================================
+# Helpers
+# ============================================================
+def load_logo():
+    for p in LOGO_PATHS:
+        if Path(p).exists():
+            return p
+    return None
+
+
+def pill(label: str):
+    st.markdown(
+        f"""
+        <span style="
+            display:inline-block;
+            padding:6px 10px;
+            border-radius:999px;
+            border:1px solid rgba(255,255,255,.16);
+            background: rgba(255,255,255,.06);
+            font-size:12px;
+            letter-spacing:.2px;
+            margin-right:8px;
+        ">{label}</span>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+# ============================================================
+# CSS (consulting-grade, minimal)
+# ============================================================
+st.markdown(
+    """
 <style>
-    /* Hero Section */
-    .hero-section {
-        background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-        padding: 3rem 2rem;
-        border-radius: 15px;
-        color: white;
-        text-align: center;
-        margin-bottom: 2rem;
-    }
+/* --- Base --- */
+.block-container { padding-top: 1.2rem; padding-bottom: 2.2rem; max-width: 1200px; }
+h1,h2,h3 { letter-spacing: -0.4px; }
+p { line-height: 1.6; }
 
-    /* Price Cards */
-    .price-card {
-        background: white;
-        border: 3px solid #3b82f6;
-        border-radius: 15px;
-        padding: 2rem;
-        text-align: center;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    }
-
-    .price-card-premium {
-        background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
-        border: 3px solid #7c3aed;
-        color: white;
-    }
-
-    .price-tag {
-        font-size: 3.5rem;
-        font-weight: bold;
-        color: #1e40af;
-        margin: 1rem 0;
-    }
-
-    .price-tag-premium {
-        color: white;
-    }
-
-    /* CTA Buttons */
-    .cta-button {
-        background: #10b981;
-        color: white;
-        padding: 1rem 2rem;
-        border-radius: 10px;
-        font-size: 1.3rem;
-        font-weight: bold;
-        text-decoration: none;
-        display: inline-block;
-        margin: 1rem 0;
-        transition: all 0.3s;
-    }
-
-    .cta-button:hover {
-        background: #059669;
-        transform: translateY(-2px);
-        box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
-    }
-
-    /* Results */
-    .big-number {
-        font-size: 4rem;
-        font-weight: bold;
-        color: #dc2626;
-        text-align: center;
-        margin: 2rem 0;
-    }
-
-    .insight-box {
-        background: #fef3c7;
-        border-left: 5px solid #f59e0b;
-        padding: 1.5rem;
-        border-radius: 10px;
-        margin: 1.5rem 0;
-    }
-
-    /* Guarantee Badge */
-    .guarantee-badge {
-        background: #dcfce7;
-        border: 2px solid #10b981;
-        border-radius: 10px;
-        padding: 1rem;
-        text-align: center;
-        margin: 1rem 0;
-    }
+/* --- Hero Card --- */
+.hero {
+    border: 1px solid rgba(255,255,255,.12);
+    background: linear-gradient(135deg, rgba(0,85,255,.16), rgba(0,255,215,.08));
+    border-radius: 18px;
+    padding: 22px 22px;
+}
+.hero-title {
+    font-size: 34px;
+    font-weight: 800;
+    margin: 0 0 6px 0;
+}
+.hero-subtitle {
+    font-size: 16px;
+    opacity: .92;
+    margin: 0 0 12px 0;
+}
+.hero-kicker {
+    font-size: 13px;
+    opacity: .85;
+    margin: 0;
+}
+.hr {
+    height: 1px;
+    background: rgba(255,255,255,.10);
+    margin: 18px 0;
+}
+.card {
+    border: 1px solid rgba(255,255,255,.12);
+    background: rgba(255,255,255,.04);
+    border-radius: 16px;
+    padding: 16px 16px;
+}
+.small { font-size: 13px; opacity: .9; }
+.muted { opacity: .85; }
+.badge {
+    display:inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.14);
+    background: rgba(255,255,255,.05);
+    font-size: 12px;
+    margin-right: 8px;
+}
+.list ul { margin: 0.2rem 0 0 1.2rem; }
+.cta-row a { text-decoration: none; }
+.footer {
+    opacity: .75;
+    font-size: 12px;
+    margin-top: 18px;
+}
 </style>
-""", unsafe_allow_html=True)
+""",
+    unsafe_allow_html=True,
+)
 
-# ============================================================================
-# Session State Initialization
-# ============================================================================
-if 'assessment_complete' not in st.session_state:
-    st.session_state.assessment_complete = False
-if 'calculated_leak' not in st.session_state:
-    st.session_state.calculated_leak = 0
-if 'risk_score' not in st.session_state:
-    st.session_state.risk_score = 0
+# ============================================================
+# Header (logo + brand)
+# ============================================================
+logo = load_logo()
 
-# ============================================================================
-# Brand Header + Positioning
-# ============================================================================
-col_logo, col_hero = st.columns([1, 3])
+top_l, top_r = st.columns([1.2, 1])
+with top_l:
+    if logo:
+        st.image(logo, width=84)
+    st.markdown("## GFI Flow Intelligence")
 
-with col_logo:
-    st.image("GFILOGO.png", width=200)
-
-with col_hero:
-    st.markdown("""
-    <div style="padding: 1rem 0;">
-        <h1 style="color: #1e40af; margin-bottom: 0.5rem;">GFI: Flow Intelligence</h1>
-        <h2 style="margin-top: 0.5rem; font-weight: 500; color: #1e40af; font-size: 1.3rem;">
-            Pre-Transformation / Post-Transformation Execution Intelligence Engine
-        </h2>
-        <p style="font-size: 1.1rem; margin-top: 1rem; color: #475569; line-height: 1.6;">
-            <strong>Measure execution capacity before transformation.</strong><br>
-            <strong>Prove execution improvement after transformation.</strong>
-        </p>
-        <p style="font-size: 1rem; margin-top: 1rem; color: #64748b;">
-            Free diagnostic → Quantify structural friction in ~12 minutes
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
-
-# Banner Image
-st.image("banner.png", use_container_width=True)
-
-# ============================================================================
-# GFI Framework Positioning
-# ============================================================================
-st.markdown("""
-<div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-     padding: 2rem; border-radius: 15px; margin: 2rem 0;">
-    <h3 style="color: #0c4a6e; text-align: center; margin-bottom: 1.5rem;">
-        GFI = The Structural Intelligence Layer for Institutional Transformation
-    </h3>
-    <p style="color: #075985; text-align: center; font-size: 1.1rem; line-height: 1.6;">
-        Most consulting engagements stop at “implementation complete.”<br>
-        <strong>GFI quantifies structural execution risk before transformation and verifies structural improvement after transformation.</strong><br>
-        Creating a defensible ROI evidence chain.
-    </p>
-</div>
-""", unsafe_allow_html=True)
-
-# Two-Stage Value Proposition
-col_pre, col_post = st.columns(2)
-
-with col_pre:
-    st.markdown("""
-    <div style="background: white; border: 2px solid #3b82f6; border-radius: 12px;
-         padding: 1.5rem; height: 100%;">
-        <h4 style="color: #1e40af; margin-bottom: 1rem;">
-            I. Pre-Transformation
-        </h4>
-        <p style="color: #475569; font-weight: 600; margin-bottom: 1rem;">
-            Purpose: Quantify structural execution risk before launch
-        </p>
-        <ul style="color: #64748b; line-height: 1.8; margin-left: 1rem;">
-            <li>Decision latency density map</li>
-            <li>Organizational friction coefficient model</li>
-            <li>Baseline capacity leakage estimate</li>
-            <li>Execution readiness index</li>
-        </ul>
-        <p style="background: #dbeafe; padding: 0.75rem; border-radius: 8px;
-             margin-top: 1rem; color: #1e40af; font-weight: 600;">
-            📊 Deliverable: Board-level “Execution Readiness Brief”
-        </p>
-        <p style="color: #64748b; margin-top: 1rem; font-style: italic;">
-            Build transformation on quantified structure—not assumptions. Reduce capital risk exposure.
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
-
-with col_post:
-    st.markdown("""
-    <div style="background: white; border: 2px solid #10b981; border-radius: 12px;
-         padding: 1.5rem; height: 100%;">
-        <h4 style="color: #059669; margin-bottom: 1rem;">
-            II. Post-Transformation
-        </h4>
-        <p style="color: #475569; font-weight: 600; margin-bottom: 1rem;">
-            Purpose: Quantify whether execution capability truly improved
-        </p>
-        <ul style="color: #64748b; line-height: 1.8; margin-left: 1rem;">
-            <li>Friction reduction magnitude</li>
-            <li>Latency compression ratio</li>
-            <li>Execution capacity expansion rate</li>
-            <li>Organizational resilience index</li>
-        </ul>
-        <p style="background: #d1fae5; padding: 0.75rem; border-radius: 8px;
-             margin-top: 1rem; color: #059669; font-weight: 600;">
-            ✅ Deliverable: Transformation Effectiveness Certification
-        </p>
-        <p style="color: #64748b; margin-top: 1rem; font-style: italic;">
-            Prove improvement with data—not slide decks. Quantify real performance lift.
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
-
-# Positioning in the Consulting Ecosystem
-st.markdown("""
-<div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-     padding: 2rem; border-radius: 15px; margin: 2rem 0; border-left: 5px solid #f59e0b;">
-    <h4 style="color: #92400e; margin-bottom: 1rem;">
-        🎯 Positioning in the Consulting Ecosystem
-    </h4>
-    <p style="color: #78350f; font-size: 1.05rem; line-height: 1.7;">
-        GFI can serve as:<br>
-        • <strong>Pre-risk scanning module</strong> — identify execution vulnerabilities before transformation<br>
-        • <strong>Post-outcome verification layer</strong> — certify real improvement vs. promised outcomes<br>
-        • <strong>Board-level assurance tool</strong> — provide leadership confidence with quantified results
-    </p>
-    <p style="color: #92400e; margin-top: 1rem; font-weight: 600;">
-        Increase project credibility and executive trust—across the full transformation lifecycle.
-    </p>
-</div>
-""", unsafe_allow_html=True)
+with top_r:
+    # Language switch (sidebar-like control but stays top)
+    lang = st.radio("Language / 语言", ["中文", "EN"], horizontal=True, label_visibility="collapsed")
 
 st.markdown("---")
 
-# ============================================================================
-# Main Content
-# ============================================================================
-tab1, tab2, tab3 = st.tabs(["🔎 Executive QuickScan", "📑 Deliverable Preview", "💼 Engagement & Pricing"])
+# ============================================================
+# Content dictionaries (CN + EN)
+# ============================================================
+CN = {
+    "hero_title": "用数学量化执行能力",
+    "hero_subtitle": "把“流程摩擦”从不可见成本，变成可计算、可对比、可优化的结构指标。",
+    "hero_kicker": "GFI 是执行层的量化引擎：不是主观评价、不是泛泛建议，而是可落地的诊断框架。",
+    "what_is": "什么是 GFI？",
+    "what_is_body": """
+GFI（Governance Flow Index）是一套 **执行效能量化引擎**。
 
-# ============================================================================
-# Tab 1: Free Assessment
-# ============================================================================
-with tab1:
-    st.header("Executive QuickScan (Free)")
-    st.markdown("**Answer 12 questions to estimate annual execution-capacity leakage and friction risk.**")
+它用可观察的结构变量，计算组织在执行层面的：
 
-    with st.form("assessment_form"):
-        st.subheader("Organization Profile")
+- 摩擦强度（Friction Load）
+- 延迟累积（Latency / Waiting）
+- 结构冗余风险（Redundancy / Loops）
+- 隐性成本蒸发（Invisible Capacity Loss）
+""",
+    "why": "为什么这很重要？",
+    "why_body": """
+在组织规模扩大后，**结构复杂度会上升**，审批、协调、等待会累积成“执行税”。
 
-        col1, col2 = st.columns(2)
+没有量化工具，管理层只能依赖感觉。  
+感觉无法优化结构。数学可以。
+""",
+    "two_stage": "两种应用场景",
+    "before": "转型前：结构诊断",
+    "before_list": [
+        "识别瓶颈与审批堆叠点",
+        "量化执行阻力与等待成本",
+        "确定优先优化路径（先拆哪里）",
+    ],
+    "after": "转型后：效果验证",
+    "after_list": [
+        "验证改革是否真正减少摩擦",
+        "避免“形式数字化、实质不变”",
+        "建立可持续执行基线（Benchmark）",
+    ],
+    "big4": "Big 4 可销售模块（产品化包装）",
+    "big4_body": """
+下面四个模块，直接对应咨询交付结构：**可打包、可复用、可扩张**。
+""",
+    "modules": [
+        ("Module A | Executive Snapshot（快筛）", "5–10 分钟获取“结构摩擦信号”，用于线索转化与优先级判断。"),
+        ("Module B | Workflow Friction Map（流程摩擦图谱）", "把审批、等待、返工、跨部门传递映射成可视化结构图与瓶颈清单。"),
+        ("Module C | Quantified Impact & Risk（量化影响与风险）", "把摩擦转化为可沟通的：延迟成本、产能损耗、合规风险、失败概率。"),
+        ("Module D | Intervention Playbook（干预手册）", "低成本、可执行的结构改造建议：减少层级、缩短路径、清除循环。"),
+    ],
+    "cta_title": "立即行动",
+    "cta_body": "先用快筛建立信号，再决定是否进入诊断合作。",
+    "btn_scan": "开始中文快筛（Google Form）",
+    "btn_cn_site": "打开中文版主页",
+    "btn_en_site": "打开英文版主页",
+    "partnership": "机构合作入口（政府 / 国企 / 大型机构 / 咨询团队）",
+    "partnership_body": """
+如果你代表机构，想把 GFI 用作“执行诊断 / 改革验证 / 转型评估”的标准工具：  
+请直接通过以下入口联系（支持 NDA / 保密范围 / 定制指标口径）。
+""",
+    "contact": f"联系邮箱：{CONTACT_EMAIL}",
+    "offer": "合作形式（示例）",
+    "offer_list": [
+        "机构试点（Pilot）：选 1–2 条关键服务/流程，快速建立基线与瓶颈清单",
+        "诊断合作（Engagement）：流程图谱 + 量化影响 + 风险分级 + 干预手册",
+        "授权与培训（License/Enablement）：把 GFI 变成你们内部标准方法（可复制交付）",
+    ],
+    "pricing": "标准产品入口（可选）",
+    "disclaimer": "免责声明：本工具用于结构诊断与执行改进，不构成法律/财务建议。",
+}
 
-        with col1:
-            company_name = st.text_input("Organization name", placeholder="Example Organization")
+EN = {
+    "hero_title": "Quantify Execution. Reduce Structural Friction.",
+    "hero_subtitle": "Turn invisible process drag into measurable indicators you can benchmark, compare, and improve.",
+    "hero_kicker": "GFI is an execution-layer diagnostic engine — not opinions, not generic advice, but a structured measurement framework.",
+    "what_is": "What is GFI?",
+    "what_is_body": """
+The Governance Flow Index (GFI) is a **quantitative execution diagnostic engine**.
 
-            employee_count = st.selectbox(
-                "Headcount range",
-                ["1–10", "11–50", "51–200", "201–500", "501–1000", "1000+"]
-            )
+Using observable structural signals, it measures:
 
-            industry = st.selectbox(
-                "Industry",
-                ["Tech / SaaS", "Professional Services", "Financial Services",
-                 "Healthcare", "Manufacturing", "Retail", "Other"]
-            )
+- Friction load
+- Latency accumulation (waiting / handoffs)
+- Redundancy risk (loops / rework)
+- Invisible capacity loss
+""",
+    "why": "Why this matters",
+    "why_body": """
+As organizations scale, complexity compounds — approvals, handoffs, and waiting become a hidden execution tax.
 
-            avg_salary = st.number_input(
-                "Average annual compensation per employee ($)",
-                min_value=30000,
-                value=75000,
-                step=5000,
-                help="A rough average across your organization"
-            )
+Without measurement, leaders rely on intuition.  
+Intuition doesn’t optimize structures. Math does.
+""",
+    "two_stage": "Two-phase applicability",
+    "before": "Pre-transformation: Structural Diagnosis",
+    "before_list": [
+        "Identify bottlenecks and approval stacking",
+        "Quantify execution drag and waiting cost",
+        "Prioritize interventions (where to remove friction first)",
+    ],
+    "after": "Post-transformation: Outcome Verification",
+    "after_list": [
+        "Verify whether friction actually decreased",
+        "Prevent ‘digitalization without real change’",
+        "Establish an execution baseline benchmark",
+    ],
+    "big4": "Big 4-ready Product Modules",
+    "big4_body": "Four modular deliverables aligned with consulting packaging — reusable, scalable, and sellable.",
+    "modules": [
+        ("Module A | Executive Snapshot", "A fast signal scan for pipeline qualification and prioritization."),
+        ("Module B | Workflow Friction Map", "A structural map of approvals, waits, loops, and cross-team handoffs."),
+        ("Module C | Quantified Impact & Risk", "Translate friction into cost, capacity loss, compliance risk, and failure probability."),
+        ("Module D | Intervention Playbook", "Low-cost structural fixes: reduce layers, shorten paths, remove loops."),
+    ],
+    "cta_title": "Start Here",
+    "cta_body": "Use the snapshot to establish signal first — then decide whether to upgrade into a full diagnostic engagement.",
+    "btn_scan": "Run the Chinese Snapshot (Google Form)",
+    "btn_cn_site": "Open CN Site",
+    "btn_en_site": "Open EN Site",
+    "partnership": "Institutional Partnership Intake",
+    "partnership_body": """
+If you represent a public agency, SOE, enterprise, or consulting team and want GFI as a standard tool for
+execution diagnostics / reform verification / transformation audit — reach out below (NDA-supported).
+""",
+    "contact": f"Email: {CONTACT_EMAIL}",
+    "offer": "Engagement Options (examples)",
+    "offer_list": [
+        "Pilot: 1–2 critical workflows to establish baseline and top bottlenecks",
+        "Engagement: mapping + quantified impact + risk tiering + playbook",
+        "License/Enablement: make GFI an internal standard methodology",
+    ],
+    "pricing": "Product Links (optional)",
+    "disclaimer": "Disclaimer: Diagnostic and execution-improvement purposes only. Not legal/financial advice.",
+}
 
-            revenue_per_employee = st.number_input(
-                "Annual revenue per employee ($)",
-                min_value=50000,
-                value=150000,
-                step=10000,
-                help="Annual revenue / total employees"
-            )
+T = CN if lang == "中文" else EN
 
-            meeting_hours_per_week = st.slider(
-                "Meeting hours per employee per week",
-                0, 40, 15,
-                help="Includes standups, reviews, steering meetings, recurring syncs"
-            )
+# ============================================================
+# HERO
+# ============================================================
+hero_left, hero_right = st.columns([2.1, 1])
 
-        with col2:
-            approval_layers = st.slider(
-                "Average approval layers for key decisions",
-                1, 10, 3,
-                help="How many approvals are required for major decisions?"
-            )
+with hero_left:
+    st.markdown(
+        f"""
+<div class="hero">
+  <div class="hero-title">{T["hero_title"]}</div>
+  <div class="hero-subtitle">{T["hero_subtitle"]}</div>
+  <div class="hero-kicker">{T["hero_kicker"]}</div>
+  <div class="hr"></div>
+  <span class="badge">GFI</span>
+  <span class="badge">Execution Measurement</span>
+  <span class="badge">Friction → Cost</span>
+  <span class="badge">Benchmark</span>
+</div>
+""",
+        unsafe_allow_html=True,
+    )
 
-            project_delay_pct = st.slider(
-                "Project delay rate (%)",
-                0, 100, 30,
-                help="What percentage of projects typically run late?"
-            )
+with hero_right:
+    st.markdown('<div class="card">', unsafe_allow_html=True)
+    st.markdown(f"### {T['cta_title']}")
+    st.write(T["cta_body"])
+    st.markdown('<div class="cta-row">', unsafe_allow_html=True)
 
-            rework_pct = st.slider(
-                "Rework due to misalignment (%)",
-                0, 50, 15,
-                help="Percent of work that must be redone due to communication/hand-offs"
-            )
+    c1, c2 = st.columns(2)
+    with c1:
+        st.link_button(T["btn_scan"], CN_FORM, use_container_width=True)
+    with c2:
+        st.link_button(T["btn_cn_site"], CN_SITE, use_container_width=True)
 
-            decision_time_days = st.slider(
-                "Average days for strategic decisions",
-                1, 90, 14,
-                help="Time from proposal to approval"
-            )
+    st.link_button(T["btn_en_site"], EN_SITE, use_container_width=True)
 
-            turnover_rate = st.slider(
-                "Annual employee turnover rate (%)",
-                0, 50, 15,
-                help="Percent of employees who leave annually"
-            )
+    st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
 
-            customer_complaint_rate = st.slider(
-                "Customer escalation rate (per 100 customers)",
-                0, 50, 5,
-                help="How many customers escalate issues tied to delay/quality?"
-            )
+st.markdown("")
 
-        submitted = st.form_submit_button("🔍 Run Executive QuickScan", use_container_width=True)
+# ============================================================
+# Main blocks
+# ============================================================
+left, right = st.columns([1.2, 1])
 
-        if submitted:
-            # ============================================================================
-            # Calculation Engine (UNCHANGED)
-            # ============================================================================
+with left:
+    st.markdown(f"### {T['what_is']}")
+    st.markdown(f"<div class='card'>{T['what_is_body']}</div>", unsafe_allow_html=True)
 
-            emp_count_map = {
-                "1–10": 5,
-                "11–50": 30,
-                "51–200": 125,
-                "201–500": 350,
-                "501–1000": 750,
-                "1000+": 1500
-            }
-            employees = emp_count_map[employee_count]
+    st.markdown("")
+    st.markdown(f"### {T['why']}")
+    st.markdown(f"<div class='card'>{T['why_body']}</div>", unsafe_allow_html=True)
 
-            hourly_rate = avg_salary / 2080  # Working hours per year
+with right:
+    st.markdown(f"### {T['two_stage']}")
+    st.markdown("<div class='card list'>", unsafe_allow_html=True)
+    st.markdown(f"**{T['before']}**")
+    st.markdown("- " + "\n- ".join(T["before_list"]))
+    st.markdown("")
+    st.markdown(f"**{T['after']}**")
+    st.markdown("- " + "\n- ".join(T["after_list"]))
+    st.markdown("</div>", unsafe_allow_html=True)
 
-            # 1) Meeting overhead (assume 40% low-value)
-            wasted_meeting_hours = meeting_hours_per_week * 0.4 * 50 * employees
-            meeting_cost = wasted_meeting_hours * hourly_rate
+st.markdown("")
 
-            # 2) Delay cost
-            delay_factor = project_delay_pct / 100
-            avg_project_value = revenue_per_employee * 0.3  # assume 30% revenue project-linked
-            delay_cost = delay_factor * avg_project_value * employees * 0.2
+# ============================================================
+# Big 4 modules
+# ============================================================
+st.markdown(f"### {T['big4']}")
+st.markdown(f"<div class='card'><div class='small muted'>{T['big4_body']}</div></div>", unsafe_allow_html=True)
 
-            # 3) Rework cost
-            rework_factor = rework_pct / 100
-            rework_cost = rework_factor * avg_salary * employees * 0.15
-
-            # 4) Decision latency opportunity cost
-            decision_delay_weeks = decision_time_days / 7
-            decision_opportunity_cost = (decision_delay_weeks - 1) * 500 * employees * 10
-
-            # 5) Turnover cost
-            turnover_factor = turnover_rate / 100
-            avg_turnover_cost = avg_salary * 1.5  # replacement cost = 150% of salary
-            turnover_total_cost = turnover_factor * employees * avg_turnover_cost
-
-            # 6) Customer friction cost
-            complaint_factor = customer_complaint_rate / 100
-            avg_customer_value = revenue_per_employee * 2
-            customer_friction_cost = complaint_factor * employees * avg_customer_value * 0.1
-
-            total_leak = (
-                meeting_cost +
-                delay_cost +
-                rework_cost +
-                decision_opportunity_cost +
-                turnover_total_cost +
-                customer_friction_cost
-            )
-
-            # Risk score (0-100)
-            risk_factors = [
-                (approval_layers - 1) * 10,
-                project_delay_pct * 0.5,
-                rework_pct * 1.5,
-                (decision_time_days / 30) * 20,
-                turnover_rate,
-                customer_complaint_rate * 1.5
-            ]
-            risk_score = min(sum(risk_factors) / len(risk_factors), 100)
-
-            st.session_state.assessment_complete = True
-            st.session_state.calculated_leak = total_leak
-            st.session_state.risk_score = risk_score
-            st.session_state.company_name = company_name
-            st.session_state.employees = employees
-
-            st.session_state.breakdown = {
-                "Meeting overhead": meeting_cost,
-                "Project delays": delay_cost,
-                "Rework & misalignment": rework_cost,
-                "Decision bottlenecks": decision_opportunity_cost,
-                "Turnover cost": turnover_total_cost,
-                "Customer friction": customer_friction_cost
-            }
-
-    # ============================================================================
-    # Results Display
-    # ============================================================================
-    if st.session_state.assessment_complete:
-        st.success("✅ QuickScan complete.")
-
-        st.markdown("---")
-
-        st.markdown(f"""
-        <div style="text-align: center; background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
-             padding: 3rem; border-radius: 15px; margin: 2rem 0;">
-            <h3 style="color: #7f1d1d; margin-bottom: 1rem;">
-                Estimated Annual Execution-Capacity Leakage — {st.session_state.company_name}
-            </h3>
-            <div class="big-number">
-                ${st.session_state.calculated_leak:,.0f}
-            </div>
-            <p style="font-size: 1.2rem; color: #991b1b; margin-top: 1rem;">
-                Equivalent to <strong>${st.session_state.calculated_leak/st.session_state.employees:,.0f} per employee</strong>
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
-
-        col1, col2 = st.columns(2)
-
-        with col1:
-            risk_color = "#dc2626" if st.session_state.risk_score > 70 else "#f59e0b" if st.session_state.risk_score > 40 else "#10b981"
-
-            fig = go.Figure(go.Indicator(
-                mode="gauge+number",
-                value=st.session_state.risk_score,
-                domain={'x': [0, 1], 'y': [0, 1]},
-                title={'text': "Operational Friction Risk Score"},
-                gauge={
-                    'axis': {'range': [None, 100]},
-                    'bar': {'color': risk_color},
-                    'steps': [
-                        {'range': [0, 40], 'color': "#dcfce7"},
-                        {'range': [40, 70], 'color': "#fef3c7"},
-                        {'range': [70, 100], 'color': "#fee2e2"}
-                    ],
-                    'threshold': {
-                        'line': {'color': "red", 'width': 4},
-                        'thickness': 0.75,
-                        'value': 85
-                    }
-                }
-            ))
-
-            fig.update_layout(height=300)
-            st.plotly_chart(fig, use_container_width=True)
-
-        with col2:
-            st.markdown("### 🎯 Executive Risk Posture")
-
-            if st.session_state.risk_score > 70:
-                st.error("**🔴 Elevated Risk** — immediate intervention recommended")
-                st.markdown("""
-                Your operating model shows multiple high-friction signals:
-                - Decision pathways are bottlenecked
-                - Delivery reliability is compromised (delays/rework)
-                - Turnover pressure suggests systemic strain
-                """)
-            elif st.session_state.risk_score > 40:
-                st.warning("**🟡 Moderate Risk** — meaningful optimization headroom")
-                st.markdown("""
-                Several friction points are suppressing throughput:
-                - Coordination drag and approval layering
-                - Preventable delays and rework
-                - Clear opportunities for structural simplification
-                """)
-            else:
-                st.success("**🟢 Low Risk** — strong baseline execution health")
-                st.markdown("""
-                Your organization shows solid execution fundamentals:
-                - Efficient decision pathways
-                - Lower workflow friction
-                - Clear opportunities for incremental performance lift
-                """)
-
-        st.markdown("### 💸 Leakage Composition (Where capacity is evaporating)")
-
-        breakdown_df = pd.DataFrame({
-            'Category': list(st.session_state.breakdown.keys()),
-            'Annual Cost': list(st.session_state.breakdown.values())
-        })
-
-        fig = go.Bar(
-            x=breakdown_df['Category'],
-            y=breakdown_df['Annual Cost'],
-            marker=dict(
-                color=breakdown_df['Annual Cost'],
-                colorscale='Reds'
-            )
+m1, m2 = st.columns(2)
+for i, (title, desc) in enumerate(T["modules"]):
+    col = m1 if i % 2 == 0 else m2
+    with col:
+        st.markdown(
+            f"""
+<div class="card">
+  <div style="font-weight:700; font-size:15px; margin-bottom:6px;">{title}</div>
+  <div class="small">{desc}</div>
+</div>
+""",
+            unsafe_allow_html=True,
         )
 
-        fig = go.Figure(data=fig)
-        fig.update_layout(
-            showlegend=False,
-            height=400,
-            yaxis_title="Annual Cost ($)"
-        )
-
-        st.plotly_chart(fig, use_container_width=True)
-
-        st.markdown("---")
-
-        st.markdown("""
-        <div class="insight-box">
-            <h3>🎯 This is the signal—not the full diagnosis</h3>
-            <p style="font-size: 1.1rem;">
-                The Executive QuickScan is designed to surface the <strong>structural magnitude</strong>.
-                The actionable value comes from pinpointing:
-            </p>
-            <ul style="font-size: 1.05rem; margin-top: 1rem;">
-                <li>Which teams/functions are driving the leakage</li>
-                <li>Your top 3 fixable execution bottlenecks</li>
-                <li>The value-at-stake of cutting friction by 30–50%</li>
-                <li>How your risk posture compares to peers</li>
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
-
-        # =====================================================================
-        # Upgraded Consulting-Grade Offer Copy (links + pricing unchanged)
-        # =====================================================================
-        st.markdown("### 💼 Upgrade to a Board-Ready Diagnostic")
-
-        col1, col2 = st.columns(2)
-
-        with col1:
-            st.markdown("""
-            <div class="price-card">
-                <h3>📑 Professional Diagnostic (Board-Ready PDF)</h3>
-                <div class="price-tag">$999</div>
-                <p style="font-size: 1.1rem; margin: 1.5rem 0;">
-                    <strong>12-page executive diagnostic</strong><br>
-                    Designed for CFO/COO, Transformation Leads, and Program Owners
-                </p>
-                <ul style="text-align: left; font-size: 1rem; line-height: 1.85;">
-                    <li>✅ Quantified leakage & friction breakdown (by category)</li>
-                    <li>✅ Top 3 execution bottlenecks (fixable, high-impact)</li>
-                    <li>✅ Risk exposure narrative (what is failing, where, and why)</li>
-                    <li>✅ Peer benchmark signals (context, not vanity metrics)</li>
-                    <li>✅ 30-day stabilization plan (quick wins + sequencing)</li>
-                    <li>✅ Clear assumptions & methodology summary</li>
-                </ul>
-                <a href="{}" target="_blank" class="cta-button" style="margin-top: 1.5rem;">
-                    Purchase Professional Diagnostic →
-                </a>
-                <p style="margin-top: 1rem; color: #64748b; font-size: 0.92rem;">
-                    Delivery: within 48 hours after intake completion
-                </p>
-            </div>
-            """.format(STRIPE_LINK_999), unsafe_allow_html=True)
-
-        with col2:
-            st.markdown("""
-            <div class="price-card price-card-premium">
-                <div style="background: #fbbf24; color: #7c2d12; padding: 0.5rem;
-                     border-radius: 5px; margin-bottom: 1rem; font-weight: bold;">
-                    🔥 Most Selected by Leadership Teams
-                </div>
-                <h3>🧭 Executive Deep-Dive (Diagnostic + Strategy Session)</h3>
-                <div class="price-tag price-tag-premium">$4,999</div>
-                <p style="font-size: 1.1rem; margin: 1.5rem 0;">
-                    <strong>Decision-grade analysis with implementation sequencing</strong><br>
-                    Built for executive sponsorship and board-level accountability
-                </p>
-                <ul style="text-align: left; font-size: 1rem; line-height: 1.85;">
-                    <li>✅ Everything in the Professional Diagnostic</li>
-                    <li>✅ Custom friction heatmap (where execution breaks down)</li>
-                    <li>✅ Team / function-level segmentation (what to fix first)</li>
-                    <li>✅ ROI sensitivity model (value of reducing friction)</li>
-                    <li>✅ 90-day execution roadmap (sequenced interventions)</li>
-                    <li>✅ <strong>2-hour strategy call with the founder</strong></li>
-                    <li>✅ 30 days of follow-up support (email)</li>
-                </ul>
-                <a href="{}" target="_blank" class="cta-button"
-                   style="margin-top: 1.5rem; background: white; color: #7c3aed;">
-                    Reserve Executive Deep-Dive →
-                </a>
-                <p style="margin-top: 1rem; font-size: 0.92rem; opacity: 0.92;">
-                    Capacity: limited to 5 clients/month
-                </p>
-            </div>
-            """.format(STRIPE_LINK_4999), unsafe_allow_html=True)
-
-        st.markdown("""
-        <div class="guarantee-badge">
-            <h3>✅ Value Assurance</h3>
-            <p style="margin-top: 0.5rem; font-size: 1.05rem; line-height: 1.55;">
-                If your diagnostic does not identify at least <strong>5×</strong> the report cost in recoverable
-                execution capacity, we will issue a full refund—no questions asked.
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
-
-# ============================================================================
-# Tab 2: Deliverable Preview
-# ============================================================================
-with tab2:
-    st.header("📑 Deliverable Preview (Sample Structure)")
-
-    st.info("**Note:** This is a simplified preview. Your actual deliverable is customized to your inputs.")
-
-    with st.expander("📄 Page 1: Executive Summary", expanded=True):
-        st.markdown("""
-        ---
-        **GFI Executive Diagnostic — Board-Ready Brief™**  
-        *Prepared for: [Organization Name]*  
-        *Date: [Report Date]*  
-        *Analyst: Ping Xu, creator of the GFI framework*
-        ---
-
-        ### Executive Summary
-
-        Our analysis indicates that **[Organization Name]** is experiencing an estimated **$[X]** in annual execution-capacity leakage,
-        driven by structural operational friction.
-
-        **Key findings:**
-
-        🔴 **Primary leakage driver:** [Largest cost category]  
-        💰 **Estimated annual value-at-stake:** $[X]  
-        ⚠️ **Risk score:** [X]/100 — [Risk level]  
-        📈 **Near-term recovery potential:** $[X] (first 90 days)
-
-        **Core insight:**  
-        Unlike visible costs (payroll, overhead), these losses are embedded in operating structure.
-        They accumulate quietly and erode margin, delivery reliability, and transformation ROI.
-
-        This diagnostic provides a prioritized roadmap to recover execution capacity.
-        """)
-
-    with st.expander("💸 Pages 2–3: Leakage & Friction Breakdown"):
-        st.markdown("""
-        ### Estimated annual leakage by category
-
-        | Category | Annual Cost | % of Total | Severity |
-        |----------|-------------|------------|----------|
-        | Meeting overhead | $[X] | [X]% | 🔴 High |
-        | Project delays | $[X] | [X]% | 🟡 Medium |
-        | Rework & errors | $[X] | [X]% | 🔴 High |
-        | Decision bottlenecks | $[X] | [X]% | 🟡 Medium |
-        | Turnover cost | $[X] | [X]% | 🔴 High |
-        | Customer friction | $[X] | [X]% | 🟢 Low |
-
-        **Included in the full deliverable:**
-        - Root-cause framing (structural)
-        - Calculation logic and assumptions
-        - Peer-context signals (benchmarks)
-        - Actionable interpretation tied to your inputs
-        """)
-
-    with st.expander("🎯 Pages 4–5: Top 3 Execution Bottlenecks"):
-        st.markdown("""
-        ### Bottleneck #1: [Specific issue]
-
-        **Observed pattern:** [Description]  
-        **Estimated annual impact:** $[X]  
-        **Functions affected:** [Teams/Functions]  
-        **Structural root driver:** [Operating model issue]
-
-        **Recommended intervention:**  
-        1. [Action]
-        2. [Action]
-        3. [Action]
-
-        **Expected recovery:** $[X] within [Timeframe]
-
-        ---
-
-        *(Bottlenecks #2 and #3 follow the same structure.)*
-        """)
-
-    with st.expander("📊 Pages 6–7: Risk Exposure & Peer Context"):
-        st.markdown("""
-        ### Risk posture vs. peers
-
-        [Visuals may include:]
-        - Your risk score vs. industry median
-        - Friction intensity by function/team
-        - Trend view (if multiple scans are run over time)
-
-        ### Competitive implications
-
-        In your industry, organizations with comparable friction levels tend to:
-        - Deliver transformation outcomes with lower ROI certainty
-        - Experience elevated attrition and cycle-time inflation relative to low-friction peers
-        """)
-
-    with st.expander("✅ Pages 8–9: Rapid Stabilization Plan (30 Days)"):
-        st.markdown("""
-        ### Three high-impact, low-burden interventions
-
-        **Action #1: [Intervention]**
-        - **What to do:** [Steps]
-        - **Time-to-implement:** [X days]
-        - **Expected recovery:** $[X]/year
-        - **Effort level:** Low / Medium / High
-
-        **Action #2: [Intervention]**  
-        *(same format)*
-
-        **Action #3: [Intervention]**  
-        *(same format)*
-
-        ### 30-day execution plan
-
-        Week 1: [Actions]  
-        Week 2: [Actions]  
-        Week 3: [Actions]  
-        Week 4: [Actions]
-        """)
-
-    with st.expander("🚀 Pages 10–12: Sequencing, Method, and Next Steps"):
-        st.markdown("""
-        ### Sequenced roadmap
-
-        **Phase 1 (0–30 days):** stabilization  
-        **Phase 2 (30–90 days):** structural simplification  
-        **Phase 3 (90–180 days):** embedded execution discipline
-
-        ### Methodology
-
-        - Framework overview
-        - Data inputs and assumptions
-        - Calculation mechanics
-        - Interpretation guide and constraints
-
-        ### About the GFI framework
-
-        [Brief positioning note]
-        """)
-
-    st.markdown("---")
-
-    st.success("""
-    **👆 This preview shows the deliverable structure.** Your actual diagnostic includes:
-    - Your organization’s specific numbers
-    - Prioritized interventions
-    - Industry/context signals
-    - A sequenced plan leadership can execute
-    """)
-
-# ============================================================================
-# Tab 3: Engagement & Pricing
-# ============================================================================
-with tab3:
-    st.header("💼 Engagement Options")
-    st.markdown("Transparent pricing. Board-ready deliverables. Minimal time burden.")
-
-    col1, col2 = st.columns(2)
-
-    with col1:
-        st.markdown("""
-        <div class="price-card">
-            <h3>📑 Professional Diagnostic</h3>
-            <div class="price-tag">$999</div>
-            <p style="font-size: 1.2rem; margin: 1.5rem 0; font-weight: 600;">
-                Board-ready PDF deliverable
-            </p>
-            <hr style="margin: 1.5rem 0;">
-            <ul style="text-align: left; font-size: 1.05rem; line-height: 2;">
-                <li>✅ 12-page PDF diagnostic</li>
-                <li>✅ Leakage & friction breakdown</li>
-                <li>✅ Top 3 execution bottlenecks</li>
-                <li>✅ Risk exposure score</li>
-                <li>✅ Peer context signals</li>
-                <li>✅ Rapid stabilization recommendations</li>
-                <li>✅ 30-day action plan</li>
-                <li>✅ Delivery within 48 hours</li>
-            </ul>
-            <a href="{}" target="_blank" class="cta-button" style="margin-top: 2rem;">
-                Purchase Professional Diagnostic →
-            </a>
-        </div>
-        """.format(STRIPE_LINK_999), unsafe_allow_html=True)
-
-        st.info("""
-        **Best for:**
-        - Mid-sized organizations (50–500 employees)
-        - CFO/COO and transformation owners needing decision-grade clarity
-        - Teams preparing for execution stabilization prior to major change
-        """)
-
-    with col2:
-        st.markdown("""
-        <div class="price-card price-card-premium">
-            <div style="background: #fbbf24; color: #7c2d12; padding: 0.5rem;
-                 border-radius: 5px; margin-bottom: 1rem; font-weight: bold;">
-                ⭐ Leadership Choice
-            </div>
-            <h3>🧭 Executive Deep-Dive</h3>
-            <div class="price-tag price-tag-premium">$4,999</div>
-            <p style="font-size: 1.2rem; margin: 1.5rem 0; font-weight: 600;">
-                Diagnostic + strategy session
-            </p>
-            <hr style="margin: 1.5rem 0; border-color: rgba(255,255,255,0.3);">
-            <ul style="text-align: left; font-size: 1.05rem; line-height: 2;">
-                <li>✅ Everything in the Professional Diagnostic</li>
-                <li>✅ Custom friction heatmap</li>
-                <li>✅ Function/team segmentation</li>
-                <li>✅ ROI sensitivity model</li>
-                <li>✅ 90-day sequencing roadmap</li>
-                <li>✅ <strong>2-hour strategy call with the founder</strong></li>
-                <li>✅ Personalized execution plan</li>
-                <li>✅ 30 days of email support</li>
-                <li>✅ Priority delivery (24 hours)</li>
-            </ul>
-            <a href="{}" target="_blank" class="cta-button"
-               style="margin-top: 2rem; background: white; color: #7c3aed;">
-                Reserve Executive Deep-Dive →
-            </a>
-            <p style="margin-top: 1rem; font-size: 0.95rem; opacity: 0.95;">
-                ⚠️ Limited to 5 clients/month
-            </p>
-        </div>
-        """.format(STRIPE_LINK_4999), unsafe_allow_html=True)
-
-        st.info("""
-        **Best for:**
-        - Leadership teams driving transformation
-        - Organizations above $10M revenue
-        - Situations where sequencing and risk containment matter
-        """)
-
-    st.markdown("---")
-
-    st.markdown("### ❓ FAQ (Scope, Method, and Delivery)")
-
-    with st.expander("How does this compare to a consulting engagement?"):
-        st.markdown("""
-        **Traditional consulting:**
-        - $50K–$200K+ fees
-        - 3–6 month project cycles
-        - Significant internal time investment
-        - Broad frameworks and workshops
-
-        **GFI Executive Diagnostic:**
-        - Fixed, transparent pricing
-        - Delivered in 24–48 hours
-        - Minimal time burden (12-minute QuickScan)
-        - Purpose-built for execution friction and leakage
-        - Actionable from day one
-        """)
-
-    with st.expander("What methodology powers this diagnostic?"):
-        st.markdown("""
-        This diagnostic is powered by the **GFI (Governance Flow Intelligence)** framework developed by Ping Xu,
-        grounded in organizational economics and system dynamics.
-
-        Key inputs:
-        - Your QuickScan responses
-        - Peer context signals (benchmarks)
-        - Revenue/cost multipliers
-        - Friction intensity modeling
-
-        The deliverable includes assumptions and calculation logic in plain language.
-        """)
-
-    with st.expander("What if I don’t find meaningful leakage?"):
-        st.markdown("""
-        **Value Assurance**
-
-        If your diagnostic does not identify at least **5× the report cost** in recoverable execution capacity,
-        we will issue a full refund—no questions asked.
-
-        Organizations typically uncover 10–50× the diagnostic cost in preventable leakage once it is made visible.
-        """)
-
-    with st.expander("How soon will I see results?"):
-        st.markdown("""
-        **Timeline:**
-        - **Immediately:** visibility into leakage magnitude and risk posture
-        - **Week 1:** rapid stabilization actions begin
-        - **30 days:** first measurable improvements
-        - **90 days:** full impact of sequenced structural changes
-
-        Many clients recover the diagnostic cost within the first month through quick wins alone.
-        """)
-
-    with st.expander("Do you offer payment plans?"):
-        st.markdown("""
-        We currently accept one-time payments via Stripe.
-
-        For the **Executive Deep-Dive**, payment arrangements can be discussed on a case-by-case basis after purchase.
-        """)
-
-    st.markdown("""
-    <div class="guarantee-badge" style="margin-top: 3rem;">
-        <h3>✅ Value Assurance</h3>
-        <p style="font-size: 1.1rem; margin-top: 1rem; line-height: 1.6;">
-            If you do not identify at least <strong>5×</strong> the diagnostic cost in actionable, recoverable execution capacity,
-            we will issue a full refund—no questions asked.
-        </p>
-        <p style="margin-top: 1rem; font-size: 0.95rem; color: #064e3b;">
-            ✅ Low burden. High clarity. Decision-grade output.
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
-
-# ============================================================================
-# Footer
-# ============================================================================
-st.markdown("---")
-
-footer_col1, footer_col2 = st.columns([1, 3])
-
-with footer_col1:
-    st.image("GFILOGO.png", width=120)
-
-with footer_col2:
-    st.markdown("""
-    <div style="padding-top: 1rem;">
-        <p style="font-size: 1.1rem; font-weight: 600; color: #1e40af;">
-            GFI: Flow Intelligence
-        </p>
-        <p style="color: #64748b; margin-top: 0.5rem;">
-            Powered by the GFI framework
-        </p>
-        <p style="margin-top: 0.5rem; color: #64748b;">
-            Creator: Ping Xu | Boston, Massachusetts
-        </p>
-        <p style="font-size: 0.9rem; margin-top: 1rem; color: #94a3b8;">
-            © 2026 All rights reserved | <a href="mailto:support@gfi.com" style="color: #3b82f6;">Contact support</a>
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
+st.markdown("")
+
+# ============================================================
+# Institutional partnership intake
+# ============================================================
+st.markdown(f"### {T['partnership']}")
+st.markdown(f"<div class='card'>{T['partnership_body']}</div>", unsafe_allow_html=True)
+
+p1, p2 = st.columns([1.4, 1])
+with p1:
+    st.markdown("<div class='card list'>", unsafe_allow_html=True)
+    st.markdown(f"**{T['offer']}**")
+    st.markdown("- " + "\n- ".join(T["offer_list"]))
+    st.markdown("</div>", unsafe_allow_html=True)
+
+with p2:
+    st.markdown("<div class='card'>", unsafe_allow_html=True)
+    st.markdown(f"**{T['contact']}**")
+    st.write("")
+    st.markdown(f"**{T['pricing']}**")
+    st.link_button("USD $999", STRIPE_999, use_container_width=True)
+    st.link_button("USD $4,999", STRIPE_4999, use_container_width=True)
+    st.markdown("</div>", unsafe_allow_html=True)
+
+st.markdown(f"<div class='footer'>{T['disclaimer']}</div>", unsafe_allow_html=True)
