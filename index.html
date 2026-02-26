@@ -2,197 +2,677 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GFI Flow Intelligence | Structural Friction & Capital Erosion Diagnostics</title>
-  <meta name="description" content="Quantify structural friction before it becomes financial loss. Built for CFOs, COOs, Risk & Governance leaders." />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GFI Flow Intelligence — Structural Friction & Capital Erosion Diagnostics</title>
+  <meta name="description" content="GFI Flow Intelligence quantifies structural friction, denominator overload, and capital erosion risk — validating whether automation truly improves execution." />
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --panel:#0f1620;
+      --panel2:#101a26;
+      --text:#e9eef6;
+      --muted:#a7b2c3;
+      --line:rgba(255,255,255,.10);
+      --accent:#7dd3fc;
+      --accent2:#a78bfa;
+      --shadow: 0 18px 60px rgba(0,0,0,.35);
+      --radius:16px;
+      --maxw:1100px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "PingFang TC", "PingFang SC", "Microsoft JhengHei", "Microsoft YaHei", sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background: radial-gradient(1200px 600px at 10% 0%, rgba(125,211,252,.10), transparent 60%),
+                  radial-gradient(1200px 600px at 90% 0%, rgba(167,139,250,.10), transparent 60%),
+                  var(--bg);
+      color:var(--text);
+      font-family:var(--font);
+      line-height:1.55;
+    }
+    a{color:inherit}
+    .wrap{max-width:var(--maxw); margin:0 auto; padding:28px 18px 80px;}
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between; gap:14px;
+      padding:14px 16px; border:1px solid var(--line); border-radius:var(--radius);
+      background:rgba(15,22,32,.65); backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+    }
+    .brand{display:flex; align-items:center; gap:12px; min-width:220px;}
+    .brand img{height:44px; width:auto; display:block;}
+    .brand .name{font-weight:700; letter-spacing:.2px;}
+    .brand .tag{color:var(--muted); font-size:13px; margin-top:1px;}
+    .langbar{display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:flex-end;}
+    .chip{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      padding:8px 10px;
+      border-radius:999px;
+      cursor:pointer;
+      font-weight:600;
+      font-size:13px;
+      color:var(--text);
+      user-select:none;
+    }
+    .chip[aria-pressed="true"]{
+      border-color: rgba(125,211,252,.55);
+      background: rgba(125,211,252,.12);
+    }
+    .cta-mini{
+      border:1px solid rgba(125,211,252,.55);
+      background: linear-gradient(135deg, rgba(125,211,252,.18), rgba(167,139,250,.12));
+      padding:8px 12px;
+      border-radius:999px;
+      text-decoration:none;
+      font-weight:700;
+      font-size:13px;
+      white-space:nowrap;
+    }
+    .hero{
+      margin-top:18px;
+      border:1px solid var(--line);
+      border-radius:24px;
+      background: linear-gradient(180deg, rgba(16,26,38,.75), rgba(15,22,32,.55));
+      box-shadow: var(--shadow);
+      padding:34px 26px;
+    }
+    h1{margin:0 0 10px; font-size:42px; line-height:1.1; letter-spacing:-.4px;}
+    .sub{margin:0; color:var(--muted); font-size:18px; max-width:920px;}
+    .badges{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px;}
+    .badge{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      padding:8px 10px;
+      border-radius:999px;
+      color:var(--muted);
+      font-size:13px;
+      display:flex; gap:8px; align-items:center;
+    }
+    .dot{height:7px;width:7px;border-radius:99px;background:var(--accent); box-shadow:0 0 18px rgba(125,211,252,.35);}
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:16px;
+      margin-top:18px;
+    }
+    .card{
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:rgba(15,22,32,.65);
+      box-shadow: var(--shadow);
+      padding:18px 18px;
+      height:100%;
+      display:flex;
+      flex-direction:column;
+    }
+    .span-4{grid-column: span 4;}
+    .span-6{grid-column: span 6;}
+    .span-12{grid-column: span 12;}
+    @media (max-width: 980px){
+      h1{font-size:36px;}
+      .span-4,.span-6{grid-column: span 12;}
+      .brand{min-width:auto}
+    }
+    .kicker{color:var(--muted); text-transform:uppercase; letter-spacing:.16em; font-size:12px; font-weight:700;}
+    .h2{margin:8px 0 8px; font-size:22px; letter-spacing:-.2px;}
+    .price{font-size:30px; font-weight:800; letter-spacing:-.3px; margin-top:6px;}
+    ul{margin:10px 0 0; padding-left:18px; color:var(--muted);}
+    li{margin:6px 0;}
+    .btnrow{margin-top:auto; padding-top:14px;}
+    .btn{
+      display:inline-block;
+      width:100%;
+      text-align:center;
+      text-decoration:none;
+      font-weight:800;
+      border-radius:12px;
+      padding:12px 14px;
+      border:1px solid rgba(125,211,252,.55);
+      background: linear-gradient(135deg, rgba(125,211,252,.20), rgba(167,139,250,.10));
+    }
+    .btn.secondary{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      font-weight:700;
+      color:var(--text);
+    }
+    .section{
+      margin-top:16px;
+      border:1px solid var(--line);
+      border-radius:24px;
+      background:rgba(15,22,32,.55);
+      box-shadow: var(--shadow);
+      padding:22px 20px;
+    }
+    .section h2{margin:0 0 10px; font-size:22px; letter-spacing:-.2px;}
+    .muted{color:var(--muted)}
+    .hr{height:1px;background:var(--line); margin:16px 0;}
+    .cols{
+      display:grid; grid-template-columns: repeat(12, 1fr); gap:16px;
+      margin-top:10px;
+    }
+    .col6{grid-column: span 6;}
+    .col12{grid-column: span 12;}
+    @media (max-width: 980px){ .col6{grid-column: span 12;} }
+    .quote{
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px 14px;
+      background:rgba(255,255,255,.03);
+      color:var(--muted);
+      font-family:var(--mono);
+      font-size:13px;
+      overflow:auto;
+    }
+    .footer{
+      margin-top:18px;
+      border:1px solid var(--line);
+      border-radius:24px;
+      background:rgba(15,22,32,.65);
+      box-shadow: var(--shadow);
+      padding:18px 20px;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .footer a{color:var(--text); text-decoration:none; border-bottom:1px solid rgba(255,255,255,.18);}
+    .footer .title{color:var(--text); font-weight:800; margin-bottom:6px;}
+    .langblock{display:none;}
+    .langblock.is-active{display:block;}
+    .small{font-size:13px}
+  </style>
 </head>
 
-<body style="margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial;background:#0b1220;color:#eaf0ff;">
-  <div style="
-    min-height:100vh;
-    background:
-      radial-gradient(1200px 700px at 15% 10%, rgba(110,168,255,0.28), transparent 60%),
-      radial-gradient(900px 600px at 80% 25%, rgba(167,139,250,0.20), transparent 60%),
-      radial-gradient(900px 650px at 50% 90%, rgba(34,211,238,0.12), transparent 55%),
-      linear-gradient(180deg, #070b14 0%, #0b1220 60%, #070b14 100%);
-    padding:28px 18px 60px 18px;
-  ">
+<body>
+  <div class="wrap">
 
-    <!-- Top Nav -->
-    <div style="max-width:1120px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;">
-      <div style="display:flex;align-items:center;gap:12px;">
-        <img src="https://gfiintel.com/GFILOGO.png" alt="GFI Flow Intelligence" style="height:46px;width:auto;display:block;">
-        <div style="line-height:1.1;">
-          <div style="font-weight:800;font-size:14px;letter-spacing:0.4px;">GFI Flow Intelligence</div>
-          <div style="font-size:12px;color:rgba(234,240,255,0.72);">Structural Friction & Capital Erosion Diagnostics</div>
+    <!-- TOP BAR -->
+    <div class="topbar">
+      <div class="brand">
+        <!-- Replace with your real logo path (already on your domain) -->
+        <img src="/GFILOGO.png" alt="GFI Flow Intelligence Logo" />
+        <div>
+          <div class="name">GFI Flow Intelligence</div>
+          <div class="tag">Structural Friction & Capital Erosion Diagnostics</div>
         </div>
       </div>
 
-      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end;">
-        <!-- Language Switch -->
-        <div style="display:flex;gap:8px;align-items:center;">
-          <a href="index.html" style="text-decoration:none;color:#0b1220;background:#eaf0ff;padding:8px 10px;border-radius:12px;font-weight:900;font-size:12px;">EN</a>
-          <a href="cn.html" style="text-decoration:none;color:rgba(234,240,255,0.86);background:rgba(255,255,255,0.06);padding:8px 10px;border-radius:12px;font-weight:900;font-size:12px;border:1px solid rgba(255,255,255,0.14);">简体</a>
-          <a href="es.html" style="text-decoration:none;color:rgba(234,240,255,0.86);background:rgba(255,255,255,0.06);padding:8px 10px;border-radius:12px;font-weight:900;font-size:12px;border:1px solid rgba(255,255,255,0.14);">ES</a>
-        </div>
-
-        <a href="mailto:info@gfiintel.com" style="
-          color:#0b1220;background:#eaf0ff;text-decoration:none;font-size:13px;
-          padding:10px 14px;border-radius:12px;font-weight:900;
-        ">Email: info@gfiintel.com</a>
+      <div class="langbar">
+        <button class="chip" id="btn-en" aria-pressed="true" onclick="setLang('en')">EN</button>
+        <button class="chip" id="btn-zhHant" aria-pressed="false" onclick="setLang('zhHant')">繁</button>
+        <button class="chip" id="btn-zhHans" aria-pressed="false" onclick="setLang('zhHans')">简</button>
+        <a class="cta-mini" href="#pricing">View Tiers</a>
       </div>
     </div>
 
-    <!-- Hero Card -->
-    <div style="max-width:1120px;margin:28px auto 0 auto;">
-      <div style="
-        border-radius:22px;padding:34px 26px;
-        background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
-        box-shadow:0 18px 60px rgba(0,0,0,0.35);
-        border:1px solid rgba(255,255,255,0.12);
-        position:relative;overflow:hidden;
-      ">
-        <div style="
-          position:absolute; inset:-2px;
-          background:linear-gradient(90deg, rgba(110,168,255,0.22), rgba(167,139,250,0.18), rgba(34,211,238,0.12));
-          filter: blur(26px);opacity:0.35;z-index:0;
-        "></div>
+    <!-- HERO -->
+    <div class="hero">
+      <div class="langblock is-active" data-lang="en">
+        <h1>When Systems Suffocate, Capital Evaporates.</h1>
+        <p class="sub">
+          GFI quantifies structural friction, denominator overload, and legitimacy decline — verifying whether automation truly improves execution,
+          or silently converts capital into delay, review inflation, and escalation loops.
+        </p>
+        <div class="badges">
+          <div class="badge"><span class="dot"></span>Built for CFO / COO / Risk Oversight</div>
+          <div class="badge"><span class="dot"></span>Structural Risk Quantification</div>
+          <div class="badge"><span class="dot"></span>Capital Erosion Modeling</div>
+          <div class="badge"><span class="dot"></span>Governance Load Diagnostics</div>
+        </div>
+      </div>
 
-        <div style="position:relative;z-index:1;display:flex;flex-direction:column;gap:16px;">
-          <div style="display:inline-flex;gap:10px;flex-wrap:wrap;">
-            <span style="font-size:12px;font-weight:900;letter-spacing:0.6px;text-transform:uppercase;padding:8px 10px;border-radius:999px;background:rgba(110,168,255,0.15);border:1px solid rgba(110,168,255,0.25);">
-              Built for CFO / COO / Risk Oversight
-            </span>
-            <span style="font-size:12px;font-weight:900;letter-spacing:0.6px;text-transform:uppercase;padding:8px 10px;border-radius:999px;background:rgba(34,211,238,0.10);border:1px solid rgba(34,211,238,0.22);">
-              Quantifies hidden execution loss
-            </span>
-            <span style="font-size:12px;font-weight:900;letter-spacing:0.6px;text-transform:uppercase;padding:8px 10px;border-radius:999px;background:rgba(167,139,250,0.12);border:1px solid rgba(167,139,250,0.22);">
-              Diagnosis → Intervention
-            </span>
-          </div>
+      <div class="langblock" data-lang="zhHant">
+        <h1>當系統窒息，資本正在蒸發。</h1>
+        <p class="sub">
+          GFI 量化結構摩擦、分母過載與合法性衰退——用來驗證自動化是否真正提升執行，
+          或在無聲中把資本變成延遲、審核膨脹與升級循環。
+        </p>
+        <div class="badges">
+          <div class="badge"><span class="dot"></span>面向 CFO / COO / 風險監督</div>
+          <div class="badge"><span class="dot"></span>結構風險量化</div>
+          <div class="badge"><span class="dot"></span>資本侵蝕模型</div>
+          <div class="badge"><span class="dot"></span>治理負載診斷</div>
+        </div>
+      </div>
 
-          <h1 style="margin:0;font-size:44px;line-height:1.08;letter-spacing:-0.6px;">
-            When Systems Suffocate,<br/>Capital Evaporates.
-          </h1>
-
-          <p style="margin:0;max-width:860px;font-size:18px;line-height:1.65;color:rgba(234,240,255,0.82);">
-            GFI Flow Intelligence measures <b>structural friction</b> and <b>capital erosion risk</b> that do not show in cost centers —
-            until they compound into operational failures, compliance stress, and execution volatility.
-          </p>
-
-          <!-- CTAs -->
-          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:10px;">
-            <a href="https://buy.stripe.com/8x25kFbp0dM4gQl0fB3VC00" style="text-decoration:none;color:#0b1220;background:#eaf0ff;padding:12px 16px;border-radius:14px;font-weight:950;font-size:14px;box-shadow:0 12px 30px rgba(0,0,0,0.35);">
-              Start Diagnostic Snapshot — $999
-            </a>
-            <a href="https://buy.stripe.com/7sYcN764GdM4arX0fB3VC01" style="text-decoration:none;color:#eaf0ff;background:rgba(255,255,255,0.06);padding:12px 16px;border-radius:14px;font-weight:950;font-size:14px;border:1px solid rgba(255,255,255,0.16);">
-              Activate Intervention Retainer — $4,999
-            </a>
-            <a href="https://buy.stripe.com/8x228t3WyazS7fL4vR3VC02" style="text-decoration:none;color:#eaf0ff;background:rgba(255,255,255,0.03);padding:12px 16px;border-radius:14px;font-weight:950;font-size:14px;border:1px dashed rgba(255,255,255,0.22);">
-              Enterprise Reconstruction — $9,999+
-            </a>
-          </div>
-
-          <div style="display:flex;flex-wrap:wrap;gap:18px;margin-top:12px;color:rgba(234,240,255,0.70);font-size:13px;">
-            <div>✔ Board-ready framing</div>
-            <div>✔ Risk-tier classification</div>
-            <div>✔ Control-load stress signals</div>
-            <div>✔ Decision-environment language</div>
-          </div>
+      <div class="langblock" data-lang="zhHans">
+        <h1>当系统窒息，资本正在蒸发。</h1>
+        <p class="sub">
+          GFI 量化结构摩擦、分母过载与合法性衰退——用于验证自动化是否真正提升执行，
+          或在无声中把资本变成延迟、审查膨胀与升级循环。
+        </p>
+        <div class="badges">
+          <div class="badge"><span class="dot"></span>面向 CFO / COO / 风险监督</div>
+          <div class="badge"><span class="dot"></span>结构风险量化</div>
+          <div class="badge"><span class="dot"></span>资本侵蚀建模</div>
+          <div class="badge"><span class="dot"></span>治理负载诊断</div>
         </div>
       </div>
     </div>
 
-    <!-- Problem -->
-    <div style="max-width:1120px;margin:18px auto 0 auto;">
-      <div style="border-radius:18px;padding:22px 18px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.10);">
-        <div style="font-size:12px;letter-spacing:0.7px;text-transform:uppercase;font-weight:900;color:rgba(234,240,255,0.65);">What decision-makers face</div>
-        <h2 style="margin:10px 0 6px 0;font-size:26px;letter-spacing:-0.3px;">Most execution failures are structural — not operational.</h2>
-
-        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:12px;margin-top:14px;">
-          <div style="padding:14px;border-radius:14px;background:rgba(0,0,0,0.18);border:1px solid rgba(255,255,255,0.08);">
-            <div style="font-weight:950;">Invisible delay</div>
-            <div style="margin-top:6px;color:rgba(234,240,255,0.75);font-size:14px;line-height:1.55;">
-              Latency that never appears as a line item — until it becomes backlog, churn, or escalation.
-            </div>
-          </div>
-          <div style="padding:14px;border-radius:14px;background:rgba(0,0,0,0.18);border:1px solid rgba(255,255,255,0.08);">
-            <div style="font-weight:950;">Automation backfire</div>
-            <div style="margin-top:6px;color:rgba(234,240,255,0.75);font-size:14px;line-height:1.55;">
-              “Efficiency” that increases exception handling, review layers, and control load.
-            </div>
-          </div>
-          <div style="padding:14px;border-radius:14px;background:rgba(0,0,0,0.18);border:1px solid rgba(255,255,255,0.08);">
-            <div style="font-weight:950;">Denominator drag</div>
-            <div style="margin-top:6px;color:rgba(234,240,255,0.75);font-size:14px;line-height:1.55;">
-              Governance density expands, approvals multiply, and throughput collapses.
-            </div>
-          </div>
-          <div style="padding:14px;border-radius:14px;background:rgba(0,0,0,0.18);border:1px solid rgba(255,255,255,0.08);">
-            <div style="font-weight:950;">Capital erosion</div>
-            <div style="margin-top:6px;color:rgba(234,240,255,0.75);font-size:14px;line-height:1.55;">
-              Value is lost through rework loops, compliance strain, and execution volatility.
-            </div>
-          </div>
-        </div>
+    <!-- AUTHORITY FOUNDATION (5 lines) -->
+    <div class="section" id="authority">
+      <div class="langblock is-active" data-lang="en">
+        <h2>Authority Foundation</h2>
+        <p class="muted">
+          GFI Flow Intelligence is grounded in a multi-volume research architecture on governance legitimacy and structural flow dynamics.<br/>
+          From <em>The Physics of Governance</em> to <em>The Physical Formula of Governance Legitimacy</em> and <em>A Fluent State</em>, this body of work establishes legitimacy as a measurable structural variable — not a philosophical abstraction.<br/>
+          It reframes execution failure as denominator overload rather than operational incompetence.<br/>
+          It defines how control friction compounds into capital erosion.<br/>
+          GFI operationalizes these principles into quantifiable executive diagnostics.
+        </p>
       </div>
-    </div>
 
-    <!-- Tiers -->
-    <div style="max-width:1120px;margin:22px auto 0 auto;">
-      <div style="border-radius:18px;padding:20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.10);">
-        <div style="font-size:12px;letter-spacing:0.7px;text-transform:uppercase;font-weight:900;color:rgba(234,240,255,0.65);">Engagement path</div>
-        <h2 style="margin:10px 0 8px 0;font-size:28px;letter-spacing:-0.3px;">Three tiers. Clean separation. No confusion.</h2>
-
-        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:14px;margin-top:12px;">
-          <div style="border-radius:18px;padding:18px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);">
-            <div style="display:flex;justify-content:space-between;gap:10px;"><div style="font-weight:950;">Diagnostic Snapshot</div><div style="font-weight:950;">$999</div></div>
-            <div style="margin-top:10px;color:rgba(234,240,255,0.80);font-size:14px;line-height:1.6;">
-              Board-ready diagnostic. <b>Diagnosis only.</b> No corrective intervention.
-            </div>
-            <a href="https://buy.stripe.com/8x25kFbp0dM4gQl0fB3VC00" style="display:inline-block;margin-top:14px;text-decoration:none;color:#0b1220;background:#eaf0ff;padding:12px 14px;border-radius:14px;font-weight:950;font-size:14px;">Pay $999</a>
-          </div>
-
-          <div style="border-radius:18px;padding:18px;background:linear-gradient(180deg, rgba(110,168,255,0.12), rgba(255,255,255,0.05));border:1px solid rgba(110,168,255,0.22);">
-            <div style="display:flex;justify-content:space-between;gap:10px;"><div style="font-weight:950;">Intervention Retainer</div><div style="font-weight:950;">$4,999</div></div>
-            <div style="margin-top:10px;color:rgba(234,240,255,0.84);font-size:14px;line-height:1.6;">
-              Activates the correction phase (surgery planning): stress mapping and corrective pathway design.
-            </div>
-            <a href="https://buy.stripe.com/7sYcN764GdM4arX0fB3VC01" style="display:inline-block;margin-top:14px;text-decoration:none;color:#0b1220;background:#bfe0ff;padding:12px 14px;border-radius:14px;font-weight:950;font-size:14px;">Pay $4,999</a>
-          </div>
-
-          <div style="border-radius:18px;padding:18px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.14);">
-            <div style="display:flex;justify-content:space-between;gap:10px;"><div style="font-weight:950;">Enterprise Reconstruction</div><div style="font-weight:950;">$9,999+</div></div>
-            <div style="margin-top:10px;color:rgba(234,240,255,0.80);font-size:14px;line-height:1.6;">
-              Full structural rebuild: governance architecture redesign and implementation roadmap.
-            </div>
-            <a href="https://buy.stripe.com/8x228t3WyazS7fL4vR3VC02" style="display:inline-block;margin-top:14px;text-decoration:none;color:#eaf0ff;background:rgba(255,255,255,0.06);padding:12px 14px;border-radius:14px;font-weight:950;font-size:14px;border:1px solid rgba(255,255,255,0.16);">Pay $9,999</a>
-          </div>
-        </div>
+      <div class="langblock" data-lang="zhHant">
+        <h2>權威基礎</h2>
+        <p class="muted">
+          GFI Flow Intelligence 建立於一套多卷本的治理結構研究體系之上，專注於合法性與流程流動性的結構動力學。<br/>
+          從《治理的物理學》到《治理合法性的物理公式》與《流暢國家》，此研究體系將「合法性」定義為可量化的結構變數，而非抽象哲學概念。<br/>
+          它重新詮釋執行失敗，指出問題來自分母過載，而非人員無能。<br/>
+          它揭示控制摩擦如何逐步侵蝕資本。<br/>
+          GFI 將這些理論轉化為可量化的高階決策診斷工具。
+        </p>
       </div>
-    </div>
 
-    <!-- Credibility -->
-    <div style="max-width:1120px;margin:22px auto 0 auto;">
-      <div style="border-radius:18px;padding:20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.10);">
-        <div style="font-size:12px;letter-spacing:0.7px;text-transform:uppercase;font-weight:900;color:rgba(234,240,255,0.65);">Credibility signal</div>
-        <h2 style="margin:10px 0 0 0;font-size:28px;letter-spacing:-0.3px;">Institutional positioning</h2>
-        <p style="margin-top:12px;color:rgba(234,240,255,0.80);font-size:15px;line-height:1.8;">
-          • Published in PA Times<br/>
-          • Framework: GL (Governance Legitimacy)<br/>
-          • Applied across public and enterprise systems
+      <div class="langblock" data-lang="zhHans">
+        <h2>权威基础</h2>
+        <p class="muted">
+          GFI Flow Intelligence 建立在一套多卷本治理结构研究体系之上，聚焦合法性与流程流动性的结构动力学。<br/>
+          从《治理的物理学》到《治理合法性的物理公式》与《流畅国家》，该体系将“合法性”界定为可量化的结构变量，而非抽象理念。<br/>
+          它重新解释执行失败，认为问题源于分母过载，而非人员能力不足。<br/>
+          它揭示控制摩擦如何逐步吞噬资本。<br/>
+          GFI 将这些原则转化为可量化的高管级诊断系统。
         </p>
       </div>
     </div>
 
-    <!-- Footer -->
-    <div style="max-width:1120px;margin:18px auto 0 auto;padding:16px 4px 0 4px;color:rgba(234,240,255,0.60);font-size:12px;line-height:1.6;">
-      <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;">
-        <div>© GFI Flow Intelligence</div>
-        <div><a href="mailto:info@gfiintel.com" style="color:rgba(234,240,255,0.78);text-decoration:none;">info@gfiintel.com</a></div>
+    <!-- CORE VALUES -->
+    <div class="section" id="values">
+      <div class="langblock is-active" data-lang="en">
+        <h2>Core Principles of GFI Flow Intelligence</h2>
+        <div class="cols">
+          <div class="col6">
+            <p><strong>1. Automation Must Justify Itself</strong><br/>
+              <span class="muted">Automation is not inherently progress. It must demonstrate measurable structural improvement before capital is committed.</span></p>
+            <p><strong>2. Structural Legitimacy Precedes Scale</strong><br/>
+              <span class="muted">Execution velocity cannot expand sustainably if control friction and review density grow disproportionately.</span></p>
+            <p><strong>3. Measure Before You Deploy</strong><br/>
+              <span class="muted">GFI quantifies denominator expansion and capital absorption potential before implementation.</span></p>
+          </div>
+          <div class="col6">
+            <p><strong>4. Capital Preservation Over Technological Enthusiasm</strong><br/>
+              <span class="muted">Not all automation creates value. Some automation accelerates structural decay.</span></p>
+            <p><strong>5. Objectivity Over Ideology</strong><br/>
+              <span class="muted">GFI does not advocate for or against automation. It evaluates structural sustainability.</span></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="langblock" data-lang="zhHant">
+        <h2>GFI 核心原則</h2>
+        <div class="cols">
+          <div class="col6">
+            <p><strong>一、自動化必須自我證明</strong><br/>
+              <span class="muted">自動化並非天然等於進步。必須在資本投入前證明其能改善結構健康。</span></p>
+            <p><strong>二、結構合法性先於規模擴張</strong><br/>
+              <span class="muted">若控制摩擦與審核密度過度膨脹，執行速度將無法持續成長。</span></p>
+            <p><strong>三、部署之前必須量測</strong><br/>
+              <span class="muted">GFI 在實施前量化分母擴張與資本吸收風險。</span></p>
+          </div>
+          <div class="col6">
+            <p><strong>四、資本保存優於技術熱情</strong><br/>
+              <span class="muted">並非所有自動化都創造價值，有些會加速結構衰退。</span></p>
+            <p><strong>五、客觀勝於意識形態</strong><br/>
+              <span class="muted">GFI 不支持或反對自動化，只評估其結構可持續性。</span></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="langblock" data-lang="zhHans">
+        <h2>GFI 核心原则</h2>
+        <div class="cols">
+          <div class="col6">
+            <p><strong>一、自动化必须自我证明</strong><br/>
+              <span class="muted">自动化并不天然等于进步，必须在投入资本前证明其结构改善效果。</span></p>
+            <p><strong>二、结构合法性先于规模扩张</strong><br/>
+              <span class="muted">若控制摩擦与审查密度过度增加，执行效率将无法持续。</span></p>
+            <p><strong>三、部署之前必须量化</strong><br/>
+              <span class="muted">GFI 在实施前评估分母扩张与资本吸收风险。</span></p>
+          </div>
+          <div class="col6">
+            <p><strong>四、资本保护优于技术冲动</strong><br/>
+              <span class="muted">并非所有自动化都会创造价值，有些反而加速结构衰退。</span></p>
+            <p><strong>五、客观高于立场</strong><br/>
+              <span class="muted">GFI 不倡导或反对自动化，只衡量其结构可持续性。</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- METHODOLOGY -->
+    <div class="section" id="methodology">
+      <div class="langblock is-active" data-lang="en">
+        <h2>Methodological Framework</h2>
+        <p class="muted">
+          GFI applies a structured diagnostic protocol to evaluate whether automation strengthens or weakens structural legitimacy.
+        </p>
+        <div class="cols">
+          <div class="col6">
+            <p><strong>Phase 1 — Structural Mapping</strong><br/><span class="muted">Identify execution pathways, decision nodes, control layers, and escalation loops.</span></p>
+            <p><strong>Phase 2 — Denominator Stress Measurement</strong><br/><span class="muted">Quantify process density (Pd), control friction (Cf), and systemic risk amplification (Srf).</span></p>
+            <p><strong>Phase 3 — Legitimacy Calculation</strong><br/><span class="muted">Apply the Governance Legitimacy Formula.</span></p>
+          </div>
+          <div class="col6">
+            <p><strong>Phase 4 — Capital Impact Modeling</strong><br/><span class="muted">Estimate friction absorption velocity and projected capital erosion under current structural conditions.</span></p>
+            <p><strong>Phase 5 — Executive Interpretation</strong><br/><span class="muted">Translate findings into board-level risk classification and intervention priority.</span></p>
+            <p class="muted"><strong>Principle:</strong> GFI does not assume automation is beneficial. It verifies whether structural conditions support sustainable execution.</p>
+          </div>
+        </div>
+        <div class="hr"></div>
+        <div class="quote">GL = (Fs × Vn) / (Pd × Cf × Srf)</div>
+        <p class="small muted" style="margin-top:10px;">
+          Fs = Flow Stability · Vn = Value Nodes · Pd = Process Density · Cf = Control Friction · Srf = Systemic Risk Factor
+        </p>
+      </div>
+
+      <div class="langblock" data-lang="zhHant">
+        <h2>方法論架構</h2>
+        <p class="muted">GFI 採用一套結構化診斷流程，用以評估自動化是否強化或削弱結構合法性。</p>
+        <div class="cols">
+          <div class="col6">
+            <p><strong>第一階段 — 結構映射</strong><br/><span class="muted">辨識執行流程、決策節點、控制層級與升級循環。</span></p>
+            <p><strong>第二階段 — 分母壓力量測</strong><br/><span class="muted">量化流程密度（Pd）、控制摩擦（Cf）與系統性風險放大因子（Srf）。</span></p>
+            <p><strong>第三階段 — 合法性計算</strong><br/><span class="muted">套用治理合法性公式。</span></p>
+          </div>
+          <div class="col6">
+            <p><strong>第四階段 — 資本影響模型</strong><br/><span class="muted">估算摩擦吸收速度與資本侵蝕風險。</span></p>
+            <p><strong>第五階段 — 高階決策解讀</strong><br/><span class="muted">將結構結果轉化為董事會層級的風險分類與干預優先順序。</span></p>
+            <p class="muted"><strong>原則：</strong>GFI 不預設自動化是正確方向，而是驗證其是否符合結構可持續性。</p>
+          </div>
+        </div>
+        <div class="hr"></div>
+        <div class="quote">GL = (Fs × Vn) / (Pd × Cf × Srf)</div>
+        <p class="small muted" style="margin-top:10px;">
+          Fs＝流程穩定度 · Vn＝價值節點 · Pd＝流程密度 · Cf＝控制摩擦 · Srf＝系統性風險因子
+        </p>
+      </div>
+
+      <div class="langblock" data-lang="zhHans">
+        <h2>方法论框架</h2>
+        <p class="muted">GFI 采用结构化诊断流程，评估自动化是否强化或削弱结构合法性。</p>
+        <div class="cols">
+          <div class="col6">
+            <p><strong>第一阶段 — 结构映射</strong><br/><span class="muted">识别执行路径、决策节点、控制层级与升级循环。</span></p>
+            <p><strong>第二阶段 — 分母压力测量</strong><br/><span class="muted">量化流程密度（Pd）、控制摩擦（Cf）与系统风险放大因子（Srf）。</span></p>
+            <p><strong>第三阶段 — 合法性计算</strong><br/><span class="muted">应用治理合法性公式。</span></p>
+          </div>
+          <div class="col6">
+            <p><strong>第四阶段 — 资本影响建模</strong><br/><span class="muted">评估摩擦吸收速度与资本侵蚀风险。</span></p>
+            <p><strong>第五阶段 — 高管层解读</strong><br/><span class="muted">将结果转化为董事会级风险分类与干预优先级。</span></p>
+            <p class="muted"><strong>原则：</strong>GFI 不假设自动化必然正确，而是验证其是否具备结构可持续性。</p>
+          </div>
+        </div>
+        <div class="hr"></div>
+        <div class="quote">GL = (Fs × Vn) / (Pd × Cf × Srf)</div>
+        <p class="small muted" style="margin-top:10px;">
+          Fs＝流程稳定度 · Vn＝价值节点 · Pd＝流程密度 · Cf＝控制摩擦 · Srf＝系统性风险因子
+        </p>
+      </div>
+    </div>
+
+    <!-- PRICING -->
+    <div class="section" id="pricing">
+      <div class="langblock is-active" data-lang="en">
+        <h2>Engagement Tiers</h2>
+        <p class="muted">Transparent entry points. No automation hype. Measured structural outcomes.</p>
+      </div>
+      <div class="langblock" data-lang="zhHant">
+        <h2>服務方案</h2>
+        <p class="muted">透明入口，不賣熱情，只賣可量測的結構結果。</p>
+      </div>
+      <div class="langblock" data-lang="zhHans">
+        <h2>服务方案</h2>
+        <p class="muted">透明入口，不卖热情，只卖可量化的结构结果。</p>
+      </div>
+
+      <div class="grid">
+        <div class="card span-4">
+          <div class="kicker langblock is-active" data-lang="en">Tier 1</div>
+          <div class="kicker langblock" data-lang="zhHant">方案一</div>
+          <div class="kicker langblock" data-lang="zhHans">方案一</div>
+
+          <div class="h2 langblock is-active" data-lang="en">Structural Signal Snapshot</div>
+          <div class="h2 langblock" data-lang="zhHant">結構信號快照</div>
+          <div class="h2 langblock" data-lang="zhHans">结构信号快照</div>
+
+          <div class="price">$999</div>
+
+          <ul class="langblock is-active" data-lang="en">
+            <li>Structural signal review (not solutions)</li>
+            <li>Denominator stress indicators</li>
+            <li>Executive summary classification</li>
+          </ul>
+          <ul class="langblock" data-lang="zhHant">
+            <li>結構信號審視（不含解法）</li>
+            <li>分母壓力指標</li>
+            <li>高階摘要與分類</li>
+          </ul>
+          <ul class="langblock" data-lang="zhHans">
+            <li>结构信号审视（不含解法）</li>
+            <li>分母压力指标</li>
+            <li>高管摘要与分类</li>
+          </ul>
+
+          <div class="btnrow">
+            <!-- Replace with your Stripe link -->
+            <a class="btn" href="https://buy.stripe.com/8x25kFbp0dM4gQl0fB3VC00">Purchase</a>
+          </div>
+        </div>
+
+        <div class="card span-4">
+          <div class="kicker langblock is-active" data-lang="en">Tier 2</div>
+          <div class="kicker langblock" data-lang="zhHant">方案二</div>
+          <div class="kicker langblock" data-lang="zhHans">方案二</div>
+
+          <div class="h2 langblock is-active" data-lang="en">Executive Structural Audit</div>
+          <div class="h2 langblock" data-lang="zhHant">高階結構稽核</div>
+          <div class="h2 langblock" data-lang="zhHans">高管结构审计</div>
+
+          <div class="price">$4,999</div>
+
+          <ul class="langblock is-active" data-lang="en">
+            <li>Full diagnostic protocol (5 phases)</li>
+            <li>Capital erosion modeling</li>
+            <li>Board-level risk tier & priority</li>
+          </ul>
+          <ul class="langblock" data-lang="zhHant">
+            <li>完整 5 階段診斷流程</li>
+            <li>資本侵蝕模型</li>
+            <li>董事會等級風險分級與優先序</li>
+          </ul>
+          <ul class="langblock" data-lang="zhHans">
+            <li>完整 5 阶段诊断流程</li>
+            <li>资本侵蚀建模</li>
+            <li>董事会级风险分级与优先级</li>
+          </ul>
+
+          <div class="btnrow">
+            <!-- Replace with your Stripe link -->
+            <a class="btn" href="https://buy.stripe.com/7sYcN764GdM4arX0fB3VC01">Secure Retainer</a>
+          </div>
+        </div>
+
+        <div class="card span-4">
+          <div class="kicker langblock is-active" data-lang="en">Tier 3</div>
+          <div class="kicker langblock" data-lang="zhHant">方案三</div>
+          <div class="kicker langblock" data-lang="zhHans">方案三</div>
+
+          <div class="h2 langblock is-active" data-lang="en">Flow Architecture Redesign</div>
+          <div class="h2 langblock" data-lang="zhHant">流程架構重構</div>
+          <div class="h2 langblock" data-lang="zhHans">流程架构重构</div>
+
+          <div class="price">$9,999+</div>
+
+          <ul class="langblock is-active" data-lang="en">
+            <li>Structural intervention plan</li>
+            <li>Control-layer rationalization</li>
+            <li>Execution recovery roadmap</li>
+          </ul>
+          <ul class="langblock" data-lang="zhHant">
+            <li>結構干預方案</li>
+            <li>控制層級合理化</li>
+            <li>執行復原路線圖</li>
+          </ul>
+          <ul class="langblock" data-lang="zhHans">
+            <li>结构干预方案</li>
+            <li>控制层级合理化</li>
+            <li>执行恢复路线图</li>
+          </ul>
+
+          <div class="btnrow">
+            <!-- Replace with your Stripe link -->
+            <a class="btn" href="https://buy.stripe.com/8x228t3WyazS7fL4vR3VC02">Initiate</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESEARCH TEASER -->
+    <div class="section" id="research">
+      <div class="langblock is-active" data-lang="en">
+        <h2>Research & Intellectual Architecture</h2>
+        <p class="muted">
+          The GFI framework emerges from a structural research program examining governance legitimacy, denominator expansion,
+          and capital sustainability under automation stress.
+        </p>
+        <p class="muted small">
+          Foundational works: <em>The Physics of Governance</em> · <em>The Physical Formula of Governance Legitimacy</em> · <em>A Fluent State</em>
+        </p>
+      </div>
+
+      <div class="langblock" data-lang="zhHant">
+        <h2>研究與理論架構</h2>
+        <p class="muted">
+          GFI 框架源自於一套結構性研究體系，探討治理合法性、分母膨脹與自動化壓力下的資本可持續性。
+        </p>
+        <p class="muted small">核心著作：《治理的物理學》·《治理合法性的物理公式》·《流暢國家》</p>
+      </div>
+
+      <div class="langblock" data-lang="zhHans">
+        <h2>研究与理论架构</h2>
+        <p class="muted">
+          GFI 框架源自一套结构研究体系，研究治理合法性、分母扩张与自动化压力下的资本可持续性。
+        </p>
+        <p class="muted small">核心著作：《治理的物理学》·《治理合法性的物理公式》·《流畅国家》</p>
+      </div>
+    </div>
+
+    <!-- FOOTER LEGAL -->
+    <div class="footer" id="legal">
+      <div class="title">© 2026 GFI Flow Intelligence</div>
+      <div class="muted">Structural Friction & Capital Erosion Diagnostics</div>
+      <div style="margin-top:10px;">
+        <span class="muted">Founder:</span> <span style="color:var(--text);font-weight:700;">Ping Xu</span> ·
+        <span class="muted">Boston, Massachusetts, USA</span>
+      </div>
+      <div style="margin-top:8px;">
+        <span class="muted">Contact:</span>
+        <a href="mailto:info@gfiintel.com">info@gfiintel.com</a>
+      </div>
+
+      <div class="hr"></div>
+
+      <div class="langblock is-active" data-lang="en">
+        <div class="title">Legal Disclaimer</div>
+        <div class="muted">
+          GFI Flow Intelligence provides structural diagnostic analysis based on proprietary modeling frameworks.
+          All financial projections and structural indices are analytical estimates intended for executive review and risk evaluation purposes only.
+          This material does not constitute financial, legal, or regulatory advice.
+        </div>
+
+        <div class="hr"></div>
+        <div class="title">Terms of Engagement</div>
+        <div class="muted">
+          Engagement begins upon confirmed payment. All structural reports are confidential and intended solely for the purchasing organization.
+          Reproduction or redistribution without written authorization is prohibited.
+        </div>
+
+        <div class="hr"></div>
+        <div class="title">Privacy Notice</div>
+        <div class="muted">
+          Submitted data is used exclusively for structural diagnostic modeling and will not be shared with third parties.
+        </div>
+      </div>
+
+      <div class="langblock" data-lang="zhHant">
+        <div class="title">法律聲明</div>
+        <div class="muted">
+          GFI Flow Intelligence 依據專有模型框架提供結構診斷分析。所有財務推估與結構指數皆為分析估算，
+          僅供高階決策審閱與風險評估之用，不構成任何財務、法律或監管建議。
+        </div>
+
+        <div class="hr"></div>
+        <div class="title">合作條款</div>
+        <div class="muted">
+          合作自付款確認後開始。所有結構報告均屬機密，僅供購買方組織內部使用。
+          未經書面授權，禁止複製、轉載或對外散布。
+        </div>
+
+        <div class="hr"></div>
+        <div class="title">隱私聲明</div>
+        <div class="muted">
+          所有提交資料僅用於結構診斷建模，不會提供給第三方。
+        </div>
+      </div>
+
+      <div class="langblock" data-lang="zhHans">
+        <div class="title">法律声明</div>
+        <div class="muted">
+          GFI Flow Intelligence 基于专有建模框架提供结构诊断分析。所有财务推算与结构指数均为分析估算，
+          仅用于高管审阅与风险评估，不构成任何财务、法律或监管建议。
+        </div>
+
+        <div class="hr"></div>
+        <div class="title">合作条款</div>
+        <div class="muted">
+          合作自付款确认后开始。所有结构报告均为保密资料，仅供购买方组织内部使用。
+          未经书面授权，禁止复制、转载或对外传播。
+        </div>
+
+        <div class="hr"></div>
+        <div class="title">隐私声明</div>
+        <div class="muted">
+          提交数据仅用于结构诊断建模，不会与第三方共享。
+        </div>
       </div>
     </div>
 
   </div>
+
+  <script>
+    function setLang(lang){
+      // toggle blocks
+      document.querySelectorAll('.langblock').forEach(el=>{
+        el.classList.toggle('is-active', el.dataset.lang === lang);
+      });
+      // toggle button states
+      const map = { en:'btn-en', zhHant:'btn-zhHant', zhHans:'btn-zhHans' };
+      Object.keys(map).forEach(k=>{
+        const btn = document.getElementById(map[k]);
+        if(btn) btn.setAttribute('aria-pressed', k===lang ? 'true' : 'false');
+      });
+      // update <html lang="">
+      document.documentElement.lang = (lang==='en')?'en':(lang==='zhHant'?'zh-Hant':'zh-Hans');
+      // remember
+      try{ localStorage.setItem('gfi_lang', lang); }catch(e){}
+    }
+    // restore language
+    (function(){
+      try{
+        const saved = localStorage.getItem('gfi_lang');
+        if(saved) setLang(saved);
+      }catch(e){}
+    })();
+  </script>
 </body>
 </html>
