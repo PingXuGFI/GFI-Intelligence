@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="page-title">Case Study | GFI Flow Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#141d2e;--surf:#1c2740;--surf2:#22304e;
+  --border:rgba(255,255,255,0.08);--text:#edf0f8;
+  --muted:#8fa3c0;--dim:#4a6080;--accent:#c8f542;--blue:#4da3ff;
+  --red:#ff6b6b;
+  --serif:'DM Serif Display',Georgia,serif;
+  --mono:'DM Mono',monospace;
+  --sans:'DM Sans',system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:17px;line-height:1.75;overflow-x:hidden}
+
+/* HEADER */
+header{position:fixed;inset:0 0 auto 0;z-index:100;height:60px;padding:0 24px;display:flex;align-items:center;justify-content:space-between;background:rgba(20,29,46,0.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.logo img{height:44px;width:auto;mix-blend-mode:lighten;border-radius:6px}
+nav{display:flex;align-items:center;gap:4px}
+nav a{font-size:13px;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;transition:color .2s,background .2s}
+nav a:hover{color:var(--text);background:rgba(255,255,255,0.05)}
+.lang-grp{display:flex;gap:3px;margin-left:8px}
+.lb-btn{font-family:var(--mono);font-size:11px;letter-spacing:.08em;padding:5px 9px;border:1px solid var(--border);border-radius:4px;background:none;color:var(--muted);cursor:pointer;transition:all .2s}
+.lb-btn:hover{color:var(--text);border-color:rgba(255,255,255,0.18)}
+.lb-btn.on{color:var(--accent);border-color:rgba(200,245,66,0.35);background:rgba(200,245,66,0.06)}
+.nav-cta{display:inline-block;padding:8px 16px;background:var(--accent);color:#0d1117;font-size:13px;font-weight:600;border-radius:6px;text-decoration:none;margin-left:8px;white-space:nowrap;transition:opacity .2s}
+.nav-cta:hover{opacity:.85}
+.ham{display:none;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;padding:6px;background:none;border:none;cursor:pointer}
+.ham span{display:block;height:2px;background:var(--text);border-radius:2px;transition:transform .25s,opacity .2s}
+.ham.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.ham.open span:nth-child(2){opacity:0}
+.ham.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.drawer{display:none;position:fixed;top:60px;left:0;right:0;z-index:99;background:rgba(20,29,46,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:16px 24px 24px;flex-direction:column}
+.drawer.open{display:flex}
+.drawer a{font-size:17px;color:var(--muted);text-decoration:none;padding:14px 0;border-bottom:1px solid var(--border);transition:color .2s}
+.drawer-lang{display:flex;gap:8px;padding:16px 0 0}
+.drawer-cta{display:block;text-align:center;padding:16px;background:var(--accent);color:#0d1117;font-weight:600;font-size:16px;border-radius:8px;text-decoration:none;margin-top:16px;border-bottom:none!important}
+.mobile-lang{display:none;position:fixed;top:60px;left:0;right:0;z-index:98;background:rgba(20,29,46,0.97);border-bottom:1px solid var(--border);padding:8px 20px;gap:8px;align-items:center}
+@media(max-width:768px){.mobile-lang{display:flex}.ham{display:flex}nav{display:none}}
+
+/* LAYOUT */
+.wrap{max-width:900px;margin:0 auto;padding:0 clamp(20px,5vw,60px)}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+
+/* HERO */
+.hero{padding:clamp(90px,14vh,130px) 0 clamp(32px,5vh,48px)}
+.back-link{font-family:var(--mono);font-size:12px;color:var(--dim);text-decoration:none;letter-spacing:.08em;display:inline-flex;align-items:center;gap:6px;margin-bottom:32px;transition:color .2s}
+.back-link:hover{color:var(--accent)}
+.case-flag-lg{font-size:48px;margin-bottom:16px}
+.case-hero-title{font-family:var(--serif);font-size:clamp(24px,4vw,42px);line-height:1.1;letter-spacing:-.02em;margin-bottom:8px}
+.case-hero-sub{font-size:clamp(14px,1.8vw,17px);color:var(--muted);margin-bottom:clamp(24px,4vh,36px)}
+.case-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:clamp(24px,4vh,36px)}
+.tag{font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:4px 10px;border-radius:3px;background:rgba(255,255,255,0.04);border:1px solid var(--border);color:var(--dim)}
+
+/* GL SCORE BAR */
+.gl-bar{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:clamp(20px,3vw,28px);margin-bottom:clamp(32px,5vh,48px);display:grid;grid-template-columns:auto 1fr;gap:clamp(16px,3vw,32px);align-items:center}
+.gl-score-big{font-family:var(--serif);font-size:clamp(40px,6vw,64px);line-height:1;color:var(--accent)}
+.gl-score-label{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--dim);text-transform:uppercase;margin-top:4px}
+.gl-params{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.gl-param{text-align:center}
+.gl-param-val{font-family:var(--mono);font-size:clamp(14px,2vw,18px);color:var(--text);font-weight:500}
+.gl-param-key{font-family:var(--mono);font-size:10px;color:var(--dim);letter-spacing:.08em;margin-top:3px}
+.gl-formula{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:12px;padding-top:12px;border-top:1px solid var(--border);grid-column:1/-1}
+@media(max-width:600px){.gl-params{grid-template-columns:repeat(2,1fr)}.gl-bar{grid-template-columns:1fr}}
+
+/* CONTENT */
+.section{margin-bottom:clamp(32px,5vh,48px)}
+.section-title{font-family:var(--serif);font-size:clamp(16px,2vw,20px);color:var(--text);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.body-p{font-size:clamp(15px,1.8vw,17px);color:var(--muted);line-height:1.85;margin-bottom:14px}
+.body-p strong{color:var(--text)}
+.pull-quote{font-family:var(--serif);font-style:italic;font-size:clamp(15px,1.9vw,19px);color:var(--text);line-height:1.55;border-left:3px solid var(--accent);padding-left:20px;margin:24px 0}
+
+/* PRINCIPLES */
+.principles{display:flex;flex-direction:column;gap:12px;margin-top:16px}
+.principle{background:var(--surf);border:1px solid var(--border);border-radius:8px;padding:clamp(14px,2vw,20px)}
+.principle-num{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--accent);text-transform:uppercase;margin-bottom:6px}
+.principle-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px}
+.principle-body{font-size:14px;color:var(--muted);line-height:1.7}
+
+/* COMPARE TABLE */
+.tscroll{overflow-x:auto;border:1px solid var(--border);border-radius:8px;margin-top:16px}
+table{width:100%;min-width:400px;border-collapse:collapse;font-size:13px}
+th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:10px 14px;border-bottom:1px solid var(--border);background:var(--surf);text-align:left}
+td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--muted);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr.hl td{color:var(--text);background:rgba(200,245,66,0.04)}
+.gl-n{font-family:var(--mono);color:var(--accent);font-weight:500}
+.gl-bad{font-family:var(--mono);color:var(--red)}
+
+/* VERDICT */
+.verdict{background:rgba(200,245,66,0.06);border:1px solid rgba(200,245,66,0.2);border-radius:10px;padding:clamp(20px,3vw,28px);margin-top:clamp(24px,4vh,36px)}
+.verdict-label{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.verdict-text{font-size:clamp(15px,1.8vw,17px);color:var(--text);line-height:1.75}
+
+/* NAV BETWEEN CASES */
+.case-nav{display:flex;justify-content:space-between;align-items:center;padding:clamp(24px,4vh,36px) 0;border-top:1px solid var(--border);margin-top:clamp(32px,5vh,48px)}
+.case-nav a{font-family:var(--mono);font-size:12px;color:var(--muted);text-decoration:none;letter-spacing:.06em;transition:color .2s}
+.case-nav a:hover{color:var(--accent)}
+
+/* FOOTER */
+footer{padding:clamp(24px,4vh,36px) clamp(20px,5vw,60px);border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;color:var(--muted);font-size:13px}
+footer a{color:var(--muted);text-decoration:none}
+footer a:hover{color:var(--text)}
+
+/* ANIMATE */
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .55s,transform .55s}
+.reveal.vis{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="logo"><img src="GFILOGO.png" alt="GFI"></a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="cases.html">Cases</a>
+    <a href="about.html">Founder</a>
+    <div class="lang-grp">
+      <button class="lb-btn on"  onclick="setLang('en',this)">EN</button>
+      <button class="lb-btn"     onclick="setLang('tw',this)">繁</button>
+      <button class="lb-btn"     onclick="setLang('cn',this)">简</button>
+    </div>
+    <a href="https://buy.stripe.com/8x25kFbp0dM4gQl0fB3VC00" class="nav-cta" target="_blank" rel="noopener">Start Verification</a>
+  </nav>
+  <button class="ham" id="ham" onclick="toggleDrawer()"><span></span><span></span><span></span></button>
+</header>
+
+<div class="mobile-lang">
+  <span style="font-family:var(--mono);font-size:10px;color:var(--dim);letter-spacing:.1em;text-transform:uppercase;margin-right:4px">Lang</span>
+  <button class="lb-btn on" onclick="setLang('en',this)">EN</button>
+  <button class="lb-btn"    onclick="setLang('tw',this)">繁</button>
+  <button class="lb-btn"    onclick="setLang('cn',this)">简</button>
+</div>
+
+<div class="drawer" id="drawer">
+  <a href="index.html" onclick="closeDrawer()">Home</a>
+  <a href="cases.html" onclick="closeDrawer()">Cases</a>
+  <a href="about.html" onclick="closeDrawer()">Founder</a>
+  <div class="drawer-lang">
+    <button class="lb-btn on" onclick="setLang('en',this)">EN</button>
+    <button class="lb-btn"    onclick="setLang('tw',this)">繁</button>
+    <button class="lb-btn"    onclick="setLang('cn',this)">简</button>
+  </div>
+  <a href="https://buy.stripe.com/8x25kFbp0dM4gQl0fB3VC00" class="drawer-cta" target="_blank" rel="noopener" onclick="closeDrawer()">Start Verification →</a>
+</div>
+
+<div id="content"></div>
+
+<footer>
+  <span>© 2026 GFI Flow Intelligence · Boston</span>
+  <div style="display:flex;gap:24px;flex-wrap:wrap">
+    <a href="index.html">Home</a>
+    <a href="cases.html">Cases</a>
+    <a href="about.html">Founder</a>
+  </div>
+</footer>
+
+<script>
+const CASES = {
+  finland: {
+    flag:'🇫🇮', gl:'3.13', fs:'0.92', vn:'9.2', pd:'1.8', cf:'1.5', order:1,
+    en:{
+      title:'Finland Education System',
+      sub:'Trust-Based Governance · Education',
+      tags:['Education','Teacher Autonomy','Low Friction','PISA Top'],
+      verdict_label:'GL Verdict',
+      verdict:'Finland proves that high performance does not come from high pressure — it comes from high trust. Less friction in the system means better flow.',
+      phenomenon_title:'The Phenomenon',
+      phenomenon:`<p class="body-p">Finland's education system consistently ranks at the top in PISA, yet students have short school hours, minimal homework, and almost no exam pressure. Teachers enjoy high social status and genuine professional autonomy. This is not a miracle — it is <strong>low-pain, high-flow system design</strong>.</p>
+      <p class="body-p">Contrast: a Shanghai high school student studies 14 hours daily with Pd ≥ 50 hrs/week. A Helsinki student studies 5–6 hours daily, no national university entrance exam, Pd ≤ 15 hrs/week. Same PISA ranking pressure, radically different citizen experience.</p>`,
+      principles_title:'GL Prescriptions',
+      principles:[
+        {n:'Rx 1',t:'Abolish High-Stakes One-Off Exams',b:'Replace national entrance exams with school-based assessment + interest interviews. Target: reduce Pd from 50+ hrs to under 15 hrs/week.'},
+        {n:'Rx 2',t:'Teacher Professionalization',b:'Require minimum Master\'s degree. Raise salaries to top-5 profession. Result: Fs increases as teacher quality becomes equitable across all schools.'},
+        {n:'Rx 3',t:'Equalize Vocational and Academic Paths',b:'Remove status hierarchy between university and vocational tracks. Smooth conversion paths reduce Cf — students don\'t need to bet their entire future on one exam.'}
+      ],
+      compare_title:'Comparative Data',
+      compare_headers:['System','GL','Pd (hrs/wk)','Cf','Teacher Trust'],
+      compare_rows:[
+        {hl:true, cells:['Finland','3.13','1.8','1.5','High autonomy']},
+        {cells:['Germany','1.24','8.4','3.2','Moderate']},
+        {cells:['South Korea','1.68','11.6','3.9','Exam-driven']},
+        {cells:['USA','0.91','14.2','4.8','Low autonomy']},
+        {cells:['Shanghai','0.34','50+','7.2','Script-following']}
+      ]
+    },
+    tw:{
+      title:'芬蘭教育制度',
+      sub:'信任型治理 · 教育',
+      tags:['教育','教師自主','低摩擦','PISA頂尖'],
+      verdict_label:'GL 診斷結論',
+      verdict:'芬蘭證明：高績效不來自高壓力，來自高信任。系統摩擦越少，流動越好。',
+      phenomenon_title:'現象',
+      phenomenon:`<p class="body-p">芬蘭教育系統常年位居 PISA 前列，但學生課時少、作業少、考試壓力小，教師社會地位高，系統幾乎不存在「內卷」。這背後不是奇蹟，而是<strong>低痛苦、高流暢的系統設計</strong>。</p>
+      <p class="body-p">對比場景：上海高中生每日學習 14 小時，Pd ≥ 50 小時/週。赫爾辛基高中生每日 5–6 小時，無大學入學考試，Pd ≤ 15 小時/週，Cf 極低。同樣的 PISA 排名壓力，截然不同的公民體驗。</p>`,
+      principles_title:'GL 處方',
+      principles:[
+        {n:'處方 1',t:'取消高風險一次性考試',b:'以校內評量＋興趣面試取代全國入學考試。目標：將 Pd 從每週 50 小時以上降至 15 小時以下。'},
+        {n:'處方 2',t:'教師專業化與社會賦能',b:'要求最低碩士學歷，薪資提升至前五大職業水準。結果：Fs 提升，教師素質在所有學校趨於均衡。'},
+        {n:'處方 3',t:'職業教育與學術教育平等化',b:'消除大學與職業教育之間的地位階層。暢通的轉換路徑降低 Cf——學生不需要把整個未來押注在一場考試上。'}
+      ],
+      compare_title:'比較數據',
+      compare_headers:['系統','GL','Pd（小時/週）','Cf','教師信任度'],
+      compare_rows:[
+        {hl:true, cells:['芬蘭','3.13','1.8','1.5','高度自主']},
+        {cells:['德國','1.24','8.4','3.2','中等']},
+        {cells:['南韓','1.68','11.6','3.9','考試導向']},
+        {cells:['美國','0.91','14.2','4.8','低自主']},
+        {cells:['上海','0.34','50+','7.2','照本宣科']}
+      ]
+    },
+    cn:{
+      title:'芬兰教育制度',
+      sub:'信任型治理 · 教育',
+      tags:['教育','教师自主','低摩擦','PISA顶尖'],
+      verdict_label:'GL 诊断结论',
+      verdict:'芬兰证明：高绩效不来自高压力，来自高信任。系统摩擦越少，流动越好。',
+      phenomenon_title:'现象',
+      phenomenon:`<p class="body-p">芬兰教育系统常年位居 PISA 前列，但学生课时少、作业少、考试压力小，教师社会地位高，系统几乎不存在「内卷」。这背后不是奇迹，而是<strong>低痛苦、高流畅的系统设计</strong>。</p>
+      <p class="body-p">对比场景：上海高中生每日学习 14 小时，Pd ≥ 50 小时/周。赫尔辛基高中生每日 5–6 小时，无大学入学考试，Pd ≤ 15 小时/周，Cf 极低。同样的 PISA 排名压力，截然不同的公民体验。</p>`,
+      principles_title:'GL 处方',
+      principles:[
+        {n:'处方 1',t:'取消高风险一次性考试',b:'以校内评量＋兴趣面试取代全国入学考试。目标：将 Pd 从每周 50 小时以上降至 15 小时以下。'},
+        {n:'处方 2',t:'教师专业化与社会赋能',b:'要求最低硕士学历，薪资提升至前五大职业水准。结果：Fs 提升，教师素质在所有学校趋于均衡。'},
+        {n:'处方 3',t:'职业教育与学术教育平等化',b:'消除大学与职业教育之间的地位阶层。畅通的转换路径降低 Cf——学生不需要把整个未来押注在一场考试上。'}
+      ],
+      compare_title:'比较数据',
+      compare_headers:['系统','GL','Pd（小时/周）','Cf','教师信任度'],
+      compare_rows:[
+        {hl:true, cells:['芬兰','3.13','1.8','1.5','高度自主']},
+        {cells:['德国','1.24','8.4','3.2','中等']},
+        {cells:['韩国','1.68','11.6','3.9','考试导向']},
+        {cells:['美国','0.91','14.2','4.8','低自主']},
+        {cells:['上海','0.34','50+','7.2','照本宣科']}
+      ]
+    }
+  },
+  brazil: {
+    flag:'🇧🇷', gl:'2.64', fs:'0.72', vn:'9.3', pd:'3.3', cf:'1.8', order:2,
+    en:{
+      title:'Brazil Bolsa Família',
+      sub:'Scale Elegance & Digital Exclusion · Social Protection',
+      tags:['Cash Transfer','50M People','Urban-Rural Divide','Elegant Scale'],
+      verdict_label:'GL Verdict',
+      verdict:'Brazil demonstrates that even middle-income countries can achieve world-class social protection — but only if the system is designed around the hardest-to-reach, not the easiest.',
+      phenomenon_title:'The Phenomenon',
+      phenomenon:`<p class="body-p">Bolsa Família reaches <strong>50 million people</strong> with administrative costs of just 2.6% of transfers. But national GL = 0.72 hides a stark divide: urban digital users achieve Fs = 0.88 with Pd = 0.25 hrs, while Amazon indigenous communities face Fs = 0.38 with Pd = 45 hrs.</p>
+      <p class="body-p">São Paulo suburb mother: 15-minute mobile app update, automatic deposit. Amazon indigenous mother: 3-hour boat trip, rejected multiple times for missing documents, 6-month wait. Same program, radically different GL.</p>`,
+      principles_title:'GL Prescriptions',
+      principles:[
+        {n:'Rx 1',t:'"Human Last Mile" Network',b:'Deploy community agents to digitally excluded areas. Target: raise rural Fs from 0.42 to 0.70 within 3 years. The administrative burden shifts from citizens to trained agents.'},
+        {n:'Rx 2',t:'Progressive Digitization Pathway',b:'Year 1: app + full office service. Year 2: add USSD/voice channels. Year 3: add biometric. Never remove analog options — they protect the most vulnerable.'},
+        {n:'Rx 3',t:'Friction Budget Mechanism',b:'Any new policy requirement must be offset by removing an existing one. Total citizen Pd cannot exceed a defined annual budget per beneficiary.'}
+      ],
+      compare_title:'GL by Population Segment',
+      compare_headers:['Segment','Fs','Pd (hrs/yr)','Cf','GL'],
+      compare_rows:[
+        {cells:['Urban digital users','0.88','0.25','1.8','~22']},
+        {hl:true, cells:['National average','0.72','3.3','1.8','2.64']},
+        {cells:['Rural digital','0.65','8.0','2.8','~0.83']},
+        {cells:['Rural non-digital','0.42','20.0','4.2','~0.24']},
+        {cells:['Indigenous communities','0.38','45.0','4.5','~0.12']}
+      ]
+    },
+    tw:{
+      title:'巴西家庭補助金',
+      sub:'優雅規模化與數位排斥 · 社會保護',
+      tags:['現金轉移','5000萬人','城鄉差距','優雅規模'],
+      verdict_label:'GL 診斷結論',
+      verdict:'巴西證明中等收入國家也能達到世界級社會保護治理——但前提是系統必須圍繞最難觸及的人設計，而非最容易的人。',
+      phenomenon_title:'現象',
+      phenomenon:`<p class="body-p">Bolsa Família 覆蓋 <strong>5,000 萬人</strong>，行政成本僅佔轉移額的 2.6%。但全國 GL = 0.72 隱藏了一個驚人的城鄉差距：城市數位用戶 Fs = 0.88，Pd = 0.25 小時；亞馬遜原住民社區 Fs = 0.38，Pd = 45 小時。</p>
+      <p class="body-p">聖保羅郊區媽媽：15 分鐘手機更新，自動存款。亞馬遜原住民媽媽：3 小時船程，因缺乏文件多次被拒，提交後等待 6 個月。同一個計畫，截然不同的 GL。</p>`,
+      principles_title:'GL 處方',
+      principles:[
+        {n:'處方 1',t:'「人類最後一英里」網絡',b:'在數位排斥地區部署社區代理人。目標：3 年內將農村 Fs 從 0.42 提升至 0.70。行政負擔從公民轉移到受過培訓的代理人。'},
+        {n:'處方 2',t:'漸進式數字化路徑',b:'第 1 年：應用程式＋完整辦公室服務。第 2 年：新增 USSD/語音管道。第 3 年：新增生物辨識。永遠不要移除類比選項——它們保護最脆弱的人。'},
+        {n:'處方 3',t:'摩擦預算機制',b:'任何新的政策要求必須通過移除現有要求來抵消。每位受益人每年的公民 Pd 總計不得超過預定預算。'}
+      ],
+      compare_title:'各人口族群 GL 比較',
+      compare_headers:['族群','Fs','Pd（小時/年）','Cf','GL'],
+      compare_rows:[
+        {cells:['城市數位用戶','0.88','0.25','1.8','~22']},
+        {hl:true, cells:['全國平均','0.72','3.3','1.8','2.64']},
+        {cells:['農村數位用戶','0.65','8.0','2.8','~0.83']},
+        {cells:['農村非數位用戶','0.42','20.0','4.2','~0.24']},
+        {cells:['原住民社區','0.38','45.0','4.5','~0.12']}
+      ]
+    },
+    cn:{
+      title:'巴西家庭补助金',
+      sub:'优雅规模化与数字排斥 · 社会保护',
+      tags:['现金转移','5000万人','城乡差距','优雅规模'],
+      verdict_label:'GL 诊断结论',
+      verdict:'巴西证明中等收入国家也能达到世界级社会保护治理——但前提是系统必须围绕最难触及的人设计，而非最容易的人。',
+      phenomenon_title:'现象',
+      phenomenon:`<p class="body-p">Bolsa Família 覆盖 <strong>5,000 万人</strong>，行政成本仅占转移额的 2.6%。但全国 GL = 0.72 隐藏了一个惊人的城乡差距：城市数字用户 Fs = 0.88，Pd = 0.25 小时；亚马逊原住民社区 Fs = 0.38，Pd = 45 小时。</p>
+      <p class="body-p">圣保罗郊区妈妈：15 分钟手机更新，自动存款。亚马逊原住民妈妈：3 小时船程，因缺乏文件多次被拒，提交后等待 6 个月。同一个计划，截然不同的 GL。</p>`,
+      principles_title:'GL 处方',
+      principles:[
+        {n:'处方 1',t:'「人类最后一英里」网络',b:'在数字排斥地区部署社区代理人。目标：3 年内将农村 Fs 从 0.42 提升至 0.70。行政负担从公民转移到受过培训的代理人。'},
+        {n:'处方 2',t:'渐进式数字化路径',b:'第 1 年：应用程序＋完整办公室服务。第 2 年：新增 USSD/语音渠道。第 3 年：新增生物识别。永远不要移除模拟选项——它们保护最脆弱的人。'},
+        {n:'处方 3',t:'摩擦预算机制',b:'任何新的政策要求必须通过移除现有要求来抵消。每位受益人每年的公民 Pd 总计不得超过预定预算。'}
+      ],
+      compare_title:'各人口群体 GL 比较',
+      compare_headers:['群体','Fs','Pd（小时/年）','Cf','GL'],
+      compare_rows:[
+        {cells:['城市数字用户','0.88','0.25','1.8','~22']},
+        {hl:true, cells:['全国平均','0.72','3.3','1.8','2.64']},
+        {cells:['农村数字用户','0.65','8.0','2.8','~0.83']},
+        {cells:['农村非数字用户','0.42','20.0','4.2','~0.24']},
+        {cells:['原住民社区','0.38','45.0','4.5','~0.12']}
+      ]
+    }
+  },
+  estonia: {
+    flag:'🇪🇪', gl:'4.20', fs:'0.97', vn:'8.8', pd:'0.3', cf:'1.5', order:3,
+    en:{
+      title:'Estonia Digital Governance',
+      sub:'Fragile Peak · Digital Services',
+      tags:['Digital ID','e-Government','Single Point of Failure','1.3M Population'],
+      verdict_label:'GL Verdict',
+      verdict:'Estonia is both an inspiration and a warning. Peak GL does not equal resilience. A purely digital system returns to zero in a crisis.',
+      phenomenon_title:'The Phenomenon',
+      phenomenon:`<p class="body-p">99% of public services are available online. A citizen moves city: update address in <strong>3 minutes online</strong>, no forms, no queues. Start a business: <strong>18 minutes</strong>, automatic tax and social security registration. Vote: <strong>2 minutes</strong> from any internet connection worldwide.</p>
+      <p class="body-p">Yet this digital utopia rests on a single point of failure: the national digital identity system. In 2007, a cyberattack paralyzed the country for days. When digital fails in Estonia, <strong>everything</strong> fails simultaneously.</p>`,
+      principles_title:'GL Prescriptions',
+      principles:[
+        {n:'Rx 1',t:'"Analog Last Resort" Channels',b:'Maintain documented paper procedures for top-20 transactions. Quarterly staff training on manual verification. Target: reduce Systemic Risk Factor from 1.8 to 1.2, preserving 85% of services during outages.'},
+        {n:'Rx 2',t:'Digital Literacy as Public Infrastructure',b:'Fund digital literacy for elderly and immigrants as aggressively as physical infrastructure. Target: reduce elderly Cf from 3.2 to 2.0. Inclusion is a resilience strategy.'},
+        {n:'Rx 3',t:'Decentralized Digital Identity',b:'Distribute identity verification across multiple systems. No single database should control all verification. A cyberattack should compromise one system, not all governance simultaneously.'}
+      ],
+      compare_title:'Estonia vs Korea: Normal vs Crisis GL',
+      compare_headers:['Scenario','Estonia GL','Korea GL','Difference'],
+      compare_rows:[
+        {cells:['Normal operations','4.20','4.12','Near equal']},
+        {cells:['Minor outage (4hr)','2.84','3.68','Korea 1.3× higher']},
+        {cells:['Major outage (72hr)','0.0098','1.85','Korea 189× higher']},
+        {cells:['National crisis (2wk)','0.0012','0.94','Korea 783× higher']}
+      ]
+    },
+    tw:{
+      title:'愛沙尼亞數位治理',
+      sub:'脆弱高峰 · 數位服務',
+      tags:['數位身分','電子政府','單點故障','130萬人口'],
+      verdict_label:'GL 診斷結論',
+      verdict:'愛沙尼亞既是啟示，也是警告。峰值 GL 不等於韌性。純數位系統在危機時歸零。',
+      phenomenon_title:'現象',
+      phenomenon:`<p class="body-p">99% 的公共服務在線上提供。公民搬家：<strong>3 分鐘線上</strong>更新地址，無表格，無排隊。創業：<strong>18 分鐘</strong>，自動稅務和社保登記。投票：全球任何網路連接 <strong>2 分鐘</strong>完成。</p>
+      <p class="body-p">然而這個數位烏托邦依賴於一個單點故障：國家數位身分系統。2007 年網路攻擊癱瘓了整個國家數日。愛沙尼亞的數位系統一旦失效，<strong>一切</strong>同時失效。</p>`,
+      principles_title:'GL 處方',
+      principles:[
+        {n:'處方 1',t:'「類比最後手段」管道',b:'為前 20 大交易維護記錄在案的紙本程序。每季工作人員手動驗證培訓。目標：將系統性風險因子從 1.8 降至 1.2，在中斷期間保留 85% 的服務。'},
+        {n:'處方 2',t:'數位素養作為公共基礎設施',b:'對老年人和移民的數位素養投資應與實體基礎設施同等積極。目標：將老年人 Cf 從 3.2 降至 2.0。包容性是一種韌性策略。'},
+        {n:'處方 3',t:'去中心化數位身分',b:'將身分驗證分散到多個系統中。沒有單一資料庫應控制所有驗證。網路攻擊應該只攻破一個系統，而不是同時癱瘓所有治理。'}
+      ],
+      compare_title:'愛沙尼亞 vs 南韓：正常與危機 GL',
+      compare_headers:['情境','愛沙尼亞 GL','南韓 GL','差異'],
+      compare_rows:[
+        {cells:['正常運作','4.20','4.12','近乎相等']},
+        {cells:['輕微中斷（4小時）','2.84','3.68','南韓高 1.3 倍']},
+        {cells:['重大中斷（72小時）','0.0098','1.85','南韓高 189 倍']},
+        {cells:['國家危機（2週）','0.0012','0.94','南韓高 783 倍']}
+      ]
+    },
+    cn:{
+      title:'爱沙尼亚数字治理',
+      sub:'脆弱高峰 · 数字服务',
+      tags:['数字身份','电子政府','单点故障','130万人口'],
+      verdict_label:'GL 诊断结论',
+      verdict:'爱沙尼亚既是启示，也是警告。峰值 GL 不等于韧性。纯数字系统在危机时归零。',
+      phenomenon_title:'现象',
+      phenomenon:`<p class="body-p">99% 的公共服务在线上提供。公民搬家：<strong>3 分钟线上</strong>更新地址，无表格，无排队。创业：<strong>18 分钟</strong>，自动税务和社保登记。投票：全球任何网络连接 <strong>2 分钟</strong>完成。</p>
+      <p class="body-p">然而这个数字乌托邦依赖于一个单点故障：国家数字身份系统。2007 年网络攻击瘫痪了整个国家数日。爱沙尼亚的数字系统一旦失效，<strong>一切</strong>同时失效。</p>`,
+      principles_title:'GL 处方',
+      principles:[
+        {n:'处方 1',t:'「模拟最后手段」渠道',b:'为前 20 大交易维护记录在案的纸本程序。每季工作人员手动验证培训。目标：将系统性风险因子从 1.8 降至 1.2，在中断期间保留 85% 的服务。'},
+        {n:'处方 2',t:'数字素养作为公共基础设施',b:'对老年人和移民的数字素养投资应与实体基础设施同等积极。目标：将老年人 Cf 从 3.2 降至 2.0。包容性是一种韧性策略。'},
+        {n:'处方 3',t:'去中心化数字身份',b:'将身份验证分散到多个系统中。没有单一数据库应控制所有验证。网络攻击应该只攻破一个系统，而不是同时瘫痪所有治理。'}
+      ],
+      compare_title:'爱沙尼亚 vs 韩国：正常与危机 GL',
+      compare_headers:['情境','爱沙尼亚 GL','韩国 GL','差异'],
+      compare_rows:[
+        {cells:['正常运作','4.20','4.12','近乎相等']},
+        {cells:['轻微中断（4小时）','2.84','3.68','韩国高 1.3 倍']},
+        {cells:['重大中断（72小时）','0.0098','1.85','韩国高 189 倍']},
+        {cells:['国家危机（2周）','0.0012','0.94','韩国高 783 倍']}
+      ]
+    }
+  },
+  germany: {
+    flag:'🇩🇪', gl:'0.056', fs:'0.68', vn:'9.5', pd:'28', cf:'4.1', order:4,
+    en:{
+      title:'Germany Energy Transition (Energiewende)',
+      sub:'Complexity Kills Transition · Climate Policy',
+      tags:['Energy','Climate','148-Page Manual','83% GL Decline'],
+      verdict_label:'GL Verdict',
+      verdict:'Germany wants to save the planet, but administrative friction is slowing the transition. Good goals are being drowned by poor execution — exactly what GL is designed to measure.',
+      phenomenon_title:'The Phenomenon',
+      phenomenon:`<p class="body-p">A Bavarian farmer wanting rooftop solar faces <strong>23 regulations from 7 agencies</strong>. The application manual alone is 148 pages. Pd = 35 hours. A North Sea community planning offshore wind must navigate 11 environmental assessments, 8 stakeholder consultations, 4 layers of government approval — average approval time: <strong>5.2 years</strong>.</p>
+      <p class="body-p">The paradox: Germany leads Europe in renewable investment but trails in deployment speed. Onshore wind: only 43% of planned turbines receive permits. Solar: 30% of applicants abandon mid-process. The technology is ready. The governance is not.</p>`,
+      principles_title:'GL Prescriptions',
+      principles:[
+        {n:'Rx 1',t:'"One-Stop Digital Permitting" with AI',b:'Single online portal across all 7 agencies. AI pre-screens applications and flags missing documents before submission. Target: reduce Pd from 28 hrs to 10 hrs, Cf from 4.1 to 2.8.'},
+        {n:'Rx 2',t:'"Complexity Budget" for New Regulations',b:'Every new climate regulation must identify which existing regulation it replaces. Total regulatory complexity cannot increase year-on-year. Apply GL scoring to proposed regulations before enactment.'},
+        {n:'Rx 3',t:'"Community Energy Accelerators"',b:'Designated fast-track zones where communities can install renewable energy under streamlined rules. Demonstrates what low-Cf permitting looks like — then scale the model nationally.'}
+      ],
+      compare_title:'Renewable Permit Burden by Country',
+      compare_headers:['Country','Permit Time','Citizen Hours','GL Score'],
+      compare_rows:[
+        {cells:['Denmark','3 months','4 hrs','2.18']},
+        {cells:['Netherlands','6 months','9 hrs','1.34']},
+        {hl:true, cells:['Germany','9 months','28 hrs','0.056']},
+        {cells:['USA (avg)','12 months','18 hrs','0.89']},
+        {cells:['China','2 months','2 hrs','3.12']}
+      ]
+    },
+    tw:{
+      title:'德國能源轉型（Energiewende）',
+      sub:'複雜性扼殺轉型 · 氣候政策',
+      tags:['能源','氣候','148頁申請手冊','GL跌幅83%'],
+      verdict_label:'GL 診斷結論',
+      verdict:'德國想拯救地球，但行政摩擦正在拖慢轉型速度。好目標被壞執行淹沒——這正是 GL 要測量的。',
+      phenomenon_title:'現象',
+      phenomenon:`<p class="body-p">巴伐利亞農民想安裝屋頂太陽能：面臨來自 7 個機構的 <strong>23 項不同法規</strong>，僅申請手冊就有 148 頁，Pd = 35 小時。北海社區規劃海上風電場：需要 11 項環境評估、8 次利益相關者諮詢、4 層政府批准，平均批准時間：<strong>5.2 年</strong>。</p>
+      <p class="body-p">悖論：德國在可再生能源投資方面領先歐洲，但在部署速度上落後。陸上風電：僅 43% 的計畫渦輪機獲得許可。太陽能：30% 的申請者在過程中放棄。技術已準備好，治理還沒有。</p>`,
+      principles_title:'GL 處方',
+      principles:[
+        {n:'處方 1',t:'具有 AI 輔助的「一站式數位許可」',b:'跨所有 7 個機構的單一線上門戶。AI 在提交前預審申請並標記缺失文件。目標：將 Pd 從 28 小時降至 10 小時，Cf 從 4.1 降至 2.8。'},
+        {n:'處方 2',t:'新法規的「複雜性預算」',b:'每項新氣候法規必須指明它取代哪項現有法規。法規總複雜性不能逐年增加。在頒布前對擬議法規進行 GL 評分。'},
+        {n:'處方 3',t:'「社區能源加速器」',b:'指定快速通道區域，社區可以在簡化規則下安裝再生能源。展示低 Cf 許可的樣子——然後在全國推廣這個模式。'}
+      ],
+      compare_title:'各國再生能源許可負擔',
+      compare_headers:['國家','許可時間','公民耗時','GL 分數'],
+      compare_rows:[
+        {cells:['丹麥','3個月','4小時','2.18']},
+        {cells:['荷蘭','6個月','9小時','1.34']},
+        {hl:true, cells:['德國','9個月','28小時','0.056']},
+        {cells:['美國（均）','12個月','18小時','0.89']},
+        {cells:['中國','2個月','2小時','3.12']}
+      ]
+    },
+    cn:{
+      title:'德国能源转型（Energiewende）',
+      sub:'复杂性扼杀转型 · 气候政策',
+      tags:['能源','气候','148页申请手册','GL跌幅83%'],
+      verdict_label:'GL 诊断结论',
+      verdict:'德国想拯救地球，但行政摩擦正在拖慢转型速度。好目标被坏执行淹没——这正是 GL 要测量的。',
+      phenomenon_title:'现象',
+      phenomenon:`<p class="body-p">巴伐利亚农民想安装屋顶太阳能：面临来自 7 个机构的 <strong>23 项不同法规</strong>，仅申请手册就有 148 页，Pd = 35 小时。北海社区规划海上风电场：需要 11 项环境评估、8 次利益相关者咨询、4 层政府批准，平均批准时间：<strong>5.2 年</strong>。</p>
+      <p class="body-p">悖论：德国在可再生能源投资方面领先欧洲，但在部署速度上落后。陆上风电：仅 43% 的计划涡轮机获得许可。太阳能：30% 的申请者在过程中放弃。技术已准备好，治理还没有。</p>`,
+      principles_title:'GL 处方',
+      principles:[
+        {n:'处方 1',t:'具有 AI 辅助的「一站式数字许可」',b:'跨所有 7 个机构的单一线上门户。AI 在提交前预审申请并标记缺失文件。目标：将 Pd 从 28 小时降至 10 小时，Cf 从 4.1 降至 2.8。'},
+        {n:'处方 2',t:'新法规的「复杂性预算」',b:'每项新气候法规必须指明它取代哪项现有法规。法规总复杂性不能逐年增加。在颁布前对拟议法规进行 GL 评分。'},
+        {n:'处方 3',t:'「社区能源加速器」',b:'指定快速通道区域，社区可以在简化规则下安装可再生能源。展示低 Cf 许可的样子——然后在全国推广这个模式。'}
+      ],
+      compare_title:'各国可再生能源许可负担',
+      compare_headers:['国家','许可时间','公民耗时','GL 分数'],
+      compare_rows:[
+        {cells:['丹麦','3个月','4小时','2.18']},
+        {cells:['荷兰','6个月','9小时','1.34']},
+        {hl:true, cells:['德国','9个月','28小时','0.056']},
+        {cells:['美国（均）','12个月','18小时','0.89']},
+        {cells:['中国','2个月','2小时','3.12']}
+      ]
+    }
+  },
+  singapore: {
+    flag:'🇸🇬', gl:'0.020', fs:'0.88', vn:'9.8', pd:'120', cf:'3.8', order:5,
+    en:{
+      title:'Singapore Public Housing (HDB)',
+      sub:'The Success Trap · Public Housing',
+      tags:['Housing','Three-Generation Decline','120hr Burden','96% GL Drop'],
+      verdict_label:'GL Verdict',
+      verdict:'Singapore HDB is the textbook success trap. No single decision was wrong. But 38 years of accumulation turned a working system into a maze — and GL tracks every step of the decline.',
+      phenomenon_title:'The Phenomenon',
+      phenomenon:`<p class="body-p">1980s buyer: factory worker buys 3-room flat for S$15,000 (3× annual income). Process: 3 forms, 2 months wait. Pd = 8 hrs, Cf = 1.2. GL = 0.486.</p>
+      <p class="body-p">2020s buyer: young graduate buys similar flat for S$300,000 (8× annual income). Process: <strong>18 eligibility criteria, income ceilings, ethnic quotas, multiple subsidy schemes</strong>. Pd = 80–120 hrs, Cf = 3.8. GL = 0.020. The system that created housing equity within one generation now risks creating inequality between generations.</p>`,
+      principles_title:'GL Prescriptions',
+      principles:[
+        {n:'Rx 1',t:'"Housing Digital Twin" with Lifetime Planning',b:'Single platform showing each citizen\'s entire housing journey — current eligibility, projected future options, subsidy calculator. Reduces Cf by making complexity navigable rather than eliminating it.'},
+        {n:'Rx 2',t:'"Unified Housing Credit" System',b:'Replace 23 separate subsidy schemes with a single Housing Credit that citizens accumulate over a lifetime. One number replaces a labyrinth. Target: reduce Cf from 3.8 to 2.0.'},
+        {n:'Rx 3',t:'"Intergenerational Wealth Transfer Mechanism"',b:'Allow elderly owners to transfer housing value to adult children\'s HDB purchases. Reduces the wealth gap between generations without adding new eligibility criteria.'}
+      ],
+      compare_title:'GL Decline Over Three Generations',
+      compare_headers:['Year','GL','Pd (hrs)','Cf','Key Change'],
+      compare_rows:[
+        {cells:['1985','0.486','12','1.5','Original design — citizen, first-time buyer']},
+        {cells:['2000','0.155','25','2.2','Income ceilings + ethnic quotas added']},
+        {cells:['2010','0.067','60','3.1','Multiple scheme layering']},
+        {hl:true, cells:['2023','0.020','120','3.8','18 eligibility criteria, 23 subsidy schemes']}
+      ]
+    },
+    tw:{
+      title:'新加坡公共住房（組屋）',
+      sub:'成功陷阱 · 公共住房',
+      tags:['住房','三代衰退','120小時負擔','GL跌幅96%'],
+      verdict_label:'GL 診斷結論',
+      verdict:'新加坡組屋是教科書級的成功陷阱。沒有一個決策是錯的，但 38 年的疊加讓整個系統變成了迷宮——GL 記錄了每一步的衰退。',
+      phenomenon_title:'現象',
+      phenomenon:`<p class="body-p">1980 年代買家：工廠工人以 1.5 萬新元（3 倍年收入）購買三房式組屋。流程：3 份表格，等待 2 個月。Pd = 8 小時，Cf = 1.2。GL = 0.486。</p>
+      <p class="body-p">2020 年代買家：年輕畢業生以 30 萬新元（8 倍年收入）購買類似組屋。流程：<strong>18 項資格標準、收入上限、種族配額、多重補貼方案</strong>。Pd = 80–120 小時，Cf = 3.8。GL = 0.020。在一個代際內創造住房公平的系統，現在可能在不同代際間製造不平等。</p>`,
+      principles_title:'GL 處方',
+      principles:[
+        {n:'處方 1',t:'具有終身規劃的「住房數位孿生」',b:'顯示每位公民整個住房歷程的單一平台——當前資格、預計未來選項、補貼計算器。通過使複雜性可導航而不是消除它來降低 Cf。'},
+        {n:'處方 2',t:'「統一住房信用」系統',b:'用公民終身積累的單一住房信用取代 23 種獨立補貼方案。一個數字取代迷宮。目標：將 Cf 從 3.8 降至 2.0。'},
+        {n:'處方 3',t:'「代際財富轉移機制」',b:'允許老年屋主將住房價值轉移到成年子女的組屋購置。在不增加新資格標準的情況下縮小代際財富差距。'}
+      ],
+      compare_title:'三代 GL 衰退',
+      compare_headers:['年份','GL','Pd（小時）','Cf','關鍵變化'],
+      compare_rows:[
+        {cells:['1985','0.486','12','1.5','原始設計——公民，首次購房者']},
+        {cells:['2000','0.155','25','2.2','引入收入上限＋種族配額']},
+        {cells:['2010','0.067','60','3.1','多重方案疊加']},
+        {hl:true, cells:['2023','0.020','120','3.8','18 項資格標準，23 種補貼方案']}
+      ]
+    },
+    cn:{
+      title:'新加坡公共住房（组屋）',
+      sub:'成功陷阱 · 公共住房',
+      tags:['住房','三代衰退','120小时负担','GL跌幅96%'],
+      verdict_label:'GL 诊断结论',
+      verdict:'新加坡组屋是教科书级的成功陷阱。没有一个决策是错的，但 38 年的叠加让整个系统变成了迷宫——GL 记录了每一步的衰退。',
+      phenomenon_title:'现象',
+      phenomenon:`<p class="body-p">1980 年代买家：工厂工人以 1.5 万新元（3 倍年收入）购买三房式组屋。流程：3 份表格，等待 2 个月。Pd = 8 小时，Cf = 1.2。GL = 0.486。</p>
+      <p class="body-p">2020 年代买家：年轻毕业生以 30 万新元（8 倍年收入）购买类似组屋。流程：<strong>18 项资格标准、收入上限、种族配额、多重补贴方案</strong>。Pd = 80–120 小时，Cf = 3.8。GL = 0.020。在一个代际内创造住房公平的系统，现在可能在不同代际间制造不平等。</p>`,
+      principles_title:'GL 处方',
+      principles:[
+        {n:'处方 1',t:'具有终身规划的「住房数字孪生」',b:'显示每位公民整个住房历程的单一平台——当前资格、预计未来选项、补贴计算器。通过使复杂性可导航而不是消除它来降低 Cf。'},
+        {n:'处方 2',t:'「统一住房信用」系统',b:'用公民终身积累的单一住房信用取代 23 种独立补贴方案。一个数字取代迷宫。目标：将 Cf 从 3.8 降至 2.0。'},
+        {n:'处方 3',t:'「代际财富转移机制」',b:'允许老年屋主将住房价值转移到成年子女的组屋购置。在不增加新资格标准的情况下缩小代际财富差距。'}
+      ],
+      compare_title:'三代 GL 衰退',
+      compare_headers:['年份','GL','Pd（小时）','Cf','关键变化'],
+      compare_rows:[
+        {cells:['1985','0.486','12','1.5','原始设计——公民，首次购房者']},
+        {cells:['2000','0.155','25','2.2','引入收入上限＋种族配额']},
+        {cells:['2010','0.067','60','3.1','多重方案叠加']},
+        {hl:true, cells:['2023','0.020','120','3.8','18 项资格标准，23 种补贴方案']}
+      ]
+    }
+  },
+  korea: {
+    flag:'🇰🇷', gl:'4.12', fs:'0.96', vn:'9.3', pd:'0.05', cf:'1.3', order:6,
+    en:{
+      title:'South Korea Digital Government 24',
+      sub:'Digital Perfection & Analog Vulnerability · Digital Governance',
+      tags:['Digital Gov','5,800 Services','Dual-Track GL','Elderly Exclusion'],
+      verdict_label:'GL Verdict',
+      verdict:'South Korea demonstrates digital governance at its finest — and its most dangerous. The more perfect the digital system, the more catastrophic its failures and the more excluded its analog citizens.',
+      phenomenon_title:'The Phenomenon',
+      phenomenon:`<p class="body-p">Digital Government 24 enables 5,800 government services through a single digital identity. Seoul resident renews driver's license: <strong>2 minutes on smartphone</strong>, Pd = 0.03 hrs. Busan business registers: <strong>15 minutes</strong> vs 5 days previously. National health claims: 98% automated, average <strong>12-second</strong> processing.</p>
+      <p class="body-p">But the Gangwon Province rural elderly: no smartphone, visits 4 agencies over 2 days for pension application, Pd = 16 hrs, Cf = 4.8. The 2022 National ID outage: 4 hours left <strong>23 million people</strong> unable to access any digital services. Digital GL = 140.2. Analog GL = 0.164. National average: 4.12.</p>`,
+      principles_title:'GL Prescriptions',
+      principles:[
+        {n:'Rx 1',t:'"Mandatory Analog Minimum" Legislation',b:'Require every digital service to maintain documented analog procedures. Staff trained quarterly. Physical ID legally valid everywhere. No digital-only services. Costs 0.4% of peak efficiency but preserves 85% of services during outages.'},
+        {n:'Rx 2',t:'"Progressive Digitalization" with Staged Mandates',b:'Never mandate digital-only before achieving 95%+ digital literacy in a population segment. The 18% of over-70s who have never used digital services represent GL = 0 for a significant population.'},
+        {n:'Rx 3',t:'"Distributed Digital Identity" Architecture',b:'Distribute verification across 100+ systems. A cyberattack should need to compromise all simultaneously to disable national identity — not just one central database.'}
+      ],
+      compare_title:'Dual-Track GL Reality',
+      compare_headers:['User Segment','Fs','Pd (hrs)','Cf','GL'],
+      compare_rows:[
+        {cells:['Digital users (urban, under-60)','0.98','0.05','1.3','140.2']},
+        {hl:true, cells:['National weighted average','0.96','0.05','1.3','4.12']},
+        {cells:['Analog users (rural, over-70)','0.65','8.0','4.2','0.164']},
+        {cells:['During 2022 outage (all users)','0.10','—','—','~0.01']}
+      ]
+    },
+    tw:{
+      title:'南韓數位政府 24',
+      sub:'數位完美與類比脆弱性 · 數位治理',
+      tags:['數位政府','5800項服務','雙軌GL','老年排斥'],
+      verdict_label:'GL 診斷結論',
+      verdict:'南韓展示了數位治理的最高境界——也是最危險的境界。數位系統越完美，其故障越災難性，被排除的類比公民越邊緣化。',
+      phenomenon_title:'現象',
+      phenomenon:`<p class="body-p">數位政府 24 透過單一數位身分提供 5,800 項政府服務。首爾居民更新駕照：<strong>智慧型手機 2 分鐘</strong>，Pd = 0.03 小時。釜山企業登記：<strong>15 分鐘</strong>，對比之前的 5 天。國民健康保險理賠：98% 自動化，平均 <strong>12 秒</strong>處理。</p>
+      <p class="body-p">但江原道農村老年人：沒有智慧型手機，為養老金申請走訪 4 個機構 2 天，Pd = 16 小時，Cf = 4.8。2022 年國民身分系統中斷：4 小時故障導致 <strong>2,300 萬人</strong>無法訪問任何數位服務。數位 GL = 140.2，類比 GL = 0.164，全國平均：4.12。</p>`,
+      principles_title:'GL 處方',
+      principles:[
+        {n:'處方 1',t:'「強制性類比最低標準」立法',b:'要求每項數位服務維護記錄在案的類比程序。每季工作人員培訓。實體身分證在所有場合合法有效。沒有純數位服務。這犧牲了 0.4% 的峰值效率，但在停機期間保留 85% 的服務。'},
+        {n:'處方 2',t:'具有分階段授權的「漸進式數字化」',b:'在某人口族群達到 95% 以上的數位素養之前，絕不要求純數位。18% 從未使用過數位服務的 70 歲以上老人，代表著一個重要人口群體的 GL = 0。'},
+        {n:'處方 3',t:'「分散式數位身分」架構',b:'將驗證分散到 100 多個系統中。網路攻擊應需要同時攻破所有系統才能癱瘓國家身分——而不只是一個中央資料庫。'}
+      ],
+      compare_title:'雙軌 GL 現實',
+      compare_headers:['用戶族群','Fs','Pd（小時）','Cf','GL'],
+      compare_rows:[
+        {cells:['數位用戶（城市，60歲以下）','0.98','0.05','1.3','140.2']},
+        {hl:true, cells:['全國加權平均','0.96','0.05','1.3','4.12']},
+        {cells:['類比用戶（農村，70歲以上）','0.65','8.0','4.2','0.164']},
+        {cells:['2022年中斷期間（所有用戶）','0.10','—','—','~0.01']}
+      ]
+    },
+    cn:{
+      title:'韩国数字政府 24',
+      sub:'数字完美与模拟脆弱性 · 数字治理',
+      tags:['数字政府','5800项服务','双轨GL','老年排斥'],
+      verdict_label:'GL 诊断结论',
+      verdict:'韩国展示了数字治理的最高境界——也是最危险的境界。数字系统越完美，其故障越灾难性，被排除的模拟公民越边缘化。',
+      phenomenon_title:'现象',
+      phenomenon:`<p class="body-p">数字政府 24 通过单一数字身份提供 5,800 项政府服务。首尔居民更新驾照：<strong>智能手机 2 分钟</strong>，Pd = 0.03 小时。釜山企业登记：<strong>15 分钟</strong>，对比之前的 5 天。国民健康保险理赔：98% 自动化，平均 <strong>12 秒</strong>处理。</p>
+      <p class="body-p">但江原道农村老年人：没有智能手机，为养老金申请走访 4 个机构 2 天，Pd = 16 小时，Cf = 4.2。2022 年国民身份系统中断：4 小时故障导致 <strong>2,300 万人</strong>无法访问任何数字服务。数字 GL = 140.2，模拟 GL = 0.164，全国平均：4.12。</p>`,
+      principles_title:'GL 处方',
+      principles:[
+        {n:'处方 1',t:'「强制性模拟最低标准」立法',b:'要求每项数字服务维护记录在案的模拟程序。每季工作人员培训。实体身份证在所有场合合法有效。没有纯数字服务。这牺牲了 0.4% 的峰值效率，但在停机期间保留 85% 的服务。'},
+        {n:'处方 2',t:'具有分阶段授权的「渐进式数字化」',b:'在某人口群体达到 95% 以上的数字素养之前，绝不要求纯数字。18% 从未使用过数字服务的 70 岁以上老人，代表着一个重要人口群体的 GL = 0。'},
+        {n:'处方 3',t:'「分散式数字身份」架构',b:'将验证分散到 100 多个系统中。网络攻击应需要同时攻破所有系统才能瘫痪国家身份——而不只是一个中央数据库。'}
+      ],
+      compare_title:'双轨 GL 现实',
+      compare_headers:['用户群体','Fs','Pd（小时）','Cf','GL'],
+      compare_rows:[
+        {cells:['数字用户（城市，60岁以下）','0.98','0.05','1.3','140.2']},
+        {hl:true, cells:['全国加权平均','0.96','0.05','1.3','4.12']},
+        {cells:['模拟用户（农村，70岁以上）','0.65','8.0','4.2','0.164']},
+        {cells:['2022年中断期间（所有用户）','0.10','—','—','~0.01']}
+      ]
+    }
+  },
+  rwanda: {
+    flag:'🇷🇼', gl:'5.08', fs:'0.88', vn:'9.7', pd:'1.2', cf:'1.4', order:7,
+    en:{
+      title:'Rwanda Mutuelle de Santé',
+      sub:'Constraint-Driven Elegance · Healthcare',
+      tags:['Healthcare','$4/Year','Color Sticker System','3,000× Efficiency'],
+      verdict_label:'GL Verdict',
+      verdict:'Rwanda achieves governance efficiency that outperforms countries spending 3,000× more per capita. Extreme constraint forced elegant design. Money is not the answer — architecture is.',
+      phenomenon_title:'The Phenomenon',
+      phenomenon:`<p class="body-p">Post-genocide 1994: Rwanda's healthcare system collapsed completely. Per capita GDP: $230. Health budget: <strong>$4 per person per year</strong>. 1 doctor per 15,000 people. The solution: Mutuelle de Santé — community health insurance with annual premium of $2–3, verified by a <strong>color-coded paper booklet</strong>, enrolled door-to-door during harvest season.</p>
+      <p class="body-p">By 2015: 90% health insurance coverage. Maternal mortality reduced by 75% (2000–2015). The verification system: a colored sticker means coverage. No electricity required. No internet required. No literacy required. It works.</p>`,
+      principles_title:'Design Principles',
+      principles:[
+        {n:'01',t:'Constraints Force Elegance',b:'$4/year budget meant no room for complexity. Every design choice had to eliminate friction. The color sticker system emerged because it was the only solution that worked for 100% of the population including the illiterate.'},
+        {n:'02',t:'Community Verification Replaces Bureaucracy',b:'Neighbors confirm poverty status. Community health workers enroll door-to-door. Social trust does what administrative systems cannot — and does it at nearly zero Cf.'},
+        {n:'03',t:'Seasonal Enrollment Matches Citizen Capacity',b:'Enrollment during harvest season, when cash is available and people are at home. Aligning system timing with citizen reality reduces both Pd and dropout rates.'}
+      ],
+      compare_title:'Healthcare GL Efficiency',
+      compare_headers:['System','$/capita/yr','GL','GL per $100'],
+      compare_rows:[
+        {hl:true, cells:['Rwanda Mutuelles','$4','5.08','127.0']},
+        {cells:['Brazil Bolsa Família','$120','2.64','2.2']},
+        {cells:['UK NHS','$4,500','1.82','0.040']},
+        {cells:['Germany Health','$6,000','0.67','0.011']},
+        {cells:['USA Health','$12,000','0.41','0.003']}
+      ]
+    },
+    tw:{
+      title:'盧安達社區健康保險',
+      sub:'約束驅動的優雅 · 醫療',
+      tags:['醫療','每年4美元','顏色貼紙系統','3000倍效率'],
+      verdict_label:'GL 診斷結論',
+      verdict:'盧安達實現了超越人均花費多 3,000 倍國家的治理效率。極端限制迫出優雅設計。錢不是答案，架構才是。',
+      phenomenon_title:'現象',
+      phenomenon:`<p class="body-p">1994 年種族滅絕後：盧安達醫療系統完全崩潰。人均 GDP：230 美元。醫療預算：<strong>每人每年 4 美元</strong>。每 15,000 人僅 1 名醫生。解決方案：Mutuelle de Santé——社區健康保險，年保費 2–3 美元，以<strong>彩色紙質手冊</strong>驗證，在收穫季節挨戶登記。</p>
+      <p class="body-p">到 2015 年：90% 的醫療保險覆蓋率。孕產婦死亡率降低 75%（2000–2015）。驗證系統：一張彩色貼紙代表有保險。不需要電力，不需要網路，不需要識字。它有效。</p>`,
+      principles_title:'核心設計原則',
+      principles:[
+        {n:'01',t:'約束迫出優雅',b:'每年 4 美元的預算意味著沒有複雜化的空間。每個設計選擇都必須消除摩擦。顏色貼紙系統的出現，是因為它是唯一對 100% 人口（包括文盲）有效的解決方案。'},
+        {n:'02',t:'社區驗證取代官僚體制',b:'鄰居確認貧困狀況。社區衛生員挨戶登記。社會信任能做到行政系統做不到的事——而且幾乎以零 Cf 做到。'},
+        {n:'03',t:'季節性登記配合公民能力',b:'在收穫季節登記，此時有現金且人在家。將系統時機與公民現實對齊，同時降低 Pd 和退出率。'}
+      ],
+      compare_title:'醫療 GL 效率',
+      compare_headers:['系統','人均年費','GL','每百美元 GL'],
+      compare_rows:[
+        {hl:true, cells:['盧安達互助','$4','5.08','127.0']},
+        {cells:['巴西家庭補助','$120','2.64','2.2']},
+        {cells:['英國 NHS','$4,500','1.82','0.040']},
+        {cells:['德國醫療','$6,000','0.67','0.011']},
+        {cells:['美國醫療','$12,000','0.41','0.003']}
+      ]
+    },
+    cn:{
+      title:'卢旺达社区健康保险',
+      sub:'约束驱动的优雅 · 医疗',
+      tags:['医疗','每年4美元','颜色贴纸系统','3000倍效率'],
+      verdict_label:'GL 诊断结论',
+      verdict:'卢旺达实现了超越人均花费多 3,000 倍国家的治理效率。极端限制迫出优雅设计。钱不是答案，架构才是。',
+      phenomenon_title:'现象',
+      phenomenon:`<p class="body-p">1994 年种族灭绝后：卢旺达医疗系统完全崩溃。人均 GDP：230 美元。医疗预算：<strong>每人每年 4 美元</strong>。每 15,000 人仅 1 名医生。解决方案：Mutuelle de Santé——社区健康保险，年保费 2–3 美元，以<strong>彩色纸质手册</strong>验证，在收获季节挨户登记。</p>
+      <p class="body-p">到 2015 年：90% 的医疗保险覆盖率。孕产妇死亡率降低 75%（2000–2015）。验证系统：一张彩色贴纸代表有保险。不需要电力，不需要网络，不需要识字。它有效。</p>`,
+      principles_title:'核心设计原则',
+      principles:[
+        {n:'01',t:'约束迫出优雅',b:'每年 4 美元的预算意味着没有复杂化的空间。每个设计选择都必须消除摩擦。颜色贴纸系统的出现，是因为它是唯一对 100% 人口（包括文盲）有效的解决方案。'},
+        {n:'02',t:'社区验证取代官僚体制',b:'邻居确认贫困状况。社区卫生员挨户登记。社会信任能做到行政系统做不到的事——而且几乎以零 Cf 做到。'},
+        {n:'03',t:'季节性登记配合公民能力',b:'在收获季节登记，此时有现金且人在家。将系统时机与公民现实对齐，同时降低 Pd 和退出率。'}
+      ],
+      compare_title:'医疗 GL 效率',
+      compare_headers:['系统','人均年费','GL','每百美元 GL'],
+      compare_rows:[
+        {hl:true, cells:['卢旺达互助','$4','5.08','127.0']},
+        {cells:['巴西家庭补助','$120','2.64','2.2']},
+        {cells:['英国 NHS','$4,500','1.82','0.040']},
+        {cells:['德国医疗','$6,000','0.67','0.011']},
+        {cells:['美国医疗','$12,000','0.41','0.003']}
+      ]
+    }
+  },
+  newzealand: {
+    flag:'🇳🇿', gl:'0.32', fs:'0.45', vn:'9.2', pd:'3.2', cf:'4.1', order:8,
+    en:{
+      title:'New Zealand Wellbeing Budget',
+      sub:'Metric Madness · Social Policy',
+      tags:['Wellbeing Metrics','Operational Collapse','GL 0.32','Bhutan Contrast'],
+      verdict_label:'GL Verdict',
+      verdict:'The Wellbeing Budget is a paradox: a tool designed to improve people\'s lives, made unusable by its own complexity. Indicator design is itself a governance problem that needs GL diagnosis.',
+      phenomenon_title:'The Phenomenon',
+      phenomenon:`<p class="body-p">2019: New Zealand formally declares GDP is no longer the highest goal. The Wellbeing Budget introduces indicators across mental health, child poverty, Māori wellbeing, digital inclusion, and environmental sustainability. The concept: visionary. The execution: <strong>operational collapse beneath grand theory</strong>.</p>
+      <p class="body-p">Frontline workers now face 6.5 hours per week of indicator-mapping paperwork — instead of helping people. The system designed to measure happiness made the people running it deeply unhappy. GL = 0.32. Compare Bhutan's GNH: GL = 3.48 — developed organically over 50 years from Buddhist tradition, not OECD reports.</p>`,
+      principles_title:'GL Prescriptions',
+      principles:[
+        {n:'Rx 1',t:'"Three Questions" National Framework',b:'Replace 247 indicators with 3 annual questions every citizen can answer: Am I safer? Is my family healthier? Can I access services when I need them? If yes to all three, governance is working. Reduces Cf from 4.1 to under 1.5.'},
+        {n:'Rx 2',t:'From "Wellbeing Measurement" to "Wellbeing Budgeting"',b:'Measure 5 indicators maximum per policy domain. Each must be directly actionable. If a frontline worker cannot use the indicator to make a decision today, remove it. Measurement that cannot drive action is pure Pd.'},
+        {n:'Rx 3',t:'Cultural Adaptation Revolution',b:'Bhutan\'s GNH works because it emerged from culture, not academia. New Zealand\'s framework must be co-designed with Māori communities and frontline workers — not imported from international frameworks.'}
+      ],
+      compare_title:'Wellbeing Governance: NZ vs Bhutan',
+      compare_headers:['System','Indicators','Fs','Pd (hrs)','GL'],
+      compare_rows:[
+        {hl:true, cells:['NZ Wellbeing Budget','247','0.45','3.2','0.32']},
+        {cells:['Bhutan GNH','9 domains','0.68','0.8','3.48']},
+        {cells:['OECD Better Life','11','—','—','~1.2']},
+        {cells:['GDP (simple)','1','—','—','High clarity']}
+      ]
+    },
+    tw:{
+      title:'紐西蘭幸福預算',
+      sub:'指標瘋狂症 · 社會政策',
+      tags:['幸福指標','操作崩潰','GL 0.32','不丹對比'],
+      verdict_label:'GL 診斷結論',
+      verdict:'幸福預算是個悖論：用來改善人民生活的工具，因為太複雜而無法使用。指標設計本身就是需要 GL 診斷的治理問題。',
+      phenomenon_title:'現象',
+      phenomenon:`<p class="body-p">2019 年：紐西蘭正式宣告 GDP 不再是最高目標。幸福預算引入涵蓋心理健康、兒童貧困、毛利人福祉、數位包容和環境永續性的指標。理念：有遠見。執行：<strong>宏大理論下的操作崩潰</strong>。</p>
+      <p class="body-p">一線工作者現在每週花費 6.5 小時填寫指標對應文書——而不是幫助人們。設計來測量幸福的系統，讓運行它的人深感不幸福。GL = 0.32。對比不丹的 GNH：GL = 3.48——從佛教傳統有機發展了 50 年，而非從 OECD 報告中引入。</p>`,
+      principles_title:'GL 處方',
+      principles:[
+        {n:'處方 1',t:'「三個問題」國家框架',b:'用每位公民都能回答的 3 個年度問題取代 247 個指標：我更安全了嗎？我的家人更健康了嗎？我在需要時能獲得服務嗎？三個都是就代表治理有效。將 Cf 從 4.1 降至 1.5 以下。'},
+        {n:'處方 2',t:'從「幸福測量」到「幸福預算」',b:'每個政策領域最多測量 5 個指標，每個都必須可直接採取行動。如果一線工作者今天無法用這個指標做出決定，就刪除它。無法驅動行動的測量就是純粹的 Pd。'},
+        {n:'處方 3',t:'文化適應革命',b:'不丹 GNH 有效是因為它源自文化，而非學術。紐西蘭的框架必須與毛利社區和一線工作者共同設計——而不是從國際框架中引入。'}
+      ],
+      compare_title:'幸福治理：紐西蘭 vs 不丹',
+      compare_headers:['系統','指標數','Fs','Pd（小時）','GL'],
+      compare_rows:[
+        {hl:true, cells:['紐西蘭幸福預算','247','0.45','3.2','0.32']},
+        {cells:['不丹 GNH','9個領域','0.68','0.8','3.48']},
+        {cells:['OECD 美好生活','11','—','—','~1.2']},
+        {cells:['GDP（簡單）','1','—','—','高清晰度']}
+      ]
+    },
+    cn:{
+      title:'新西兰幸福预算',
+      sub:'指标疯狂症 · 社会政策',
+      tags:['幸福指标','操作崩溃','GL 0.32','不丹对比'],
+      verdict_label:'GL 诊断结论',
+      verdict:'幸福预算是个悖论：用来改善人民生活的工具，因为太复杂而无法使用。指标设计本身就是需要 GL 诊断的治理问题。',
+      phenomenon_title:'现象',
+      phenomenon:`<p class="body-p">2019 年：新西兰正式宣告 GDP 不再是最高目标。幸福预算引入涵盖心理健康、儿童贫困、毛利人福祉、数字包容和环境可持续性的指标。理念：有远见。执行：<strong>宏大理论下的操作崩溃</strong>。</p>
+      <p class="body-p">一线工作者现在每周花费 6.5 小时填写指标对应文书——而不是帮助人们。设计来测量幸福的系统，让运行它的人深感不幸福。GL = 0.32。对比不丹的 GNH：GL = 3.48——从佛教传统有机发展了 50 年，而非从 OECD 报告中引入。</p>`,
+      principles_title:'GL 处方',
+      principles:[
+        {n:'处方 1',t:'「三个问题」国家框架',b:'用每位公民都能回答的 3 个年度问题取代 247 个指标：我更安全了吗？我的家人更健康了吗？我在需要时能获得服务吗？三个都是就代表治理有效。将 Cf 从 4.1 降至 1.5 以下。'},
+        {n:'处方 2',t:'从「幸福测量」到「幸福预算」',b:'每个政策领域最多测量 5 个指标，每个都必须可直接采取行动。如果一线工作者今天无法用这个指标做出决定，就删除它。无法驱动行动的测量就是纯粹的 Pd。'},
+        {n:'处方 3',t:'文化适应革命',b:'不丹 GNH 有效是因为它源自文化，而非学术。新西兰的框架必须与毛利社区和一线工作者共同设计——而不是从国际框架中引入。'}
+      ],
+      compare_title:'幸福治理：新西兰 vs 不丹',
+      compare_headers:['系统','指标数','Fs','Pd（小时）','GL'],
+      compare_rows:[
+        {hl:true, cells:['新西兰幸福预算','247','0.45','3.2','0.32']},
+        {cells:['不丹 GNH','9个领域','0.68','0.8','3.48']},
+        {cells:['OECD 美好生活','11','—','—','~1.2']},
+        {cells:['GDP（简单）','1','—','—','高清晰度']}
+      ]
+    }
+  },
+  uruguay: {
+    flag:'🇺🇾', gl:'6.24', fs:'0.62', vn:'8.8', pd:'0.3', cf:'2.1', order:9,
+    en:{
+      title:'Uruguay Digital Democracy',
+      sub:'The Participation Paradox · Democratic Governance',
+      tags:['Digital Democracy','3.5M Population','GL 6.24 Adjusted','Quality vs Efficiency'],
+      verdict_label:'GL Verdict',
+      verdict:'Uruguay\'s Digital Democracy achieves high participation but reveals the paradox: when democracy becomes too easy, deliberation suffers. Efficiency cannot compensate for the lack of depth.',
+      phenomenon_title:'The Phenomenon',
+      phenomenon:`<p class="body-p">Uruguay, 3.5 million people, launched the Digital Democracy Portal in 2018: transforming democracy from an intermittent election-day ritual into daily accessible online practice. Participation jumped from 1–3% (traditional consultations) to an average of <strong>12%</strong>. Democratic participation compressed from hours to <strong>18 minutes</strong>.</p>
+      <p class="body-p">But: out of 142 major consultations, only <strong>38 led to actual policy changes</strong>. The platform skewed heavily toward urban, educated, male participants — representing only 27% of actual population diversity. Surface GL = 8.66. Quality-adjusted GL = <strong>6.24</strong>. Efficiency without deliberation is not democracy — it is a survey.</p>`,
+      principles_title:'GL Prescriptions',
+      principles:[
+        {n:'Rx 1',t:'Intelligent Issue Tiering System',b:'Simple issues (infrastructure, local services): digital voting fine. Complex issues (constitutional change, social policy): require deliberative process with minimum 6-week engagement. Not every decision deserves the same democratic process.'},
+        {n:'Rx 2',t:'Dynamic Representation Correction Engine',b:'Real-time monitoring of participation demographics. When a consultation deviates >15% from population profile, automatically trigger outreach to underrepresented groups before results are counted. Representation is a design problem, not a goodwill problem.'},
+        {n:'Rx 3',t:'Deliberation Quality Enhancement Framework',b:'Introduce mandatory "cooling off" period for consequential decisions: 72-hour minimum between proposal and vote. Require exposure to counterarguments. Measure and publish Decision Quality Index alongside participation rates.'}
+      ],
+      compare_title:'Democratic Models Compared',
+      compare_headers:['Model','GL (adjusted)','Participation','Decision Quality','Representation'],
+      compare_rows:[
+        {hl:true, cells:['Uruguay Digital','6.24','12%','0.72 DQD','RGI 73/100']},
+        {cells:['Taiwan vTaiwan','4.8','3%','High deliberation','Better balance']},
+        {cells:['Switzerland Referendum','3.2','45%','High','Strong']},
+        {cells:['Traditional consultation','1.1','1-3%','High','Narrow elite']}
+      ]
+    },
+    tw:{
+      title:'烏拉圭數位民主',
+      sub:'參與悖論 · 民主治理',
+      tags:['數位民主','350萬人口','調整後GL 6.24','品質vs效率'],
+      verdict_label:'GL 診斷結論',
+      verdict:'烏拉圭數位民主實現了高參與率，但揭示了悖論：當民主變得太容易，審議品質就會下降。效率無法補償深度的缺失。',
+      phenomenon_title:'現象',
+      phenomenon:`<p class="body-p">烏拉圭，350 萬人，2018 年推出數位民主門戶：將民主從間歇性的選舉日儀式轉變為每日可及的線上實踐。參與率從 1–3%（傳統諮詢）躍升至平均 <strong>12%</strong>。民主參與從數小時壓縮到 <strong>18 分鐘</strong>。</p>
+      <p class="body-p">但：142 次重大諮詢中，只有 <strong>38 次導致實際政策改變</strong>。平台嚴重傾向城市、受過教育的男性參與者——僅代表實際人口多樣性的 27%。表面 GL = 8.66。品質調整後 GL = <strong>6.24</strong>。沒有審議的效率不是民主——而是問卷調查。</p>`,
+      principles_title:'GL 處方',
+      principles:[
+        {n:'處方 1',t:'議題智能分層系統',b:'簡單議題（基礎設施、地方服務）：數位投票適合。複雜議題（憲法修改、社會政策）：需要最少 6 週參與的審議過程。不是每個決策都值得相同的民主過程。'},
+        {n:'處方 2',t:'動態代表性校正引擎',b:'實時監測參與人口統計。當一個諮詢的人口偏離超過 15% 時，在統計結果前自動觸發對未代表群體的外展。代表性是設計問題，不是善意問題。'},
+        {n:'處方 3',t:'審議品質增強框架',b:'為重大決策引入強制性「冷靜期」：提案和投票之間最少 72 小時。要求接觸反對論點。測量並公佈決策品質指數，與參與率並列。'}
+      ],
+      compare_title:'民主模式比較',
+      compare_headers:['模式','GL（調整後）','參與率','決策品質','代表性'],
+      compare_rows:[
+        {hl:true, cells:['烏拉圭數位民主','6.24','12%','DQD 0.72','RGI 73/100']},
+        {cells:['台灣 vTaiwan','4.8','3%','高審議性','較好平衡']},
+        {cells:['瑞士公投','3.2','45%','高','強']},
+        {cells:['傳統諮詢','1.1','1-3%','高','精英為主']}
+      ]
+    },
+    cn:{
+      title:'乌拉圭数字民主',
+      sub:'参与悖论 · 民主治理',
+      tags:['数字民主','350万人口','调整后GL 6.24','质量vs效率'],
+      verdict_label:'GL 诊断结论',
+      verdict:'乌拉圭数字民主实现了高参与率，但揭示了悖论：当民主变得太容易，审议质量就会下降。效率无法补偿深度的缺失。',
+      phenomenon_title:'现象',
+      phenomenon:`<p class="body-p">乌拉圭，350 万人，2018 年推出数字民主门户：将民主从间歇性的选举日仪式转变为每日可及的线上实践。参与率从 1–3%（传统咨询）跃升至平均 <strong>12%</strong>。民主参与从数小时压缩到 <strong>18 分钟</strong>。</p>
+      <p class="body-p">但：142 次重大咨询中，只有 <strong>38 次导致实际政策改变</strong>。平台严重倾向城市、受过教育的男性参与者——仅代表实际人口多样性的 27%。表面 GL = 8.66。质量调整后 GL = <strong>6.24</strong>。没有审议的效率不是民主——而是问卷调查。</p>`,
+      principles_title:'GL 处方',
+      principles:[
+        {n:'处方 1',t:'议题智能分层系统',b:'简单议题（基础设施、地方服务）：数字投票适合。复杂议题（宪法修改、社会政策）：需要最少 6 周参与的审议过程。不是每个决策都值得相同的民主过程。'},
+        {n:'处方 2',t:'动态代表性校正引擎',b:'实时监测参与人口统计。当一个咨询的人口偏离超过 15% 时，在统计结果前自动触发对未代表群体的外展。代表性是设计问题，不是善意问题。'},
+        {n:'处方 3',t:'审议质量增强框架',b:'为重大决策引入强制性「冷静期」：提案和投票之间最少 72 小时。要求接触反对论点。测量并公布决策质量指数，与参与率并列。'}
+      ],
+      compare_title:'民主模式比较',
+      compare_headers:['模式','GL（调整后）','参与率','决策质量','代表性'],
+      compare_rows:[
+        {hl:true, cells:['乌拉圭数字民主','6.24','12%','DQD 0.72','RGI 73/100']},
+        {cells:['台湾 vTaiwan','4.8','3%','高审议性','较好平衡']},
+        {cells:['瑞士公投','3.2','45%','高','强']},
+        {cells:['传统咨询','1.1','1-3%','高','精英为主']}
+      ]
+    }
+  }
+};
+
+
+const ORDER = ['finland','brazil','estonia','germany','singapore','korea','rwanda','newzealand','uruguay'];
+
+let currentLang = 'en';
+
+function getParam(){
+  return new URLSearchParams(window.location.search).get('c') || 'finland';
+}
+
+function glClass(gl){
+  const n = parseFloat(gl);
+  if(n >= 6) return 'gl-outstanding';
+  if(n >= 3) return 'gl-excellent';
+  if(n >= 1.5) return 'gl-good';
+  return 'gl-violence';
+}
+
+function glLabel(gl, lang){
+  const n = parseFloat(gl);
+  const labels = {
+    en: n>=6?'Outstanding':n>=3?'Excellent':n>=1.5?'Good':'Policy Violence',
+    tw: n>=6?'卓越':n>=3?'優良':n>=1.5?'良好':'政策暴力',
+    cn: n>=6?'卓越':n>=3?'优良':n>=1.5?'良好':'政策暴力'
+  };
+  return labels[lang];
+}
+
+function backLabel(lang){
+  return {en:'← All Cases', tw:'← 所有案例', cn:'← 所有案例'}[lang];
+}
+
+function navLabels(lang, prev, next){
+  const p = prev ? CASES[prev] : null;
+  const n = next ? CASES[next] : null;
+  const prevTxt = {en:'Previous', tw:'上一個', cn:'上一个'}[lang];
+  const nextTxt = {en:'Next', tw:'下一個', cn:'下一个'}[lang];
+  return {
+    prev: p ? `← ${prevTxt}: ${p[lang].title}` : '',
+    next: n ? `${nextTxt}: ${n[lang].title} →` : ''
+  };
+}
+
+function buildTable(headers, rows){
+  const ths = headers.map(h=>`<th>${h}</th>`).join('');
+  const trs = rows.map(r=>{
+    const cls = r.hl ? ' class="hl"' : '';
+    const tds = r.cells.map((c,i)=>{
+      const isGl = i===1 && (c.includes('.')|| c==='—');
+      const cls2 = isGl ? (parseFloat(c)<1?' class="gl-bad"':' class="gl-n"') : '';
+      return `<td${cls2}>${c}</td>`;
+    }).join('');
+    return `<tr${cls}>${tds}</tr>`;
+  }).join('');
+  return `<div class="tscroll"><table><thead><tr>${ths}</tr></thead><tbody>${trs}</tbody></table></div>`;
+}
+
+function render(lang){
+  const key = getParam();
+  const c = CASES[key];
+  if(!c){ document.getElementById('content').innerHTML='<div class="wrap" style="padding-top:100px">Case not found.</div>'; return; }
+  const d = c[lang];
+  const idx = ORDER.indexOf(key);
+  const prevKey = idx > 0 ? ORDER[idx-1] : null;
+  const nextKey = idx < ORDER.length-1 ? ORDER[idx+1] : null;
+  const nav = navLabels(lang, prevKey, nextKey);
+  const glCls = glClass(c.gl);
+  const glLbl = glLabel(c.gl, lang);
+
+  const principles = d.principles.map(p=>`
+    <div class="principle reveal">
+      <div class="principle-num">${p.n}</div>
+      <div class="principle-title">${p.t}</div>
+      <div class="principle-body">${p.b}</div>
+    </div>`).join('');
+
+  const formulaLabels = {
+    en:'GL = (Fs × Vn) / (Pd × Cf)',
+    tw:'GL = (Fs × Vn) / (Pd × Cf)',
+    cn:'GL = (Fs × Vn) / (Pd × Cf)'
+  };
+  const paramLabels = {
+    en:['Flow Success','Strategic Value','Pain Duration','Cognitive Friction'],
+    tw:['流程成功率','戰略價值','痛苦時長','認知摩擦'],
+    cn:['流程成功率','战略价值','痛苦时长','认知摩擦']
+  };
+  const pl = paramLabels[lang];
+
+  document.title = d.title + ' | GFI Flow Intelligence';
+
+  document.getElementById('content').innerHTML = `
+  <div class="hero"><div class="wrap">
+    <a href="cases.html" class="back-link reveal">${backLabel(lang)}</a>
+    <div class="case-flag-lg reveal">${c.flag}</div>
+    <div class="eyebrow reveal">${d.sub}</div>
+    <h1 class="case-hero-title reveal">${d.title}</h1>
+    <div class="case-tags reveal">${d.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+
+    <div class="gl-bar reveal">
+      <div>
+        <div class="gl-score-big">${c.gl}</div>
+        <div class="gl-score-label"><span class="${glCls}" style="padding:3px 8px;border-radius:12px;font-size:10px;border:1px solid;font-family:var(--mono);letter-spacing:.06em">${glLbl}</span></div>
+      </div>
+      <div>
+        <div class="gl-params">
+          <div class="gl-param"><div class="gl-param-val">${c.fs}</div><div class="gl-param-key">Fs · ${pl[0]}</div></div>
+          <div class="gl-param"><div class="gl-param-val">${c.vn}</div><div class="gl-param-key">Vn · ${pl[1]}</div></div>
+          <div class="gl-param"><div class="gl-param-val">${c.pd}</div><div class="gl-param-key">Pd · ${pl[2]}</div></div>
+          <div class="gl-param"><div class="gl-param-val">${c.cf}</div><div class="gl-param-key">Cf · ${pl[3]}</div></div>
+        </div>
+        <div class="gl-formula">${formulaLabels[lang]} = (${c.fs} × ${c.vn}) / (${c.pd} × ${c.cf}) = <strong style="color:var(--accent)">${c.gl}</strong></div>
+      </div>
+    </div>
+  </div></div>
+
+  <div class="wrap">
+    <div class="section reveal">
+      <div class="section-title">${d.phenomenon_title}</div>
+      ${d.phenomenon}
+    </div>
+
+    <div class="section reveal">
+      <div class="section-title">${d.principles_title}</div>
+      <div class="principles">${principles}</div>
+    </div>
+
+    <div class="section reveal">
+      <div class="section-title">${d.compare_title}</div>
+      ${buildTable(d.compare_headers, d.compare_rows)}
+    </div>
+
+    <div class="verdict reveal">
+      <div class="verdict-label">${d.verdict_label}</div>
+      <div class="verdict-text">${d.verdict}</div>
+    </div>
+
+    <div class="case-nav reveal">
+      <div>${prevKey ? `<a href="case-detail.html?c=${prevKey}">${nav.prev}</a>` : ''}</div>
+      <div>${nextKey ? `<a href="case-detail.html?c=${nextKey}">${nav.next}</a>` : ''}</div>
+    </div>
+  </div>`;
+
+  // Re-observe new elements
+  document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+  window.scrollTo({top:0,behavior:'instant'});
+}
+
+function setLang(lang, btn){
+  currentLang = lang;
+  document.querySelectorAll('.lb-btn').forEach(b=>{
+    b.classList.toggle('on', b.getAttribute('onclick')&&b.getAttribute('onclick').includes("'"+lang+"'"));
+  });
+  render(lang);
+  closeDrawer();
+}
+
+function toggleDrawer(){
+  document.getElementById('ham').classList.toggle('open');
+  document.getElementById('drawer').classList.toggle('open');
+}
+function closeDrawer(){
+  document.getElementById('ham').classList.remove('open');
+  document.getElementById('drawer').classList.remove('open');
+}
+
+const ro = new IntersectionObserver(e=>e.forEach(x=>{
+  if(x.isIntersecting) x.target.classList.add('vis');
+}), {threshold:0.05});
+
+render('en');
+</script>
+</body>
+</html>
