@@ -9,214 +9,422 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-/* ══════════ 完整保留 200+ 行 CSS 樣式，絕無刪減 ══════════ */
 :root {
-  --bg:      #141d2e;
-  --surf:    #1c2740;
-  --surf2:   #22304e;
-  --border:  rgba(255,255,255,0.08);
-  --text:    #edf0f8;
-  --muted:   #8fa3c0;
-  --dim:     #4a6080;
-  --accent:  #c8f542;
-  --blue:    #4da3ff;
-  --serif:   'DM Serif Display', Georgia, serif;
-  --mono:    'DM Mono', monospace;
-  --sans:    'DM Sans', system-ui, sans-serif;
+  --bg:     #141d2e;
+  --surf:   #1c2740;
+  --surf2:  #22304e;
+  --border: rgba(255,255,255,0.08);
+  --text:   #edf0f8;
+  --muted:  #8fa3c0;
+  --dim:    #4a6080;
+  --accent: #c8f542;
+  --blue:   #4da3ff;
+  --serif:  'DM Serif Display', Georgia, serif;
+  --mono:   'DM Mono', monospace;
+  --sans:   'DM Sans', system-ui, sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:17px;line-height:1.75;overflow-x:hidden}
+img{max-width:100%;display:block}
 
-header{position:fixed;inset:0 0 auto 0;z-index:100;height:60px;padding:0 24px;display:flex;align-items:center;justify-content:space-between;background:rgba(20,29,46,0.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+/* HEADER */
+header{position:fixed;inset:0 0 auto 0;z-index:100;height:60px;padding:0 24px;display:flex;align-items:center;justify-content:space-between;background:rgba(20,29,46,0.93);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
 .logo img{height:44px;width:auto;mix-blend-mode:lighten;border-radius:6px}
 nav{display:flex;align-items:center;gap:4px}
-nav a{font-size:13px;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;transition:all .2s}
+nav a{font-size:13px;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;transition:color .2s,background .2s}
 nav a:hover{color:var(--text);background:rgba(255,255,255,0.05)}
+.lang-grp{display:flex;gap:3px;margin-left:8px}
 .lb-btn{font-family:var(--mono);font-size:11px;letter-spacing:.08em;padding:5px 9px;border:1px solid var(--border);border-radius:4px;background:none;color:var(--muted);cursor:pointer;transition:all .2s}
+.lb-btn:hover{color:var(--text);border-color:rgba(255,255,255,0.18)}
 .lb-btn.on{color:var(--accent);border-color:rgba(200,245,66,0.35);background:rgba(200,245,66,0.06)}
+.nav-cta{display:inline-block;padding:8px 16px;background:var(--accent);color:#0d1117;font-size:13px;font-weight:600;border-radius:6px;text-decoration:none;margin-left:8px;white-space:nowrap;transition:opacity .2s}
+.nav-cta:hover{opacity:.85}
 
-/* HERO 佈局區 */
-.hero{position:relative;min-height:95svh;display:flex;flex-direction:column;justify-content:center;overflow:hidden;padding-top:60px}
-.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:52px 52px;mask-image:radial-gradient(ellipse 80% 50% at 50% 0%,black 20%,transparent 75%)}
-.wrap{max-width:1060px;margin:0 auto;padding:0 clamp(20px,5vw,60px);position:relative;z-index:10;}
-.hero-name{font-family:var(--serif);font-size:clamp(34px, 5.5vw, 64px);line-height:1.1;margin-bottom:48px;text-align:center;}
+/* HAMBURGER */
+.ham{display:none;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;padding:6px;background:none;border:none;cursor:pointer}
+.ham span{display:block;height:2px;background:var(--text);border-radius:2px;transition:transform .25s,opacity .2s}
+.ham.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.ham.open span:nth-child(2){opacity:0}
+.ham.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 
-/* 入口對稱卡片樣式 */
-.dual-container{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-top:20px;}
-.entry-card{text-decoration:none;flex:1;min-width:320px;max-width:480px;transition:all 0.4s;}
-.entry-inner{background:rgba(255,255,255,0.02);border:1px solid var(--border);padding:40px 32px;border-radius:20px;height:100%;display:flex;flex-direction:column;text-align:left;}
-.entry-card:hover .entry-inner{border-color:var(--accent);background:rgba(200,245,66,0.03);transform:translateY(-8px);}
-.card-label{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--muted);margin-bottom:16px;display:block;}
-.card-title{font-family:var(--serif);font-size:28px;margin-bottom:12px;color:var(--text);}
-.card-cta{margin-top:auto;font-family:var(--mono);font-size:13px;font-weight:600;color:var(--accent);}
+/* DRAWER */
+.drawer{display:none;position:fixed;top:60px;left:0;right:0;z-index:99;background:rgba(20,29,46,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:16px 24px 24px;flex-direction:column}
+.drawer.open{display:flex}
+.drawer a{font-size:17px;color:var(--muted);text-decoration:none;padding:14px 0;border-bottom:1px solid var(--border);transition:color .2s}
+.drawer a:hover{color:var(--text)}
+.drawer-lang{display:flex;gap:8px;padding:16px 0 0}
+.drawer-cta{display:block;text-align:center;padding:16px;background:var(--accent);color:#0d1117;font-weight:600;font-size:16px;border-radius:8px;text-decoration:none;margin-top:16px;border-bottom:none!important}
 
-/* ══════════ 完整保留其他所有原始 Section 樣式 ══════════ */
+/* LANG */
+.lb{display:none}
+.lb.on{display:block}
+
+/* LAYOUT */
+.wrap{max-width:1060px;margin:0 auto;padding:0 clamp(20px,5vw,60px)}
+
+/* HERO */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:52px 52px;mask-image:radial-gradient(ellipse 80% 50% at 50% 0%,black 20%,transparent 75%);pointer-events:none}
+.hero-glow{position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(200,245,66,.05) 0%,transparent 70%);top:-100px;right:-100px;pointer-events:none}
+.hero-inner{position:relative;padding:clamp(80px,14vh,140px) 0 clamp(60px,10vh,100px)}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:clamp(16px,3vh,24px);opacity:0;animation:up .6s .1s forwards}
+.hero h1{font-family:var(--serif);font-size:clamp(28px,4vw,46px);line-height:1.1;letter-spacing:-.02em;max-width:820px;margin-bottom:clamp(18px,3vh,28px);opacity:0;animation:up .6s .25s forwards}
+.hero h1 em{font-style:italic;color:var(--accent)}
+.hero-sub{font-size:clamp(16px,2vw,19px);color:var(--muted);max-width:580px;line-height:1.75;margin-bottom:clamp(28px,5vh,44px);opacity:0;animation:up .6s .4s forwards}
+.hero-btns{display:flex;flex-wrap:wrap;gap:12px;opacity:0;animation:up .6s .55s forwards}
+.btn-solid{display:inline-flex;align-items:center;padding:clamp(13px,2vh,16px) clamp(22px,3vw,34px);background:var(--accent);color:#0d1117;font-weight:600;font-size:clamp(14px,1.8vw,16px);border-radius:8px;text-decoration:none;white-space:nowrap;transition:opacity .2s,transform .2s}
+.btn-solid:hover{opacity:.87;transform:translateY(-1px)}
+.btn-ghost{display:inline-flex;align-items:center;padding:clamp(13px,2vh,16px) clamp(22px,3vw,34px);border:1px solid var(--border);color:var(--muted);font-size:clamp(14px,1.8vw,16px);border-radius:8px;text-decoration:none;white-space:nowrap;transition:all .2s}
+.btn-ghost:hover{border-color:rgba(255,255,255,.2);color:var(--text)}
+.hero-stats{display:flex;flex-wrap:wrap;gap:clamp(24px,4vw,52px);margin-top:clamp(40px,7vh,72px);padding-top:clamp(28px,4vh,44px);border-top:1px solid var(--border);opacity:0;animation:up .6s .7s forwards}
+.stat-n{font-family:var(--serif);font-size:clamp(26px,4vw,40px);color:var(--accent);line-height:1}
+.stat-l{font-size:13px;color:var(--muted);margin-top:5px}
+
+/* SECTOR PORTAL CARDS */
+.sector-portal{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,2vw,20px);margin-top:clamp(32px,5vh,52px);opacity:0;animation:up .6s .85s forwards}
+.sp-card{background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:clamp(22px,3vw,36px);text-decoration:none;transition:border-color .25s,transform .25s,background .25s;display:flex;flex-direction:column;gap:10px}
+.sp-card:hover{border-color:rgba(200,245,66,.3);transform:translateY(-3px);background:var(--surf2)}
+.sp-card.gov{border-color:rgba(200,245,66,.15)}
+.sp-card.priv{border-color:rgba(77,163,255,.15)}
+.sp-card.gov:hover{border-color:rgba(200,245,66,.45)}
+.sp-card.priv:hover{border-color:rgba(77,163,255,.45)}
+.sp-tag{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase}
+.sp-card.gov .sp-tag{color:var(--accent)}
+.sp-card.priv .sp-tag{color:var(--blue)}
+.sp-title{font-family:var(--serif);font-size:clamp(17px,2.2vw,24px);color:var(--text);line-height:1.25}
+.sp-desc{font-size:clamp(13px,1.6vw,15px);color:var(--muted);line-height:1.65;flex-grow:1}
+.sp-cta{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-top:4px}
+.sp-card.gov .sp-cta{color:var(--accent)}
+.sp-card.priv .sp-cta{color:var(--blue)}
+@media(max-width:640px){.sector-portal{grid-template-columns:1fr}}
+
+/* SECTIONS */
 section{padding:clamp(60px,10vh,110px) 0}
 section.band{background:var(--surf);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-h2.stitle{font-family:var(--serif);font-size:clamp(22px,3.2vw,36px);line-height:1.12;margin-bottom:16px}
+h2.stitle{font-family:var(--serif);font-size:clamp(22px,3.2vw,36px);line-height:1.12;letter-spacing:-.02em;margin-bottom:16px}
 .slead{font-size:clamp(16px,1.9vw,18px);color:var(--muted);max-width:680px;line-height:1.8}
 
-.mg{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(230px,100%),1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-top:48px}
-.mc{background:var(--surf);padding:34px;transition:background .2s}
+/* MEASURES */
+.mg{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(230px,100%),1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-top:clamp(28px,5vh,48px)}
+.mc{background:var(--surf);padding:clamp(22px,3vw,34px);transition:background .2s}
 .mc:hover{background:var(--surf2)}
 .mc-eye{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.12em;margin-bottom:12px}
-.mc h3{font-family:var(--serif);font-size:22px;margin-bottom:12px}
-.mc p{font-size:15px;color:var(--muted);line-height:1.6}
-.fstrip{margin-top:32px;padding:26px 32px;background:rgba(0,0,0,.2);border:1px solid var(--border);border-radius:8px;font-family:var(--mono);font-size:14px;color:var(--muted);display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.mc h3{font-family:var(--serif);font-size:clamp(16px,2vw,20px);margin-bottom:9px}
+.mc p{color:var(--muted);font-size:clamp(13px,1.7vw,15px);line-height:1.65}
+.fstrip{margin-top:clamp(20px,3vh,32px);padding:clamp(18px,2vw,26px) clamp(20px,3vw,32px);background:rgba(0,0,0,.2);border:1px solid var(--border);border-radius:8px;font-family:var(--mono);font-size:clamp(12px,1.6vw,14px);color:var(--muted);display:flex;flex-wrap:wrap;align-items:center;gap:10px;line-height:1.6}
+.fstrip a{font-size:11px;letter-spacing:.1em;color:var(--accent);text-decoration:none;margin-left:auto;white-space:nowrap}
 
-/* TABLE STYLES */
-.tscroll{overflow-x:auto; margin-top:48px; border:1px solid var(--border); border-radius:10px}
-table{width:100%;min-width:800px;border-collapse:collapse;font-size:14px;text-align:left}
-th{font-family:var(--mono);font-size:10px;color:var(--muted);padding:18px 24px;border-bottom:1px solid var(--border);text-transform:uppercase;letter-spacing:1px}
-td{padding:18px 24px;border-bottom:1px solid var(--border);color:var(--muted)}
-.gln{font-family:var(--serif);font-size:22px;color:var(--accent)}
-.tag{display:inline-block;padding:4px 10px;border-radius:4px;font-family:var(--mono);font-size:10px}
+/* BEFORE/AFTER */
+.ba-wrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(10px,2vw,20px);margin-top:clamp(28px,5vh,48px)}
+.ba{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:clamp(20px,3vw,32px)}
+.ba.good{border-color:rgba(200,245,66,.18);background:rgba(200,245,66,.025)}
+.ba-head{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+.ba.good .ba-head{color:var(--accent)}
+.ba ul{list-style:none}
+.ba ul li{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);font-size:clamp(13px,1.7vw,15px);color:var(--muted);line-height:1.55}
+.ba.good ul li{color:var(--text)}
+.ba ul li::before{content:'—';color:var(--dim);flex-shrink:0}
+.ba.good ul li::before{content:'✓';color:var(--accent)}
+
+/* TABLE */
+.tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:clamp(28px,5vh,48px);border:1px solid var(--border);border-radius:10px}
+table{width:100%;min-width:540px;border-collapse:collapse;font-size:clamp(13px,1.7vw,14px)}
+th{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);padding:13px 16px;border-bottom:1px solid var(--border);text-align:left;background:var(--surf);white-space:nowrap}
+td{padding:13px 16px;border-bottom:1px solid var(--border);color:var(--muted);vertical-align:middle}
+td:nth-child(2){color:var(--text)}
+tr:hover td{background:rgba(255,255,255,.018)}
+.gln{font-family:var(--mono);font-size:15px;color:var(--accent);font-weight:500}
+.lo-txt{color:#ff6b6b!important}
+.tag{display:inline-block;padding:3px 8px;border-radius:4px;font-family:var(--mono);font-size:10px;white-space:nowrap}
 .tag.hi{background:rgba(200,245,66,.1);color:var(--accent)}
+.tag.md{background:rgba(77,163,255,.1);color:var(--blue)}
 .tag.lo{background:rgba(255,107,107,.1);color:#ff7070}
 
-/* PRICING STYLES */
-.pg{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(250px,100%),1fr));gap:22px;margin-top:48px}
-.pc{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:34px;display:flex;flex-direction:column;transition:all 0.25s}
-.pc.feat{border-color:var(--accent);background:rgba(200,245,66,.025)}
-.pc-amt{font-family:var(--serif);font-size:52px;line-height:1;margin-bottom:4px}
-.pc-cur{font-size:18px;vertical-align:top;color:var(--muted);margin-right:4px}
-.pc-btn{display:block;text-align:center;padding:14px;background:var(--accent);color:#0d1117;font-weight:600;text-decoration:none;border-radius:7px;margin-top:auto}
+/* METHOD CARDS */
+.mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:clamp(12px,2vw,18px);margin-top:clamp(24px,4vh,40px)}
+.mcard{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:clamp(18px,2.6vw,26px)}
+.mkv{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.meq{font-family:var(--mono);color:var(--accent);font-size:14px;line-height:1.7;word-break:break-word}
+.mlist{list-style:none;margin-top:10px}
+.mlist li{padding:10px 0;border-bottom:1px solid var(--border);color:var(--muted);display:flex;gap:10px;font-size:14px}
+.mlist li::before{content:'✓';color:var(--accent);flex:0 0 auto}
+
+/* PRICING */
+.pg{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(250px,100%),1fr));gap:clamp(12px,2vw,22px);margin-top:clamp(28px,5vh,48px)}
+.pc{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:clamp(22px,3vw,34px);display:flex;flex-direction:column;transition:border-color .2s,transform .25s}
+.pc:hover{border-color:rgba(200,245,66,.2);transform:translateY(-3px)}
+.pc.feat{border-color:rgba(200,245,66,.18);background:rgba(200,245,66,.025)}
+.pc-tier{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.pc.feat .pc-tier{color:var(--accent)}
+.pc-amt{font-family:var(--serif);font-size:clamp(34px,5vw,48px);line-height:1;margin-bottom:4px}
+.pc-cur{font-family:var(--sans);font-size:17px;vertical-align:top;line-height:1.3;color:var(--muted)}
+.pc-desc{color:var(--muted);font-size:clamp(13px,1.7vw,14px);line-height:1.65;margin:10px 0 20px;flex-grow:1}
+.pc-feats{list-style:none;margin-bottom:24px}
+.pc-feats li{font-size:clamp(13px,1.7vw,14px);color:var(--muted);padding:8px 0;border-bottom:1px solid var(--border);display:flex;gap:9px}
+.pc-feats li::before{content:'→';color:var(--accent);flex-shrink:0}
+.pc-btn{display:block;text-align:center;padding:clamp(12px,1.8vh,14px);border:1px solid var(--border);color:var(--text);text-decoration:none;border-radius:7px;font-size:14px;transition:background .2s,border-color .2s}
+.pc-btn:hover{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.16)}
+.pc.feat .pc-btn{background:var(--accent);color:#0d1117;border-color:transparent;font-weight:600}
+.pc.feat .pc-btn:hover{opacity:.88}
 
 /* PUBLICATIONS */
-.pub-list{margin-top:48px}
-.pub-item{display:flex;justify-content:space-between;padding:24px 0;border-bottom:1px solid var(--border);text-decoration:none;transition:opacity 0.2s}
-.pub-item:hover{opacity:0.7}
-.pub-t{color:var(--text);font-size:16px}
+.pub-list{margin-top:clamp(28px,5vh,48px)}
+.pub-item{display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:clamp(16px,2.5vh,24px) 0;border-bottom:1px solid var(--border);transition:opacity .2s}
+.pub-item:hover{opacity:.7}
+.pub-date{font-family:var(--mono);font-size:12px;color:var(--dim);white-space:nowrap;flex-shrink:0}
+.pub-t{font-size:clamp(14px,1.8vw,16px);color:var(--text);text-decoration:none;flex-grow:1;line-height:1.5}
+.pub-tag{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);white-space:nowrap;flex-shrink:0}
 
-.lb{display:none}.lb.on{display:block}
-footer{padding:80px 24px; border-top:1px solid var(--border); text-align:center; color:var(--muted); font-size:13px}
-.reveal{opacity:0;transform:translateY(20px);transition:opacity .65s,transform .65s}.reveal.vis{opacity:1;transform:none}
+/* CONTACT */
+.contact-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:clamp(28px,5vh,44px)}
+.cl{display:inline-flex;align-items:center;gap:8px;padding:clamp(12px,1.8vh,14px) clamp(20px,2.5vw,28px);border:1px solid var(--border);border-radius:8px;color:var(--muted);text-decoration:none;font-size:clamp(14px,1.8vw,15px);transition:all .2s}
+.cl:hover{color:var(--text);border-color:rgba(255,255,255,.18)}
+.cl.primary{background:var(--accent);color:#0d1117;border-color:transparent;font-weight:600}
+.cl.primary:hover{opacity:.88;color:#0d1117}
+
+/* FOOTER */
+footer{padding:clamp(28px,5vh,44px) clamp(20px,5vw,60px);border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;color:var(--muted);font-size:13px}
+footer a{color:var(--muted);text-decoration:none}
+footer a:hover{color:var(--text)}
+.footer-links{display:flex;gap:24px;flex-wrap:wrap}
+
+/* ANIMATIONS */
+@keyframes up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .65s,transform .65s}
+.reveal.vis{opacity:1;transform:none}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  nav{display:none}
+  .ham{display:flex}
+  .ba-wrap{grid-template-columns:1fr}
+  .pub-date{display:none}
+  footer{flex-direction:column;text-align:center}
+}
+.mobile-lang{display:none;position:fixed;top:60px;left:0;right:0;z-index:98;background:rgba(20,29,46,0.97);border-bottom:1px solid var(--border);padding:8px 20px;gap:8px;align-items:center;}
+@media(max-width:768px){.mobile-lang{display:flex}.hero{padding-top:40px}}
 </style>
 </head>
 <body>
 
 <header>
-  <a href="index.html" class="logo"><img src="GFILOGO.png" alt="GFI"></a>
+  <a href="index.html" class="logo"><img src="GFILOGO.png" alt="GFI Flow Intelligence"></a>
   <nav>
-    <a href="index.html">Home</a>
-    <a href="government.html" style="color:var(--accent); font-weight:600;">Government</a>
-    <a href="#measures" onclick="navTo('measures',event)">Measures</a>
+    <a href="#measures"   onclick="navTo('measures',event)">What GL Measures</a>
     <a href="#validation" onclick="navTo('validation',event)">Validation</a>
-    <a href="#pricing" onclick="navTo('pricing',event)">Pricing</a>
+    <a href="cases.html">Cases</a>
+    <a href="government.html">Public Sector</a>
+    <a href="#method"     onclick="navTo('method',event)">Method</a>
+    <a href="#pricing"    onclick="navTo('pricing',event)">Pricing</a>
     <a href="about.html">Founder</a>
     <div class="lang-grp">
-      <button class="lb-btn on" onclick="setLang('en',this)">EN</button>
-      <button class="lb-btn" onclick="setLang('tw',this)">繁</button>
+      <button class="lb-btn on"  onclick="setLang('en',this)">EN</button>
+      <button class="lb-btn"     onclick="setLang('tw',this)">繁</button>
+      <button class="lb-btn"     onclick="setLang('cn',this)">简</button>
     </div>
+    <a href="https://buy.stripe.com/8x25kFbp0dM4gQl0fB3VC00" class="nav-cta" target="_blank" rel="noopener">Start Verification</a>
   </nav>
+  <button class="ham" id="ham" aria-label="Menu" onclick="toggleDrawer()">
+    <span></span><span></span><span></span>
+  </button>
 </header>
 
-<section class="hero">
-  <div class="hero-grid"></div>
-  <div class="wrap hero-inner">
-    <div class="lb on" data-lang="en">
-      <h1 class="hero-name">Does your transformation<br>actually improve<br>capital efficiency?</h1>
-      <p class="hero-sub" style="margin: 0 auto 48px; max-width: 650px; color: var(--muted);">GL independently verifies whether organizational change increases or decreases capital velocity — before and after transformation.</p>
-    </div>
-    <div class="lb" data-lang="tw">
-      <h1 class="hero-name">您的轉型<br>真的提升了<br>資本效率嗎？</h1>
-      <p class="hero-sub" style="margin: 0 auto 48px; max-width: 650px; color: var(--muted);">GL 獨立驗證組織變革是否提升或降低資本速度——轉型前後皆可量化。</p>
-    </div>
+<div class="mobile-lang">
+  <span style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--dim);text-transform:uppercase;margin-right:4px">Lang</span>
+  <button class="lb-btn on"  onclick="setLang('en',this)">EN</button>
+  <button class="lb-btn"     onclick="setLang('tw',this)">繁</button>
+  <button class="lb-btn"     onclick="setLang('cn',this)">简</button>
+</div>
 
-    <div class="dual-container">
-      <a href="government.html" class="entry-card">
-        <div class="entry-inner">
-          <span class="card-label">PUBLIC SECTOR / GOVERNMENT</span>
-          <div class="lb on" data-lang="en">
-            <h2 class="card-title">Institutional Flow</h2>
-            <p style="color:var(--muted); font-size:15px; margin-bottom:20px;">Verify administrative flow and institutional friction in public systems.</p>
-            <span class="card-cta">ENTER SECTOR →</span>
-          </div>
-          <div class="lb" data-lang="tw">
-            <h2 class="card-title">公營機構與治理</h2>
-            <p style="color:var(--muted); font-size:15px; margin-bottom:20px;">驗證行政流動性，修復政府系統中的制度摩擦。</p>
-            <span class="card-cta">進入審計專區 →</span>
-          </div>
-        </div>
+<div class="drawer" id="drawer">
+  <a href="#measures"   onclick="navTo('measures',event);closeDrawer()">What GL Measures</a>
+  <a href="#validation" onclick="navTo('validation',event);closeDrawer()">Validation</a>
+  <a href="cases.html"  onclick="closeDrawer()">Cases</a>
+  <a href="government.html" onclick="closeDrawer()">Public Sector</a>
+  <a href="#method"     onclick="navTo('method',event);closeDrawer()">Method</a>
+  <a href="#pricing"    onclick="navTo('pricing',event);closeDrawer()">Pricing</a>
+  <a href="about.html"  onclick="closeDrawer()">Founder</a>
+  <div class="drawer-lang">
+    <button class="lb-btn on" onclick="setLang('en',this)">EN</button>
+    <button class="lb-btn"    onclick="setLang('tw',this)">繁</button>
+    <button class="lb-btn"    onclick="setLang('cn',this)">简</button>
+  </div>
+  <a href="https://buy.stripe.com/8x25kFbp0dM4gQl0fB3VC00" class="drawer-cta" target="_blank" rel="noopener" onclick="closeDrawer()">Start Verification →</a>
+</div>
+
+<!-- ══════════ ENGLISH ══════════ -->
+<div class="lb on" data-lang="en">
+
+<div class="hero">
+  <div class="hero-grid"></div><div class="hero-glow"></div>
+  <div class="wrap hero-inner">
+    <div class="eyebrow">GFI Flow Intelligence · Boston</div>
+    <h1>Does your transformation<br><em>actually</em> improve<br>capital efficiency?</h1>
+    <p class="hero-sub">GL independently verifies whether organizational change increases or decreases capital velocity — before and after transformation.</p>
+    <div class="hero-btns">
+      <a href="https://buy.stripe.com/8x25kFbp0dM4gQl0fB3VC00" class="btn-solid" target="_blank" rel="noopener">Start Verification ($999) →</a>
+      <a href="#method" class="btn-ghost">View Method</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-n">9</div><div class="stat-l">International Cases</div></div>
+      <div><div class="stat-n">GL</div><div class="stat-l">Proprietary Formula</div></div>
+      <div><div class="stat-n">3</div><div class="stat-l">Engagement Tiers</div></div>
+      <div><div class="stat-n">Δ</div><div class="stat-l">Before &amp; After Delta</div></div>
+    </div>
+    <div class="sector-portal">
+      <a href="government.html" class="sp-card gov">
+        <div class="sp-tag">Public Sector</div>
+        <div class="sp-title">Government &amp; Public Administration</div>
+        <p class="sp-desc">Independent structural diagnosis of government programs — UI systems, audit analysis, cross-state efficiency comparison. For state auditors, oversight offices, and public researchers.</p>
+        <div class="sp-cta">Explore →</div>
       </a>
-      <a href="#pricing" onclick="navTo('pricing',event)" class="entry-card">
-        <div class="entry-inner">
-          <span class="card-label">PRIVATE ENTERPRISE</span>
-          <div class="lb on" data-lang="en">
-            <h2 class="card-title">Capital Velocity</h2>
-            <p style="color:var(--muted); font-size:15px; margin-bottom:20px;">Optimize capital allocation and operational denominators.</p>
-            <span class="card-cta" style="color:var(--blue);">START VERIFICATION →</span>
-          </div>
-          <div class="lb" data-lang="tw">
-            <h2 class="card-title">民營企業策略</h2>
-            <p style="color:var(--muted); font-size:15px; margin-bottom:20px;">優化資本配置，測量營運分母，提升獲利能力。</p>
-            <span class="card-cta" style="color:var(--blue);">啟動企業驗證 →</span>
-          </div>
-        </div>
+      <a href="#pricing" onclick="navTo('pricing',event)" class="sp-card priv">
+        <div class="sp-tag">Private Sector</div>
+        <div class="sp-title">Enterprise &amp; Capital Efficiency</div>
+        <p class="sp-desc">GL independently verifies whether organizational transformation improves capital velocity. For ERP, AI, and digital transformation leaders who need proof, not promises.</p>
+        <div class="sp-cta">Explore →</div>
       </a>
     </div>
   </div>
-</section>
+</div>
 
 <section class="band" id="measures">
   <div class="wrap">
-    <div class="eyebrow">Methodology</div>
-    <div class="lb on" data-lang="en"><h2 class="stitle">Structural metrics of flow efficiency.</h2></div>
-    <div class="lb" data-lang="tw"><h2 class="stitle">結構化流動性效率指標。</h2></div>
+    <div class="eyebrow">What GL Measures</div>
+    <h2 class="stitle">Capital velocity,<br>structurally verified.</h2>
+    <p class="slead">GL verifies whether capital efficiency actually improved — and where friction moved after change.</p>
     <div class="mg reveal">
-      <div class="mc"><div class="mc-eye">01 · Fs</div><h3>Flow Success</h3><p>Percentage of processes completing core workflow without failure.</p></div>
-      <div class="mc"><div class="mc-eye">02 · Vn</div><h3>Strategic Value</h3><p>Weighted policy and capital impact scored against objectives.</p></div>
-      <div class="mc"><div class="mc-eye">03 · Pd</div><h3>Pain Duration</h3><p>Total time consumed by structural friction and wait states.</p></div>
-      <div class="mc"><div class="mc-eye">04 · Cf</div><h3>Cognitive Friction</h3><p>Mental load index reflecting complexity imposed on users.</p></div>
+      <div class="mc"><div class="mc-eye">01 · Fs</div><h3>Flow Success Rate</h3><p>% of eligible processes completing their core workflow without friction-induced failure.</p></div>
+      <div class="mc"><div class="mc-eye">02 · Vn</div><h3>Strategic Value</h3><p>Weighted policy and capital impact scored 0–10 against transformation objectives.</p></div>
+      <div class="mc"><div class="mc-eye">03 · Pd</div><h3>Pain Duration</h3><p>Annual hours consumed by structural friction — approvals, rework loops, bottlenecks.</p></div>
+      <div class="mc"><div class="mc-eye">04 · Cf</div><h3>Cognitive Friction</h3><p>Mental load index (0–10) reflecting complexity imposed on users navigating the system.</p></div>
     </div>
-    <div class="fstrip reveal">GL = (Fs × Vn) / (Pd × Cf)</div>
+    <div class="fstrip reveal">
+      <span>GL = (Fs × Vn) / (Pd × Cf)</span>
+      <span style="color:var(--dim)">·</span>
+      <span>GL<sub>r</sub> = (Fs × Vn) / (Pd × Cf × SRF)</span>
+      <a href="#method">VIEW METHOD →</a>
+    </div>
   </div>
 </section>
 
-<section id="validation">
+<section id="before-after">
   <div class="wrap">
-    <div class="eyebrow">9-Case Matrix</div>
-    <h2 class="stitle">International Validation</h2>
+    <div class="eyebrow">Why Before &amp; After</div>
+    <h2 class="stitle">Deployment success<br>≠ efficiency gain.</h2>
+    <p class="slead">Automation, ERP, and AI initiatives often increase complexity without improving capital velocity. GL measures the delta that matters.</p>
+    <div class="ba-wrap reveal">
+      <div class="ba">
+        <div class="ba-head">Without GL Verification</div>
+        <ul>
+          <li>ERP deployed — approval layers multiplied</li>
+          <li>AI tools added — decision latency unchanged</li>
+          <li>Reorganization done — rework increased</li>
+          <li>Digital roadmap launched — capital velocity declined</li>
+          <li>Consultants validated deployment — efficiency unmeasured</li>
+        </ul>
+      </div>
+      <div class="ba good">
+        <div class="ba-head">With GL Verification</div>
+        <ul>
+          <li>Baseline GL score established pre-transformation</li>
+          <li>Friction sources quantified by layer</li>
+          <li>Post-change GL delta calculated independently</li>
+          <li>Capital efficiency gain or loss documented</li>
+          <li>Board-ready verification report delivered</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="validation">
+  <div class="wrap">
+    <div class="eyebrow">International Validation</div>
+    <h2 class="stitle">9-Case Verification Matrix</h2>
+    <p class="slead">Cross-domain application of GL across education, digital governance, healthcare, housing, climate, and identity systems.</p>
     <div class="tscroll reveal">
       <table>
         <thead><tr><th>#</th><th>Country / System</th><th>Domain</th><th>GL Score</th><th>Signal</th></tr></thead>
         <tbody>
-          <tr><td>01</td><td>Finland · Education</td><td>Public Education</td><td><span class="gln">3.13</span></td><td><span class="tag hi">Excellent</span></td></tr>
-          <tr><td>02</td><td>Brazil · Bolsa Família</td><td>Social Protection</td><td><span class="gln">2.64</span></td><td><span class="tag hi">Excellent</span></td></tr>
-          <tr><td>03</td><td>Estonia · e-Governance</td><td>Digital Identity</td><td><span class="gln">4.20</span></td><td><span class="tag hi">Excellent</span></td></tr>
-          <tr><td>04</td><td>Germany · Energiewende</td><td>Energy / Climate</td><td><span class="gln" style="color:#ff6b6b">0.056</span></td><td><span class="tag lo">Friction</span></td></tr>
-          <tr><td>05</td><td>Singapore · HDB Housing</td><td>Public Housing</td><td><span class="gln" style="color:#ff6b6b">0.020</span></td><td><span class="tag lo">Friction</span></td></tr>
-          <tr><td>06</td><td>South Korea · Digital Gov</td><td>Digital Governance</td><td><span class="gln">4.12</span></td><td><span class="tag hi">Excellent</span></td></tr>
-          <tr><td>07</td><td>Rwanda · Mutuelle</td><td>Healthcare</td><td><span class="gln">5.08</span></td><td><span class="tag hi">Outstanding</span></td></tr>
-          <tr><td>08</td><td>New Zealand · Wellbeing</td><td>Social Policy</td><td><span class="gln" style="color:#ff6b6b">0.32</span></td><td><span class="tag lo">Friction</span></td></tr>
-          <tr><td>09</td><td>Uruguay · Digital Demo</td><td>Governance</td><td><span class="gln">6.24</span></td><td><span class="tag hi">Outstanding</span></td></tr>
-          <tr style="background:rgba(200,245,66,0.02)"><td>Case</td><td>Massachusetts · DUA</td><td>Audit / UI</td><td><span class="gln" style="color:#ff6b6b">0.009</span></td><td><span class="tag lo">Critical</span></td></tr>
-          <tr style="background:rgba(200,245,66,0.02)"><td>Case</td><td>California · EDD</td><td>Admin Flow</td><td><span class="gln" style="color:#ff6b6b">0.012</span></td><td><span class="tag lo">Critical</span></td></tr>
+          <tr><td style="font-family:var(--mono);color:var(--dim);font-size:11px">01</td><td>Finland · Education</td><td>Public Education</td><td><span class="gln">3.13</span></td><td><span class="tag hi">Excellent</span></td></tr>
+          <tr><td style="font-family:var(--mono);color:var(--dim);font-size:11px">02</td><td>Brazil · Bolsa Família</td><td>Social Protection</td><td><span class="gln">2.64</span></td><td><span class="tag hi">Excellent</span></td></tr>
+          <tr><td style="font-family:var(--mono);color:var(--dim);font-size:11px">03</td><td>Estonia · e-Governance</td><td>Digital Identity</td><td><span class="gln">4.20</span></td><td><span class="tag hi">Excellent</span></td></tr>
+          <tr><td style="font-family:var(--mono);color:var(--dim);font-size:11px">04</td><td>Germany · Energiewende</td><td>Climate / Energy</td><td><span class="gln lo-txt">0.056</span></td><td><span class="tag lo">Friction</span></td></tr>
+          <tr><td style="font-family:var(--mono);color:var(--dim);font-size:11px">05</td><td>Singapore · HDB Housing</td><td>Public Housing</td><td><span class="gln lo-txt">0.020</span></td><td><span class="tag lo">Friction</span></td></tr>
+          <tr><td style="font-family:var(--mono);color:var(--dim);font-size:11px">06</td><td>South Korea · Digital Gov 24</td><td>Digital Governance</td><td><span class="gln">4.12</span></td><td><span class="tag hi">Excellent</span></td></tr>
+          <tr><td style="font-family:var(--mono);color:var(--dim);font-size:11px">07</td><td>Rwanda · Mutuelle de Santé</td><td>Healthcare</td><td><span class="gln">5.08</span></td><td><span class="tag hi">Outstanding</span></td></tr>
+          <tr><td style="font-family:var(--mono);color:var(--dim);font-size:11px">08</td><td>New Zealand · Wellbeing Budget</td><td>Social Policy</td><td><span class="gln lo-txt">0.32</span></td><td><span class="tag lo">Friction</span></td></tr>
+          <tr><td style="font-family:var(--mono);color:var(--dim);font-size:11px">09</td><td>Uruguay · Digital Democracy</td><td>Democratic Gov.</td><td><span class="gln">6.24</span></td><td><span class="tag hi">Outstanding</span></td></tr>
         </tbody>
       </table>
     </div>
   </div>
 </section>
 
+<section id="method">
+  <div class="wrap">
+    <div class="eyebrow">Method</div>
+    <h2 class="stitle">GL Method</h2>
+    <p class="slead">A formula for measuring structural efficiency before and after change.</p>
+    <div class="mgrid reveal">
+      <div class="mcard">
+        <div class="mkv">Formula</div>
+        <div class="meq">GL = (Fs × Vn) / (Pd × Cf)</div>
+        <div class="meq" style="margin-top:8px">GL<sub>r</sub> = (Fs × Vn) / (Pd × Cf × SRF)</div>
+      </div>
+      <div class="mcard">
+        <div class="mkv">Inputs</div>
+        <ul class="mlist">
+          <li>Fs: workflow completion success rate</li>
+          <li>Vn: strategic value weight (0–10)</li>
+          <li>Pd: pain duration in hours</li>
+          <li>Cf: cognitive friction index (0–10)</li>
+        </ul>
+      </div>
+      <div class="mcard">
+        <div class="mkv">Protocol</div>
+        <ul class="mlist">
+          <li>Measure baseline GL pre-transformation</li>
+          <li>Measure GL again post-transformation</li>
+          <li>Compute GL delta (gain or loss)</li>
+          <li>Map friction shift by layer</li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top:24px">
+      <a href="https://buy.stripe.com/8x25kFbp0dM4gQl0fB3VC00" class="btn-solid" target="_blank" rel="noopener">Start Verification ($999) →</a>
+    </div>
+  </div>
+</section>
+
 <section class="band" id="pricing">
   <div class="wrap">
-    <div class="eyebrow">Verification Tiers</div>
+    <div class="eyebrow">Engagement</div>
+    <h2 class="stitle">Start verification.</h2>
+    <p class="slead">Three tiers for different stages — from diagnostic assessment to board-ready verification.</p>
     <div class="pg">
-      <div class="pc reveal">
+      <div class="pc">
+        <div class="pc-tier">Diagnostic</div>
         <div class="pc-amt"><span class="pc-cur">$</span>999</div>
-        <h3>Diagnostic</h3>
-        <a href="https://buy.stripe.com/8x25kFbp0dM4gQl0fB3VC00" class="pc-btn" target="_blank">Verify Now</a>
+        <p class="pc-desc">Baseline GL assessment. Identify friction before committing to transformation.</p>
+        <ul class="pc-feats"><li>12-question GL diagnostic</li><li>Friction source identification</li><li>GL score + risk classification</li><li>12-page PDF · 48hr delivery</li></ul>
+        <a href="https://buy.stripe.com/8x25kFbp0dM4gQl0fB3VC00" class="pc-btn" target="_blank" rel="noopener">Begin Assessment →</a>
       </div>
-      <div class="pc feat reveal">
+      <div class="pc feat">
+        <div class="pc-tier">Verification</div>
         <div class="pc-amt"><span class="pc-cur">$</span>4,999</div>
-        <h3>Full Verification</h3>
-        <a href="https://buy.stripe.com/7sYcN764GdM4arX0fB3VC01" class="pc-btn" target="_blank">Verify Now</a>
+        <p class="pc-desc">Before &amp; after GL measurement. Verify whether transformation improved capital efficiency.</p>
+        <ul class="pc-feats"><li>Everything in Diagnostic</li><li>Pre/post GL delta analysis</li><li>Layer-by-layer friction map</li><li>Executive strategy session (2hr)</li><li>30-day follow-up support</li></ul>
+        <a href="https://buy.stripe.com/7sYcN764GdM4arX0fB3VC01" class="pc-btn" target="_blank" rel="noopener">Start Verification →</a>
       </div>
-      <div class="pc reveal">
+      <div class="pc">
+        <div class="pc-tier">Board-Ready</div>
         <div class="pc-amt"><span class="pc-cur">$</span>9,999</div>
-        <h3>Board-Ready</h3>
-        <a href="https://buy.stripe.com/8x228t3WyazS7fL4vR3VC02" class="pc-btn" target="_blank">Verify Now</a>
+        <p class="pc-desc">Full independent verification for board presentation, investor reporting, or M&amp;A due diligence.</p>
+        <ul class="pc-feats"><li>Everything in Verification</li><li>Independent auditor sign-off</li><li>Board presentation format</li><li>Investor / LP summary</li><li>Quarterly tracking</li></ul>
+        <a href="https://buy.stripe.com/8x228t3WyazS7fL4vR3VC02" class="pc-btn" target="_blank" rel="noopener">Engage →</a>
       </div>
     </div>
   </div>
@@ -224,32 +432,288 @@ footer{padding:80px 24px; border-top:1px solid var(--border); text-align:center;
 
 <section id="publications">
   <div class="wrap">
-    <div class="eyebrow">Intellectual Evolution</div>
+    <div class="eyebrow">Publications</div>
+    <h2 class="stitle">Intellectual evolution.</h2>
+    <p class="slead">The thinking behind GL — from framework development to international validation.</p>
     <div class="pub-list reveal">
-      <a href="#" class="pub-item"><span>Feb 2026</span><span class="pub-t">GL Method: Nine International Case Studies Validation</span></a>
-      <a href="#" class="pub-item"><span>Jan 2026</span><span class="pub-t">Capital Efficiency Verification as an Analytical Category</span></a>
-      <a href="#" class="pub-item"><span>Sep 2025</span><span class="pub-t">Introducing the Governance Friction Index (GFI)</span></a>
+      <div class="pub-item"><span class="pub-date">Feb 2026</span><a href="#method" class="pub-t">GL Method: Nine International Case Studies — Concept Validation of the Governance Friction Index</a><span class="pub-tag">Method</span></div>
+      <div class="pub-item"><span class="pub-date">Jan 2026</span><a href="#" class="pub-t">Capital Efficiency Verification as an Independent Analytical Category</a><span class="pub-tag">Framework</span></div>
+      <div class="pub-item"><span class="pub-date">Nov 2025</span><a href="#" class="pub-t">Why Automation Success Does Not Guarantee Efficiency Gain</a><span class="pub-tag">Analysis</span></div>
+      <div class="pub-item"><span class="pub-date">Sep 2025</span><a href="#" class="pub-t">Introducing the Governance Friction Index: A Structural Measurement Approach</a><span class="pub-tag">Foundation</span></div>
     </div>
   </div>
 </section>
 
-<footer>
+<section id="contact" style="text-align:center">
   <div class="wrap">
-    © 2026 GFI Flow Intelligence · Boston · Founder: Ping Xu<br>
-    Contact: <a href="mailto:gfi@gfiintel.com" style="color:var(--accent)">gfi@gfiintel.com</a> | <a href="mailto:contact@gfiintel.com" style="color:var(--accent)">contact@gfiintel.com</a>
+    <div class="eyebrow">Contact</div>
+    <h2 class="stitle">Initiate a verification.</h2>
+    <p class="slead" style="margin:0 auto;text-align:center">For enterprise scoping, partnership inquiries, or academic collaboration.</p>
+    <div class="contact-links" style="justify-content:center;margin-top:36px">
+      <a href="mailto:gfi@gfiintel.com" class="cl">✉ gfi@gfiintel.com</a>
+      <a href="https://buy.stripe.com/8x25kFbp0dM4gQl0fB3VC00" class="cl primary" target="_blank" rel="noopener">⟶ Start Verification ($999)</a>
+      <a href="#method" class="cl">⊞ GL Method</a>
+    </div>
+  </div>
+</section>
+</div><!-- /en -->
+
+<!-- ══════════ 繁體中文 ══════════ -->
+<div class="lb" data-lang="tw">
+<div class="hero">
+  <div class="hero-grid"></div><div class="hero-glow"></div>
+  <div class="wrap hero-inner">
+    <div class="eyebrow">GFI Flow Intelligence · 波士頓</div>
+    <h1>您的轉型<br><em>真的</em>提升了<br>資本效率嗎？</h1>
+    <p class="hero-sub">GL 獨立驗證組織變革是否提升或降低資本速度——轉型前後皆可量化。</p>
+    <div class="hero-btns">
+      <a href="https://buy.stripe.com/8x25kFbp0dM4gQl0fB3VC00" class="btn-solid" target="_blank" rel="noopener">啟動驗證（$999）→</a>
+      <a href="#method-tw" class="btn-ghost">查看方法</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-n">9</div><div class="stat-l">國際案例研究</div></div>
+      <div><div class="stat-n">GL</div><div class="stat-l">專有效率公式</div></div>
+      <div><div class="stat-n">3</div><div class="stat-l">服務層級</div></div>
+      <div><div class="stat-n">Δ</div><div class="stat-l">轉型前後差值</div></div>
+    </div>
+    <div class="sector-portal">
+      <a href="government.html" class="sp-card gov">
+        <div class="sp-tag">公部門</div>
+        <div class="sp-title">政府與公共行政</div>
+        <p class="sp-desc">政府計劃的獨立結構診斷——UI 系統、審計分析、跨州效率比較。適合州審計長、監督辦公室及公共研究者。</p>
+        <div class="sp-cta">了解更多 →</div>
+      </a>
+      <a href="#pricing-tw" onclick="navTo('pricing',event)" class="sp-card priv">
+        <div class="sp-tag">民間企業</div>
+        <div class="sp-title">企業與資本效率</div>
+        <p class="sp-desc">GL 獨立驗證組織轉型是否提升資本速度。適合需要數據佐證而非空洞承諾的 ERP、AI 與數位轉型領導者。</p>
+        <div class="sp-cta">了解更多 →</div>
+      </a>
+    </div>
+  </div>
+</div>
+<section class="band" id="measures-tw"><div class="wrap">
+  <h2 class="stitle">資本速度，<br>結構性驗證。</h2>
+  <p class="slead">GL 驗證資本效率是否真正提升，並指出轉型後摩擦轉移到哪一層。</p>
+  <div class="mg reveal">
+    <div class="mc"><div class="mc-eye">01 · Fs</div><h3>流程成功率</h3><p>合資格流程在無摩擦失敗情況下完成核心工作流程的百分比。</p></div>
+    <div class="mc"><div class="mc-eye">02 · Vn</div><h3>戰略價值</h3><p>加權政策與資本影響，對照轉型目標評分 0–10。</p></div>
+    <div class="mc"><div class="mc-eye">03 · Pd</div><h3>痛點持續時間</h3><p>每年因結構摩擦耗費的小時數——審批、返工迴圈、決策瓶頸。</p></div>
+    <div class="mc"><div class="mc-eye">04 · Cf</div><h3>認知摩擦指數</h3><p>系統複雜性對使用者造成的心智負荷，標準化為 0–10 指數。</p></div>
+  </div>
+  <div class="fstrip reveal">
+    <span>GL = (Fs × Vn) / (Pd × Cf)</span><span style="color:var(--dim)">·</span><span>GL<sub>r</sub> = (Fs × Vn) / (Pd × Cf × SRF)</span>
+    <a href="#method">查看方法 →</a>
+  </div>
+</div></section>
+<section><div class="wrap">
+  <div class="eyebrow">為何需要前後對比</div>
+  <h2 class="stitle">部署成功 ≠ 效率提升。</h2>
+  <p class="slead">自動化、ERP 和 AI 計劃常常增加複雜性，卻未改善資本速度。GL 測量真正重要的差值。</p>
+  <div class="ba-wrap reveal">
+    <div class="ba"><div class="ba-head">沒有 GL 驗證</div><ul><li>ERP 已部署——審批層級增加</li><li>AI 工具已加入——決策延遲未改變</li><li>重組已完成——返工增加</li><li>數位路線圖已啟動——資本速度下降</li><li>顧問驗證了部署——效率未量化</li></ul></div>
+    <div class="ba good"><div class="ba-head">有 GL 驗證</div><ul><li>轉型前建立基準 GL 分數</li><li>按層級量化摩擦來源</li><li>獨立計算轉型後 GL 差值</li><li>記錄資本效率提升或下降</li><li>交付董事會級驗證報告</li></ul></div>
+  </div>
+</div></section>
+<section class="band" id="validation-tw"><div class="wrap">
+  <div class="eyebrow">國際驗證</div>
+  <h2 class="stitle">九案例驗證矩陣</h2>
+  <p class="slead">GL 公式跨域應用於教育、數位治理、醫療、住房、氣候和身份系統。</p>
+  <div class="tscroll reveal"><table>
+    <thead><tr><th>#</th><th>國家 / 系統</th><th>領域</th><th>GL 分數</th><th>信號</th></tr></thead>
+    <tbody>
+      <tr><td style="font-family:var(--mono);color:var(--dim);font-size:11px">01</td><td>芬蘭 · 教育制度</td><td>公共教育</td><td><span class="gln">3.13</span></td><td><span class="tag hi">優良</span></td></tr>
+      <tr><td style="font-family:var(--mono);color:var(--dim);font-size:11px">02</td><td>巴西 · 家庭補助金</td><td>社會保護</td><td><span class="gln">2.64</span></td><td><span class="tag hi">優良</span></td></tr>
+      <tr><td style="font-family:var(--mono);color:var(--dim);font-size:11px">03</td><td>愛沙尼亞 · 數位治理</td><td>數位身份</td><td><span class="gln">4.20</span></td><td><span class="tag hi">優良</span></td></tr>
+      <tr><td style="font-family:var(--mono);color:var(--dim);font-size:11px">04</td><td>德國 · 能源轉型</td><td>氣候 / 能源</td><td><span class="gln lo-txt">0.056</span></td><td><span class="tag lo">高摩擦</span></td></tr>
+      <tr><td style="font-family:var(--mono);color:var(--dim);font-size:11px">05</td><td>新加坡 · 公共住房</td><td>住房</td><td><span class="gln lo-txt">0.020</span></td><td><span class="tag lo">高摩擦</span></td></tr>
+      <tr><td style="font-family:var(--mono);color:var(--dim);font-size:11px">06</td><td>南韓 · 數位政府 24</td><td>數位治理</td><td><span class="gln">4.12</span></td><td><span class="tag hi">優良</span></td></tr>
+      <tr><td style="font-family:var(--mono);color:var(--dim);font-size:11px">07</td><td>盧安達 · 社區健康保險</td><td>醫療</td><td><span class="gln">5.08</span></td><td><span class="tag hi">卓越</span></td></tr>
+      <tr><td style="font-family:var(--mono);color:var(--dim);font-size:11px">08</td><td>紐西蘭 · 幸福預算</td><td>社會政策</td><td><span class="gln lo-txt">0.32</span></td><td><span class="tag lo">高摩擦</span></td></tr>
+      <tr><td style="font-family:var(--mono);color:var(--dim);font-size:11px">09</td><td>烏拉圭 · 數位民主</td><td>民主治理</td><td><span class="gln">6.24</span></td><td><span class="tag hi">卓越</span></td></tr>
+    </tbody>
+  </table></div>
+</div></section>
+<section id="method-tw"><div class="wrap">
+  <div class="eyebrow">方法</div>
+  <h2 class="stitle">GL 方法</h2>
+  <p class="slead">衡量轉型前後資本效率變化的計算方法。</p>
+  <div class="mgrid reveal">
+    <div class="mcard"><div class="mkv">公式</div><div class="meq">GL = (Fs × Vn) / (Pd × Cf)</div><div class="meq" style="margin-top:8px">GL<sub>r</sub> = (Fs × Vn) / (Pd × Cf × SRF)</div></div>
+    <div class="mcard"><div class="mkv">輸入</div><ul class="mlist"><li>Fs：流程完成成功率</li><li>Vn：戰略價值權重（0–10）</li><li>Pd：痛點耗時（延遲/迴圈）</li><li>Cf：認知摩擦指數（0–10）</li></ul></div>
+    <div class="mcard"><div class="mkv">流程</div><ul class="mlist"><li>轉型前建立 GL 基準</li><li>轉型後用同一流程再測</li><li>計算 GL 差值（增益/損失）</li><li>標示摩擦轉移的層級</li></ul></div>
+  </div>
+  <div style="margin-top:24px"><a href="https://buy.stripe.com/8x25kFbp0dM4gQl0fB3VC00" class="btn-solid" target="_blank" rel="noopener">啟動驗證（$999）→</a></div>
+</div></section>
+<section class="band" id="pricing-tw"><div class="wrap">
+  <div class="eyebrow">服務方案</div>
+  <h2 class="stitle">啟動驗證。</h2>
+  <p class="slead">三個層級，適應轉型的不同階段。</p>
+  <div class="pg">
+    <div class="pc"><div class="pc-tier">診斷</div><div class="pc-amt"><span class="pc-cur">$</span>999</div><p class="pc-desc">基準 GL 評估。在承諾轉型前識別摩擦源。</p><ul class="pc-feats"><li>12 題 GL 診斷</li><li>摩擦源識別</li><li>GL 分數 + 風險分類</li><li>12 頁 PDF · 48 小時交付</li></ul><a href="https://buy.stripe.com/8x25kFbp0dM4gQl0fB3VC00" class="pc-btn" target="_blank" rel="noopener">開始評估 →</a></div>
+    <div class="pc feat"><div class="pc-tier">驗證</div><div class="pc-amt"><span class="pc-cur">$</span>4,999</div><p class="pc-desc">轉型前後 GL 測量。驗證您的轉型是否真正提升資本效率。</p><ul class="pc-feats"><li>包含診斷所有內容</li><li>前後 GL 差值分析</li><li>逐層摩擦地圖</li><li>高管策略會議（2 小時）</li><li>30 天後續支援</li></ul><a href="https://buy.stripe.com/7sYcN764GdM4arX0fB3VC01" class="pc-btn" target="_blank" rel="noopener">啟動驗證 →</a></div>
+    <div class="pc"><div class="pc-tier">董事會級</div><div class="pc-amt"><span class="pc-cur">$</span>9,999</div><p class="pc-desc">適合董事會報告、投資人呈現或併購盡職調查。</p><ul class="pc-feats"><li>包含驗證所有內容</li><li>獨立審計師簽核</li><li>董事會報告格式</li><li>投資人摘要</li><li>季度持續追蹤</li></ul><a href="https://buy.stripe.com/8x228t3WyazS7fL4vR3VC02" class="pc-btn" target="_blank" rel="noopener">聯繫洽詢 →</a></div>
+  </div>
+</div></section>
+<section style="text-align:center"><div class="wrap">
+  <div class="eyebrow">聯絡</div>
+  <h2 class="stitle">啟動驗證。</h2>
+  <p class="slead" style="margin:0 auto;text-align:center">企業範圍評估、合作夥伴諮詢或學術合作。</p>
+  <div class="contact-links" style="justify-content:center;margin-top:36px">
+    <a href="mailto:gfi@gfiintel.com" class="cl">✉ gfi@gfiintel.com</a>
+    <a href="https://buy.stripe.com/8x25kFbp0dM4gQl0fB3VC00" class="cl primary" target="_blank" rel="noopener">⟶ 啟動驗證（$999）</a>
+    <a href="#method-tw" class="cl">⊞ GL 方法</a>
+  </div>
+</div></section>
+</div><!-- /tw -->
+
+<!-- ══════════ 简体中文 ══════════ -->
+<div class="lb" data-lang="cn">
+<div class="hero">
+  <div class="hero-grid"></div><div class="hero-glow"></div>
+  <div class="wrap hero-inner">
+    <div class="eyebrow">GFI Flow Intelligence · 波士顿</div>
+    <h1>您的转型<br><em>真的</em>提升了<br>资本效率吗？</h1>
+    <p class="hero-sub">GL 独立验证组织变革是否提升或降低资本速度——转型前后皆可量化。</p>
+    <div class="hero-btns">
+      <a href="https://buy.stripe.com/8x25kFbp0dM4gQl0fB3VC00" class="btn-solid" target="_blank" rel="noopener">启动验证（$999）→</a>
+      <a href="#method-cn" class="btn-ghost">查看方法</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-n">9</div><div class="stat-l">国际案例研究</div></div>
+      <div><div class="stat-n">GL</div><div class="stat-l">专有效率公式</div></div>
+      <div><div class="stat-n">3</div><div class="stat-l">服务层级</div></div>
+      <div><div class="stat-n">Δ</div><div class="stat-l">转型前后差值</div></div>
+    </div>
+    <div class="sector-portal">
+      <a href="government.html" class="sp-card gov">
+        <div class="sp-tag">公共部门</div>
+        <div class="sp-title">政府与公共行政</div>
+        <p class="sp-desc">政府项目的独立结构诊断——UI 系统、审计分析、跨州效率比较。适合州审计长、监督办公室及公共研究者。</p>
+        <div class="sp-cta">了解更多 →</div>
+      </a>
+      <a href="#pricing-cn" onclick="navTo('pricing',event)" class="sp-card priv">
+        <div class="sp-tag">民间企业</div>
+        <div class="sp-title">企业与资本效率</div>
+        <p class="sp-desc">GL 独立验证组织转型是否提升资本速度。适合需要数据佐证而非空洞承诺的 ERP、AI 与数字转型领导者。</p>
+        <div class="sp-cta">了解更多 →</div>
+      </a>
+    </div>
+  </div>
+</div>
+<section class="band" id="measures-cn"><div class="wrap">
+  <div class="eyebrow">GL 测量什么</div>
+  <h2 class="stitle">资本速度，<br>结构性验证。</h2>
+  <p class="slead">GL 验证资本效率是否真正提升，并指出转型后摩擦转移到哪一层。</p>
+  <div class="mg reveal">
+    <div class="mc"><div class="mc-eye">01 · Fs</div><h3>流程成功率</h3><p>符合条件的流程在无摩擦失败情况下完成核心工作流程的百分比。</p></div>
+    <div class="mc"><div class="mc-eye">02 · Vn</div><h3>战略价值</h3><p>加权政策与资本影响，对照转型目标评分 0–10。</p></div>
+    <div class="mc"><div class="mc-eye">03 · Pd</div><h3>痛点持续时间</h3><p>每年因结构摩擦耗费的小时数——审批、返工循环、决策瓶颈。</p></div>
+    <div class="mc"><div class="mc-eye">04 · Cf</div><h3>认知摩擦指数</h3><p>系统复杂性对用户造成的心智负荷，标准化为 0–10 指数。</p></div>
+  </div>
+  <div class="fstrip reveal">
+    <span>GL = (Fs × Vn) / (Pd × Cf)</span><span style="color:var(--dim)">·</span><span>GL<sub>r</sub> = (Fs × Vn) / (Pd × Cf × SRF)</span>
+    <a href="#method-cn">查看方法 →</a>
+  </div>
+</div></section>
+<section><div class="wrap">
+  <div class="eyebrow">为何需要前后对比</div>
+  <h2 class="stitle">部署成功 ≠ 效率提升。</h2>
+  <p class="slead">自动化、ERP 和 AI 项目常常增加复杂性，却未改善资本速度。GL 测量真正重要的差值。</p>
+  <div class="ba-wrap reveal">
+    <div class="ba"><div class="ba-head">没有 GL 验证</div><ul><li>ERP 已部署——审批层级增加</li><li>AI 工具已加入——决策延迟未改变</li><li>重组已完成——返工增加</li><li>数字路线图已启动——资本速度下降</li><li>顾问验证了部署——效率未量化</li></ul></div>
+    <div class="ba good"><div class="ba-head">有 GL 验证</div><ul><li>转型前建立基准 GL 分数</li><li>按层级量化摩擦来源</li><li>独立计算转型后 GL 差值</li><li>记录资本效率提升或下降</li><li>交付董事会级验证报告</li></ul></div>
+  </div>
+</div></section>
+<section class="band" id="validation-cn"><div class="wrap">
+  <div class="eyebrow">国际验证</div>
+  <h2 class="stitle">九案例验证矩阵</h2>
+  <p class="slead">GL 公式跨域应用于教育、数字治理、医疗、住房、气候和身份系统。</p>
+  <div class="tscroll reveal"><table>
+    <thead><tr><th>#</th><th>国家 / 系统</th><th>领域</th><th>GL 分数</th><th>信号</th></tr></thead>
+    <tbody>
+      <tr><td style="font-family:var(--mono);color:var(--dim);font-size:11px">01</td><td>芬兰 · 教育制度</td><td>公共教育</td><td><span class="gln">3.13</span></td><td><span class="tag hi">优良</span></td></tr>
+      <tr><td style="font-family:var(--mono);color:var(--dim);font-size:11px">02</td><td>巴西 · 家庭补助金</td><td>社会保护</td><td><span class="gln">2.64</span></td><td><span class="tag hi">优良</span></td></tr>
+      <tr><td style="font-family:var(--mono);color:var(--dim);font-size:11px">03</td><td>爱沙尼亚 · 数字治理</td><td>数字身份</td><td><span class="gln">4.20</span></td><td><span class="tag hi">优良</span></td></tr>
+      <tr><td style="font-family:var(--mono);color:var(--dim);font-size:11px">04</td><td>德国 · 能源转型</td><td>气候 / 能源</td><td><span class="gln lo-txt">0.056</span></td><td><span class="tag lo">高摩擦</span></td></tr>
+      <tr><td style="font-family:var(--mono);color:var(--dim);font-size:11px">05</td><td>新加坡 · 公共住房</td><td>住房</td><td><span class="gln lo-txt">0.020</span></td><td><span class="tag lo">高摩擦</span></td></tr>
+      <tr><td style="font-family:var(--mono);color:var(--dim);font-size:11px">06</td><td>韩国 · 数字政府 24</td><td>数字治理</td><td><span class="gln">4.12</span></td><td><span class="tag hi">优良</span></td></tr>
+      <tr><td style="font-family:var(--mono);color:var(--dim);font-size:11px">07</td><td>卢旺达 · 社区健康保险</td><td>医疗</td><td><span class="gln">5.08</span></td><td><span class="tag hi">卓越</span></td></tr>
+      <tr><td style="font-family:var(--mono);color:var(--dim);font-size:11px">08</td><td>新西兰 · 幸福预算</td><td>社会政策</td><td><span class="gln lo-txt">0.32</span></td><td><span class="tag lo">高摩擦</span></td></tr>
+      <tr><td style="font-family:var(--mono);color:var(--dim);font-size:11px">09</td><td>乌拉圭 · 数字民主</td><td>民主治理</td><td><span class="gln">6.24</span></td><td><span class="tag hi">卓越</span></td></tr>
+    </tbody>
+  </table></div>
+</div></section>
+<section id="method-cn"><div class="wrap">
+  <div class="eyebrow">方法</div>
+  <h2 class="stitle">GL 方法</h2>
+  <p class="slead">衡量转型前后资本效率变化的计算方法。</p>
+  <div class="mgrid reveal">
+    <div class="mcard"><div class="mkv">公式</div><div class="meq">GL = (Fs × Vn) / (Pd × Cf)</div><div class="meq" style="margin-top:8px">GL<sub>r</sub> = (Fs × Vn) / (Pd × Cf × SRF)</div></div>
+    <div class="mcard"><div class="mkv">输入</div><ul class="mlist"><li>Fs：流程完成成功率</li><li>Vn：战略价值权重（0–10）</li><li>Pd：痛点耗时（延迟/循环）</li><li>Cf：认知摩擦指数（0–10）</li></ul></div>
+    <div class="mcard"><div class="mkv">流程</div><ul class="mlist"><li>转型前建立 GL 基准</li><li>转型后用同一流程再测</li><li>计算 GL 差值（增益/损失）</li><li>标示摩擦转移的层级</li></ul></div>
+  </div>
+  <div style="margin-top:24px"><a href="https://buy.stripe.com/8x25kFbp0dM4gQl0fB3VC00" class="btn-solid" target="_blank" rel="noopener">启动验证（$999）→</a></div>
+</div></section>
+<section class="band" id="pricing-cn"><div class="wrap">
+  <div class="eyebrow">服务方案</div>
+  <h2 class="stitle">启动验证。</h2>
+  <p class="slead">三个层级，适应转型的不同阶段。</p>
+  <div class="pg">
+    <div class="pc"><div class="pc-tier">诊断</div><div class="pc-amt"><span class="pc-cur">$</span>999</div><p class="pc-desc">基准 GL 评估。在承诺转型前识别摩擦源。</p><ul class="pc-feats"><li>12 题 GL 诊断</li><li>摩擦源识别</li><li>GL 分数 + 风险分类</li><li>12 页 PDF · 48 小时交付</li></ul><a href="https://buy.stripe.com/8x25kFbp0dM4gQl0fB3VC00" class="pc-btn" target="_blank" rel="noopener">开始评估 →</a></div>
+    <div class="pc feat"><div class="pc-tier">验证</div><div class="pc-amt"><span class="pc-cur">$</span>4,999</div><p class="pc-desc">转型前后 GL 测量。验证您的转型是否真正提升资本效率。</p><ul class="pc-feats"><li>包含诊断所有内容</li><li>前后 GL 差值分析</li><li>逐层摩擦地图</li><li>高管策略会议（2 小时）</li><li>30 天后续支持</li></ul><a href="https://buy.stripe.com/7sYcN764GdM4arX0fB3VC01" class="pc-btn" target="_blank" rel="noopener">启动验证 →</a></div>
+    <div class="pc"><div class="pc-tier">董事会级</div><div class="pc-amt"><span class="pc-cur">$</span>9,999</div><p class="pc-desc">适合董事会报告、投资人呈现或并购尽职调查。</p><ul class="pc-feats"><li>包含验证所有内容</li><li>独立审计师签核</li><li>董事会报告格式</li><li>投资人摘要</li><li>季度持续追踪</li></ul><a href="https://buy.stripe.com/8x228t3WyazS7fL4vR3VC02" class="pc-btn" target="_blank" rel="noopener">联系洽询 →</a></div>
+  </div>
+</div></section>
+<section style="text-align:center"><div class="wrap">
+  <div class="eyebrow">联系</div>
+  <h2 class="stitle">启动验证。</h2>
+  <p class="slead" style="margin:0 auto;text-align:center">企业范围评估、合作伙伴咨询或学术合作。</p>
+  <div class="contact-links" style="justify-content:center;margin-top:36px">
+    <a href="mailto:gfi@gfiintel.com" class="cl">✉ gfi@gfiintel.com</a>
+    <a href="https://buy.stripe.com/8x25kFbp0dM4gQl0fB3VC00" class="cl primary" target="_blank" rel="noopener">⟶ 启动验证（$999）</a>
+    <a href="#method-cn" class="cl">⊞ GL 方法</a>
+  </div>
+</div></section>
+</div><!-- /cn -->
+
+<footer>
+  <span>© 2026 GFI Flow Intelligence · Boston</span>
+  <div class="footer-links">
+    <a href="#method">Method</a>
+    <a href="government.html">Public Sector</a>
+    <a href="mailto:gfi@gfiintel.com">Contact</a>
   </div>
 </footer>
 
 <script>
-/* ══════════ 完整保留原始 100+ 行 JS 邏輯 ══════════ */
-function setLang(l,b){
-  document.querySelectorAll('.lb').forEach(e=>e.classList.remove('on'));
-  document.querySelectorAll('.lb[data-lang="'+l+'"]').forEach(e=>e.classList.add('on'));
-  document.querySelectorAll('.lb-btn').forEach(x=>x.classList.remove('on')); b.classList.add('on');
+function navTo(section, e) {
+  e && e.preventDefault();
+  const lang = document.querySelector('.lb.on') ? document.querySelector('.lb.on').getAttribute('data-lang') : 'en';
+  const suffix = lang === 'tw' ? '-tw' : lang === 'cn' ? '-cn' : '';
+  const target = document.getElementById(section + suffix) || document.getElementById(section);
+  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
-function navTo(id,e){ e.preventDefault(); document.getElementById(id).scrollIntoView({behavior:'smooth'}); }
-const ro=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis')}),{threshold:0.1});
-document.querySelectorAll('.reveal').forEach(e=>ro.observe(e));
+
+function setLang(lang,btn){
+  document.querySelectorAll('.lb').forEach(el=>el.classList.remove('on'));
+  document.querySelectorAll('.lb[data-lang="'+lang+'"]').forEach(el=>el.classList.add('on'));
+  document.querySelectorAll('.lb-btn').forEach(b=>{
+    b.classList.toggle('on', b.getAttribute('onclick') && b.getAttribute('onclick').includes("'"+lang+"'"));
+  });
+  closeDrawer();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleDrawer(){
+  document.getElementById('ham').classList.toggle('open');
+  document.getElementById('drawer').classList.toggle('open');
+}
+function closeDrawer(){
+  document.getElementById('ham').classList.remove('open');
+  document.getElementById('drawer').classList.remove('open');
+}
+const ro=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis')}),{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
 </script>
 </body>
 </html>
