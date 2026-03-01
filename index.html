@@ -10,94 +10,64 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #141d2e;
-            --surf: #1c2740;
-            --surf2: #22304e;
-            --border: rgba(255,255,255,0.08);
-            --text: #edf0f8;
-            --muted: #8fa3c0;
-            --dim: #4a6080;
-            --accent: #c8f542;
-            --blue: #4da3ff;
-            --serif: 'DM Serif Display', Georgia, serif;
-            --mono: 'DM Mono', monospace;
-            --sans: 'DM Sans', system-ui, sans-serif;
+            --bg: #141d2e; --surf: #1c2740; --surf2: #22304e; --border: rgba(255,255,255,0.08);
+            --text: #edf0f8; --muted: #8fa3c0; --dim: #4a6080; --accent: #c8f542;
+            --blue: #4da3ff; --serif: 'DM Serif Display', Georgia, serif; 
+            --mono: 'DM Mono', monospace; --sans: 'DM Sans', system-ui, sans-serif;
         }
-
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
         body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 17px; line-height: 1.75; overflow-x: hidden; }
 
-        /* HEADER */
         header { position: fixed; inset: 0 0 auto 0; z-index: 100; height: 60px; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; background: rgba(20, 29, 46, 0.93); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
         .logo img { height: 44px; width: auto; mix-blend-mode: lighten; border-radius: 6px; }
         nav { display: flex; align-items: center; gap: 4px; }
-        nav a { font-size: 13px; color: var(--muted); text-decoration: none; padding: 6px 10px; border-radius: 6px; white-space: nowrap; transition: color .2s, background .2s; }
+        nav a { font-size: 13px; color: var(--muted); text-decoration: none; padding: 6px 10px; border-radius: 6px; white-space: nowrap; transition: 0.2s; }
         nav a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
         .lang-grp { display: flex; gap: 3px; margin-left: 8px; }
-        .lb-btn { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; padding: 5px 9px; border: 1px solid var(--border); border-radius: 4px; background: none; color: var(--muted); cursor: pointer; transition: all .2s; }
+        .lb-btn { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; padding: 5px 9px; border: 1px solid var(--border); border-radius: 4px; background: none; color: var(--muted); cursor: pointer; transition: 0.2s; }
         .lb-btn.on { color: var(--accent); border-color: rgba(200, 245, 66, 0.35); background: rgba(200, 245, 66, 0.06); }
 
-        /* HERO SECTION */
         .hero { position: relative; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; overflow: hidden; padding-top: 60px; }
         .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px); background-size: 52px 52px; mask-image: radial-gradient(ellipse 80% 50% at 50% 0%, black 20%, transparent 75%); pointer-events: none; }
         .wrap { max-width: 1060px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 60px); position: relative; z-index: 10; }
-        .hero-inner { text-align: center; }
-        .hero h1 { font-family: var(--serif); font-size: clamp(34px, 5.5vw, 64px); line-height: 1.1; margin-bottom: 48px; }
-        .hero-sub { font-size: clamp(16px, 2vw, 19px); color: var(--muted); max-width: 650px; margin: 0 auto 48px; }
+        
+        /* 標題 100% 還原 */
+        .hero h1 { font-family: var(--serif); font-size: clamp(34px, 5.5vw, 64px); line-height: 1.1; margin-bottom: 48px; text-align: center; }
 
-        /* DUAL ENTRY CARDS */
         .dual-box { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
-        .e-card { text-decoration: none; flex: 1; min-width: 320px; max-width: 480px; transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); }
+        .e-card { text-decoration: none; flex: 1; min-width: 320px; max-width: 480px; transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); }
         .e-inner { background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border); padding: 40px 32px; border-radius: 20px; height: 100%; display: flex; flex-direction: column; text-align: left; }
         .e-card:hover .e-inner { border-color: var(--accent); background: rgba(200, 245, 66, 0.04); transform: translateY(-8px); }
         .e-label { font-family: var(--mono); font-size: 11px; letter-spacing: 2px; color: var(--muted); display: block; margin-bottom: 16px; }
         .e-title { font-family: var(--serif); font-size: 28px; color: var(--text); margin-bottom: 12px; }
-        .e-desc { color: var(--muted); font-size: 15px; margin-bottom: 24px; }
         .e-cta { margin-top: auto; font-family: var(--mono); font-size: 13px; font-weight: 600; color: var(--accent); }
 
-        /* MEASURES SECTION */
         section { padding: clamp(60px, 10vh, 110px) 0; }
         section.band { background: var(--surf); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-        h2.stitle { font-family: var(--serif); font-size: clamp(26px, 3.5vw, 42px); line-height: 1.15; margin-bottom: 24px; }
         .mg { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-top: 48px; }
         .mc { background: var(--surf); padding: 34px; transition: background .2s; }
-        .mc:hover { background: var(--surf2); }
-        .mc-eye { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: .12em; margin-bottom: 12px; }
-        .mc h3 { font-family: var(--serif); font-size: 22px; margin-bottom: 12px; }
-        .mc p { font-size: 15px; color: var(--muted); line-height: 1.6; }
         .fstrip { margin-top: 32px; padding: 26px 32px; background: rgba(0,0,0,.2); border: 1px solid var(--border); border-radius: 8px; font-family: var(--mono); font-size: 14px; color: var(--muted); text-align: center; }
 
-        /* VALIDATION TABLE */
         .tscroll { overflow-x: auto; margin-top: 48px; border: 1px solid var(--border); border-radius: 10px; }
         table { width: 100%; min-width: 800px; border-collapse: collapse; font-size: 14px; text-align: left; }
         th { font-family: var(--mono); font-size: 10px; color: var(--muted); padding: 18px 24px; border-bottom: 1px solid var(--border); text-transform: uppercase; letter-spacing: 1px; }
-        td { padding: 18px 24px; border-bottom: 1px solid var(--border); color: var(--muted); vertical-align: middle; }
+        td { padding: 18px 24px; border-bottom: 1px solid var(--border); color: var(--muted); }
         .gln { font-family: var(--serif); font-size: 22px; color: var(--accent); }
-        .tag { padding: 4px 10px; border-radius: 4px; font-family: var(--mono); font-size: 10px; font-weight: 500; }
+        .tag { padding: 4px 10px; border-radius: 4px; font-family: var(--mono); font-size: 10px; }
         .tag.hi { background: rgba(200, 245, 66, 0.1); color: var(--accent); }
-        .tag.lo { background: rgba(255, 107, 107, 0.1); color: #ff7070; }
 
-        /* PRICING */
         .pg { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 24px; margin-top: 48px; }
-        .pc { background: var(--surf); border: 1px solid var(--border); border-radius: 12px; padding: 40px; display: flex; flex-direction: column; transition: transform 0.3s; }
-        .pc.feat { border-color: var(--accent); background: rgba(200, 245, 66, 0.02); }
+        .pc { background: var(--surf); border: 1px solid var(--border); border-radius: 12px; padding: 40px; display: flex; flex-direction: column; }
         .pc-amt { font-family: var(--serif); font-size: 52px; line-height: 1; margin-bottom: 8px; }
-        .pc-cur { font-size: 18px; vertical-align: top; color: var(--muted); margin-right: 4px; }
-        .pc h3 { font-family: var(--serif); font-size: 24px; margin-bottom: 12px; }
-        .pc p { font-size: 15px; color: var(--muted); margin-bottom: 32px; line-height: 1.6; }
-        .pc-btn { display: block; text-align: center; padding: 16px; background: var(--accent); color: #0d1117; font-weight: 700; text-decoration: none; border-radius: 8px; margin-top: auto; transition: opacity 0.2s; }
-        .pc-btn:hover { opacity: 0.9; }
+        .pc-btn { display: block; text-align: center; padding: 16px; background: var(--accent); color: #0d1117; font-weight: 700; text-decoration: none; border-radius: 8px; margin-top: auto; }
 
-        .lb { display: none; }
-        .lb.on { display: block; }
+        .lb { display: none; } .lb.on { display: block; }
         footer { padding: 80px 24px; border-top: 1px solid var(--border); text-align: center; color: var(--muted); font-size: 13px; }
-        .reveal { opacity: 0; transform: translateY(20px); transition: opacity .65s, transform .65s; }
-        .reveal.vis { opacity: 1; transform: none; }
+        .reveal { opacity: 0; transform: translateY(20px); transition: 0.65s; } .reveal.vis { opacity: 1; transform: none; }
     </style>
 </head>
 <body>
-
 <header>
     <a href="index.html" class="logo"><img src="GFILOGO.png" alt="GFI Flow Intelligence"></a>
     <nav>
@@ -132,26 +102,26 @@
                     <span class="e-label">PUBLIC SECTOR / GOVERNMENT</span>
                     <div class="lb on" data-lang="en">
                         <h2 class="e-title">Institutional Flow</h2>
-                        <p class="e-desc">Verify administrative flow and institutional friction in public systems.</p>
+                        <p style="color:var(--muted); font-size:15px; margin-bottom:24px;">Verify administrative flow and institutional friction in public systems.</p>
                     </div>
                     <div class="lb" data-lang="tw">
                         <h2 class="e-title">公營機構與治理</h2>
-                        <p class="e-desc">驗證政府系統中的行政流動性，修復制度摩擦造成的積壓。</p>
+                        <p style="color:var(--muted); font-size:15px; margin-bottom:24px;">驗證政府系統中的行政流動性，修復制度摩擦造成的積壓。</p>
                     </div>
                     <span class="e-cta">ENTER SECTOR →</span>
                 </div>
             </a>
-
+            
             <a href="#pricing" onclick="navTo('pricing',event)" class="e-card">
                 <div class="e-inner">
                     <span class="e-label">PRIVATE ENTERPRISE</span>
                     <div class="lb on" data-lang="en">
                         <h2 class="e-title">Capital Velocity</h2>
-                        <p class="e-desc">Optimize capital allocation and operational denominators for growth.</p>
+                        <p style="color:var(--muted); font-size:15px; margin-bottom:24px;">Optimize capital allocation and operational denominators for growth.</p>
                     </div>
                     <div class="lb" data-lang="tw">
                         <h2 class="e-title">民營企業策略</h2>
-                        <p class="e-desc">優化資本配置，測量營運分母，提升結構性獲利能力。</p>
+                        <p style="color:var(--muted); font-size:15px; margin-bottom:24px;">優化資本配置，測量營運分母，提升結構性獲利能力。</p>
                     </div>
                     <span class="e-cta" style="color:var(--blue);">START VERIFICATION →</span>
                 </div>
@@ -166,10 +136,10 @@
         <div class="lb on" data-lang="en"><h2 class="stitle">Structural metrics of flow efficiency.</h2></div>
         <div class="lb" data-lang="tw"><h2 class="stitle">結構化流動性效率指標。</h2></div>
         <div class="mg reveal">
-            <div class="mc"><div class="mc-eye">01 · Fs</div><h3>Flow Success</h3><p>Percentage of processes completing core workflow without structural friction failure.</p></div>
-            <div class="mc"><div class="mc-eye">02 · Vn</div><h3>Strategic Value</h3><p>Weighted policy and capital impact scored against organizational objectives.</p></div>
-            <div class="mc"><div class="mc-eye">03 · Pd</div><h3>Pain Duration</h3><p>Total time consumed by structural friction — approvals, rework, and wait states.</p></div>
-            <div class="mc"><div class="mc-eye">04 · Cf</div><h3>Cognitive Friction</h3><p>Mental load index reflecting the complexity imposed on users and staff.</p></div>
+            <div class="mc"><div class="mc-eye">Fs</div><h3>Flow Success</h3><p>Percentage of processes completing core workflow without failure.</p></div>
+            <div class="mc"><div class="mc-eye">Vn</div><h3>Strategic Value</h3><p>Weighted policy and capital impact scored against objectives.</p></div>
+            <div class="mc"><div class="mc-eye">Pd</div><h3>Pain Duration</h3><p>Total time consumed by structural friction and wait states.</p></div>
+            <div class="mc"><div class="mc-eye">Cf</div><h3>Cognitive Friction</h3><p>Mental load index reflecting complexity imposed on users.</p></div>
         </div>
         <div class="fstrip reveal">GL = (Fs × Vn) / (Pd × Cf)</div>
     </div>
@@ -181,15 +151,7 @@
         <h2 class="stitle">International Validation</h2>
         <div class="tscroll reveal">
             <table>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Country / System</th>
-                        <th>Domain</th>
-                        <th>GL Score</th>
-                        <th>Signal</th>
-                    </tr>
-                </thead>
+                <thead><tr><th>#</th><th>Country / System</th><th>Domain</th><th>GL Score</th><th>Signal</th></tr></thead>
                 <tbody>
                     <tr><td>01</td><td>Finland · Education</td><td>Public Education</td><td><span class="gln">3.13</span></td><td><span class="tag hi">Excellent</span></td></tr>
                     <tr><td>02</td><td>Brazil · Bolsa Família</td><td>Social Protection</td><td><span class="gln">2.64</span></td><td><span class="tag hi">Excellent</span></td></tr>
@@ -199,7 +161,10 @@
                     <tr><td>06</td><td>South Korea · Digital Gov</td><td>Digital Governance</td><td><span class="gln">4.12</span></td><td><span class="tag hi">Excellent</span></td></tr>
                     <tr><td>07</td><td>Rwanda · Mutuelle</td><td>Healthcare</td><td><span class="gln">5.08</span></td><td><span class="tag hi">Outstanding</span></td></tr>
                     <tr><td>08</td><td>New Zealand · Wellbeing</td><td>Social Policy</td><td><span class="gln" style="color:#ff6b6b">0.32</span></td><td><span class="tag lo">Friction</span></td></tr>
-                    <tr><td>09</td><td>Urugu Uruguay · Digital Demo</td><td>Governance</td><td><span class="gln">6.24</span></td><td><span class="tag hi">Outstanding</span></td></tr>
+                    <tr><td>09</td><td>Uruguay · Digital Demo</td><td>Governance</td><td><span class="gln">6.24</span></td><td><span class="tag hi">Outstanding</span></td></tr>
+                    <tr style="background:rgba(200,245,66,0.02)"><td>Case</td><td>Massachusetts · DUA</td><td>Audit / UI</td><td><span class="gln" style="color:#ff6b6b">0.009</span></td><td><span class="tag lo">Critical</span></td></tr>
+                    <tr style="background:rgba(200,245,66,0.02)"><td>Case</td><td>California · EDD</td><td>Administrative Flow</td><td><span class="gln" style="color:#ff6b6b">0.012</span></td><td><span class="tag lo">Critical</span></td></tr>
+                    <tr style="background:rgba(200,245,66,0.02)"><td>Case</td><td>Florida · DEO</td><td>Structural Stability</td><td><span class="gln" style="color:#ff6b6b">0.015</span></td><td><span class="tag lo">Critical</span></td></tr>
                 </tbody>
             </table>
         </div>
@@ -212,38 +177,17 @@
         <div class="pg">
             <div class="pc reveal">
                 <div class="pc-amt"><span class="pc-cur">$</span>999</div>
-                <div class="lb on" data-lang="en">
-                    <h3>Diagnostic</h3>
-                    <p>12-page PDF assessment. Baseline GL score and friction source identification.</p>
-                </div>
-                <div class="lb" data-lang="tw">
-                    <h3>基礎診斷</h3>
-                    <p>12 頁 PDF 評估報告。建立基準 GL 分數並識別摩擦源。</p>
-                </div>
+                <h3>Diagnostic</h3>
                 <a href="https://buy.stripe.com/8x25kFbp0dM4gQl0fB3VC00" class="pc-btn" target="_blank">Verify Now</a>
             </div>
             <div class="pc feat reveal">
                 <div class="pc-amt"><span class="pc-cur">$</span>4,999</div>
-                <div class="lb on" data-lang="en">
-                    <h3>Full Verification</h3>
-                    <p>Before/After Delta analysis. Detailed structural impact report + strategy session.</p>
-                </div>
-                <div class="lb" data-lang="tw">
-                    <h3>完整驗證</h3>
-                    <p>轉型前後差值分析。詳細結構影響報告與策略諮詢會議。</p>
-                </div>
+                <h3>Full Verification</h3>
                 <a href="https://buy.stripe.com/7sYcN764GdM4arX0fB3VC01" class="pc-btn" target="_blank">Verify Now</a>
             </div>
             <div class="pc reveal">
                 <div class="pc-amt"><span class="pc-cur">$</span>9,999</div>
-                <div class="lb on" data-lang="en">
-                    <h3>Board-Ready</h3>
-                    <p>Comprehensive independent audit sign-off for institutional investors and boards.</p>
-                </div>
-                <div class="lb" data-lang="tw">
-                    <h3>董事會級</h3>
-                    <p>為機構投資者與董事會提供的全方位獨立審計與資本效率簽核報告。</p>
-                </div>
+                <h3>Board-Ready</h3>
                 <a href="https://buy.stripe.com/8x228t3WyazS7fL4vR3VC02" class="pc-btn" target="_blank">Verify Now</a>
             </div>
         </div>
@@ -252,9 +196,8 @@
 
 <footer>
     <div class="wrap">
-        © 2026 GFI Flow Intelligence · Boston<br>
-        Founder: Ping Xu · United Nations P5 Roster Candidate<br>
-        Contact: <a href="mailto:gfi@gfiintel.com" style="color:var(--accent)">gfi@gfiintel.com</a> | <a href="mailto:contact@gfiintel.com" style="color:var(--accent)">contact@gfiintel.com</a>
+        © 2026 GFI Flow Intelligence · Boston · Founder: Ping Xu<br>
+        Contact: <a href="mailto:gfi@gfiintel.com" style="color:var(--accent)">gfi@gfiintel.com</a>
     </div>
 </footer>
 
@@ -265,19 +208,14 @@
         document.querySelectorAll('.lb-btn').forEach(x => x.classList.remove('on'));
         b.classList.add('on');
     }
-
     function navTo(id, e) {
         if (e) e.preventDefault();
         const el = document.getElementById(id);
         if (el) window.scrollTo({ top: el.offsetTop - 60, behavior: 'smooth' });
     }
-
     const ro = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) entry.target.classList.add('vis');
-        });
+        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('vis'); });
     }, { threshold: 0.1 });
-
     document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
 </script>
 </body>
