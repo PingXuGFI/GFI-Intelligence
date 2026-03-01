@@ -35,30 +35,42 @@ nav a{font-size:13px;color:var(--muted);text-decoration:none;padding:6px 10px;bo
 nav a:hover{color:var(--text);background:rgba(255,255,255,0.05)}
 .lb-btn{font-family:var(--mono);font-size:11px;padding:5px 9px;border:1px solid var(--border);border-radius:4px;background:none;color:var(--muted);cursor:pointer;margin-left:8px}
 .lb-btn.on{color:var(--accent);border-color:rgba(200,245,66,0.35);background:rgba(200,245,66,0.06)}
+.nav-cta{padding:8px 16px;background:var(--accent);color:#0d1117;font-size:13px;font-weight:600;border-radius:6px;text-decoration:none;margin-left:8px;}
 
-/* HERO & LAYOUT */
+/* HERO SECTOR DIVIDER */
 .hero{position:relative;min-height:95svh;display:flex;align-items:center;overflow:hidden}
 .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:52px 52px;mask-image:radial-gradient(ellipse 80% 50% at 50% 0%,black 20%,transparent 75%)}
-.hero-glow{position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(200,245,66,.05) 0%,transparent 70%);top:-100px;right:-100px}
+.hero-glow{position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(200,245,66,.05) 0%,transparent 70%);top:-100px;right:-100px}
 .wrap{max-width:1060px;margin:0 auto;padding:0 clamp(20px,5vw,60px)}
 .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
 .hero-name{font-family:var(--serif);font-size:clamp(34px, 5.5vw, 64px);line-height:1.1;margin-bottom:24px}
-.body-text{font-size:clamp(17px,2.2vw,20px);color:var(--muted);line-height:1.9}
 
-/* SECTIONS */
-section.band{background:var(--surf);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:clamp(60px,10vh,110px) 0}
-.reveal{opacity:0;transform:translateY(20px);transition:opacity .65s,transform .65s}.reveal.vis{opacity:1;transform:none}
-.lb{display:none}.lb.on{display:block}
+/* SECTION BANDS */
+section{padding:clamp(60px,10vh,110px) 0}
+section.band{background:var(--surf);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+h2.stitle{font-family:var(--serif);font-size:clamp(22px,3.2vw,36px);line-height:1.12;margin-bottom:16px}
+.slead{font-size:clamp(16px,1.9vw,18px);color:var(--muted);max-width:680px}
 
-/* DATA TABLE STYLE */
-table{width:100%;border-collapse:collapse;margin-top:30px}
-th{font-family:var(--mono);font-size:10px;color:var(--muted);padding:12px;border-bottom:1px solid var(--border);text-align:left}
-td{padding:12px;border-bottom:1px solid var(--border);color:var(--muted)}
-.gln{color:var(--accent);font-family:var(--serif);font-size:20px}
+/* PRICING & CARDS */
+.pg{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-top:48px}
+.pc{background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:32px;display:flex;flex-direction:column;transition:0.3s}
+.pc.feat{border-color:var(--accent);background:rgba(200,245,66,0.02)}
+.pc-amt{font-family:var(--serif);font-size:48px;margin-bottom:8px}
+.pc-cur{font-size:18px;vertical-align:top;color:var(--muted)}
+.pc-btn{display:block;text-align:center;padding:14px;background:var(--accent);color:#0d1117;font-weight:600;text-decoration:none;border-radius:8px;margin-top:auto}
+
+/* VALIDATION TABLE */
+.tscroll{overflow-x:auto; margin-top:40px; border:1px solid var(--border); border-radius:10px;}
+table{width:100%;min-width:600px;border-collapse:collapse;font-size:14px}
+th{font-family:var(--mono);font-size:10px;color:var(--muted);padding:14px;border-bottom:1px solid var(--border);text-align:left;background:rgba(255,255,255,0.02)}
+td{padding:14px;border-bottom:1px solid var(--border);color:var(--muted)}
+.gln{font-family:var(--serif);font-size:20px;color:var(--accent)}
 .tag{padding:2px 8px;border-radius:4px;font-size:10px;font-family:var(--mono)}
 .tag.hi{background:rgba(200,245,66,0.1);color:var(--accent)}
 
-footer{padding:44px 0; border-top:1px solid var(--border); text-align:center; color:var(--muted); font-size:13px}
+.lb{display:none}.lb.on{display:block}
+footer{padding:60px 0; border-top:1px solid var(--border); text-align:center; color:var(--muted); font-size:13px}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .65s,transform .65s}.reveal.vis{opacity:1;transform:none}
 </style>
 </head>
 <body>
@@ -68,21 +80,23 @@ footer{padding:44px 0; border-top:1px solid var(--border); text-align:center; co
   <nav>
     <a href="index.html">Home</a>
     <a href="government.html" style="color:var(--accent); font-weight:600;">Government</a>
-    <a href="#validation">Validation</a>
+    <a href="#validation" onclick="navTo('validation',event)">Validation</a>
+    <a href="#pricing" onclick="navTo('pricing',event)">Pricing</a>
     <a href="about.html">Founder</a>
-    <button class="lb-btn on" onclick="setLang('en',this)">EN</button>
-    <button class="lb-btn" onclick="setLang('tw',this)">繁</button>
-    <button class="lb-btn" onclick="setLang('cn',this)">简</button>
+    <div class="lang-grp">
+      <button class="lb-btn on" onclick="setLang('en',this)">EN</button>
+      <button class="lb-btn" onclick="setLang('tw',this)">繁</button>
+      <button class="lb-btn" onclick="setLang('cn',this)">简</button>
+    </div>
   </nav>
 </header>
 
 <section class="hero">
   <div class="hero-grid"></div><div class="hero-glow"></div>
   <div class="wrap" style="position:relative; z-index:10; width:100%; text-align:center;">
-    
     <div class="lb on" data-lang="en">
-      <div class="eyebrow">GFI Flow Intelligence</div>
-      <h1 class="hero-name">Governance Leverage Framework</h1>
+      <div class="eyebrow">Governance Leverage Framework</div>
+      <h1 class="hero-name">Structural Intelligence for<br>Institutional Flow</h1>
       <p class="body-text" style="max-width:750px; margin:0 auto 48px; opacity:0.85;">Quantifying administrative friction to transform hidden institutional costs into visible capital efficiency.</p>
     </div>
     <div class="lb" data-lang="tw">
@@ -106,30 +120,51 @@ footer{padding:44px 0; border-top:1px solid var(--border); text-align:center; co
           <div style="margin-top:24px; color:var(--accent); font-family:var(--mono); font-size:13px; font-weight:600;">ENTER SECTOR →</div>
         </div>
       </a>
-      <a href="#validation" style="text-decoration:none; flex:1; min-width:300px;">
+      <a href="#pricing" onclick="navTo('pricing',event)" style="text-decoration:none; flex:1; min-width:300px;">
         <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border); padding:40px 30px; border-radius:16px; transition:0.3s; text-align:left; height:100%;" onmouseover="this.style.borderColor='var(--blue)'; this.style.transform='translateY(-8px)'" onmouseout="this.style.borderColor='var(--border)'; this.style.transform='translateY(0)'">
           <div style="font-family:var(--mono); color:var(--blue); font-size:11px; margin-bottom:12px; letter-spacing:2px;">PRIVATE ENTERPRISE</div>
           <div class="lb on" data-lang="en"><h2 style="font-family:var(--serif); font-size:26px; margin-bottom:12px;">Private Enterprise</h2><p style="font-size:15px; color:var(--muted);">Optimize capital allocation and measure operational denominators.</p></div>
           <div class="lb" data-lang="tw"><h2 style="font-family:var(--serif); font-size:26px; margin-bottom:12px;">民營企業 / 策略</h2><p style="font-size:15px; color:var(--muted);">優化資本配置，測量營運分母，提升結構性獲利能力。</p></div>
           <div class="lb" data-lang="cn"><h2 style="font-family:var(--serif); font-size:26px; margin-bottom:12px;">民营企业 / 策略</h2><p style="font-size:15px; color:var(--muted);">优化资本配置，测量运营分母，提升结构性获利能力。</p></div>
-          <div style="margin-top:24px; color:var(--blue); font-family:var(--mono); font-size:13px; font-weight:600;">VIEW VALIDATION →</div>
+          <div style="margin-top:24px; color:var(--blue); font-family:var(--mono); font-size:13px; font-weight:600;">START VERIFICATION →</div>
         </div>
       </a>
     </div>
   </div>
 </section>
 
-<section class="band" id="validation">
+<section class="band" id="pricing">
   <div class="wrap">
-    <div class="eyebrow">International Validation</div>
-    <h2 class="stitle">9-Case Verification Matrix</h2>
-    <table>
-      <thead><tr><th>#</th><th>Country</th><th>GL Score</th><th>Signal</th></tr></thead>
-      <tbody>
-        <tr><td>01</td><td>Finland</td><td><span class="gln">3.13</span></td><td><span class="tag hi">Excellent</span></td></tr>
-        <tr><td>03</td><td>Estonia</td><td><span class="gln">4.20</span></td><td><span class="tag hi">Excellent</span></td></tr>
-      </tbody>
-    </table>
+    <div class="eyebrow">Verification Tiers</div>
+    <h2 class="stitle">Start Verification.</h2>
+    <div class="pg">
+      <div class="pc reveal">
+        <div class="lb on" data-lang="en"><div class="pc-amt"><span class="pc-cur">$</span>999</div><h3>Diagnostic</h3><p class="muted">12-page PDF. Baseline GL assessment.</p></div>
+        <div class="lb" data-lang="tw"><div class="pc-amt"><span class="pc-cur">$</span>999</div><h3>基礎診斷</h3><p class="muted">12 頁 PDF 報告。建立基準 GL 分數。</p></div>
+        <a href="https://buy.stripe.com/8x25kFbp0dM4gQl0fB3VC00" class="pc-btn">Buy Now</a>
+      </div>
+      <div class="pc feat reveal">
+        <div class="lb on" data-lang="en"><div class="pc-amt"><span class="pc-cur">$</span>4,999</div><h3>Full Verification</h3><p class="muted">Pre/Post Delta analysis + strategy session.</p></div>
+        <div class="lb" data-lang="tw"><div class="pc-amt"><span class="pc-cur">$</span>4,999</div><h3>完整驗證</h3><p class="muted">轉型前後差值分析 + 高管策略會議。</p></div>
+        <a href="https://buy.stripe.com/7sYcN764GdM4arX0fB3VC01" class="pc-btn">Buy Now</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="validation">
+  <div class="wrap">
+    <div class="eyebrow">International Matrix</div>
+    <h2 class="stitle">9-Case Verification</h2>
+    <div class="tscroll reveal">
+      <table>
+        <thead><tr><th>#</th><th>Country</th><th>Domain</th><th>GL Score</th><th>Signal</th></tr></thead>
+        <tbody>
+          <tr><td>01</td><td>Finland</td><td>Education</td><td><span class="gln">3.13</span></td><td><span class="tag hi">Excellent</span></td></tr>
+          <tr><td>03</td><td>Estonia</td><td>Digital Identity</td><td><span class="gln">4.20</span></td><td><span class="tag hi">Excellent</span></td></tr>
+          </tbody>
+      </table>
+    </div>
   </div>
 </section>
 
@@ -146,6 +181,7 @@ function setLang(l,b){
   document.querySelectorAll('.lb[data-lang="'+l+'"]').forEach(e=>e.classList.add('on'));
   document.querySelectorAll('.lb-btn').forEach(x=>x.classList.remove('on')); b.classList.add('on');
 }
+function navTo(id,e){ e.preventDefault(); document.getElementById(id).scrollIntoView({behavior:'smooth'}); }
 const ro=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis')}),{threshold:0.1});
 document.querySelectorAll('.reveal').forEach(e=>ro.observe(e));
 </script>
