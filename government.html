@@ -3,296 +3,640 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Public Sector Strategy | GFI Flow Intelligence</title>
-
+<meta name="description" content="GL Framework for Government & Public Sector — independent structural diagnosis of administrative efficiency, UI systems, and public program delivery.">
+<title>Public Sector | GFI Flow Intelligence</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-
 <style>
 :root{
---bg:#141d2e;
---surf2:#22304e;
---border:rgba(255,255,255,0.08);
---text:#edf0f8;
---muted:#8fa3c0;
---accent:#c8f542;
---serif:'DM Serif Display', Georgia, serif;
---mono:'DM Mono', monospace;
---sans:'DM Sans', system-ui, sans-serif;
+  --bg:#141d2e;--surf:#1c2740;--surf2:#22304e;
+  --border:rgba(255,255,255,0.08);--text:#edf0f8;
+  --muted:#8fa3c0;--dim:#4a6080;--accent:#c8f542;--blue:#4da3ff;
+  --serif:'DM Serif Display',Georgia,serif;
+  --mono:'DM Mono',monospace;
+  --sans:'DM Sans',system-ui,sans-serif;
 }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:17px;line-height:1.75;overflow-x:hidden}
 
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+header{position:fixed;inset:0 0 auto 0;z-index:100;height:60px;padding:0 24px;display:flex;align-items:center;justify-content:space-between;background:rgba(20,29,46,0.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.logo img{height:44px;width:auto}
+nav{display:flex;align-items:center;gap:4px}
+nav a{font-size:13px;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;transition:color .2s,background .2s}
+nav a:hover{color:var(--text);background:rgba(255,255,255,0.05)}
+nav a.active{color:var(--accent)}
+.lang-grp{display:flex;gap:3px;margin-left:8px}
+.lb-btn{font-family:var(--mono);font-size:11px;letter-spacing:.08em;padding:5px 9px;border:1px solid var(--border);border-radius:4px;background:none;color:var(--muted);cursor:pointer;transition:all .2s}
+.lb-btn:hover{color:var(--text);border-color:rgba(255,255,255,0.18)}
+.lb-btn.on{color:var(--accent);border-color:rgba(200,245,66,0.35);background:rgba(200,245,66,0.06)}
+.nav-cta{display:inline-block;padding:8px 16px;background:var(--accent);color:#0d1117;font-size:13px;font-weight:600;border-radius:6px;text-decoration:none;margin-left:8px;white-space:nowrap;transition:opacity .2s}
+.nav-cta:hover{opacity:.85}
+.ham{display:none;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;padding:6px;background:none;border:none;cursor:pointer}
+.ham span{display:block;height:2px;background:var(--text);border-radius:2px;transition:transform .25s,opacity .2s}
+.ham.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.ham.open span:nth-child(2){opacity:0}
+.ham.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.drawer{display:none;position:fixed;top:60px;left:0;right:0;z-index:99;background:rgba(20,29,46,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:16px 24px 24px;flex-direction:column}
+.drawer.open{display:flex}
+.drawer a{font-size:17px;color:var(--muted);text-decoration:none;padding:14px 0;border-bottom:1px solid var(--border);transition:color .2s}
+.drawer a:hover{color:var(--text)}
+.drawer-lang{display:flex;gap:8px;padding:16px 0 0}
+.drawer-cta{display:block;text-align:center;padding:16px;background:var(--accent);color:#0d1117;font-weight:600;font-size:16px;border-radius:8px;text-decoration:none;margin-top:16px;border-bottom:none!important}
+.mobile-lang{display:none;position:fixed;top:60px;left:0;right:0;z-index:98;background:rgba(20,29,46,0.97);border-bottom:1px solid var(--border);padding:8px 20px;gap:8px;align-items:center}
+@media(max-width:768px){.mobile-lang{display:flex}.hero{padding-top:40px}}
 
-body{
-background:var(--bg);
-color:var(--text);
-font-family:var(--sans);
-font-size:17px;
-line-height:1.75;
-overflow-x:hidden;
-}
+.lb{display:none}.lb.on{display:block}
 
-header{
-position:fixed;
-inset:0 0 auto 0;
-z-index:100;
-height:60px;
-padding:0 24px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-background:rgba(20,29,46,.93);
-backdrop-filter:blur(16px);
-border-bottom:1px solid var(--border);
-}
+.wrap{max-width:1060px;margin:0 auto;padding:0 clamp(20px,5vw,60px)}
+section{padding:clamp(60px,10vh,110px) 0}
+section.band{background:var(--surf);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
 
-.logo img{height:44px;width:auto;}
+/* HERO */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:52px 52px;mask-image:radial-gradient(ellipse 80% 50% at 50% 0%,black 20%,transparent 75%);pointer-events:none}
+.hero-glow{position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(200,245,66,.04) 0%,transparent 70%);top:-150px;right:-150px;pointer-events:none}
+.hero-inner{position:relative;padding:clamp(80px,14vh,140px) 0 clamp(60px,10vh,100px)}
+.hero h1{font-family:var(--serif);font-size:clamp(28px,4vw,52px);line-height:1.1;letter-spacing:-.02em;max-width:820px;margin-bottom:clamp(18px,3vh,28px);opacity:0;animation:up .6s .1s forwards}
+.hero h1 em{font-style:italic;color:var(--accent)}
+.hero-sub{font-size:clamp(16px,2vw,19px);color:var(--muted);max-width:600px;line-height:1.75;margin-bottom:clamp(28px,5vh,44px);opacity:0;animation:up .6s .3s forwards}
 
-nav{display:flex;gap:10px;align-items:center;}
+/* PULL QUOTE */
+.pull{font-family:var(--serif);font-style:italic;font-size:clamp(17px,2.3vw,24px);color:var(--text);line-height:1.5;border-left:3px solid var(--accent);padding-left:22px;margin:clamp(24px,4vh,40px) 0}
 
-nav a{
-font-size:13px;
-color:var(--muted);
-text-decoration:none;
-padding:6px 10px;
-border-radius:6px;
-}
+/* DIAGNOSIS CARDS */
+.diag-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-top:clamp(28px,5vh,48px)}
+.diag-card{background:var(--surf);padding:clamp(22px,3vw,34px);transition:background .2s}
+.diag-card:hover{background:var(--surf2)}
+.diag-num{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+.diag-title{font-family:var(--serif);font-size:clamp(17px,2.2vw,22px);color:var(--text);margin-bottom:10px;line-height:1.3}
+.diag-body{font-size:clamp(14px,1.7vw,16px);color:var(--muted);line-height:1.75}
+.diag-signal{display:inline-block;margin-top:14px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(255,107,107,.1);color:#ff7070}
 
-.lb-btn{
-font-family:var(--mono);
-font-size:11px;
-padding:5px 9px;
-border:1px solid var(--border);
-border-radius:4px;
-background:none;
-color:var(--muted);
-cursor:pointer;
-}
+/* CASE ROWS */
+.case-row{display:grid;grid-template-columns:70px 1fr;gap:clamp(16px,3vw,36px);padding:clamp(24px,4vh,44px) 0;border-bottom:1px solid var(--border);align-items:start}
+.case-row:first-of-type{border-top:1px solid var(--border)}
+.case-num{font-family:var(--serif);font-style:italic;font-size:clamp(36px,5vw,56px);color:rgba(200,245,66,0.15);line-height:1}
+.case-label{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.case-title{font-family:var(--serif);font-size:clamp(17px,2.3vw,24px);color:var(--text);margin-bottom:14px;line-height:1.3}
+.body-text{font-size:clamp(16px,2vw,18px);color:var(--muted);line-height:1.9;margin-bottom:16px}
+.body-text strong{color:var(--text)}
 
-.lb-btn.on{
-color:var(--accent);
-border-color:var(--accent);
-}
+h2.stitle{font-family:var(--serif);font-size:clamp(22px,3.2vw,36px);line-height:1.12;letter-spacing:-.02em;margin-bottom:16px}
+.slead{font-size:clamp(16px,1.9vw,18px);color:var(--muted);max-width:680px;line-height:1.8;margin-bottom:0}
 
-.wrap{
-max-width:1060px;
-margin:0 auto;
-padding:0 24px;
-}
+/* WHAT GL OFFERS GOV */
+.offer-list{list-style:none;margin-top:clamp(20px,3vh,32px)}
+.offer-list li{font-size:clamp(15px,1.8vw,17px);color:var(--muted);padding:18px 0;border-bottom:1px solid var(--border);display:flex;gap:16px;line-height:1.65;align-items:start}
+.offer-list li::before{content:'→';color:var(--accent);flex-shrink:0;font-family:var(--mono);margin-top:2px}
+.offer-list li strong{color:var(--text)}
 
-section{
-padding:clamp(100px,15vh,140px) 0 60px;
-border-bottom:1px solid var(--border);
-}
+/* POLITICAL NEUTRALITY */
+.neutral-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2vw,24px);margin-top:clamp(28px,5vh,48px)}
+.neutral-card{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:clamp(20px,3vw,30px)}
+.neutral-card.red{border-color:rgba(255,107,107,.2)}
+.neutral-card.blue{border-color:rgba(77,163,255,.2)}
+.nc-label{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px}
+.neutral-card.red .nc-label{color:#ff7070}
+.neutral-card.blue .nc-label{color:var(--blue)}
+.nc-body{font-size:clamp(14px,1.7vw,16px);color:var(--muted);line-height:1.75}
+.nc-body strong{color:var(--text)}
+.neutral-center{background:rgba(200,245,66,.04);border:1px solid rgba(200,245,66,.15);border-radius:10px;padding:clamp(20px,3vw,32px);margin-top:clamp(16px,2vw,20px);text-align:center}
+.nc-verdict{font-family:var(--serif);font-size:clamp(16px,2.2vw,22px);color:var(--text);line-height:1.45}
 
-.eyebrow{
-font-family:var(--mono);
-font-size:12px;
-letter-spacing:3px;
-text-transform:uppercase;
-color:var(--accent);
-margin-bottom:20px;
-}
+/* ARTICLE HIGHLIGHT */
+.article-card{background:var(--surf);border:1px solid rgba(200,245,66,.18);border-radius:10px;padding:clamp(22px,3vw,36px);margin-top:clamp(28px,5vh,48px);display:flex;flex-direction:column;gap:14px}
+.article-tag{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.article-title{font-family:var(--serif);font-size:clamp(18px,2.5vw,28px);color:var(--text);line-height:1.3}
+.article-desc{font-size:clamp(15px,1.8vw,17px);color:var(--muted);line-height:1.75;max-width:640px}
+.article-meta{font-family:var(--mono);font-size:12px;color:var(--dim)}
+.btn-solid{display:inline-flex;align-items:center;padding:clamp(12px,1.8vh,15px) clamp(20px,2.5vw,30px);background:var(--accent);color:#0d1117;font-weight:600;font-size:clamp(14px,1.6vw,15px);border-radius:8px;text-decoration:none;white-space:nowrap;transition:opacity .2s,transform .2s;margin-top:6px;width:fit-content}
+.btn-solid:hover{opacity:.87;transform:translateY(-1px)}
+.btn-ghost{display:inline-flex;align-items:center;padding:clamp(12px,1.8vh,15px) clamp(20px,2.5vw,30px);border:1px solid var(--border);color:var(--muted);font-size:clamp(14px,1.6vw,15px);border-radius:8px;text-decoration:none;white-space:nowrap;transition:all .2s;margin-top:6px;width:fit-content}
+.btn-ghost:hover{border-color:rgba(255,255,255,.2);color:var(--text)}
+.btn-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:clamp(20px,3vh,32px)}
 
-h1.stitle{
-font-family:var(--serif);
-font-size:clamp(34px,5.5vw,64px);
-line-height:1.1;
-margin-bottom:32px;
-}
+/* CONTACT */
+.contact-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:clamp(28px,5vh,44px)}
+.cl{display:inline-flex;align-items:center;gap:8px;padding:clamp(12px,1.8vh,14px) clamp(20px,2.5vw,28px);border:1px solid var(--border);border-radius:8px;color:var(--muted);text-decoration:none;font-size:clamp(14px,1.8vw,15px);transition:all .2s}
+.cl:hover{color:var(--text);border-color:rgba(255,255,255,.18)}
+.cl.primary{background:var(--accent);color:#0d1117;border-color:transparent;font-weight:600}
+.cl.primary:hover{opacity:.88;color:#0d1117}
 
-.contact-box{
-text-align:center;
-padding:80px 0;
-}
+footer{padding:clamp(28px,5vh,44px) clamp(20px,5vw,60px);border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;color:var(--muted);font-size:13px}
+footer a{color:var(--muted);text-decoration:none}
+footer a:hover{color:var(--text)}
+.footer-links{display:flex;gap:24px;flex-wrap:wrap}
 
-.contact-title{
-font-family:var(--serif);
-font-size:clamp(40px,8vw,80px);
-line-height:1;
-margin-bottom:20px;
-}
+/* REQUEST STEPS */
+.request-steps{margin-top:clamp(32px,5vh,52px);display:flex;flex-direction:column}
+.req-step{display:grid;grid-template-columns:52px 1fr;gap:clamp(16px,3vw,28px);padding:clamp(20px,3vh,30px) 0;border-bottom:1px solid var(--border);align-items:start}
+.req-step:first-child{border-top:1px solid var(--border)}
+.req-n{font-family:var(--serif);font-style:italic;font-size:clamp(32px,5vw,48px);color:rgba(200,245,66,0.18);line-height:1;padding-top:4px}
+.req-title{font-family:var(--serif);font-size:clamp(17px,2.2vw,22px);color:var(--text);margin-bottom:8px;line-height:1.25}
+.req-desc{font-size:clamp(14px,1.7vw,16px);color:var(--muted);line-height:1.75}
+.request-cta-block{margin-top:clamp(36px,6vh,56px);display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+.request-cta-note{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding:8px 14px;border:1px solid var(--border);border-radius:4px}
+.request-cta-sub{font-family:var(--mono);font-size:11px;color:var(--dim);margin-top:4px}
 
-.contact-sub{
-font-size:20px;
-color:var(--muted);
-max-width:800px;
-margin:0 auto 40px;
-}
+@keyframes up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .65s,transform .65s}
+.reveal.vis{opacity:1;transform:none}
 
-.diag-btn{
-display:inline-flex;
-align-items:center;
-background-color:var(--accent);
-color:#0d1117;
-padding:18px 36px;
-border-radius:8px;
-font-weight:700;
-text-decoration:none;
-font-size:16px;
-transition:.2s;
-gap:10px;
-}
-
-.diag-btn:hover{
-background-color:#ffffff;
-transform:translateY(-2px);
-}
-
-.lang-section{display:none;}
-.lang-section.on{display:block;}
-
-.gov-card{
-background:var(--surf2);
-padding:40px;
-border-radius:12px;
-border:1px solid var(--border);
-margin-top:40px;
-}
-
-footer{
-padding:60px 0;
-text-align:center;
-color:var(--muted);
-font-size:13px;
+@media(max-width:768px){
+  nav{display:none}.ham{display:flex}
+  .neutral-grid{grid-template-columns:1fr}
+  .case-row{grid-template-columns:1fr}
+  .case-num{display:none}
+  footer{flex-direction:column;text-align:center}
 }
 </style>
 </head>
-
 <body>
 
 <header>
-<a href="index.html" class="logo">
-<img src="GFILOGO.png" alt="GFI">
-</a>
-<nav>
-<a href="index.html">Home</a>
-<button class="lb-btn on" onclick="setLang('en',this)">EN</button>
-<button class="lb-btn" onclick="setLang('tw',this)">繁</button>
-<button class="lb-btn" onclick="setLang('cn',this)">简</button>
-</nav>
+  <a href="index.html" class="logo"><img src="GFILOGO.png" alt="GFI"></a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="government.html" class="active">Public Sector</a>
+    <a href="index.html#pricing">Private Sector</a>
+    <a href="about.html">Founder</a>
+    <div class="lang-grp">
+      <button class="lb-btn on"  onclick="setLang('en',this)">EN</button>
+      <button class="lb-btn"     onclick="setLang('tw',this)">繁</button>
+      <button class="lb-btn"     onclick="setLang('cn',this)">简</button>
+    </div>
+    <a href="mailto:gfi@gfiintel.com" class="nav-cta">Contact</a>
+  </nav>
+  <button class="ham" id="ham" aria-label="Menu" onclick="toggleDrawer()">
+    <span></span><span></span><span></span>
+  </button>
 </header>
 
-<!-- ENGLISH -->
-<div id="en-sec" class="lang-section on">
-<section>
-<div class="wrap">
-
-<div class="eyebrow">Public Sector · Government</div>
-
-<h1 class="stitle">
-Your system is not broken.<br>
-It is <span style="font-style:italic;color:var(--accent)">structurally misaligned.</span>
-</h1>
-
-<div class="contact-box">
-<div class="eyebrow">CONTACT</div>
-<h2 class="contact-title">20 minutes.<br>That is all I am asking for.</h2>
-<p class="contact-sub">
-To determine whether your state's data structure supports the same methodology.
-The analytical work and any public exposure remain mine.
-The underlying audit record remains yours.
-</p>
-<a href="mailto:gfi@gfiintel.com?subject=Inquiry regarding Government Sector Diagnostic" class="diag-btn">
-Request a Diagnostic Conversation →
-</a>
+<div class="mobile-lang">
+  <span style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--dim);text-transform:uppercase;margin-right:4px">Lang</span>
+  <button class="lb-btn on"  onclick="setLang('en',this)">EN</button>
+  <button class="lb-btn"     onclick="setLang('tw',this)">繁</button>
+  <button class="lb-btn"     onclick="setLang('cn',this)">简</button>
 </div>
 
-<div class="gov-card">
-<h2 style="font-family:var(--serif);font-size:24px;color:var(--accent);">
-Active Case Audits
-</h2>
-<p style="color:var(--muted);margin-top:10px;">
-Massachusetts (DUA), California (EDD), and Florida.
-</p>
+<div class="drawer" id="drawer">
+  <a href="index.html" onclick="closeDrawer()">Home</a>
+  <a href="government.html" onclick="closeDrawer()">Public Sector</a>
+  <a href="index.html#pricing" onclick="closeDrawer()">Private Sector</a>
+  <a href="about.html" onclick="closeDrawer()">Founder</a>
+  <div class="drawer-lang">
+    <button class="lb-btn on" onclick="setLang('en',this)">EN</button>
+    <button class="lb-btn"    onclick="setLang('tw',this)">繁</button>
+    <button class="lb-btn"    onclick="setLang('cn',this)">简</button>
+  </div>
+  <a href="mailto:gfi@gfiintel.com" class="drawer-cta" onclick="closeDrawer()">Contact →</a>
 </div>
 
+<!-- ══════════ ENGLISH ══════════ -->
+<div class="lb on" data-lang="en">
+
+<div class="hero">
+  <div class="hero-grid"></div><div class="hero-glow"></div>
+  <div class="wrap hero-inner">
+    <div class="eyebrow" style="opacity:0;animation:up .6s .05s forwards">Public Sector · Government</div>
+    <h1>Your system is not broken.<br>It is <em>structurally misaligned.</em></h1>
+    <p class="hero-sub">GL provides independent structural diagnosis of government administrative systems — using your own public audit data to measure what your office already knows but cannot say.</p>
+    <div class="btn-row" style="opacity:0;animation:up .6s .45s forwards">
+      <a href="mailto:gfi@gfiintel.com" class="btn-solid">Request a Diagnostic Conversation →</a>
+      <a href="about.html" class="btn-ghost">About the Researcher</a>
+    </div>
+  </div>
 </div>
+
+<!-- WHAT GL DOES FOR GOV -->
+<section class="band">
+  <div class="wrap">
+    <div class="eyebrow reveal">Independent Analysis</div>
+    <h2 class="stitle reveal">What GL offers that your office cannot do alone</h2>
+    <p class="slead reveal">Government audit offices operate inside institutional constraints. GL operates outside them.</p>
+    <ul class="offer-list reveal">
+      <li><strong>Independent voice:</strong> As an external researcher, I can publish findings that your audit record supports but that your office may not be positioned to lead publicly.</li>
+      <li><strong>Cross-state comparison:</strong> GL applies the same formula across jurisdictions, producing comparative efficiency scores that no single state office can generate.</li>
+      <li><strong>Political neutrality:</strong> GL does not ask whether benefits should be given. It only asks: did the system accomplish what it was designed to accomplish? No politician can publicly refuse that question.</li>
+      <li><strong>Your data, your record:</strong> The analytical work and any public exposure remain mine. The underlying audit record remains yours. Politically clean for both sides.</li>
+      <li><strong>Fraud is a process failure:</strong> When systems have $5B in improper payments while legitimate claimants wait, that is not primarily a criminal problem. It is a denominator design problem. GL names it.</li>
+    </ul>
+  </div>
 </section>
-</div>
 
-<!-- TRADITIONAL -->
-<div id="tw-sec" class="lang-section">
+<!-- CASES -->
 <section>
-<div class="wrap">
+  <div class="wrap">
+    <div class="eyebrow reveal">Structural Diagnoses · United States</div>
+    <h2 class="stitle reveal">Five States. One Pattern.</h2>
+    <p class="slead reveal" style="margin-bottom: clamp(12px,2vh,20px)">Independent GL analysis of publicly available state audit records.</p>
 
-<div class="eyebrow">公共部門 · 政府審計</div>
+    <div class="case-row reveal">
+      <div class="case-num">MA</div>
+      <div>
+        <div class="case-label">Massachusetts DUA · 2025</div>
+        <div class="case-title">When Automation Accelerates Failure</div>
+        <p class="body-text">Massachusetts spent millions automating its unemployment system. Appeals backlogs grew <strong>nine times over</strong>. On-time payments collapsed to <strong>49%</strong> — worst in the nation. This occurred while new claims were at a six-year low.</p>
+        <p class="body-text">GL diagnosis: <strong>denominator acceleration.</strong> Speed was applied to a broken classification logic. The system produced errors faster, routed them to appeals faster, and depleted adjudicator capacity faster. Automation did not fix the friction. It amplified it.</p>
+      </div>
+    </div>
 
-<h1 class="stitle">
-您的系統並沒有壞。<br>
-它是<span style="font-style:italic;color:var(--accent)">結構性的錯位。</span>
-</h1>
+    <div class="case-row reveal">
+      <div class="case-num">CA</div>
+      <div>
+        <div class="case-label">California EDD · 2023–2024</div>
+        <div class="case-title">$1.5B Improper Payments — Friction, Not Fraud</div>
+        <p class="body-text">California EDD failed federal timeliness standards for all but one month since January 2013. Its <strong>43% appeal overturn rate</strong> is not a fraud signal. It is a friction signal: the system is denying valid claims at the front end, forcing claimants through appeals, and reversing those decisions at the back end.</p>
+        <p class="body-text">GL diagnosis: the system spends more processing appeals for correctly eligible claimants than it would have spent paying them in the first place. <strong>Rework is the invisible denominator.</strong></p>
+      </div>
+    </div>
 
-<div class="contact-box">
-<div class="eyebrow">聯絡</div>
-<h2 class="contact-title">20 分鐘。<br>這是我唯一的要求。</h2>
-<p class="contact-sub">
-確定您的州的數據結構是否支持相同的方法論。
-分析工作與任何公開曝光由我承擔。
-底層審計記錄仍屬於貴方。
-</p>
-<a href="mailto:gfi@gfiintel.com?subject=預約診斷諮詢" class="diag-btn">
-✉ 申請診斷對話
-</a>
-</div>
+    <div class="case-row reveal">
+      <div class="case-num">TX</div>
+      <div>
+        <div class="case-label">Texas TWC · Current</div>
+        <div class="case-title">A $1B Fund Balance That Hides a 77% Exclusion Rate</div>
+        <p class="body-text">Texas Workforce Commission holds a $1B UI Trust Fund balance and presents it as fiscal health. But <strong>only 23% of unemployed Texans receive benefits</strong> — ranking 28th nationally. The fund stays solvent partly because the system's friction excludes eligible claimants before they can reach it.</p>
+        <p class="body-text">GL diagnosis: a system that achieves solvency through exclusion has not solved its efficiency problem. It has transferred the cost to unemployed workers who never appear in the denominator.</p>
+      </div>
+    </div>
 
-</div>
+    <div class="case-row reveal">
+      <div class="case-num">FL</div>
+      <div>
+        <div class="case-label">Florida CONNECT · 2014–2024</div>
+        <div class="case-title">Ten Years of Unresolved Audit Findings</div>
+        <p class="body-text">A 2015 audit identified 31 problems. A 2019 audit found over 50% unresolved. A 2021 audit found 14 issues still outstanding — including processing errors from 2014. A $244M modernization over five years produced no follow-up audit. The last progress report: June 2024. Then silence.</p>
+        <p class="body-text">Florida has the worst or second-worst UI recipiency rate nationally. Governor DeSantis himself called the system a "jalopy" with "pointless roadblocks." <strong>The data is there. The pattern is visible. What is missing is an independent voice to say what the data shows.</strong></p>
+      </div>
+    </div>
+
+    <div class="case-row reveal">
+      <div class="case-num">IL</div>
+      <div>
+        <div class="case-label">Illinois IDES · FY2020–2022</div>
+        <div class="case-title">$5.2B in Improper Payments — Failing in Both Directions</div>
+        <p class="body-text"><strong>$5.2B in fraudulent and improper payments</strong> while legitimate claimants experienced delays. This is the signature pattern of a high-friction system: it fails in both directions simultaneously, because the underlying process design cannot distinguish between valid and invalid claims.</p>
+        <p class="body-text">GL diagnosis: fraud at that scale is not primarily a criminal problem. It is a process design problem. The same structural failure that let $5.2B flow incorrectly is the same failure that blocked legitimate claimants from accessing what they were owed.</p>
+      </div>
+    </div>
+  </div>
 </section>
-</div>
 
-<!-- SIMPLIFIED -->
-<div id="cn-sec" class="lang-section">
+<!-- POLITICAL NEUTRALITY -->
+<section class="band">
+  <div class="wrap">
+    <div class="eyebrow reveal">Political Neutrality</div>
+    <h2 class="stitle reveal">GL works in red states and blue states.</h2>
+    <p class="slead reveal">Because GL does not set the goal. It only asks: you said you would do X. Did you do X? How efficiently?</p>
+    <div class="neutral-grid reveal">
+      <div class="neutral-card red">
+        <div class="nc-label">Republican / Fiscal Conservative</div>
+        <p class="nc-body">You say small government, low spending, no dependency — fine. But when an eligible claimant is wrongly denied, appeals, gets re-adjudicated, then finally paid, <strong>TWC spent 3× the admin cost.</strong> That is not protecting taxpayers. That is wasting taxpayer money on rework. GL quantifies that waste.</p>
+      </div>
+      <div class="neutral-card blue">
+        <div class="nc-label">Democrat / Progressive</div>
+        <p class="nc-body">You say protect vulnerable populations, ensure benefits reach those in need — fine. But when IDES has <strong>$5.2B in fraud</strong> while legitimate claimants wait, the system design is letting money flow to the wrong places. GL quantifies that leakage.</p>
+      </div>
+    </div>
+    <div class="neutral-center reveal">
+      <p class="nc-verdict">"GL does not judge whether the benefit should exist.<br>It only measures whether the system served the purpose it was built for."</p>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATION -->
 <section>
-<div class="wrap">
-
-<div class="eyebrow">公共部门 · 政府审计</div>
-
-<h1 class="stitle">
-您的系统并没有坏。<br>
-它是<span style="font-style:italic;color:var(--accent)">结构性的错位。</span>
-</h1>
-
-<div class="contact-box">
-<div class="eyebrow">联系</div>
-<h2 class="contact-title">20 分钟。<br>这是我唯一的要求。</h2>
-<p class="contact-sub">
-确定您的州的数据结构是否支持相同的方法论。
-分析工作与任何公开披露由我承担。
-底层审计记录仍属于贵方。
-</p>
-<a href="mailto:gfi@gfiintel.com?subject=预约诊断咨询" class="diag-btn">
-✉ 申请诊断对话
-</a>
-</div>
-
-</div>
+  <div class="wrap">
+    <div class="eyebrow reveal">Publication</div>
+    <h2 class="stitle reveal">The Denominator Problem</h2>
+    <div class="article-card reveal">
+      <div class="article-tag">PA Times · Public Administration Review</div>
+      <div class="article-title">The Denominator Problem: Why Government Systems Fail the People They Were Built to Serve</div>
+      <p class="article-desc">Forthcoming March 13, 2026. This article introduces the GL Framework's application to public administrative systems — arguing that institutional failure is not a resource problem but a denominator design problem. The Massachusetts DUA serves as the central case study.</p>
+      <div class="article-meta">PA Times · March 2026 · Ping Xu, GFI Flow Intelligence</div>
+      <a href="mailto:gfi@gfiintel.com?subject=PA Times article — advance copy request" class="btn-solid">Request Pre-Publication Copy →</a>
+    </div>
+  </div>
 </section>
+
+<!-- REQUEST VERIFICATION -->
+<section id="request">
+  <div class="wrap">
+    <div class="eyebrow reveal">Request Structural Diagnosis</div>
+    <h2 class="stitle reveal">No procurement process.<br>No payment required.<br>20 minutes.</h2>
+    <p class="slead reveal" style="max-width:580px">This is a research conversation, not a sales call. I reach out to you. You decide whether to continue.</p>
+
+    <div class="request-steps reveal">
+      <div class="req-step">
+        <div class="req-n">01</div>
+        <div class="req-body">
+          <div class="req-title">Send a brief introduction</div>
+          <p class="req-desc">Your name, office, and state. One or two sentences on what you are observing in your system. No formal documentation required.</p>
+        </div>
+      </div>
+      <div class="req-step">
+        <div class="req-n">02</div>
+        <div class="req-body">
+          <div class="req-title">I review and respond within 48 hours</div>
+          <p class="req-desc">I will indicate whether your state's public audit data supports a GL analysis, and what that analysis could produce.</p>
+        </div>
+      </div>
+      <div class="req-step">
+        <div class="req-n">03</div>
+        <div class="req-body">
+          <div class="req-title">20-minute conversation — on your schedule</div>
+          <p class="req-desc">To confirm methodology fit. The analytical work and any public exposure remain mine. Your underlying audit record remains yours.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="request-cta-block reveal">
+      <div class="request-cta-note">No payment. No vendor registration. No RFP.</div>
+      <a href="mailto:gfi@gfiintel.com?subject=Structural Diagnosis Request — [Your State]&body=Name:%0AOffice:%0AState:%0AWhat I am observing:" class="btn-solid" style="font-size:clamp(15px,1.8vw,17px);padding:clamp(15px,2.2vh,18px) clamp(28px,3.5vw,40px)">
+        Request Structural Diagnosis →
+      </a>
+      <div class="request-cta-sub">Opens your email client · gfi@gfiintel.com</div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /en -->
+
+<!-- ══════════ 繁體中文 ══════════ -->
+<div class="lb" data-lang="tw">
+
+<div class="hero">
+  <div class="hero-grid"></div><div class="hero-glow"></div>
+  <div class="wrap hero-inner">
+    <div class="eyebrow" style="opacity:0;animation:up .6s .05s forwards">公部門 · 政府機關</div>
+    <h1>你的系統沒有壞掉。<br>它是<em>結構性偏移。</em></h1>
+    <p class="hero-sub">GL 為政府行政系統提供獨立結構診斷——使用你們自己的公開審計數據，測量你的辦公室已知但無法公開說出口的事。</p>
+    <div class="btn-row" style="opacity:0;animation:up .6s .45s forwards">
+      <a href="mailto:gfi@gfiintel.com" class="btn-solid">申請診斷對話 →</a>
+      <a href="about.html" class="btn-ghost">關於研究者</a>
+    </div>
+  </div>
 </div>
+
+<section class="band"><div class="wrap">
+  <div class="eyebrow reveal">獨立分析</div>
+  <h2 class="stitle reveal">GL 能提供你的辦公室無法單獨完成的事</h2>
+  <p class="slead reveal">政府審計辦公室在體制內部運作。GL 在體制外部運作。</p>
+  <ul class="offer-list reveal">
+    <li><strong>獨立聲音：</strong>作為外部研究者，我可以發表你的審計記錄所支持、但你的辦公室可能無法公開主導的研究發現。</li>
+    <li><strong>跨州比較：</strong>GL 在不同司法管轄區應用相同公式，產生任何單一州辦公室都無法生成的比較效率分數。</li>
+    <li><strong>政治中立：</strong>GL 不問福利是否應該給予。它只問：系統是否完成了它被設計要完成的事？沒有任何政治人物可以公開拒絕這個問題。</li>
+    <li><strong>你的數據，你的記錄：</strong>分析工作和任何公開曝光由我承擔。底層審計記錄仍屬於你們。對雙方都在政治上乾淨。</li>
+    <li><strong>欺詐是流程失敗：</strong>當系統有 50 億美元不當付款而合法申請人在等待，這不主要是刑事問題。這是分母設計問題。GL 為它命名。</li>
+  </ul>
+</div></section>
+
+<section><div class="wrap">
+  <div class="eyebrow reveal">結構診斷 · 美國</div>
+  <h2 class="stitle reveal">五個州。一個模式。</h2>
+  <p class="slead reveal" style="margin-bottom:clamp(12px,2vh,20px)">基於公開州審計記錄的獨立 GL 分析。</p>
+  <div class="case-row reveal"><div class="case-num">MA</div><div>
+    <div class="case-label">麻薩諸塞州 DUA · 2025</div>
+    <div class="case-title">當自動化加速失敗</div>
+    <p class="body-text">麻州花費數百萬美元自動化其失業系統。上訴積壓案件成長了<strong>九倍</strong>。準時付款率崩潰至 <strong>49%</strong>——全國最差。而這發生在新申請量處於六年低點之際。</p>
+    <p class="body-text">GL 診斷：<strong>分母加速。</strong>速度被套用在一個破損的分類邏輯上，更快地產生錯誤、更快地導向上訴、更快地耗盡裁決者能量。</p>
+  </div></div>
+  <div class="case-row reveal"><div class="case-num">CA</div><div>
+    <div class="case-label">加州 EDD · 2023–2024</div>
+    <div class="case-title">15 億美元不當付款——摩擦，不是欺詐</div>
+    <p class="body-text">加州 EDD 自 2013 年 1 月以來幾乎每個月都未達聯邦及時性標準。<strong>43% 的上訴推翻率</strong>不是欺詐信號，而是摩擦信號：系統在前端拒絕了有效申請，迫使申請人通過上訴，然後在後端推翻那些決定。</p>
+    <p class="body-text">GL 診斷：系統花在處理合格申請人上訴的費用，比直接付款給他們還要多。<strong>返工是不可見的分母。</strong></p>
+  </div></div>
+  <div class="case-row reveal"><div class="case-num">FL</div><div>
+    <div class="case-label">佛羅里達 CONNECT · 2014–2024</div>
+    <div class="case-title">十年未解決的審計問題</div>
+    <p class="body-text">2015 年審計發現 31 個問題。2019 年審計發現超過 50% 未解決。2021 年審計發現 14 個問題仍未處理——包括 2014 年的處理錯誤。2.44 億美元的五年現代化改造沒有產生後續審計。最後一份進度報告：2024 年 6 月。然後是沉默。</p>
+    <p class="body-text"><strong>數據就在那裡。模式清晰可見。缺少的是一個獨立的聲音來說出數據所顯示的事。</strong></p>
+  </div></div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <div class="eyebrow reveal">政治中立</div>
+  <h2 class="stitle reveal">GL 在紅州和藍州都適用。</h2>
+  <p class="slead reveal">因為 GL 不設定目標。它只問：你說你會做 X。你做到了嗎？效率如何？</p>
+  <div class="neutral-grid reveal">
+    <div class="neutral-card red">
+      <div class="nc-label">共和黨 / 財政保守派</div>
+      <p class="nc-body">你說小政府、低支出、不依賴福利——好。但當一個合格申請人被錯誤拒絕、上訴、重新裁決、最終獲得給付，<strong>TWC 花費了三倍的行政成本。</strong>這不是保護納稅人。這是在浪費納稅人的錢。GL 量化那個浪費。</p>
+    </div>
+    <div class="neutral-card blue">
+      <div class="nc-label">民主黨 / 進步派</div>
+      <p class="nc-body">你說保護弱勢群體、確保福利到達需要的人——好。但當 IDES 有 <strong>52 億美元欺詐</strong>而合法申請人在等待，系統設計讓錢流向了錯誤的地方。GL 量化那個漏損。</p>
+    </div>
+  </div>
+  <div class="neutral-center reveal">
+    <p class="nc-verdict">「GL 不判斷福利是否應該存在。<br>它只測量系統是否服務了它被建立的目的。」</p>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="eyebrow reveal">發表文章</div>
+  <h2 class="stitle reveal">分母問題</div>
+  <div class="article-card reveal">
+    <div class="article-tag">PA Times · 公共行政評論</div>
+    <div class="article-title">分母問題：為什麼政府系統辜負了它被建立來服務的人</div>
+    <p class="article-desc">即將於 2026 年 3 月 13 日發表。本文介紹 GL 框架在公共行政系統中的應用——論證制度失敗不是資源問題，而是分母設計問題。麻州 DUA 是核心案例。</p>
+    <div class="article-meta">PA Times · 2026 年 3 月 · 徐萍，GFI Flow Intelligence</div>
+    <a href="mailto:gfi@gfiintel.com?subject=PA Times article — advance copy request" class="btn-solid">申請預發表版本 →</a>
+  </div>
+</div></section>
+
+<section id="request-tw"><div class="wrap">
+  <div class="eyebrow reveal">申請結構診斷</div>
+  <h2 class="stitle reveal">無需採購流程。<br>無需付款。<br>20 分鐘。</h2>
+  <p class="slead reveal" style="max-width:580px">這是一個研究性對話，不是銷售電話。由我主動聯繫你。你決定是否繼續。</p>
+  <div class="request-steps reveal">
+    <div class="req-step">
+      <div class="req-n">01</div>
+      <div class="req-body">
+        <div class="req-title">發送簡短介紹</div>
+        <p class="req-desc">你的姓名、辦公室和所在州。一兩句說明你在系統中觀察到的現象。無需正式文件。</p>
+      </div>
+    </div>
+    <div class="req-step">
+      <div class="req-n">02</div>
+      <div class="req-body">
+        <div class="req-title">我在 48 小時內回覆</div>
+        <p class="req-desc">我會說明你的州的公開審計數據是否支持 GL 分析，以及這個分析能產生什麼結果。</p>
+      </div>
+    </div>
+    <div class="req-step">
+      <div class="req-n">03</div>
+      <div class="req-body">
+        <div class="req-title">20 分鐘對話——按你的時間安排</div>
+        <p class="req-desc">確認方法論的適用性。分析工作和任何公開曝光由我承擔。底層審計記錄仍屬於你們。</p>
+      </div>
+    </div>
+  </div>
+  <div class="request-cta-block reveal">
+    <div class="request-cta-note">無付款。無廠商登記。無招標程序。</div>
+    <a href="mailto:gfi@gfiintel.com?subject=結構診斷申請 — [你的州]&body=姓名：%0A辦公室：%0A所在州：%0A觀察到的現象：" class="btn-solid" style="font-size:clamp(15px,1.8vw,17px);padding:clamp(15px,2.2vh,18px) clamp(28px,3.5vw,40px)">
+      申請結構診斷 →
+    </a>
+    <div class="request-cta-sub">開啟你的郵件客戶端 · gfi@gfiintel.com</div>
+  </div>
+</div></section>
+
+</div><!-- /tw -->
+
+<!-- ══════════ 简体中文 ══════════ -->
+<div class="lb" data-lang="cn">
+
+<div class="hero">
+  <div class="hero-grid"></div><div class="hero-glow"></div>
+  <div class="wrap hero-inner">
+    <div class="eyebrow" style="opacity:0;animation:up .6s .05s forwards">公共部门 · 政府机构</div>
+    <h1>你的系统没有坏掉。<br>它是<em>结构性偏移。</em></h1>
+    <p class="hero-sub">GL 为政府行政系统提供独立结构诊断——使用你们自己的公开审计数据，测量你的办公室已知但无法公开说出口的事。</p>
+    <div class="btn-row" style="opacity:0;animation:up .6s .45s forwards">
+      <a href="mailto:gfi@gfiintel.com" class="btn-solid">申请诊断对话 →</a>
+      <a href="about.html" class="btn-ghost">关于研究者</a>
+    </div>
+  </div>
+</div>
+
+<section class="band"><div class="wrap">
+  <div class="eyebrow reveal">独立分析</div>
+  <h2 class="stitle reveal">GL 能提供你的办公室无法单独完成的事</h2>
+  <p class="slead reveal">政府审计办公室在体制内部运作。GL 在体制外部运作。</p>
+  <ul class="offer-list reveal">
+    <li><strong>独立声音：</strong>作为外部研究者，我可以发表你的审计记录所支持、但你的办公室可能无法公开主导的研究发现。</li>
+    <li><strong>跨州比较：</strong>GL 在不同司法管辖区应用相同公式，产生任何单一州办公室都无法生成的比较效率分数。</li>
+    <li><strong>政治中立：</strong>GL 不问福利是否应该给予。它只问：系统是否完成了它被设计要完成的事？没有任何政治人物可以公开拒绝这个问题。</li>
+    <li><strong>你的数据，你的记录：</strong>分析工作和任何公开曝光由我承担。底层审计记录仍属于你们。对双方都在政治上干净。</li>
+    <li><strong>欺诈是流程失败：</strong>当系统有 50 亿美元不当付款而合法申请人在等待，这不主要是刑事问题。这是分母设计问题。GL 为它命名。</li>
+  </ul>
+</div></section>
+
+<section><div class="wrap">
+  <div class="eyebrow reveal">结构诊断 · 美国</div>
+  <h2 class="stitle reveal">五个州。一个模式。</h2>
+  <p class="slead reveal" style="margin-bottom:clamp(12px,2vh,20px)">基于公开州审计记录的独立 GL 分析。</p>
+  <div class="case-row reveal"><div class="case-num">MA</div><div>
+    <div class="case-label">麻萨诸塞州 DUA · 2025</div>
+    <div class="case-title">当自动化加速失败</div>
+    <p class="body-text">麻州花费数百万美元自动化其失业系统。上诉积压案件增长了<strong>九倍</strong>。准时付款率崩溃至 <strong>49%</strong>——全国最差。而这发生在新申请量处于六年低点之际。</p>
+    <p class="body-text">GL 诊断：<strong>分母加速。</strong>速度被套用在一个破损的分类逻辑上，更快地产生错误、更快地导向上诉、更快地耗尽裁决者能量。</p>
+  </div></div>
+  <div class="case-row reveal"><div class="case-num">CA</div><div>
+    <div class="case-label">加州 EDD · 2023–2024</div>
+    <div class="case-title">15 亿美元不当付款——摩擦，不是欺诈</div>
+    <p class="body-text">加州 EDD 自 2013 年 1 月以来几乎每个月都未达联邦及时性标准。<strong>43% 的上诉推翻率</strong>不是欺诈信号，而是摩擦信号。GL 诊断：系统花在处理合格申请人上诉的费用，比直接付款给他们还要多。<strong>返工是不可见的分母。</strong></p>
+  </div></div>
+  <div class="case-row reveal"><div class="case-num">FL</div><div>
+    <div class="case-label">佛罗里达 CONNECT · 2014–2024</div>
+    <div class="case-title">十年未解决的审计问题</div>
+    <p class="body-text">2015 年审计发现 31 个问题。2021 年审计发现 14 个问题仍未处理——包括 2014 年的处理错误。2.44 亿美元的五年现代化改造没有产生后续审计。<strong>数据就在那里。模式清晰可见。缺少的是一个独立的声音来说出数据所显示的事。</strong></p>
+  </div></div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <div class="eyebrow reveal">政治中立</div>
+  <h2 class="stitle reveal">GL 在红州和蓝州都适用。</h2>
+  <p class="slead reveal">因为 GL 不设定目标。它只问：你说你会做 X。你做到了吗？效率如何？</p>
+  <div class="neutral-grid reveal">
+    <div class="neutral-card red">
+      <div class="nc-label">共和党 / 财政保守派</div>
+      <p class="nc-body">你说小政府、低支出——好。但当一个合格申请人被错误拒绝、上诉、重新裁决、最终获得给付，<strong>TWC 花费了三倍的行政成本。</strong>这是在浪费纳税人的钱。GL 量化那个浪费。</p>
+    </div>
+    <div class="neutral-card blue">
+      <div class="nc-label">民主党 / 进步派</div>
+      <p class="nc-body">你说保护弱势群体——好。但当 IDES 有 <strong>52 亿美元欺诈</strong>而合法申请人在等待，系统设计让钱流向了错误的地方。GL 量化那个漏损。</p>
+    </div>
+  </div>
+  <div class="neutral-center reveal">
+    <p class="nc-verdict">「GL 不判断福利是否应该存在。<br>它只测量系统是否服务了它被建立的目的。」</p>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="eyebrow reveal">发表文章</div>
+  <h2 class="stitle reveal">分母问题</div>
+  <div class="article-card reveal">
+    <div class="article-tag">PA Times · 公共行政评论</div>
+    <div class="article-title">分母问题：为什么政府系统辜负了它被建立来服务的人</div>
+    <p class="article-desc">即将于 2026 年 3 月 13 日发表。本文介绍 GL 框架在公共行政系统中的应用——论证制度失败不是资源问题，而是分母设计问题。</p>
+    <div class="article-meta">PA Times · 2026 年 3 月 · 徐萍，GFI Flow Intelligence</div>
+    <a href="mailto:gfi@gfiintel.com?subject=PA Times article — advance copy request" class="btn-solid">申请预发表版本 →</a>
+  </div>
+</div></section>
+
+<section id="request-cn"><div class="wrap">
+  <div class="eyebrow reveal">申请结构诊断</div>
+  <h2 class="stitle reveal">无需采购流程。<br>无需付款。<br>20 分钟。</h2>
+  <p class="slead reveal" style="max-width:580px">这是一个研究性对话，不是销售电话。由我主动联系你。你决定是否继续。</p>
+  <div class="request-steps reveal">
+    <div class="req-step">
+      <div class="req-n">01</div>
+      <div class="req-body">
+        <div class="req-title">发送简短介绍</div>
+        <p class="req-desc">你的姓名、办公室和所在州。一两句说明你在系统中观察到的现象。无需正式文件。</p>
+      </div>
+    </div>
+    <div class="req-step">
+      <div class="req-n">02</div>
+      <div class="req-body">
+        <div class="req-title">我在 48 小时内回复</div>
+        <p class="req-desc">我会说明你的州的公开审计数据是否支持 GL 分析，以及这个分析能产生什么结果。</p>
+      </div>
+    </div>
+    <div class="req-step">
+      <div class="req-n">03</div>
+      <div class="req-body">
+        <div class="req-title">20 分钟对话——按你的时间安排</div>
+        <p class="req-desc">确认方法论的适用性。分析工作和任何公开曝光由我承担。底层审计记录仍属于你们。</p>
+      </div>
+    </div>
+  </div>
+  <div class="request-cta-block reveal">
+    <div class="request-cta-note">无付款。无供应商登记。无招标程序。</div>
+    <a href="mailto:gfi@gfiintel.com?subject=结构诊断申请 — [你的州]&body=姓名：%0A办公室：%0A所在州：%0A观察到的现象：" class="btn-solid" style="font-size:clamp(15px,1.8vw,17px);padding:clamp(15px,2.2vh,18px) clamp(28px,3.5vw,40px)">
+      申请结构诊断 →
+    </a>
+    <div class="request-cta-sub">打开你的邮件客户端 · gfi@gfiintel.com</div>
+  </div>
+</div></section>
+
+</div><!-- /cn -->
 
 <footer>
-<div class="wrap">
-© 2026 GFI Flow Intelligence · Boston
-</div>
+  <span>© 2026 GFI Flow Intelligence · Boston</span>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="about.html">Founder</a>
+    <a href="mailto:gfi@gfiintel.com">Contact</a>
+  </div>
 </footer>
 
 <script>
-function setLang(l,b){
-document.querySelectorAll('.lang-section').forEach(s=>s.classList.remove('on'));
-document.getElementById(l+'-sec').classList.add('on');
-document.querySelectorAll('.lb-btn').forEach(x=>x.classList.remove('on'));
-if(b){b.classList.add('on');}
-localStorage.setItem('gfi_lang',l);
+function setLang(lang,btn){
+  document.querySelectorAll('.lb').forEach(el=>el.classList.remove('on'));
+  document.querySelectorAll('.lb[data-lang="'+lang+'"]').forEach(el=>el.classList.add('on'));
+  document.querySelectorAll('.lb-btn').forEach(b=>{
+    b.classList.toggle('on',b.getAttribute('onclick')&&b.getAttribute('onclick').includes("'"+lang+"'"));
+  });
+  closeDrawer();
+  window.scrollTo({top:0,behavior:'smooth'});
 }
-
-document.addEventListener('DOMContentLoaded',function(){
-const saved=localStorage.getItem('gfi_lang');
-if(saved){
-const btn=[...document.querySelectorAll('.lb-btn')].find(x=>x.textContent.includes(saved==='en'?'EN':saved==='tw'?'繁':'简'));
-setLang(saved,btn);
+function toggleDrawer(){
+  document.getElementById('ham').classList.toggle('open');
+  document.getElementById('drawer').classList.toggle('open');
 }
-});
+function closeDrawer(){
+  document.getElementById('ham').classList.remove('open');
+  document.getElementById('drawer').classList.remove('open');
+}
+const ro=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis')}),{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
 </script>
-
 </body>
 </html>
