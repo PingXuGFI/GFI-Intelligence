@@ -16,22 +16,23 @@
             --success-green: #198754; 
             --bg-light: #f8f9fa; 
         }
-        body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background-color: var(--bg-light); color: #212529; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-light); color: #212529; }
         .hero { background: linear-gradient(135deg, #0d6efd, #6610f2); color: white; padding: 60px 0; border-bottom: 5px solid #fff; }
         .formula-box { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 40px; }
         
-        /* Case Cards */
-        .case-card { cursor: pointer; transition: all 0.2s ease-in-out; border: none; border-radius: 10px; margin-bottom: 12px; border-left: 6px solid #dee2e6; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .case-card:hover { transform: translateX(5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); background: #fff; }
+        /* Interactive Case Cards */
+        .case-card { cursor: pointer; transition: all 0.3s ease; border: none; border-radius: 10px; margin-bottom: 12px; border-left: 6px solid #dee2e6; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .case-card:hover { transform: translateX(8px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .case-high { border-left-color: var(--success-green); }
         .case-low { border-left-color: var(--danger-red); }
         
-        /* Content Sections */
-        .diag-box { border-top: 1px solid #eee; padding: 20px; margin-top: 10px; display: none; transition: all 0.3s; }
-        .pre-box { background: #e7f1ff; border-radius: 8px; padding: 15px; margin-top: 15px; border-left: 4px solid var(--primary-blue); }
+        /* Diagnostic & Prescription Blocks */
+        .diag-box { border-top: 1px solid #eee; padding: 20px; margin-top: 10px; display: none; }
+        .pre-box { background: #e7f1ff; border: 1px solid #b6d4fe; border-radius: 8px; padding: 20px; margin-top: 15px; color: #084298; }
         
-        .gl-tag { font-weight: bold; font-family: monospace; }
-        footer { background: #212529; color: rgba(255,255,255,0.6); padding: 40px 0; font-size: 0.85rem; margin-top: 50px; }
+        .gl-tag { font-weight: bold; font-size: 1.1rem; }
+        .cta-btn { padding: 15px 30px; font-weight: bold; border-radius: 30px; text-transform: uppercase; letter-spacing: 1px; }
+        footer { background: #212529; color: rgba(255,255,255,0.6); padding: 50px 0; font-size: 0.85rem; margin-top: 50px; }
     </style>
 </head>
 <body>
@@ -39,8 +40,8 @@
 <section class="hero text-center">
     <div class="container">
         <h1 class="fw-bold">GFI Governance Validation</h1>
-        <p class="lead">Proof of Concept: 18 International Cases</p>
-        <p>Based on <i>The Physics of Governance</i> by Ping Xu</p>
+        <p class="lead">Proof of Concept: 18 International Case Studies</p>
+        <p>Based on <i>The Physics of Governance</i> and <i>Why Do Good Policies Cause So Much Pain?</i> by Ping Xu</p>
     </div>
 </section>
 
@@ -48,72 +49,83 @@
     <div class="formula-box text-center">
         <h4 class="text-primary mb-3">Governance Legitimacy Formula (GL Index)</h4>
         <div class="fs-2 mb-2">\[ GL = \frac{Fs \times Vn}{Pd \times Cf} \]</div>
-        <p class="text-muted small">Legitimacy = (Success Rate × Value) / (Pain Duration × Friction)</p>
+        <p class="text-muted small">Legitimacy = (Success Rate × Strategic Value) / (Pain Duration × Cognitive Friction)</p>
     </div>
 
-    <h3 class="mb-4">Case Studies (Click cards to view details)</h3>
+    <h3 class="mb-4">Case Studies (Click to expand Diagnosis & Prescription)</h3>
     <div id="cases-wrapper">
         </div>
+
+    <div class="text-center mt-5 p-5 bg-white rounded shadow-sm border">
+        <h4 class="fw-bold">Need a Governance Audit?</h4>
+        <p class="text-muted mb-4">Request a professional GL Index validation and diagnostic report for your policy implementation.</p>
+        <a href="mailto:gfi@gfiintel.com?subject=Request for Verification Diagnosis" class="btn btn-primary btn-lg cta-btn shadow">
+            Request Verification Diagnosis
+        </a>
+    </div>
 </div>
 
 <footer>
     <div class="container text-center">
         <p>GFI Flow Intelligence | Boston, MA | 2026</p>
-        <p>&copy; Ping Xu. All mathematical diagnostic data verified.</p>
+        <p>&copy; Ping Xu. All data derived from 18 international empirical case studies.</p>
+        <div class="mt-3">
+            Contact: <span class="text-white fw-bold">gfi (at) gfiintel.com</span>
+        </div>
     </div>
 </footer>
 
 <script>
 const casesData = [
-    { id: 1, name: "1. Finland Education System", gl: "3.13", type: "high", diag: "Administrative burden flows uphill to institutions. Automatic data sharing for enrollment results in minimal citizen Pd (2.5 hrs/year).", pre: "Maintain single-entry data architecture. Prevent 'Appendix' growth by capping annual policy amendments." },
-    { id: 2, name: "2. Rwanda Health Insurance", gl: "5.08", type: "high", diag: "Exceptional GL achieved through resource constraints. Community-driven registration and color-coded tiers keep Pd at 1.2 hrs.", pre: "Standardize the 'Minimalist Token' system (stickers/mobile) for other social safety nets." },
-    { id: 3, name: "3. Estonia Digital Government", gl: "10.54", type: "high", diag: "97% Flow Success (Fs). Digital purity reduces Pd to minutes, but SRF 1.8 indicates high risk during infrastructure outages.", pre: "Integrate South Korean-style analog fallbacks to maintain GL during system downtime." },
-    { id: 4, name: "4. Singapore Public Housing (HDB)", gl: "0.020", type: "low", diag: "Success trap. Decades of over-refining rules led to 120 hrs of Pd and high Cf, creating Policy Violence for young applicants.", pre: "Simplicity Reset: Sunset 20% of eligibility criteria and implement a 'Fast-Track' for standard applicants." },
-    { id: 5, name: "5. Germany Energy Transition", gl: "0.056", type: "low", diag: "Permit trap. 24 amendments to climate laws since 1991 have increased Cf by 300%, causing an 83% drop in GL.", pre: "Complexity Budgeting: Mandate that every new environmental regulation must replace two existing ones." },
-    { id: 6, name: "6. New Zealand Wellbeing Budget", gl: "0.013", type: "low", diag: "Metric madness. 247 wellbeing indicators created a reporting Pd of 45 hrs, paralyzing delivery flow.", pre: "Metric Consolidation: Reduce indicators to 12 core variables. Automate data extraction to remove human Pd." },
-    { id: 7, name: "7. Brazil Bolsa Família", gl: "2.64", type: "high", diag: "Scalable elegance. Unified 'Cadastro Único' database ensures 50M people have low-friction access. Pd 3.3, Cf 1.8.", pre: "Leverage existing retail banking networks for 'One-Click' disbursements to maintain high Fs." },
-    { id: 8, name: "8. South Korea Digital ID", gl: "4.12", type: "high", diag: "Resilient tech. High GL (4.12) maintained through mandatory analog backups. Fs remains stable even during cyber threats.", pre: "Preserve the 'Distributed Database' model to ensure local offices can issue IDs if central servers fail." },
-    { id: 9, name: "9. India Aadhaar System", gl: "1.89", type: "high", diag: "Billion-scale transformation. Reduced $15B in leakage. Cf 2.7 is high due to diversity, but Fs is high enough for 'Good' status.", pre: "Implement 'Offline Authentication' modes to reduce Fs failures in areas with poor internet connectivity." },
-    { id: 10, name: "10. U.S. Student Loan Forgiveness", gl: "0.006", type: "low", diag: "Pure Policy Violence. Rejection loops for teachers after 10 years of service. Pd 100 hrs, Cf 4.5.", pre: "Automatic Forgiveness: Cross-reference IRS income data with Department of Ed records to erase debt automatically." },
-    { id: 11, name: "11. UK Universal Credit", gl: "0.06", type: "low", diag: "Chronic attrition. Maze-like interfaces and 5-week waits function as a 'complexity sieve' against the poor.", pre: "Abolish wait periods. Implement 'Immediate Lifeline' advances via mobile-first simplified portals." },
-    { id: 12, name: "12. Taiwan Vaccine Booking (Elderly)", gl: "0.16", type: "low", diag: "Reverse Protection. High Cf (5.5) blocked the tech-illiterate elderly from life-saving vaccines during peaks.", pre: "Proxy Booking: Use NHI records to push appointments via local community centers rather than pull via apps." },
-    { id: 13, name: "13. India Demonetization", gl: "0.023", type: "low", diag: "Financial surgery without anesthesia. 86% cash invalidation created collective trauma and 48 hrs of Pd.", pre: "Gradual Phase-out: Use mobile banking incentives rather than sudden invalidation to protect unbanked citizens." },
-    { id: 14, name: "14. EU GDPR", gl: "0.4", type: "low", diag: "Privacy Fatigue. Citizens reflexively click 'Accept' on pop-ups due to Cf 3.2. Compliance Pd 15 hrs/year.", pre: "Global Privacy Control (GPC): Enforce browser-level standard signals to eliminate per-site consent friction." },
-    { id: 15, name: "15. Japan MyNumber Card", gl: "0.15", type: "low", diag: "Trust Deficit. High Cf and Pd (6 hrs) in the application process caused low uptake despite high strategic value.", pre: "Convenience First: Integrate ID with high-frequency services (Transport/ATM) and simplify the biometric signup." },
-    { id: 16, name: "16. South Africa Social Grants", gl: "0.066", type: "low", diag: "Survival Gambling. System outages cause Fs to drop to 0.5 monthly, forcing long queues and desperate Pd.", pre: "Redundancy: Deploy multiple private-sector payout partners to eliminate 'Single Point of Failure' risks." },
-    { id: 17, name: "17. Australia Flood Relief", gl: "0.078", type: "low", diag: "Secondary Disaster. Victims in ruins were asked for digital proof of disaster. Site crashes added 12 hrs of Pd.", pre: "Auto-Eligibility: Trigger payments based on satellite/flood-map data rather than individual proof-of-loss." },
-    { id: 18, name: "18. Canada Passport Renewal", gl: "0.032", type: "low", diag: "Planned Failure. Post-COVID surge ignored by planning. Pd 50 hrs for a basic right. Cf 3.8.", pre: "Demand Buffering: Implement 'One-Click Renew' for low-risk applicants and scale staffing based on expiry data." }
+    // Cases 1-9: From Nine International Case Studies
+    [cite_start]{ id: 1, name: "1. Finland Education System", gl: "3.13", type: "high", diag: "Administrative burden flows uphill to institutions. Automatic data sharing for enrollment results in minimal citizen Pd (2.5 hrs/year)[cite: 1].", pre: "Maintain single-entry data architecture. [cite_start]Prevent 'Appendix' growth by capping annual policy amendments[cite: 1]." },
+    { id: 2, name: "2. Rwanda Health Insurance", gl: "5.08", type: "high", diag: "Exceptional GL achieved through resource constraints. [cite_start]Community-driven registration and color-coded tiers keep Pd at 1.2 hrs [cite: 1][cite_start].", pre: "Standardize the 'Minimalist Token' system (stickers/mobile) for other social safety nets[cite: 1]." },
+    { id: 3, name: "3. Estonia Digital Government", gl: "10.54", type: "high", diag: "97% Flow Success (Fs). [cite_start]Digital purity reduces Pd to minutes, but SRF 1.8 indicates high risk during infrastructure outages [cite: 1][cite_start].", pre: "Integrate South Korean-style analog fallbacks to maintain GL during system downtime[cite: 1]." },
+    { id: 7, name: "7. Brazil Bolsa Família", gl: "2.64", type: "high", diag: "Scalable elegance via unified 'Cadastro Único' database. [cite_start]Pd 3.3, Cf 1.8 [cite: 1][cite_start].", pre: "Leverage existing retail banking networks for 'One-Click' disbursements to maintain high Fs[cite: 1]." },
+    { id: 8, name: "8. South Korea Digital ID", gl: "4.12", type: "high", diag: "Resilient tech. [cite_start]High GL maintained through mandatory analog backups, ensuring stable Fs even during cyber threats [cite: 1][cite_start].", pre: "Preserve the 'Distributed Database' model to ensure local offices can issue IDs if central servers fail[cite: 1]." },
+    { id: 9, name: "9. India Aadhaar System", gl: "1.89", type: "high", diag: "Billion-scale transformation. [cite_start]Reduced $15B in leakage despite diversity-related Cf of 2.7 [cite: 1][cite_start].", pre: "Implement 'Offline Authentication' modes to reduce Fs failures in areas with poor internet connectivity[cite: 1]." },
+    { id: 4, name: "4. Singapore Public Housing (HDB)", gl: "0.020", type: "low", diag: "Success trap. [cite_start]Decades of over-refining rules led to 120 hrs of Pd and high Cf, creating Policy Violence for applicants [cite: 1][cite_start].", pre: "Simplicity Reset: Sunset 20% of eligibility criteria and implement a 'Fast-Track' for standard applicants[cite: 1]." },
+    { id: 5, name: "5. Germany Energy Transition", gl: "0.056", type: "low", diag: "Permit trap. [cite_start]24 amendments since 1991 increased Cf by 300%, causing an 83% drop in GL [cite: 1][cite_start].", pre: "Complexity Budgeting: Mandate that every new regulation must replace two existing ones[cite: 1]." },
+    { id: 6, name: "6. New Zealand Wellbeing Budget", gl: "0.013", type: "low", diag: "Metric madness. [cite_start]247 wellbeing indicators created a reporting Pd of 45 hrs, paralyzing delivery flow[cite: 1].", pre: "Metric Consolidation: Reduce indicators to 12 core variables. [cite_start]Automate data extraction to remove human Pd[cite: 1]." },
+    
+    // Cases 10-18: From Why Do Good Policies Cause So Much Pain?
+    { id: 10, name: "10. U.S. Student Loan Forgiveness", gl: "0.006", type: "low", diag: "Pure Policy Violence. Rejection loops for teachers after 10 years of service. [cite_start]Pd 100 hrs, Cf 4.5 [cite: 2][cite_start].", pre: "Automatic Forgiveness: Cross-reference IRS income data with Department of Ed records to erase debt automatically[cite: 2]." },
+    { id: 13, name: "13. India Demonetization", gl: "0.023", type: "low", diag: "A 'financial surgery without anesthesia.' [cite_start]Pd 48 hrs (collective trauma), Cf 4.0 [cite: 2][cite_start].", pre: "Gradual Phase-out: Use mobile banking incentives rather than sudden invalidation to protect unbanked citizens[cite: 2]." },
+    { id: 17, name: "17. Australia Flood Relief", gl: "0.078", type: "low", diag: "Secondary Disaster. Victims in ruins were asked for digital proof of disaster. [cite_start]Pd 12 hrs, Cf 4.2 [cite: 2][cite_start].", pre: "Auto-Eligibility: Trigger payments based on satellite/flood-map data rather than individual proof-of-loss[cite: 2]." },
+    { id: 18, name: "18. Canada Passport Renewal", gl: "0.032", type: "low", diag: "Planned Failure. Post-COVID surge ignored by planning. Pd 50 hrs for a basic right. [cite_start]Cf 3.8 [cite: 2][cite_start].", pre: "Demand Buffering: Implement 'One-Click Renew' for low-risk applicants and scale staffing based on expiry data[cite: 2]." },
+    { id: 11, name: "11. UK Universal Credit", gl: "0.06", type: "low", diag: "Chronic attrition. [cite_start]Maze-like interfaces and 5-week waits function as a 'complexity sieve' against the poor[cite: 2].", pre: "Abolish wait periods. [cite_start]Implement 'Immediate Lifeline' advances via mobile-first simplified portals[cite: 2]." },
+    { id: 12, name: "12. Taiwan Vaccine Booking (Elderly)", gl: "0.16", type: "low", diag: "Reverse Protection. [cite_start]High Cf (5.5) blocked the tech-illiterate elderly from life-saving vaccines [cite: 2][cite_start].", pre: "Proxy Booking: Use NHI records to push appointments via local community centers rather than pull via apps[cite: 2]." },
+    { id: 15, name: "15. Japan MyNumber Card", gl: "0.15", type: "low", diag: "Trust Deficit. [cite_start]High Cf and Pd (6 hrs) in the application process caused low uptake [cite: 2][cite_start].", pre: "Convenience First: Integrate ID with high-frequency services (Transport/ATM) and simplify the biometric signup[cite: 2]." },
+    { id: 16, name: "16. South Africa Social Grants", gl: "0.066", type: "low", diag: "Survival Gambling. [cite_start]System outages cause Fs to drop to 0.5 monthly, forcing long queues and desperate Pd [cite: 2][cite_start].", pre: "Redundancy: Deploy multiple private-sector payout partners to eliminate 'Single Point of Failure' risks[cite: 2]." },
+    { id: 14, name: "14. EU GDPR", gl: "0.4", type: "low", diag: "Privacy Fatigue. Citizens reflexively click 'Accept' on pop-ups due to Cf 3.2. [cite_start]Pd 15 hrs/year [cite: 2][cite_start].", pre: "Global Privacy Control (GPC): Enforce browser-level standard signals to eliminate per-site consent friction[cite: 2]." }
 ];
 
 function render() {
     const wrapper = document.getElementById('cases-wrapper');
     casesData.forEach(c => {
-        const card = document.createElement('div');
-        card.className = `card case-card p-3 ${c.type === 'high' ? 'case-high' : 'case-low'}`;
-        card.innerHTML = `
+        const div = document.createElement('div');
+        div.className = `card case-card p-3 ${c.type === 'high' ? 'case-high' : 'case-low'}`;
+        div.innerHTML = `
             <div class="d-flex justify-content-between align-items-center fw-bold">
                 <span>${c.name}</span>
                 <span class="gl-tag ${c.type === 'high' ? 'text-success' : 'text-danger'}">GL: ${c.gl}</span>
             </div>
-            <div class="diag-box" id="box-${c.id}">
-                <p><strong>Diagnosis:</strong> ${c.diag}</p>
+            <div id="box-${c.id}" class="diag-box">
+                <h6 class="fw-bold text-secondary">Diagnostic Details:</h6>
+                <p class="mb-0">${c.diag}</p>
                 <div class="pre-box">
-                    <strong>Prescription:</strong> ${c.pre}
+                    <h6 class="fw-bold text-primary">Optimization Prescription:</h6>
+                    <p class="mb-0">${c.pre}</p>
                 </div>
             </div>
         `;
-        // Reliable click handler
-        card.addEventListener('click', function() {
+        div.addEventListener('click', function() {
             const box = document.getElementById(`box-${c.id}`);
             const isVisible = box.style.display === 'block';
-            
-            // Close all boxes first for a clean look
             document.querySelectorAll('.diag-box').forEach(b => b.style.display = 'none');
-            
-            // Toggle the clicked one
             box.style.display = isVisible ? 'none' : 'block';
         });
-        wrapper.appendChild(card);
+        wrapper.appendChild(div);
     });
 }
 
