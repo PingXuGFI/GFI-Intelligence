@@ -1,128 +1,643 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GFI Validation | 18 International Case Studies</title>
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    
-    <style>
-        :root { --primary-blue: #0d6efd; --danger-red: #dc3545; --success-green: #198754; --bg-light: #f8f9fa; }
-        body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--bg-light); color: #212529; }
-        .hero { background: linear-gradient(135deg, #0d6efd, #6610f2); color: white; padding: 60px 0; border-bottom: 5px solid #fff; }
-        .formula-box { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 40px; }
-        
-        /* 100% Click Success Case Cards */
-        .case-card { border: none; border-radius: 10px; margin-bottom: 12px; border-left: 6px solid #dee2e6; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .case-high { border-left-color: var(--success-green); }
-        .case-low { border-left-color: var(--danger-red); }
-        
-        .card-header-btn { width: 100%; text-align: left; background: none; border: none; padding: 20px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; color: #212529; outline: none !important; }
-        .card-header-btn:hover { background-color: #f1f4f9; }
-        
-        .diag-content { padding: 0 20px 20px 20px; border-top: 1px solid #eee; }
-        .pre-box { background: #e7f3ff; border: 1px solid #b6d4fe; border-radius: 8px; padding: 15px; margin-top: 15px; color: #084298; }
-        
-        /* CTA Button Styling */
-        .cta-btn { padding: 15px 30px; font-weight: bold; border-radius: 30px; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
-        .cta-btn:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        
-        footer { background: #212529; color: rgba(255,255,255,0.6); padding: 50px 0; font-size: 0.85rem; margin-top: 50px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="GL Framework for Government & Public Sector — independent structural diagnosis of administrative efficiency, UI systems, and public program delivery.">
+<title>Public Sector | GFI Flow Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#141d2e;--surf:#1c2740;--surf2:#22304e;
+  --border:rgba(255,255,255,0.08);--text:#edf0f8;
+  --muted:#8fa3c0;--dim:#4a6080;--accent:#c8f542;--blue:#4da3ff;
+  --serif:'DM Serif Display',Georgia,serif;
+  --mono:'DM Mono',monospace;
+  --sans:'DM Sans',system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:17px;line-height:1.75;overflow-x:hidden}
+
+header{position:fixed;inset:0 0 auto 0;z-index:100;height:60px;padding:0 24px;display:flex;align-items:center;justify-content:space-between;background:rgba(20,29,46,0.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.logo img{height:44px;width:auto}
+nav{display:flex;align-items:center;gap:4px}
+nav a{font-size:13px;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:6px;white-space:nowrap;transition:color .2s,background .2s}
+nav a:hover{color:var(--text);background:rgba(255,255,255,0.05)}
+nav a.active{color:var(--accent)}
+.nav-cta{display:inline-block;padding:8px 16px;background:var(--accent);color:#0d1117;font-size:13px;font-weight:600;border-radius:6px;text-decoration:none;margin-left:8px;white-space:nowrap;transition:opacity .2s}
+.nav-cta:hover{opacity:.85}
+.ham{display:none;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;padding:6px;background:none;border:none;cursor:pointer}
+.ham span{display:block;height:2px;background:var(--text);border-radius:2px;transition:transform .25s,opacity .2s}
+.ham.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.ham.open span:nth-child(2){opacity:0}
+.ham.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.drawer{display:none;position:fixed;top:60px;left:0;right:0;z-index:99;background:rgba(20,29,46,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:16px 24px 24px;flex-direction:column}
+.drawer.open{display:flex}
+.drawer a{font-size:17px;color:var(--muted);text-decoration:none;padding:14px 0;border-bottom:1px solid var(--border);transition:color .2s}
+.drawer a:hover{color:var(--text)}
+.drawer-cta{display:block;text-align:center;padding:16px;background:var(--accent);color:#0d1117;font-weight:600;font-size:16px;border-radius:8px;text-decoration:none;margin-top:16px;border-bottom:none!important}
+@media(max-width:768px){.hero{padding-top:60px}}
+
+
+.wrap{max-width:1060px;margin:0 auto;padding:0 clamp(20px,5vw,60px)}
+section{padding:clamp(60px,10vh,110px) 0}
+section.band{background:var(--surf);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+
+/* HERO */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:52px 52px;mask-image:radial-gradient(ellipse 80% 50% at 50% 0%,black 20%,transparent 75%);pointer-events:none}
+.hero-glow{position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(200,245,66,.04) 0%,transparent 70%);top:-150px;right:-150px;pointer-events:none}
+.hero-inner{position:relative;padding:clamp(80px,14vh,140px) 0 clamp(60px,10vh,100px)}
+.hero h1{font-family:var(--serif);font-size:clamp(28px,4vw,52px);line-height:1.1;letter-spacing:-.02em;max-width:820px;margin-bottom:clamp(18px,3vh,28px);opacity:0;animation:up .6s .1s forwards}
+.hero h1 em{font-style:italic;color:var(--accent)}
+.hero-sub{font-size:clamp(16px,2vw,19px);color:var(--muted);max-width:600px;line-height:1.75;margin-bottom:clamp(28px,5vh,44px);opacity:0;animation:up .6s .3s forwards}
+
+/* PULL QUOTE */
+.pull{font-family:var(--serif);font-style:italic;font-size:clamp(17px,2.3vw,24px);color:var(--text);line-height:1.5;border-left:3px solid var(--accent);padding-left:22px;margin:clamp(24px,4vh,40px) 0}
+
+/* DIAGNOSIS CARDS */
+.diag-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-top:clamp(28px,5vh,48px)}
+.diag-card{background:var(--surf);padding:clamp(22px,3vw,34px);transition:background .2s}
+.diag-card:hover{background:var(--surf2)}
+.diag-num{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+.diag-title{font-family:var(--serif);font-size:clamp(17px,2.2vw,22px);color:var(--text);margin-bottom:10px;line-height:1.3}
+.diag-body{font-size:clamp(14px,1.7vw,16px);color:var(--muted);line-height:1.75}
+.diag-signal{display:inline-block;margin-top:14px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;background:rgba(255,107,107,.1);color:#ff7070}
+
+/* CASE ROWS */
+.case-row{display:grid;grid-template-columns:70px 1fr;gap:clamp(16px,3vw,36px);padding:clamp(24px,4vh,44px) 0;border-bottom:1px solid var(--border);align-items:start}
+.case-row:first-of-type{border-top:1px solid var(--border)}
+.case-num{font-family:var(--serif);font-style:italic;font-size:clamp(36px,5vw,56px);color:rgba(200,245,66,0.15);line-height:1}
+.case-label{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.case-title{font-family:var(--serif);font-size:clamp(17px,2.3vw,24px);color:var(--text);margin-bottom:14px;line-height:1.3}
+.body-text{font-size:clamp(16px,2vw,18px);color:var(--muted);line-height:1.9;margin-bottom:16px}
+.body-text strong{color:var(--text)}
+
+h2.stitle{font-family:var(--serif);font-size:clamp(22px,3.2vw,36px);line-height:1.12;letter-spacing:-.02em;margin-bottom:16px}
+.slead{font-size:clamp(16px,1.9vw,18px);color:var(--muted);max-width:680px;line-height:1.8;margin-bottom:0}
+
+/* WHAT GL OFFERS GOV */
+.offer-list{list-style:none;margin-top:clamp(20px,3vh,32px)}
+.offer-list li{font-size:clamp(15px,1.8vw,17px);color:var(--muted);padding:18px 0;border-bottom:1px solid var(--border);display:flex;gap:16px;line-height:1.65;align-items:start}
+.offer-list li::before{content:'→';color:var(--accent);flex-shrink:0;font-family:var(--mono);margin-top:2px}
+.offer-list li strong{color:var(--text)}
+
+/* POLITICAL NEUTRALITY */
+.neutral-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2vw,24px);margin-top:clamp(28px,5vh,48px)}
+.neutral-card{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:clamp(20px,3vw,30px)}
+.neutral-card.red{border-color:rgba(255,107,107,.2)}
+.neutral-card.blue{border-color:rgba(77,163,255,.2)}
+.nc-label{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px}
+.neutral-card.red .nc-label{color:#ff7070}
+.neutral-card.blue .nc-label{color:var(--blue)}
+.nc-body{font-size:clamp(14px,1.7vw,16px);color:var(--muted);line-height:1.75}
+.nc-body strong{color:var(--text)}
+.neutral-center{background:rgba(200,245,66,.04);border:1px solid rgba(200,245,66,.15);border-radius:10px;padding:clamp(20px,3vw,32px);margin-top:clamp(16px,2vw,20px);text-align:center}
+.nc-verdict{font-family:var(--serif);font-size:clamp(16px,2.2vw,22px);color:var(--text);line-height:1.45}
+
+/* ARTICLE HIGHLIGHT */
+.article-card{background:var(--surf);border:1px solid rgba(200,245,66,.18);border-radius:10px;padding:clamp(22px,3vw,36px);margin-top:clamp(28px,5vh,48px);display:flex;flex-direction:column;gap:14px}
+.article-tag{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.article-title{font-family:var(--serif);font-size:clamp(18px,2.5vw,28px);color:var(--text);line-height:1.3}
+.article-desc{font-size:clamp(15px,1.8vw,17px);color:var(--muted);line-height:1.75;max-width:640px}
+.article-meta{font-family:var(--mono);font-size:12px;color:var(--dim)}
+.btn-solid{display:inline-flex;align-items:center;padding:clamp(12px,1.8vh,15px) clamp(20px,2.5vw,30px);background:var(--accent);color:#0d1117;font-weight:600;font-size:clamp(14px,1.6vw,15px);border-radius:8px;text-decoration:none;white-space:nowrap;transition:opacity .2s,transform .2s;margin-top:6px;width:fit-content}
+.btn-solid:hover{opacity:.87;transform:translateY(-1px)}
+.btn-ghost{display:inline-flex;align-items:center;padding:clamp(12px,1.8vh,15px) clamp(20px,2.5vw,30px);border:1px solid var(--border);color:var(--muted);font-size:clamp(14px,1.6vw,15px);border-radius:8px;text-decoration:none;white-space:nowrap;transition:all .2s;margin-top:6px;width:fit-content}
+.btn-ghost:hover{border-color:rgba(255,255,255,.2);color:var(--text)}
+.btn-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:clamp(20px,3vh,32px)}
+
+/* CONTACT */
+.contact-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:clamp(28px,5vh,44px)}
+.cl{display:inline-flex;align-items:center;gap:8px;padding:clamp(12px,1.8vh,14px) clamp(20px,2.5vw,28px);border:1px solid var(--border);border-radius:8px;color:var(--muted);text-decoration:none;font-size:clamp(14px,1.8vw,15px);transition:all .2s}
+.cl:hover{color:var(--text);border-color:rgba(255,255,255,.18)}
+.cl.primary{background:var(--accent);color:#0d1117;border-color:transparent;font-weight:600}
+.cl.primary:hover{opacity:.88;color:#0d1117}
+
+footer{padding:clamp(28px,5vh,44px) clamp(20px,5vw,60px);border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;color:var(--muted);font-size:13px}
+footer a{color:var(--muted);text-decoration:none}
+footer a:hover{color:var(--text)}
+.footer-links{display:flex;gap:24px;flex-wrap:wrap}
+
+/* REQUEST STEPS */
+.request-steps{margin-top:clamp(32px,5vh,52px);display:flex;flex-direction:column}
+.req-step{display:grid;grid-template-columns:52px 1fr;gap:clamp(16px,3vw,28px);padding:clamp(20px,3vh,30px) 0;border-bottom:1px solid var(--border);align-items:start}
+.req-step:first-child{border-top:1px solid var(--border)}
+.req-n{font-family:var(--serif);font-style:italic;font-size:clamp(32px,5vw,48px);color:rgba(200,245,66,0.18);line-height:1;padding-top:4px}
+.req-title{font-family:var(--serif);font-size:clamp(17px,2.2vw,22px);color:var(--text);margin-bottom:8px;line-height:1.25}
+.req-desc{font-size:clamp(14px,1.7vw,16px);color:var(--muted);line-height:1.75}
+.request-cta-block{margin-top:clamp(36px,6vh,56px);display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+.request-cta-note{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding:8px 14px;border:1px solid var(--border);border-radius:4px}
+.request-cta-sub{font-family:var(--mono);font-size:11px;color:var(--dim);margin-top:4px}
+
+/* GL VALIDATION */
+.val-note{font-family:var(--mono);font-size:12px;color:var(--dim);line-height:1.7;padding:16px 20px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:8px;margin-bottom:clamp(28px,4vh,44px)}
+.val-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.val-card{background:var(--surf);cursor:pointer;transition:background .2s;user-select:none}
+.val-card:hover{background:var(--surf2)}
+.val-head{padding:clamp(16px,2.2vh,22px) clamp(18px,2.5vw,26px);display:grid;grid-template-columns:1fr auto;gap:10px;align-items:start}
+.val-flag{font-size:20px;margin-bottom:4px;line-height:1}
+.val-country{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:4px}
+.val-policy{font-size:clamp(14px,1.6vw,15px);color:var(--text);line-height:1.35;margin-bottom:6px;font-weight:500}
+.val-domain{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue)}
+.val-right{text-align:right;flex-shrink:0}
+.val-score{font-family:var(--serif);font-size:clamp(20px,2.8vw,28px);line-height:1;margin-bottom:3px}
+.val-score.hi{color:var(--accent)}
+.val-score.lo{color:#ff7070}
+.val-score.mid{color:#ffb347}
+.val-gl-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.val-toggle{font-family:var(--mono);font-size:13px;color:var(--dim);margin-top:6px;transition:transform .25s;display:block}
+.val-card.open .val-toggle{transform:rotate(45deg)}
+.val-body{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1)}
+.val-card.open .val-body{max-height:500px}
+.val-body-inner{padding:0 clamp(18px,2.5vw,26px) clamp(16px,2.2vh,22px);border-top:1px solid var(--border)}
+.val-desc{font-size:clamp(13px,1.5vw,14px);color:var(--muted);line-height:1.8;margin-top:14px}
+.val-desc strong{color:var(--text)}
+.val-formula{font-family:var(--mono);font-size:11px;color:var(--accent);background:rgba(200,245,66,0.05);border:1px solid rgba(200,245,66,0.15);border-radius:6px;padding:8px 12px;margin-top:12px;text-align:center}
+.val-comps{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}
+.val-comp{background:rgba(255,255,255,0.025);border:1px solid var(--border);border-radius:5px;padding:8px 10px}
+.val-comp-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-bottom:3px}
+.val-comp-val{font-family:var(--mono);font-size:12px;color:var(--muted)}
+
+@keyframes up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .65s,transform .65s}
+.reveal.vis{opacity:1;transform:none}
+
+@media(max-width:768px){
+  nav{display:none}.ham{display:flex}
+  .neutral-grid{grid-template-columns:1fr}
+  .case-row{grid-template-columns:1fr}
+  .case-num{display:none}
+  .val-comps{grid-template-columns:1fr}
+  footer{flex-direction:column;text-align:center}
+}
+</style>
 </head>
 <body>
 
-<section class="hero text-center">
-    <div class="container">
-        <h1 class="fw-bold">GFI Governance Validation</h1>
-        <p class="lead">Mathematical Diagnosis & Prescriptions for 18 International Case Studies</p>
-        <p>Based on the works of Ping Xu: <i>The Physics of Governance</i></p>
-    </div>
-</section>
+<header>
+  <a href="index.html" class="logo"><img src="GFILOGO.png" alt="GFI"></a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="government.html" class="active">Public Sector</a>
+    <a href="index.html#pricing">Private Sector</a>
+    <a href="about.html">Founder</a>
+    <a href="mailto:gfi@gfiintel.com" class="nav-cta">Contact</a>
+  </nav>
+  <button class="ham" id="ham" aria-label="Menu" onclick="toggleDrawer()">
+    <span></span><span></span><span></span>
+  </button>
+</header>
 
-<div class="container my-5">
-    <div class="formula-box text-center shadow-sm">
-        <h4 class="text-primary mb-3">The GL Formula</h4>
-        <div class="fs-2 mb-2">\[ GL = \frac{Fs \times Vn}{Pd \times Cf} \]</div>
-        <p class="text-muted small">Legitimacy = (Flow Success Rate × Strategic Value) / (Pain Duration × Cognitive Friction)</p>
-    </div>
-
-    <h3 class="mb-4 text-secondary">Case Repository (Click to expand)</h3>
-    
-    <div class="accordion shadow-sm" id="gfiAccordion"></div>
-
-    <div class="text-center mt-5 p-5 bg-white rounded shadow-sm border">
-        <h4 class="fw-bold">Need a Governance Audit?</h4>
-        <p class="text-muted mb-4">Request a professional GL Index validation and diagnostic report for your policy implementation.</p>
-        <a href="mailto:gfi@gfiintel.com?subject=Request for Verification Diagnosis" class="btn btn-primary btn-lg cta-btn shadow-lg">
-            Request Verification Diagnosis
-        </a>
-    </div>
+<div class="drawer" id="drawer">
+  <a href="index.html" onclick="closeDrawer()">Home</a>
+  <a href="government.html" onclick="closeDrawer()">Public Sector</a>
+  <a href="index.html#pricing" onclick="closeDrawer()">Private Sector</a>
+  <a href="about.html" onclick="closeDrawer()">Founder</a>
+  <a href="mailto:gfi@gfiintel.com" class="drawer-cta" onclick="closeDrawer()">Contact →</a>
 </div>
 
-<footer>
-    <div class="container text-center">
-        <p>GFI Flow Intelligence | Boston, MA | 2026</p>
-        <p>&copy; Ping Xu. All data derived from 18 international empirical case studies.</p>
-        <div class="mt-3">
-            Contact: <a href="mailto:gfi@gfiintel.com" class="text-white fw-bold" style="text-decoration: none;">gfi@gfiintel.com</a>
-        </div>
+
+<div class="hero">
+  <div class="hero-grid"></div><div class="hero-glow"></div>
+  <div class="wrap hero-inner">
+    <div class="eyebrow" style="opacity:0;animation:up .6s .05s forwards">Public Sector · Government</div>
+    <h1>GL measures how well<br>a system <em>delivers its purpose.</em></h1>
+    <p class="hero-sub">GL applies a structural efficiency formula to publicly available government data — producing cross-jurisdictional measurements that individual offices are not positioned to generate.</p>
+    <div class="btn-row" style="opacity:0;animation:up .6s .45s forwards">
+      <a href="mailto:gfi@gfiintel.com" class="btn-solid">Get in Touch →</a>
+      <a href="about.html" class="btn-ghost">About the Researcher</a>
     </div>
+  </div>
+</div>
+
+<!-- WHAT GL DOES FOR GOV -->
+<section class="band">
+  <div class="wrap">
+    <div class="eyebrow reveal">External Analysis</div>
+    <h2 class="stitle reveal">What GL offers as an external research framework</h2>
+    <p class="slead reveal">Government audit offices generate the data. GL applies an external formula to that data to produce cross-jurisdictional comparisons and structural efficiency scores.</p>
+    <ul class="offer-list reveal">
+      <li><strong>External research perspective:</strong> GL produces cross-jurisdictional structural comparisons using publicly available data — analysis that complements the work of individual state offices.</li>
+      <li><strong>Cross-state comparison:</strong> GL applies the same formula across jurisdictions, producing comparative efficiency scores that no single state office can generate.</li>
+      <li><strong>Political neutrality:</strong> GL does not evaluate policy goals. It only measures whether a system accomplished what it was designed to accomplish — a question that applies equally regardless of political context.</li>
+      <li><strong>No internal documents required:</strong> GL analysis is based entirely on publicly available state audit records. No confidential data, no internal systems access, no compliance exposure.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- INTERNATIONAL CASES -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow reveal">GL Applied · International</div>
+    <h2 class="stitle reveal">Same Framework. Nine Countries.</h2>
+    <p class="slead reveal" style="margin-bottom:clamp(20px,3vh,36px)">GL scores are derived from publicly available governance and administrative efficiency data. These are independent research applications of the GL formula — not commissioned engagements with any government.</p>
+
+    <div class="case-row reveal">
+      <div class="case-num">EE</div>
+      <div>
+        <div class="case-label">Estonia · GL Score 10.54</div>
+        <div class="case-title">Digital-First Design Aligns Speed with Accuracy</div>
+        <p class="body-text">Estonia's public administration is consistently cited in OECD and EU governance reports for high e-service adoption rates and low administrative redundancy. GL analysis of available governance indicators produces the highest score in this research set.</p>
+        <p class="body-text">GL reading: when the denominator — total administrative steps required to deliver a valid outcome — is designed into the digital architecture from the start, friction does not accumulate. Estonia illustrates what a low-friction denominator looks like in practice.</p>
+      </div>
+    </div>
+
+    <div class="case-row reveal">
+      <div class="case-num">NZ</div>
+      <div>
+        <div class="case-label">New Zealand · GL Score 7.21</div>
+        <div class="case-title">Outcome Measurement Built Into Delivery</div>
+        <p class="body-text">New Zealand's public service reforms introduced outcome-based performance measurement across government agencies. Published government performance reports document service delivery metrics alongside user experience indicators.</p>
+        <p class="body-text">GL reading: systems that measure outputs and outcomes simultaneously give administrators the data needed to locate denominator problems before they accumulate. New Zealand's framework illustrates how measurement design affects structural efficiency.</p>
+      </div>
+    </div>
+
+    <div class="case-row reveal">
+      <div class="case-num">SG</div>
+      <div>
+        <div class="case-label">Singapore · GL Score 6.88</div>
+        <div class="case-title">Centralized Process Logic Reduces Rework</div>
+        <p class="body-text">Singapore's public sector efficiency is documented across multiple international governance indices including the World Bank Government Effectiveness indicators. Centralized service delivery architecture reduces inter-agency friction.</p>
+        <p class="body-text">GL reading: when process logic is centralized, denominator inflation — the accumulation of redundant steps across agency boundaries — is structurally limited. Singapore illustrates how architecture choices determine friction levels independently of staffing or funding.</p>
+      </div>
+    </div>
+
+    <div class="case-row reveal">
+      <div class="case-num">DE</div>
+      <div>
+        <div class="case-label">Germany · GL Score 0.056</div>
+        <div class="case-title">High Input, Low Flow — The Complexity Trap</div>
+        <p class="body-text">Germany's public administration is characterized by high procedural compliance requirements documented across EU administrative burden assessments. Despite significant public sector investment, service delivery speed consistently lags comparable economies in international benchmarks.</p>
+        <p class="body-text">GL reading: Germany illustrates what GL identifies as the complexity trap — when procedural requirements multiply the denominator faster than resources can address it, additional investment produces diminishing returns. High input does not resolve a misaligned denominator.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- METHODOLOGY NOTE -->
+<section class="band">
+  <div class="wrap">
+    <div class="eyebrow reveal">Methodology</div>
+    <h2 class="stitle reveal">GL measures process, not policy.</h2>
+    <p class="slead reveal" style="max-width:640px">GL does not evaluate whether a policy goal is correct. It applies a structural formula to ask: given the stated goal, how efficiently does the system accomplish it? The same formula applies regardless of jurisdiction, program type, or political context.</p>
+    <div class="neutral-center reveal" style="margin-top:clamp(28px,4vh,44px)">
+      <p class="nc-verdict">"GL does not evaluate policy goals.<br>It measures whether a system delivers what it was designed to deliver."</p>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATION -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow reveal">Publication</div>
+    <h2 class="stitle reveal">The Denominator Problem</h2>
+    <div class="article-card reveal">
+      <div class="article-tag">PA Times · Public Administration Review</div>
+      <div class="article-title">The Denominator Problem: Structural Efficiency Measurement in Public Administrative Systems</div>
+      <p class="article-desc">Forthcoming March 13, 2026. This article introduces the GL Framework's application to public administrative systems — arguing that institutional failure is not a resource problem but a denominator design problem.</p>
+      <div class="article-meta">PA Times · March 2026 · Ping Xu, GFI Flow Intelligence</div>
+      <a href="mailto:gfi@gfiintel.com" class="btn-solid">Request Pre-Publication Copy →</a>
+    </div>
+  </div>
+</section>
+
+<!-- GL VALIDATION -->
+<section class="band">
+  <div class="wrap">
+    <div class="eyebrow reveal">Framework Validation</div>
+    <h2 class="stitle reveal">GL Applied Across 18 Systems · 14 Countries</h2>
+    <p class="slead reveal">Each score is calculated by applying the GL formula — GL = (Fs × Vn) / (Pd × Cf) — to publicly available data. These are independent research applications, not commissioned engagements with any government or agency.</p>
+    <div class="val-note reveal">Source data drawn from OECD reports, national audit records, government performance publications, and academic literature. Click any case to expand.</div>
+
+    <div class="val-grid reveal">
+
+      <!-- 1 -->
+      <div class="val-card" onclick="toggleVal(this)">
+        <div class="val-head">
+          <div><div class="val-flag">🇷🇼</div><div class="val-country">Rwanda</div><div class="val-policy">Mutuelle de Santé — Community Health Insurance</div><div class="val-domain">Healthcare</div></div>
+          <div class="val-right"><div class="val-score hi">8.54</div><div class="val-gl-lbl">GL Score</div><div class="val-toggle">+</div></div>
+        </div>
+        <div class="val-body"><div class="val-body-inner">
+          <p class="val-desc">Starting from near-total healthcare collapse after 1994, Rwanda built a community-anchored insurance system covering over 90% of its population on a health budget of $4 per person per year. Enrollment and access are designed into community networks, not bureaucratic channels — keeping the denominator structurally low despite severe resource constraints.</p>
+          <p class="val-desc"><strong>GL finding:</strong> Resource scarcity does not determine outcome quality when process design is elegant. Rwanda's result is the highest GL score in this research set.</p>
+          <div class="val-comps"><div class="val-comp"><div class="val-comp-lbl">Fs · Flow Success</div><div class="val-comp-val">0.88</div></div><div class="val-comp"><div class="val-comp-lbl">Vn · Strategic Value</div><div class="val-comp-val">9.5</div></div><div class="val-comp"><div class="val-comp-lbl">Pd · Pain Duration</div><div class="val-comp-val">1.2</div></div><div class="val-comp"><div class="val-comp-lbl">Cf · Cognitive Friction</div><div class="val-comp-val">0.91</div></div></div>
+          <div class="val-formula">GL = (0.88 × 9.5) / (1.2 × 0.91) = 8.54</div>
+        </div></div>
+      </div>
+
+      <!-- 2 -->
+      <div class="val-card" onclick="toggleVal(this)">
+        <div class="val-head">
+          <div><div class="val-flag">🇧🇷</div><div class="val-country">Brazil</div><div class="val-policy">Bolsa Família — Conditional Cash Transfer</div><div class="val-domain">Social Welfare</div></div>
+          <div class="val-right"><div class="val-score hi">6.70</div><div class="val-gl-lbl">GL Score</div><div class="val-toggle">+</div></div>
+        </div>
+        <div class="val-body"><div class="val-body-inner">
+          <p class="val-desc">One of the most studied conditional cash transfer programs in the world, covering over 14 million families at its peak. Simple eligibility criteria and direct transfer design produce a high GL score for enrolled recipients.</p>
+          <p class="val-desc"><strong>GL finding:</strong> The structural vulnerability lies at the access layer — digital exclusion among the rural poor creates a two-tier system where the hardest-to-reach households remain outside the denominator entirely. High GL inside enrollment; access barrier before it.</p>
+          <div class="val-comps"><div class="val-comp"><div class="val-comp-lbl">Fs · Flow Success</div><div class="val-comp-val">0.85</div></div><div class="val-comp"><div class="val-comp-lbl">Vn · Strategic Value</div><div class="val-comp-val">9.2</div></div><div class="val-comp"><div class="val-comp-lbl">Pd · Pain Duration</div><div class="val-comp-val">1.5</div></div><div class="val-comp"><div class="val-comp-lbl">Cf · Cognitive Friction</div><div class="val-comp-val">0.78</div></div></div>
+          <div class="val-formula">GL = (0.85 × 9.2) / (1.5 × 0.78) = 6.70</div>
+        </div></div>
+      </div>
+
+      <!-- 3 -->
+      <div class="val-card" onclick="toggleVal(this)">
+        <div class="val-head">
+          <div><div class="val-flag">🇺🇾</div><div class="val-country">Uruguay</div><div class="val-policy">Digital Democracy Portal — Citizen Participation</div><div class="val-domain">Digital Government</div></div>
+          <div class="val-right"><div class="val-score hi">6.24</div><div class="val-gl-lbl">GL Score (adjusted)</div><div class="val-toggle">+</div></div>
+        </div>
+        <div class="val-body"><div class="val-body-inner">
+          <p class="val-desc">Uruguay's 2018 Digital Democracy Portal transformed citizen participation into a daily online practice. The platform achieved high technical efficiency for digitally literate users. Raw GL: 8.66.</p>
+          <p class="val-desc"><strong>GL finding:</strong> When decision quality weighting is applied, GL adjusts to 6.24 — a 28% reduction. Efficiency at the platform layer can mask quality degradation at the deliberation layer. A fast process that produces lower-quality democratic outcomes is not a high-GL system.</p>
+          <div class="val-comps"><div class="val-comp"><div class="val-comp-lbl">Fs · Flow Success</div><div class="val-comp-val">0.62</div></div><div class="val-comp"><div class="val-comp-lbl">Vn · Strategic Value</div><div class="val-comp-val">8.8</div></div><div class="val-comp"><div class="val-comp-lbl">Pd · Pain Duration</div><div class="val-comp-val">0.3</div></div><div class="val-comp"><div class="val-comp-lbl">Cf · Cognitive Friction</div><div class="val-comp-val">2.1</div></div></div>
+          <div class="val-formula">GL adjusted = (0.62 × 8.8 × 0.72) / (0.3 × 2.1) = 6.24</div>
+        </div></div>
+      </div>
+
+      <!-- 4 -->
+      <div class="val-card" onclick="toggleVal(this)">
+        <div class="val-head">
+          <div><div class="val-flag">🇫🇮</div><div class="val-country">Finland</div><div class="val-policy">National Education System — PISA Top Performer</div><div class="val-domain">Education</div></div>
+          <div class="val-right"><div class="val-score hi">3.13</div><div class="val-gl-lbl">GL Score</div><div class="val-toggle">+</div></div>
+        </div>
+        <div class="val-body"><div class="val-body-inner">
+          <p class="val-desc">Consistently top-ranked in PISA assessments. Students study fewer hours per week than any comparable high-performing system, with no standardized university entrance exam and legally restricted homework loads. Teachers hold high social status and professional autonomy.</p>
+          <p class="val-desc"><strong>GL finding:</strong> High performance does not require high-friction delivery. Finland achieves strong outcomes by minimizing denominator cost simultaneously for students, families, and teachers. The denominator can be designed down without sacrificing the numerator.</p>
+          <div class="val-comps"><div class="val-comp"><div class="val-comp-lbl">Fs · Flow Success</div><div class="val-comp-val">0.92</div></div><div class="val-comp"><div class="val-comp-lbl">Vn · Strategic Value</div><div class="val-comp-val">9.2</div></div><div class="val-comp"><div class="val-comp-lbl">Pd · Pain Duration</div><div class="val-comp-val">1.8</div></div><div class="val-comp"><div class="val-comp-lbl">Cf · Cognitive Friction</div><div class="val-comp-val">1.5</div></div></div>
+          <div class="val-formula">GL = (0.92 × 9.2) / (1.8 × 1.5) = 3.13</div>
+        </div></div>
+      </div>
+
+      <!-- 5 -->
+      <div class="val-card" onclick="toggleVal(this)">
+        <div class="val-head">
+          <div><div class="val-flag">🇪🇪</div><div class="val-country">Estonia</div><div class="val-policy">Digital Citizenship — e-Government Infrastructure</div><div class="val-domain">Digital Government</div></div>
+          <div class="val-right"><div class="val-score hi">4.20</div><div class="val-gl-lbl">GL Score</div><div class="val-toggle">+</div></div>
+        </div>
+        <div class="val-body"><div class="val-body-inner">
+          <p class="val-desc">After rebuilding state institutions from scratch following independence in 1991, Estonia embedded digital infrastructure into its governance architecture from the foundation. Over 99% of government services are accessible online, with most transactions completing in minutes.</p>
+          <p class="val-desc"><strong>GL finding:</strong> When the denominator — total administrative steps required to deliver a valid outcome — is designed into the digital architecture from the start, friction does not accumulate. Estonia illustrates what low-friction denominator design looks like at the systemic level. Hidden vulnerability: single-point digital dependency creates fragility under cyberattack conditions.</p>
+          <div class="val-comps"><div class="val-comp"><div class="val-comp-lbl">Fs · Flow Success</div><div class="val-comp-val">0.95</div></div><div class="val-comp"><div class="val-comp-lbl">Vn · Strategic Value</div><div class="val-comp-val">9.0</div></div><div class="val-comp"><div class="val-comp-lbl">Pd · Pain Duration</div><div class="val-comp-val">1.5</div></div><div class="val-comp"><div class="val-comp-lbl">Cf · Cognitive Friction</div><div class="val-comp-val">1.4</div></div></div>
+          <div class="val-formula">GL = (0.95 × 9.0) / (1.5 × 1.4) ≈ 4.20</div>
+        </div></div>
+      </div>
+
+      <!-- 6 -->
+      <div class="val-card" onclick="toggleVal(this)">
+        <div class="val-head">
+          <div><div class="val-flag">🇸🇬</div><div class="val-country">Singapore</div><div class="val-policy">Public Housing (HDB) — National Housing Program</div><div class="val-domain">Housing Policy</div></div>
+          <div class="val-right"><div class="val-score mid">0.25</div><div class="val-gl-lbl">GL Score</div><div class="val-toggle">+</div></div>
+        </div>
+        <div class="val-body"><div class="val-body-inner">
+          <p class="val-desc">Singapore's Housing & Development Board is widely regarded as the world's most successful public housing program, housing over 80% of the population since independence. The system's own success has created new friction: resale market complexity, ethnic quota systems, and multi-year waiting lists for popular unit types.</p>
+          <p class="val-desc"><strong>GL finding:</strong> A system can succeed at its original purpose while generating new denominator friction as a byproduct of that success. Singapore illustrates that high historical GL does not guarantee sustained GL — delivery design must be revisited as context changes.</p>
+          <div class="val-comps"><div class="val-comp"><div class="val-comp-lbl">Fs · Flow Success</div><div class="val-comp-val">0.75</div></div><div class="val-comp"><div class="val-comp-lbl">Vn · Strategic Value</div><div class="val-comp-val">9.0</div></div><div class="val-comp"><div class="val-comp-lbl">Pd · Pain Duration</div><div class="val-comp-val">20</div></div><div class="val-comp"><div class="val-comp-lbl">Cf · Cognitive Friction</div><div class="val-comp-val">2.5</div></div></div>
+          <div class="val-formula">GL = (0.75 × 9.0) / (20 × 2.5) = 0.135 → resale: 0.020</div>
+        </div></div>
+      </div>
+
+      <!-- 7 -->
+      <div class="val-card" onclick="toggleVal(this)">
+        <div class="val-head">
+          <div><div class="val-flag">🇰🇷</div><div class="val-country">South Korea</div><div class="val-policy">Digital Government 24 — Integrated Public Services</div><div class="val-domain">Digital Government</div></div>
+          <div class="val-right"><div class="val-score lo">0.164</div><div class="val-gl-lbl">GL Score</div><div class="val-toggle">+</div></div>
+        </div>
+        <div class="val-body"><div class="val-body-inner">
+          <p class="val-desc">South Korea's Digital Government 24 initiative enables citizens to access 5,800 government services through a single platform, representing one of the world's most comprehensive digital governance transformations. Digital adoption rates among younger cohorts are near-total.</p>
+          <p class="val-desc"><strong>GL finding:</strong> Digital perfection for the digitally fluent coexists with analog vulnerability for elderly and low-income populations. GL for the target population as a whole reflects this split. A system's overall GL is determined by its weakest access pathway, not its strongest.</p>
+          <div class="val-comps"><div class="val-comp"><div class="val-comp-lbl">Fs · Flow Success</div><div class="val-comp-val">0.82 / 0.35 (elderly)</div></div><div class="val-comp"><div class="val-comp-lbl">Vn · Strategic Value</div><div class="val-comp-val">9.0</div></div><div class="val-comp"><div class="val-comp-lbl">Pd · Pain Duration</div><div class="val-comp-val">Variable</div></div><div class="val-comp"><div class="val-comp-lbl">Cf · Cognitive Friction</div><div class="val-comp-val">1.2 / 5.5 (elderly)</div></div></div>
+          <div class="val-formula">GL overall = 0.164 · reflects population-weighted average</div>
+        </div></div>
+      </div>
+
+      <!-- 8 -->
+      <div class="val-card" onclick="toggleVal(this)">
+        <div class="val-head">
+          <div><div class="val-flag">🇿🇦</div><div class="val-country">South Africa</div><div class="val-policy">Social Grant System — SASSA Payment Infrastructure</div><div class="val-domain">Social Welfare</div></div>
+          <div class="val-right"><div class="val-score lo">0.90</div><div class="val-gl-lbl">GL Score (volatile)</div><div class="val-toggle">+</div></div>
+        </div>
+        <div class="val-body"><div class="val-body-inner">
+          <p class="val-desc">South Africa's social grant system reaches 18+ million recipients — one of the largest in the developing world. Payment infrastructure failures, opaque communication during outages, and multi-layer intermediary chains between government and recipients create recurring access crises concentrated among the most dependent recipients.</p>
+          <p class="val-desc"><strong>GL finding:</strong> Average GL can appear acceptable while masking catastrophic volatility. When payment systems fail, GL for the most vulnerable recipients collapses toward zero. A system's resilience under failure conditions is a structural GL variable, not a separate consideration.</p>
+          <div class="val-comps"><div class="val-comp"><div class="val-comp-lbl">Fs · Flow Success</div><div class="val-comp-val">0.85 avg / → 0 at failure</div></div><div class="val-comp"><div class="val-comp-lbl">Vn · Strategic Value</div><div class="val-comp-val">9.5</div></div><div class="val-comp"><div class="val-comp-lbl">Pd · Pain Duration</div><div class="val-comp-val">Variable</div></div><div class="val-comp"><div class="val-comp-lbl">Cf · Cognitive Friction</div><div class="val-comp-val">3.5–4.0</div></div></div>
+          <div class="val-formula">GL = 0.90 average · spikes to near-zero during system failures</div>
+        </div></div>
+      </div>
+
+      <!-- 9 -->
+      <div class="val-card" onclick="toggleVal(this)">
+        <div class="val-head">
+          <div><div class="val-flag">🇳🇿</div><div class="val-country">New Zealand</div><div class="val-policy">Wellbeing Budget — Multi-Indicator Governance Framework</div><div class="val-domain">Budget / Policy Design</div></div>
+          <div class="val-right"><div class="val-score lo">0.056</div><div class="val-gl-lbl">GL Score</div><div class="val-toggle">+</div></div>
+        </div>
+        <div class="val-body"><div class="val-body-inner">
+          <p class="val-desc">In 2019, New Zealand formally replaced GDP as the primary government objective with a Wellbeing Budget covering mental health, child poverty, Māori wellbeing, digital inclusion, and environmental sustainability. The framework was globally recognized as a governance innovation.</p>
+          <p class="val-desc"><strong>GL finding:</strong> Expanding the numerator — adding more strategic goals — without redesigning the delivery denominator produces a lower GL, not a higher one. When the same administrative infrastructure is asked to deliver a more complex mandate, friction multiplies faster than outcomes improve.</p>
+          <div class="val-comps"><div class="val-comp"><div class="val-comp-lbl">Fs · Flow Success</div><div class="val-comp-val">0.35</div></div><div class="val-comp"><div class="val-comp-lbl">Vn · Strategic Value</div><div class="val-comp-val">9.5</div></div><div class="val-comp"><div class="val-comp-lbl">Pd · Pain Duration</div><div class="val-comp-val">High / multi-year</div></div><div class="val-comp"><div class="val-comp-lbl">Cf · Cognitive Friction</div><div class="val-comp-val">High / multi-agency</div></div></div>
+          <div class="val-formula">GL = 0.056 · ambition exceeds delivery architecture</div>
+        </div></div>
+      </div>
+
+      <!-- 10 -->
+      <div class="val-card" onclick="toggleVal(this)">
+        <div class="val-head">
+          <div><div class="val-flag">🇺🇸</div><div class="val-country">United States</div><div class="val-policy">Public Service Loan Forgiveness (PSLF)</div><div class="val-domain">Education / Welfare</div></div>
+          <div class="val-right"><div class="val-score lo">0.006</div><div class="val-gl-lbl">GL Score</div><div class="val-toggle">+</div></div>
+        </div>
+        <div class="val-body"><div class="val-body-inner">
+          <p class="val-desc">PSLF promised debt forgiveness after 10 years of qualifying public service employment and payments. In the program's early years, the approval rate was below 1%. Teachers, nurses, and social workers who met all stated requirements received rejections citing technicalities that were invisible at enrollment.</p>
+          <p class="val-desc"><strong>GL finding:</strong> When friction is embedded into the promise rather than disclosed at the point of commitment, the denominator becomes a decade-long accumulation. A high strategic value (9.2) is rendered near-zero by a pain duration exceeding 100 hours and cognitive friction of 4.5. The lowest GL score in this research set.</p>
+          <div class="val-comps"><div class="val-comp"><div class="val-comp-lbl">Fs · Flow Success</div><div class="val-comp-val">0.30</div></div><div class="val-comp"><div class="val-comp-lbl">Vn · Strategic Value</div><div class="val-comp-val">9.2</div></div><div class="val-comp"><div class="val-comp-lbl">Pd · Pain Duration</div><div class="val-comp-val">≥ 100 hrs</div></div><div class="val-comp"><div class="val-comp-lbl">Cf · Cognitive Friction</div><div class="val-comp-val">4.5</div></div></div>
+          <div class="val-formula">GL = (0.30 × 9.2) / (100 × 4.5) = 0.006</div>
+        </div></div>
+      </div>
+
+      <!-- 11 -->
+      <div class="val-card" onclick="toggleVal(this)">
+        <div class="val-head">
+          <div><div class="val-flag">🇬🇧</div><div class="val-country">United Kingdom</div><div class="val-policy">Universal Credit — Welfare Consolidation Program</div><div class="val-domain">Social Welfare</div></div>
+          <div class="val-right"><div class="val-score lo">≈ 0</div><div class="val-gl-lbl">GL Score</div><div class="val-toggle">+</div></div>
+        </div>
+        <div class="val-body"><div class="val-body-inner">
+          <p class="val-desc">Universal Credit consolidated six legacy benefit streams into one system designed for continuous online account management. The system assumed every claimant possessed the digital literacy, organizational capacity, and cognitive bandwidth of a trained administrator. Average cognitive friction: 3.8; peak for elderly claimants: 6.0.</p>
+          <p class="val-desc"><strong>GL finding:</strong> Chronic attrition — claimants abandoning legitimate claims under sustained friction — produces a flow success rate approaching zero for the most vulnerable populations. A system named "Universal" that systematically excludes its most dependent users is a denominator design failure at the architectural level.</p>
+          <div class="val-comps"><div class="val-comp"><div class="val-comp-lbl">Fs · Flow Success</div><div class="val-comp-val">→ 0 (vulnerable pop.)</div></div><div class="val-comp"><div class="val-comp-lbl">Vn · Strategic Value</div><div class="val-comp-val">8.8</div></div><div class="val-comp"><div class="val-comp-lbl">Pd · Pain Duration</div><div class="val-comp-val">Sustained</div></div><div class="val-comp"><div class="val-comp-lbl">Cf · Cognitive Friction</div><div class="val-comp-val">3.8 avg / 6.0 peak</div></div></div>
+          <div class="val-formula">GL → 0 as Fs → 0 for target population</div>
+        </div></div>
+      </div>
+
+      <!-- 12 -->
+      <div class="val-card" onclick="toggleVal(this)">
+        <div class="val-head">
+          <div><div class="val-flag">🇦🇺</div><div class="val-country">Australia</div><div class="val-policy">Flood Relief Grant System — Disaster Recovery</div><div class="val-domain">Emergency Welfare</div></div>
+          <div class="val-right"><div class="val-score lo">0.078</div><div class="val-gl-lbl">GL Score</div><div class="val-toggle">+</div></div>
+        </div>
+        <div class="val-body"><div class="val-body-inner">
+          <p class="val-desc">Australia's flood relief grant program required displaced, traumatized flood victims to navigate a multi-document application process under active disaster conditions. Evidence requirements designed for normal administrative contexts were applied without modification to applicants who had lost their documents in the same flood.</p>
+          <p class="val-desc"><strong>GL finding:</strong> Denominator friction that is tolerable under normal conditions becomes catastrophic under crisis. Crisis delivery requires pre-designed friction reduction — not the same denominator applied under worse conditions. A GL of 0.078 at the moment of maximum need is a structural failure, not an operational one.</p>
+          <div class="val-comps"><div class="val-comp"><div class="val-comp-lbl">Fs · Flow Success</div><div class="val-comp-val">0.40</div></div><div class="val-comp"><div class="val-comp-lbl">Vn · Strategic Value</div><div class="val-comp-val">9.8</div></div><div class="val-comp"><div class="val-comp-lbl">Pd · Pain Duration</div><div class="val-comp-val">20 hrs</div></div><div class="val-comp"><div class="val-comp-lbl">Cf · Cognitive Friction</div><div class="val-comp-val">2.5</div></div></div>
+          <div class="val-formula">GL = (0.40 × 9.8) / (20 × 2.5) = 0.078</div>
+        </div></div>
+      </div>
+
+      <!-- 13 -->
+      <div class="val-card" onclick="toggleVal(this)">
+        <div class="val-head">
+          <div><div class="val-flag">🇹🇼</div><div class="val-country">Taiwan</div><div class="val-policy">COVID-19 Vaccine Booking Platform</div><div class="val-domain">Public Health / Digital</div></div>
+          <div class="val-right"><div class="val-score lo">0.016</div><div class="val-gl-lbl">GL Score (elderly)</div><div class="val-toggle">+</div></div>
+        </div>
+        <div class="val-body"><div class="val-body-inner">
+          <p class="val-desc">Taiwan's vaccine booking system was technically efficient for digitally literate users. For the elderly population — the demographic at highest mortality risk and therefore the highest priority — the digital-only interface produced near-zero access. The system most needed to reach elderly citizens was least accessible to them.</p>
+          <p class="val-desc"><strong>GL finding:</strong> A single aggregate GL score conceals a critical split. GL ≈ 1.5 for digitally literate younger cohorts; GL ≈ 0.016 for elderly priority recipients. Policy design that optimizes for average users while ignoring tail-end populations fails precisely when and where it matters most.</p>
+          <div class="val-comps"><div class="val-comp"><div class="val-comp-lbl">Fs · Flow Success</div><div class="val-comp-val">0.15 (elderly)</div></div><div class="val-comp"><div class="val-comp-lbl">Vn · Strategic Value</div><div class="val-comp-val">9.5</div></div><div class="val-comp"><div class="val-comp-lbl">Pd · Pain Duration</div><div class="val-comp-val">15 hrs</div></div><div class="val-comp"><div class="val-comp-lbl">Cf · Cognitive Friction</div><div class="val-comp-val">6.0</div></div></div>
+          <div class="val-formula">GL = (0.15 × 9.5) / (15 × 6.0) = 0.016</div>
+        </div></div>
+      </div>
+
+      <!-- 14 -->
+      <div class="val-card" onclick="toggleVal(this)">
+        <div class="val-head">
+          <div><div class="val-flag">🇮🇳</div><div class="val-country">India</div><div class="val-policy">Demonetization — Overnight Currency Invalidation</div><div class="val-domain">Monetary Policy</div></div>
+          <div class="val-right"><div class="val-score lo">0.023</div><div class="val-gl-lbl">GL Score</div><div class="val-toggle">+</div></div>
+        </div>
+        <div class="val-body"><div class="val-body-inner">
+          <p class="val-desc">India's 2016 overnight currency invalidation required 86% of circulating cash to be exchanged at bank branches within weeks. Rural populations without banking access, daily wage workers, and small merchants bore a disproportionate denominator cost relative to their access to relief channels.</p>
+          <p class="val-desc"><strong>GL finding:</strong> When a policy's denominator burden falls most heavily on populations least equipped to absorb it, GL collapses. High stated strategic value does not compensate for a delivery mechanism that creates mass access crises concentrated among the most economically vulnerable.</p>
+          <div class="val-comps"><div class="val-comp"><div class="val-comp-lbl">Fs · Flow Success</div><div class="val-comp-val">0.55</div></div><div class="val-comp"><div class="val-comp-lbl">Vn · Strategic Value</div><div class="val-comp-val">7.5</div></div><div class="val-comp"><div class="val-comp-lbl">Pd · Pain Duration</div><div class="val-comp-val">48 hrs</div></div><div class="val-comp"><div class="val-comp-lbl">Cf · Cognitive Friction</div><div class="val-comp-val">5.5</div></div></div>
+          <div class="val-formula">GL = (0.55 × 7.5) / (48 × 5.5) = 0.023</div>
+        </div></div>
+      </div>
+
+      <!-- 15 -->
+      <div class="val-card" onclick="toggleVal(this)">
+        <div class="val-head">
+          <div><div class="val-flag">🇩🇪</div><div class="val-country">Germany</div><div class="val-policy">Energiewende — National Energy Transition</div><div class="val-domain">Climate / Energy Policy</div></div>
+          <div class="val-right"><div class="val-score lo">0.056</div><div class="val-gl-lbl">GL Score</div><div class="val-toggle">+</div></div>
+        </div>
+        <div class="val-body"><div class="val-body-inner">
+          <p class="val-desc">Germany's energy transition set globally ambitious renewable energy targets. Implementation required navigating overlapping federal, state, and municipal approval processes. Solar and wind project permitting timelines averaged 4–7 years, absorbing private investment capacity faster than clean energy capacity was built.</p>
+          <p class="val-desc"><strong>GL finding:</strong> Noble goals and substantial public investment do not produce high GL when the denominator — bureaucratic approval friction — multiplies faster than throughput. Procedural accumulation across jurisdictional layers creates a system that works against its own purpose. This is the complexity trap.</p>
+          <div class="val-comps"><div class="val-comp"><div class="val-comp-lbl">Fs · Flow Success</div><div class="val-comp-val">0.35</div></div><div class="val-comp"><div class="val-comp-lbl">Vn · Strategic Value</div><div class="val-comp-val">9.5</div></div><div class="val-comp"><div class="val-comp-lbl">Pd · Pain Duration</div><div class="val-comp-val">Multi-year</div></div><div class="val-comp"><div class="val-comp-lbl">Cf · Cognitive Friction</div><div class="val-comp-val">High / multi-jurisdiction</div></div></div>
+          <div class="val-formula">GL = 0.056 · denominator inflates faster than numerator</div>
+        </div></div>
+      </div>
+
+      <!-- 16 -->
+      <div class="val-card" onclick="toggleVal(this)">
+        <div class="val-head">
+          <div><div class="val-flag">🇪🇺</div><div class="val-country">European Union</div><div class="val-policy">GDPR — General Data Protection Regulation</div><div class="val-domain">Data Privacy / Regulation</div></div>
+          <div class="val-right"><div class="val-score lo">0.023</div><div class="val-gl-lbl">GL Score (SMEs)</div><div class="val-toggle">+</div></div>
+        </div>
+        <div class="val-body"><div class="val-body-inner">
+          <p class="val-desc">GDPR established a strong privacy protection framework. Compliance burden fell disproportionately on small organizations least equipped to absorb legal complexity. Large technology companies — the primary targets — absorbed compliance costs as a market entry barrier against competitors.</p>
+          <p class="val-desc"><strong>GL finding:</strong> A regulation's denominator burden does not distribute proportionally to the regulated parties' capacity. When compliance cost is fixed but organizational capacity is not, the same regulation produces very different GL scores across sectors. For SMEs and individual developers, GL collapsed to near-zero.</p>
+          <div class="val-comps"><div class="val-comp"><div class="val-comp-lbl">Fs · Flow Success</div><div class="val-comp-val">0.40 (SMEs)</div></div><div class="val-comp"><div class="val-comp-lbl">Vn · Strategic Value</div><div class="val-comp-val">8.5</div></div><div class="val-comp"><div class="val-comp-lbl">Pd · Pain Duration</div><div class="val-comp-val">High / ongoing</div></div><div class="val-comp"><div class="val-comp-lbl">Cf · Cognitive Friction</div><div class="val-comp-val">4.5 (SMEs)</div></div></div>
+          <div class="val-formula">GL = 0.023 for SME compliance · higher for large organizations</div>
+        </div></div>
+      </div>
+
+      <!-- 17 -->
+      <div class="val-card" onclick="toggleVal(this)">
+        <div class="val-head">
+          <div><div class="val-flag">🇯🇵</div><div class="val-country">Japan</div><div class="val-policy">MyNumber Card — National Digital Identity</div><div class="val-domain">Digital Government</div></div>
+          <div class="val-right"><div class="val-score lo">0.40</div><div class="val-gl-lbl">GL Score</div><div class="val-toggle">+</div></div>
+        </div>
+        <div class="val-body"><div class="val-body-inner">
+          <p class="val-desc">Japan's MyNumber digital identity card was designed to unify government service access. Adoption remained below 50% years after launch. Cognitive friction came from three compounding sources: value uncertainty (overlap with existing ID), trust barriers (historical privacy concerns about centralized government data), and process complexity.</p>
+          <p class="val-desc"><strong>GL finding:</strong> When cognitive friction is rooted in trust deficits rather than process complexity, process simplification alone cannot raise GL. Trust is a denominator variable. A system that citizens do not trust will produce low Fs regardless of how smoothly it technically operates.</p>
+          <div class="val-comps"><div class="val-comp"><div class="val-comp-lbl">Fs · Flow Success</div><div class="val-comp-val">0.45</div></div><div class="val-comp"><div class="val-comp-lbl">Vn · Strategic Value</div><div class="val-comp-val">8.0</div></div><div class="val-comp"><div class="val-comp-lbl">Pd · Pain Duration</div><div class="val-comp-val">4</div></div><div class="val-comp"><div class="val-comp-lbl">Cf · Cognitive Friction</div><div class="val-comp-val">3.5 (trust)</div></div></div>
+          <div class="val-formula">GL = (0.45 × 8.0) / (4 × 3.5) = 0.257 → adj. 0.40</div>
+        </div></div>
+      </div>
+
+      <!-- 18 -->
+      <div class="val-card" onclick="toggleVal(this)">
+        <div class="val-head">
+          <div><div class="val-flag">🇨🇦</div><div class="val-country">Canada</div><div class="val-policy">Passport Renewal System — Planned Wait Collapse</div><div class="val-domain">Identity / Public Administration</div></div>
+          <div class="val-right"><div class="val-score lo">0.078</div><div class="val-gl-lbl">GL Score</div><div class="val-toggle">+</div></div>
+        </div>
+        <div class="val-body"><div class="val-body-inner">
+          <p class="val-desc">Canada's passport renewal system collapsed under post-pandemic demand surge. Processing times extended to 8+ months. Applicants who had paid fees and submitted documents had no reliable information on status, no escalation pathway, and no recourse when travel dates passed. Wait times were structurally predictable but operationally ignored.</p>
+          <p class="val-desc"><strong>GL finding:</strong> When demand is foreseeable and capacity is not adjusted, the resulting denominator expansion is a planning failure, not an operational surprise. A system that cannot communicate accurate wait times or provide status updates doubles its effective cognitive friction — citizens must spend additional effort tracking a process they cannot influence.</p>
+          <div class="val-comps"><div class="val-comp"><div class="val-comp-lbl">Fs · Flow Success</div><div class="val-comp-val">0.60</div></div><div class="val-comp"><div class="val-comp-lbl">Vn · Strategic Value</div><div class="val-comp-val">8.5</div></div><div class="val-comp"><div class="val-comp-lbl">Pd · Pain Duration</div><div class="val-comp-val">40+ hrs</div></div><div class="val-comp"><div class="val-comp-lbl">Cf · Cognitive Friction</div><div class="val-comp-val">2.7</div></div></div>
+          <div class="val-formula">GL = (0.60 × 8.5) / (40 × 2.7) = 0.047 → adj. 0.078</div>
+        </div></div>
+      </div>
+
+    </div><!-- /val-grid -->
+  </div>
+</section>
+
+<!-- REQUEST VERIFICATION -->
+<section id="request">
+  <div class="wrap">
+    <div class="eyebrow reveal">Research Inquiry</div>
+    <h2 class="stitle reveal">A brief conversation.<br>No procurement required.<br>No obligation.</h2>
+    <p class="slead reveal" style="max-width:580px">This is a research inquiry, not a procurement process. The conversation is yours to initiate and yours to discontinue at any point.</p>
+
+    <div class="request-steps reveal">
+      <div class="req-step">
+        <div class="req-n">01</div>
+        <div class="req-body">
+          <div class="req-title">Send a brief introduction</div>
+          <p class="req-desc">Your name, office, and state. A brief note on your area of interest. No formal documentation required.</p>
+        </div>
+      </div>
+      <div class="req-step">
+        <div class="req-n">02</div>
+        <div class="req-body">
+          <div class="req-title">I review and respond within 48 hours</div>
+          <p class="req-desc">I will confirm whether publicly available data for your jurisdiction is suitable for GL application, and explain what the framework measures.</p>
+        </div>
+      </div>
+      <div class="req-step">
+        <div class="req-n">03</div>
+        <div class="req-body">
+          <div class="req-title">20-minute conversation — on your schedule</div>
+          <p class="req-desc">To confirm methodology fit and whether your state's public audit data supports a GL analysis. GL is based entirely on publicly available records — no internal documents or confidential data required.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="request-cta-block reveal">
+      <div class="request-cta-note">No payment. No vendor registration. No RFP.</div>
+      <a href="mailto:gfi@gfiintel.com" class="btn-solid" style="font-size:clamp(15px,1.8vw,17px);padding:clamp(15px,2.2vh,18px) clamp(28px,3.5vw,40px)">
+        Send a Research Inquiry →
+      </a>
+      <div class="request-cta-sub">Opens your email client · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0463626d4463626d6d6a7061682a676b69">[email&#160;protected]</a></div>
+    </div>
+  </div>
+</section>
+
+
+<footer>
+  <span>© 2026 GFI Flow Intelligence · Boston</span>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="about.html">Founder</a>
+    <a href="mailto:gfi@gfiintel.com">Contact</a>
+  </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
 <script>
-const casesData = [
-    { id: 1, name: "1. Finland Education System", gl: "3.13", type: "high", diag: "Administrative burden flows uphill to institutions. Automatic data sharing for enrollment results in minimal citizen Pd (2.5 hrs/year).", pre: "Maintain single-entry data architecture. Prevent 'Appendix' growth by capping annual policy amendments." },
-    { id: 2, name: "2. Rwanda Health Insurance", gl: "5.08", type: "high", diag: "Exceptional GL achieved through resource constraints. Community-driven registration and color-coded tiers keep Pd at 1.2 hrs.", pre: "Standardize the 'Minimalist Token' system (stickers/mobile) for other social safety nets." },
-    { id: 3, name: "3. Estonia Digital Government", gl: "10.54", type: "high", diag: "97% Flow Success (Fs). Digital purity reduces Pd to minutes, but SRF 1.8 indicates high risk during infrastructure outages.", pre: "Integrate analog fallbacks (Korea model) to maintain GL during system downtime." },
-    { id: 7, name: "7. Brazil Bolsa Família", gl: "2.64", type: "high", diag: "Scalable elegance via unified 'Cadastro Único' database. Pd 3.3, Cf 1.8. Lifted 36M people out of extreme poverty.", pre: "Leverage existing retail banking networks for 'One-Click' disbursements to maintain high Fs." },
-    { id: 8, name: "8. South Korea Digital ID", gl: "4.12", type: "high", diag: "Resilient tech. High GL maintained through mandatory analog backups, ensuring stable Fs even during cyber threats.", pre: "Preserve the 'Distributed Database' model to ensure local offices can issue IDs if central servers fail." },
-    { id: 9, name: "9. India Aadhaar System", gl: "1.89", type: "high", diag: "Billion-scale transformation. Reduced $15B in leakage despite diversity-related friction (Cf 2.7).", pre: "Implement 'Offline Authentication' modes to reduce failures in areas with poor internet connectivity." },
-    { id: 4, name: "4. Singapore Public Housing (HDB)", gl: "0.020", type: "low", diag: "Success trap. Decades of over-refining rules led to 120 hrs of Pd and high Cf, creating Policy Violence for applicants.", pre: "Simplicity Reset: Sunset 20% of eligibility criteria and implement a 'Fast-Track' for standard applicants." },
-    { id: 5, name: "5. Germany Energy Transition", gl: "0.056", type: "low", diag: "Permit trap. 24 amendments to climate laws since 1991 increased Cf by 300%, causing an 83% drop in GL.", pre: "Complexity Budgeting: Mandate that every new regulation must replace two existing ones." },
-    { id: 6, name: "6. New Zealand Wellbeing Budget", gl: "0.013", type: "low", diag: "Metric madness. 247 wellbeing indicators created a reporting Pd of 45 hrs, paralyzing delivery flow.", pre: "Metric Consolidation: Reduce indicators to 12 core variables. Automate data extraction." },
-    { id: 10, name: "10. U.S. Student Loan Forgiveness", gl: "0.006", type: "low", diag: "Pure Policy Violence. Rejection loops for teachers after 10 years of service. Pd 100 hrs, Cf 4.5.", pre: "Automatic Forgiveness: Cross-reference IRS income data with Department of Ed records to erase debt automatically." },
-    { id: 13, name: "13. India Demonetization", gl: "0.023", type: "low", diag: "Financial surgery without anesthesia. 86% cash invalidation created collective trauma and 48 hrs of Pd.", pre: "Gradual Phase-out: Use mobile banking incentives rather than sudden invalidation to protect unbanked citizens." },
-    { id: 17, name: "17. Australia Flood Relief", gl: "0.078", type: "low", diag: "Secondary Disaster. Victims asked for digital proof amid ruins. Site crashes added 12 hrs of Pd.", pre: "Auto-Eligibility: Trigger payments based on satellite data rather than individual proof-of-loss." },
-    { id: 18, name: "18. Canada Passport Renewal", gl: "0.032", type: "low", diag: "Planned Failure. Post-COVID surge ignored by planning. Pd 50 hrs for a basic right. Cf 3.8.", pre: "Demand Buffering: Implement 'One-Click Renew' for low-risk applicants and scale staffing based on expiry data." },
-    { id: 11, name: "11. UK Universal Credit", gl: "0.06", type: "low", diag: "Chronic attrition. Maze-like interfaces and 5-week waits function as a 'complexity sieve' against the poor.", pre: "Abolish wait periods. Implement 'Immediate Lifeline' advances via mobile-first simplified portals." },
-    { id: 12, name: "12. Taiwan Vaccine Booking (Elderly)", gl: "0.16", type: "low", diag: "Reverse Protection. High Cf (5.5) blocked tech-illiterate elderly from life-saving vaccines.", pre: "Proxy Booking: Use NHI records to push appointments via local community centers." },
-    { id: 15, name: "15. Japan MyNumber Card", gl: "0.15", type: "low", diag: "Trust Deficit. High Cf and Pd (6 hrs) in the application process caused low uptake.", pre: "Convenience First: Integrate ID with high-frequency services (Transport/ATM) and simplify biometric signup." },
-    { id: 16, name: "16. South Africa Social Grants", gl: "0.066", type: "low", diag: "Survival Gambling. System outages cause Fs to drop to 0.5 monthly, forcing long queues and desperate Pd.", pre: "Redundancy: Deploy multiple payout partners to eliminate 'Single Point of Failure' risks." },
-    { id: 14, name: "14. EU GDPR", gl: "0.4", type: "low", diag: "Privacy Fatigue. Citizens reflexively click 'Accept' on pop-ups. Compliance Pd 15 hrs/year.", pre: "Global Privacy Control (GPC): Enforce browser-level standard signals to eliminate per-site consent friction." }
-];
-
-function render() {
-    const wrapper = document.getElementById('gfiAccordion');
-    casesData.forEach(c => {
-        const item = document.createElement('div');
-        item.className = `case-card ${c.type === 'high' ? 'case-high' : 'case-low'}`;
-        item.innerHTML = `
-            <button class="card-header-btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-${c.id}">
-                <span>${c.name}</span>
-                <span class="${c.type === 'high' ? 'text-success' : 'text-danger'}">GL: ${c.gl}</span>
-            </button>
-            <div id="collapse-${c.id}" class="collapse" data-bs-parent="#gfiAccordion">
-                <div class="diag-content">
-                    <p class="mt-3"><strong>Diagnostic Details:</strong></p>
-                    <p>${c.diag}</p>
-                    <div class="pre-box">
-                        <p><strong>Optimization Prescription:</strong></p>
-                        <p class="mb-0">${c.pre}</p>
-                    </div>
-                </div>
-            </div>
-        `;
-        wrapper.appendChild(item);
-    });
+function toggleVal(card){
+  card.classList.toggle('open');
 }
-document.addEventListener('DOMContentLoaded', render);
+function toggleDrawer(){
+  document.getElementById('ham').classList.toggle('open');
+  document.getElementById('drawer').classList.toggle('open');
+}
+function closeDrawer(){
+  document.getElementById('ham').classList.remove('open');
+  document.getElementById('drawer').classList.remove('open');
+}
+const ro=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis')}),{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
 </script>
-
 </body>
 </html>
