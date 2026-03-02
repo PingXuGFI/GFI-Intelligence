@@ -168,6 +168,39 @@ tr:hover td{background:rgba(255,255,255,.018)}
 .pc.feat .pc-btn{background:var(--accent);color:#0d1117;border-color:transparent;font-weight:600}
 .pc.feat .pc-btn:hover{opacity:.88}
 
+/* QUICK SCAN */
+.qs-wrap{margin-top:clamp(28px,5vh,48px)}
+.qs-step{display:none}.qs-step.active{display:block}
+.qs-q{font-family:var(--serif);font-size:clamp(18px,2.5vw,26px);color:var(--text);line-height:1.35;margin-bottom:clamp(20px,3vh,32px)}
+.qs-sub{font-size:clamp(13px,1.6vw,14px);color:var(--dim);font-family:var(--mono);margin-bottom:clamp(20px,3vh,28px)}
+.qs-opts{display:flex;flex-direction:column;gap:8px}
+.qs-opt{display:flex;align-items:center;gap:14px;padding:clamp(14px,2vh,18px) clamp(16px,2.5vw,22px);background:var(--surf);border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all .2s;font-size:clamp(14px,1.7vw,15px);color:var(--muted);text-align:left;width:100%}
+.qs-opt:hover{background:var(--surf2);border-color:rgba(200,245,66,.25);color:var(--text)}
+.qs-opt.selected{background:rgba(200,245,66,.07);border-color:rgba(200,245,66,.4);color:var(--text)}
+.qs-opt-key{font-family:var(--mono);font-size:10px;letter-spacing:.1em;width:20px;flex-shrink:0;color:var(--accent)}
+.qs-nav{display:flex;align-items:center;gap:12px;margin-top:clamp(20px,3vh,28px)}
+.qs-btn{padding:10px 22px;border-radius:7px;font-size:14px;cursor:pointer;transition:all .2s;border:1px solid var(--border);background:none;color:var(--muted)}
+.qs-btn:hover{color:var(--text);border-color:rgba(255,255,255,.2)}
+.qs-btn.primary{background:var(--accent);color:#0d1117;border-color:transparent;font-weight:600}
+.qs-btn.primary:hover{opacity:.88}
+.qs-btn:disabled{opacity:.3;cursor:default}
+.qs-progress{display:flex;gap:5px;margin-bottom:clamp(20px,3vh,28px)}
+.qs-dot{width:6px;height:6px;border-radius:50%;background:var(--border);transition:background .3s}
+.qs-dot.done{background:var(--accent)}
+.qs-dot.active{background:rgba(200,245,66,.5)}
+.qs-result{display:none;text-align:center;padding:clamp(32px,5vh,52px) 0}
+.qs-result.show{display:block}
+.qs-gl-display{font-family:var(--serif);font-size:clamp(52px,9vw,88px);line-height:1;margin-bottom:8px}
+.qs-gl-display.hi{color:var(--accent)}
+.qs-gl-display.mid{color:#ffb347}
+.qs-gl-display.lo{color:#ff6b6b}
+.qs-gl-label{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:clamp(20px,3vh,28px)}
+.qs-verdict{font-family:var(--serif);font-size:clamp(16px,2.2vw,22px);color:var(--text);line-height:1.4;max-width:540px;margin:0 auto clamp(16px,2.5vh,24px)}
+.qs-finding{font-size:clamp(14px,1.7vw,15px);color:var(--muted);line-height:1.8;max-width:580px;margin:0 auto clamp(24px,4vh,36px)}
+.qs-cta-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.qs-reset{font-family:var(--mono);font-size:11px;color:var(--dim);cursor:pointer;text-decoration:underline;margin-top:16px;display:block;background:none;border:none}
+.qs-reset:hover{color:var(--muted)}
+
 /* PUBLICATIONS */
 .pub-list{margin-top:clamp(28px,5vh,48px)}
 .pub-item{display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:clamp(16px,2.5vh,24px) 0;border-bottom:1px solid var(--border);transition:opacity .2s}
@@ -395,6 +428,97 @@ footer a:hover{color:var(--text)}
     </div>
     <div style="margin-top:24px">
       <a href="https://buy.stripe.com/8x25kFbp0dM4gQl0fB3VC00" class="btn-solid" target="_blank" rel="noopener">Start Verification ($999) →</a>
+    </div>
+  </div>
+</section>
+
+<section id="quickscan">
+  <div class="wrap">
+    <div class="eyebrow">Quick Scan</div>
+    <h2 class="stitle">Is your AI investment working?</h2>
+    <p class="slead">Four questions. Two minutes. Your preliminary GL score — calculated live.</p>
+
+    <div class="qs-wrap">
+      <div class="qs-progress">
+        <div class="qs-dot active" id="dot-0"></div>
+        <div class="qs-dot" id="dot-1"></div>
+        <div class="qs-dot" id="dot-2"></div>
+        <div class="qs-dot" id="dot-3"></div>
+      </div>
+
+      <!-- Q1: Fs -->
+      <div class="qs-step active" id="qs-0">
+        <p class="qs-sub">Fs · Flow Success Rate</p>
+        <p class="qs-q">Since your AI or automation rollout, what has happened to your process completion rate?</p>
+        <div class="qs-opts">
+          <button class="qs-opt" onclick="selectOpt(this,0,0.92)"><span class="qs-opt-key">A</span>Significantly improved — fewer errors, less rework</button>
+          <button class="qs-opt" onclick="selectOpt(this,0,0.72)"><span class="qs-opt-key">B</span>Slightly improved — some gains but inconsistent</button>
+          <button class="qs-opt" onclick="selectOpt(this,0,0.50)"><span class="qs-opt-key">C</span>About the same — no measurable change</button>
+          <button class="qs-opt" onclick="selectOpt(this,0,0.28)"><span class="qs-opt-key">D</span>Worse — rework and error rates have increased</button>
+        </div>
+        <div class="qs-nav"><button class="qs-btn primary" onclick="nextStep(1)" id="next-0" disabled>Next →</button></div>
+      </div>
+
+      <!-- Q2: Vn -->
+      <div class="qs-step" id="qs-1">
+        <p class="qs-sub">Vn · Strategic Value</p>
+        <p class="qs-q">How central is this automated process to your core revenue or customer delivery?</p>
+        <div class="qs-opts">
+          <button class="qs-opt" onclick="selectOpt(this,1,9.5)"><span class="qs-opt-key">A</span>Mission critical — directly touches revenue or customer outcome</button>
+          <button class="qs-opt" onclick="selectOpt(this,1,7.5)"><span class="qs-opt-key">B</span>Important — supports core operations but not customer-facing</button>
+          <button class="qs-opt" onclick="selectOpt(this,1,5.5)"><span class="qs-opt-key">C</span>Moderate — back-office or administrative function</button>
+          <button class="qs-opt" onclick="selectOpt(this,1,3.5)"><span class="qs-opt-key">D</span>Peripheral — low strategic weight</button>
+        </div>
+        <div class="qs-nav">
+          <button class="qs-btn" onclick="prevStep(0)">← Back</button>
+          <button class="qs-btn primary" onclick="nextStep(2)" id="next-1" disabled>Next →</button>
+        </div>
+      </div>
+
+      <!-- Q3: Pd -->
+      <div class="qs-step" id="qs-2">
+        <p class="qs-sub">Pd · Pain Duration</p>
+        <p class="qs-q">After automation, how much staff time per week is still spent on exceptions, corrections, or manual intervention in this process?</p>
+        <div class="qs-opts">
+          <button class="qs-opt" onclick="selectOpt(this,2,1.5)"><span class="qs-opt-key">A</span>Under 2 hours — nearly fully automated</button>
+          <button class="qs-opt" onclick="selectOpt(this,2,5.0)"><span class="qs-opt-key">B</span>2–8 hours — occasional intervention needed</button>
+          <button class="qs-opt" onclick="selectOpt(this,2,15.0)"><span class="qs-opt-key">C</span>8–20 hours — significant manual handling remains</button>
+          <button class="qs-opt" onclick="selectOpt(this,2,35.0)"><span class="qs-opt-key">D</span>20+ hours — more intervention than before automation</button>
+        </div>
+        <div class="qs-nav">
+          <button class="qs-btn" onclick="prevStep(1)">← Back</button>
+          <button class="qs-btn primary" onclick="nextStep(3)" id="next-2" disabled>Next →</button>
+        </div>
+      </div>
+
+      <!-- Q4: Cf -->
+      <div class="qs-step" id="qs-3">
+        <p class="qs-sub">Cf · Cognitive Friction</p>
+        <p class="qs-q">How much judgment, coordination, or context-switching does your team still need to complete this process?</p>
+        <div class="qs-opts">
+          <button class="qs-opt" onclick="selectOpt(this,3,1.2)"><span class="qs-opt-key">A</span>Minimal — the system handles it, staff just confirm</button>
+          <button class="qs-opt" onclick="selectOpt(this,3,2.2)"><span class="qs-opt-key">B</span>Some — staff interpret outputs and make occasional decisions</button>
+          <button class="qs-opt" onclick="selectOpt(this,3,3.5)"><span class="qs-opt-key">C</span>High — frequent judgment calls, cross-team coordination</button>
+          <button class="qs-opt" onclick="selectOpt(this,3,5.0)"><span class="qs-opt-key">D</span>Very high — automation created new complexity to manage</button>
+        </div>
+        <div class="qs-nav">
+          <button class="qs-btn" onclick="prevStep(2)">← Back</button>
+          <button class="qs-btn primary" onclick="calcResult()" id="next-3" disabled>Calculate GL →</button>
+        </div>
+      </div>
+
+      <!-- RESULT -->
+      <div class="qs-result" id="qs-result">
+        <div class="qs-gl-display" id="qs-score">—</div>
+        <div class="qs-gl-label">Your Preliminary GL Score</div>
+        <div class="qs-verdict" id="qs-verdict"></div>
+        <div class="qs-finding" id="qs-finding"></div>
+        <div class="qs-cta-row">
+          <a href="https://buy.stripe.com/8x25kFbp0dM4gQl0fB3VC00" class="pc-btn feat" target="_blank" rel="noopener" style="padding:14px 28px;border-radius:8px;font-size:15px;font-weight:600;background:var(--accent);color:#0d1117;text-decoration:none">Get Full Diagnosis — $999 →</a>
+          <a href="#contact" class="pc-btn" style="padding:14px 28px;border-radius:8px;font-size:15px;text-decoration:none;border:1px solid var(--border);color:var(--muted)">Ask a question first</a>
+        </div>
+        <button class="qs-reset" onclick="resetScan()">← Run again</button>
+      </div>
     </div>
   </div>
 </section>
@@ -702,4 +826,83 @@ function setLang(lang,btn){
     b.classList.toggle('on', b.getAttribute('onclick') && b.getAttribute('onclick').includes("'"+lang+"'"));
   });
   closeDrawer();
-  window.scrollTo({top:
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleDrawer(){
+  document.getElementById('ham').classList.toggle('open');
+  document.getElementById('drawer').classList.toggle('open');
+}
+function closeDrawer(){
+  document.getElementById('ham').classList.remove('open');
+  document.getElementById('drawer').classList.remove('open');
+}
+const ro=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis')}),{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+
+// ── QUICK SCAN ────────────────────────────────────────────────────
+const answers = [null, null, null, null];
+function selectOpt(btn, qIdx, val) {
+  btn.closest('.qs-opts').querySelectorAll('.qs-opt').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  answers[qIdx] = val;
+  const nextBtn = document.getElementById('next-' + qIdx);
+  if (nextBtn) nextBtn.disabled = false;
+}
+function nextStep(idx) {
+  document.querySelectorAll('.qs-step').forEach(s => s.classList.remove('active'));
+  document.getElementById('qs-' + idx).classList.add('active');
+  updateDots(idx);
+}
+function prevStep(idx) {
+  document.querySelectorAll('.qs-step').forEach(s => s.classList.remove('active'));
+  document.getElementById('qs-' + idx).classList.add('active');
+  updateDots(idx);
+}
+function updateDots(current) {
+  for (let i = 0; i < 4; i++) {
+    const d = document.getElementById('dot-' + i);
+    d.classList.remove('active', 'done');
+    if (i < current) d.classList.add('done');
+    else if (i === current) d.classList.add('active');
+  }
+}
+function calcResult() {
+  const fs = answers[0], vn = answers[1], pd = answers[2], cf = answers[3];
+  if (!fs || !vn || !pd || !cf) return;
+  const gl = (fs * vn) / (pd * cf);
+  const glRounded = Math.round(gl * 100) / 100;
+
+  const scoreEl = document.getElementById('qs-score');
+  const verdictEl = document.getElementById('qs-verdict');
+  const findingEl = document.getElementById('qs-finding');
+
+  scoreEl.textContent = glRounded;
+
+  if (gl >= 1.5) {
+    scoreEl.className = 'qs-gl-display hi';
+    verdictEl.textContent = 'Your process is structurally sound.';
+    findingEl.textContent = 'A GL above 1.5 indicates that your automation investment is delivering real efficiency. Flow is high relative to friction. A full diagnosis can confirm whether this holds across all process layers or whether specific sub-processes are pulling the score down.';
+  } else if (gl >= 0.5) {
+    scoreEl.className = 'qs-gl-display mid';
+    verdictEl.textContent = 'Warning: your denominator is accumulating.';
+    findingEl.textContent = 'A GL between 0.5 and 1.5 signals that friction is absorbing a significant share of your automation investment. The process is functioning — but not efficiently. Rework, exceptions, and manual intervention are costing more than they appear on any single report. A full GL diagnosis identifies exactly where the denominator is inflating.';
+  } else {
+    scoreEl.className = 'qs-gl-display lo';
+    verdictEl.textContent = 'Your automation may be accelerating errors, not eliminating them.';
+    findingEl.textContent = 'A GL below 0.5 means your denominator — friction, pain duration, and cognitive load — is outpacing your numerator. This is the pattern seen when automation is applied to a misaligned process: it produces errors faster, not fewer. A full GL diagnosis maps the exact friction sources and quantifies the cost of leaving them unaddressed.';
+  }
+
+  document.querySelectorAll('.qs-step').forEach(s => s.classList.remove('active'));
+  const result = document.getElementById('qs-result');
+  result.classList.add('show');
+}
+function resetScan() {
+  answers.fill(null);
+  document.getElementById('qs-result').classList.remove('show');
+  document.querySelectorAll('.qs-opt').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('.qs-btn.primary').forEach(b => { if (b.id && b.id.startsWith('next-')) b.disabled = true; });
+  nextStep(0);
+}
+</script>
+</body>
+</html>
