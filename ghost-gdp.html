@@ -1,122 +1,390 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>試算 Ghost GDP % – GFI Flow Intelligence</title>
-  
-  <!-- 使用你網站的 Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-  
-  <!-- Bootstrap CSS (保持一致) -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"/>
-  
-  <style>
-    :root {
-      --bg:#141d2e; --surf:#1c2740; --surf2:#22304e;
-      --border:rgba(255,255,255,0.08); --text:#edf0f8;
-      --muted:#8fa3c0; --dim:#4a6080; --accent:#c8f542; --blue:#4da3ff;
-      --serif:'DM Serif Display',Georgia,serif;
-      --mono:'DM Mono',monospace;
-      --sans:'DM Sans',system-ui,sans-serif;
-    }
-    body { background:var(--bg); color:var(--text); font-family:var(--sans); min-height:100svh; }
-    .lang-bar { position:fixed; top:0; left:0; right:0; z-index:100; height:56px; padding:0 20px; display:flex; align-items:center; justify-content:space-between; background:rgba(20,29,46,0.93); backdrop-filter:blur(16px); border-bottom:1px solid var(--border); }
-    .logo img { height:40px; width:auto; }
-    .lang-grp button { font-family:var(--mono); font-size:11px; letter-spacing:.08em; padding:5px 10px; border:1px solid var(--border); border-radius:4px; background:none; color:var(--muted); cursor:pointer; margin:0 4px; }
-    .lang-grp button.on { color:var(--accent); border-color:rgba(200,245,66,0.4); background:rgba(200,245,66,0.07); }
-    .container { max-width:960px; padding:80px 20px 40px; margin:auto; }
-    .book-cover { max-width:400px; margin:0 auto 2rem; display:block; border-radius:12px; box-shadow:0 20px 40px rgba(0,0,0,0.4); }
-    .lang-content { display:none; }
-    .lang-content.active { display:block; }
-    .calculator-card { background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:16px; padding:2rem; margin:3rem 0; }
-    #result { font-size:3.5rem; font-weight:bold; color:var(--accent); text-align:center; margin:1.5rem 0; }
-    .form-label { color:var(--muted); margin-bottom:0.5rem; display:block; font-size:0.9rem; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Ghost GDP Calculator — Quantify the structural friction absorbing your policy or process value. Powered by the GL Framework (Governance Legitimacy Index). GFI Flow Intelligence.">
+<title>Ghost GDP Calculator | GL Framework | GFI Flow Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#141d2e;--surf:#1c2740;--surf2:#22304e;
+  --border:rgba(255,255,255,0.08);--text:#edf0f8;
+  --muted:#8fa3c0;--dim:#4a6080;--accent:#c8f542;--blue:#4da3ff;
+  --red:#ff6b6b;--amber:#ffb347;
+  --serif:'DM Serif Display',Georgia,serif;
+  --mono:'DM Mono',monospace;
+  --sans:'DM Sans',system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.75;overflow-x:hidden}
+
+/* HEADER */
+header{position:fixed;inset:0 0 auto 0;z-index:100;height:60px;padding:0 24px;display:flex;align-items:center;justify-content:space-between;background:rgba(20,29,46,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.logo img{height:40px;width:auto}
+nav{display:flex;align-items:center;gap:4px}
+nav a{font-size:13px;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:6px;transition:color .2s,background .2s}
+nav a:hover{color:var(--text);background:rgba(255,255,255,0.05)}
+nav a.active{color:var(--accent)}
+.ham{display:none;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;padding:6px;background:none;border:none;cursor:pointer}
+.ham span{display:block;height:2px;background:var(--text);border-radius:2px;transition:transform .25s,opacity .2s}
+.ham.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.ham.open span:nth-child(2){opacity:0}
+.ham.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.drawer{display:none;position:fixed;top:60px;left:0;right:0;z-index:99;background:rgba(20,29,46,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:16px 24px 24px;flex-direction:column}
+.drawer.open{display:flex}
+.drawer a{font-size:16px;color:var(--muted);text-decoration:none;padding:14px 0;border-bottom:1px solid var(--border);transition:color .2s}
+.drawer a:hover{color:var(--text)}
+
+.wrap{max-width:900px;margin:0 auto;padding:0 clamp(20px,5vw,60px)}
+
+/* HERO */
+.hero{position:relative;padding:clamp(100px,16vh,140px) 0 clamp(48px,8vh,72px);overflow:hidden}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:52px 52px;mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,black 20%,transparent 75%);pointer-events:none}
+.hero-glow{position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(255,107,107,.04) 0%,transparent 70%);top:-200px;right:-100px;pointer-events:none}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+.hero h1{font-family:var(--serif);font-size:clamp(28px,4.5vw,56px);line-height:1.08;letter-spacing:-.02em;margin-bottom:clamp(16px,3vh,24px);opacity:0;animation:up .6s .1s forwards}
+.hero h1 em{font-style:italic;color:var(--red)}
+.hero-sub{font-size:clamp(15px,1.8vw,17px);color:var(--muted);max-width:620px;line-height:1.8;margin-bottom:clamp(20px,3vh,28px);opacity:0;animation:up .6s .25s forwards}
+.formula-row{display:flex;flex-wrap:wrap;gap:clamp(12px,2vw,24px);opacity:0;animation:up .6s .4s forwards}
+.formula-pill{font-family:var(--mono);font-size:12px;padding:8px 16px;border-radius:6px;border:1px solid var(--border);color:var(--muted);background:rgba(255,255,255,.02)}
+.formula-pill strong{color:var(--text)}
+.formula-pill.ghost{border-color:rgba(255,107,107,.3);background:rgba(255,107,107,.05);color:#ff9090}
+.formula-pill.ghost strong{color:var(--red)}
+
+/* EXPLAINER */
+.explainer{padding:clamp(40px,7vh,72px) 0;border-top:1px solid var(--border)}
+.ex-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,64px);align-items:start}
+.ex-label{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.ex-title{font-family:var(--serif);font-size:clamp(18px,2.5vw,26px);color:var(--text);line-height:1.3;margin-bottom:14px}
+.ex-body{font-size:clamp(14px,1.6vw,15px);color:var(--muted);line-height:1.85}
+.ex-body strong{color:var(--text)}
+.ghost-eq{font-family:var(--mono);font-size:clamp(13px,1.7vw,15px);background:rgba(255,107,107,.06);border:1px solid rgba(255,107,107,.2);border-radius:8px;padding:clamp(16px,2.5vh,22px) clamp(18px,2.5vw,26px);margin-top:20px;line-height:2;color:#ff9090}
+.ghost-eq strong{color:var(--red);font-size:1.1em}
+
+/* CALCULATOR */
+.calc-section{padding:clamp(40px,7vh,72px) 0;border-top:1px solid var(--border)}
+.calc-wrap{background:var(--surf);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.calc-head{padding:clamp(22px,3.5vh,32px) clamp(24px,3.5vw,40px);border-bottom:1px solid var(--border)}
+.calc-head-label{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.calc-head-title{font-family:var(--serif);font-size:clamp(18px,2.5vw,24px);color:var(--text);line-height:1.3}
+.calc-body{padding:clamp(22px,3.5vh,36px) clamp(24px,3.5vw,40px)}
+.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2vw,22px);margin-bottom:clamp(20px,3vh,28px)}
+.field{display:flex;flex-direction:column;gap:6px}
+.field-label{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.field-hint{font-size:12px;color:var(--dim);line-height:1.4;margin-top:2px}
+.field input{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:10px 14px;font-family:var(--mono);font-size:14px;color:var(--text);width:100%;transition:border-color .2s;-moz-appearance:textfield}
+.field input:focus{outline:none;border-color:rgba(200,245,66,.4)}
+.field input::-webkit-outer-spin-button,.field input::-webkit-inner-spin-button{-webkit-appearance:none}
+.calc-divider{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding:clamp(14px,2vh,20px) 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:clamp(14px,2vh,20px)}
+.calc-btn{width:100%;padding:clamp(14px,2.2vh,18px);background:var(--accent);color:#0d1117;font-weight:700;font-size:clamp(14px,1.7vw,16px);border:none;border-radius:8px;cursor:pointer;font-family:var(--sans);letter-spacing:.02em;transition:opacity .2s,transform .2s;margin-top:8px}
+.calc-btn:hover{opacity:.88;transform:translateY(-1px)}
+
+/* RESULT */
+.result-wrap{display:none;padding:clamp(28px,4vh,44px) clamp(24px,3.5vw,40px);border-top:1px solid var(--border);animation:up .5s forwards}
+.result-wrap.show{display:block}
+.result-row{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:clamp(20px,3vh,28px)}
+.result-cell{background:var(--bg);padding:clamp(18px,2.5vh,26px) clamp(18px,2.5vw,26px)}
+.result-cell-label{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
+.result-num{font-family:var(--serif);font-size:clamp(32px,5vw,52px);line-height:1;margin-bottom:4px}
+.result-num.hi{color:var(--accent)}
+.result-num.mid{color:var(--amber)}
+.result-num.lo{color:var(--red)}
+.result-num.ghost{color:var(--red)}
+.result-sub{font-family:var(--mono);font-size:11px;color:var(--dim)}
+.result-verdict{font-family:var(--serif);font-size:clamp(17px,2.2vw,22px);color:var(--text);line-height:1.4;margin-bottom:12px}
+.result-finding{font-size:clamp(14px,1.6vw,15px);color:var(--muted);line-height:1.85;margin-bottom:clamp(20px,3vh,28px)}
+.result-finding strong{color:var(--text)}
+.result-cta{display:flex;flex-wrap:wrap;gap:10px}
+.btn-solid{display:inline-flex;align-items:center;padding:12px 24px;background:var(--accent);color:#0d1117;font-weight:600;font-size:14px;border-radius:8px;text-decoration:none;transition:opacity .2s}
+.btn-solid:hover{opacity:.88}
+.btn-ghost-btn{display:inline-flex;align-items:center;padding:12px 24px;border:1px solid var(--border);color:var(--muted);font-size:14px;border-radius:8px;text-decoration:none;transition:all .2s;background:none;cursor:pointer}
+.btn-ghost-btn:hover{border-color:rgba(255,255,255,.2);color:var(--text)}
+
+/* BOOK STRIP */
+.book-strip{margin-top:clamp(40px,7vh,72px);padding:clamp(24px,4vh,36px) clamp(24px,3.5vw,40px);background:var(--surf);border:1px solid rgba(200,245,66,.15);border-radius:12px;display:grid;grid-template-columns:auto 1fr;gap:clamp(20px,3vw,36px);align-items:center}
+.book-badge{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.book-title{font-family:var(--serif);font-size:clamp(17px,2.3vw,24px);color:var(--text);line-height:1.25;margin-bottom:6px}
+.book-sub{font-size:13px;color:var(--muted);margin-bottom:16px;font-style:italic}
+.book-icon{width:80px;height:80px;background:rgba(200,245,66,.08);border:1px solid rgba(200,245,66,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:36px;flex-shrink:0}
+
+footer{padding:clamp(28px,5vh,44px) clamp(20px,5vw,60px);border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;color:var(--muted);font-size:13px;margin-top:clamp(48px,8vh,80px)}
+footer a{color:var(--muted);text-decoration:none}
+footer a:hover{color:var(--text)}
+.footer-links{display:flex;gap:24px;flex-wrap:wrap}
+
+@keyframes up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:768px){
+  nav{display:none}.ham{display:flex}
+  .ex-grid{grid-template-columns:1fr}
+  .field-grid{grid-template-columns:1fr}
+  .result-row{grid-template-columns:1fr}
+  .book-strip{grid-template-columns:1fr}
+  .book-icon{display:none}
+  footer{flex-direction:column;text-align:center}
+}
+</style>
 </head>
 <body>
 
-<div class="lang-bar">
-  <a href="index.html"><img src="GFILOGO.png" alt="GFI Logo"></a>
-  <div class="lang-grp">
-    <button class="on" onclick="switchLang('tw')">繁</button>
-    <button onclick="switchLang('cn')">简</button>
-    <button onclick="switchLang('en')">EN</button>
+<header>
+  <a href="index.html" class="logo"><img src="GFILOGO.png" alt="GFI"></a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="government.html">Public Sector</a>
+    <a href="enterprise.html">Private Sector</a>
+    <a href="about.html">Founder</a>
+    <a href="ghost-gdp.html" class="active">Ghost GDP</a>
+  </nav>
+  <button class="ham" id="ham" aria-label="Menu" onclick="toggleDrawer()">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<div class="drawer" id="drawer">
+  <a href="index.html" onclick="closeDrawer()">Home</a>
+  <a href="government.html" onclick="closeDrawer()">Public Sector</a>
+  <a href="enterprise.html" onclick="closeDrawer()">Private Sector</a>
+  <a href="about.html" onclick="closeDrawer()">Founder</a>
+  <a href="ghost-gdp.html" onclick="closeDrawer()">Ghost GDP</a>
+</div>
+
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="wrap" style="position:relative">
+    <div class="eyebrow">GL Framework · Structural Friction Analysis</div>
+    <h1>GDP counted it.<br>Nobody received it.<br>That's <em>Ghost GDP.</em></h1>
+    <p class="hero-sub">Rework, waiting, re-filing, corrections — these activities register as economic output but deliver no real value. The GL Framework measures exactly how much of a process's intended value is absorbed by structural friction.</p>
+    <div class="formula-row">
+      <div class="formula-pill"><strong>GL</strong> = (Fs × Vn) / (Pd × Cf)</div>
+      <div class="formula-pill ghost"><strong>Ghost GDP %</strong> = friction cost / total process cost</div>
+      <div class="formula-pill">When GL &lt; 1 → Ghost GDP is forming</div>
+    </div>
   </div>
 </div>
 
-<div class="container">
+<div class="wrap">
 
-  <!-- 書封 + Amazon 連結（三語共用） -->
-  <div class="text-center">
-    <img src="https://m.media-amazon.com/images/I/81yZ3Z3Z3ZL._AC_UF1000,1000_QL80_.jpg" alt="The Physics of Governance Book Cover" class="book-cover">
-    <p class="mt-3">
-      <a href="https://a.co/d/0fkdxRIR" target="_blank" style="color:var(--accent); text-decoration:none; font-weight:500;">
-        Buy on Amazon → 
-      </a>
-    </p>
+  <!-- EXPLAINER -->
+  <div class="explainer">
+    <div class="ex-grid">
+      <div>
+        <div class="ex-label">The Problem</div>
+        <div class="ex-title">Output that reaches no one</div>
+        <p class="ex-body">Standard economic measurement counts activity — not delivery. Every hour spent re-filing a rejected application, waiting on hold, correcting a system error, or navigating an unclear form is counted as productive output. <strong>But none of it reached the person who needed it.</strong></p>
+        <p class="ex-body" style="margin-top:14px">This is Ghost GDP: economic activity that appears in the numerator of productivity calculations while functioning as pure denominator cost for the people experiencing it.</p>
+      </div>
+      <div>
+        <div class="ex-label">The GL Connection</div>
+        <div class="ex-title">The same formula detects both</div>
+        <p class="ex-body">The GL Framework was designed to measure structural friction in governance and enterprise systems. Its denominator — <strong>Pd × Cf</strong> (Pain Duration × Cognitive Friction) — is precisely the component that generates Ghost GDP.</p>
+        <div class="ghost-eq">
+          Ghost GDP % = <strong>(Pd × Cf) / [(Fs × Vn) + (Pd × Cf)]</strong><br>
+          <span style="font-size:11px;color:var(--dim)">When GL is low, this ratio is high. The same friction that collapses GL inflates Ghost GDP.</span>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- 語言內容區塊 -->
-  <div id="tw" class="lang-content active">
-    <h1 class="text-center" style="font-family:var(--serif); margin:2rem 0;">治理的物理學</h1>
-    <h2 class="text-center">GDP 只測生產，GL 將測合法性</h2>
-    <p class="text-center lead">合法性 = 交付價值 ÷ 公民痛苦</p>
+  <!-- CALCULATOR -->
+  <div class="calc-section">
+    <div class="eyebrow">Calculator</div>
+    <h2 style="font-family:var(--serif);font-size:clamp(22px,3vw,34px);letter-spacing:-.02em;margin-bottom:clamp(20px,3vh,32px)">What is your Ghost GDP %?</h2>
 
-    <div class="calculator-card">
-      <h3 class="text-center">試算 Ghost GDP %</h3>
-      <p class="text-center">估計政策或行政流程中被「隱藏摩擦」吃掉的比例（排隊、填表、認知負荷等）</p>
-      <!-- 計算器表單（繁體版） -->
-      <form class="row g-3 mt-4">
-        <div class="col-md-6">
-          <label class="form-label">平均等待時間（小時）</label>
-          <input type="number" class="form-control bg-dark text-white border-secondary" id="wait_tw" value="10" min="0" step="0.5">
+    <div class="calc-wrap">
+      <div class="calc-head">
+        <div class="calc-head-label">GL Formula Inputs</div>
+        <div class="calc-head-title">Enter values for your policy, process, or administrative system</div>
+      </div>
+      <div class="calc-body">
+
+        <div class="field-grid">
+          <div class="field">
+            <div class="field-label">Fs · Flow Success Rate</div>
+            <input type="number" id="fs" value="0.65" min="0" max="1" step="0.01">
+            <div class="field-hint">% of cases that complete without rework or rejection (0–1). E.g. 0.65 = 65% success rate.</div>
+          </div>
+          <div class="field">
+            <div class="field-label">Vn · Strategic Value</div>
+            <input type="number" id="vn" value="8.0" min="0" max="10" step="0.1">
+            <div class="field-hint">Importance of this process to your core mission (0–10). E.g. 8.0 = high strategic value.</div>
+          </div>
+          <div class="field">
+            <div class="field-label">Pd · Pain Duration (hours)</div>
+            <input type="number" id="pd" value="12" min="0" step="0.5">
+            <div class="field-hint">Average staff or citizen hours spent on exceptions, corrections, and waiting per case.</div>
+          </div>
+          <div class="field">
+            <div class="field-label">Cf · Cognitive Friction</div>
+            <input type="number" id="cf" value="3.0" min="0" max="10" step="0.1">
+            <div class="field-hint">Complexity and judgment required (1–10). E.g. 3.0 = moderate; 6.0 = high; 9.0 = expert-level.</div>
+          </div>
         </div>
-        <!-- 其他欄位略，完整代碼會包含所有 -->
-        <div class="col-12 text-center mt-4">
-          <button type="button" class="btn btn-lg" style="background:var(--accent); color:#000;" onclick="calc('tw')">立即試算</button>
+
+        <div class="calc-divider">Optional — for dollar cost estimate</div>
+
+        <div class="field-grid">
+          <div class="field">
+            <div class="field-label">Hourly cost ($/hr)</div>
+            <input type="number" id="wage" value="45" min="0" step="1">
+            <div class="field-hint">Average loaded cost per staff hour. Leave at 0 to skip cost estimate.</div>
+          </div>
+          <div class="field">
+            <div class="field-label">Cases per month</div>
+            <input type="number" id="volume" value="500" min="0" step="1">
+            <div class="field-hint">Monthly transaction or case volume for this process.</div>
+          </div>
         </div>
-      </form>
-      <div class="text-center mt-5">
-        <div id="result_tw" style="font-size:3.5rem; font-weight:bold; color:var(--accent);"></div>
-        <p id="insight_tw" class="lead text-muted"></p>
+
+        <button class="calc-btn" onclick="calculate()">Calculate Ghost GDP % →</button>
+
+        <!-- RESULT -->
+        <div class="result-wrap" id="result-wrap">
+          <div class="result-row">
+            <div class="result-cell">
+              <div class="result-cell-label">GL Score</div>
+              <div class="result-num" id="res-gl">—</div>
+              <div class="result-sub" id="res-gl-bench"></div>
+            </div>
+            <div class="result-cell">
+              <div class="result-cell-label">Ghost GDP %</div>
+              <div class="result-num ghost" id="res-ghost">—</div>
+              <div class="result-sub">of process cost produces no real value</div>
+            </div>
+            <div class="result-cell">
+              <div class="result-cell-label">Friction absorbing</div>
+              <div class="result-num lo" id="res-friction">—</div>
+              <div class="result-sub">of intended value lost to denominator</div>
+            </div>
+            <div class="result-cell">
+              <div class="result-cell-label">Monthly Ghost Cost</div>
+              <div class="result-num" id="res-cost" style="font-size:clamp(20px,3vw,32px)">—</div>
+              <div class="result-sub" id="res-cost-sub"></div>
+            </div>
+          </div>
+
+          <div class="result-verdict" id="res-verdict"></div>
+          <div class="result-finding" id="res-finding"></div>
+
+          <div class="result-cta">
+            <a href="https://buy.stripe.com/8x25kFbp0dM4gQl0fB3VC00" target="_blank" rel="noopener" class="btn-solid">Get Full GL Diagnosis — $999 →</a>
+            <a href="enterprise.html" class="btn-solid" style="background:transparent;border:1px solid var(--border);color:var(--muted)">Learn about GL verification</a>
+            <button class="btn-ghost-btn" onclick="resetCalc()">← Recalculate</button>
+          </div>
+        </div>
+
       </div>
     </div>
 
-    <!-- 前言內容（繁體） -->
-    <div class="mt-5">
-      <h3>為什麼好政策反而令人痛苦？</h3>
-      <p>——GL 指數與九國治理的數學診斷</p>
-      <h4>前言：當「正確」變得難以忍受</h4>
-      <!-- 貼上繁體前言全文 -->
-      <p>你是否曾在深夜盯著一份複雜到令人頭暈的政府表格，感到無比挫敗與憤怒？...</p>
-      <!-- ... 完整前言 ... -->
+    <!-- BOOK STRIP -->
+    <div class="book-strip">
+      <div class="book-icon">📐</div>
+      <div>
+        <div class="book-badge">Published · Amazon Kindle</div>
+        <div class="book-title">The Physics of Governance</div>
+        <div class="book-sub">GDP Measured Production. GL Will Measure Legitimacy.</div>
+        <a href="https://a.co/d/097NDgnK" target="_blank" rel="noopener" class="btn-solid" style="font-size:13px;padding:10px 20px">View on Amazon →</a>
+      </div>
     </div>
+
   </div>
-
-  <!-- 簡體與英文區塊類似，省略重複代碼以節省空間。完整版會包含所有三語內容與切換邏輯 -->
-
 </div>
 
+<footer>
+  <span>© 2026 GFI Flow Intelligence · Boston</span>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="government.html">Public Sector</a>
+    <a href="enterprise.html">Private Sector</a>
+    <a href="about.html">Founder</a>
+    <a href="mailto:gfi@gfiintel.com">Contact</a>
+  </div>
+</footer>
+
 <script>
-function switchLang(lang) {
-  document.querySelectorAll('.lang-content').forEach(el => el.classList.remove('active'));
-  document.getElementById(lang).classList.add('active');
-  
-  document.querySelectorAll('.lang-bar button').forEach(btn => btn.classList.remove('on'));
-  event.target.classList.add('on');
+function calculate() {
+  const fs = parseFloat(document.getElementById('fs').value) || 0;
+  const vn = parseFloat(document.getElementById('vn').value) || 0;
+  const pd = parseFloat(document.getElementById('pd').value) || 0;
+  const cf = parseFloat(document.getElementById('cf').value) || 0;
+  const wage = parseFloat(document.getElementById('wage').value) || 0;
+  const volume = parseFloat(document.getElementById('volume').value) || 0;
+
+  if (!fs || !vn || !pd || !cf) return;
+
+  const numerator = fs * vn;
+  const denominator = pd * cf;
+  const gl = numerator / denominator;
+  const glR = Math.round(gl * 100) / 100;
+
+  // Ghost GDP % = denominator cost / total process cost
+  const ghostPct = Math.round((denominator / (numerator + denominator)) * 100);
+  // Value lost % = how much of intended value is absorbed
+  const valueLost = gl >= 1 ? Math.round((1 - (1/gl)) * 100 * -1) : Math.round((1 - gl) * 100);
+  const frictionPct = Math.min(Math.round((denominator / (numerator + denominator)) * 100), 99);
+
+  // Monthly ghost cost
+  const monthlyCost = wage > 0 && volume > 0 ? Math.round(pd * cf * wage * volume) : null;
+
+  // Update UI
+  const glEl = document.getElementById('res-gl');
+  glEl.textContent = glR;
+  if (gl >= 1.5) { glEl.className = 'result-num hi'; }
+  else if (gl >= 0.5) { glEl.className = 'result-num mid'; }
+  else { glEl.className = 'result-num lo'; }
+
+  document.getElementById('res-gl-bench').textContent =
+    gl >= 1.5 ? 'Healthy (≥ 1.5)' : gl >= 0.5 ? 'Warning (0.5–1.5)' : 'Critical (< 0.5)';
+
+  document.getElementById('res-ghost').textContent = ghostPct + '%';
+  document.getElementById('res-friction').textContent = frictionPct + '%';
+
+  const costEl = document.getElementById('res-cost');
+  const costSub = document.getElementById('res-cost-sub');
+  if (monthlyCost) {
+    costEl.textContent = '$' + monthlyCost.toLocaleString();
+    costSub.textContent = 'per month in friction cost';
+  } else {
+    costEl.textContent = '—';
+    costSub.textContent = 'enter hourly cost + volume to calculate';
+  }
+
+  // Verdict + Finding
+  const verdict = document.getElementById('res-verdict');
+  const finding = document.getElementById('res-finding');
+
+  if (gl >= 1.5) {
+    verdict.textContent = 'Your process is delivering efficiently.';
+    finding.innerHTML = 'A GL of <strong>' + glR + '</strong> indicates your flow is outpacing friction. Structural efficiency is high — Ghost GDP formation in this process is limited. A full GL diagnosis can confirm whether this holds across all sub-processes or whether specific layers are pulling the score down.';
+  } else if (gl >= 0.5) {
+    verdict.textContent = 'Friction is accumulating — value is leaking.';
+    finding.innerHTML = 'A GL of <strong>' + glR + '</strong> means your denominator is absorbing a significant share of process capacity. An estimated <strong>' + ghostPct + '%</strong> of total process cost is generating no real outcome — it exists in operational records but never reaches its intended recipient. This is the formation stage of Ghost GDP: activity without delivery.';
+  } else {
+    verdict.textContent = 'Ghost GDP is active. Your denominator is outpacing your numerator.';
+    finding.innerHTML = 'A GL of <strong>' + glR + '</strong> means structural friction has overtaken intended value delivery. Approximately <strong>' + ghostPct + '%</strong> of total process cost is producing no real outcome. Rework, corrections, and re-processing are being counted as output — but nothing is being delivered. If automation has been introduced, it is likely accelerating this cycle rather than breaking it. This is the operational definition of Ghost GDP inside an organization.';
+  }
+
+  document.getElementById('result-wrap').classList.add('show');
+  document.getElementById('result-wrap').scrollIntoView({behavior:'smooth', block:'start'});
 }
 
-function calc(lang) {
-  // 計算邏輯（可根據 lang 調整顯示文字）
-  // 這裡省略完整計算代碼，實際上會取對應 id 的輸入值
-  let result = 12.34; // 範例
-  document.getElementById(`result_${lang}`).innerHTML = `${result.toFixed(2)}%`;
-  document.getElementById(`insight_${lang}`).innerHTML = `估計有 ${result.toFixed(2)}% 的經濟活動被程序摩擦消耗。`;
+function resetCalc() {
+  document.getElementById('result-wrap').classList.remove('show');
+}
+
+function toggleDrawer(){
+  document.getElementById('ham').classList.toggle('open');
+  document.getElementById('drawer').classList.toggle('open');
+}
+function closeDrawer(){
+  document.getElementById('ham').classList.remove('open');
+  document.getElementById('drawer').classList.remove('open');
 }
 </script>
-
 </body>
 </html>
