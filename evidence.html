@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evidence & Context | GFI Flow Intelligence</title>
+  <meta name="description" content="Congressional inquiries, GAO high-risk programs, and documented delivery failures in U.S. public systems.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0b1220;--bg2:#0d1526;--dim:#1a2640;--text:#f8fbff;--muted:#c7d2e3;--sub:#9fb0c8;--green:#9FE870;--blue:#7DD3FC;--gold:#c8922a;--red:#ff5050;--serif:'DM Serif Display',Georgia,serif;--mono:'DM Mono',monospace;--sans:'DM Sans',system-ui,sans-serif}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.75;overflow-x:hidden;min-height:100vh}
+    .nav{position:fixed;inset:0 0 auto 0;z-index:100;height:62px;padding:0 clamp(18px,5vw,52px);display:flex;align-items:center;justify-content:space-between;background:rgba(11,18,32,.90);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.07)}
+    .logo{color:#fff;text-decoration:none;font-family:var(--mono);font-size:13px;letter-spacing:.16em;text-transform:uppercase}
+    .nav-back{color:var(--sub);text-decoration:none;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;transition:color .2s}
+    .nav-back:hover{color:#fff}
+    .page{padding-top:62px}
+
+    section{width:100%;padding:clamp(56px,7vw,88px) clamp(20px,6vw,80px)}
+    .inner{max-width:820px;margin:0 auto}
+
+    /* HERO */
+    .hero{background:radial-gradient(ellipse 50% 60% at 80% 30%,rgba(248,113,113,.06),transparent),var(--bg);border-bottom:1px solid rgba(255,255,255,.06);padding:clamp(72px,9vw,110px) clamp(20px,6vw,80px) clamp(56px,7vw,80px)}
+    .hero-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(248,113,113,.6);margin-bottom:20px;opacity:0;animation:up .5s .05s forwards}
+    .hero-h1{font-family:var(--serif);font-size:clamp(28px,4vw,50px);line-height:1.1;color:#fff;margin-bottom:14px;opacity:0;animation:up .55s .15s forwards}
+    .hero-sub{font-size:15px;color:var(--sub);max-width:620px;line-height:1.75;opacity:0;animation:up .55s .25s forwards}
+
+    /* SECTION LABEL */
+    .section-label{font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:20px;display:flex;align-items:center;gap:14px}
+    .section-label::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.07)}
+    .section-h{font-family:var(--serif);font-size:clamp(20px,2.4vw,30px);color:#fff;margin-bottom:8px;line-height:1.2}
+    .section-sub{font-size:14px;color:var(--sub);margin-bottom:28px;line-height:1.7}
+
+    /* EVIDENCE CARDS */
+    .ev-list{display:flex;flex-direction:column;gap:16px;margin-bottom:12px}
+    .ev-card{border-radius:14px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.025);overflow:hidden}
+    .ev-card-header{padding:18px 22px 14px;border-bottom:1px solid rgba(255,255,255,.05);display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+    .ev-tag{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:3px 9px;border-radius:4px;flex-shrink:0}
+    .tag-congress{background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.25);color:#ff8080}
+    .tag-gao{background:rgba(125,211,252,.1);border:1px solid rgba(125,211,252,.25);color:var(--blue)}
+    .tag-audit{background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.2);color:#fbbf24}
+    .ev-source{font-family:var(--mono);font-size:10px;color:var(--sub);letter-spacing:.06em}
+    .ev-card-body{padding:16px 22px 18px}
+    .ev-title{font-size:16px;font-weight:600;color:#eaf2fb;line-height:1.35;margin-bottom:8px}
+    .ev-text{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:10px}
+    .ev-finding{font-family:var(--mono);font-size:11px;color:var(--red);letter-spacing:.04em;padding:8px 12px;background:rgba(255,80,80,.05);border-left:2px solid rgba(255,80,80,.3);border-radius:0 6px 6px 0;margin-top:6px}
+    .ev-link{display:inline-flex;align-items:center;gap:6px;color:var(--green);text-decoration:none;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;margin-top:10px;transition:opacity .2s}
+    .ev-link:hover{opacity:.7}
+
+    /* CTA */
+    .cta-box{background:linear-gradient(160deg,rgba(159,232,112,.05),rgba(255,255,255,.01));border:1px solid rgba(159,232,112,.2);border-radius:16px;padding:32px 36px;text-align:center;margin-top:40px}
+    .cta-title{font-family:var(--serif);font-size:22px;color:#fff;margin-bottom:10px}
+    .cta-sub{font-size:14px;color:var(--sub);margin-bottom:24px;line-height:1.7}
+    .cta-btn{display:inline-flex;align-items:center;gap:10px;padding:13px 28px;border-radius:10px;border:1px solid rgba(159,232,112,.35);background:rgba(159,232,112,.1);color:#edfde0;text-decoration:none;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;transition:all .22s}
+    .cta-btn:hover{border-color:rgba(159,232,112,.6);background:rgba(159,232,112,.18);transform:translateY(-2px)}
+    .arr{display:inline-block;transition:transform .2s}
+    .cta-btn:hover .arr{transform:translateX(4px)}
+
+    .footer{text-align:center;padding:24px 20px 32px;font-family:var(--mono);font-size:11px;color:rgba(255,255,255,.2);letter-spacing:.05em;border-top:1px solid rgba(255,255,255,.05)}
+    .footer a{color:rgba(255,255,255,.32);text-decoration:none;transition:color .2s}
+    .footer a:hover{color:#fff}
+
+    @keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+    @media(max-width:600px){section{padding:48px 18px}.ev-card-header{flex-direction:column}.cta-box{padding:22px 18px}}
+  </style>
+</head>
+<body>
+<div class="nav">
+  <a href="index.html" class="logo">GFI Flow Intelligence</a>
+  <a href="index.html" class="nav-back">← Back</a>
+</div>
+
+<div class="page">
+  <section class="hero">
+    <div class="inner">
+      <div class="hero-eyebrow">Evidence & Context</div>
+      <h1 class="hero-h1">The delivery gap is documented.<br>Not just observed.</h1>
+      <p class="hero-sub">Congressional inquiries, GAO findings, and federal audit data confirm what GL Framework measures: systems are implemented and funded, but outcomes for citizens are not independently verified.</p>
+    </div>
+  </section>
+
+  <section style="background:var(--bg2);border-bottom:1px solid rgba(255,255,255,.06)">
+    <div class="inner">
+      <div class="section-label">U.S. Congressional Inquiries · Unemployment Insurance Systems</div>
+      <div class="section-h">Senators Warren and Wyden on UI system failures</div>
+      <div class="section-sub">Multiple states received hundreds of millions in federal funding to modernize unemployment insurance systems. Congressional inquiry followed documented delivery failures.</div>
+      <div class="ev-list">
+        <div class="ev-card">
+          <div class="ev-card-header">
+            <div>
+              <div class="ev-source">U.S. Senate · 2021–2023</div>
+            </div>
+            <span class="ev-tag tag-congress">Congressional Inquiry</span>
+          </div>
+          <div class="ev-card-body">
+            <div class="ev-title">Senate Inquiry: UI Modernization Failures and Contractor Accountability</div>
+            <div class="ev-text">Senators Elizabeth Warren and Ron Wyden led inquiries into unemployment insurance modernization contracts, examining why states that received significant federal funding continued to fail claimants — with processing delays, inaccessible systems, and mass wrongful denials persisting after go-live.</div>
+            <div class="ev-finding">Systems were modernized. Outcomes for claimants were not independently verified before or after go-live.</div>
+          </div>
+        </div>
+        <div class="ev-card">
+          <div class="ev-card-header">
+            <div>
+              <div class="ev-source">Massachusetts DUA · 2025–2026</div>
+            </div>
+            <span class="ev-tag tag-congress">State-Level Case</span>
+          </div>
+          <div class="ev-card-body">
+            <div class="ev-title">Massachusetts DUA: $46.6M Modernization · Delivery Not Confirmed</div>
+            <div class="ev-text">Massachusetts spent $46.6M modernizing its unemployment insurance system. The May 2025 upgrade refreshed the interface. Processing delays, a 70,000+ case backlog, and a 9× surge in appeals were documented in public sources through early 2026. No independent outcome verification was conducted.</div>
+            <div class="ev-finding">Implementation confirmed. Outcome improvement not proven. GL = 0.059 (Flow Collapse).</div>
+            <a href="reports/MA_DUA_GL_Diagnostic_Report_EN.pdf" target="_blank" rel="noopener" class="ev-link">Read the GL Diagnostic Report →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--bg);border-bottom:1px solid rgba(255,255,255,.06)">
+    <div class="inner">
+      <div class="section-label">U.S. Government Accountability Office · High Risk List</div>
+      <div class="section-h">GAO High Risk Programs — Delivery failure as a documented pattern</div>
+      <div class="section-sub">The GAO High Risk List identifies federal programs with persistent management challenges. Many have been on the list for over a decade — funded, audited, and still failing to deliver outcomes consistently.</div>
+      <div class="ev-list">
+        <div class="ev-card">
+          <div class="ev-card-header">
+            <div><div class="ev-source">GAO · Updated 2025</div></div>
+            <span class="ev-tag tag-gao">GAO High Risk</span>
+          </div>
+          <div class="ev-card-body">
+            <div class="ev-title">Unemployment Insurance · On GAO High Risk List</div>
+            <div class="ev-text">The U.S. unemployment insurance system has been identified as a high-risk area by the GAO due to improper payments, fraud vulnerability, and inconsistent delivery across states. Federal investments in modernization have not eliminated delivery failure at the point of citizen contact.</div>
+            <div class="ev-finding">Documented: funding exists, systems exist, delivery outcomes remain unverified at the program level.</div>
+          </div>
+        </div>
+        <div class="ev-card">
+          <div class="ev-card-header">
+            <div><div class="ev-source">GAO · Updated 2025</div></div>
+            <span class="ev-tag tag-gao">GAO High Risk</span>
+          </div>
+          <div class="ev-card-body">
+            <div class="ev-title">Medicaid · On GAO High Risk List</div>
+            <div class="ev-text">Medicaid has remained on the GAO High Risk List due to improper payments and program integrity challenges. The Iowa Medicaid case documents a $60M+ contractor-operated system where 72% of 247,522 disenrollments were procedural failures — the system lacked data, not eligibility evidence.</div>
+            <div class="ev-finding">GL = 0.082 (Structural Failure). Denominator design, not fraud or underfunding, is the primary cause.</div>
+          </div>
+        </div>
+        <div class="ev-card">
+          <div class="ev-card-header">
+            <div><div class="ev-source">GAO · Updated 2025</div></div>
+            <span class="ev-tag tag-gao">GAO High Risk</span>
+          </div>
+          <div class="ev-card-body">
+            <div class="ev-title">Medicare Fee-for-Service · On GAO High Risk List</div>
+            <div class="ev-text">Medicare Fee-for-Service has been on the GAO High Risk List since 1990 — over 35 years. It remains there despite continuous investment and system upgrades, because improper payment rates and delivery inconsistencies persist as structural, not technological, problems.</div>
+            <div class="ev-finding">35+ years on the GAO High Risk List. The problem is structural. Technology alone has not resolved it.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--bg2);border-bottom:1px solid rgba(255,255,255,.06)">
+    <div class="inner">
+      <div class="section-label">Medicaid · Improper Payments · Federal Audit Data</div>
+      <div class="section-h">Improper payments as a delivery failure indicator</div>
+      <div class="section-sub">Improper payment data from federal audits documents a consistent pattern: systems process transactions, but the outcomes for eligible citizens diverge significantly from policy intent.</div>
+      <div class="ev-list">
+        <div class="ev-card">
+          <div class="ev-card-header">
+            <div><div class="ev-source">HHS / CMS · Annual Report</div></div>
+            <span class="ev-tag tag-audit">Federal Audit Data</span>
+          </div>
+          <div class="ev-card-body">
+            <div class="ev-title">Medicaid Improper Payment Rate</div>
+            <div class="ev-text">The Medicaid improper payment rate has been documented at approximately 15–22% in recent years, representing tens of billions of dollars annually. A significant portion of these improper payments are procedural — not fraud — caused by documentation failures, eligibility determination errors, and system design that imposes burden on claimants rather than resolving it internally.</div>
+            <div class="ev-finding">Procedural errors, not fraud, are the dominant source of improper payments. This is a denominator problem.</div>
+          </div>
+        </div>
+        <div class="ev-card">
+          <div class="ev-card-header">
+            <div><div class="ev-source">Iowa Medicaid · OIG / CMS Review</div></div>
+            <span class="ev-tag tag-audit">State Case Study</span>
+          </div>
+          <div class="ev-card-body">
+            <div class="ev-title">Iowa Medicaid Eligibility System: 72% Procedural Disenrollments</div>
+            <div class="ev-text">Under Iowa's contractor-operated Medicaid eligibility system, 247,522 people were disenrolled. 72% of those disenrollments were procedural — the system lacked data to confirm eligibility, not evidence that people were ineligible. The ex parte renewal rate of 46% lagged the 60% national average, indicating systematic failure at the eligibility determination layer.</div>
+            <div class="ev-finding">The system worked as designed. The design was the problem.</div>
+            <a href="reports/Iowa_Medicaid_GL_Diagnostic_Report_EN.pdf" target="_blank" rel="noopener" class="ev-link">Read the GL Diagnostic Report →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta-box">
+        <div class="cta-title">This is what Delivery Assurance Review addresses.</div>
+        <div class="cta-sub">Not fraud detection. Not compliance auditing.<br>Independent verification of whether systems deliver measurable improvement for the people they serve.</div>
+        <a href="rfp-insert.html" class="cta-btn">Get the RFP Insert <span class="arr">→</span></a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="footer">
+  © 2026 GFI Flow Intelligence · Boston ·
+  <a href="index.html">Home</a> ·
+  <a href="government.html">Government</a> ·
+  <a href="rfp-insert.html">RFP Insert</a> ·
+  <a href="mailto:ping@gfiintel.com">ping@gfiintel.com</a>
+</div>
+</body>
+</html>
