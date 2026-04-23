@@ -1,404 +1,700 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GFI Flow Intelligence</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GL Framework by GFI Flow Intelligence — independent outcome verification for digital transformation. Published on SSRN and PA Times.">
+  <title>GFI Flow Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b1220;
+      --bg2:#0d1526;
+      --text:#f8fbff;
+      --muted:#c7d2e3;
+      --sub:#9fb0c8;
+      --dim:rgba(255,255,255,.06);
+      --green:#9FE870;
+      --blue:#7DD3FC;
+      --serif:'DM Serif Display',Georgia,serif;
+      --mono:'DM Mono',monospace;
+      --sans:'DM Sans',system-ui,sans-serif
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+    body{
+      background:var(--bg);
+      color:var(--text);
+      font-family:var(--sans);
+      font-size:15px;
+      line-height:1.75;
+      overflow-x:hidden
+    }
 
-<style>
-:root {
-  --bg: #0f1a1c;
-  --bg2: #152226;
-  --gold: #c8a96e;
-  --gold-dim: #9a7d4a;
-  --green: #4a9b6f;
-  --text: #e8e0d4;
-  --text-dim: #8a8278;
-  --border: rgba(200,169,110,0.18);
-  --mono: 'IBM Plex Mono', monospace;
-  --serif: 'Playfair Display', serif;
-  --sans: 'IBM Plex Sans', sans-serif;
-}
+    .nav{
+      position:fixed;
+      inset:0 0 auto 0;
+      z-index:100;
+      height:62px;
+      padding:0 clamp(18px,5vw,52px);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      background:rgba(11,18,32,.90);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid rgba(255,255,255,.07)
+    }
+    .logo{
+      color:#fff;
+      text-decoration:none;
+      font-family:var(--mono);
+      font-size:13px;
+      letter-spacing:.16em;
+      text-transform:uppercase
+    }
+    .lang-grp{display:flex;gap:6px}
+    .lb-btn{
+      font-family:var(--mono);
+      font-size:11px;
+      letter-spacing:.08em;
+      padding:5px 10px;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:5px;
+      background:none;
+      color:var(--sub);
+      cursor:pointer;
+      transition:all .2s
+    }
+    .lb-btn:hover{color:var(--text);border-color:rgba(255,255,255,.2)}
+    .lb-btn.on{
+      color:var(--green);
+      border-color:rgba(159,232,112,.35);
+      background:rgba(159,232,112,.07)
+    }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+    .lb{display:none}
+    .lb.active{display:block}
+    .page{padding-top:62px}
 
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--sans);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
+    section{
+      width:100%;
+      padding:clamp(72px,9vw,112px) clamp(20px,6vw,80px)
+    }
+    .inner{max-width:1100px;margin:0 auto}
 
-/* subtle grid texture */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(200,169,110,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(200,169,110,0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
-  pointer-events: none;
-  z-index: 0;
-}
+    .hero{
+      min-height:calc(100vh - 62px);
+      display:flex;
+      align-items:center;
+      background:
+        radial-gradient(ellipse 55% 45% at 72% 38%,rgba(159,232,112,.055),transparent),
+        radial-gradient(ellipse 40% 55% at 8% 78%,rgba(56,189,248,.045),transparent),
+        var(--bg);
+      border-bottom:1px solid var(--dim);
+      position:relative;
+      overflow:hidden
+    }
+    .hero::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.013) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.013) 1px,transparent 1px);
+      background-size:60px 60px;
+      mask-image:radial-gradient(ellipse 85% 75% at 50% 50%,black,transparent);
+      pointer-events:none
+    }
+    .hero .inner{position:relative;z-index:1}
 
-.page-wrap {
-  position: relative;
-  z-index: 1;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 32px;
-}
+    .hero-eyebrow{
+      font-family:var(--mono);
+      font-size:11px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      color:rgba(159,232,112,.65);
+      margin-bottom:24px;
+      opacity:0;
+      animation:up .5s .05s forwards
+    }
+    .hero-h1{
+      font-family:var(--serif);
+      font-size:clamp(34px,4.8vw,62px);
+      line-height:1.08;
+      letter-spacing:-.02em;
+      color:#fff;
+      margin-bottom:14px;
+      max-width:820px;
+      opacity:0;
+      animation:up .55s .15s forwards
+    }
+    .hero-h1 em{font-style:italic;color:var(--green)}
+    .hero-h1 span{color:var(--blue)}
 
-/* NAV */
-nav {
-  padding: 28px 0 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 20px;
-  animation: fadeDown 0.6s ease both;
-}
+    /* NEW: one-line identity anchor */
+    .hero-who{
+      font-family:var(--sans);
+      font-size:15px;
+      font-weight:400;
+      color:var(--muted);
+      max-width:640px;
+      margin-bottom:10px;
+      opacity:0;
+      animation:up .55s .20s forwards
+    }
 
-.nav-brand {
-  font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: 2.5px;
-  color: var(--gold);
-  text-transform: uppercase;
-}
+    .hero-sub{
+      font-family:var(--mono);
+      font-size:13px;
+      color:var(--sub);
+      letter-spacing:.05em;
+      line-height:1.7;
+      max-width:620px;
+      margin-bottom:40px;
+      opacity:0;
+      animation:up .55s .25s forwards
+    }
+    .hero-links{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      opacity:0;
+      animation:up .55s .35s forwards
+    }
+    .pill-link{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 18px;
+      border-radius:8px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.03);
+      color:var(--muted);
+      text-decoration:none;
+      font-family:var(--mono);
+      font-size:11px;
+      letter-spacing:.09em;
+      text-transform:uppercase;
+      transition:all .2s
+    }
+    .pill-link:hover{
+      border-color:rgba(255,255,255,.22);
+      color:#fff;
+      transform:translateY(-1px)
+    }
 
-.nav-links {
-  display: flex;
-  gap: 28px;
-  list-style: none;
-}
+    .hero-credibility{
+      font-family:var(--mono);
+      font-size:11px;
+      color:rgba(200,146,42,.8);
+      letter-spacing:.04em;
+      max-width:540px;
+      margin-bottom:12px;
+      line-height:1.6;
+      opacity:0;
+      animation:up .55s .30s forwards
+    }
+    .ev-btn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 16px;
+      border-radius:7px;
+      border:1px solid rgba(200,146,42,.3);
+      background:rgba(200,146,42,.07);
+      color:rgba(200,146,42,.9);
+      text-decoration:none;
+      font-family:var(--mono);
+      font-size:10px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      margin-bottom:20px;
+      transition:all .2s;
+      opacity:0;
+      animation:up .55s .33s forwards
+    }
+    .ev-btn:hover{
+      border-color:rgba(200,146,42,.6);
+      background:rgba(200,146,42,.14)
+    }
 
-.nav-links a {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 1.5px;
-  color: var(--text-dim);
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: color 0.2s;
-}
-.nav-links a:hover { color: var(--gold); }
+    .hero-statement{
+      font-family:var(--serif);
+      font-size:clamp(16px,1.8vw,22px);
+      color:rgba(255,255,255,.7);
+      line-height:1.5;
+      max-width:480px;
+      margin-bottom:20px;
+      font-style:italic;
+      opacity:0;
+      animation:up .55s .32s forwards
+    }
 
-/* HERO */
-.hero {
-  padding: 80px 0 60px;
-}
+    .arr{display:inline-block;transition:transform .2s}
+    .pill-link:hover .arr{transform:translateX(3px)}
 
-.hero-eyebrow {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 3px;
-  color: var(--green);
-  text-transform: uppercase;
-  margin-bottom: 28px;
-  animation: fadeUp 0.7s 0.1s ease both;
-}
+    .gate-section{
+      background:var(--bg2);
+      border-bottom:1px solid var(--dim)
+    }
+    .section-eyebrow{
+      font-family:var(--mono);
+      font-size:10px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.28);
+      margin-bottom:20px;
+      display:flex;
+      align-items:center;
+      gap:14px
+    }
+    .section-eyebrow::after{
+      content:'';
+      flex:1;
+      height:1px;
+      background:rgba(255,255,255,.07)
+    }
 
-.hero-eyebrow span {
-  color: var(--text-dim);
-  margin: 0 8px;
-}
+    .gate-cards{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:20px;
+      max-width:1100px
+    }
+    .gate-card{
+      display:flex;
+      flex-direction:column;
+      min-height:250px;
+      border-radius:18px;
+      padding:28px 26px 24px;
+      text-decoration:none;
+      border:1px solid rgba(255,255,255,.09);
+      transition:transform .25s,border-color .25s,box-shadow .25s
+    }
+    .gate-card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 14px 40px rgba(0,0,0,.25)
+    }
 
-.hero h1 {
-  font-family: var(--serif);
-  font-size: clamp(38px, 5.5vw, 64px);
-  font-weight: 900;
-  line-height: 1.12;
-  color: var(--text);
-  max-width: 820px;
-  margin-bottom: 32px;
-  animation: fadeUp 0.7s 0.2s ease both;
-}
+    .gate-card.gov{
+      background:
+        radial-gradient(circle at top right,rgba(159,232,112,.09),transparent 40%),
+        linear-gradient(160deg,#131f18,#101a15);
+      border-color:rgba(159,232,112,.2)
+    }
+    .gate-card.gov:hover{border-color:rgba(159,232,112,.42)}
 
-.hero h1 em {
-  font-style: italic;
-  color: var(--gold);
-}
+    .gate-card.firms{
+      background:
+        radial-gradient(circle at top right,rgba(125,211,252,.10),transparent 40%),
+        linear-gradient(160deg,#0f1b2a,#0d1724);
+      border-color:rgba(125,211,252,.20)
+    }
+    .gate-card.firms:hover{border-color:rgba(125,211,252,.40)}
 
-.hero-definition {
-  display: flex;
-  align-items: flex-start;
-  gap: 20px;
-  max-width: 680px;
-  margin-bottom: 20px;
-  padding: 20px 24px;
-  border-left: 2px solid var(--gold);
-  background: rgba(200,169,110,0.04);
-  animation: fadeUp 0.7s 0.3s ease both;
-}
+    .gate-card.priv{
+      background:
+        radial-gradient(circle at top right,rgba(125,211,252,.07),transparent 40%),
+        linear-gradient(160deg,#151b28,#101827);
+      border-color:rgba(255,255,255,.12)
+    }
+    .gate-card.priv:hover{border-color:rgba(255,255,255,.24)}
 
-.hero-definition p {
-  font-family: var(--sans);
-  font-size: 17px;
-  font-weight: 300;
-  line-height: 1.65;
-  color: var(--text);
-}
+    .gc-sector{
+      font-family:var(--mono);
+      font-size:10px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      margin-bottom:12px
+    }
+    .gate-card.gov .gc-sector{color:var(--green)}
+    .gate-card.firms .gc-sector{color:var(--blue)}
+    .gate-card.priv .gc-sector{color:#d8e3f5}
 
-.hero-definition p strong {
-  font-weight: 500;
-  color: var(--text);
-}
+    .gc-title{
+      font-family:var(--serif);
+      font-size:clamp(18px,1.8vw,23px);
+      line-height:1.2;
+      margin-bottom:10px
+    }
+    .gate-card.gov .gc-title{color:#f0ffe8}
+    .gate-card.firms .gc-title{color:#eaf5ff}
+    .gate-card.priv .gc-title{color:#f3f8ff}
 
-.hero-constraint {
-  font-family: var(--mono);
-  font-size: 12px;
-  color: var(--text-dim);
-  letter-spacing: 1px;
-  margin-bottom: 36px;
-  animation: fadeUp 0.7s 0.35s ease both;
-}
+    .gc-desc{
+      font-size:13px;
+      color:rgba(255,255,255,.45);
+      line-height:1.7;
+      margin-bottom:16px;
+      flex:1
+    }
+    .gc-cta{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-family:var(--mono);
+      font-size:11px;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+      margin-top:auto
+    }
+    .gate-card.gov .gc-cta{color:var(--green)}
+    .gate-card.firms .gc-cta{color:var(--blue)}
+    .gate-card.priv .gc-cta{color:#d8e3f5}
+    .gate-card:hover .arr{transform:translateX(3px)}
 
-.hero-constraint span {
-  color: var(--green);
-  margin-right: 6px;
-}
+    .rfp-section{
+      background:linear-gradient(180deg,rgba(200,146,42,.06),rgba(255,255,255,.01));
+      border-top:1px solid rgba(200,146,42,.2);
+      border-bottom:1px solid rgba(200,146,42,.2)
+    }
+    .rfp-inner{
+      max-width:1040px;
+      margin:0 auto;
+      padding:clamp(48px,6vw,72px) clamp(20px,6vw,80px);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:32px;
+      flex-wrap:wrap
+    }
+    .rfp-label{
+      font-family:var(--mono);
+      font-size:10px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      color:rgba(200,146,42,.8);
+      margin-bottom:10px
+    }
+    .rfp-title{
+      font-family:var(--serif);
+      font-size:clamp(18px,2.2vw,26px);
+      color:#fff;
+      line-height:1.25;
+      margin-bottom:8px;
+      max-width:520px
+    }
+    .rfp-sub{
+      font-family:var(--mono);
+      font-size:11px;
+      color:var(--sub);
+      letter-spacing:.04em
+    }
+    .rfp-btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:13px 26px;
+      border-radius:10px;
+      border:1px solid rgba(200,146,42,.4);
+      background:rgba(200,146,42,.1);
+      color:#f5e6c8;
+      text-decoration:none;
+      font-family:var(--mono);
+      font-size:12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      white-space:nowrap;
+      transition:all .22s;
+      flex-shrink:0
+    }
+    .rfp-btn:hover{
+      border-color:rgba(200,146,42,.7);
+      background:rgba(200,146,42,.18);
+      transform:translateY(-2px)
+    }
+    .rfp-btn:hover .arr{transform:translateX(4px)}
 
-/* AUDIENCE TAGS */
-.audience-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 44px;
-  animation: fadeUp 0.7s 0.4s ease both;
-}
+    .footer{
+      text-align:center;
+      padding:24px 20px 32px;
+      font-family:var(--mono);
+      font-size:11px;
+      color:rgba(255,255,255,.2);
+      letter-spacing:.05em;
+      border-top:1px solid rgba(255,255,255,.05)
+    }
+    .footer a{
+      color:rgba(255,255,255,.32);
+      text-decoration:none;
+      transition:color .2s
+    }
+    .footer a:hover{color:#fff}
 
-.audience-tag {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-  padding: 6px 14px;
-  border: 1px solid var(--border);
-  color: var(--text-dim);
-  border-radius: 2px;
-}
+    @keyframes up{
+      from{opacity:0;transform:translateY(14px)}
+      to{opacity:1;transform:translateY(0)}
+    }
 
-/* CTA ROW */
-.cta-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  animation: fadeUp 0.7s 0.45s ease both;
-}
-
-.cta-primary {
-  font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: 1.8px;
-  text-transform: uppercase;
-  padding: 14px 28px;
-  background: var(--gold);
-  color: var(--bg);
-  border: none;
-  cursor: pointer;
-  text-decoration: none;
-  font-weight: 500;
-  transition: background 0.2s, transform 0.15s;
-  display: inline-block;
-}
-.cta-primary:hover {
-  background: #dfc07e;
-  transform: translateY(-1px);
-}
-
-.cta-secondary {
-  font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: 1.8px;
-  text-transform: uppercase;
-  padding: 13px 28px;
-  background: transparent;
-  color: var(--gold);
-  border: 1px solid var(--gold-dim);
-  cursor: pointer;
-  text-decoration: none;
-  transition: border-color 0.2s, color 0.2s;
-  display: inline-block;
-}
-.cta-secondary:hover {
-  border-color: var(--gold);
-  color: #dfc07e;
-}
-
-/* DIVIDER */
-.section-divider {
-  border: none;
-  border-top: 1px solid var(--border);
-  margin: 64px 0;
-}
-
-/* PROBLEM SECTION */
-.problem {
-  animation: fadeUp 0.7s 0.5s ease both;
-}
-
-.section-label {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--gold-dim);
-  margin-bottom: 24px;
-}
-
-.problem-statement {
-  font-family: var(--serif);
-  font-size: clamp(22px, 3vw, 32px);
-  font-weight: 700;
-  line-height: 1.35;
-  color: var(--text);
-  max-width: 700px;
-  margin-bottom: 20px;
-}
-
-.problem-body {
-  font-size: 16px;
-  font-weight: 300;
-  line-height: 1.75;
-  color: #a09890;
-  max-width: 620px;
-}
-
-.problem-quote {
-  margin-top: 36px;
-  padding: 24px 28px;
-  border: 1px solid var(--border);
-  max-width: 600px;
-  position: relative;
-}
-
-.problem-quote::before {
-  content: '';
-  position: absolute;
-  top: -1px; left: 0;
-  width: 40px; height: 2px;
-  background: var(--gold);
-}
-
-.problem-quote p {
-  font-family: var(--serif);
-  font-size: 18px;
-  font-style: italic;
-  color: var(--text);
-  line-height: 1.5;
-  margin-bottom: 12px;
-}
-
-.problem-quote cite {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 1.2px;
-  color: var(--text-dim);
-  font-style: normal;
-}
-
-/* ANIMATIONS */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(18px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes fadeDown {
-  from { opacity: 0; transform: translateY(-10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* MOBILE */
-@media (max-width: 600px) {
-  .page-wrap { padding: 0 20px; }
-  .hero { padding: 48px 0 40px; }
-  .nav-links { display: none; }
-  .cta-row { flex-direction: column; }
-  .cta-primary, .cta-secondary { text-align: center; }
-}
-</style>
+    @media(max-width:900px){
+      .gate-cards{grid-template-columns:1fr}
+    }
+    @media(max-width:480px){
+      section{padding:52px 18px}
+    }
+  </style>
 </head>
-
 <body>
-<div class="page-wrap">
-
-  <!-- NAV -->
-  <nav>
-    <div class="nav-brand">GFI Flow Intelligence</div>
-    <ul class="nav-links">
-      <li><a href="#">Framework</a></li>
-      <li><a href="#">Evidence</a></li>
-      <li><a href="#">Research</a></li>
-      <li><a href="#">Contact</a></li>
-    </ul>
-  </nav>
-
-  <!-- HERO -->
-  <section class="hero">
-
-    <div class="hero-eyebrow">
-      GL Framework <span>·</span> GFI Flow Intelligence <span>·</span> Boston
+  <div class="nav">
+    <a href="index.html" class="logo">GFI Flow Intelligence</a>
+    <div class="lang-grp">
+      <button class="lb-btn on" data-lang="en">EN</button>
+      <button class="lb-btn" data-lang="tw">繁</button>
+      <button class="lb-btn" data-lang="cn">简</button>
+      <button class="lb-btn" data-lang="es">ES</button>
     </div>
+  </div>
 
-    <h1>We measure whether systems<br><em>actually deliver</em> — after they go live.</h1>
+  <!-- EN -->
+  <div class="lb active page" data-lang="en">
+    <section class="hero">
+      <div class="inner">
+        <div class="hero-eyebrow">GL Framework · GFI Flow Intelligence · Boston</div>
+        <h1 class="hero-h1">Prove outcome improvement<br>in 90 days — or explain why.</h1>
+        <p class="hero-who">GFI Flow Intelligence is a Boston-based research firm that measures whether government and enterprise systems actually deliver results — after they go live.</p>
+        <p class="hero-sub">Independent outcome verification after implementation. External data only. No system access required. You receive a structured diagnostic report with a GFI score.</p>
+        <p class="hero-credibility">Referenced in U.S. Congressional inquiries (UI systems) and GAO high-risk programs.</p>
+        <a href="evidence.html" class="ev-btn">Evidence &amp; Context →</a>
+        <p class="hero-statement">The system was delivered.<br>The outcome was never required.</p>
+        <div class="hero-links">
+          <a href="OVaaS_DWP_OnePane.pdf" target="_blank" rel="noopener" class="pill-link">UK DWP · Outcome Verification <span class="arr">→</span></a>
+          <a href="GL_Delivery_Assurance_Review.pdf" target="_blank" rel="noopener" class="pill-link">Odoo ERP · Before Review <span class="arr">→</span></a>
+          <a href="GL_Delivery_Assurance_Review_After.pdf" target="_blank" rel="noopener" class="pill-link">Odoo ERP · After Review <span class="arr">→</span></a>
+        </div>
+      </div>
+    </section>
 
-    <div class="hero-definition">
-      <p>
-        GFI Flow Intelligence is a Boston-based research firm specializing in
-        <strong>independent outcome verification</strong> for government and enterprise systems.
-        After deployment, we measure processing time, approval speed, and real delivery outcomes —
-        and produce a structured diagnostic report with a <strong>GFI score</strong>.
-      </p>
-    </div>
+    <section class="gate-section">
+      <div class="inner">
+        <div class="section-eyebrow">Case Studies &amp; Analysis</div>
+        <div class="gate-cards">
+          <a href="government.html" class="gate-card gov">
+            <div class="gc-sector">Public Sector</div>
+            <div class="gc-title">For Government</div>
+            <div class="gc-desc">Procurement, accountability, and outcome verification for public systems after deployment.</div>
+            <div class="gc-cta">View page <span class="arr">→</span></div>
+          </a>
+          <a href="firms.html" class="gate-card firms">
+            <div class="gc-sector">Implementation Sector</div>
+            <div class="gc-title">For Digital Transformation Firms</div>
+            <div class="gc-desc">Strengthen proposals, prove delivery, and add an independent outcome verification layer.</div>
+            <div class="gc-cta">View page <span class="arr">→</span></div>
+          </a>
+          <a href="enterprise.html" class="gate-card priv">
+            <div class="gc-sector">Private Sector</div>
+            <div class="gc-title">For Enterprise</div>
+            <div class="gc-desc">Measure operational friction, verify post-implementation improvement, and justify investment.</div>
+            <div class="gc-cta">View page <span class="arr">→</span></div>
+          </a>
+        </div>
+      </div>
+    </section>
 
-    <p class="hero-constraint">
-      <span>✓</span> No system access &nbsp;·&nbsp;
-      <span>✓</span> External data only &nbsp;·&nbsp;
-      <span>✓</span> No integration required
-    </p>
+    <section class="rfp-section">
+      <div class="rfp-inner">
+        <div class="rfp-text">
+          <div class="rfp-label">For Procurement Officers &amp; Vendors</div>
+          <div class="rfp-title">Add a 90-Day Outcome Verification Requirement to Your RFP</div>
+          <div class="rfp-sub">One-page procurement insert · Open the PDF directly</div>
+        </div>
+        <a href="RFP_Insert_90Day_Outcome_Verification.pdf" target="_blank" rel="noopener" class="rfp-btn">Get Procurement Insert <span class="arr">→</span></a>
+      </div>
+    </section>
+  </div>
 
-    <div class="audience-row">
-      <div class="audience-tag">Government Agencies</div>
-      <div class="audience-tag">Public Sector Vendors</div>
-      <div class="audience-tag">NGOs</div>
-      <div class="audience-tag">Enterprise</div>
-      <div class="audience-tag">UN / Multilateral</div>
-    </div>
+  <!-- TW -->
+  <div class="lb page" data-lang="tw">
+    <section class="hero">
+      <div class="inner">
+        <div class="hero-eyebrow">GL Framework · GFI Flow Intelligence · 波士頓</div>
+        <h1 class="hero-h1">在90天內證明成果改善<br>——否則說明原因。</h1>
+        <p class="hero-who">GFI Flow Intelligence 是一家位於波士頓的研究機構，專門驗證政府與企業系統在上線後是否真正達成預期成果。</p>
+        <p class="hero-sub">上線後的獨立成果驗證。僅用外部數據。無需系統存取。驗證結果以結構化診斷報告呈現，附 GFI 評分。</p>
+        <p class="hero-credibility">已被美國國會質詢（UI系統）及 GAO 高風險計畫報告所引用。</p>
+        <a href="evidence.html" class="ev-btn">證據與背景 →</a>
+        <p class="hero-statement">系統已經交付。<br>結果從來不是要求。</p>
+        <div class="hero-links">
+          <a href="OVaaS_DWP_OnePane.pdf" target="_blank" rel="noopener" class="pill-link">UK DWP · 成果驗證 <span class="arr">→</span></a>
+          <a href="GL_Delivery_Assurance_Review.pdf" target="_blank" rel="noopener" class="pill-link">Odoo ERP · 審查前 <span class="arr">→</span></a>
+          <a href="GL_Delivery_Assurance_Review_After.pdf" target="_blank" rel="noopener" class="pill-link">Odoo ERP · 審查後 <span class="arr">→</span></a>
+        </div>
+      </div>
+    </section>
 
-    <div class="cta-row">
-      <a href="#" class="cta-primary">View Sample Report →</a>
-      <a href="#" class="cta-secondary">Request a Diagnostic →</a>
-    </div>
+    <section class="gate-section">
+      <div class="inner">
+        <div class="section-eyebrow">個案研究與分析</div>
+        <div class="gate-cards">
+          <a href="government.html" class="gate-card gov">
+            <div class="gc-sector">公部門</div>
+            <div class="gc-title">政府入口</div>
+            <div class="gc-desc">聚焦採購、問責與部署後成果驗證，提供公共系統的外部可見性。</div>
+            <div class="gc-cta">查看頁面 <span class="arr">→</span></div>
+          </a>
+          <a href="firms.html" class="gate-card firms">
+            <div class="gc-sector">實施產業</div>
+            <div class="gc-title">數位轉型公司入口</div>
+            <div class="gc-desc">補強提案、證明交付成果，並加入一層獨立成果驗證機制。</div>
+            <div class="gc-cta">查看頁面 <span class="arr">→</span></div>
+          </a>
+          <a href="enterprise.html" class="gate-card priv">
+            <div class="gc-sector">民間企業</div>
+            <div class="gc-title">企業入口</div>
+            <div class="gc-desc">衡量營運摩擦、驗證上線後改善，並支撐投資回報的討論。</div>
+            <div class="gc-cta">查看頁面 <span class="arr">→</span></div>
+          </a>
+        </div>
+      </div>
+    </section>
 
-  </section>
+    <section class="rfp-section">
+      <div class="rfp-inner">
+        <div class="rfp-text">
+          <div class="rfp-label">給採購官員與 Vendor</div>
+          <div class="rfp-title">在你的 RFP 中加入90天成果驗證要求</div>
+          <div class="rfp-sub">一頁採購插入條款 · 直接開啟 PDF</div>
+        </div>
+        <a href="RFP_Insert_90Day_Outcome_Verification.pdf" target="_blank" rel="noopener" class="rfp-btn">取得採購條款 <span class="arr">→</span></a>
+      </div>
+    </section>
+  </div>
 
-  <hr class="section-divider">
+  <!-- CN -->
+  <div class="lb page" data-lang="cn">
+    <section class="hero">
+      <div class="inner">
+        <div class="hero-eyebrow">GL Framework · GFI Flow Intelligence · 波士顿</div>
+        <h1 class="hero-h1">在90天内证明成果改善<br>——否则说明原因。</h1>
+        <p class="hero-who">GFI Flow Intelligence 是一家位于波士顿的研究机构，专门验证政府与企业系统在上线后是否真正达成预期成果。</p>
+        <p class="hero-sub">上线后的独立成果验证。仅用外部数据。无需系统访问。验证结果以结构化诊断报告呈现，附 GFI 评分。</p>
+        <p class="hero-credibility">已被美国国会质询（UI系统）及 GAO 高风险项目报告所引用。</p>
+        <a href="evidence.html" class="ev-btn">证据与背景 →</a>
+        <p class="hero-statement">系统已经交付。<br>结果从来不是要求。</p>
+        <div class="hero-links">
+          <a href="OVaaS_DWP_OnePane.pdf" target="_blank" rel="noopener" class="pill-link">UK DWP · 成果验证 <span class="arr">→</span></a>
+          <a href="GL_Delivery_Assurance_Review.pdf" target="_blank" rel="noopener" class="pill-link">Odoo ERP · 审查前 <span class="arr">→</span></a>
+          <a href="GL_Delivery_Assurance_Review_After.pdf" target="_blank" rel="noopener" class="pill-link">Odoo ERP · 审查后 <span class="arr">→</span></a>
+        </div>
+      </div>
+    </section>
 
-  <!-- PROBLEM -->
-  <section class="problem">
-    <div class="section-label">The Problem</div>
+    <section class="gate-section">
+      <div class="inner">
+        <div class="section-eyebrow">案例研究与分析</div>
+        <div class="gate-cards">
+          <a href="government.html" class="gate-card gov">
+            <div class="gc-sector">公共部门</div>
+            <div class="gc-title">政府入口</div>
+            <div class="gc-desc">聚焦采购、问责与部署后成果验证，为公共系统提供外部可见性。</div>
+            <div class="gc-cta">查看页面 <span class="arr">→</span></div>
+          </a>
+          <a href="firms.html" class="gate-card firms">
+            <div class="gc-sector">实施产业</div>
+            <div class="gc-title">数字转型公司入口</div>
+            <div class="gc-desc">补强提案、证明交付成果，并加入一层独立成果验证机制。</div>
+            <div class="gc-cta">查看页面 <span class="arr">→</span></div>
+          </a>
+          <a href="enterprise.html" class="gate-card priv">
+            <div class="gc-sector">民间企业</div>
+            <div class="gc-title">企业入口</div>
+            <div class="gc-desc">衡量运营摩擦、验证上线后改善，并支撑投资回报的讨论。</div>
+            <div class="gc-cta">查看页面 <span class="arr">→</span></div>
+          </a>
+        </div>
+      </div>
+    </section>
 
-    <h2 class="problem-statement">
-      Most systems are implemented.<br>Very few are verified.
-    </h2>
+    <section class="rfp-section">
+      <div class="rfp-inner">
+        <div class="rfp-text">
+          <div class="rfp-label">给采购官员与 Vendor</div>
+          <div class="rfp-title">在你的 RFP 中加入90天成果验证要求</div>
+          <div class="rfp-sub">一页采购插入条款 · 直接打开 PDF</div>
+        </div>
+        <a href="RFP_Insert_90Day_Outcome_Verification.pdf" target="_blank" rel="noopener" class="rfp-btn">获取采购条款 <span class="arr">→</span></a>
+      </div>
+    </section>
+  </div>
 
-    <p class="problem-body">
-      Digital transformation projects are accepted based on system delivery —
-      but rarely verified based on real-world outcomes. Procurement closes
-      when the system goes live. Whether it works is never formally required.
-    </p>
+  <!-- ES -->
+  <div class="lb page" data-lang="es">
+    <section class="hero">
+      <div class="inner">
+        <div class="hero-eyebrow">GL Framework · GFI Flow Intelligence · Boston</div>
+        <h1 class="hero-h1">Prueba la mejora de resultados<br>en 90 días — o explica por qué.</h1>
+        <p class="hero-who">GFI Flow Intelligence es una firma de investigación con sede en Boston que mide si los sistemas de gobierno y empresa realmente entregan resultados — después de entrar en operación.</p>
+        <p class="hero-sub">Verificación independiente de resultados después de la implementación. Solo datos externos. Sin acceso a sistemas. El resultado es un informe diagnóstico estructurado con puntuación GFI.</p>
+        <p class="hero-credibility">Referenciado en investigaciones del Congreso de EE.UU. (sistemas UI) y programas de alto riesgo de la GAO.</p>
+        <a href="evidence.html" class="ev-btn">Evidencia &amp; Contexto →</a>
+        <p class="hero-statement">El sistema fue entregado.<br>El resultado nunca fue requerido.</p>
+        <div class="hero-links">
+          <a href="OVaaS_DWP_OnePane.pdf" target="_blank" rel="noopener" class="pill-link">UK DWP · Verificación de resultados <span class="arr">→</span></a>
+          <a href="GL_Delivery_Assurance_Review.pdf" target="_blank" rel="noopener" class="pill-link">Odoo ERP · Revisión inicial <span class="arr">→</span></a>
+          <a href="GL_Delivery_Assurance_Review_After.pdf" target="_blank" rel="noopener" class="pill-link">Odoo ERP · Revisión posterior <span class="arr">→</span></a>
+        </div>
+      </div>
+    </section>
 
-    <div class="problem-quote">
-      <p>"The system was delivered.<br>The outcome was never required."</p>
-      <cite>GL Framework · GFI Flow Intelligence</cite>
-    </div>
-  </section>
+    <section class="gate-section">
+      <div class="inner">
+        <div class="section-eyebrow">Casos de Estudio y Análisis</div>
+        <div class="gate-cards">
+          <a href="government.html" class="gate-card gov">
+            <div class="gc-sector">Sector Público</div>
+            <div class="gc-title">Para Gobierno</div>
+            <div class="gc-desc">Contratación, rendición de cuentas y verificación de resultados para sistemas públicos después del despliegue.</div>
+            <div class="gc-cta">Ver página <span class="arr">→</span></div>
+          </a>
+          <a href="firms.html" class="gate-card firms">
+            <div class="gc-sector">Sector de Implementación</div>
+            <div class="gc-title">Para Firmas de Transformación Digital</div>
+            <div class="gc-desc">Fortalezca propuestas, pruebe la entrega y añada una capa independiente de verificación de resultados.</div>
+            <div class="gc-cta">Ver página <span class="arr">→</span></div>
+          </a>
+          <a href="enterprise.html" class="gate-card priv">
+            <div class="gc-sector">Sector Privado</div>
+            <div class="gc-title">Para Empresa</div>
+            <div class="gc-desc">Mida fricción operativa, verifique mejora post-implementación y justifique inversión.</div>
+            <div class="gc-cta">Ver página <span class="arr">→</span></div>
+          </a>
+        </div>
+      </div>
+    </section>
 
-</div><!-- /page-wrap -->
+    <section class="rfp-section">
+      <div class="rfp-inner">
+        <div class="rfp-text">
+          <div class="rfp-label">Para Oficiales de Contratación y Vendors</div>
+          <div class="rfp-title">Añade un Requisito de Verificación de 90 Días a tu RFP</div>
+          <div class="rfp-sub">Inserto de contratación de una página · Abrir PDF directamente</div>
+        </div>
+        <a href="RFP_Insert_90Day_Outcome_Verification.pdf" target="_blank" rel="noopener" class="rfp-btn">Obtener Inserto de Contratación <span class="arr">→</span></a>
+      </div>
+    </section>
+  </div>
+
+  <div class="footer">
+    © 2026 GFI Flow Intelligence · Boston ·
+    <a href="about.html">About</a> ·
+    <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6178024" target="_blank" rel="noopener">SSRN</a> ·
+    <a href="mailto:ping@gfiintel.com">ping@gfiintel.com</a>
+  </div>
+
+  <script>
+    const btns = document.querySelectorAll('.lb-btn');
+    const blocks = document.querySelectorAll('.lb');
+
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.dataset.lang;
+        btns.forEach(b => b.classList.remove('on'));
+        blocks.forEach(b => b.classList.remove('active'));
+        btn.classList.add('on');
+        document.querySelector(`.lb[data-lang="${lang}"]`).classList.add('active');
+      });
+    });
+  </script>
 </body>
 </html>
