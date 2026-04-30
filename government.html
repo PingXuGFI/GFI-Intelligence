@@ -5,932 +5,152 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Government | GFI Flow Intelligence</title>
   <meta name="description" content="GL Framework for public sector delivery diagnostics. Independent outcome verification for government digital transformation.">
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
-
   <style>
-    :root{
-      --bg:#0b1220;
-      --bg2:#111827;
-      --border:rgba(255,255,255,.10);
-      --text:#f8fbff;
-      --muted:#c7d2e3;
-      --sub:#9fb0c8;
-      --green:#9FE870;
-      --blue:#7DD3FC;
-      --gold:#c8922a;
-      --serif:'DM Serif Display',Georgia,serif;
-      --mono:'DM Mono',monospace;
-      --sans:'DM Sans',system-ui,sans-serif;
-    }
+    :root{--bg:#0b1220;--bg2:#111827;--border:rgba(255,255,255,.10);--text:#f8fbff;--muted:#c7d2e3;--sub:#9fb0c8;--green:#9FE870;--blue:#7DD3FC;--gold:#c8922a;--serif:'DM Serif Display',Georgia,serif;--mono:'DM Mono',monospace;--sans:'DM Sans',system-ui,sans-serif;}
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-    body{
-      background:
-        radial-gradient(circle at 18% 10%,rgba(159,232,112,.08),transparent 26%),
-        radial-gradient(circle at 85% 80%,rgba(56,189,248,.08),transparent 28%),
-        linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);
-      color:var(--text);
-      font-family:var(--sans);
-      font-size:15px;
-      line-height:1.75;
-      overflow-x:hidden;
-      min-height:100vh;
-    }
-    .bg-grid{
-      position:fixed;
-      inset:0;
-      background-image:
-        linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
-      background-size:56px 56px;
-      mask-image:radial-gradient(ellipse 85% 72% at 50% 42%,black 18%,transparent 82%);
-      pointer-events:none;
-      z-index:0;
-    }
-    .topbar{
-      position:fixed;
-      top:0;left:0;right:0;
-      z-index:100;
-      height:62px;
-      padding:0 clamp(18px,5vw,52px);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      background:rgba(11,18,32,.82);
-      backdrop-filter:blur(14px);
-      border-bottom:1px solid rgba(255,255,255,.08);
-    }
-    .logo{
-      color:#fff;
-      text-decoration:none;
-      font-family:var(--mono);
-      font-size:14px;
-      letter-spacing:.16em;
-      text-transform:uppercase;
-    }
+    body{background:radial-gradient(circle at 18% 10%,rgba(159,232,112,.08),transparent 26%),radial-gradient(circle at 85% 80%,rgba(56,189,248,.08),transparent 28%),linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.75;overflow-x:hidden;min-height:100vh;}
+    .bg-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse 85% 72% at 50% 42%,black 18%,transparent 82%);pointer-events:none;z-index:0;}
+    .topbar{position:fixed;top:0;left:0;right:0;z-index:100;height:62px;padding:0 clamp(18px,5vw,52px);display:flex;align-items:center;justify-content:space-between;background:rgba(11,18,32,.82);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.08);}
+    .logo{color:#fff;text-decoration:none;font-family:var(--mono);font-size:14px;letter-spacing:.16em;text-transform:uppercase;}
     .nav-right{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
     .mini-nav{display:flex;gap:14px;flex-wrap:wrap}
-    .mini-nav a{
-      color:var(--sub);
-      text-decoration:none;
-      font-family:var(--mono);
-      font-size:11px;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-      transition:color .2s ease;
-    }
+    .mini-nav a{color:var(--sub);text-decoration:none;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;transition:color .2s ease;}
     .mini-nav a:hover,.mini-nav a.active{color:#fff}
     .lang-grp{display:flex;gap:6px;align-items:center}
-    .lb-btn{
-      font-family:var(--mono);
-      font-size:11px;
-      letter-spacing:.08em;
-      padding:6px 11px;
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:6px;
-      background:none;
-      color:var(--sub);
-      cursor:pointer;
-      transition:all .2s ease;
-    }
-    .lb-btn:hover{
-      color:var(--text);
-      border-color:rgba(255,255,255,.20);
-      background:rgba(255,255,255,.03);
-    }
-    .lb-btn.on{
-      color:var(--green);
-      border-color:rgba(159,232,112,.35);
-      background:rgba(159,232,112,.08);
-    }
+    .lb-btn{font-family:var(--mono);font-size:11px;letter-spacing:.08em;padding:6px 11px;border:1px solid rgba(255,255,255,.10);border-radius:6px;background:none;color:var(--sub);cursor:pointer;transition:all .2s ease;}
+    .lb-btn:hover{color:var(--text);border-color:rgba(255,255,255,.20);background:rgba(255,255,255,.03);}
+    .lb-btn.on{color:var(--green);border-color:rgba(159,232,112,.35);background:rgba(159,232,112,.08);}
     .lb{display:none;position:relative;z-index:1}
     .lb.active{display:block}
-    main{
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:flex-start;
-      padding:96px clamp(20px,5vw,60px) 64px;
-    }
-    .wrap{
-      width:100%;
-      max-width:1080px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-    }
-    .eyebrow{
-      font-family:var(--mono);
-      font-size:11px;
-      letter-spacing:.22em;
-      text-transform:uppercase;
-      color:#AFC3DB;
-      text-align:center;
-      margin-bottom:18px;
-      opacity:0;
-      animation:up .55s .05s forwards;
-    }
-    .title{
-      font-family:var(--serif);
-      font-size:clamp(24px,2.8vw,40px);
-      line-height:1.18;
-      letter-spacing:-.02em;
-      text-align:center;
-      max-width:760px;
-      margin-bottom:14px;
-      color:#FFFFFF;
-      opacity:0;
-      animation:up .55s .16s forwards;
-    }
-    .definition{
-      max-width:700px;
-      margin:0 auto 10px;
-      text-align:center;
-      font-size:16px;
-      line-height:1.7;
-      color:#C8D8EC;
-      opacity:0;
-      animation:up .55s .22s forwards;
-    }
-    .subline{
-      max-width:760px;
-      margin:0 auto 26px;
-      text-align:center;
-      font-family:var(--mono);
-      font-size:12px;
-      letter-spacing:.06em;
-      color:#7a90aa;
-      opacity:0;
-      animation:up .55s .28s forwards;
-    }
-    .hero-actions{
-      width:100%;
-      max-width:760px;
-      display:flex;
-      flex-wrap:wrap;
-      justify-content:center;
-      gap:12px;
-      margin-bottom:26px;
-      opacity:0;
-      animation:up .58s .34s forwards;
-    }
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      padding:11px 18px;
-      border-radius:10px;
-      border:1px solid rgba(255,255,255,.12);
-      background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));
-      color:#F5FFE9;
-      text-decoration:none;
-      font-family:var(--mono);
-      font-size:11px;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-      transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;
-    }
-    .btn:hover{
-      transform:translateY(-2px);
-      border-color:rgba(159,232,112,.30);
-      box-shadow:0 10px 24px rgba(0,0,0,.22);
-    }
-    .btn.primary{
-      border:1px solid rgba(159,232,112,.28);
-      background:linear-gradient(180deg,rgba(159,232,112,.14),rgba(159,232,112,.07));
-      color:#EDFDE0;
-    }
-    .btn.secondary{
-      border:1px solid rgba(125,211,252,.24);
-      background:linear-gradient(180deg,rgba(125,211,252,.10),rgba(125,211,252,.04));
-      color:#EAF7FF;
-    }
-    .btn.gold{
-      border:1px solid rgba(200,146,42,.38);
-      background:linear-gradient(180deg,rgba(200,146,42,.16),rgba(200,146,42,.06));
-      color:#f7e9c8;
-    }
+    main{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:96px clamp(20px,5vw,60px) 64px;}
+    .wrap{width:100%;max-width:1080px;display:flex;flex-direction:column;align-items:center;}
+    .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#AFC3DB;text-align:center;margin-bottom:18px;opacity:0;animation:up .55s .05s forwards;}
+    .title{font-family:var(--serif);font-size:clamp(24px,2.8vw,40px);line-height:1.18;letter-spacing:-.02em;text-align:center;max-width:760px;margin-bottom:14px;color:#FFFFFF;opacity:0;animation:up .55s .16s forwards;}
+    .definition{max-width:700px;margin:0 auto 10px;text-align:center;font-size:16px;line-height:1.7;color:#C8D8EC;opacity:0;animation:up .55s .22s forwards;}
+    .subline{max-width:760px;margin:0 auto 26px;text-align:center;font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:#7a90aa;opacity:0;animation:up .55s .28s forwards;}
+    .hero-actions{width:100%;max-width:760px;display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-bottom:26px;opacity:0;animation:up .58s .34s forwards;}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:11px 18px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));color:#F5FFE9;text-decoration:none;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;}
+    .btn:hover{transform:translateY(-2px);border-color:rgba(159,232,112,.30);box-shadow:0 10px 24px rgba(0,0,0,.22);}
+    .btn.primary{border:1px solid rgba(159,232,112,.28);background:linear-gradient(180deg,rgba(159,232,112,.14),rgba(159,232,112,.07));color:#EDFDE0;}
+    .btn.secondary{border:1px solid rgba(125,211,252,.24);background:linear-gradient(180deg,rgba(125,211,252,.10),rgba(125,211,252,.04));color:#EAF7FF;}
+    .btn.gold{border:1px solid rgba(200,146,42,.38);background:linear-gradient(180deg,rgba(200,146,42,.16),rgba(200,146,42,.06));color:#f7e9c8;}
     .arrow{font-size:13px;transition:transform .22s ease;display:inline-block}
     .btn:hover .arrow{transform:translateX(4px)}
-
-    .video-block,.section-block,.pub-list,.final-box,.grid,.research-cards,.brief-box,.procurement-box,.diag-section,.cases-section,.legal-box{
-      width:100%;
-    }
-
-    .video-block{
-      max-width:900px;
-      margin:0 auto 30px;
-      opacity:0;
-      animation:up .58s .38s forwards;
-    }
-    .section-label,.diag-label,.cases-label{
-      font-family:var(--mono);
-      font-size:10px;
-      letter-spacing:.22em;
-      text-transform:uppercase;
-      color:#7a90aa;
-      margin-bottom:12px;
-      display:flex;
-      align-items:center;
-      gap:12px;
-    }
-    .section-label::after,.diag-label::after,.cases-label::after{
-      content:'';
-      flex:1;
-      height:1px;
-      background:rgba(255,255,255,.08);
-    }
-    .video-wrap{
-      position:relative;
-      width:100%;
-      padding-top:56.25%;
-      border-radius:18px;
-      overflow:hidden;
-      border:1px solid rgba(255,255,255,.10);
-      box-shadow:0 10px 28px rgba(0,0,0,.16);
-      background:rgba(255,255,255,.03);
-    }
-    .video-wrap iframe{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-    }
-    .video-note{
-      margin-top:10px;
-      font-size:14px;
-      color:#9fb0c8;
-      line-height:1.7;
-    }
-
-    .brief-box{
-      max-width:860px;
-      margin:0 auto 24px;
-      padding:36px 40px 32px;
-      border:1px solid rgba(159,232,112,.25);
-      border-radius:18px;
-      background:linear-gradient(180deg,rgba(159,232,112,.06),rgba(255,255,255,.018));
-      box-shadow:0 8px 24px rgba(0,0,0,.14);
-      text-align:center;
-      opacity:0;
-      animation:up .58s .42s forwards;
-    }
-    .brief-kicker{
-      font-family:var(--mono);
-      font-size:10px;
-      letter-spacing:.22em;
-      text-transform:uppercase;
-      color:#9FE870;
-      margin-bottom:12px;
-    }
-    .brief-title{
-      font-family:var(--serif);
-      font-size:clamp(20px,2vw,26px);
-      color:#fff;
-      margin-bottom:10px;
-      line-height:1.2;
-    }
-    .brief-desc{
-      font-size:15px;
-      color:#C8D8EC;
-      line-height:1.8;
-      margin-bottom:8px;
-      max-width:620px;
-      margin-left:auto;
-      margin-right:auto;
-    }
-    .brief-note{
-      font-family:var(--mono);
-      font-size:11px;
-      color:#7a90aa;
-      margin-bottom:28px;
-      line-height:1.6;
-    }
-    .brief-form{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      max-width:520px;
-      margin:0 auto 24px;
-    }
-    .brief-form input{
-      width:100%;
-      padding:12px 16px;
-      border-radius:10px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.04);
-      color:#fff;
-      font-family:var(--sans);
-      font-size:14px;
-      outline:none;
-      transition:border-color .2s ease;
-    }
+    .video-block,.section-block,.pub-list,.final-box,.grid,.research-cards,.brief-box,.procurement-box,.diag-section,.cases-section,.legal-box{width:100%;}
+    .video-block{max-width:900px;margin:0 auto 30px;opacity:0;animation:up .58s .38s forwards;}
+    .section-label,.diag-label,.cases-label{font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#7a90aa;margin-bottom:12px;display:flex;align-items:center;gap:12px;}
+    .section-label::after,.diag-label::after,.cases-label::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.08);}
+    .video-wrap{position:relative;width:100%;padding-top:56.25%;border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.10);box-shadow:0 10px 28px rgba(0,0,0,.16);background:rgba(255,255,255,.03);}
+    .video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;}
+    .video-note{margin-top:10px;font-size:14px;color:#9fb0c8;line-height:1.7;}
+    .brief-box{max-width:860px;margin:0 auto 24px;padding:36px 40px 32px;border:1px solid rgba(159,232,112,.25);border-radius:18px;background:linear-gradient(180deg,rgba(159,232,112,.06),rgba(255,255,255,.018));box-shadow:0 8px 24px rgba(0,0,0,.14);text-align:center;opacity:0;animation:up .58s .42s forwards;}
+    .brief-kicker{font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#9FE870;margin-bottom:12px;}
+    .brief-title{font-family:var(--serif);font-size:clamp(20px,2vw,26px);color:#fff;margin-bottom:10px;line-height:1.2;}
+    .brief-desc{font-size:15px;color:#C8D8EC;line-height:1.8;margin-bottom:8px;max-width:620px;margin-left:auto;margin-right:auto;}
+    .brief-note{font-family:var(--mono);font-size:11px;color:#7a90aa;margin-bottom:28px;line-height:1.6;}
+    .brief-form{display:flex;flex-direction:column;gap:12px;max-width:520px;margin:0 auto 24px;}
+    .brief-form input{width:100%;padding:12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#fff;font-family:var(--sans);font-size:14px;outline:none;transition:border-color .2s ease;}
     .brief-form input::placeholder{color:#7a90aa}
-    .brief-form input:focus{
-      border-color:rgba(159,232,112,.4);
-      background:rgba(159,232,112,.04);
-    }
-    .brief-submit{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      padding:13px 28px;
-      border-radius:10px;
-      border:1px solid rgba(159,232,112,.35);
-      background:linear-gradient(180deg,rgba(159,232,112,.18),rgba(159,232,112,.09));
-      color:#EDFDE0;
-      font-family:var(--mono);
-      font-size:12px;
-      letter-spacing:.10em;
-      text-transform:uppercase;
-      cursor:pointer;
-      transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;
-      width:100%;
-    }
-    .brief-submit:hover{
-      transform:translateY(-2px);
-      border-color:rgba(159,232,112,.55);
-      box-shadow:0 8px 22px rgba(0,0,0,.18);
-    }
-    .brief-fine{
-      font-family:var(--mono);
-      font-size:10px;
-      color:#6a7e96;
-      margin-top:6px;
-      line-height:1.6;
-    }
-    .brief-confirm{
-      display:none;
-      text-align:center;
-      padding:16px;
-      border-radius:10px;
-      background:rgba(159,232,112,.08);
-      border:1px solid rgba(159,232,112,.2);
-    }
-    .brief-confirm p{
-      color:#9FE870;
-      font-family:var(--mono);
-      font-size:13px;
-      line-height:1.7;
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns:1fr 1fr 1fr;
-      gap:18px;
-      margin-bottom:34px;
-      opacity:0;
-      animation:up .6s .52s forwards;
-    }
-    .card{
-      padding:22px 20px 18px;
-      border-radius:18px;
-      border:1px solid rgba(255,255,255,.08);
-      background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.018));
-      box-shadow:0 10px 28px rgba(0,0,0,.16);
-    }
-    .card-num{
-      font-family:var(--serif);
-      font-size:30px;
-      line-height:1;
-      color:var(--green);
-      margin-bottom:10px;
-    }
-    .card-title{
-      font-family:var(--serif);
-      font-size:21px;
-      line-height:1.2;
-      margin-bottom:10px;
-      color:#F3F8FF;
-    }
-    .card-text{
-      font-size:14px;
-      color:#C6D5E5;
-      line-height:1.75;
-    }
-
-    .section-block{
-      max-width:960px;
-      margin:0 auto 34px;
-      opacity:0;
-      animation:up .6s .56s forwards;
-    }
-    .section-head,.diag-head,.cases-head{
-      font-family:var(--serif);
-      font-size:30px;
-      line-height:1.2;
-      margin-bottom:10px;
-      color:#fff;
-    }
-    .section-text,.diag-sub,.cases-sub{
-      font-size:15px;
-      color:#C8D8EC;
-      line-height:1.8;
-      max-width:860px;
-    }
-
-    .legal-box{
-      max-width:960px;
-      margin:0 auto 34px;
-      padding:34px 34px 30px;
-      border:1px solid rgba(125,211,252,.24);
-      border-radius:18px;
-      background:linear-gradient(180deg,rgba(125,211,252,.07),rgba(255,255,255,.018));
-      box-shadow:0 10px 28px rgba(0,0,0,.16);
-      opacity:0;
-      animation:up .6s .58s forwards;
-    }
-    .legal-kicker{
-      font-family:var(--mono);
-      font-size:10px;
-      letter-spacing:.22em;
-      text-transform:uppercase;
-      color:var(--blue);
-      margin-bottom:12px;
-    }
-    .legal-head{
-      font-family:var(--serif);
-      font-size:30px;
-      line-height:1.2;
-      color:#fff;
-      margin-bottom:12px;
-    }
-    .legal-text{
-      font-size:15px;
-      color:#D4E2F1;
-      line-height:1.9;
-      margin-bottom:16px;
-    }
-    .legal-quote{
-      border-left:3px solid rgba(125,211,252,.65);
-      background:rgba(255,255,255,.03);
-      border-radius:0 10px 10px 0;
-      padding:18px 20px;
-      color:#E8F2FD;
-      font-size:14px;
-      line-height:1.8;
-    }
-
-    .pub-list{
-      display:grid;
-      gap:14px;
-      opacity:0;
-      animation:up .6s .60s forwards;
-    }
-    .pub{
-      padding:18px 20px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.08);
-      background:rgba(255,255,255,.025);
-    }
-    .pub-top{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-bottom:8px;
-    }
-    .pub-date{
-      font-family:var(--mono);
-      font-size:10px;
-      letter-spacing:.12em;
-      color:#7a90aa;
-      text-transform:uppercase;
-    }
-    .tag{
-      font-family:var(--mono);
-      font-size:9px;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      color:#9FE870;
-      background:rgba(159,232,112,.1);
-      border:1px solid rgba(159,232,112,.2);
-      padding:2px 8px;
-      border-radius:4px;
-    }
-    .pub-title{
-      font-size:17px;
-      color:#EAF2FB;
-      line-height:1.45;
-      margin-bottom:6px;
-      font-weight:500;
-    }
-    .pub-summary{
-      font-size:14px;
-      color:#9fb0c8;
-      line-height:1.75;
-    }
-    .pub-link{
-      display:inline-flex;
-      margin-top:10px;
-      color:var(--green);
-      text-decoration:none;
-      font-family:var(--mono);
-      font-size:11px;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-    }
-
-    .research-cards{
-      display:grid;
-      grid-template-columns:1fr 1fr 1fr;
-      gap:14px;
-      margin-top:20px;
-      max-width:1060px;
-      opacity:0;
-      animation:up .6s .62s forwards;
-    }
-    .research-card{
-      padding:22px 20px 18px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.08);
-      background:rgba(255,255,255,.025);
-      text-decoration:none;
-      transition:border-color .2s,transform .2s;
-    }
-    .research-card:hover{
-      border-color:rgba(255,255,255,.18);
-      transform:translateY(-2px);
-    }
-    .rc-label{
-      font-family:var(--mono);
-      font-size:10px;
-      letter-spacing:.16em;
-      text-transform:uppercase;
-      color:var(--sub);
-      margin-bottom:10px;
-    }
-    .rc-title{
-      font-family:var(--serif);
-      font-size:16px;
-      color:#fff;
-      line-height:1.3;
-      margin-bottom:8px;
-    }
-    .rc-desc{
-      font-size:13px;
-      color:var(--sub);
-      line-height:1.65;
-      margin-bottom:10px;
-    }
-    .rc-cta{
-      font-family:var(--mono);
-      font-size:10px;
-      letter-spacing:.08em;
-      color:var(--green);
-    }
-
-    .procurement-box{
-      width:100%;
-      max-width:860px;
-      margin:34px auto 0;
-      padding:36px 40px 32px;
-      border:1px solid rgba(159,232,112,.3);
-      border-radius:18px;
-      background:linear-gradient(160deg,rgba(159,232,112,.06),rgba(255,255,255,.015));
-      opacity:0;
-      animation:up .62s .64s forwards;
-    }
-    .procurement-kicker{
-      font-family:var(--mono);
-      font-size:10px;
-      letter-spacing:.22em;
-      text-transform:uppercase;
-      color:rgba(159,232,112,.7);
-      margin-bottom:16px;
-    }
-    .procurement-title{
-      font-family:var(--serif);
-      font-size:clamp(20px,2.2vw,28px);
-      color:#fff;
-      line-height:1.2;
-      margin-bottom:16px;
-    }
-    .procurement-contract{
-      background:rgba(255,255,255,.03);
-      border:1px solid rgba(159,232,112,.15);
-      border-left:3px solid var(--green);
-      border-radius:0 10px 10px 0;
-      padding:20px 24px;
-      margin-bottom:20px;
-      font-style:italic;
-      font-size:15px;
-      color:#d7e4f2;
-      line-height:1.75;
-    }
-    .procurement-note{
-      font-family:var(--mono);
-      font-size:11px;
-      color:var(--sub);
-      line-height:1.7;
-      margin-bottom:20px;
-    }
-    .procurement-divider{
-      height:1px;
-      background:rgba(255,255,255,.07);
-      margin:24px 0;
-    }
-    .procurement-subtitle{
-      font-family:var(--serif);
-      font-size:20px;
-      color:#fff;
-      margin-bottom:10px;
-    }
-    .procurement-desc{
-      font-size:14px;
-      color:#c7d2e3;
-      line-height:1.75;
-      margin-bottom:16px;
-    }
-
-    .reg-block{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-top:20px;
-    }
-    .reg-item{
-      padding:10px 16px;
-      border-radius:8px;
-      border:1px solid rgba(159,232,112,.18);
-      background:rgba(159,232,112,.05);
-      min-width:120px;
-    }
-    .reg-label{
-      font-family:var(--mono);
-      font-size:9px;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color:#7a90aa;
-      margin-bottom:4px;
-    }
-    .reg-value{
-      font-family:var(--mono);
-      font-size:13px;
-      color:#9FE870;
-      letter-spacing:.04em;
-      font-weight:500;
-    }
-    .commbuys-badge{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:10px 18px;
-      border-radius:8px;
-      border:1px solid rgba(159,232,112,.25);
-      background:rgba(159,232,112,.06);
-      font-family:var(--mono);
-      font-size:11px;
-      color:var(--green);
-      letter-spacing:.08em;
-    }
-
-    .diag-section{
-      width:100%;
-      max-width:1060px;
-      margin:34px auto 0;
-      opacity:0;
-      animation:up .6s .63s forwards;
-    }
-    .diag-grid{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:16px;
-      margin-bottom:14px;
-    }
-    .diag-card{
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,.09);
-      background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.016));
-      overflow:hidden;
-      transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;
-    }
-    .diag-card:hover{
-      transform:translateY(-3px);
-      border-color:rgba(159,232,112,.22);
-      box-shadow:0 12px 32px rgba(0,0,0,.22);
-    }
-    .diag-card-header{
-      padding:16px 18px 12px;
-      border-bottom:1px solid rgba(255,255,255,.07);
-    }
-    .diag-flag{
-      font-family:var(--mono);
-      font-size:10px;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      color:#7a90aa;
-      margin-bottom:6px;
-    }
-    .diag-system{
-      font-size:15px;
-      font-weight:600;
-      color:#EAF2FB;
-      line-height:1.3;
-      margin-bottom:4px;
-    }
+    .brief-form input:focus{border-color:rgba(159,232,112,.4);background:rgba(159,232,112,.04);}
+    .brief-submit{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:13px 28px;border-radius:10px;border:1px solid rgba(159,232,112,.35);background:linear-gradient(180deg,rgba(159,232,112,.18),rgba(159,232,112,.09));color:#EDFDE0;font-family:var(--mono);font-size:12px;letter-spacing:.10em;text-transform:uppercase;cursor:pointer;transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;width:100%;}
+    .brief-submit:hover{transform:translateY(-2px);border-color:rgba(159,232,112,.55);box-shadow:0 8px 22px rgba(0,0,0,.18);}
+    .brief-fine{font-family:var(--mono);font-size:10px;color:#6a7e96;margin-top:6px;line-height:1.6;}
+    .brief-confirm{display:none;text-align:center;padding:16px;border-radius:10px;background:rgba(159,232,112,.08);border:1px solid rgba(159,232,112,.2);}
+    .brief-confirm p{color:#9FE870;font-family:var(--mono);font-size:13px;line-height:1.7;}
+    .grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-bottom:34px;opacity:0;animation:up .6s .52s forwards;}
+    .card{padding:22px 20px 18px;border-radius:18px;border:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.018));box-shadow:0 10px 28px rgba(0,0,0,.16);}
+    .card-num{font-family:var(--serif);font-size:30px;line-height:1;color:var(--green);margin-bottom:10px;}
+    .card-title{font-family:var(--serif);font-size:21px;line-height:1.2;margin-bottom:10px;color:#F3F8FF;}
+    .card-text{font-size:14px;color:#C6D5E5;line-height:1.75;}
+    .section-block{max-width:960px;margin:0 auto 34px;opacity:0;animation:up .6s .56s forwards;}
+    .section-head,.diag-head,.cases-head{font-family:var(--serif);font-size:30px;line-height:1.2;margin-bottom:10px;color:#fff;}
+    .section-text,.diag-sub,.cases-sub{font-size:15px;color:#C8D8EC;line-height:1.8;max-width:860px;}
+    .legal-box{max-width:960px;margin:0 auto 34px;padding:34px 34px 30px;border:1px solid rgba(125,211,252,.24);border-radius:18px;background:linear-gradient(180deg,rgba(125,211,252,.07),rgba(255,255,255,.018));box-shadow:0 10px 28px rgba(0,0,0,.16);opacity:0;animation:up .6s .58s forwards;}
+    .legal-kicker{font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--blue);margin-bottom:12px;}
+    .legal-head{font-family:var(--serif);font-size:30px;line-height:1.2;color:#fff;margin-bottom:12px;}
+    .legal-text{font-size:15px;color:#D4E2F1;line-height:1.9;margin-bottom:16px;}
+    .legal-quote{border-left:3px solid rgba(125,211,252,.65);background:rgba(255,255,255,.03);border-radius:0 10px 10px 0;padding:18px 20px;color:#E8F2FD;font-size:14px;line-height:1.8;}
+    .pub-list{display:grid;gap:14px;opacity:0;animation:up .6s .60s forwards;}
+    .pub{padding:18px 20px;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.025);}
+    .pub-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px;}
+    .pub-date{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:#7a90aa;text-transform:uppercase;}
+    .tag{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#9FE870;background:rgba(159,232,112,.1);border:1px solid rgba(159,232,112,.2);padding:2px 8px;border-radius:4px;}
+    .pub-title{font-size:17px;color:#EAF2FB;line-height:1.45;margin-bottom:6px;font-weight:500;}
+    .pub-summary{font-size:14px;color:#9fb0c8;line-height:1.75;}
+    .pub-link{display:inline-flex;margin-top:10px;color:var(--green);text-decoration:none;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;}
+    .research-cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:20px;max-width:1060px;opacity:0;animation:up .6s .62s forwards;}
+    .research-card{padding:22px 20px 18px;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.025);text-decoration:none;transition:border-color .2s,transform .2s;}
+    .research-card:hover{border-color:rgba(255,255,255,.18);transform:translateY(-2px);}
+    .rc-label{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--sub);margin-bottom:10px;}
+    .rc-title{font-family:var(--serif);font-size:16px;color:#fff;line-height:1.3;margin-bottom:8px;}
+    .rc-desc{font-size:13px;color:var(--sub);line-height:1.65;margin-bottom:10px;}
+    .rc-cta{font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--green);}
+    .procurement-box{width:100%;max-width:860px;margin:34px auto 0;padding:36px 40px 32px;border:1px solid rgba(159,232,112,.3);border-radius:18px;background:linear-gradient(160deg,rgba(159,232,112,.06),rgba(255,255,255,.015));opacity:0;animation:up .62s .64s forwards;}
+    .procurement-kicker{font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:rgba(159,232,112,.7);margin-bottom:16px;}
+    .procurement-title{font-family:var(--serif);font-size:clamp(20px,2.2vw,28px);color:#fff;line-height:1.2;margin-bottom:16px;}
+    .procurement-contract{background:rgba(255,255,255,.03);border:1px solid rgba(159,232,112,.15);border-left:3px solid var(--green);border-radius:0 10px 10px 0;padding:20px 24px;margin-bottom:20px;font-style:italic;font-size:15px;color:#d7e4f2;line-height:1.75;}
+    .procurement-note{font-family:var(--mono);font-size:11px;color:var(--sub);line-height:1.7;margin-bottom:20px;}
+    .procurement-divider{height:1px;background:rgba(255,255,255,.07);margin:24px 0;}
+    .procurement-subtitle{font-family:var(--serif);font-size:20px;color:#fff;margin-bottom:10px;}
+    .procurement-desc{font-size:14px;color:#c7d2e3;line-height:1.75;margin-bottom:16px;}
+    .reg-block{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px;}
+    .reg-item{padding:10px 16px;border-radius:8px;border:1px solid rgba(159,232,112,.18);background:rgba(159,232,112,.05);min-width:120px;}
+    .reg-label{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#7a90aa;margin-bottom:4px;}
+    .reg-value{font-family:var(--mono);font-size:13px;color:#9FE870;letter-spacing:.04em;font-weight:500;}
+    .commbuys-badge{display:inline-flex;align-items:center;gap:10px;padding:10px 18px;border-radius:8px;border:1px solid rgba(159,232,112,.25);background:rgba(159,232,112,.06);font-family:var(--mono);font-size:11px;color:var(--green);letter-spacing:.08em;}
+    .diag-section{width:100%;max-width:1060px;margin:34px auto 0;opacity:0;animation:up .6s .63s forwards;}
+    .diag-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:14px;}
+    .diag-card{border-radius:16px;border:1px solid rgba(255,255,255,.09);background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.016));overflow:hidden;transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;}
+    .diag-card:hover{transform:translateY(-3px);border-color:rgba(159,232,112,.22);box-shadow:0 12px 32px rgba(0,0,0,.22);}
+    .diag-card-header{padding:16px 18px 12px;border-bottom:1px solid rgba(255,255,255,.07);}
+    .diag-flag{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#7a90aa;margin-bottom:6px;}
+    .diag-system{font-size:15px;font-weight:600;color:#EAF2FB;line-height:1.3;margin-bottom:4px;}
     .diag-card-body{padding:14px 18px 16px}
-    .diag-score-row{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      margin-bottom:10px;
-    }
-    .diag-score-num{
-      font-family:var(--mono);
-      font-size:28px;
-      font-weight:500;
-      line-height:1;
-    }
+    .diag-score-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+    .diag-score-num{font-family:var(--mono);font-size:28px;font-weight:500;line-height:1;}
     .diag-score-fail{color:#f87171}
-    .diag-score-label{
-      font-family:var(--mono);
-      font-size:9px;
-      letter-spacing:.10em;
-      text-transform:uppercase;
-      padding:2px 7px;
-      border-radius:4px;
-      background:rgba(248,113,113,.09);
-      border:1px solid rgba(248,113,113,.22);
-      color:#f87171;
-    }
-    .diag-finding{
-      font-size:13px;
-      color:#C6D5E5;
-      line-height:1.7;
-      margin-bottom:12px;
-    }
-    .diag-formula{
-      font-family:var(--mono);
-      font-size:11px;
-      color:#7a90aa;
-      background:rgba(255,255,255,.03);
-      border:1px solid rgba(255,255,255,.06);
-      border-radius:6px;
-      padding:7px 10px;
-      margin-bottom:12px;
-      line-height:1.5;
-    }
-    .diag-dl{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      color:var(--green);
-      text-decoration:none;
-      font-family:var(--mono);
-      font-size:10px;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-      transition:opacity .2s;
-    }
+    .diag-score-label{font-family:var(--mono);font-size:9px;letter-spacing:.10em;text-transform:uppercase;padding:2px 7px;border-radius:4px;background:rgba(248,113,113,.09);border:1px solid rgba(248,113,113,.22);color:#f87171;}
+    .diag-finding{font-size:13px;color:#C6D5E5;line-height:1.7;margin-bottom:12px;}
+    .diag-formula{font-family:var(--mono);font-size:11px;color:#7a90aa;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:6px;padding:7px 10px;margin-bottom:12px;line-height:1.5;}
+    .diag-dl{display:inline-flex;align-items:center;gap:6px;color:var(--green);text-decoration:none;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;transition:opacity .2s;}
     .diag-dl:hover{opacity:.75}
-    .diag-note,.cases-note{
-      font-family:var(--mono);
-      font-size:10px;
-      color:#6a7e96;
-      margin-top:14px;
-      line-height:1.6;
-    }
-
-    .cases-section{
-      width:100%;
-      max-width:1060px;
-      margin:34px auto 0;
-      opacity:0;
-      animation:up .6s .64s forwards;
-    }
-    .tbl-wrap{
-      width:100%;
-      overflow-x:auto;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.08);
-    }
-    table.gl-table{
-      width:100%;
-      border-collapse:collapse;
-      font-size:13px;
-    }
+    .diag-note,.cases-note{font-family:var(--mono);font-size:10px;color:#6a7e96;margin-top:14px;line-height:1.6;}
+    .cases-section{width:100%;max-width:1060px;margin:34px auto 0;opacity:0;animation:up .6s .64s forwards;}
+    .tbl-wrap{width:100%;overflow-x:auto;border-radius:14px;border:1px solid rgba(255,255,255,.08);}
+    table.gl-table{width:100%;border-collapse:collapse;font-size:13px;}
     table.gl-table thead tr{background:rgba(255,255,255,.04)}
-    table.gl-table th{
-      font-family:var(--mono);
-      font-size:10px;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      color:#9fb0c8;
-      padding:12px 14px;
-      text-align:left;
-      border-bottom:1px solid rgba(255,255,255,.08);
-      white-space:nowrap;
-    }
-    table.gl-table td{
-      padding:11px 14px;
-      border-bottom:1px solid rgba(255,255,255,.05);
-      color:#C8D8EC;
-      vertical-align:middle;
-      line-height:1.5;
-    }
+    table.gl-table th{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#9fb0c8;padding:12px 14px;text-align:left;border-bottom:1px solid rgba(255,255,255,.08);white-space:nowrap;}
+    table.gl-table td{padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.05);color:#C8D8EC;vertical-align:middle;line-height:1.5;}
     table.gl-table tbody tr:last-child td{border-bottom:none}
     table.gl-table tbody tr:hover{background:rgba(255,255,255,.025)}
-    .gl-score{
-      font-family:var(--mono);
-      font-weight:500;
-      font-size:13px;
-    }
-    .gl-high{color:#9FE870}
-    .gl-mid{color:#7DD3FC}
-    .gl-low{color:#f87171}
-    .gl-badge{
-      display:inline-block;
-      font-family:var(--mono);
-      font-size:9px;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-      padding:2px 7px;
-      border-radius:4px;
-    }
+    .gl-score{font-family:var(--mono);font-weight:500;font-size:13px;}
+    .gl-high{color:#9FE870}.gl-mid{color:#7DD3FC}.gl-low{color:#f87171}
+    .gl-badge{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:4px;}
     .badge-excellent{background:rgba(159,232,112,.1);border:1px solid rgba(159,232,112,.25);color:#9FE870}
     .badge-exceptional{background:rgba(159,232,112,.18);border:1px solid rgba(159,232,112,.4);color:#c8f542}
     .badge-outstanding{background:rgba(125,211,252,.1);border:1px solid rgba(125,211,252,.25);color:#7DD3FC}
     .badge-good{background:rgba(125,211,252,.06);border:1px solid rgba(125,211,252,.15);color:#93c5fd}
     .badge-violence{background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.2);color:#f87171}
     .badge-dysfunction{background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.18);color:#fbbf24}
-
-    .final-box{
-      max-width:860px;
-      margin:34px auto 0;
-      padding:26px 32px 24px;
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:18px;
-      background:linear-gradient(180deg,rgba(159,232,112,.05),rgba(255,255,255,.016));
-      box-shadow:0 8px 24px rgba(0,0,0,.14);
-      text-align:center;
-      opacity:0;
-      animation:up .62s .66s forwards;
-    }
-    .final-title{
-      font-family:var(--serif);
-      font-size:28px;
-      line-height:1.2;
-      margin-bottom:10px;
-      color:#fff;
-    }
-    .final-text{
-      font-size:15px;
-      color:#C8D8EC;
-      line-height:1.8;
-      margin-bottom:18px;
-    }
-
-    .footer{
-      position:relative;
-      z-index:1;
-      text-align:center;
-      padding:28px 20px 36px;
-      color:#6a7e96;
-      font-size:11px;
-      font-family:var(--mono);
-      letter-spacing:.05em;
-    }
+    .final-box{max-width:860px;margin:34px auto 0;padding:26px 32px 24px;border:1px solid rgba(255,255,255,.10);border-radius:18px;background:linear-gradient(180deg,rgba(159,232,112,.05),rgba(255,255,255,.016));box-shadow:0 8px 24px rgba(0,0,0,.14);text-align:center;opacity:0;animation:up .62s .66s forwards;}
+    .final-title{font-family:var(--serif);font-size:28px;line-height:1.2;margin-bottom:10px;color:#fff;}
+    .final-text{font-size:15px;color:#C8D8EC;line-height:1.8;margin-bottom:18px;}
+    .footer{position:relative;z-index:1;text-align:center;padding:28px 20px 36px;color:#6a7e96;font-size:11px;font-family:var(--mono);letter-spacing:.05em;}
     .footer a{color:#8faabe;text-decoration:none}
     .footer a:hover{color:#fff}
-
-    @keyframes up{
-      from{opacity:0;transform:translateY(14px)}
-      to{opacity:1;transform:translateY(0)}
-    }
-
-    @media(max-width:1100px){
-      .diag-grid{grid-template-columns:1fr 1fr;}
-    }
-    @media(max-width:900px){
-      .grid,.research-cards{grid-template-columns:1fr}
-    }
-    @media(max-width:720px){
-      .topbar{padding:0 16px}
-      .nav-right{gap:10px}
-      .mini-nav{display:none}
-      main{padding:82px 18px 48px}
-      .title{font-size:clamp(20px,6.5vw,30px)}
-      .brief-box,.final-box,.procurement-box,.legal-box{padding:20px 16px;border-radius:14px}
-      .hero-actions{flex-direction:column}
-      .btn{width:100%}
-      .section-head,.cases-head,.diag-head,.legal-head{font-size:25px}
-    }
-    @media(max-width:600px){
-      .diag-grid{grid-template-columns:1fr;}
-      .research-cards{grid-template-columns:1fr;}
-    }
+    @keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+    @media(max-width:1100px){.diag-grid{grid-template-columns:1fr 1fr;}}
+    @media(max-width:900px){.grid,.research-cards{grid-template-columns:1fr}}
+    @media(max-width:720px){.topbar{padding:0 16px}.nav-right{gap:10px}.mini-nav{display:none}main{padding:82px 18px 48px}.title{font-size:clamp(20px,6.5vw,30px)}.brief-box,.final-box,.procurement-box,.legal-box{padding:20px 16px;border-radius:14px}.hero-actions{flex-direction:column}.btn{width:100%}.section-head,.cases-head,.diag-head,.legal-head{font-size:25px}}
+    @media(max-width:600px){.diag-grid{grid-template-columns:1fr;}.research-cards{grid-template-columns:1fr;}}
   </style>
 </head>
 <body>
 <div class="bg-grid"></div>
-
 <div class="topbar">
   <a href="index.html" class="logo">GFI Flow Intelligence</a>
   <div class="nav-right">
@@ -957,64 +177,36 @@
     <h1 class="title">GL measures how well a public system actually delivers.</h1>
     <p class="definition">A single metric for system delivery performance.</p>
     <p class="subline">No internal access · No installation · Works with public or table-based data</p>
-
     <div class="hero-actions">
       <a href="https://ssrn.com/abstract=6642280" class="btn secondary" target="_blank" rel="noopener">View SSRN <span class="arrow">→</span></a>
       <a href="RFP_Insert_90Day_Outcome_Verification.pdf" class="btn gold" target="_blank" rel="noopener">Procurement Insert <span class="arrow">→</span></a>
       <a href="mailto:ping@gfiintel.com" class="btn primary">Contact <span class="arrow">→</span></a>
     </div>
-
-
-
-
-
     <div class="grid">
       <div class="card"><div class="card-num">01</div><div class="card-title">Compare delivery performance</div><div class="card-text">See how similar public processes perform across programs, units, or jurisdictions.</div></div>
       <div class="card"><div class="card-num">02</div><div class="card-title">See friction without system exposure</div><div class="card-text">Start with public data, table exports, or manually assembled operating figures.</div></div>
       <div class="card"><div class="card-num">03</div><div class="card-title">Support leadership discussion</div><div class="card-text">Discuss delay, burden, rework, and process design risk with a common metric.</div></div>
     </div>
-
     <div class="legal-box">
       <div class="legal-kicker">Law, regulation, and execution</div>
       <div class="legal-head">Different systems. Same gap.</div>
-      <div class="legal-text">
-        IV&amp;V requirements under 45 CFR § 95.626 establish independent verification during system development. However, in practice, these requirements are not consistently extended into outcome-based verification once systems are in operation.
-      </div>
-      <div class="legal-text">
-        This creates a misalignment between regulatory intent — ensuring effective system delivery — and operational reality, where post-deployment outcomes are not always systematically demonstrated.
-      </div>
-      <div class="legal-text">
-        Across different legal systems, oversight mechanisms vary in form but share a common limitation. Whether through audit-driven accountability in common law systems or rule-based administrative control in civil law systems, verification frameworks are primarily designed to confirm compliance and completion, rather than continuously demonstrate outcome improvement.
-      </div>
-      <div class="legal-quote">
-        The result is a shared structural gap between implementation assurance and demonstrated improvement in public service delivery.
-      </div>
+      <div class="legal-text">IV&amp;V requirements under 45 CFR § 95.626 establish independent verification during system development. However, in practice, these requirements are not consistently extended into outcome-based verification once systems are in operation.</div>
+      <div class="legal-text">This creates a misalignment between regulatory intent — ensuring effective system delivery — and operational reality, where post-deployment outcomes are not always systematically demonstrated.</div>
+      <div class="legal-text">Across different legal systems, oversight mechanisms vary in form but share a common limitation. Whether through audit-driven accountability in common law systems or rule-based administrative control in civil law systems, verification frameworks are primarily designed to confirm compliance and completion, rather than continuously demonstrate outcome improvement.</div>
+      <div class="legal-quote">The result is a shared structural gap between implementation assurance and demonstrated improvement in public service delivery.</div>
     </div>
-
     <div class="section-block">
       <div class="section-label">Why this matters for procurement</div>
       <div class="section-head">Public acceptance confirms completion. Public accountability requires outcome visibility.</div>
-      <div class="section-text">
-        Public procurement often assumes that successful implementation implies successful delivery. In reality, system acceptance confirms that a system was built — not that it works effectively for citizens.
-      </div>
-      <div class="section-text">
-        Without a mechanism to verify post-deployment outcomes, governments carry hidden risk: projects may be formally completed while delivery performance remains unchanged. Accountability stops at acceptance, while public impact remains unverified.
-      </div>
+      <div class="section-text">Public procurement often assumes that successful implementation implies successful delivery. In reality, system acceptance confirms that a system was built — not that it works effectively for citizens.</div>
+      <div class="section-text">Without a mechanism to verify post-deployment outcomes, governments carry hidden risk: projects may be formally completed while delivery performance remains unchanged. Accountability stops at acceptance, while public impact remains unverified.</div>
     </div>
-
     <div class="procurement-box">
       <div class="procurement-kicker">Use this directly</div>
       <div class="procurement-title">Insert this language into your next digital transformation contract.</div>
-      <div class="procurement-contract">
-        “Within 90 days of system go-live, an independent outcome verification review shall confirm whether intended service delivery outcomes improved. The review shall rely solely on external or publicly available data. No internal system access is required.”
-      </div>
-      <div class="procurement-contract">
-        “Final acceptance or performance evaluation may incorporate outcome-based verification results where applicable.”
-      </div>
-      <div class="procurement-note">
-        This does not add technology burden. It adds a post-deployment proof layer.<br>
-        It does not replace implementation acceptance. It completes the accountability structure.
-      </div>
+      <div class="procurement-contract">"Within 90 days of system go-live, an independent outcome verification review shall confirm whether intended service delivery outcomes improved. The review shall rely solely on external or publicly available data. No internal system access is required."</div>
+      <div class="procurement-contract">"Final acceptance or performance evaluation may incorporate outcome-based verification results where applicable."</div>
+      <div class="procurement-note">This does not add technology burden. It adds a post-deployment proof layer.<br>It does not replace implementation acceptance. It completes the accountability structure.</div>
       <div class="procurement-divider"></div>
       <div class="procurement-subtitle">System already deployed?</div>
       <div class="procurement-desc">We can run a post-implementation Delivery Assurance Review now. No system access required. External data only. Delivered in 5–10 business days.</div>
@@ -1022,30 +214,22 @@
         <div class="reg-item"><div class="reg-label">CommBuys</div><div class="reg-value">Supplier ID 00085149</div></div>
         <div class="reg-item"><div class="reg-label">UEI</div><div class="reg-value">PEPWMCV35765</div></div>
       </div>
-      <div style="margin-top:16px;">
-        <a href="RFP_Insert_90Day_Outcome_Verification.pdf" class="btn gold" target="_blank" rel="noopener">Download Full Insert <span class="arrow">→</span></a>
-      </div>
+      <div style="margin-top:16px;"><a href="RFP_Insert_90Day_Outcome_Verification.pdf" class="btn gold" target="_blank" rel="noopener">Download Full Insert <span class="arrow">→</span></a></div>
     </div>
-
     <div class="section-block">
       <div class="section-label">Why it matters</div>
       <div class="section-head">Public delivery problems are often structural before they are political.</div>
       <div class="section-text">A program can be well-funded and well-intended and still underperform because the path through the process is too slow, too layered, or too difficult to complete.</div>
     </div>
-
     <div class="final-box">
       <div class="final-title">Start with one program, one workflow, or one operating unit.</div>
       <div class="final-text">GL is designed to help public leaders discuss delivery performance with more clarity before the problem becomes normalized as routine backlog.</div>
-
     </div>
-
-
     <div class="section-block" style="margin-top:34px;">
       <div class="section-label">Publications</div>
       <div class="section-head">Selected public administration writing</div>
       <div class="section-text">Research and commentary focused on administrative friction, policy delivery, and system design.</div>
     </div>
-
     <div class="pub-list">
       <div class="pub"><div class="pub-top"><div class="pub-date">PA Times · Published</div></div><div class="pub-title">The Denominator Problem: How Administrative Friction Derails Policy</div><div class="pub-summary">Introduces the implementation burden lens behind GL and explains why delay and process drag weaken outcomes even in well-funded programs.</div><a class="pub-link" href="https://patimes.org/the-denominator-problem-how-administrative-friction-derails-policy/" target="_blank" rel="noopener">Read Article →</a></div>
       <div class="pub"><div class="pub-top"><div class="pub-date">PA Times · Apr 3, 2026</div></div><div class="pub-title">Proportional Sequencing in Long-Term Care</div><div class="pub-summary">Examines how process ordering affects access and why safeguards do not need to be removed in order to reduce delay.</div><a class="pub-link" href="https://patimes.org/proportional-sequencing-in-long-term-care-a-process-design-approach-for-u-s-hcbs/" target="_blank" rel="noopener">Read Article →</a></div>
@@ -1053,13 +237,11 @@
       <div class="pub"><div class="pub-top"><div class="pub-date">PA Times · May 1, 2026</div><div class="tag">Forthcoming</div></div><div class="pub-title">When AI Is Placed Wrong: Front-End Automation and the Amplification of Public Sector Error</div><div class="pub-summary">Examines why deploying AI at the intake stage amplifies error rather than reducing it.</div></div>
       <div class="pub"><div class="pub-top"><div class="pub-date">PA Times · May 22, 2026</div><div class="tag">Forthcoming</div></div><div class="pub-title">What One-Stop Service Reveals About the Delivery Problem</div><div class="pub-summary">Shows why coordination burden should sit with systems rather than citizens.</div></div>
     </div>
-
     <div class="section-block" style="margin-top:34px;">
       <div class="section-label">SSRN Publications</div>
       <div class="section-head">Selected working papers</div>
       <div class="section-text">Published on SSRN · American Society for Public Administration · PA Times</div>
     </div>
-
     <div class="research-cards">
       <a href="https://ssrn.com/abstract=6642280" target="_blank" rel="noopener" class="research-card"><div class="rc-label">SSRN · 6642280 · 2026</div><div class="rc-title">The Missing Layer in Public Procurement</div><div class="rc-desc">Outcome verification after deployment. Structural gap in procurement frameworks. April 2026.</div><div class="rc-cta">Read on SSRN →</div></a>
       <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6372460" target="_blank" rel="noopener" class="research-card"><div class="rc-label">SSRN · 6372460 · 2026</div><div class="rc-title">The Denominator Problem</div><div class="rc-desc">How administrative friction derails policy. PA Times March 2026.</div><div class="rc-cta">Read on SSRN →</div></a>
@@ -1070,6 +252,8 @@
       <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6343960" target="_blank" rel="noopener" class="research-card"><div class="rc-label">SSRN · 6343960 · 2026</div><div class="rc-title">GL Framework Technical White Paper</div><div class="rc-desc">Institutional efficiency and delivery loss in public systems.</div><div class="rc-cta">Read on SSRN →</div></a>
       <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6652758" target="_blank" rel="noopener" class="research-card"><div class="rc-label">SSRN · 6652758 · 2026</div><div class="rc-title">Process Inertia: The Hidden Cost of Bureaucracy</div><div class="rc-desc">How embedded procedural structures accumulate friction and suppress policy delivery outcomes.</div><div class="rc-cta">Read on SSRN →</div></a>
       <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6652780" target="_blank" rel="noopener" class="research-card"><div class="rc-label">SSRN · 6652780 · 2026</div><div class="rc-title">Procurement Inertia: Structural Gaps in Public Digital Transformation</div><div class="rc-desc">Outcome verification after deployment. Why procurement frameworks fail to close the delivery loop.</div><div class="rc-cta">Read on SSRN →</div></a>
+      <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6674460" target="_blank" rel="noopener" class="research-card"><div class="rc-label">SSRN · 6674460 · 2026</div><div class="rc-title">Beyond Ideology: A Delivery-Based Resolution to the Capitalism-Socialism Debate</div><div class="rc-desc">Reframes the capitalism-socialism debate as a delivery performance question, proposing GL as a cross-system measurement standard.</div><div class="rc-cta">Read on SSRN →</div></a>
+      <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6674719" target="_blank" rel="noopener" class="research-card"><div class="rc-label">SSRN · 6674719 · 2026</div><div class="rc-title">The GL Standard: A Measurement Framework for Delivery Performance in Public Systems</div><div class="rc-desc">Establishes GL as a standardized framework for measuring and comparing delivery performance across public systems and jurisdictions.</div><div class="rc-cta">Read on SSRN →</div></a>
     </div>
 
         <div class="cases-section">
@@ -1098,64 +282,36 @@
     <h1 class="title">GL 衡量一個公共系統到底交付得好不好。</h1>
     <p class="definition">用單一指標衡量系統交付效能。</p>
     <p class="subline">不需內部系統存取 · 不需安裝 · 可用公開或表格資料</p>
-
     <div class="hero-actions">
       <a href="https://ssrn.com/abstract=6642280" class="btn secondary" target="_blank" rel="noopener">查看 SSRN <span class="arrow">→</span></a>
       <a href="RFP_Insert_90Day_Outcome_Verification.pdf" class="btn gold" target="_blank" rel="noopener">採購條款 <span class="arrow">→</span></a>
       <a href="mailto:ping@gfiintel.com" class="btn primary">聯絡我們 <span class="arrow">→</span></a>
     </div>
-
-
-
-
-
     <div class="grid">
       <div class="card"><div class="card-num">01</div><div class="card-title">比較交付表現</div><div class="card-text">比較相似公共流程在不同方案、單位或轄區中的表現。</div></div>
       <div class="card"><div class="card-num">02</div><div class="card-title">不碰內部系統也能看見摩擦</div><div class="card-text">可以從公開資料、表格匯出或人工整理的營運數字開始。</div></div>
       <div class="card"><div class="card-num">03</div><div class="card-title">支撐領導層討論</div><div class="card-text">用共同指標討論延遲、負擔、返工與流程設計風險。</div></div>
     </div>
-
     <div class="legal-box">
       <div class="legal-kicker">法規、制度與執行</div>
       <div class="legal-head">不同制度，同一缺口。</div>
-      <div class="legal-text">
-        依據 45 CFR § 95.626，政府資助的系統開發需設置獨立驗證與確認機制。然而在實務上，這些要求並沒有一貫延伸到系統上線後的成果導向驗證。
-      </div>
-      <div class="legal-text">
-        因此產生一種落差：法規原意在於確保系統有效交付，但實際運作中，對於部署後是否真正改善公共服務結果，缺乏持續且系統性的證明機制。
-      </div>
-      <div class="legal-text">
-        在不同法系中，監督方式雖有差異，但存在共同限制。在英美法系中，多依賴審計與事後檢視；在大陸法系中，則透過制度化程序與規範控制進行監督。無論形式如何，現行驗證機制多集中於確認程序合規與建置完成，較少延伸至持續性的成果改善證明。
-      </div>
-      <div class="legal-quote">
-        因此，在各種法律體系下，普遍存在一個結構性缺口：能確認系統已建置，卻無法持續證明其是否真正提升公共服務效果。
-      </div>
+      <div class="legal-text">依據 45 CFR § 95.626，政府資助的系統開發需設置獨立驗證與確認機制。然而在實務上，這些要求並沒有一貫延伸到系統上線後的成果導向驗證。</div>
+      <div class="legal-text">因此產生一種落差：法規原意在於確保系統有效交付，但實際運作中，對於部署後是否真正改善公共服務結果，缺乏持續且系統性的證明機制。</div>
+      <div class="legal-text">在不同法系中，監督方式雖有差異，但存在共同限制。在英美法系中，多依賴審計與事後檢視；在大陸法系中，則透過制度化程序與規範控制進行監督。無論形式如何，現行驗證機制多集中於確認程序合規與建置完成，較少延伸至持續性的成果改善證明。</div>
+      <div class="legal-quote">因此，在各種法律體系下，普遍存在一個結構性缺口：能確認系統已建置，卻無法持續證明其是否真正提升公共服務效果。</div>
     </div>
-
     <div class="section-block">
       <div class="section-label">為何影響採購</div>
       <div class="section-head">公共驗收確認了完成。公共問責還需要成果可見性。</div>
-      <div class="section-text">
-        公共採購往往假設系統建置成功，就代表服務交付成功。但實際上，驗收只能證明系統存在，並不代表它真的對市民有效。
-      </div>
-      <div class="section-text">
-        缺乏部署後成果驗證時，政府承擔的是隱性風險：專案形式上完成，但交付表現可能沒有改善。問責停在驗收，公共效果卻沒有被驗證。
-      </div>
+      <div class="section-text">公共採購往往假設系統建置成功，就代表服務交付成功。但實際上，驗收只能證明系統存在，並不代表它真的對市民有效。</div>
+      <div class="section-text">缺乏部署後成果驗證時，政府承擔的是隱性風險：專案形式上完成，但交付表現可能沒有改善。問責停在驗收，公共效果卻沒有被驗證。</div>
     </div>
-
     <div class="procurement-box">
       <div class="procurement-kicker">可直接使用</div>
       <div class="procurement-title">把這段文字直接放進下一份數位轉型合約。</div>
-      <div class="procurement-contract">
-        「系統上線後九十日內，應進行獨立成果驗證審查，以確認預期的服務交付結果是否真正改善。審查僅使用外部或公開資料，無需內部系統存取。」
-      </div>
-      <div class="procurement-contract">
-        「最終驗收或績效評估，得視情況納入成果驗證結果。」
-      </div>
-      <div class="procurement-note">
-        這不是增加技術負擔，而是補上一層部署後的成果證明機制。<br>
-        它不是取代系統驗收，而是補完整個問責結構。
-      </div>
+      <div class="procurement-contract">「系統上線後九十日內，應進行獨立成果驗證審查，以確認預期的服務交付結果是否真正改善。審查僅使用外部或公開資料，無需內部系統存取。」</div>
+      <div class="procurement-contract">「最終驗收或績效評估，得視情況納入成果驗證結果。」</div>
+      <div class="procurement-note">這不是增加技術負擔，而是補上一層部署後的成果證明機制。<br>它不是取代系統驗收，而是補完整個問責結構。</div>
       <div class="procurement-divider"></div>
       <div class="procurement-subtitle">系統已經部署了？</div>
       <div class="procurement-desc">我們現在可以執行事後交付保證審查。無需系統存取，僅用外部資料，約五到十個工作天交付。</div>
@@ -1163,30 +319,22 @@
         <div class="reg-item"><div class="reg-label">CommBuys</div><div class="reg-value">Supplier ID 00085149</div></div>
         <div class="reg-item"><div class="reg-label">UEI</div><div class="reg-value">PEPWMCV35765</div></div>
       </div>
-      <div style="margin-top:16px;">
-        <a href="RFP_Insert_90Day_Outcome_Verification.pdf" class="btn gold" target="_blank" rel="noopener">下載完整條款 <span class="arrow">→</span></a>
-      </div>
+      <div style="margin-top:16px;"><a href="RFP_Insert_90Day_Outcome_Verification.pdf" class="btn gold" target="_blank" rel="noopener">下載完整條款 <span class="arrow">→</span></a></div>
     </div>
-
     <div class="section-block">
       <div class="section-label">為什麼重要</div>
       <div class="section-head">很多公共交付問題，先是結構問題，才是政治問題。</div>
       <div class="section-text">一個方案即使預算充足、目標正確，仍可能表現不佳，因為整個流程太慢、太多層、太難走完。</div>
     </div>
-
     <div class="final-box">
       <div class="final-title">從一個方案、一條流程或一個營運單位開始。</div>
       <div class="final-text">GL 的設計目的，是讓公共部門領導者能在問題被當成例行積壓之前，更清楚地討論交付表現。</div>
-
     </div>
-
-
     <div class="section-block" style="margin-top:34px;">
       <div class="section-label">文章</div>
       <div class="section-head">公共行政相關文章</div>
       <div class="section-text">聚焦行政摩擦、政策交付與系統設計的研究與評論。</div>
     </div>
-
     <div class="pub-list">
       <div class="pub"><div class="pub-top"><div class="pub-date">PA Times · 已刊登</div></div><div class="pub-title">分母問題：行政摩擦如何拖垮政策交付</div><div class="pub-summary">介紹 GL 背後的執行負擔視角，說明為何即使預算充足，延遲與流程拖累仍會削弱結果。</div><a class="pub-link" href="https://patimes.org/the-denominator-problem-how-administrative-friction-derails-policy/" target="_blank" rel="noopener">閱讀文章 →</a></div>
       <div class="pub"><div class="pub-top"><div class="pub-date">PA Times · 2026年4月3日</div></div><div class="pub-title">長期照護中的比例排序</div><div class="pub-summary">探討流程排序如何影響可近性，以及為何要減少延遲，不必然等於拿掉保障機制。</div><a class="pub-link" href="https://patimes.org/proportional-sequencing-in-long-term-care-a-process-design-approach-for-u-s-hcbs/" target="_blank" rel="noopener">閱讀文章 →</a></div>
@@ -1194,13 +342,11 @@
       <div class="pub"><div class="pub-top"><div class="pub-date">PA Times · 2026年5月1日</div><div class="tag">即將刊出</div></div><div class="pub-title">人工智慧放錯位置：前端自動化與公部門錯誤的放大效應</div><div class="pub-summary">探討為何將人工智慧部署於受理端會放大錯誤而非減少錯誤。</div></div>
       <div class="pub"><div class="pub-top"><div class="pub-date">PA Times · 2026年5月22日</div><div class="tag">即將刊出</div></div><div class="pub-title">一站式服務揭示的交付問題</div><div class="pub-summary">說明為何協調負擔應由系統承擔，而不是丟給市民。</div></div>
     </div>
-
     <div class="section-block" style="margin-top:34px;">
       <div class="section-label">SSRN 學術論文</div>
       <div class="section-head">代表性工作論文</div>
       <div class="section-text">發表於 SSRN · 美國公共行政學會 · PA Times</div>
     </div>
-
     <div class="research-cards">
       <a href="https://ssrn.com/abstract=6642280" target="_blank" rel="noopener" class="research-card"><div class="rc-label">SSRN · 6642280 · 2026</div><div class="rc-title">公共採購中的缺失層</div><div class="rc-desc">部署後成果驗證。採購框架中的結構性缺口。2026年4月。</div><div class="rc-cta">在 SSRN 閱讀 →</div></a>
       <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6372460" target="_blank" rel="noopener" class="research-card"><div class="rc-label">SSRN · 6372460 · 2026</div><div class="rc-title">分母問題</div><div class="rc-desc">行政摩擦如何拖垮政策交付。PA Times 2026年3月。</div><div class="rc-cta">在 SSRN 閱讀 →</div></a>
@@ -1211,6 +357,8 @@
       <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6343960" target="_blank" rel="noopener" class="research-card"><div class="rc-label">SSRN · 6343960 · 2026</div><div class="rc-title">GL Framework 技術白皮書</div><div class="rc-desc">制度效率與公共服務交付損失。</div><div class="rc-cta">在 SSRN 閱讀 →</div></a>
       <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6652758" target="_blank" rel="noopener" class="research-card"><div class="rc-label">SSRN · 6652758 · 2026</div><div class="rc-title">流程慣性：官僚體制的隱性代價</div><div class="rc-desc">根深蒂固的程序結構如何積累摩擦並壓制政策交付成果。</div><div class="rc-cta">在 SSRN 閱讀 →</div></a>
       <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6652780" target="_blank" rel="noopener" class="research-card"><div class="rc-label">SSRN · 6652780 · 2026</div><div class="rc-title">採購慣性：公共數字化轉型的結構性缺口</div><div class="rc-desc">部署後成果驗證。為何採購框架無法閉合交付迴路。</div><div class="rc-cta">在 SSRN 閱讀 →</div></a>
+      <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6674460" target="_blank" rel="noopener" class="research-card"><div class="rc-label">SSRN · 6674460 · 2026</div><div class="rc-title">超越意識形態：以交付績效解決資本主義與社會主義之爭</div><div class="rc-desc">將資本主義與社會主義的辯論重新定位為交付績效問題，並提出 GL 作為跨系統的衡量標準。</div><div class="rc-cta">在 SSRN 閱讀 →</div></a>
+      <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6674719" target="_blank" rel="noopener" class="research-card"><div class="rc-label">SSRN · 6674719 · 2026</div><div class="rc-title">GL 標準：公共系統交付績效衡量框架</div><div class="rc-desc">將 GL 確立為衡量與比較各公共系統及轄區交付績效的標準化框架。</div><div class="rc-cta">在 SSRN 閱讀 →</div></a>
     </div>
 
         <div class="cases-section">
@@ -1239,64 +387,36 @@
     <h1 class="title">GL 衡量一个公共系统到底交付得好不好。</h1>
     <p class="definition">用单一指标衡量系统交付效能。</p>
     <p class="subline">无需内部系统访问 · 无需安装 · 可用公开或表格数据</p>
-
     <div class="hero-actions">
       <a href="https://ssrn.com/abstract=6642280" class="btn secondary" target="_blank" rel="noopener">查看 SSRN <span class="arrow">→</span></a>
       <a href="RFP_Insert_90Day_Outcome_Verification.pdf" class="btn gold" target="_blank" rel="noopener">采购条款 <span class="arrow">→</span></a>
       <a href="mailto:ping@gfiintel.com" class="btn primary">联系我们 <span class="arrow">→</span></a>
     </div>
-
-
-
-
-
     <div class="grid">
       <div class="card"><div class="card-num">01</div><div class="card-title">比较交付表现</div><div class="card-text">比较相似公共流程在不同项目、单位或辖区中的表现。</div></div>
       <div class="card"><div class="card-num">02</div><div class="card-title">不碰内部系统也能看见摩擦</div><div class="card-text">可以从公开数据、表格导出或人工整理的运营数字开始。</div></div>
       <div class="card"><div class="card-num">03</div><div class="card-title">支撑领导层讨论</div><div class="card-text">用共同指标讨论延迟、负担、返工与流程设计风险。</div></div>
     </div>
-
     <div class="legal-box">
       <div class="legal-kicker">法规、制度与执行</div>
       <div class="legal-head">不同制度，同一缺口。</div>
-      <div class="legal-text">
-        根据 45 CFR § 95.626，政府资助的系统开发需设置独立验证与确认机制。然而在实际执行中，这些要求并没有一贯延伸到系统上线后的成果导向验证。
-      </div>
-      <div class="legal-text">
-        因此产生一种落差：法规原意在于确保系统有效交付，但在实际运作中，对于部署后是否真正改善公共服务结果，缺乏持续且系统性的证明机制。
-      </div>
-      <div class="legal-text">
-        在不同法系中，监督方式虽有差异，但存在共同限制。在普通法体系中，多依赖审计与事后评估；在大陆法体系中，则通过制度化程序与规范控制进行监督。无论形式如何，现行验证机制多集中于确认流程合规与建设完成，较少延伸至持续性的成果改善证明。
-      </div>
-      <div class="legal-quote">
-        因此，在不同法律体系下，普遍存在一个结构性缺口：能够确认系统已建成，却无法持续证明其是否真正提升公共服务效果。
-      </div>
+      <div class="legal-text">根据 45 CFR § 95.626，政府资助的系统开发需设置独立验证与确认机制。然而在实际执行中，这些要求并没有一贯延伸到系统上线后的成果导向验证。</div>
+      <div class="legal-text">因此产生一种落差：法规原意在于确保系统有效交付，但在实际运作中，对于部署后是否真正改善公共服务结果，缺乏持续且系统性的证明机制。</div>
+      <div class="legal-text">在不同法系中，监督方式虽有差异，但存在共同限制。在普通法体系中，多依赖审计与事后评估；在大陆法体系中，则通过制度化程序与规范控制进行监督。无论形式如何，现行验证机制多集中于确认流程合规与建设完成，较少延伸至持续性的成果改善证明。</div>
+      <div class="legal-quote">因此，在不同法律体系下，普遍存在一个结构性缺口：能够确认系统已建成，却无法持续证明其是否真正提升公共服务效果。</div>
     </div>
-
     <div class="section-block">
       <div class="section-label">为何影响采购</div>
       <div class="section-head">公共验收确认了完成。公共问责还需要成果可见性。</div>
-      <div class="section-text">
-        公共采购往往假设系统建设成功，就代表服务交付成功。但实际上，验收只能证明系统存在，并不代表它真的对市民有效。
-      </div>
-      <div class="section-text">
-        缺乏部署后成果验证时，政府承担的是隐性风险：项目形式上完成，但交付表现可能没有改善。问责停在验收，公共效果却没有被验证。
-      </div>
+      <div class="section-text">公共采购往往假设系统建设成功，就代表服务交付成功。但实际上，验收只能证明系统存在，并不代表它真的对市民有效。</div>
+      <div class="section-text">缺乏部署后成果验证时，政府承担的是隐性风险：项目形式上完成，但交付表现可能没有改善。问责停在验收，公共效果却没有被验证。</div>
     </div>
-
     <div class="procurement-box">
       <div class="procurement-kicker">可直接使用</div>
       <div class="procurement-title">把这段文字直接放进下一份数字转型合同。</div>
-      <div class="procurement-contract">
-        「系统上线后九十日内，应进行独立成果验证审查，以确认预期的服务交付结果是否真正改善。审查仅使用外部或公开数据，无需内部系统访问。」
-      </div>
-      <div class="procurement-contract">
-        「最终验收或绩效评估，得视情况纳入成果验证结果。」
-      </div>
-      <div class="procurement-note">
-        这不是增加技术负担，而是补上一层部署后的成果证明机制。<br>
-        它不是取代系统验收，而是补完整个问责结构。
-      </div>
+      <div class="procurement-contract">「系统上线后九十日内，应进行独立成果验证审查，以确认预期的服务交付结果是否真正改善。审查仅使用外部或公开数据，无需内部系统访问。」</div>
+      <div class="procurement-contract">「最终验收或绩效评估，得视情况纳入成果验证结果。」</div>
+      <div class="procurement-note">这不是增加技术负担，而是补上一层部署后的成果证明机制。<br>它不是取代系统验收，而是补完整个问责结构。</div>
       <div class="procurement-divider"></div>
       <div class="procurement-subtitle">系统已经部署了？</div>
       <div class="procurement-desc">我们现在可以执行事后交付保证审查。无需系统访问，仅用外部数据，约五到十个工作日交付。</div>
@@ -1304,30 +424,22 @@
         <div class="reg-item"><div class="reg-label">CommBuys</div><div class="reg-value">Supplier ID 00085149</div></div>
         <div class="reg-item"><div class="reg-label">UEI</div><div class="reg-value">PEPWMCV35765</div></div>
       </div>
-      <div style="margin-top:16px;">
-        <a href="RFP_Insert_90Day_Outcome_Verification.pdf" class="btn gold" target="_blank" rel="noopener">下载完整条款 <span class="arrow">→</span></a>
-      </div>
+      <div style="margin-top:16px;"><a href="RFP_Insert_90Day_Outcome_Verification.pdf" class="btn gold" target="_blank" rel="noopener">下载完整条款 <span class="arrow">→</span></a></div>
     </div>
-
     <div class="section-block">
       <div class="section-label">为什么重要</div>
       <div class="section-head">很多公共交付问题，首先是结构问题，然后才是政治问题。</div>
       <div class="section-text">一个项目即使预算充足、目标正确，仍可能表现不佳，因为整个流程太慢、层级太多、太难走完。</div>
     </div>
-
     <div class="final-box">
       <div class="final-title">从一个项目、一条流程或一个运营单位开始。</div>
       <div class="final-text">GL 的设计目的，是让公共部门领导者能在问题被当成例行积压之前，更清楚地讨论交付表现。</div>
-
     </div>
-
-
     <div class="section-block" style="margin-top:34px;">
       <div class="section-label">文章</div>
       <div class="section-head">公共行政相关文章</div>
       <div class="section-text">聚焦行政摩擦、政策交付与系统设计的研究与评论。</div>
     </div>
-
     <div class="pub-list">
       <div class="pub"><div class="pub-top"><div class="pub-date">PA Times · 已刊登</div></div><div class="pub-title">分母问题：行政摩擦如何拖垮政策交付</div><div class="pub-summary">介绍 GL 背后的执行负担视角，说明为何即使预算充足，延迟与流程拖累仍会削弱结果。</div><a class="pub-link" href="https://patimes.org/the-denominator-problem-how-administrative-friction-derails-policy/" target="_blank" rel="noopener">阅读文章 →</a></div>
       <div class="pub"><div class="pub-top"><div class="pub-date">PA Times · 2026年4月3日</div></div><div class="pub-title">长期照护中的比例排序</div><div class="pub-summary">探讨流程排序如何影响可及性，以及为何要减少延迟，不必然等于拿掉保障机制。</div><a class="pub-link" href="https://patimes.org/proportional-sequencing-in-long-term-care-a-process-design-approach-for-u-s-hcbs/" target="_blank" rel="noopener">阅读文章 →</a></div>
@@ -1335,13 +447,11 @@
       <div class="pub"><div class="pub-top"><div class="pub-date">PA Times · 2026年5月1日</div><div class="tag">即将刊出</div></div><div class="pub-title">人工智能放错位置：前端自动化与公部门错误的放大效应</div><div class="pub-summary">探讨为何将人工智能部署于受理端会放大错误而非减少错误。</div></div>
       <div class="pub"><div class="pub-top"><div class="pub-date">PA Times · 2026年5月22日</div><div class="tag">即将刊出</div></div><div class="pub-title">一站式服务揭示的交付问题</div><div class="pub-summary">说明为何协调负担应由系统承担，而不是丢给市民。</div></div>
     </div>
-
     <div class="section-block" style="margin-top:34px;">
       <div class="section-label">SSRN 学术论文</div>
       <div class="section-head">代表性工作论文</div>
       <div class="section-text">发表于 SSRN · 美国公共行政学会 · PA Times</div>
     </div>
-
     <div class="research-cards">
       <a href="https://ssrn.com/abstract=6642280" target="_blank" rel="noopener" class="research-card"><div class="rc-label">SSRN · 6642280 · 2026</div><div class="rc-title">公共采购中的缺失层</div><div class="rc-desc">部署后成果验证。采购框架中的结构性缺口。2026年4月。</div><div class="rc-cta">在 SSRN 阅读 →</div></a>
       <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6372460" target="_blank" rel="noopener" class="research-card"><div class="rc-label">SSRN · 6372460 · 2026</div><div class="rc-title">分母问题</div><div class="rc-desc">行政摩擦如何拖垮政策交付。PA Times 2026年3月。</div><div class="rc-cta">在 SSRN 阅读 →</div></a>
@@ -1352,6 +462,8 @@
       <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6343960" target="_blank" rel="noopener" class="research-card"><div class="rc-label">SSRN · 6343960 · 2026</div><div class="rc-title">GL Framework 技术白皮书</div><div class="rc-desc">制度效率与公共服务交付损失。</div><div class="rc-cta">在 SSRN 阅读 →</div></a>
       <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6652758" target="_blank" rel="noopener" class="research-card"><div class="rc-label">SSRN · 6652758 · 2026</div><div class="rc-title">流程惯性：官僚体制的隐性代价</div><div class="rc-desc">根深蒂固的程序结构如何积累摩擦并压制政策交付成果。</div><div class="rc-cta">在 SSRN 阅读 →</div></a>
       <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6652780" target="_blank" rel="noopener" class="research-card"><div class="rc-label">SSRN · 6652780 · 2026</div><div class="rc-title">采购惯性：公共数字化转型的结构性缺口</div><div class="rc-desc">部署后成果验证。为何采购框架无法闭合交付回路。</div><div class="rc-cta">在 SSRN 阅读 →</div></a>
+      <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6674460" target="_blank" rel="noopener" class="research-card"><div class="rc-label">SSRN · 6674460 · 2026</div><div class="rc-title">超越意识形态：以交付绩效化解资本主义与社会主义之争</div><div class="rc-desc">将资本主义与社会主义的争论重新定位为交付绩效问题，并提出 GL 作为跨系统的衡量标准。</div><div class="rc-cta">在 SSRN 阅读 →</div></a>
+      <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6674719" target="_blank" rel="noopener" class="research-card"><div class="rc-label">SSRN · 6674719 · 2026</div><div class="rc-title">GL 标准：公共系统交付绩效衡量框架</div><div class="rc-desc">将 GL 确立为衡量与比较各公共系统及辖区交付绩效的标准化框架。</div><div class="rc-cta">在 SSRN 阅读 →</div></a>
     </div>
 
         <div class="cases-section">
@@ -1380,64 +492,36 @@
     <h1 class="title">GL mide qué tan bien un sistema público realmente cumple.</h1>
     <p class="definition">Un solo indicador para medir el rendimiento real de entrega del sistema.</p>
     <p class="subline">Sin acceso interno · Sin instalación · Funciona con datos públicos o tablas</p>
-
     <div class="hero-actions">
       <a href="https://ssrn.com/abstract=6642280" class="btn secondary" target="_blank" rel="noopener">Ver SSRN <span class="arrow">→</span></a>
       <a href="RFP_Insert_90Day_Outcome_Verification.pdf" class="btn gold" target="_blank" rel="noopener">Cláusula de contratación <span class="arrow">→</span></a>
       <a href="mailto:ping@gfiintel.com" class="btn primary">Contáctenos <span class="arrow">→</span></a>
     </div>
-
-
-
-
-
     <div class="grid">
       <div class="card"><div class="card-num">01</div><div class="card-title">Comparar rendimiento de entrega</div><div class="card-text">Observe cómo procesos públicos similares se desempeñan entre programas, unidades o jurisdicciones.</div></div>
       <div class="card"><div class="card-num">02</div><div class="card-title">Ver fricción sin exponer sistemas</div><div class="card-text">Empiece con datos públicos, exportaciones tabulares o cifras operativas compiladas manualmente.</div></div>
       <div class="card"><div class="card-num">03</div><div class="card-title">Respaldar discusión directiva</div><div class="card-text">Hable de demora, carga, retrabajo y riesgo de diseño con una métrica común.</div></div>
     </div>
-
     <div class="legal-box">
       <div class="legal-kicker">Norma, sistema y ejecución</div>
       <div class="legal-head">Distintos sistemas. La misma brecha.</div>
-      <div class="legal-text">
-        Los requisitos establecidos en 45 CFR § 95.626 garantizan verificación y validación independiente durante el desarrollo de sistemas financiados por el gobierno. Sin embargo, en la práctica, esas exigencias no siempre se extienden de forma consistente hacia la verificación basada en resultados una vez que los sistemas ya están operando.
-      </div>
-      <div class="legal-text">
-        Esto genera una desalineación entre la intención regulatoria y los resultados reales de la prestación del servicio después del despliegue.
-      </div>
-      <div class="legal-text">
-        En distintos sistemas jurídicos, los mecanismos de supervisión varían en su forma, pero comparten una limitación común. En los sistemas de derecho anglosajón, la supervisión suele basarse en auditorías y revisiones posteriores; en los sistemas de derecho civil, se apoya más en procedimientos administrativos y controles normativos. En ambos casos, la verificación se concentra principalmente en confirmar cumplimiento y finalización, no en demostrar mejora continua de resultados.
-      </div>
-      <div class="legal-quote">
-        El resultado es una brecha estructural compartida entre asegurar la implementación y demostrar la mejora real en la prestación de servicios públicos.
-      </div>
+      <div class="legal-text">Los requisitos establecidos en 45 CFR § 95.626 garantizan verificación y validación independiente durante el desarrollo de sistemas financiados por el gobierno. Sin embargo, en la práctica, esas exigencias no siempre se extienden de forma consistente hacia la verificación basada en resultados una vez que los sistemas ya están operando.</div>
+      <div class="legal-text">Esto genera una desalineación entre la intención regulatoria y los resultados reales de la prestación del servicio después del despliegue.</div>
+      <div class="legal-text">En distintos sistemas jurídicos, los mecanismos de supervisión varían en su forma, pero comparten una limitación común. En los sistemas de derecho anglosajón, la supervisión suele basarse en auditorías y revisiones posteriores; en los sistemas de derecho civil, se apoya más en procedimientos administrativos y controles normativos. En ambos casos, la verificación se concentra principalmente en confirmar cumplimiento y finalización, no en demostrar mejora continua de resultados.</div>
+      <div class="legal-quote">El resultado es una brecha estructural compartida entre asegurar la implementación y demostrar la mejora real en la prestación de servicios públicos.</div>
     </div>
-
     <div class="section-block">
       <div class="section-label">Por qué importa en contratación</div>
       <div class="section-head">La aceptación pública confirma la finalización. La rendición de cuentas pública requiere visibilidad de resultados.</div>
-      <div class="section-text">
-        La contratación pública suele asumir que una implementación exitosa implica una entrega exitosa. En realidad, la aceptación del sistema confirma que algo fue construido, no que funcione eficazmente para la ciudadanía.
-      </div>
-      <div class="section-text">
-        Sin verificación posterior al despliegue, el gobierno asume un riesgo oculto: los proyectos pueden completarse formalmente mientras el rendimiento del servicio permanece sin cambios. La rendición de cuentas termina en la aceptación, mientras el impacto público queda sin verificar.
-      </div>
+      <div class="section-text">La contratación pública suele asumir que una implementación exitosa implica una entrega exitosa. En realidad, la aceptación del sistema confirma que algo fue construido, no que funcione eficazmente para la ciudadanía.</div>
+      <div class="section-text">Sin verificación posterior al despliegue, el gobierno asume un riesgo oculto: los proyectos pueden completarse formalmente mientras el rendimiento del servicio permanece sin cambios. La rendición de cuentas termina en la aceptación, mientras el impacto público queda sin verificar.</div>
     </div>
-
     <div class="procurement-box">
       <div class="procurement-kicker">Úselo directamente</div>
       <div class="procurement-title">Inserte este lenguaje en su próximo contrato de transformación digital.</div>
-      <div class="procurement-contract">
-        “Dentro de los noventa días posteriores al lanzamiento del sistema, una revisión independiente de verificación de resultados deberá confirmar si los resultados previstos de la prestación del servicio realmente mejoraron. La revisión se basará únicamente en datos externos o de acceso público. No se requiere acceso interno al sistema.”
-      </div>
-      <div class="procurement-contract">
-        “La aceptación final o la evaluación de desempeño podrá incorporar, cuando corresponda, los resultados de la verificación basada en resultados.”
-      </div>
-      <div class="procurement-note">
-        Esto no añade carga tecnológica. Añade una capa de prueba posterior al despliegue.<br>
-        No sustituye la aceptación de implementación. Completa la estructura de rendición de cuentas.
-      </div>
+      <div class="procurement-contract">"Dentro de los noventa días posteriores al lanzamiento del sistema, una revisión independiente de verificación de resultados deberá confirmar si los resultados previstos de la prestación del servicio realmente mejoraron. La revisión se basará únicamente en datos externos o de acceso público. No se requiere acceso interno al sistema."</div>
+      <div class="procurement-contract">"La aceptación final o la evaluación de desempeño podrá incorporar, cuando corresponda, los resultados de la verificación basada en resultados."</div>
+      <div class="procurement-note">Esto no añade carga tecnológica. Añade una capa de prueba posterior al despliegue.<br>No sustituye la aceptación de implementación. Completa la estructura de rendición de cuentas.</div>
       <div class="procurement-divider"></div>
       <div class="procurement-subtitle">¿El sistema ya está desplegado?</div>
       <div class="procurement-desc">Podemos ejecutar ahora una revisión posterior a la implementación. Sin acceso al sistema. Solo datos externos. Entrega aproximada en cinco a diez días hábiles.</div>
@@ -1445,30 +529,22 @@
         <div class="reg-item"><div class="reg-label">CommBuys</div><div class="reg-value">Supplier ID 00085149</div></div>
         <div class="reg-item"><div class="reg-label">UEI</div><div class="reg-value">PEPWMCV35765</div></div>
       </div>
-      <div style="margin-top:16px;">
-        <a href="RFP_Insert_90Day_Outcome_Verification.pdf" class="btn gold" target="_blank" rel="noopener">Descargar cláusula completa <span class="arrow">→</span></a>
-      </div>
+      <div style="margin-top:16px;"><a href="RFP_Insert_90Day_Outcome_Verification.pdf" class="btn gold" target="_blank" rel="noopener">Descargar cláusula completa <span class="arrow">→</span></a></div>
     </div>
-
     <div class="section-block">
       <div class="section-label">Por qué importa</div>
       <div class="section-head">Muchos problemas de entrega pública son estructurales antes que políticos.</div>
       <div class="section-text">Un programa puede estar bien financiado y bien diseñado, y aun así rendir mal porque el recorrido del proceso es demasiado lento, demasiado fragmentado o demasiado difícil de completar.</div>
     </div>
-
     <div class="final-box">
       <div class="final-title">Empiece con un programa, un flujo o una unidad operativa.</div>
       <div class="final-text">GL está diseñado para ayudar a los líderes públicos a discutir el desempeño de entrega con mayor claridad antes de que el problema se normalice como simple acumulación rutinaria.</div>
-
     </div>
-
-
     <div class="section-block" style="margin-top:34px;">
       <div class="section-label">Publicaciones</div>
       <div class="section-head">Textos seleccionados de administración pública</div>
       <div class="section-text">Investigación y análisis centrados en fricción administrativa, entrega de políticas y diseño de sistemas.</div>
     </div>
-
     <div class="pub-list">
       <div class="pub"><div class="pub-top"><div class="pub-date">PA Times · Publicado</div></div><div class="pub-title">El problema del denominador</div><div class="pub-summary">Presenta la lógica de carga de implementación detrás de GL y explica por qué la demora y el arrastre del proceso debilitan resultados incluso en programas bien financiados.</div><a class="pub-link" href="https://patimes.org/the-denominator-problem-how-administrative-friction-derails-policy/" target="_blank" rel="noopener">Leer artículo →</a></div>
       <div class="pub"><div class="pub-top"><div class="pub-date">PA Times · 3 abr 2026</div></div><div class="pub-title">Secuenciación proporcional en el cuidado de largo plazo</div><div class="pub-summary">Examina cómo el orden del proceso afecta el acceso y por qué reducir demora no requiere eliminar salvaguardas.</div><a class="pub-link" href="https://patimes.org/proportional-sequencing-in-long-term-care-a-process-design-approach-for-u-s-hcbs/" target="_blank" rel="noopener">Leer artículo →</a></div>
@@ -1476,13 +552,11 @@
       <div class="pub"><div class="pub-top"><div class="pub-date">PA Times · 1 may 2026</div><div class="tag">Próximamente</div></div><div class="pub-title">Cuando la inteligencia artificial está mal ubicada</div><div class="pub-summary">Examina por qué desplegar inteligencia artificial en la etapa de recepción amplifica el error en lugar de reducirlo.</div></div>
       <div class="pub"><div class="pub-top"><div class="pub-date">PA Times · 22 may 2026</div><div class="tag">Próximamente</div></div><div class="pub-title">Lo que revela el servicio de ventanilla única</div><div class="pub-summary">Muestra por qué la carga de coordinación debe recaer en los sistemas y no en la ciudadanía.</div></div>
     </div>
-
     <div class="section-block" style="margin-top:34px;">
       <div class="section-label">Publicaciones SSRN</div>
       <div class="section-head">Documentos de trabajo representativos</div>
       <div class="section-text">Publicados en SSRN · American Society for Public Administration · PA Times</div>
     </div>
-
     <div class="research-cards">
       <a href="https://ssrn.com/abstract=6642280" target="_blank" rel="noopener" class="research-card"><div class="rc-label">SSRN · 6642280 · 2026</div><div class="rc-title">La capa faltante en la contratación pública</div><div class="rc-desc">Verificación de resultados posterior al despliegue. Brecha estructural en marcos de contratación. Abril 2026.</div><div class="rc-cta">Leer en SSRN →</div></a>
       <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6372460" target="_blank" rel="noopener" class="research-card"><div class="rc-label">SSRN · 6372460 · 2026</div><div class="rc-title">El problema del denominador</div><div class="rc-desc">Cómo la fricción administrativa descarrila la política. PA Times marzo 2026.</div><div class="rc-cta">Leer en SSRN →</div></a>
@@ -1493,6 +567,8 @@
       <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6343960" target="_blank" rel="noopener" class="research-card"><div class="rc-label">SSRN · 6343960 · 2026</div><div class="rc-title">Documento técnico de GL Framework</div><div class="rc-desc">Eficiencia institucional y pérdidas en la entrega de servicios públicos.</div><div class="rc-cta">Leer en SSRN →</div></a>
       <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6652758" target="_blank" rel="noopener" class="research-card"><div class="rc-label">SSRN · 6652758 · 2026</div><div class="rc-title">Inercia de proceso: el costo oculto de la burocracia</div><div class="rc-desc">Cómo las estructuras procedimentales acumulan fricción y suprimen los resultados de entrega.</div><div class="rc-cta">Leer en SSRN →</div></a>
       <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6652780" target="_blank" rel="noopener" class="research-card"><div class="rc-label">SSRN · 6652780 · 2026</div><div class="rc-title">Inercia de contratación: brechas estructurales en la transformación digital pública</div><div class="rc-desc">Verificación de resultados posterior al despliegue. Por qué los marcos de contratación no cierran el ciclo de entrega.</div><div class="rc-cta">Leer en SSRN →</div></a>
+      <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6674460" target="_blank" rel="noopener" class="research-card"><div class="rc-label">SSRN · 6674460 · 2026</div><div class="rc-title">Más allá de la ideología: una resolución basada en entrega al debate capitalismo-socialismo</div><div class="rc-desc">Reencuadra el debate capitalismo-socialismo como una cuestión de rendimiento de entrega y propone GL como estándar de medición entre sistemas.</div><div class="rc-cta">Leer en SSRN →</div></a>
+      <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6674719" target="_blank" rel="noopener" class="research-card"><div class="rc-label">SSRN · 6674719 · 2026</div><div class="rc-title">El estándar GL: un marco de medición del rendimiento de entrega en sistemas públicos</div><div class="rc-desc">Establece GL como marco estandarizado para medir y comparar el rendimiento de entrega en sistemas públicos y jurisdicciones.</div><div class="rc-cta">Leer en SSRN →</div></a>
     </div>
 
         <div class="cases-section">
@@ -1523,7 +599,6 @@
 <script>
   const buttons = document.querySelectorAll(".lb-btn");
   const blocks = document.querySelectorAll(".lb");
-
   buttons.forEach(btn => {
     btn.addEventListener("click", () => {
       const lang = btn.dataset.lang;
@@ -1533,8 +608,6 @@
       document.querySelector(`.lb[data-lang="${lang}"]`).classList.add("active");
     });
   });
-
-
 </script>
 </body>
 </html>
