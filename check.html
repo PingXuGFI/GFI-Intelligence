@@ -3,12 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <meta name="description" content="GFI Check — Measure generalization efficiency of AI-driven government automation. IMCR + GL Level assessment tool.">
-  <title>GFI Check | Generalization Efficiency Tool</title>
+  <meta name="description" content="GFI Check — One-page report for generalization efficiency (IMCR + GL Level).">
+  <title>GFI Check | One-Page Report</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
     :root{
       --bg:#0b1220;
@@ -29,19 +28,18 @@
       color:var(--text);
       font-family:var(--sans);
       font-size:15px;
-      line-height:1.75;
-      overflow-x:hidden
+      line-height:1.6;
     }
     .nav{
-      position:fixed;
-      inset:0 0 auto 0;
+      position:sticky;
+      top:0;
       z-index:100;
       height:62px;
       padding:0 clamp(18px,5vw,52px);
       display:flex;
       align-items:center;
       justify-content:space-between;
-      background:rgba(11,18,32,.90);
+      background:rgba(11,18,32,.92);
       backdrop-filter:blur(14px);
       border-bottom:1px solid rgba(255,255,255,.07)
     }
@@ -72,11 +70,12 @@
       border-color:rgba(159,232,112,.35);
       background:rgba(159,232,112,.07)
     }
-    .page{padding-top:62px}
+    .lb{display:none}
+    .lb.active{display:block}
     .container{
-      max-width:1200px;
+      max-width:1000px;
       margin:0 auto;
-      padding:clamp(32px,5vw,56px) clamp(20px,6vw,48px);
+      padding:clamp(28px,4vw,48px) clamp(20px,6vw,40px);
     }
     .hero-badge{
       font-family:var(--mono);
@@ -84,54 +83,46 @@
       letter-spacing:.22em;
       text-transform:uppercase;
       color:var(--green);
-      margin-bottom:20px
+      margin-bottom:12px
     }
     h1{
       font-family:var(--serif);
-      font-size:clamp(32px,4.2vw,48px);
+      font-size:clamp(28px,3.6vw,40px);
       line-height:1.1;
-      margin-bottom:16px;
+      margin-bottom:8px;
       color:#fff
     }
     .subhead{
-      font-size:16px;
+      font-size:14px;
       color:var(--muted);
-      max-width:640px;
-      margin-bottom:32px
+      margin-bottom:32px;
+      border-left:2px solid var(--green);
+      padding-left:16px
     }
-    .two-columns{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:28px;
-      margin:32px 0 28px
-    }
-    @media(max-width:850px){
-      .two-columns{grid-template-columns:1fr;gap:24px}
-    }
-    .card{
+    .input-panel{
       background:var(--bg2);
       border:1px solid var(--dim);
       border-radius:24px;
       padding:24px 28px;
-      transition:border-color .2s
+      margin-bottom:32px;
     }
-    .card-title{
-      font-family:var(--mono);
-      font-size:11px;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color:var(--green);
-      margin-bottom:16px
+    .input-row{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:20px;
+      margin-bottom:20px;
     }
-    .form-group{margin-bottom:16px}
+    .form-group{margin-bottom:0}
     label{
       display:block;
-      font-size:12px;
+      font-size:11px;
       font-weight:500;
+      text-transform:uppercase;
+      letter-spacing:.08em;
       margin-bottom:6px;
-      color:var(--sub)
+      color:var(--green)
     }
-    input, select{
+    input{
       width:100%;
       padding:10px 14px;
       background:rgba(255,255,255,.05);
@@ -140,124 +131,145 @@
       color:#fff;
       font-family:var(--sans);
       font-size:14px;
-      transition:border-color .2s
     }
-    input:focus, select:focus{
+    input:focus{
       outline:none;
       border-color:rgba(159,232,112,.5)
     }
-    .radio-group{
-      display:flex;
-      flex-direction:column;
+    .gl-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
       gap:12px;
-      margin:12px 0 8px
+      margin:16px 0 20px;
     }
-    .radio-item{
+    .gl-item{
       display:flex;
       align-items:center;
       gap:12px;
-      flex-wrap:wrap
+      background:rgba(255,255,255,.02);
+      padding:10px 14px;
+      border-radius:14px;
     }
-    .radio-item input{
-      width:auto;
-      margin:0
-    }
-    .radio-item label{
-      margin:0;
-      font-size:13px;
-      font-weight:400
-    }
+    .gl-item input{width:auto; margin:0;}
+    .gl-item label{margin:0; font-size:12px; text-transform:none; letter-spacing:0; color:var(--sub);}
     button{
-      background:rgba(159,232,112,.12);
-      border:1px solid rgba(159,232,112,.35);
+      background:var(--green);
+      border:none;
       border-radius:40px;
-      padding:10px 20px;
+      padding:12px 24px;
       font-family:var(--mono);
-      font-size:11px;
+      font-size:12px;
       letter-spacing:.1em;
       text-transform:uppercase;
-      color:var(--green);
+      color:#0b1220;
+      font-weight:600;
       cursor:pointer;
       transition:all .2s;
-      margin-right:10px;
-      margin-bottom:10px
     }
     button:hover{
-      background:rgba(159,232,112,.22);
-      border-color:rgba(159,232,112,.6);
-      transform:translateY(-1px)
-    }
-    .btn-primary{
-      background:var(--green);
-      color:#0b1220;
-      border-color:var(--green)
-    }
-    .btn-primary:hover{
       background:#b5ff8a;
       transform:translateY(-1px)
     }
-    .result-card{
+    /* 報告區塊 — 這就是「一頁報告」 */
+    .report{
       background:linear-gradient(145deg,#0f1a24,#0b121f);
       border-radius:24px;
-      padding:24px;
-      margin-top:28px;
-      border:1px solid rgba(159,232,112,.2)
+      padding:32px;
+      border:1px solid rgba(159,232,112,.25);
+      margin-top:16px;
+      page-break-inside:avoid;
     }
-    .metric-line{
+    .report-header{
+      text-align:center;
+      margin-bottom:28px;
+      padding-bottom:20px;
+      border-bottom:1px solid rgba(255,255,255,.1);
+    }
+    .report-title{
+      font-family:var(--serif);
+      font-size:26px;
+      color:#fff;
+      margin-bottom:6px;
+    }
+    .report-sub{
+      font-family:var(--mono);
+      font-size:10px;
+      color:var(--green);
+      letter-spacing:.2em;
+    }
+    .report-meta{
+      display:flex;
+      justify-content:space-between;
+      font-size:11px;
+      color:var(--sub);
+      margin-bottom:24px;
+    }
+    .metric-block{
       display:flex;
       justify-content:space-between;
       flex-wrap:wrap;
-      padding:12px 0;
-      border-bottom:1px solid rgba(255,255,255,.06)
+      padding:14px 0;
+      border-bottom:1px solid rgba(255,255,255,.06);
     }
-    .metric-value-lg{
-      font-size:28px;
-      font-weight:700;
-      font-family:var(--mono);
-      color:var(--green)
+    .metric-label{font-weight:500; color:var(--muted);}
+    .metric-value{font-family:var(--mono); font-weight:600; color:var(--green); font-size:18px;}
+    .imcr-big{
+      font-size:36px;
+      font-weight:800;
     }
-    .tier-gold{color:#FFD966}
-    .tier-silver{color:#B0C4DE}
-    .tier-bronze{color:#CD7A32}
     .gl-badge{
       background:rgba(159,232,112,.15);
       padding:4px 12px;
       border-radius:40px;
-      font-size:12px
-    }
-    .history-item{
-      background:rgba(255,255,255,.03);
-      border-radius:14px;
-      padding:10px 14px;
-      margin-bottom:8px;
-      cursor:pointer;
       font-size:12px;
-      transition:background .2s
     }
-    .history-item:hover{
-      background:rgba(255,255,255,.08)
+    .compliance{
+      margin-top:20px;
+      padding:16px;
+      background:rgba(159,232,112,.05);
+      border-radius:20px;
+      text-align:center;
     }
-    .template-buttons{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin:16px 0 8px
+    .tier-gold{color:#FFD966;}
+    .tier-silver{color:#B0C4DE;}
+    .tier-bronze{color:#CD7A32;}
+    .print-btn{
+      margin-top:24px;
+      text-align:right;
     }
-    canvas{max-height:160px; width:100%; margin-top:16px}
     .footer{
       text-align:center;
       padding:24px 20px 32px;
       font-family:var(--mono);
-      font-size:11px;
+      font-size:10px;
       color:rgba(255,255,255,.2);
       border-top:1px solid rgba(255,255,255,.05);
-      margin-top:20px
+      margin-top:32px;
     }
-    .footer a{
-      color:rgba(255,255,255,.32);
-      text-decoration:none
+    @media print{
+      body{
+        background:white;
+        color:black;
+      }
+      .nav, .input-panel, .print-btn, .lang-grp, .footer{
+        display:none;
+      }
+      .report{
+        background:white;
+        border:1px solid #ccc;
+        color:black;
+      }
+      .report .metric-value, .report .metric-label, .report .report-sub, .report .report-meta{
+        color:black;
+      }
+      .metric-value{color:#1a5d7c;}
+      .compliance{background:#f5f5f5;}
     }
-    .footer a:hover{color:#fff}
+    @media(max-width:640px){
+      .gl-grid{grid-template-columns:1fr;}
+      .input-row{grid-template-columns:1fr;}
+      .report{padding:20px;}
+    }
   </style>
 </head>
 <body>
@@ -270,238 +282,166 @@
   </div>
 </div>
 
-<div class="page">
+<!-- 多語言內容區塊 -->
+<div class="lb active" data-lang="en">
   <div class="container">
-    <div class="hero-badge">GFI Check · Generalization Efficiency Framework</div>
-    <h1>Measure Marginal Cost Reduction <span style="color:var(--green)">IMCR + GL Level</span></h1>
-    <div class="subhead">One-page diagnostic for government automation. Based on SSRN peer-reviewed framework (GEF).</div>
+    <div class="hero-badge">GFI Check · One-Page Report</div>
+    <h1>Generalization Efficiency Report</h1>
+    <div class="subhead">IMCR + GL Level · Based on GEF (SSRN peer-reviewed)</div>
 
-    <div class="two-columns">
-      <!-- 左欄：輸入 -->
-      <div class="card">
-        <div class="card-title">📌 System & IMCR</div>
-        <div class="form-group"><label>System Name</label><input type="text" id="systemName" value="Smart One-Station Platform"></div>
-        <div class="form-group"><label>Total Services (N)</label><input type="number" id="serviceCount" value="387"></div>
-        <div class="form-group"><label>Early Marginal Cost (first 10 avg)</label><input type="number" id="mcEarly" value="100" step="any"></div>
-        <div class="form-group"><label>Late Marginal Cost (last 10 avg)</label><input type="number" id="mcLate" value="12" step="any"></div>
-        <div class="form-group"><label>Cost Unit</label><input type="text" id="costUnit" value="CNY"></div>
-        
-        <div class="card-title" style="margin-top:16px">🏛️ GL Level Maturity</div>
-        <div class="radio-group" id="glGroup">
-          <div class="radio-item"><input type="radio" name="glQ1" value="yes" id="q1Yes"><label>✅ Yes</label><input type="radio" name="glQ1" value="no" id="q1No"><label>❌ No</label><span> Q1: Cross-dept data sharing?</span></div>
-          <div class="radio-item"><input type="radio" name="glQ2" value="yes" id="q2Yes"><label>✅ Yes</label><input type="radio" name="glQ2" value="no" id="q2No"><label>❌ No</label><span> Q2: ≥3 shared modules reused ≥5 times?</span></div>
-          <div class="radio-item"><input type="radio" name="glQ3" value="yes" id="q3Yes"><label>✅ Yes</label><input type="radio" name="glQ3" value="no" id="q3No"><label>❌ No</label><span> Q3: Natural language intent recognition?</span></div>
-          <div class="radio-item"><input type="radio" name="glQ4" value="yes" id="q4Yes"><label>✅ Yes</label><input type="radio" name="glQ4" value="no" id="q4No"><label>❌ No</label><span> Q4: Dynamic orchestration (runtime cross-dept)?</span></div>
-        </div>
-        <div class="template-buttons">
-          <button class="template-btn" data-template="jiangxi">📁 Load Jiangxi</button>
-          <button class="template-btn" data-template="beijing">🏙️ Load Beijing</button>
-          <button class="template-btn" data-template="legacy">🏚️ Load Legacy</button>
-        </div>
-        <div style="margin-top:16px">
-          <button id="calcBtn" class="btn-primary">⚡ Generate Report</button>
-          <button id="saveHistoryBtn">💾 Save Session</button>
-          <button id="downloadPdfBtn">📄 Export PDF</button>
-        </div>
+    <div class="input-panel">
+      <div class="input-row">
+        <div class="form-group"><label>System Name</label><input type="text" id="sysName_en" value="Smart One-Station Platform"></div>
+        <div class="form-group"><label>Total Services (N)</label><input type="number" id="serviceCount_en" value="387"></div>
       </div>
-
-      <!-- 右欄：圖表 + 歷史 -->
-      <div class="card">
-        <div class="card-title">📈 Marginal Cost Trend</div>
-        <canvas id="costChart" width="400" height="140"></canvas>
-        <div class="card-title" style="margin-top:24px">📜 Assessment History (click to restore)</div>
-        <div id="historyList" style="max-height: 210px; overflow-y: auto;">No records</div>
-        <button id="clearHistoryBtn" style="margin-top:8px; background:none;">Clear history</button>
+      <div class="input-row">
+        <div class="form-group"><label>Early Marginal Cost (first 10 avg)</label><input type="number" id="mcEarly_en" value="100" step="any"></div>
+        <div class="form-group"><label>Late Marginal Cost (last 10 avg)</label><input type="number" id="mcLate_en" value="12" step="any"></div>
+        <div class="form-group"><label>Cost Unit</label><input type="text" id="unit_en" value="CNY"></div>
       </div>
+      <div class="gl-grid">
+        <div class="gl-item"><input type="checkbox" id="q1_en"> <label>Q1: Cross-dept data sharing?</label></div>
+        <div class="gl-item"><input type="checkbox" id="q2_en"> <label>Q2: ≥3 shared modules reused ≥5 times?</label></div>
+        <div class="gl-item"><input type="checkbox" id="q3_en"> <label>Q3: Natural language intent recognition?</label></div>
+        <div class="gl-item"><input type="checkbox" id="q4_en"> <label>Q4: Dynamic orchestration (runtime cross-dept)?</label></div>
+      </div>
+      <button id="genBtn_en">Generate Report →</button>
     </div>
 
-    <!-- 結果區 -->
-    <div id="resultPanel">
-      <div class="result-card" style="text-align:center; color:var(--sub);">Click "Generate Report" to see IMCR + GL Level + compliance tier</div>
-    </div>
+    <div id="reportContainer_en"></div>
+    <div class="print-btn" id="printBtn_en" style="display:none;"><button onclick="window.print();return false;">📄 Save as PDF / Print</button></div>
   </div>
 </div>
 
-<div class="footer">
-  © 2026 GFI Flow Intelligence · Boston · 
-  <a href="about.html">About</a> · 
-  <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6178024" target="_blank">SSRN</a> · 
-  <a href="mailto:ping@gfiintel.com">ping@gfiintel.com</a> · 
-  <a href="index.html">Home</a>
+<div class="lb" data-lang="tw">
+  <div class="container">
+    <div class="hero-badge">GFI Check · 一頁報告</div>
+    <h1>普遍化效率報告</h1>
+    <div class="subhead">IMCR + GL Level · 基於 GEF (SSRN 同儕審查)</div>
+    <div class="input-panel">
+      <div class="input-row"><div class="form-group"><label>系統名稱</label><input type="text" id="sysName_tw" value="智慧一站到位平台"></div>
+      <div class="form-group"><label>服務總數 (N)</label><input type="number" id="serviceCount_tw" value="387"></div></div>
+      <div class="input-row"><div class="form-group"><label>早期邊際成本 (前10項平均)</label><input type="number" id="mcEarly_tw" value="100" step="any"></div>
+      <div class="form-group"><label>後期邊際成本 (最近10項平均)</label><input type="number" id="mcLate_tw" value="12" step="any"></div>
+      <div class="form-group"><label>成本單位</label><input type="text" id="unit_tw" value="人民幣"></div></div>
+      <div class="gl-grid"><div class="gl-item"><input type="checkbox" id="q1_tw"> <label>Q1: 跨部門資料共享？</label></div>
+      <div class="gl-item"><input type="checkbox" id="q2_tw"> <label>Q2: ≥3個通用模組且重複使用？</label></div>
+      <div class="gl-item"><input type="checkbox" id="q3_tw"> <label>Q3: 自然語言意圖辨識？</label></div>
+      <div class="gl-item"><input type="checkbox" id="q4_tw"> <label>Q4: 動態編排跨部門流程？</label></div></div>
+      <button id="genBtn_tw">產生報告 →</button>
+    </div>
+    <div id="reportContainer_tw"></div>
+    <div class="print-btn" id="printBtn_tw" style="display:none;"><button onclick="window.print();return false;">📄 儲存為 PDF / 列印</button></div>
+  </div>
 </div>
 
+<div class="lb" data-lang="cn">
+  <div class="container">
+    <div class="hero-badge">GFI Check · 一页报告</div>
+    <h1>普遍化效率报告</h1>
+    <div class="subhead">IMCR + GL Level · 基于 GEF (SSRN 同行评审)</div>
+    <div class="input-panel">
+      <div class="input-row"><div class="form-group"><label>系统名称</label><input type="text" id="sysName_cn" value="智慧一站到位平台"></div>
+      <div class="form-group"><label>服务总数 (N)</label><input type="number" id="serviceCount_cn" value="387"></div></div>
+      <div class="input-row"><div class="form-group"><label>早期边际成本 (前10项平均)</label><input type="number" id="mcEarly_cn" value="100" step="any"></div>
+      <div class="form-group"><label>后期边际成本 (最近10项平均)</label><input type="number" id="mcLate_cn" value="12" step="any"></div>
+      <div class="form-group"><label>成本单位</label><input type="text" id="unit_cn" value="人民币"></div></div>
+      <div class="gl-grid"><div class="gl-item"><input type="checkbox" id="q1_cn"> <label>Q1: 跨部门数据共享？</label></div>
+      <div class="gl-item"><input type="checkbox" id="q2_cn"> <label>Q2: ≥3个通用模块且重复使用？</label></div>
+      <div class="gl-item"><input type="checkbox" id="q3_cn"> <label>Q3: 自然语言意图识别？</label></div>
+      <div class="gl-item"><input type="checkbox" id="q4_cn"> <label>Q4: 动态编排跨部门流程？</label></div></div>
+      <button id="genBtn_cn">生成报告 →</button>
+    </div>
+    <div id="reportContainer_cn"></div>
+    <div class="print-btn" id="printBtn_cn" style="display:none;"><button onclick="window.print();return false;">📄 保存为 PDF / 打印</button></div>
+  </div>
+</div>
+
+<div class="footer">© 2026 GFI Flow Intelligence · Boston · <a href="index.html">Home</a> · <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6178024" target="_blank">SSRN</a> · <a href="mailto:ping@gfiintel.com">ping@gfiintel.com</a></div>
+
 <script>
-  // ---------- 語言切換 (與首頁一致) ----------
+  // 語言切換
   const btns = document.querySelectorAll('.lb-btn');
-  function updateLangUI(lang) {
-    // 工具為簡化版：主要顯示英文, 繁/簡可進一步擴充labels
-    if(lang === 'tw') document.querySelector('h1').innerHTML = '衡量邊際成本降幅 <span style="color:var(--green)">IMCR + GL Level</span>';
-    else if(lang === 'cn') document.querySelector('h1').innerHTML = '衡量边际成本降幅 <span style="color:var(--green)">IMCR + GL Level</span>';
-    else document.querySelector('h1').innerHTML = 'Measure Marginal Cost Reduction <span style="color:var(--green)">IMCR + GL Level</span>';
-  }
+  const blocks = document.querySelectorAll('.lb');
   btns.forEach(btn => {
     btn.addEventListener('click', () => {
       const lang = btn.dataset.lang;
       btns.forEach(b => b.classList.remove('on'));
+      blocks.forEach(b => b.classList.remove('active'));
       btn.classList.add('on');
-      updateLangUI(lang);
+      document.querySelector(`.lb[data-lang="${lang}"]`).classList.add('active');
     });
   });
 
-  // ---------- 輔助函數 ----------
-  function getRadioValue(name) {
-    let selected = document.querySelector(`input[name="${name}"]:checked`);
-    return selected ? selected.value === 'yes' : false;
-  }
+  // 通用計算與呈現
+  function generateReport(lang, data) {
+    let imcrRaw = 1 - (data.late / data.early);
+    let imcrPct = Math.round(imcrRaw * 100);
+    let gl = (data.q1?1:0) + (data.q2?1:0) + (data.q3?1:0) + (data.q4?1:0);
+    let glDesc = ["Pure specificity (GL0)","Shared data layer (GL1)","Shared module library (GL2)","Intent-driven (GL3)","Dynamic orchestration (GL4)"][gl];
+    let imcrLabel = "";
+    if(imcrPct<0) imcrLabel = "Negative generalization";
+    else if(imcrPct<30) imcrLabel = "Weak generalization";
+    else if(imcrPct<70) imcrLabel = "Moderate generalization";
+    else if(imcrPct<90) imcrLabel = "Strong generalization";
+    else imcrLabel = "Full generalization (MC→0)";
+    
+    let tier = "", tierClass = "", msg = "";
+    if(imcrPct>=90 && gl>=4) { tier = "Gold ★★★"; tierClass = "tier-gold"; msg = "Gold standard: full generalization efficiency. Suitable for enterprise orchestration."; }
+    else if(imcrPct>=70 && gl>=3) { tier = "Silver ★★"; tierClass = "tier-silver"; msg = "Silver: suitable for cross-dept procurement. Strong efficiency."; }
+    else if(imcrPct>=30 && gl>=2) { tier = "Bronze ★"; tierClass = "tier-bronze"; msg = "Bronze: basic generalization. Improvement advised."; }
+    else { tier = "Below Threshold"; tierClass = ""; msg = "Does not meet minimum threshold. Review system architecture."; }
 
-  function computeGLLevel(q1,q2,q3,q4) {
-    if(!q1) return 0; if(!q2) return 1; if(!q3) return 2; if(!q4) return 3;
-    return 4;
-  }
-  function getGLDesc(level) {
-    const map = {0:"Pure specificity",1:"Shared data layer",2:"Shared module library",3:"Intent-driven",4:"Dynamic orchestration"};
-    return map[level];
-  }
-  function getIMCRLabel(imcr) {
-    if(imcr<0) return "Negative generalization";
-    if(imcr<30) return "Weak generalization";
-    if(imcr<70) return "Moderate generalization";
-    if(imcr<90) return "Strong generalization";
-    return "Full generalization (MC→0)";
-  }
-  function getCompliance(imcr, gl) {
-    if(imcr>=90 && gl>=4) return {tier:"Gold ★★★", msg:"Gold standard: full generalization efficiency"};
-    if(imcr>=70 && gl>=3) return {tier:"Silver ★★", msg:"Silver: suitable for cross-dept procurement"};
-    if(imcr>=30 && gl>=2) return {tier:"Bronze ★", msg:"Bronze: basic generalization, improvement advised"};
-    return {tier:"Below Threshold", msg:"Does not meet minimum threshold; review architecture"};
-  }
-
-  let costChart = null;
-  function updateChart(early, late) {
-    const ctx = document.getElementById('costChart').getContext('2d');
-    if(costChart) costChart.destroy();
-    costChart = new Chart(ctx, {
-      type: 'line',
-      data: { labels: ['Early (first 10 avg)', 'Late (last 10 avg)'], datasets: [{ label: 'Marginal Cost', data: [early, late], borderColor: '#9FE870', tension: 0.2, fill: false, pointRadius: 6 }] },
-      options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { labels: { color: '#c7d2e3' } } } }
-    });
-  }
-
-  function generateAndDisplay() {
-    let sys = document.getElementById("systemName").value;
-    let cnt = document.getElementById("serviceCount").value;
-    let early = parseFloat(document.getElementById("mcEarly").value);
-    let late = parseFloat(document.getElementById("mcLate").value);
-    let unit = document.getElementById("costUnit").value;
-    let q1=getRadioValue('glQ1'), q2=getRadioValue('glQ2'), q3=getRadioValue('glQ3'), q4=getRadioValue('glQ4');
-    if(isNaN(early) || isNaN(late) || early<=0) { alert("Please enter valid marginal costs"); return; }
-    let imcrRaw = 1 - (late/early);
-    let imcrPct = Math.round(imcrRaw*100);
-    let gl = computeGLLevel(q1,q2,q3,q4);
-    let imcrLabel = getIMCRLabel(imcrPct);
-    let comp = getCompliance(imcrPct, gl);
-    let tierClass = comp.tier.includes("Gold")?"tier-gold":(comp.tier.includes("Silver")?"tier-silver":"tier-bronze");
-    updateChart(early, late);
-    let html = `<div class="result-card">
-      <div class="metric-line"><strong>🏛️ ${sys}</strong> <span>Total services: ${cnt}</span></div>
-      <div class="metric-line"><span>📉 GFI-IMCR: <strong class="metric-value-lg">${imcrPct}%</strong> (${imcrLabel})</span><span>${early} → ${late} ${unit}</span></div>
-      <div class="metric-line"><span>⚙️ GFI-GL Level: <strong>${gl}</strong> (${getGLDesc(gl)})</span><span class="gl-badge">${['GL0','GL1','GL2','GL3','GL4'][gl]}</span></div>
-      <div class="metric-line"><span>🏅 Compliance: <span class="${tierClass}">${comp.tier}</span></span><span>💡 ${comp.msg}</span></div>
-      <div class="metric-line"><span>✅ One-station readiness:</span><span>${gl>=3 && imcrPct>=70 ? 'High' : (gl>=2 ? 'Medium' : 'Low')}</span></div>
-      <div class="metric-line" style="border-bottom:none; font-size:12px; color:var(--sub);">Based on GEF (Generalization Efficiency Framework) · SSRN peer-reviewed</div>
+    let html = `<div class="report">
+      <div class="report-header"><div class="report-title">Generalization Efficiency Report</div>
+      <div class="report-sub">GFI-IMCR + GFI-GL · Based on GEF</div></div>
+      <div class="report-meta"><span>System: ${data.sys}</span><span>Total services (N): ${data.cnt}</span><span>Report date: ${new Date().toLocaleDateString()}</span></div>
+      <div class="metric-block"><span class="metric-label">📉 GFI-IMCR (Marginal Cost Reduction)</span><span class="metric-value imcr-big">${imcrPct}%</span></div>
+      <div class="metric-block"><span class="metric-label">Cost change (per service)</span><span>${data.early} → ${data.late} ${data.unit} (${imcrLabel})</span></div>
+      <div class="metric-block"><span class="metric-label">⚙️ GFI-GL Level</span><span class="metric-value">GL${gl} · ${glDesc}</span></div>
+      <div class="metric-block"><span class="metric-label">Maturity details</span><span>${data.q1?'✅':'❌'} Data sharing &nbsp; ${data.q2?'✅':'❌'} Shared modules &nbsp; ${data.q3?'✅':'❌'} Intent recognition &nbsp; ${data.q4?'✅':'❌'} Dynamic orchestration</span></div>
+      <div class="compliance"><span class="${tierClass}" style="font-weight:800;">${tier}</span><br><span style="font-size:12px;">${msg}</span></div>
+      <div class="metric-block" style="border-bottom:none; margin-top:12px;"><span class="metric-label">✅ One-station readiness</span><span>${gl>=3 && imcrPct>=70 ? 'High' : (gl>=2 ? 'Medium' : 'Low')}</span></div>
+      <div style="font-size:10px; text-align:center; margin-top:20px; color:var(--sub);">© GFI Flow Intelligence · GEF framework (SSRN peer-reviewed)</div>
     </div>`;
-    document.getElementById("resultPanel").innerHTML = html;
-    return {imcrPct, gl, sys, cnt, early, late, unit, q1, q2, q3, q4};
+    document.getElementById(`reportContainer_${lang}`).innerHTML = html;
+    document.getElementById(`printBtn_${lang}`).style.display = 'block';
   }
 
-  function saveToHistory() {
-    let data = generateAndDisplay();
-    let history = JSON.parse(localStorage.getItem("gf_check_history") || "[]");
-    let record = {...data, timestamp: new Date().toLocaleString()};
-    history.unshift(record);
-    if(history.length>10) history.pop();
-    localStorage.setItem("gf_check_history", JSON.stringify(history));
-    renderHistory();
-  }
-
-  function renderHistory() {
-    let history = JSON.parse(localStorage.getItem("gf_check_history") || "[]");
-    let container = document.getElementById("historyList");
-    if(history.length===0) { container.innerHTML = "<div style='padding:12px; opacity:0.6;'>No saved sessions</div>"; return; }
-    container.innerHTML = history.map((h,idx)=>`<div class="history-item" data-idx="${idx}">📅 ${h.timestamp} | ${h.sys} | IMCR: ${h.imcrPct}% | GL${h.gl}</div>`).join("");
-    document.querySelectorAll(".history-item").forEach(el=>{
-      el.addEventListener("click",()=>{
-        let rec = history[parseInt(el.dataset.idx)];
-        document.getElementById("systemName").value = rec.sys;
-        document.getElementById("serviceCount").value = rec.cnt;
-        document.getElementById("mcEarly").value = rec.early;
-        document.getElementById("mcLate").value = rec.late;
-        document.getElementById("costUnit").value = rec.unit;
-        document.querySelector(`input[name="glQ1"][value="${rec.q1?"yes":"no"}"]`).checked = true;
-        document.querySelector(`input[name="glQ2"][value="${rec.q2?"yes":"no"}"]`).checked = true;
-        document.querySelector(`input[name="glQ3"][value="${rec.q3?"yes":"no"}"]`).checked = true;
-        document.querySelector(`input[name="glQ4"][value="${rec.q4?"yes":"no"}"]`).checked = true;
-        generateAndDisplay();
+  // 綁定各個語言的產生按鈕
+  const langs = ['en','tw','cn'];
+  langs.forEach(lang => {
+    const genBtn = document.getElementById(`genBtn_${lang}`);
+    if(genBtn){
+      genBtn.addEventListener('click', () => {
+        let sys = document.getElementById(`sysName_${lang}`)?.value || "System";
+        let cnt = document.getElementById(`serviceCount_${lang}`)?.value || 0;
+        let early = parseFloat(document.getElementById(`mcEarly_${lang}`)?.value) || 0;
+        let late = parseFloat(document.getElementById(`mcLate_${lang}`)?.value) || 0;
+        let unit = document.getElementById(`unit_${lang}`)?.value || "";
+        let q1 = document.getElementById(`q1_${lang}`)?.checked || false;
+        let q2 = document.getElementById(`q2_${lang}`)?.checked || false;
+        let q3 = document.getElementById(`q3_${lang}`)?.checked || false;
+        let q4 = document.getElementById(`q4_${lang}`)?.checked || false;
+        if(early<=0 || late<=0){ alert(lang==='en'?"Please enter positive marginal costs":"請輸入正數邊際成本"); return; }
+        generateReport(lang, {sys,cnt,early,late,unit,q1,q2,q3,q4});
       });
-    });
-  }
-
-  function clearHistory() { localStorage.removeItem("gf_check_history"); renderHistory(); }
-  function downloadPDF() {
-    let content = document.getElementById("resultPanel").innerHTML;
-    if(!content.includes("GFI-IMCR")) { alert("Please generate a report first"); return; }
-    let printWindow = window.open('', '_blank');
-    let styles = document.querySelector('style').innerHTML;
-    printWindow.document.write(`<html><head><title>GFI_Check_Report</title><style>${styles} body { padding:24px; } .nav, .lang-grp, .template-buttons, #historyList, #clearHistoryBtn, #saveHistoryBtn, #downloadPdfBtn, .two-columns .card:first-child .template-buttons, .two-columns .card:first-child button:not(.btn-primary) { display:none; } .two-columns { display:block; } .card { background:transparent; border:none; } .result-card { margin-top:0; }</style></head><body><div class="container">${document.querySelector('.container').cloneNode(true).outerHTML}</div></body></html>`);
-    printWindow.document.close();
-    printWindow.print();
-  }
-
-  function loadTemplate(type) {
-    if(type==='jiangxi'){
-      document.getElementById("systemName").value = "Jiangxi Ding Ding";
-      document.getElementById("serviceCount").value = "387";
-      document.getElementById("mcEarly").value = "100";
-      document.getElementById("mcLate").value = "12";
-      document.getElementById("costUnit").value = "CNY";
-      document.querySelector(`input[name="glQ1"][value="yes"]`).checked=true;
-      document.querySelector(`input[name="glQ2"][value="yes"]`).checked=true;
-      document.querySelector(`input[name="glQ3"][value="yes"]`).checked=true;
-      document.querySelector(`input[name="glQ4"][value="no"]`).checked=true;
-    } else if(type==='beijing'){
-      document.getElementById("systemName").value = "Beijing Feng Xiaozhi";
-      document.getElementById("serviceCount").value = "11 depts";
-      document.getElementById("mcEarly").value = "100";
-      document.getElementById("mcLate").value = "25";
-      document.getElementById("costUnit").value = "man-hours";
-      document.querySelector(`input[name="glQ1"][value="yes"]`).checked=true;
-      document.querySelector(`input[name="glQ2"][value="yes"]`).checked=true;
-      document.querySelector(`input[name="glQ3"][value="yes"]`).checked=true;
-      document.querySelector(`input[name="glQ4"][value="no"]`).checked=true;
-    } else {
-      document.getElementById("systemName").value = "Legacy Silo System";
-      document.getElementById("serviceCount").value = "15";
-      document.getElementById("mcEarly").value = "100";
-      document.getElementById("mcLate").value = "110";
-      document.getElementById("costUnit").value = "USD";
-      document.querySelector(`input[name="glQ1"][value="no"]`).checked=true;
-      document.querySelector(`input[name="glQ2"][value="no"]`).checked=true;
-      document.querySelector(`input[name="glQ3"][value="no"]`).checked=true;
-      document.querySelector(`input[name="glQ4"][value="no"]`).checked=true;
     }
-    generateAndDisplay();
-  }
-
-  // 綁定事件
-  document.getElementById("calcBtn").addEventListener("click", generateAndDisplay);
-  document.getElementById("saveHistoryBtn").addEventListener("click", saveToHistory);
-  document.getElementById("clearHistoryBtn").addEventListener("click", clearHistory);
-  document.getElementById("downloadPdfBtn").addEventListener("click", downloadPDF);
-  document.querySelectorAll(".template-btn").forEach(btn=>{
-    btn.addEventListener("click",()=>loadTemplate(btn.dataset.template));
+    // 預設生成一次（展示範例）
+    if(lang==='en'){
+      setTimeout(()=>{
+        document.getElementById(`genBtn_${lang}`).click();
+      },100);
+    } else if(lang==='tw'){
+      setTimeout(()=>{
+        document.getElementById(`genBtn_${lang}`).click();
+      },150);
+    } else {
+      setTimeout(()=>{
+        document.getElementById(`genBtn_${lang}`).click();
+      },200);
+    }
   });
-  renderHistory();
-  generateAndDisplay();
 </script>
 </body>
 </html>
