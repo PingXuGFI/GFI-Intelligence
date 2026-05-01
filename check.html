@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <meta name="description" content="GFI Check — Measure generalization efficiency of AI-driven government automation. IMCR + GL Level assessment tool.">
+  <title>GFI Check | Generalization Efficiency Tool</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    :root{
+      --bg:#0b1220;
+      --bg2:#0d1526;
+      --text:#f8fbff;
+      --muted:#c7d2e3;
+      --sub:#9fb0c8;
+      --dim:rgba(255,255,255,.06);
+      --green:#9FE870;
+      --blue:#7DD3FC;
+      --serif:'DM Serif Display',Georgia,serif;
+      --mono:'DM Mono',monospace;
+      --sans:'DM Sans',system-ui,sans-serif
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{
+      background:var(--bg);
+      color:var(--text);
+      font-family:var(--sans);
+      font-size:15px;
+      line-height:1.75;
+      overflow-x:hidden
+    }
+    .nav{
+      position:fixed;
+      inset:0 0 auto 0;
+      z-index:100;
+      height:62px;
+      padding:0 clamp(18px,5vw,52px);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      background:rgba(11,18,32,.90);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid rgba(255,255,255,.07)
+    }
+    .logo{
+      color:#fff;
+      text-decoration:none;
+      font-family:var(--mono);
+      font-size:13px;
+      letter-spacing:.16em;
+      text-transform:uppercase
+    }
+    .lang-grp{display:flex;gap:6px}
+    .lb-btn{
+      font-family:var(--mono);
+      font-size:11px;
+      letter-spacing:.08em;
+      padding:5px 10px;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:5px;
+      background:none;
+      color:var(--sub);
+      cursor:pointer;
+      transition:all .2s
+    }
+    .lb-btn:hover{color:var(--text);border-color:rgba(255,255,255,.2)}
+    .lb-btn.on{
+      color:var(--green);
+      border-color:rgba(159,232,112,.35);
+      background:rgba(159,232,112,.07)
+    }
+    .page{padding-top:62px}
+    .container{
+      max-width:1200px;
+      margin:0 auto;
+      padding:clamp(32px,5vw,56px) clamp(20px,6vw,48px);
+    }
+    .hero-badge{
+      font-family:var(--mono);
+      font-size:10px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      color:var(--green);
+      margin-bottom:20px
+    }
+    h1{
+      font-family:var(--serif);
+      font-size:clamp(32px,4.2vw,48px);
+      line-height:1.1;
+      margin-bottom:16px;
+      color:#fff
+    }
+    .subhead{
+      font-size:16px;
+      color:var(--muted);
+      max-width:640px;
+      margin-bottom:32px
+    }
+    .two-columns{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:28px;
+      margin:32px 0 28px
+    }
+    @media(max-width:850px){
+      .two-columns{grid-template-columns:1fr;gap:24px}
+    }
+    .card{
+      background:var(--bg2);
+      border:1px solid var(--dim);
+      border-radius:24px;
+      padding:24px 28px;
+      transition:border-color .2s
+    }
+    .card-title{
+      font-family:var(--mono);
+      font-size:11px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:var(--green);
+      margin-bottom:16px
+    }
+    .form-group{margin-bottom:16px}
+    label{
+      display:block;
+      font-size:12px;
+      font-weight:500;
+      margin-bottom:6px;
+      color:var(--sub)
+    }
+    input, select{
+      width:100%;
+      padding:10px 14px;
+      background:rgba(255,255,255,.05);
+      border:1px solid var(--dim);
+      border-radius:12px;
+      color:#fff;
+      font-family:var(--sans);
+      font-size:14px;
+      transition:border-color .2s
+    }
+    input:focus, select:focus{
+      outline:none;
+      border-color:rgba(159,232,112,.5)
+    }
+    .radio-group{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      margin:12px 0 8px
+    }
+    .radio-item{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap
+    }
+    .radio-item input{
+      width:auto;
+      margin:0
+    }
+    .radio-item label{
+      margin:0;
+      font-size:13px;
+      font-weight:400
+    }
+    button{
+      background:rgba(159,232,112,.12);
+      border:1px solid rgba(159,232,112,.35);
+      border-radius:40px;
+      padding:10px 20px;
+      font-family:var(--mono);
+      font-size:11px;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+      color:var(--green);
+      cursor:pointer;
+      transition:all .2s;
+      margin-right:10px;
+      margin-bottom:10px
+    }
+    button:hover{
+      background:rgba(159,232,112,.22);
+      border-color:rgba(159,232,112,.6);
+      transform:translateY(-1px)
+    }
+    .btn-primary{
+      background:var(--green);
+      color:#0b1220;
+      border-color:var(--green)
+    }
+    .btn-primary:hover{
+      background:#b5ff8a;
+      transform:translateY(-1px)
+    }
+    .result-card{
+      background:linear-gradient(145deg,#0f1a24,#0b121f);
+      border-radius:24px;
+      padding:24px;
+      margin-top:28px;
+      border:1px solid rgba(159,232,112,.2)
+    }
+    .metric-line{
+      display:flex;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      padding:12px 0;
+      border-bottom:1px solid rgba(255,255,255,.06)
+    }
+    .metric-value-lg{
+      font-size:28px;
+      font-weight:700;
+      font-family:var(--mono);
+      color:var(--green)
+    }
+    .tier-gold{color:#FFD966}
+    .tier-silver{color:#B0C4DE}
+    .tier-bronze{color:#CD7A32}
+    .gl-badge{
+      background:rgba(159,232,112,.15);
+      padding:4px 12px;
+      border-radius:40px;
+      font-size:12px
+    }
+    .history-item{
+      background:rgba(255,255,255,.03);
+      border-radius:14px;
+      padding:10px 14px;
+      margin-bottom:8px;
+      cursor:pointer;
+      font-size:12px;
+      transition:background .2s
+    }
+    .history-item:hover{
+      background:rgba(255,255,255,.08)
+    }
+    .template-buttons{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin:16px 0 8px
+    }
+    canvas{max-height:160px; width:100%; margin-top:16px}
+    .footer{
+      text-align:center;
+      padding:24px 20px 32px;
+      font-family:var(--mono);
+      font-size:11px;
+      color:rgba(255,255,255,.2);
+      border-top:1px solid rgba(255,255,255,.05);
+      margin-top:20px
+    }
+    .footer a{
+      color:rgba(255,255,255,.32);
+      text-decoration:none
+    }
+    .footer a:hover{color:#fff}
+  </style>
+</head>
+<body>
+<div class="nav">
+  <a href="index.html" class="logo">GFI Flow Intelligence</a>
+  <div class="lang-grp">
+    <button class="lb-btn on" data-lang="en">EN</button>
+    <button class="lb-btn" data-lang="tw">繁</button>
+    <button class="lb-btn" data-lang="cn">简</button>
+  </div>
+</div>
+
+<div class="page">
+  <div class="container">
+    <div class="hero-badge">GFI Check · Generalization Efficiency Framework</div>
+    <h1>Measure Marginal Cost Reduction <span style="color:var(--green)">IMCR + GL Level</span></h1>
+    <div class="subhead">One-page diagnostic for government automation. Based on SSRN peer-reviewed framework (GEF).</div>
+
+    <div class="two-columns">
+      <!-- 左欄：輸入 -->
+      <div class="card">
+        <div class="card-title">📌 System & IMCR</div>
+        <div class="form-group"><label>System Name</label><input type="text" id="systemName" value="Smart One-Station Platform"></div>
+        <div class="form-group"><label>Total Services (N)</label><input type="number" id="serviceCount" value="387"></div>
+        <div class="form-group"><label>Early Marginal Cost (first 10 avg)</label><input type="number" id="mcEarly" value="100" step="any"></div>
+        <div class="form-group"><label>Late Marginal Cost (last 10 avg)</label><input type="number" id="mcLate" value="12" step="any"></div>
+        <div class="form-group"><label>Cost Unit</label><input type="text" id="costUnit" value="CNY"></div>
+        
+        <div class="card-title" style="margin-top:16px">🏛️ GL Level Maturity</div>
+        <div class="radio-group" id="glGroup">
+          <div class="radio-item"><input type="radio" name="glQ1" value="yes" id="q1Yes"><label>✅ Yes</label><input type="radio" name="glQ1" value="no" id="q1No"><label>❌ No</label><span> Q1: Cross-dept data sharing?</span></div>
+          <div class="radio-item"><input type="radio" name="glQ2" value="yes" id="q2Yes"><label>✅ Yes</label><input type="radio" name="glQ2" value="no" id="q2No"><label>❌ No</label><span> Q2: ≥3 shared modules reused ≥5 times?</span></div>
+          <div class="radio-item"><input type="radio" name="glQ3" value="yes" id="q3Yes"><label>✅ Yes</label><input type="radio" name="glQ3" value="no" id="q3No"><label>❌ No</label><span> Q3: Natural language intent recognition?</span></div>
+          <div class="radio-item"><input type="radio" name="glQ4" value="yes" id="q4Yes"><label>✅ Yes</label><input type="radio" name="glQ4" value="no" id="q4No"><label>❌ No</label><span> Q4: Dynamic orchestration (runtime cross-dept)?</span></div>
+        </div>
+        <div class="template-buttons">
+          <button class="template-btn" data-template="jiangxi">📁 Load Jiangxi</button>
+          <button class="template-btn" data-template="beijing">🏙️ Load Beijing</button>
+          <button class="template-btn" data-template="legacy">🏚️ Load Legacy</button>
+        </div>
+        <div style="margin-top:16px">
+          <button id="calcBtn" class="btn-primary">⚡ Generate Report</button>
+          <button id="saveHistoryBtn">💾 Save Session</button>
+          <button id="downloadPdfBtn">📄 Export PDF</button>
+        </div>
+      </div>
+
+      <!-- 右欄：圖表 + 歷史 -->
+      <div class="card">
+        <div class="card-title">📈 Marginal Cost Trend</div>
+        <canvas id="costChart" width="400" height="140"></canvas>
+        <div class="card-title" style="margin-top:24px">📜 Assessment History (click to restore)</div>
+        <div id="historyList" style="max-height: 210px; overflow-y: auto;">No records</div>
+        <button id="clearHistoryBtn" style="margin-top:8px; background:none;">Clear history</button>
+      </div>
+    </div>
+
+    <!-- 結果區 -->
+    <div id="resultPanel">
+      <div class="result-card" style="text-align:center; color:var(--sub);">Click "Generate Report" to see IMCR + GL Level + compliance tier</div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  © 2026 GFI Flow Intelligence · Boston · 
+  <a href="about.html">About</a> · 
+  <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6178024" target="_blank">SSRN</a> · 
+  <a href="mailto:ping@gfiintel.com">ping@gfiintel.com</a> · 
+  <a href="index.html">Home</a>
+</div>
+
+<script>
+  // ---------- 語言切換 (與首頁一致) ----------
+  const btns = document.querySelectorAll('.lb-btn');
+  function updateLangUI(lang) {
+    // 工具為簡化版：主要顯示英文, 繁/簡可進一步擴充labels
+    if(lang === 'tw') document.querySelector('h1').innerHTML = '衡量邊際成本降幅 <span style="color:var(--green)">IMCR + GL Level</span>';
+    else if(lang === 'cn') document.querySelector('h1').innerHTML = '衡量边际成本降幅 <span style="color:var(--green)">IMCR + GL Level</span>';
+    else document.querySelector('h1').innerHTML = 'Measure Marginal Cost Reduction <span style="color:var(--green)">IMCR + GL Level</span>';
+  }
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const lang = btn.dataset.lang;
+      btns.forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+      updateLangUI(lang);
+    });
+  });
+
+  // ---------- 輔助函數 ----------
+  function getRadioValue(name) {
+    let selected = document.querySelector(`input[name="${name}"]:checked`);
+    return selected ? selected.value === 'yes' : false;
+  }
+
+  function computeGLLevel(q1,q2,q3,q4) {
+    if(!q1) return 0; if(!q2) return 1; if(!q3) return 2; if(!q4) return 3;
+    return 4;
+  }
+  function getGLDesc(level) {
+    const map = {0:"Pure specificity",1:"Shared data layer",2:"Shared module library",3:"Intent-driven",4:"Dynamic orchestration"};
+    return map[level];
+  }
+  function getIMCRLabel(imcr) {
+    if(imcr<0) return "Negative generalization";
+    if(imcr<30) return "Weak generalization";
+    if(imcr<70) return "Moderate generalization";
+    if(imcr<90) return "Strong generalization";
+    return "Full generalization (MC→0)";
+  }
+  function getCompliance(imcr, gl) {
+    if(imcr>=90 && gl>=4) return {tier:"Gold ★★★", msg:"Gold standard: full generalization efficiency"};
+    if(imcr>=70 && gl>=3) return {tier:"Silver ★★", msg:"Silver: suitable for cross-dept procurement"};
+    if(imcr>=30 && gl>=2) return {tier:"Bronze ★", msg:"Bronze: basic generalization, improvement advised"};
+    return {tier:"Below Threshold", msg:"Does not meet minimum threshold; review architecture"};
+  }
+
+  let costChart = null;
+  function updateChart(early, late) {
+    const ctx = document.getElementById('costChart').getContext('2d');
+    if(costChart) costChart.destroy();
+    costChart = new Chart(ctx, {
+      type: 'line',
+      data: { labels: ['Early (first 10 avg)', 'Late (last 10 avg)'], datasets: [{ label: 'Marginal Cost', data: [early, late], borderColor: '#9FE870', tension: 0.2, fill: false, pointRadius: 6 }] },
+      options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { labels: { color: '#c7d2e3' } } } }
+    });
+  }
+
+  function generateAndDisplay() {
+    let sys = document.getElementById("systemName").value;
+    let cnt = document.getElementById("serviceCount").value;
+    let early = parseFloat(document.getElementById("mcEarly").value);
+    let late = parseFloat(document.getElementById("mcLate").value);
+    let unit = document.getElementById("costUnit").value;
+    let q1=getRadioValue('glQ1'), q2=getRadioValue('glQ2'), q3=getRadioValue('glQ3'), q4=getRadioValue('glQ4');
+    if(isNaN(early) || isNaN(late) || early<=0) { alert("Please enter valid marginal costs"); return; }
+    let imcrRaw = 1 - (late/early);
+    let imcrPct = Math.round(imcrRaw*100);
+    let gl = computeGLLevel(q1,q2,q3,q4);
+    let imcrLabel = getIMCRLabel(imcrPct);
+    let comp = getCompliance(imcrPct, gl);
+    let tierClass = comp.tier.includes("Gold")?"tier-gold":(comp.tier.includes("Silver")?"tier-silver":"tier-bronze");
+    updateChart(early, late);
+    let html = `<div class="result-card">
+      <div class="metric-line"><strong>🏛️ ${sys}</strong> <span>Total services: ${cnt}</span></div>
+      <div class="metric-line"><span>📉 GFI-IMCR: <strong class="metric-value-lg">${imcrPct}%</strong> (${imcrLabel})</span><span>${early} → ${late} ${unit}</span></div>
+      <div class="metric-line"><span>⚙️ GFI-GL Level: <strong>${gl}</strong> (${getGLDesc(gl)})</span><span class="gl-badge">${['GL0','GL1','GL2','GL3','GL4'][gl]}</span></div>
+      <div class="metric-line"><span>🏅 Compliance: <span class="${tierClass}">${comp.tier}</span></span><span>💡 ${comp.msg}</span></div>
+      <div class="metric-line"><span>✅ One-station readiness:</span><span>${gl>=3 && imcrPct>=70 ? 'High' : (gl>=2 ? 'Medium' : 'Low')}</span></div>
+      <div class="metric-line" style="border-bottom:none; font-size:12px; color:var(--sub);">Based on GEF (Generalization Efficiency Framework) · SSRN peer-reviewed</div>
+    </div>`;
+    document.getElementById("resultPanel").innerHTML = html;
+    return {imcrPct, gl, sys, cnt, early, late, unit, q1, q2, q3, q4};
+  }
+
+  function saveToHistory() {
+    let data = generateAndDisplay();
+    let history = JSON.parse(localStorage.getItem("gf_check_history") || "[]");
+    let record = {...data, timestamp: new Date().toLocaleString()};
+    history.unshift(record);
+    if(history.length>10) history.pop();
+    localStorage.setItem("gf_check_history", JSON.stringify(history));
+    renderHistory();
+  }
+
+  function renderHistory() {
+    let history = JSON.parse(localStorage.getItem("gf_check_history") || "[]");
+    let container = document.getElementById("historyList");
+    if(history.length===0) { container.innerHTML = "<div style='padding:12px; opacity:0.6;'>No saved sessions</div>"; return; }
+    container.innerHTML = history.map((h,idx)=>`<div class="history-item" data-idx="${idx}">📅 ${h.timestamp} | ${h.sys} | IMCR: ${h.imcrPct}% | GL${h.gl}</div>`).join("");
+    document.querySelectorAll(".history-item").forEach(el=>{
+      el.addEventListener("click",()=>{
+        let rec = history[parseInt(el.dataset.idx)];
+        document.getElementById("systemName").value = rec.sys;
+        document.getElementById("serviceCount").value = rec.cnt;
+        document.getElementById("mcEarly").value = rec.early;
+        document.getElementById("mcLate").value = rec.late;
+        document.getElementById("costUnit").value = rec.unit;
+        document.querySelector(`input[name="glQ1"][value="${rec.q1?"yes":"no"}"]`).checked = true;
+        document.querySelector(`input[name="glQ2"][value="${rec.q2?"yes":"no"}"]`).checked = true;
+        document.querySelector(`input[name="glQ3"][value="${rec.q3?"yes":"no"}"]`).checked = true;
+        document.querySelector(`input[name="glQ4"][value="${rec.q4?"yes":"no"}"]`).checked = true;
+        generateAndDisplay();
+      });
+    });
+  }
+
+  function clearHistory() { localStorage.removeItem("gf_check_history"); renderHistory(); }
+  function downloadPDF() {
+    let content = document.getElementById("resultPanel").innerHTML;
+    if(!content.includes("GFI-IMCR")) { alert("Please generate a report first"); return; }
+    let printWindow = window.open('', '_blank');
+    let styles = document.querySelector('style').innerHTML;
+    printWindow.document.write(`<html><head><title>GFI_Check_Report</title><style>${styles} body { padding:24px; } .nav, .lang-grp, .template-buttons, #historyList, #clearHistoryBtn, #saveHistoryBtn, #downloadPdfBtn, .two-columns .card:first-child .template-buttons, .two-columns .card:first-child button:not(.btn-primary) { display:none; } .two-columns { display:block; } .card { background:transparent; border:none; } .result-card { margin-top:0; }</style></head><body><div class="container">${document.querySelector('.container').cloneNode(true).outerHTML}</div></body></html>`);
+    printWindow.document.close();
+    printWindow.print();
+  }
+
+  function loadTemplate(type) {
+    if(type==='jiangxi'){
+      document.getElementById("systemName").value = "Jiangxi Ding Ding";
+      document.getElementById("serviceCount").value = "387";
+      document.getElementById("mcEarly").value = "100";
+      document.getElementById("mcLate").value = "12";
+      document.getElementById("costUnit").value = "CNY";
+      document.querySelector(`input[name="glQ1"][value="yes"]`).checked=true;
+      document.querySelector(`input[name="glQ2"][value="yes"]`).checked=true;
+      document.querySelector(`input[name="glQ3"][value="yes"]`).checked=true;
+      document.querySelector(`input[name="glQ4"][value="no"]`).checked=true;
+    } else if(type==='beijing'){
+      document.getElementById("systemName").value = "Beijing Feng Xiaozhi";
+      document.getElementById("serviceCount").value = "11 depts";
+      document.getElementById("mcEarly").value = "100";
+      document.getElementById("mcLate").value = "25";
+      document.getElementById("costUnit").value = "man-hours";
+      document.querySelector(`input[name="glQ1"][value="yes"]`).checked=true;
+      document.querySelector(`input[name="glQ2"][value="yes"]`).checked=true;
+      document.querySelector(`input[name="glQ3"][value="yes"]`).checked=true;
+      document.querySelector(`input[name="glQ4"][value="no"]`).checked=true;
+    } else {
+      document.getElementById("systemName").value = "Legacy Silo System";
+      document.getElementById("serviceCount").value = "15";
+      document.getElementById("mcEarly").value = "100";
+      document.getElementById("mcLate").value = "110";
+      document.getElementById("costUnit").value = "USD";
+      document.querySelector(`input[name="glQ1"][value="no"]`).checked=true;
+      document.querySelector(`input[name="glQ2"][value="no"]`).checked=true;
+      document.querySelector(`input[name="glQ3"][value="no"]`).checked=true;
+      document.querySelector(`input[name="glQ4"][value="no"]`).checked=true;
+    }
+    generateAndDisplay();
+  }
+
+  // 綁定事件
+  document.getElementById("calcBtn").addEventListener("click", generateAndDisplay);
+  document.getElementById("saveHistoryBtn").addEventListener("click", saveToHistory);
+  document.getElementById("clearHistoryBtn").addEventListener("click", clearHistory);
+  document.getElementById("downloadPdfBtn").addEventListener("click", downloadPDF);
+  document.querySelectorAll(".template-btn").forEach(btn=>{
+    btn.addEventListener("click",()=>loadTemplate(btn.dataset.template));
+  });
+  renderHistory();
+  generateAndDisplay();
+</script>
+</body>
+</html>
