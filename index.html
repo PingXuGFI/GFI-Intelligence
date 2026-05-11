@@ -3,419 +3,774 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="GFI Flow Intelligence — independent outcome verification, procurement accountability, false digitization detection, and AI governance review for public systems." />
+  <meta name="description" content="GFI Flow Intelligence — independent outcome verification, procurement accountability, false digitization diagnostics, and AI governance review for public systems." />
   <title>GFI Flow Intelligence</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Inter:wght@300;400;450;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root{
+      --ink:#172033;
+      --ink2:#24324a;
+      --muted:#627089;
+      --soft:#7d8ca3;
+      --paper:#f7f3ea;
+      --paper2:#efe8dc;
+      --white:#ffffff;
+      --navy:#0b1220;
+      --navy2:#111a2b;
+      --teal:#2f7f86;
+      --teal2:#4aa0a8;
+      --gold:#b99046;
+      --line:rgba(23,32,51,.12);
+      --lineDark:rgba(255,255,255,.12);
+      --shadow:0 22px 70px rgba(20,30,50,.14);
+      --serif:"Source Serif 4", Georgia, serif;
+      --sans:"Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --mono:"IBM Plex Mono", monospace;
+      --max:1160px;
     }
 
-    body {
-      background: #ffffff;
-      color: #1a1e2b;
-      font-family: 'Inter', -apple-system, system-ui, sans-serif;
-      font-size: 16px;
-      line-height: 1.55;
-      font-weight: 400;
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+    body{
+      background:var(--paper);
+      color:var(--ink);
+      font-family:var(--sans);
+      font-size:15.5px;
+      line-height:1.72;
+      letter-spacing:-.005em;
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+
+    .nav{
+      position:fixed;
+      inset:0 0 auto 0;
+      z-index:100;
+      height:76px;
+      padding:0 clamp(22px,5vw,64px);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      background:rgba(247,243,234,.88);
+      backdrop-filter:blur(20px);
+      border-bottom:1px solid rgba(23,32,51,.10);
     }
 
-    .nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 70px;
-      padding: 0 32px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: rgba(255,255,255,0.96);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid #e6e8ec;
-      z-index: 100;
+    .logo{
+      display:flex;
+      align-items:center;
+      gap:13px;
+      min-width:0;
+      color:var(--ink);
+    }
+    .logo img{
+      width:48px;
+      height:auto;
+      flex:0 0 auto;
+      filter:drop-shadow(0 8px 18px rgba(20,30,50,.16));
+    }
+    .logo-text{
+      display:flex;
+      flex-direction:column;
+      line-height:1.12;
+    }
+    .logo-text strong{
+      font-family:var(--serif);
+      font-size:21px;
+      font-weight:500;
+      letter-spacing:-.01em;
+      color:var(--ink);
+    }
+    .logo-text span{
+      margin-top:3px;
+      font-family:var(--mono);
+      font-size:10px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:var(--muted);
     }
 
-    .logo {
-      display: flex;
-      align-items: baseline;
-      gap: 8px;
-      font-weight: 600;
-      font-size: 18px;
-      color: #1a1e2b;
-      text-decoration: none;
-      letter-spacing: -0.3px;
+    .nav-right{
+      display:flex;
+      align-items:center;
+      gap:18px;
+    }
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:20px;
+      font-size:13.5px;
+      color:var(--muted);
+    }
+    .nav-links a:hover{color:var(--teal)}
+
+    .lang-grp{display:flex;gap:6px}
+    .lb-btn{
+      font-family:var(--mono);
+      font-size:10.5px;
+      letter-spacing:.08em;
+      padding:5px 9px;
+      border:1px solid rgba(23,32,51,.12);
+      border-radius:999px;
+      background:rgba(255,255,255,.35);
+      color:var(--muted);
+      cursor:pointer;
+      transition:all .2s ease;
+    }
+    .lb-btn:hover{color:var(--ink);border-color:rgba(47,127,134,.28)}
+    .lb-btn.on{
+      color:var(--teal);
+      border-color:rgba(47,127,134,.38);
+      background:rgba(47,127,134,.08);
     }
 
-    .logo span {
-      font-weight: 400;
-      color: #6b7280;
-      font-size: 13px;
+    .lb{display:none}
+    .lb.active{display:block}
+    .page{padding-top:76px}
+    .wrap{width:min(var(--max), calc(100% - 44px)); margin:0 auto}
+
+    .hero{
+      min-height:calc(100vh - 76px);
+      display:flex;
+      align-items:center;
+      position:relative;
+      overflow:hidden;
+      background:
+        linear-gradient(90deg, rgba(247,243,234,.96) 0%, rgba(247,243,234,.88) 34%, rgba(247,243,234,.52) 56%, rgba(247,243,234,.08) 74%),
+        url('government-hero.jpg') center right/cover no-repeat;
+      border-bottom:1px solid var(--line);
+    }
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at 20% 22%, rgba(255,255,255,.55), transparent 34%),
+        linear-gradient(180deg, rgba(255,255,255,.10), rgba(0,0,0,.04));
+      pointer-events:none;
+    }
+    .hero-grid{
+      position:relative;
+      z-index:1;
+      display:grid;
+      grid-template-columns:1.04fr .96fr;
+      gap:56px;
+      align-items:center;
+      padding:78px 0 70px;
+    }
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      font-family:var(--mono);
+      font-size:11px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      color:var(--teal);
+      margin-bottom:20px;
+      opacity:0;
+      animation:up .5s .05s forwards;
+    }
+    .eyebrow::before{
+      content:"";
+      width:34px;
+      height:1px;
+      background:var(--teal);
+      opacity:.7;
+    }
+    h1{
+      font-family:var(--serif);
+      font-size:clamp(43px,5vw,72px);
+      line-height:1.03;
+      letter-spacing:-.035em;
+      font-weight:500;
+      color:var(--ink);
+      max-width:820px;
+      opacity:0;
+      animation:up .55s .12s forwards;
+    }
+    .hero-desc{
+      max-width:680px;
+      margin-top:24px;
+      font-size:19px;
+      line-height:1.78;
+      font-weight:300;
+      color:var(--ink2);
+      opacity:0;
+      animation:up .55s .2s forwards;
+    }
+    .hero-proof{
+      margin-top:22px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      opacity:0;
+      animation:up .55s .26s forwards;
+    }
+    .proof-pill{
+      border:1px solid rgba(47,127,134,.22);
+      background:rgba(255,255,255,.48);
+      color:var(--muted);
+      border-radius:999px;
+      padding:7px 12px;
+      font-family:var(--mono);
+      font-size:11px;
+      letter-spacing:.04em;
+    }
+    .hero-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:34px;
+      opacity:0;
+      animation:up .55s .32s forwards;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:9px;
+      padding:11px 18px;
+      border-radius:999px;
+      font-size:13.5px;
+      font-weight:600;
+      transition:all .22s ease;
+      white-space:nowrap;
+    }
+    .btn.primary{
+      color:#fff;
+      background:linear-gradient(135deg,var(--navy),var(--teal));
+      border:1px solid rgba(47,127,134,.42);
+      box-shadow:0 14px 36px rgba(20,30,50,.18);
+    }
+    .btn.secondary{
+      color:var(--ink);
+      background:rgba(255,255,255,.52);
+      border:1px solid rgba(23,32,51,.14);
+    }
+    .btn:hover{transform:translateY(-1px)}
+
+    .hero-card{
+      position:relative;
+      border:1px solid rgba(255,255,255,.28);
+      border-radius:30px;
+      background:rgba(255,255,255,.20);
+      backdrop-filter:blur(18px);
+      box-shadow:0 24px 70px rgba(20,30,50,.22);
+      padding:28px;
+      opacity:0;
+      animation:up .65s .38s forwards;
+    }
+    .hero-card::before{
+      content:"";
+      position:absolute;
+      inset:12px;
+      border:1px solid rgba(47,127,134,.12);
+      border-radius:22px;
+      pointer-events:none;
+    }
+    .card-label{
+      font-family:var(--mono);
+      font-size:10.5px;
+      letter-spacing:.15em;
+      text-transform:uppercase;
+      color:var(--gold);
+      margin-bottom:16px;
+    }
+    .missing-layer{
+      border-radius:22px;
+      overflow:hidden;
+      border:1px solid rgba(23,32,51,.09);
+      background:#fff;
+      margin-bottom:20px;
+    }
+    .missing-layer img{width:100%}
+    .card-note{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+    .note-box{
+      border-radius:16px;
+      border:1px solid rgba(23,32,51,.09);
+      background:rgba(247,243,234,.76);
+      padding:16px;
+    }
+    .note-box b{
+      display:block;
+      font-size:13.5px;
+      color:var(--ink);
+      margin-bottom:6px;
+    }
+    .note-box span{
+      display:block;
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.55;
     }
 
-    .nav-links {
-      display: flex;
-      gap: 28px;
-      font-size: 14px;
+    section{padding:72px 0;border-bottom:1px solid var(--line)}
+    .section-head{
+      display:grid;
+      grid-template-columns:.85fr 1.15fr;
+      gap:44px;
+      align-items:start;
+      margin-bottom:34px;
+    }
+    h2{
+      font-family:var(--serif);
+      font-size:clamp(30px,3.6vw,48px);
+      line-height:1.1;
+      letter-spacing:-.025em;
+      font-weight:500;
+      color:var(--ink);
+    }
+    .lead{color:var(--muted);font-size:16.5px;line-height:1.8}
+
+    .gate-section{background:#fbf8f1}
+    .gate-cards{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+    }
+    .gate-card{
+      min-height:230px;
+      display:flex;
+      flex-direction:column;
+      border-radius:24px;
+      padding:24px;
+      background:rgba(255,255,255,.62);
+      border:1px solid rgba(23,32,51,.11);
+      box-shadow:0 12px 40px rgba(20,30,50,.06);
+      transition:all .22s ease;
+    }
+    .gate-card:hover{transform:translateY(-3px);box-shadow:0 18px 50px rgba(20,30,50,.10)}
+    .gc-sector{
+      font-family:var(--mono);
+      font-size:10px;
+      letter-spacing:.15em;
+      text-transform:uppercase;
+      color:var(--teal);
+      margin-bottom:12px;
+    }
+    .gc-title{
+      font-family:var(--serif);
+      font-size:23px;
+      line-height:1.18;
+      color:var(--ink);
+      margin-bottom:10px;
+      letter-spacing:-.015em;
+    }
+    .gc-desc{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.68;
+      flex:1;
+    }
+    .gc-cta{
+      margin-top:18px;
+      font-family:var(--mono);
+      font-size:11px;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+      color:var(--teal);
+    }
+    .arr{display:inline-block;transition:transform .2s ease}
+    .gate-card:hover .arr,.btn:hover .arr{transform:translateX(3px)}
+
+    .dark-section{
+      background:linear-gradient(180deg,var(--navy),#08101d);
+      color:#fff;
+      border-bottom:1px solid var(--lineDark);
+    }
+    .dark-section h2{color:#fff}
+    .dark-section .lead{color:#c8d3e4}
+    .dark-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+    }
+    .dark-card{
+      border-radius:24px;
+      padding:25px;
+      background:rgba(255,255,255,.045);
+      border:1px solid rgba(255,255,255,.11);
+    }
+    .dark-card b{
+      display:block;
+      color:#f0d99b;
+      font-family:var(--mono);
+      font-size:11px;
+      letter-spacing:.13em;
+      text-transform:uppercase;
+      margin-bottom:12px;
+    }
+    .dark-card p{color:#c8d3e4;font-size:14.5px;line-height:1.72}
+
+    .download-section{
+      background:linear-gradient(180deg,#fbf8f1,var(--paper2));
+    }
+    .download-box{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:30px;
+      align-items:center;
+      border:1px solid rgba(185,144,70,.22);
+      border-radius:30px;
+      background:rgba(255,255,255,.62);
+      padding:38px;
+      box-shadow:var(--shadow);
+    }
+    .download-box h2{font-size:clamp(30px,3.4vw,44px)}
+    .download-box p{color:var(--muted);margin-top:16px;font-size:16.5px;line-height:1.78}
+    .download-actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:flex-end}
+
+    .gfi-check-section{
+      background:#fbf8f1;
+      text-align:center;
+    }
+    .gfi-check-label{
+      display:inline-block;
+      font-family:var(--mono);
+      font-size:10.5px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      color:var(--teal);
+      margin-bottom:12px;
+    }
+    .gfi-check-title{
+      font-family:var(--serif);
+      font-size:clamp(28px,3vw,40px);
+      line-height:1.15;
+      font-weight:500;
+      letter-spacing:-.02em;
+      color:var(--ink);
+      margin-bottom:12px;
+    }
+    .gfi-check-desc{color:var(--muted);font-size:15px;margin-bottom:24px}
+
+    .footer{
+      padding:32px 22px;
+      text-align:center;
+      font-family:var(--mono);
+      font-size:11px;
+      letter-spacing:.05em;
+      color:rgba(23,32,51,.45);
+      background:var(--paper2);
+    }
+    .footer a{color:rgba(23,32,51,.62)}
+    .footer a:hover{color:var(--teal)}
+
+    @keyframes up{
+      from{opacity:0;transform:translateY(14px)}
+      to{opacity:1;transform:translateY(0)}
     }
 
-    .nav-links a {
-      text-decoration: none;
-      color: #4b5563;
+    @media(max-width:1040px){
+      .hero-grid{grid-template-columns:1fr;gap:36px}
+      .gate-cards{grid-template-columns:repeat(2,1fr)}
+      .dark-grid{grid-template-columns:1fr}
+      .download-box{grid-template-columns:1fr}
+      .download-actions{justify-content:flex-start}
+      .nav-links{display:none}
     }
-
-    .nav-links a:hover {
-      color: #1a1e2b;
-    }
-
-    .lang-group {
-      display: flex;
-      gap: 6px;
-    }
-
-    .lang-btn {
-      background: none;
-      border: 1px solid #e2e4e8;
-      padding: 5px 12px;
-      border-radius: 30px;
-      font-size: 11px;
-      font-weight: 500;
-      cursor: pointer;
-      color: #6b7280;
-      transition: all 0.2s;
-    }
-
-    .lang-btn.on {
-      background: #1a1e2b;
-      border-color: #1a1e2b;
-      color: white;
-    }
-
-    .page {
-      display: none;
-      padding-top: 70px;
-    }
-
-    .page.active {
-      display: block;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 32px;
-    }
-
-    .hero {
-      display: grid;
-      grid-template-columns: 1fr 0.9fr;
-      gap: 60px;
-      align-items: center;
-      min-height: calc(100vh - 70px);
-      padding: 60px 0;
-    }
-
-    .hero-left h1 {
-      font-family: 'Source Serif 4', Georgia, serif;
-      font-size: 48px;
-      font-weight: 500;
-      line-height: 1.2;
-      letter-spacing: -0.02em;
-      color: #1a1e2b;
-      margin-bottom: 24px;
-    }
-
-    .hero-desc {
-      font-size: 18px;
-      line-height: 1.5;
-      color: #4b5563;
-      margin-bottom: 28px;
-      max-width: 500px;
-    }
-
-    .pill-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 32px;
-    }
-
-    .pill {
-      border: 1px solid #e2e4e8;
-      background: #f9fafb;
-      padding: 6px 14px;
-      border-radius: 40px;
-      font-size: 12px;
-      font-weight: 500;
-      color: #374151;
-    }
-
-    .btn-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-    }
-
-    .btn-primary {
-      background: #1a1e2b;
-      color: white;
-      border: none;
-      padding: 12px 28px;
-      border-radius: 40px;
-      font-weight: 600;
-      font-size: 14px;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .btn-secondary {
-      background: transparent;
-      border: 1px solid #d1d5db;
-      color: #1a1e2b;
-      padding: 12px 28px;
-      border-radius: 40px;
-      font-weight: 500;
-      font-size: 14px;
-      text-decoration: none;
-    }
-
-    .hero-right {
-      border: 1px solid #e6e8ec;
-      border-radius: 24px;
-      padding: 0;
-      background: #ffffff;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
-      overflow: hidden;
-    }
-
-    .hero-right img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    section {
-      padding: 64px 0;
-      border-bottom: 1px solid #f0f1f3;
-    }
-
-    .section-title {
-      font-family: 'Source Serif 4', serif;
-      font-size: 32px;
-      font-weight: 500;
-      margin-bottom: 16px;
-    }
-
-    .section-desc {
-      color: #6b7280;
-      max-width: 600px;
-      margin-bottom: 40px;
-    }
-
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
-    }
-
-    .card {
-      border: 1px solid #eef0f2;
-      border-radius: 20px;
-      padding: 24px;
-      background: #ffffff;
-    }
-
-    .card-label {
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #6c7a5e;
-      margin-bottom: 12px;
-    }
-
-    .card-title {
-      font-size: 20px;
-      font-weight: 600;
-      margin-bottom: 10px;
-    }
-
-    .card-desc {
-      font-size: 14px;
-      color: #6b7280;
-      line-height: 1.5;
-    }
-
-    .dark-bg {
-      background: #f8f9fb;
-    }
-
-    .footer {
-      text-align: center;
-      padding: 40px 20px;
-      font-size: 12px;
-      color: #9ca3af;
-      border-top: 1px solid #eef0f2;
-    }
-
-    @media (max-width: 900px) {
-      .hero {
-        grid-template-columns: 1fr;
-        gap: 40px;
-      }
-      .card-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .nav-links {
-        display: none;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .card-grid {
-        grid-template-columns: 1fr;
-      }
-      .container {
-        padding: 0 20px;
-      }
-      .nav {
-        padding: 0 20px;
-      }
-      .hero-left h1 {
-        font-size: 36px;
-      }
+    @media(max-width:700px){
+      .nav{height:68px;padding:0 18px}
+      .page{padding-top:68px}
+      .logo img{width:42px}
+      .logo-text strong{font-size:18px}
+      .logo-text span{display:none}
+      .lang-grp{gap:4px}
+      .lb-btn{font-size:10px;padding:4px 7px}
+      .wrap{width:min(var(--max), calc(100% - 34px))}
+      .hero{min-height:auto}
+      .hero-grid{padding:56px 0 46px}
+      h1{font-size:clamp(38px,11vw,52px)}
+      .hero-desc{font-size:17px}
+      .card-note{grid-template-columns:1fr}
+      section{padding:56px 0}
+      .section-head{grid-template-columns:1fr;gap:18px}
+      .gate-cards{grid-template-columns:1fr}
+      .download-box{padding:26px;border-radius:24px}
     }
   </style>
 </head>
 
 <body>
   <div class="nav">
-    <a href="index.html" class="logo">GFI <span>Flow Intelligence</span></a>
-    <div style="display: flex; gap: 24px; align-items: center;">
-      <div class="nav-links">
+    <a href="index.html" class="logo" aria-label="GFI Flow Intelligence home">
+      <img src="logo.png" alt="GFI Flow Intelligence Logo" />
+      <span class="logo-text">
+        <strong>GFI Flow Intelligence</strong>
+        <span>Independent Outcome Verification</span>
+      </span>
+    </a>
+
+    <div class="nav-right">
+      <nav class="nav-links" aria-label="Primary navigation">
         <a href="government.html">Government</a>
         <a href="taskforce.html">Task Force</a>
         <a href="firms.html">Firms</a>
+        <a href="enterprise.html">Enterprise</a>
         <a href="about.html">About</a>
-      </div>
-      <div class="lang-group">
-        <button class="lang-btn on" data-lang="en">EN</button>
-        <button class="lang-btn" data-lang="tw">繁</button>
-        <button class="lang-btn" data-lang="cn">简</button>
-        <button class="lang-btn" data-lang="es">ES</button>
+      </nav>
+      <div class="lang-grp" aria-label="Language selector">
+        <button class="lb-btn on" data-lang="en">EN</button>
+        <button class="lb-btn" data-lang="tw">繁</button>
+        <button class="lb-btn" data-lang="cn">简</button>
+        <button class="lb-btn" data-lang="es">ES</button>
       </div>
     </div>
   </div>
 
-  <!-- ENGLISH -->
-  <div class="page active" data-lang="en">
-    <div class="container">
-      <div class="hero">
-        <div class="hero-left">
-          <h1>Independent outcome verification for public systems.</h1>
-          <p class="hero-desc">We help governments close the accountability gap — verifying real outcomes, detecting false digitization, reviewing AI governance risks, and strengthening procurement oversight.</p>
-          <div class="pill-group">
-            <span class="pill">No system access required</span>
-            <span class="pill">Operational data only</span>
-            <span class="pill">Post‑deployment verification</span>
+  <!-- EN -->
+  <div class="lb active page" data-lang="en">
+    <main>
+      <section class="hero">
+        <div class="wrap hero-grid">
+          <div>
+            <div class="eyebrow">GFI Flow Intelligence · Boston</div>
+            <h1>Independent Outcome Verification for public systems.</h1>
+            <p class="hero-desc">GFI provides an independent diagnostic layer for digital transformation, procurement accountability, false digitization detection, and AI governance review after deployment.</p>
+            <div class="hero-proof">
+              <span class="proof-pill">No system access required</span>
+              <span class="proof-pill">Real operational data</span>
+              <span class="proof-pill">Post-deployment verification</span>
+            </div>
+            <div class="hero-actions">
+              <a class="btn primary" href="taskforce.html">Government Task Force <span class="arr">→</span></a>
+              <a class="btn secondary" href="sample-diagnostic.pdf" target="_blank" rel="noopener">Sample Report</a>
+              <a class="btn secondary" href="GL_Government_Diagnostic_Task_Force_Framework.pdf" target="_blank" rel="noopener">Framework PDF</a>
+            </div>
           </div>
-          <div class="btn-group">
-            <a href="taskforce.html" class="btn-primary">90‑Day Diagnostic →</a>
-            <a href="GL_Government_Diagnostic_Task_Force_Framework.pdf" class="btn-secondary">Framework PDF</a>
-          </div>
-        </div>
-        <div class="hero-right">
-          <img src="badge-bg.png" alt="Independent Outcome Verification">
-        </div>
-      </div>
 
-      <section>
-        <div class="section-title">One framework. Four entry points.</div>
-        <div class="section-desc">Implementation completion is not outcome achievement. GFI verifies what actually changed.</div>
-        <div class="card-grid">
-          <div class="card"><div class="card-label">Public Sector</div><div class="card-title">For Government</div><div class="card-desc">Procurement accountability, outcome validation, and independent diagnostics.</div></div>
-          <div class="card"><div class="card-label">Operational Framework</div><div class="card-title">Government Task Force</div><div class="card-desc">90‑day diagnostic: friction, false digitization, AI governance review.</div></div>
-          <div class="card"><div class="card-label">Implementation Sector</div><div class="card-title">For Digital Firms</div><div class="card-desc">Strengthen proposals with independent outcome verification.</div></div>
-          <div class="card"><div class="card-label">Private Sector</div><div class="card-title">For Enterprise</div><div class="card-desc">Measure operational friction and post‑implementation improvement.</div></div>
-        </div>
-      </section>
-
-      <section class="dark-bg" style="border-radius: 32px; margin: 0 0 64px 0; padding: 48px;">
-        <div style="max-width: 800px;">
-          <div class="section-title">Technical completion is not public success.</div>
-          <p style="color: #4b5563; margin-bottom: 24px;">A system can launch, pass UAT, meet contract milestones — and still increase citizen burden. GFI verifies the hidden layer.</p>
-          <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-            <span style="font-weight: 500;">✓ Outcome verification</span>
-            <span style="font-weight: 500;">✓ False digitization detection</span>
-            <span style="font-weight: 500;">✓ AI governance review</span>
+          <div class="hero-card">
+            <div class="card-label">The Missing Layer</div>
+            <div class="missing-layer">
+              <img src="missing-layer.png" alt="The Missing Layer in Digital Transformation" />
+            </div>
+            <div class="card-note">
+              <div class="note-box"><b>Before acceptance</b><span>Verify whether implementation changed real outcomes.</span></div>
+              <div class="note-box"><b>After deployment</b><span>Detect friction, burden transfer, and false digitization.</span></div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section style="border-bottom: none;">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
-          <div><div class="section-title">Add independent verification to procurement.</div><p class="section-desc">Use the RFP insert and Task Force Framework to define post‑deployment verification before final acceptance.</p><a href="RFP_Insert_90Day_Outcome_Verification.pdf" class="btn-primary" style="background: #2c3e2f;">RFP Insert →</a></div>
-          <div style="text-align: right;"><a href="check.html" style="font-weight: 500;">GFI Check → Free assessment tool</a></div>
+      <section class="gate-section">
+        <div class="wrap section-head">
+          <h2>One framework. Four entry points.</h2>
+          <p class="lead">GFI separates implementation from verification. The purpose is not to declare a system launched, but to determine whether outcomes improved.</p>
+        </div>
+        <div class="wrap gate-cards">
+          <a href="government.html" class="gate-card">
+            <div class="gc-sector">Public Sector</div>
+            <div class="gc-title">For Government</div>
+            <div class="gc-desc">Procurement, accountability, and outcome verification for public systems after deployment.</div>
+            <div class="gc-cta">View page <span class="arr">→</span></div>
+          </a>
+          <a href="taskforce.html" class="gate-card">
+            <div class="gc-sector">Operational Framework</div>
+            <div class="gc-title">Government Task Force</div>
+            <div class="gc-desc">A 90-day diagnostic structure for outcome verification, false digitization review, and AI placement risk.</div>
+            <div class="gc-cta">View framework <span class="arr">→</span></div>
+          </a>
+          <a href="firms.html" class="gate-card">
+            <div class="gc-sector">Implementation Sector</div>
+            <div class="gc-title">For Digital Transformation Firms</div>
+            <div class="gc-desc">Strengthen proposals and add an independent outcome verification layer.</div>
+            <div class="gc-cta">View page <span class="arr">→</span></div>
+          </a>
+          <a href="enterprise.html" class="gate-card">
+            <div class="gc-sector">Private Sector</div>
+            <div class="gc-title">For Enterprise</div>
+            <div class="gc-desc">Measure operational friction, verify post-implementation improvement, and justify investment.</div>
+            <div class="gc-cta">View page <span class="arr">→</span></div>
+          </a>
         </div>
       </section>
-    </div>
+
+      <section class="dark-section">
+        <div class="wrap section-head">
+          <h2>Technical completion is not public success.</h2>
+          <p class="lead">A system can launch, pass technical acceptance, meet contract milestones, and still increase citizen burden. GFI verifies the hidden layer.</p>
+        </div>
+        <div class="wrap dark-grid">
+          <div class="dark-card"><b>Outcome Verification</b><p>Did the system improve measurable public outcomes after deployment?</p></div>
+          <div class="dark-card"><b>False Digitization</b><p>Does the system process information, or merely move paperwork through a portal?</p></div>
+          <div class="dark-card"><b>AI Governance Review</b><p>Was AI placed where it reduces burden, or where it amplifies procedural error?</p></div>
+        </div>
+      </section>
+
+      <section class="download-section">
+        <div class="wrap download-box">
+          <div>
+            <h2>Add independent outcome verification to procurement.</h2>
+            <p>Use the RFP insert and Task Force Framework to define post-deployment verification before final acceptance and payment.</p>
+          </div>
+          <div class="download-actions">
+            <a class="btn primary" href="RFP_Insert_90Day_Outcome_Verification.pdf" target="_blank" rel="noopener">RFP Insert <span class="arr">→</span></a>
+            <a class="btn secondary" href="GL_Government_Diagnostic_Task_Force_Framework.pdf" target="_blank" rel="noopener">Task Force PDF</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="gfi-check-section">
+        <div class="wrap">
+          <div class="gfi-check-label">GFI Check · Free Assessment Tool</div>
+          <div class="gfi-check-title">Measure your system's generalization efficiency.</div>
+          <p class="gfi-check-desc">IMCR + GL Level · One-page report · Based on GEF.</p>
+          <a href="check.html" class="btn primary">Launch GFI Check <span class="arr">→</span></a>
+        </div>
+      </section>
+    </main>
   </div>
 
-  <!-- 繁體中文 -->
-  <div class="page" data-lang="tw">
-    <div class="container">
-      <div class="hero">
-        <div class="hero-left"><h1>公共系統的獨立成果驗證。</h1><p class="hero-desc">我們協助政府縮短當責差距 — 驗證真實成果、偵測偽數位化、評估 AI 治理風險，並強化採購監督。</p><div class="pill-group"><span class="pill">無須系統存取</span><span class="pill">僅使用營運數據</span><span class="pill">部署後驗證</span></div><div class="btn-group"><a href="taskforce.html" class="btn-primary">90 天診斷 →</a><a href="GL_Government_Diagnostic_Task_Force_Framework.pdf" class="btn-secondary">框架 PDF</a></div></div>
-        <div class="hero-right"><img src="badge-bg.png" alt="獨立成果驗證"></div>
-      </div>
-      <section><div class="section-title">一套框架，四個入口。</div><div class="section-desc">系統上線不等於成果達成。GFI 驗證的是真正改變了什麼。</div><div class="card-grid"><div class="card"><div class="card-label">公部門</div><div class="card-title">政府入口</div><div class="card-desc">採購當責、成果驗證與獨立診斷。</div></div><div class="card"><div class="card-label">營運框架</div><div class="card-title">政府專案小組</div><div class="card-desc">90 天診斷：摩擦、假數位化、AI治理審查。</div></div><div class="card"><div class="card-label">實施產業</div><div class="card-title">數位轉型公司</div><div class="card-desc">以獨立驗證層強化提案。</div></div><div class="card"><div class="card-label">私部門</div><div class="card-title">企業入口</div><div class="card-desc">衡量營運摩擦與上線後改善幅度。</div></div></div></section>
-      <section class="dark-bg" style="border-radius: 32px; margin-bottom: 64px; padding: 48px;"><div style="max-width:800px"><div class="section-title">技術完成 ≠ 公共成功。</div><p style="color:#4b5563;margin-bottom:24px">系統可能成功上線、通過驗收、達成合約里程碑，但仍增加民眾負擔。GFI 驗證的是這個隱藏層。</p><div style="display:flex;gap:20px;flex-wrap:wrap"><span>✓ 成果驗證</span><span>✓ 假數位化偵測</span><span>✓ AI 治理檢視</span></div></div></section>
-      <section style="border-bottom:none"><div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center"><div><div class="section-title">在採購中加入獨立驗證。</div><p class="section-desc">使用 RFP 條款與 Task Force 框架，在最終驗收前定義部署後驗證。</p><a href="RFP_Insert_90Day_Outcome_Verification.pdf" class="btn-primary" style="background:#2c3e2f">RFP 條款 →</a></div><div style="text-align:right"><a href="check.html" style="font-weight:500">GFI Check → 免費評估工具</a></div></div></section>
-    </div>
+  <!-- TW -->
+  <div class="lb page" data-lang="tw">
+    <main>
+      <section class="hero">
+        <div class="wrap hero-grid">
+          <div>
+            <div class="eyebrow">GFI Flow Intelligence · 波士頓</div>
+            <h1>公共系統的獨立成果驗證。</h1>
+            <p class="hero-desc">GFI 提供部署後的獨立診斷層，用於數位轉型、採購問責、假數位化辨識與 AI 治理檢視。</p>
+            <div class="hero-proof">
+              <span class="proof-pill">無需存取系統</span>
+              <span class="proof-pill">使用真實營運數據</span>
+              <span class="proof-pill">部署後成果驗證</span>
+            </div>
+            <div class="hero-actions">
+              <a class="btn primary" href="taskforce.html">政府專案小組框架 <span class="arr">→</span></a>
+              <a class="btn secondary" href="sample-diagnostic.pdf" target="_blank" rel="noopener">範本報告</a>
+              <a class="btn secondary" href="GL_Government_Diagnostic_Task_Force_Framework.pdf" target="_blank" rel="noopener">框架 PDF</a>
+            </div>
+          </div>
+          <div class="hero-card">
+            <div class="card-label">缺失的一層</div>
+            <div class="missing-layer"><img src="missinglayerCH.png" alt="數位轉型中的缺失層" /></div>
+            <div class="card-note">
+              <div class="note-box"><b>驗收之前</b><span>檢查實施是否真的改變成果。</span></div>
+              <div class="note-box"><b>部署之後</b><span>辨識摩擦、負擔轉嫁與假數位化。</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="gate-section">
+        <div class="wrap section-head">
+          <h2>一套框架，四個入口。</h2>
+          <p class="lead">GFI 將實施與驗證分開。重點不是宣布系統上線，而是判斷成果是否真正改善。</p>
+        </div>
+        <div class="wrap gate-cards">
+          <a href="government.html" class="gate-card"><div class="gc-sector">公部門</div><div class="gc-title">政府入口</div><div class="gc-desc">部署後公共系統的採購、問責與成果驗證。</div><div class="gc-cta">查看頁面 <span class="arr">→</span></div></a>
+          <a href="taskforce.html" class="gate-card"><div class="gc-sector">操作框架</div><div class="gc-title">政府專案小組</div><div class="gc-desc">90 天診斷架構，用於成果驗證、假數位化檢視與 AI 放置風險。</div><div class="gc-cta">查看框架 <span class="arr">→</span></div></a>
+          <a href="firms.html" class="gate-card"><div class="gc-sector">實施產業</div><div class="gc-title">數位轉型公司入口</div><div class="gc-desc">補強提案，加入獨立成果驗證層。</div><div class="gc-cta">查看頁面 <span class="arr">→</span></div></a>
+          <a href="enterprise.html" class="gate-card"><div class="gc-sector">民間企業</div><div class="gc-title">企業入口</div><div class="gc-desc">衡量營運摩擦、驗證上線後改善並支撐投資判斷。</div><div class="gc-cta">查看頁面 <span class="arr">→</span></div></a>
+        </div>
+      </section>
+
+      <section class="dark-section">
+        <div class="wrap section-head">
+          <h2>技術完成，不等於公共成功。</h2>
+          <p class="lead">系統可以成功上線、通過技術驗收、達成合約里程碑，但仍然增加民眾負擔。GFI 驗證的是這個隱藏層。</p>
+        </div>
+        <div class="wrap dark-grid">
+          <div class="dark-card"><b>成果驗證</b><p>系統部署後是否真正改善可衡量的公共成果？</p></div>
+          <div class="dark-card"><b>假數位化</b><p>系統是在處理資訊，還是只是把紙本流程搬進入口網站？</p></div>
+          <div class="dark-card"><b>AI 治理檢視</b><p>AI 是放在減少負擔的位置，還是放大程序錯誤的位置？</p></div>
+        </div>
+      </section>
+
+      <section class="download-section">
+        <div class="wrap download-box">
+          <div><h2>把獨立成果驗證加入採購。</h2><p>使用 RFP 插入條款與 Task Force 框架，在最終驗收與付款前定義部署後驗證。</p></div>
+          <div class="download-actions"><a class="btn primary" href="RFP_Insert_90Day_Outcome_Verification.pdf" target="_blank" rel="noopener">RFP 條款 <span class="arr">→</span></a><a class="btn secondary" href="GL_Government_Diagnostic_Task_Force_Framework.pdf" target="_blank" rel="noopener">Task Force PDF</a></div>
+        </div>
+      </section>
+
+      <section class="gfi-check-section"><div class="wrap"><div class="gfi-check-label">GFI Check · 免費評估工具</div><div class="gfi-check-title">衡量你的系統普遍化效率。</div><p class="gfi-check-desc">IMCR + GL Level · 單頁報告 · 基於 GEF。</p><a href="check.html" class="btn primary">開啟 GFI Check <span class="arr">→</span></a></div></section>
+    </main>
   </div>
 
-  <!-- 简体中文 -->
-  <div class="page" data-lang="cn">
-    <div class="container">
-      <div class="hero"><div class="hero-left"><h1>公共系统的独立成果验证。</h1><p class="hero-desc">我们协助政府缩小问责差距 — 验证真实成果、检测伪数字化、评估 AI 治理风险，并强化采购监督。</p><div class="pill-group"><span class="pill">无须系统访问</span><span class="pill">仅使用运营数据</span><span class="pill">部署后验证</span></div><div class="btn-group"><a href="taskforce.html" class="btn-primary">90 天诊断 →</a><a href="GL_Government_Diagnostic_Task_Force_Framework.pdf" class="btn-secondary">框架 PDF</a></div></div><div class="hero-right"><img src="badge-bg.png" alt="独立成果验证"></div></div>
-      <section><div class="section-title">一套框架，四个入口。</div><div class="section-desc">系统上线不等于成果达成。GFI 验证的是真正改变了什么。</div><div class="card-grid"><div class="card"><div class="card-label">公共部门</div><div class="card-title">政府入口</div><div class="card-desc">采购问责、成果验证与独立诊断。</div></div><div class="card"><div class="card-label">运营框架</div><div class="card-title">政府专项小组</div><div class="card-desc">90 天诊断：摩擦、假数字化、AI治理审查。</div></div><div class="card"><div class="card-label">实施产业</div><div class="card-title">数字转型公司</div><div class="card-desc">以独立验证层强化提案。</div></div><div class="card"><div class="card-label">私营部门</div><div class="card-title">企业入口</div><div class="card-desc">衡量运营摩擦与上线后改善幅度。</div></div></div></section>
-      <section class="dark-bg" style="border-radius:32px;margin-bottom:64px;padding:48px"><div><div class="section-title">技术完成 ≠ 公共成功。</div><p style="color:#4b5563;margin-bottom:24px">系统可以成功上线、通过验收、达成合同里程碑，但仍然增加民众负担。GFI 验证的是这个隐藏层。</p><div style="display:flex;gap:20px"><span>✓ 成果验证</span><span>✓ 假数字化检测</span><span>✓ AI 治理审查</span></div></div></section>
-      <section style="border-bottom:none"><div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center"><div><div class="section-title">在采购中加入独立验证。</div><p class="section-desc">使用 RFP 条款与 Task Force 框架，在最终验收前定义部署后验证。</p><a href="RFP_Insert_90Day_Outcome_Verification.pdf" class="btn-primary" style="background:#2c3e2f">RFP 条款 →</a></div><div style="text-align:right"><a href="check.html" style="font-weight:500">GFI Check → 免费评估工具</a></div></div></section>
-    </div>
+  <!-- CN -->
+  <div class="lb page" data-lang="cn">
+    <main>
+      <section class="hero">
+        <div class="wrap hero-grid">
+          <div>
+            <div class="eyebrow">GFI Flow Intelligence · 波士顿</div>
+            <h1>公共系统的独立成果验证。</h1>
+            <p class="hero-desc">GFI 提供部署后的独立诊断层，用于数字转型、采购问责、假数字化识别与 AI 治理 review。</p>
+            <div class="hero-proof"><span class="proof-pill">无需访问系统</span><span class="proof-pill">使用真实运营数据</span><span class="proof-pill">部署后成果验证</span></div>
+            <div class="hero-actions"><a class="btn primary" href="taskforce.html">政府专项小组框架 <span class="arr">→</span></a><a class="btn secondary" href="sample-diagnostic.pdf" target="_blank" rel="noopener">样本报告</a><a class="btn secondary" href="GL_Government_Diagnostic_Task_Force_Framework.pdf" target="_blank" rel="noopener">框架 PDF</a></div>
+          </div>
+          <div class="hero-card"><div class="card-label">缺失的一层</div><div class="missing-layer"><img src="missinglayerCH.png" alt="数字转型中的缺失层" /></div><div class="card-note"><div class="note-box"><b>验收之前</b><span>检查实施是否真的改变成果。</span></div><div class="note-box"><b>部署之后</b><span>识别摩擦、负担转嫁与假数字化。</span></div></div></div>
+        </div>
+      </section>
+
+      <section class="gate-section">
+        <div class="wrap section-head"><h2>一套框架，四个入口。</h2><p class="lead">GFI 将实施与验证分开。重点不是宣布系统上线，而是判断成果是否真正改善。</p></div>
+        <div class="wrap gate-cards">
+          <a href="government.html" class="gate-card"><div class="gc-sector">公共部门</div><div class="gc-title">政府入口</div><div class="gc-desc">部署后公共系统的采购、问责与成果验证。</div><div class="gc-cta">查看页面 <span class="arr">→</span></div></a>
+          <a href="taskforce.html" class="gate-card"><div class="gc-sector">操作框架</div><div class="gc-title">政府专项小组</div><div class="gc-desc">90 天诊断结构，用于成果验证、假数字化检查与 AI 放置风险。</div><div class="gc-cta">查看框架 <span class="arr">→</span></div></a>
+          <a href="firms.html" class="gate-card"><div class="gc-sector">实施产业</div><div class="gc-title">数字转型公司入口</div><div class="gc-desc">补强提案，加入独立成果验证层。</div><div class="gc-cta">查看页面 <span class="arr">→</span></div></a>
+          <a href="enterprise.html" class="gate-card"><div class="gc-sector">民间企业</div><div class="gc-title">企业入口</div><div class="gc-desc">衡量运营摩擦、验证上线后改善并支撑投资判断。</div><div class="gc-cta">查看页面 <span class="arr">→</span></div></a>
+        </div>
+      </section>
+
+      <section class="dark-section"><div class="wrap section-head"><h2>技术完成，不等于公共成功。</h2><p class="lead">系统可以成功上线、通过技术验收、达成合同里程碑，但仍然增加民众负担。GFI 验证的是这个隐藏层。</p></div><div class="wrap dark-grid"><div class="dark-card"><b>成果验证</b><p>系统部署后是否真正改善可衡量的公共成果？</p></div><div class="dark-card"><b>假数字化</b><p>系统是在处理信息，还是只是把纸本流程搬进入口网站？</p></div><div class="dark-card"><b>AI 治理检查</b><p>AI 是放在减少负担的位置，还是放大程序错误的位置？</p></div></div></section>
+      <section class="download-section"><div class="wrap download-box"><div><h2>把独立成果验证加入采购。</h2><p>使用 RFP 插入条款与 Task Force 框架，在最终验收与付款前定义部署后验证。</p></div><div class="download-actions"><a class="btn primary" href="RFP_Insert_90Day_Outcome_Verification.pdf" target="_blank" rel="noopener">RFP 条款 <span class="arr">→</span></a><a class="btn secondary" href="GL_Government_Diagnostic_Task_Force_Framework.pdf" target="_blank" rel="noopener">Task Force PDF</a></div></div></section>
+      <section class="gfi-check-section"><div class="wrap"><div class="gfi-check-label">GFI Check · 免费评估工具</div><div class="gfi-check-title">衡量你的系统普遍化效率。</div><p class="gfi-check-desc">IMCR + GL Level · 单页报告 · 基于 GEF。</p><a href="check.html" class="btn primary">开启 GFI Check <span class="arr">→</span></a></div></section>
+    </main>
   </div>
 
-  <!-- ESPAÑOL -->
-  <div class="page" data-lang="es">
-    <div class="container">
-      <div class="hero"><div class="hero-left"><h1>Verificación independiente de resultados para sistemas públicos.</h1><p class="hero-desc">Ayudamos a los gobiernos a cerrar la brecha de rendición de cuentas — verificando resultados reales, detectando falsa digitalización, evaluando riesgos de IA y fortaleciendo la supervisión de adquisiciones.</p><div class="pill-group"><span class="pill">Sin acceso a sistemas</span><span class="pill">Solo datos operativos</span><span class="pill">Verificación post‑despliegue</span></div><div class="btn-group"><a href="taskforce.html" class="btn-primary">Diagnóstico 90 días →</a><a href="GL_Government_Diagnostic_Task_Force_Framework.pdf" class="btn-secondary">Framework PDF</a></div></div><div class="hero-right"><img src="badge-bg.png" alt="Verificación Independiente de Resultados"></div></div>
-      <section><div class="section-title">Un marco. Cuatro puntos de entrada.</div><div class="section-desc">La finalización de la implementación no es logro de resultados. GFI verifica lo que realmente cambió.</div><div class="card-grid"><div class="card"><div class="card-label">Sector Público</div><div class="card-title">Para Gobierno</div><div class="card-desc">Rendición de cuentas, validación de resultados y diagnósticos independientes.</div></div><div class="card"><div class="card-label">Marco Operativo</div><div class="card-title">Government Task Force</div><div class="card-desc">Diagnóstico 90 días: fricción, falsa digitalización, revisión de IA.</div></div><div class="card"><div class="card-label">Implementación</div><div class="card-title">Para Firmas Digitales</div><div class="card-desc">Fortalecer propuestas con verificación independiente.</div></div><div class="card"><div class="card-label">Sector Privado</div><div class="card-title">Para Empresa</div><div class="card-desc">Medir fricción operativa y mejora post‑implementación.</div></div></div></section>
-      <section class="dark-bg" style="border-radius:32px;margin-bottom:64px;padding:48px"><div><div class="section-title">La finalización técnica no es éxito público.</div><p style="color:#4b5563;margin-bottom:24px">Un sistema puede lanzarse, pasar la aceptación técnica, cumplir hitos contractuales y aún aumentar la carga ciudadana. GFI verifica esa capa oculta.</p><div style="display:flex;gap:20px"><span>✓ Verificación de resultados</span><span>✓ Detección de falsa digitalización</span><span>✓ Revisión de gobernanza de IA</span></div></div></section>
-      <section style="border-bottom:none"><div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center"><div><div class="section-title">Añadir verificación independiente a las adquisiciones.</div><p class="section-desc">Utilice la cláusula RFP y el marco Task Force para definir verificación post‑despliegue antes de la aceptación final.</p><a href="RFP_Insert_90Day_Outcome_Verification.pdf" class="btn-primary" style="background:#2c3e2f">Cláusula RFP →</a></div><div style="text-align:right"><a href="check.html" style="font-weight:500">GFI Check → Herramienta gratuita</a></div></div></section>
-    </div>
+  <!-- ES -->
+  <div class="lb page" data-lang="es">
+    <main>
+      <section class="hero">
+        <div class="wrap hero-grid">
+          <div>
+            <div class="eyebrow">GFI Flow Intelligence · Boston</div>
+            <h1>Verificación independiente de resultados para sistemas públicos.</h1>
+            <p class="hero-desc">GFI proporciona una capa diagnóstica independiente para transformación digital, contratación pública, falsa digitalización y revisión de gobernanza de IA después del despliegue.</p>
+            <div class="hero-proof"><span class="proof-pill">Sin acceso a sistemas</span><span class="proof-pill">Datos operativos reales</span><span class="proof-pill">Verificación post-despliegue</span></div>
+            <div class="hero-actions"><a class="btn primary" href="taskforce.html">Task Force Framework <span class="arr">→</span></a><a class="btn secondary" href="sample-diagnostic.pdf" target="_blank" rel="noopener">Informe de muestra</a><a class="btn secondary" href="GL_Government_Diagnostic_Task_Force_Framework.pdf" target="_blank" rel="noopener">Framework PDF</a></div>
+          </div>
+          <div class="hero-card"><div class="card-label">The Missing Layer</div><div class="missing-layer"><img src="missing-layer.png" alt="La capa faltante en la transformación digital" /></div><div class="card-note"><div class="note-box"><b>Antes de aceptar</b><span>Verificar si la implementación cambió resultados reales.</span></div><div class="note-box"><b>Después del despliegue</b><span>Detectar fricción, carga transferida y falsa digitalización.</span></div></div></div>
+        </div>
+      </section>
+
+      <section class="gate-section"><div class="wrap section-head"><h2>Un marco. Cuatro entradas.</h2><p class="lead">GFI separa implementación de verificación. El propósito no es declarar que un sistema fue lanzado, sino determinar si los resultados mejoraron.</p></div><div class="wrap gate-cards"><a href="government.html" class="gate-card"><div class="gc-sector">Sector Público</div><div class="gc-title">Para Gobierno</div><div class="gc-desc">Contratación, rendición de cuentas y verificación de resultados para sistemas públicos.</div><div class="gc-cta">Ver página <span class="arr">→</span></div></a><a href="taskforce.html" class="gate-card"><div class="gc-sector">Marco Operativo</div><div class="gc-title">Government Task Force</div><div class="gc-desc">Estructura diagnóstica de 90 días para verificación de resultados y revisión de riesgos de IA.</div><div class="gc-cta">Ver framework <span class="arr">→</span></div></a><a href="firms.html" class="gate-card"><div class="gc-sector">Implementación</div><div class="gc-title">Para Firmas Digitales</div><div class="gc-desc">Fortalecer propuestas y añadir una capa independiente de verificación.</div><div class="gc-cta">Ver página <span class="arr">→</span></div></a><a href="enterprise.html" class="gate-card"><div class="gc-sector">Sector Privado</div><div class="gc-title">Para Empresa</div><div class="gc-desc">Medir fricción operativa y verificar mejora post-implementación.</div><div class="gc-cta">Ver página <span class="arr">→</span></div></a></div></section>
+      <section class="dark-section"><div class="wrap section-head"><h2>La finalización técnica no equivale al éxito público.</h2><p class="lead">Un sistema puede lanzarse, pasar aceptación técnica y cumplir hitos contractuales mientras aumenta la carga ciudadana. GFI verifica esa capa oculta.</p></div><div class="wrap dark-grid"><div class="dark-card"><b>Outcome Verification</b><p>¿El sistema mejoró resultados públicos medibles después del despliegue?</p></div><div class="dark-card"><b>False Digitization</b><p>¿El sistema procesa información o solo mueve papeleo por un portal?</p></div><div class="dark-card"><b>AI Governance Review</b><p>¿La IA reduce carga o amplifica errores procedimentales?</p></div></div></section>
+      <section class="download-section"><div class="wrap download-box"><div><h2>Añadir verificación independiente a la contratación.</h2><p>Use el inserto RFP y el Task Force Framework para definir verificación post-despliegue antes de aceptación final y pago.</p></div><div class="download-actions"><a class="btn primary" href="RFP_Insert_90Day_Outcome_Verification.pdf" target="_blank" rel="noopener">RFP Insert <span class="arr">→</span></a><a class="btn secondary" href="GL_Government_Diagnostic_Task_Force_Framework.pdf" target="_blank" rel="noopener">Task Force PDF</a></div></div></section>
+      <section class="gfi-check-section"><div class="wrap"><div class="gfi-check-label">GFI Check · Herramienta gratuita</div><div class="gfi-check-title">Mida la eficiencia de generalización de su sistema.</div><p class="gfi-check-desc">IMCR + GL Level · Informe de una página · Basado en GEF.</p><a href="check.html" class="btn primary">Abrir GFI Check <span class="arr">→</span></a></div></section>
+    </main>
   </div>
 
   <footer class="footer">
-    © 2026 GFI Flow Intelligence · Boston · <a href="about.html">About</a> · <a href="taskforce.html">Task Force</a> · <a href="mailto:ping@gfiintel.com">ping@gfiintel.com</a>
+    © 2026 GFI Flow Intelligence · Boston ·
+    <a href="about.html">About</a> ·
+    <a href="taskforce.html">Task Force</a> ·
+    <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6178024" target="_blank" rel="noopener">SSRN</a> ·
+    <a href="mailto:ping@gfiintel.com">ping@gfiintel.com</a>
   </footer>
 
   <script>
-    const btns = document.querySelectorAll('.lang-btn');
-    const pages = document.querySelectorAll('.page');
+    const btns = document.querySelectorAll('.lb-btn');
+    const blocks = document.querySelectorAll('.lb');
     btns.forEach(btn => {
       btn.addEventListener('click', () => {
         const lang = btn.dataset.lang;
         btns.forEach(b => b.classList.remove('on'));
-        pages.forEach(p => p.classList.remove('active'));
+        blocks.forEach(b => b.classList.remove('active'));
         btn.classList.add('on');
-        document.querySelector(`.page[data-lang="${lang}"]`).classList.add('active');
+        document.querySelector(`.lb[data-lang="${lang}"]`).classList.add('active');
       });
     });
   </script>
