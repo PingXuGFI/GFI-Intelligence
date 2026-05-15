@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="GL Framework for University & Research: verifier pipeline, methodology calibration, academic anchoring, and public-sector governance research." />
+  <title>GL for University & Research | GFI Flow Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Inter:wght@300;400;450;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b1220;
+      --bg2:#101a2d;
+      --panel:#111d32;
+      --panel2:#16243d;
+      --text:#f8fbff;
+      --muted:#c8d3e4;
+      --sub:#9fb0c8;
+      --line:rgba(255,255,255,.12);
+      --gold:#d8b56d;
+      --gold2:#f0d99b;
+      --blue:#8fb7ff;
+      --green:#9be3c3;
+      --shadow:0 24px 80px rgba(0,0,0,.38);
+      --max:1180px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background: radial-gradient(circle at 12% 5%, rgba(216,181,109,.18), transparent 34%),
+                  radial-gradient(circle at 88% 8%, rgba(143,183,255,.16), transparent 30%),
+                  linear-gradient(180deg,var(--bg),#08101d 48%,#070d18);
+      color:var(--text);
+      font-family:"Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height:1.72;
+      letter-spacing:-.005em;
+      font-weight:400;
+    }
+    a{color:inherit;text-decoration:none}
+    .wrap{width:min(var(--max), calc(100% - 40px)); margin:0 auto}
+    header{
+      position:sticky;
+      top:0;
+      z-index:20;
+      backdrop-filter: blur(18px);
+      background:rgba(8,15,28,.78);
+      border-bottom:1px solid var(--line);
+    }
+    .nav{
+      height:74px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:24px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      line-height:1.15;
+    }
+    .brandtext{display:flex;flex-direction:column;}
+    .logo{
+      width:54px;
+      height:auto;
+      display:block;
+      filter:drop-shadow(0 6px 18px rgba(0,0,0,.25));
+    }
+    .brand strong{
+      font-family:"Source Serif 4", Georgia, serif;
+      font-size:21px;
+      font-weight:500;
+    }
+    .brand span{
+      color:var(--sub);
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+    }
+    .navlinks{
+      display:flex;
+      gap:22px;
+      align-items:center;
+      font-size:13.5px;
+      color:var(--muted);
+    }
+    .navlinks a:hover{color:var(--gold2)}
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border:1px solid rgba(216,181,109,.55);
+      color:#101724;
+      background:linear-gradient(135deg,var(--gold2),var(--gold));
+      padding:10px 16px;
+      border-radius:999px;
+      font-weight:600;
+      font-size:13.5px;
+      transition:.2s ease;
+      white-space:nowrap;
+    }
+    .btn:hover{transform:translateY(-1px); box-shadow:0 16px 42px rgba(216,181,109,.22)}
+    .btn.secondary{
+      background:transparent;
+      color:var(--text);
+      border-color:rgba(255,255,255,.22);
+      box-shadow:none;
+    }
+    section{padding:68px 0; border-bottom:1px solid var(--line)}
+    .section-head{
+      display:grid;
+      grid-template-columns:.85fr 1.15fr;
+      gap:44px;
+      align-items:start;
+      margin-bottom:34px;
+    }
+    h1,h2,h3{
+      margin:0;
+      font-weight:500;
+      letter-spacing:-.018em;
+    }
+    h1{
+      font-family:"Source Serif 4", Georgia, serif;
+      font-size:clamp(36px, 4.8vw, 58px);
+      line-height:1.1;
+      margin-bottom:20px;
+    }
+    h2{
+      font-family:"Source Serif 4", Georgia, serif;
+      font-size:clamp(30px, 3.5vw, 46px);
+      line-height:1.12;
+    }
+    .lead{
+      color:var(--muted);
+      font-size:16.5px;
+      margin:0;
+      line-height:1.78;
+    }
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:24px;
+      margin:48px 0 32px;
+    }
+    .card{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.045);
+      border-radius:28px;
+      padding:28px;
+    }
+    .card h3{
+      font-size:21px;
+      margin-bottom:14px;
+      color:var(--gold2);
+    }
+    .card p, .card li{color:var(--muted); font-size:15px; line-height:1.7}
+    .card ul{margin:14px 0 0; padding-left:20px}
+    .pillar-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:20px;
+      margin:36px 0;
+    }
+    .pillar{
+      border-left:3px solid var(--gold);
+      background:rgba(255,255,255,.04);
+      padding:22px 24px;
+      border-radius:24px;
+    }
+    .pillar h3{font-size:20px; margin-bottom:8px; color:#fff}
+    .pillar p{color:var(--muted); font-size:14.5px; margin:0}
+    .quote-card{
+      border:1px solid rgba(216,181,109,.28);
+      background:linear-gradient(180deg,rgba(216,181,109,.12),rgba(255,255,255,.035));
+      border-radius:28px;
+      padding:36px;
+      margin:40px 0;
+    }
+    .quote-card p{
+      font-family:"Source Serif 4", Georgia, serif;
+      font-size:28px;
+      line-height:1.28;
+      margin:0;
+    }
+    .cta-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:28px;
+      justify-content:space-between;
+      align-items:center;
+      background:linear-gradient(135deg,rgba(216,181,109,.12),rgba(143,183,255,.08));
+      border-radius:32px;
+      padding:42px 38px;
+      margin:44px 0 20px;
+    }
+    footer{
+      padding:44px 0;
+      color:var(--sub);
+      font-size:13px;
+    }
+    footer .foot{
+      display:flex;
+      justify-content:space-between;
+      gap:20px;
+      flex-wrap:wrap;
+      border-top:1px solid var(--line);
+      padding-top:28px;
+    }
+    @media (max-width:900px){
+      .nav{height:auto; padding:18px 0; align-items:flex-start}
+      .navlinks{display:none}
+      .cards, .pillar-grid, .section-head{grid-template-columns:1fr}
+      .quote-card p{font-size:22px}
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="index.html" aria-label="GFI Flow Intelligence home">
+      <img src="logo.png" alt="GFI Flow Intelligence Logo" class="logo">
+      <div class="brandtext">
+        <strong>GFI Flow Intelligence</strong>
+        <span>Independent Outcome Verification</span>
+      </div>
+    </a>
+    <nav class="navlinks">
+      <a href="index.html">Home</a>
+      <a href="government.html">Government</a>
+      <a href="firms.html">Firms</a>
+      <a href="university-research.html">University & Research</a>
+      <a href="mailto:info@gfiintel.com?subject=GL%20University%20Research%20Inquiry" class="btn">Contact Research</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <section style="padding-bottom: 40px;">
+    <div class="wrap">
+      <div class="eyebrow" style="display:inline-flex;align-items:center;gap:10px;color:var(--gold2);font-family:monospace;font-size:11px;text-transform:uppercase;margin-bottom:20px;"><span style="width:32px;height:1px;background:var(--gold);display:inline-block;"></span>GL FRAMEWORK · ACADEMIC ANCHORING</div>
+      <h1>Research & Verifier Pipeline<br>Institutionalising outcome verification.</h1>
+      <p class="lead" style="max-width:780px;">The GL Framework provides a methodology, calibration protocol, and professional verifier track for universities, research centres, and public governance programs. We help you move from theory to verifiable practice.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap section-head">
+      <h2>Why universities & research institutes?</h2>
+      <p class="lead">The missing layer in digital governance is not technology — it’s independent, repeatable outcome verification. Academic institutions are essential to build legitimacy, train verifiers, and anchor the methodology in peer review.</p>
+    </div>
+    <div class="wrap cards">
+      <div class="card"><h3>🧪 Verifier Pipeline</h3><p>Develop a structured curriculum, calibration exercises, and certification track for GL Verifiers — a new professional role in public-sector accountability.</p></div>
+      <div class="card"><h3>📐 Methodology Calibration</h3><p>Test and refine diagnostic tools (friction mapping, false digitization detection, outcome measurement) through real-world pilots and controlled studies.</p></div>
+      <div class="card"><h3>🎓 Academic Anchoring</h3><p>Peer-reviewed publications, governance research, and evidence-based frameworks that legitimise outcome verification as a distinct field of expertise.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="quote-card">
+        <p>“Implementation is verified. Outcomes are not. Universities can close that gap — by training verifiers, not just publishing papers.”</p>
+        <small>GFI Flow Intelligence · GL Framework</small>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap section-head">
+      <h2>Three roles for research partners</h2>
+      <p class="lead">We work with academic institutions in three complementary capacities: training, methodology validation, and institutional adoption.</p>
+    </div>
+    <div class="wrap pillar-grid">
+      <div class="pillar"><h3>1. GL Verifier Training Program</h3><p>Custom workshops, semester modules, or executive courses covering diagnostic logic, friction analysis, false digitization identification, and calibration exercises. Graduates become certified GL Verifiers ready for task forces.</p></div>
+      <div class="pillar"><h3>2. Methodology R&D</h3><p>Collaborative research to refine outcome metrics, conduct inter-rater reliability studies, and test the framework across different policy domains (welfare, health, licensing, procurement).</p></div>
+      <div class="pillar"><h3>3. Governance Lab</h3><p>Establish a university-based “Outcome Verification Lab” that provides independent validation services for local/regional governments while training students in real-world projects.</p></div>
+      <div class="pillar"><h3>4. Ethics & Calibration Board</h3><p>Academic oversight to maintain independence, peer review of diagnostic protocols, and continuous improvement of the GL standard.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap section-head">
+      <h2>What we bring to the partnership</h2>
+      <p class="lead">Operational methodology, diagnostic templates, case studies, and a growing network of public-sector practitioners.</p>
+    </div>
+    <div class="wrap matrix" style="border:1px solid var(--line); border-radius:24px; overflow:hidden;">
+      <div class="row" style="display:grid; grid-template-columns:260px 1fr; border-bottom:1px solid var(--line);"><div style="padding:18px 24px; background:rgba(255,255,255,.035); font-weight:600;">GL Diagnostic Toolkit</div><div style="padding:18px 24px; color:var(--muted);">Friction mapping sheets, false digitization checklist, outcome verification templates, calibration cases</div></div>
+      <div class="row" style="display:grid; grid-template-columns:260px 1fr; border-bottom:1px solid var(--line);"><div style="padding:18px 24px; background:rgba(255,255,255,.035); font-weight:600;">Task Force Method</div><div style="padding:18px 24px; color:var(--muted);">90-day rapid diagnostic model, independence protocols, reporting standards for government clients</div></div>
+      <div class="row" style="display:grid; grid-template-columns:260px 1fr;"><div style="padding:18px 24px; background:rgba(255,255,255,.035); font-weight:600;">Verifier Certification</div><div style="padding:18px 24px; color:var(--muted);">Criteria, ethics code, calibration process, continuing education framework</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="cta-row">
+        <div style="max-width: 580px;">
+          <h2 style="font-size:32px; margin-bottom:12px;">Start a research collaboration</h2>
+          <p style="color:var(--muted); margin:0;">Whether you are interested in training verifiers, co-designing a methodology study, or hosting a governance lab — we’d like to hear from your institution.</p>
+        </div>
+        <div>
+          <a href="mailto:info@gfiintel.com?subject=University%20%26%20Research%20Collaboration%20-%20GL%20Framework" class="btn" style="font-size:1rem; padding:12px 28px;">Contact Research →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap" style="text-align:center;">
+      <div style="display:inline-flex; gap:24px; flex-wrap:wrap; justify-content:center; border-top:1px solid var(--line); padding-top:40px;">
+        <span style="color:var(--sub);">📄 Verifier curriculum outline available</span>
+        <span style="color:var(--sub);">⚙️ Calibration case library</span>
+        <span style="color:var(--sub);">🏛️ Public governance focus</span>
+        <span style="color:var(--sub);">📊 Peer-review ready</span>
+      </div>
+    </div>
+  </section>
+</main>
+<footer>
+  <div class="wrap foot">
+    <div>© GFI Flow Intelligence · Independent Outcome Verification · GL Framework</div>
+    <div><a href="index.html" style="color:var(--gold2);">Home</a> · <a href="mailto:info@gfiintel.com" style="color:var(--gold2);">info@gfiintel.com</a></div>
+  </div>
+</footer>
+</body>
+</html>
