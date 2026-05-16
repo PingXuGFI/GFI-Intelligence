@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Global Governance Failure Case Library – structured diagnostic cases of government IT and service delivery failures. Independent outcome verification methodology.">
+    <title>Governance Failure Case Library – GFI Flow Intelligence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0b1220;
+            --bg2: #0d1526;
+            --text: #f8fbff;
+            --muted: #c7d2e3;
+            --sub: #9fb0c8;
+            --dim: rgba(255,255,255,.06);
+            --green: #9FE870;
+            --blue: #7DD3FC;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --mono: 'DM Mono', monospace;
+            --sans: 'DM Sans', system-ui, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 15px;
+            line-height: 1.75;
+            overflow-x: hidden;
+        }
+        .nav {
+            position: fixed;
+            inset: 0 0 auto 0;
+            z-index: 100;
+            height: 62px;
+            padding: 0 clamp(18px, 5vw, 52px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(11, 18, 32, .90);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(255, 255, 255, .07);
+        }
+        .logo {
+            color: #fff;
+            text-decoration: none;
+            font-family: var(--mono);
+            font-size: 13px;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+        }
+        .lang-grp { display: flex; gap: 6px; }
+        .lb-btn {
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: .08em;
+            padding: 5px 10px;
+            border: 1px solid rgba(255, 255, 255, .10);
+            border-radius: 5px;
+            background: none;
+            color: var(--sub);
+            cursor: pointer;
+            transition: all .2s;
+        }
+        .lb-btn:hover { color: var(--text); border-color: rgba(255, 255, 255, .2); }
+        .lb-btn.on {
+            color: var(--green);
+            border-color: rgba(159, 232, 112, .35);
+            background: rgba(159, 232, 112, .07);
+        }
+        .lb { display: none; }
+        .lb.active { display: block; }
+        .page { padding-top: 62px; }
+        section {
+            width: 100%;
+            padding: clamp(72px, 9vw, 112px) clamp(20px, 6vw, 80px);
+        }
+        .inner { max-width: 1200px; margin: 0 auto; }
+
+        .page-header { margin-bottom: 2rem; }
+        .page-eyebrow {
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: rgba(159, 232, 112, .65);
+            margin-bottom: 20px;
+        }
+        .page-title {
+            font-family: var(--serif);
+            font-size: clamp(38px, 5vw, 68px);
+            line-height: 1.08;
+            letter-spacing: -.02em;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+        .page-title span { color: #c41e3a; }
+        .page-desc {
+            font-size: 18px;
+            font-weight: 300;
+            color: var(--muted);
+            max-width: 800px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        /* 結構性剛需區塊 */
+        .necessity-block {
+            background: rgba(159, 232, 112, .04);
+            border: 1px solid rgba(159, 232, 112, .15);
+            border-radius: 24px;
+            padding: 40px 48px;
+            margin: 40px 0;
+        }
+        .necessity-title {
+            font-family: var(--serif);
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+        .necessity-sub {
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: .12em;
+            color: var(--green);
+            margin-bottom: 28px;
+            text-transform: uppercase;
+        }
+        .necessity-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+        }
+        .necessity-item h4 {
+            font-family: var(--mono);
+            font-size: 13px;
+            color: var(--green);
+            margin-bottom: 8px;
+        }
+        .necessity-item p {
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+        .vacancy-box {
+            background: rgba(0,0,0,.3);
+            border-radius: 16px;
+            padding: 24px;
+            margin-top: 28px;
+            text-align: center;
+            border: 1px dashed rgba(159, 232, 112, .3);
+        }
+        .vacancy-box .label {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--sub);
+            margin-bottom: 8px;
+        }
+        .vacancy-box .statement {
+            font-family: var(--serif);
+            font-size: 20px;
+            color: #fff;
+        }
+        .vacancy-box .statement span { color: var(--green); }
+
+        /* 標準化案例卡片 */
+        .case-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            margin: 48px 0;
+        }
+        .case-card {
+            background: var(--bg2);
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: border-color .2s;
+        }
+        .case-card:hover {
+            border-color: rgba(159, 232, 112, .3);
+        }
+        .case-header {
+            padding: 24px 32px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, .05);
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .case-title {
+            font-family: var(--serif);
+            font-size: 22px;
+            font-weight: 500;
+        }
+        .case-tag {
+            font-family: var(--mono);
+            font-size: 10px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(159, 232, 112, .12);
+            color: var(--green);
+        }
+        .case-body {
+            padding: 24px 32px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+        }
+        .case-section {
+            background: rgba(0,0,0,.2);
+            padding: 20px;
+            border-radius: 12px;
+        }
+        .case-section h4 {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--green);
+            margin-bottom: 12px;
+        }
+        .case-section p {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+        .case-section .label {
+            font-family: var(--mono);
+            font-size: 9px;
+            color: var(--sub);
+            margin-bottom: 4px;
+        }
+        .case-footer {
+            padding: 16px 32px 24px;
+            border-top: 1px solid rgba(255, 255, 255, .05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .case-lesson {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: #f5d471;
+        }
+        .case-link {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--green);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .case-link:hover .arr { transform: translateX(4px); }
+        .arr { transition: transform .2s; }
+
+        /* 表格（保留作為快速索引） */
+        .table-wrapper {
+            margin: 48px 0;
+            overflow-x: auto;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, .08);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+        }
+        th {
+            text-align: left;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, .04);
+            font-weight: 500;
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(255, 255, 255, .08);
+            cursor: pointer;
+        }
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, .05);
+            vertical-align: top;
+        }
+        .price-original { color: var(--sub); text-decoration: line-through; font-size: 0.7rem; display: block; }
+        .price-final { font-weight: 600; color: #f08b5e; }
+        .multiplier { font-family: var(--mono); font-weight: 500; }
+        .badge-red { background: rgba(200, 60, 50, 0.2); color: #f08b5e; display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.65rem; }
+
+        /* 模式區塊 */
+        .pattern-section {
+            background: var(--bg2);
+            padding: 40px;
+            margin: 48px 0;
+            border-radius: 18px;
+        }
+        .pattern-section h3 {
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--green);
+            margin-bottom: 24px;
+        }
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        .step {
+            background: rgba(255, 255, 255, .03);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 2px solid var(--green);
+        }
+        .step-num {
+            font-family: var(--mono);
+            font-weight: 600;
+            color: var(--green);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .step-title { font-weight: 600; font-size: 0.9rem; margin-bottom: 8px; }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 40px 0;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 28px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-family: var(--mono);
+            font-size: 12px;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            font-weight: 500;
+            transition: all .22s;
+        }
+        .btn-primary {
+            background: var(--green);
+            color: var(--bg);
+            border: 1px solid transparent;
+        }
+        .btn-primary:hover { background: #8fd460; transform: translateY(-2px); }
+        .btn-outline {
+            border: 1px solid rgba(159, 232, 112, .5);
+            background: rgba(159, 232, 112, .1);
+            color: var(--green);
+        }
+        .btn-outline:hover { background: rgba(159, 232, 112, .2); border-color: var(--green); transform: translateY(-2px); }
+
+        .footer {
+            text-align: center;
+            padding: 24px 20px 32px;
+            font-family: var(--mono);
+            font-size: 11px;
+            color: rgba(255, 255, 255, .2);
+            letter-spacing: .05em;
+            border-top: 1px solid rgba(255, 255, 255, .05);
+        }
+        .footer a { color: rgba(255, 255, 255, .32); text-decoration: none; }
+        .footer a:hover { color: #fff; }
+
+        @media (max-width: 700px) {
+            .necessity-grid { grid-template-columns: 1fr; }
+            .necessity-block { padding: 28px; }
+            .case-body { grid-template-columns: 1fr; padding: 20px; }
+            .case-header { padding: 20px; }
+            .pattern-section { padding: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="nav">
+    <a href="index.html" class="logo">GFI Flow Intelligence</a>
+    <div class="lang-grp">
+        <button class="lb-btn on" data-lang="en">EN</button>
+        <button class="lb-btn" data-lang="tw">繁</button>
+        <button class="lb-btn" data-lang="cn">简</button>
+        <button class="lb-btn" data-lang="es">ES</button>
+    </div>
+</div>
+
+<!-- EN -->
+<div class="lb active page" data-lang="en">
+    <section>
+        <div class="inner">
+            <div class="page-header">
+                <div class="page-eyebrow">GEF · GFI Flow Intelligence · Boston</div>
+                <h1 class="page-title">Governance Failure <span>Case Library</span></h1>
+                <p class="page-desc">A structured archive of government IT and service delivery failures. Each case follows a standardized diagnostic format: conventional acceptance vs. actual public outcome, GL diagnostic, and structural lesson. Not commentary. Not opinion. Observable and verifiable.</p>
+            </div>
+
+            <div class="necessity-block">
+                <div class="necessity-title">The Structural Necessity of GL</div>
+                <div class="necessity-sub">Why independent outcome verification is no longer optional</div>
+                <div class="necessity-grid">
+                    <div class="necessity-item"><h4>1. Governments can no longer prove value for money</h4><p>This is the single largest political risk. The UK, Canada, the US, and Australia have all entered procurement accountability, public spending scrutiny, AI governance, and modernization review phases.</p></div>
+                    <div class="necessity-item"><h4>2. The AI era amplifies error</h4><p>In the past, low efficiency meant slowness. Now, automated error means mass misclassification, mass wrongful denial, mass incorrect debt. Australia's Robodebt is the warning.</p></div>
+                    <div class="necessity-item"><h4>3. No existing governance role fills this gap</h4><p>We have audit, procurement, PMO, cybersecurity, compliance, QA, IV&V. But no one verifies whether citizens can actually complete things. This is the vacancy.</p></div>
+                    <div class="necessity-item"><h4>4. EO 14402 is the signal</h4><p>Executive Order 14402 is about efficiency, accountability, measurable performance, contractor scrutiny. Stop telling me what you did. Tell me whether outcomes actually improved.</p></div>
+                </div>
+                <div class="vacancy-box"><div class="label">THE VACANCY</div><div class="statement">"The system is live. <span>So why can't citizens actually get things done?"</span></div></div>
+            </div>
+
+            <!-- 標準化案例庫 -->
+            <div class="case-grid">
+                <!-- Case 1: Birmingham -->
+                <div class="case-card">
+                    <div class="case-header"><div class="case-title">Birmingham Oracle ERP</div><div class="case-tag">United Kingdom · 2022–present</div></div>
+                    <div class="case-body">
+                        <div class="case-section"><h4>Conventional Acceptance</h4><p>ERP deployed · Migration completed · Vendor contract fulfilled · System live October 2022</p></div>
+                        <div class="case-section"><h4>Actual Public Outcome</h4><p>Payroll disruption · Finance workflow collapse · Manual workaround explosion · Section 114 bankruptcy notice · 18+ months with no audit trail</p></div>
+                        <div class="case-section"><h4>GL Diagnostic</h4><p>Workflow continuity failure · Operational friction increase · No independent outcome verification · <strong>GL = 0.071</strong></p></div>
+                        <div class="case-section"><h4>Structural Lesson</h4><p>Implementation completion ≠ delivery success. 187 processes go-live simultaneously without parallel running guarantees failure.</p></div>
+                    </div>
+                    <div class="case-footer"><div class="case-lesson">🔍 Friction source: Vendor self-verification · No independent acceptance gate</div><a href="https://gfiintel.com/gl-demo" class="case-link">GL Diagnostic → <span class="arr">→</span></a></div>
+                </div>
+
+                <!-- Case 2: Phoenix Pay System -->
+                <div class="case-card">
+                    <div class="case-header"><div class="case-title">Phoenix Pay System</div><div class="case-tag">Canada · 2016–present</div></div>
+                    <div class="case-body">
+                        <div class="case-section"><h4>Conventional Acceptance</h4><p>IBM delivered · System went live · C$300M original budget</p></div>
+                        <div class="case-section"><h4>Actual Public Outcome</h4><p>C$3.5B and counting · 80%+ of public servants underpaid, overpaid, or not paid · Still failing after a decade</p></div>
+                        <div class="case-section"><h4>GL Diagnostic</h4><p>Payroll integrity collapse · No independent pre-go-live verification · Fs → 0</p></div>
+                        <div class="case-section"><h4>Structural Lesson</h4><p>No parallel running. No independent acceptance criteria. Vendor paid to fix what vendor broke — failure premium.</p></div>
+                    </div>
+                    <div class="case-footer"><div class="case-lesson">🔍 Friction source: No independent payroll verification before legacy retirement</div><a href="https://gfiintel.com/gl-demo" class="case-link">GL Diagnostic → <span class="arr">→</span></a></div>
+                </div>
+
+                <!-- Case 3: Queensland Health -->
+                <div class="case-card">
+                    <div class="case-header"><div class="case-title">Queensland Health Payroll</div><div class="case-tag">Australia · 2010–2016</div></div>
+                    <div class="case-body">
+                        <div class="case-section"><h4>Conventional Acceptance</h4><p>EY delivered · A$6M contract · "Project completed"</p></div>
+                        <div class="case-section"><h4>Actual Public Outcome</h4><p>A$1.2B ultimate cost · Australia's worst IT failure · Thousands of incorrect pays</p></div>
+                        <div class="case-section"><h4>GL Diagnostic</h4><p>200x multiplier · No outcome-based acceptance · Fs near zero</p></div>
+                        <div class="case-section"><h4>Structural Lesson</h4><p>Lowball bid → customization → Big Bang → failure premium. The standard operating manual.</p></div>
+                    </div>
+                    <div class="case-footer"><div class="case-lesson">🔍 Friction source: Cost-reimbursement contract with no performance incentive</div><a href="https://gfiintel.com/gl-demo" class="case-link">GL Diagnostic → <span class="arr">→</span></a></div>
+                </div>
+
+                <!-- Case 4: LAUSD SAP -->
+                <div class="case-card">
+                    <div class="case-header"><div class="case-title">LAUSD SAP</div><div class="case-tag">United States · 2008–2010</div></div>
+                    <div class="case-body">
+                        <div class="case-section"><h4>Conventional Acceptance</h4><p>Deloitte delivered · $95M contract · Big Bang go-live</p></div>
+                        <div class="case-section"><h4>Actual Public Outcome</h4><p>32,000 incorrect payroll checks in one month · Teachers forced to queue at headquarters</p></div>
+                        <div class="case-section"><h4>GL Diagnostic</h4><p>Payroll integrity collapse · Cf maximum · No parallel running</p></div>
+                        <div class="case-section"><h4>Structural Lesson</h4><p>Big Bang go-live without parallel running is not transformation — it is a hostage situation.</p></div>
+                    </div>
+                    <div class="case-footer"><div class="case-lesson">🔍 Friction source: No phased rollout · No fallback</div><a href="https://gfiintel.com/gl-demo" class="case-link">GL Diagnostic → <span class="arr">→</span></a></div>
+                </div>
+            </div>
+
+            <!-- 快速索引表格 -->
+            <div class="table-wrapper">
+                <table id="failureTable">
+                    <thead><tr><th>Country</th><th>Project</th><th>Original → Final</th><th>Multiplier</th><th>Primary Vendor</th><th>Primary Failure Mode</th></tr></thead>
+                    <tbody>
+                        <tr><td>🇬🇧 UK</td><td>Birmingham Oracle ERP</td><td><span class="price-original">£19M</span> → <span class="price-final">£100M+</span></td><td class="multiplier">5.3x</td><td>Capgemini → KPMG</td><td>Section 114 bankruptcy, no audit trail</td></tr>
+                        <tr><td>🇨🇦 Canada</td><td>Phoenix Pay System</td><td><span class="price-original">C$300M</span> → <span class="price-final">C$3.5B</span></td><td class="multiplier">11.7x</td><td>IBM</td><td>Still failing after a decade</td></tr>
+                        <tr><td>🇨🇦 Canada</td><td>Panorama (BC)</td><td><span class="price-original">C$27M</span> → <span class="price-final">C$113M</span></td><td class="multiplier">4.2x</td><td>IBM</td><td>1,200 defects, 320+ workarounds</td></tr>
+                        <tr><td>🇨🇦 Canada</td><td>BDM (PwC)</td><td><span class="price-original">C$1.7B</span> → <span class="price-final">C$2.5B+</span></td><td class="multiplier">1.5x</td><td>PwC</td><td>Doubled before go-live</td></tr>
+                        <tr><td>🇦🇺 Australia</td><td>Queensland Health</td><td><span class="price-original">A$6M</span> → <span class="price-final">A$1.2B</span></td><td class="multiplier">200x</td><td>EY</td><td>Worst in Australian history</td></tr>
+                        <tr><td>🇦🇺 Australia</td><td>Defence KPMG</td><td><span class="price-original">A$515M</span> → <span class="price-final">A$515M+</span></td><td class="multiplier">N/A</td><td>KPMG</td><td>Double-billing, self-diluted requirements</td></tr>
+                        <tr><td>🇮🇪 Ireland</td><td>PPARS</td><td><span class="price-original">$10.7M</span> → <span class="price-final">$180M</span></td><td class="multiplier">16.8x</td><td>Deloitte + SAP</td><td>Abandoned after 10 years</td></tr>
+                        <tr><td>🇺🇸 USA</td><td>LAUSD SAP</td><td><span class="price-original">$95M</span> → <span class="price-final">$95M+</span></td><td class="multiplier">~2x</td><td>Deloitte</td><td>32,000 payroll errors in one month</td></tr>
+                        <tr><td>🇺🇸 USA</td><td>US Navy ERP</td><td><span class="price-original">$500M</span> → <span class="price-final">$1B+ wasted</span></td><td class="multiplier">2x+</td><td>IBM, EDS, Deloitte</td><td>GAO: "These efforts are failures"</td></tr>
+                        <tr><td>🇬🇧 UK</td><td>West Sussex ERP</td><td><span class="price-original">£2.6M</span> → <span class="price-final">£40M</span></td><td class="multiplier">15.4x</td><td>DXC → Infosys</td><td>Delayed to 2025</td></tr>
+                        <tr><td>🇩🇪 Germany</td><td>Federal IT Integration</td><td>Undisclosed → Billions €</td><td class="multiplier">N/A</td><td>Deloitte, Capgemini, IBM</td><td>Systemic consulting dependency</td></tr>
+                        <tr><td>🌍 Global</td><td>Ethics Exam Cheating</td><td>N/A</td><td class="multiplier">N/A</td><td>KPMG, PwC, EY, Deloitte</td><td>Hundreds systematically cheated</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 共通模式 -->
+            <div class="pattern-section">
+                <h3>🔍 Common Pattern: Big 4's Standard Operating Manual</h3>
+                <div class="steps">
+                    <div class="step"><span class="step-num">1. Lowball to win</span><div class="step-title">Under-bid, recover through variations</div><div class="step-example">West Sussex: £4M → 50%+ overbilled</div></div>
+                    <div class="step"><span class="step-num">2. Sell customization</span><div class="step-title">"You're special – you need tailored solutions"</div><div class="step-example">Birmingham: adoption → adaptation</div></div>
+                    <div class="step"><span class="step-num">3. Big Bang go-live</span><div class="step-title">Refuse phased rollout or parallel running</div><div class="step-example">Birmingham: 187 at once; LAUSD: overnight switch</div></div>
+                    <div class="step"><span class="step-num">4. Hide problems</span><div class="step-title">Prevent client from independent verification</div><div class="step-example">US Navy: GAO demanded oversight</div></div>
+                    <div class="step"><span class="step-num">5. Maximize billable hours</span><div class="step-title">Extend projects, over-staff</div><div class="step-example">Germany: "billable hours maximization"</div></div>
+                    <div class="step"><span class="step-num">6. Collect failure premium</span><div class="step-title">Get paid again to fix what you broke</div><div class="step-example">Oracle: another £10M; IBM still collecting Phoenix maintenance</div></div>
+                </div>
+            </div>
+
+            <div class="cta-buttons">
+                <a href="https://gfiintel.com/gl-demo" class="btn btn-primary">EXPLORE GL FRAMEWORK <span class="arr">→</span></a>
+                <a href="gl-verifier.html" class="btn btn-outline">BECOME A GL VERIFIER <span class="arr">→</span></a>
+            </div>
+
+            <div class="footer">
+                © 2026 GFI Flow Intelligence · Boston ·
+                <a href="about.html">About</a> ·
+                <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6178024" target="_blank" rel="noopener">SSRN</a> ·
+                <a href="mailto:ping@gfiintel.com">ping@gfiintel.com</a>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- 其他語言精簡版（結構相同，僅翻譯） -->
+<div class="lb page" data-lang="tw"><section><div class="inner"><div class="page-header"><div class="page-eyebrow">GEF · GFI Flow Intelligence · 波士頓</div><h1 class="page-title">治理失敗<span>案例庫</span></h1><p class="page-desc">政府 IT 與服務交付失敗的結構化檔案。每個案例遵循標準化診斷格式：傳統驗收 vs. 實際公共成果、GL 診斷、結構性教訓。</p></div><div class="necessity-block"><div class="necessity-title">GL 的結構性剛需</div><div class="necessity-sub">為什麼獨立成果驗證不再是選項</div><div class="necessity-grid"><div class="necessity-item"><h4>1. 政府無法證明花錢有效</h4><p>英國、加拿大、美國、澳洲都已進入採購問責與公共支出審查階段。</p></div><div class="necessity-item"><h4>2. AI 時代會放大錯誤</h4><p>自動化錯誤會變成大規模誤判、錯誤債務。澳洲 Robodebt 是前車之鑑。</p></div><div class="necessity-item"><h4>3. 現有治理架構沒有這個角色</h4><p>有審計、採購、PMO，但沒有人負責驗證人民是否真的能辦完事。</p></div><div class="necessity-item"><h4>4. EO 14402 是訊號</h4><p>不要再告訴我你做了什麼，告訴我結果是否真的改善。</p></div></div><div class="vacancy-box"><div class="label">空缺</div><div class="statement">「系統上線了。<span>但人民為什麼還是辦不了事？」</span></div></div></div><div class="case-grid"><div class="case-card"><div class="case-header"><div class="case-title">伯明罕 Oracle ERP</div><div class="case-tag">英國 · 2022–</div></div><div class="case-body"><div class="case-section"><h4>傳統驗收</h4><p>ERP 部署完成 · 遷移完成 · 廠商合約履行 · 2022年10月上線</p></div><div class="case-section"><h4>實際公共成果</h4><p>薪資中斷 · 財務流程崩潰 · Section 114破產通知 · 18個月無審計線索</p></div><div class="case-section"><h4>GL 診斷</h4><p>工作流連續性失效 · 無獨立成果驗證 · <strong>GL = 0.071</strong></p></div><div class="case-section"><h4>結構性教訓</h4><p>實施完成 ≠ 交付成功。187個流程同時上線，沒有並行運行。</p></div></div><div class="case-footer"><div class="case-lesson">🔍 摩擦來源：廠商自我驗證 · 無獨立驗收關卡</div><a href="https://gfiintel.com/gl-demo" class="case-link">GL 診斷 → <span class="arr">→</span></a></div></div></div><div class="table-wrapper"><td><thead><tr><th>國家</th><th>專案</th><th>原始 → 最終</th><th>倍數</th><th>主要廠商</th></tr></thead><tbody><tr><td>🇬🇧 英國</td><td>伯明罕 Oracle ERP</td><td>£19M → £100M+</td><td>5.3x</td><td>Capgemini → KPMG</td></tr><tr><td>🇨🇦 加拿大</td><td>Phoenix 薪資系統</td><td>C$300M → C$3.5B</td><td>11.7x</td><td>IBM</td></tr><tr><td>🇦🇺 澳洲</td><td>昆士蘭健康薪資</td><td>A$6M → A$1.2B</td><td class="multiplier">200x</td><td>EY</td></tr></tbody></table></div><div class="cta-buttons"><a href="https://gfiintel.com/gl-demo" class="btn btn-primary">了解 GL 框架 →</a><a href="gl-verifier.html" class="btn btn-outline">成為 GL 驗證師 →</a></div></div></section></div>
+
+<!-- CN 簡體版 -->
+<div class="lb page" data-lang="cn"><section><div class="inner"><div class="page-header"><div class="page-eyebrow">GEF · GFI Flow Intelligence · 波士顿</div><h1 class="page-title">治理失败<span>案例库</span></h1><p class="page-desc">政府 IT 与服务交付失败的结构化档案。每个案例遵循标准化诊断格式：传统验收 vs. 实际公共成果、GL 诊断、结构性教训。</p></div><div class="necessity-block"><div class="necessity-title">GL 的结构性刚需</div><div class="necessity-sub">为什么独立成果验证不再是选项</div><div class="necessity-grid"><div class="necessity-item"><h4>1. 政府无法证明花钱有效</h4><p>英国、加拿大、美国、澳洲都已进入采购问责与公共支出审查阶段。</p></div><div class="necessity-item"><h4>2. AI 时代会放大错误</h4><p>自动化错误会变成大规模误判、错误债务。澳洲 Robodebt 是前车之鉴。</p></div><div class="necessity-item"><h4>3. 现有治理架构没有这个角色</h4><p>有审计、采购、PMO，但没有人负责验证人民是否真的能办完事。</p></div><div class="necessity-item"><h4>4. EO 14402 是信号</h4><p>不要再告诉我你做了什么，告诉我结果是否真的改善。</p></div></div><div class="vacancy-box"><div class="label">空缺</div><div class="statement">「系统上线了。<span>但人民为什么还是办不了事？」</span></div></div></div><div class="case-grid"><div class="case-card"><div class="case-header"><div class="case-title">伯明翰 Oracle ERP</div><div class="case-tag">英国 · 2022–</div></div><div class="case-body"><div class="case-section"><h4>传统验收</h4><p>ERP 部署完成 · 迁移完成 · 厂商合约履行 · 2022年10月上线</p></div><div class="case-section"><h4>实际公共成果</h4><p>薪资中断 · 财务流程崩溃 · Section 114破产通知 · 18个月无审计线索</p></div><div class="case-section"><h4>GL 诊断</h4><p>工作流连续性失效 · 无独立成果验证 · <strong>GL = 0.071</strong></p></div><div class="case-section"><h4>结构性教训</h4><p>实施完成 ≠ 交付成功。187个流程同时上线，没有并行运行。</p></div></div><div class="case-footer"><div class="case-lesson">🔍 摩擦来源：厂商自我验证 · 无独立验收关卡</div><a href="https://gfiintel.com/gl-demo" class="case-link">GL 诊断 → <span class="arr">→</span></a></div></div></div><div class="table-wrapper"><table><thead><tr><th>国家</th><th>项目</th><th>原始 → 最终</th><th>倍数</th><th>主要厂商</th></tr></thead><tbody><tr><td>🇬🇧 英国</td><td>伯明翰 Oracle ERP</td><td>£19M → £100M+</td><td>5.3x</td><td>Capgemini → KPMG</td></tr></tbody></table></div><div class="cta-buttons"><a href="https://gfiintel.com/gl-demo" class="btn btn-primary">了解 GL 框架 →</a><a href="gl-verifier.html" class="btn btn-outline">成为 GL 验证师 →</a></div></div></section></div>
+
+<!-- ES 西班牙語版 -->
+<div class="lb page" data-lang="es"><section><div class="inner"><div class="page-header"><div class="page-eyebrow">GEF · GFI Flow Intelligence · Boston</div><h1 class="page-title">Biblioteca de <span>Casos de Fracaso</span></h1><p class="page-desc">Un archivo estructurado de fallos gubernamentales en TI y prestación de servicios. Cada caso sigue un formato de diagnóstico estandarizado.</p></div><div class="necessity-block"><div class="necessity-title">La Necesidad Estructural de GL</div><div class="necessity-sub">Por qué la verificación independiente ya no es opcional</div><div class="necessity-grid"><div class="necessity-item"><h4>1. Los gobiernos no pueden probar valor por dinero</h4><p>Reino Unido, Canadá, EE.UU. y Australia han entrado en fases de rendición de cuentas.</p></div><div class="necessity-item"><h4>2. La era de IA amplifica el error</h4><p>Robodebt de Australia es la advertencia.</p></div><div class="necessity-item"><h4>3. Ningún rol de gobernanza llena este vacío</h4><p>Nadie verifica si los ciudadanos pueden completar los trámites.</p></div><div class="necessity-item"><h4>4. EO 14402 es la señal</h4><p>Dime si los resultados mejoraron.</p></div></div><div class="vacancy-box"><div class="label">EL VACÍO</div><div class="statement">"El sistema está funcionando. <span>¿Por qué los ciudadanos no pueden hacer los trámites?"</span></div></div></div><div class="case-grid"><div class="case-card"><div class="case-header"><div class="case-title">Birmingham Oracle ERP</div><div class="case-tag">Reino Unido · 2022–</div></div><div class="case-body"><div class="case-section"><h4>Aceptación Convencional</h4><p>ERP implementado · Migración completada · Contrato cumplido</p></div><div class="case-section"><h4>Resultado Público Real</h4><p>Interrupción de nóminas · Colapso financiero · Section 114</p></div><div class="case-section"><h4>Diagnóstico GL</h4><p>Falla de continuidad · <strong>GL = 0.071</strong></p></div><div class="case-section"><h4>Lección Estructural</h4><p>Implementación completada ≠ éxito en la entrega.</p></div></div><div class="case-footer"><div class="case-lesson">🔍 Fuente de fricción: Auto-verificación del proveedor</div><a href="https://gfiintel.com/gl-demo" class="case-link">Diagnóstico GL → <span class="arr">→</span></a></div></div></div><div class="table-wrapper"><table><thead><tr><th>País</th><th>Proyecto</th><th>Original → Final</th><th>Multiplicador</th><th>Proveedor</th></tr></thead><tbody><tr><td>🇬🇧 UK</td><td>Birmingham Oracle ERP</td><td>£19M → £100M+</td><td>5.3x</td><td>Capgemini → KPMG</td></tr></tbody></table></div><div class="cta-buttons"><a href="https://gfiintel.com/gl-demo" class="btn btn-primary">CONOCER GL →</a><a href="gl-verifier.html" class="btn btn-outline">SER GL VERIFIER →</a></div></div></section></div>
+
+<script>
+    const btns = document.querySelectorAll('.lb-btn');
+    const blocks = document.querySelectorAll('.lb');
+    btns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const lang = btn.dataset.lang;
+            btns.forEach(b => b.classList.remove('on'));
+            blocks.forEach(b => b.classList.remove('active'));
+            btn.classList.add('on');
+            document.querySelector(`.lb[data-lang="${lang}"]`).classList.add('active');
+        });
+    });
+</script>
+</body>
+</html>
