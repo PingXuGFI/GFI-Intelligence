@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Public Diagnostic Reports — GL Framework structural failure analyses of government IT systems across 8 countries. Free PDF downloads.">
+    <title>Public Diagnostic Reports – GFI Flow Intelligence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0b1220;
+            --bg2: #0d1526;
+            --text: #f8fbff;
+            --muted: #c7d2e3;
+            --sub: #9fb0c8;
+            --dim: rgba(255,255,255,.06);
+            --green: #9FE870;
+            --blue: #7DD3FC;
+            --gold: #c89a2a;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --mono: 'DM Mono', monospace;
+            --sans: 'DM Sans', system-ui, sans-serif;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 15px;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+        .nav {
+            position: fixed;
+            inset: 0 0 auto 0;
+            z-index: 100;
+            height: 62px;
+            padding: 0 clamp(18px, 5vw, 52px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(11, 18, 32, .90);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(255, 255, 255, .07);
+        }
+        .logo {
+            color: #fff;
+            text-decoration: none;
+            font-family: var(--mono);
+            font-size: 13px;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+        }
+        .lang-grp { display: flex; gap: 6px; }
+        .lb-btn {
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: .08em;
+            padding: 5px 10px;
+            border: 1px solid rgba(255, 255, 255, .10);
+            border-radius: 5px;
+            background: none;
+            color: var(--sub);
+            cursor: pointer;
+            transition: all .2s;
+        }
+        .lb-btn:hover { color: var(--text); border-color: rgba(255, 255, 255, .2); }
+        .lb-btn.on {
+            color: var(--green);
+            border-color: rgba(159, 232, 112, .35);
+            background: rgba(159, 232, 112, .07);
+        }
+        .lb { display: none; }
+        .lb.active { display: block; }
+        .page { padding-top: 62px; }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 3rem 2rem 4rem;
+        }
+        .page-header {
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--dim);
+            padding-bottom: 1.5rem;
+        }
+        .page-eyebrow {
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: var(--green);
+            margin-bottom: 1rem;
+        }
+        .page-title {
+            font-family: var(--serif);
+            font-size: clamp(36px, 5vw, 56px);
+            line-height: 1.08;
+            letter-spacing: -.02em;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+        .page-desc {
+            font-size: 1.1rem;
+            color: var(--muted);
+            max-width: 800px;
+            line-height: 1.6;
+        }
+        .reports-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 24px;
+            margin: 2rem 0;
+        }
+        .report-card {
+            background: var(--bg2);
+            border: 1px solid var(--dim);
+            border-radius: 20px;
+            padding: 1.5rem;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .report-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(159, 232, 112, 0.3);
+        }
+        .report-country {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: .1em;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: rgba(159, 232, 112, 0.12);
+            color: var(--green);
+            margin-bottom: 1rem;
+        }
+        .report-title {
+            font-family: var(--serif);
+            font-size: 1.3rem;
+            line-height: 1.3;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+        .report-system {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--gold);
+            margin-bottom: 0.75rem;
+        }
+        .report-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+            padding: 0.75rem 0;
+            border-top: 1px solid var(--dim);
+            border-bottom: 1px solid var(--dim);
+        }
+        .gl-score {
+            font-family: var(--mono);
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #f08b5e;
+        }
+        .gl-label {
+            font-size: 0.7rem;
+            color: var(--sub);
+            letter-spacing: 0.5px;
+        }
+        .vendor {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            color: var(--sub);
+            text-align: right;
+        }
+        .report-desc {
+            font-size: 0.8rem;
+            color: var(--muted);
+            line-height: 1.5;
+            margin: 1rem 0;
+        }
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--dim);
+            border-radius: 40px;
+            color: var(--text);
+            text-decoration: none;
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: .08em;
+            transition: all 0.2s;
+            margin-top: 0.5rem;
+        }
+        .download-btn:hover {
+            background: rgba(159, 232, 112, 0.15);
+            border-color: var(--green);
+            transform: translateY(-2px);
+        }
+        .footer-note {
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 16px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--sub);
+            border: 1px solid var(--dim);
+        }
+        .footer {
+            text-align: center;
+            padding: 24px 20px 32px;
+            font-family: var(--mono);
+            font-size: 11px;
+            color: rgba(255, 255, 255, .2);
+            letter-spacing: .05em;
+            border-top: 1px solid rgba(255, 255, 255, .05);
+        }
+        .footer a {
+            color: rgba(255, 255, 255, .32);
+            text-decoration: none;
+        }
+        .footer a:hover { color: #fff; }
+
+        @media (max-width: 800px) {
+            .container { padding: 2rem 1rem; }
+            .reports-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="nav">
+    <a href="index.html" class="logo">GFI Flow Intelligence</a>
+    <div class="lang-grp">
+        <button class="lb-btn on" data-lang="en">EN</button>
+        <button class="lb-btn" data-lang="tw">繁</button>
+        <button class="lb-btn" data-lang="cn">简</button>
+        <button class="lb-btn" data-lang="es">ES</button>
+    </div>
+</div>
+
+<!-- ENGLISH -->
+<div class="lb active page" data-lang="en">
+    <div class="container">
+        <div class="page-header">
+            <div class="page-eyebrow">GL Framework · Public Diagnostic Reports</div>
+            <h1 class="page-title">Structural Failure <span style="color: #f08b5e;">Case Library</span></h1>
+            <p class="page-desc">Independent diagnostic reports applying the GL Framework to real government IT failures. Each report uses only publicly available data — no system access required. All reports are free to download.</p>
+        </div>
+
+        <div class="reports-grid">
+            <div class="report-card">
+                <span class="report-country">🇬🇧 United Kingdom · Health</span>
+                <div class="report-title">NHS National Programme for IT</div>
+                <div class="report-system">Lorenzo Electronic Patient Records</div>
+                <div class="report-meta">
+                    <div><span class="gl-score">0.038</span><br><span class="gl-label">GL Score</span></div>
+                    <div class="vendor">Accenture · CSC · Fujitsu · BT</div>
+                </div>
+                <div class="report-desc">£12.7B spent, £10.1B net loss. Lorenzo deployed to 22 trusts vs 220+ target. Selected from paper descriptions — no clinical proof of concept before contract.</div>
+                <a href="/reports/GL_NHS_NPfIT_Diagnostic_Report_EN.pdf" class="download-btn" download>📄 Download PDF →</a>
+            </div>
+
+            <div class="report-card">
+                <span class="report-country">🇺🇸 United States · Manufacturing</span>
+                <div class="report-title">Zimmer Biomet SAP S/4HANA</div>
+                <div class="report-system">Deloitte Implementation Failure</div>
+                <div class="report-meta">
+                    <div><span class="gl-score">0.034</span><br><span class="gl-label">GL Score (acute phase)</span></div>
+                    <div class="vendor">Deloitte</div>
+                </div>
+                <div class="report-desc">$172M lawsuit. Medical device shipments halted. Deloitte terminated all contracts without knowledge transfer. No independent go-live gate.</div>
+                <a href="/reports/GL_ZimmerBiomet_Deloitte_Diagnostic_Report_EN.pdf" class="download-btn" download>📄 Download PDF →</a>
+            </div>
+
+            <div class="report-card">
+                <span class="report-country">🇨🇦 Canada · Driver/Vehicle Licensing</span>
+                <div class="report-title">SAAQ SAP S/4HANA</div>
+                <div class="report-system">IBM · Gallant Commission Findings</div>
+                <div class="report-meta">
+                    <div><span class="gl-score">0.052</span><br><span class="gl-label">GL Score</span></div>
+                    <div class="vendor">IBM · SAP</div>
+                </div>
+                <div class="report-desc">C$1.1B spent. Phases 2.5 and 3 cancelled. SAP had privileged pre-tender relationship. Agile before design completion caused sprint explosion.</div>
+                <a href="/reports/GL_SAAQ_IBM_SAP_Diagnostic_Report_EN.pdf" class="download-btn" download>📄 Download PDF →</a>
+            </div>
+
+            <div class="report-card">
+                <span class="report-country">🇬🇧 United Kingdom · Social Welfare</span>
+                <div class="report-title">DWP Universal Credit</div>
+                <div class="report-system">IBM Infrastructure Transformation</div>
+                <div class="report-meta">
+                    <div><span class="gl-score">0.074</span><br><span class="gl-label">GL Score</span></div>
+                    <div class="vendor">IBM Consulting</div>
+                </div>
+                <div class="report-desc">£22.7B in benefits unclaimed annually. Structural 5-week wait. Managed migration places burden on claimants — 110,000+ reassessment backlog.</div>
+                <a href="/reports/UK_DWP_GL_Diagnostic_Report_EN.pdf" class="download-btn" download>📄 Download PDF →</a>
+            </div>
+
+            <div class="report-card">
+                <span class="report-country">🇺🇸 United States · Unemployment</span>
+                <div class="report-title">Massachusetts DUA</div>
+                <div class="report-system">Unemployment Insurance</div>
+                <div class="report-meta">
+                    <div><span class="gl-score">0.067</span><br><span class="gl-label">GL Score</span></div>
+                    <div class="vendor">(System integrator not specified)</div>
+                </div>
+                <div class="report-desc">First payment: 4–6 weeks. 10-day appeal window. Call Center closed Fridays. Mobile access limited — structural barriers to benefit access.</div>
+                <a href="/reports/MA_DUA_GL_Snapshot.pdf" class="download-btn" download>📄 Download PDF →</a>
+            </div>
+
+            <div class="report-card">
+                <span class="report-country">🇺🇸 United States · Medicaid</span>
+                <div class="report-title">Iowa Medicaid Eligibility System</div>
+                <div class="report-system">Accenture-Operated</div>
+                <div class="report-meta">
+                    <div><span class="gl-score">0.082</span><br><span class="gl-label">GL Score</span></div>
+                    <div class="vendor">Accenture</div>
+                </div>
+                <div class="report-desc">46% ex parte rate vs 60% national avg. 72% of disenrollments were procedural. $20M+ cost to add work requirements — denominator rigidity.</div>
+                <a href="/reports/Iowa_Medicaid_GL_Diagnostic_Report_EN.pdf" class="download-btn" download>📄 Download PDF →</a>
+            </div>
+
+            <div class="report-card">
+                <span class="report-country">🇹🇼 Taiwan · Long-Term Care</span>
+                <div class="report-title">Long-Term Care Plan 3.0</div>
+                <div class="report-system">Front-loaded Sequential Assessment</div>
+                <div class="report-meta">
+                    <div><span class="gl-score">0.148</span><br><span class="gl-label">GL Score</span></div>
+                    <div class="vendor">(No single SI)</div>
+                </div>
+                <div class="report-desc">Budget > NT$100B annually. 4–12 weeks to first service. No provisional activation. Rural assessment waits 12+ weeks. A-B-C tier fragmentation.</div>
+                <a href="/reports/Taiwan_LTC3_GL_Diagnostic_Report_EN.docx.pdf" class="download-btn" download>📄 Download PDF →</a>
+            </div>
+
+            <div class="report-card">
+                <span class="report-country">🇬🇧 United Kingdom · Local Government</span>
+                <div class="report-title">Birmingham Oracle Cloud Fusion</div>
+                <div class="report-system">Capgemini → KPMG</div>
+                <div class="report-meta">
+                    <div><span class="gl-score">0.071</span><br><span class="gl-label">GL Score</span></div>
+                    <div class="vendor">Oracle · Capgemini · KPMG</div>
+                </div>
+                <div class="report-desc">Section 114 bankruptcy. £19M → £100M+. 187 processes simultaneous go-live. 18+ months with no audit trail. £760M unquantified equal pay liability.</div>
+                <a href="/reports/UK_Birmingham_GL_Diagnostic_Report_EN.pdf" class="download-btn" download>📄 Download PDF →</a>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            <strong>Methodology Note:</strong> All GL scores computed using GL = (Fs × Vn) / (Pd × Cf). 
+            Input values derived from publicly available sources — audit reports, parliamentary inquiries, official investigations, and news reporting. 
+            No internal system access required. GL Framework published in PA Times (ASPA, March & April 2026) and SSRN.
+        </div>
+    </div>
+</div>
+
+<!-- 繁體中文 -->
+<div class="lb page" data-lang="tw">
+    <div class="container">
+        <div class="page-header">
+            <div class="page-eyebrow">GL 框架 · 公開診斷報告</div>
+            <h1 class="page-title">結構性失敗<span style="color: #f08b5e;">案例庫</span></h1>
+            <p class="page-desc">應用 GL 框架於真實政府 IT 失敗案例的獨立診斷報告。僅使用公開資料 — 無需系統存取。所有報告免費下載。</p>
+        </div>
+        <div class="reports-grid">
+            <div class="report-card"><span class="report-country">🇬🇧 英國 · 醫療</span><div class="report-title">NHS 國家 IT 計畫</div><div class="report-system">Lorenzo 電子病歷</div><div class="report-meta"><div><span class="gl-score">0.038</span><br><span class="gl-label">GL 分數</span></div><div class="vendor">Accenture · CSC · Fujitsu · BT</div></div><div class="report-desc">£127 億花費，£101 億淨損失。Lorenzo 部署到 22 個信託 vs 220+ 目標。合約前無臨床概念驗證。</div><a href="/reports/GL_NHS_NPfIT_Diagnostic_Report_EN.pdf" class="download-btn" download>📄 下載 PDF →</a></div>
+            <div class="report-card"><span class="report-country">🇺🇸 美國 · 製造業</span><div class="report-title">Zimmer Biomet SAP S/4HANA</div><div class="report-system">Deloitte 導入失敗</div><div class="report-meta"><div><span class="gl-score">0.034</span><br><span class="gl-label">GL 分數（急性期）</span></div><div class="vendor">Deloitte</div></div><div class="report-desc">$1.72 億訴訟。醫療設備出貨中斷。Deloitte 終止合約無交接。無獨立上線閘門。</div><a href="/reports/GL_ZimmerBiomet_Deloitte_Diagnostic_Report_EN.pdf" class="download-btn" download>📄 下載 PDF →</a></div>
+            <div class="report-card"><span class="report-country">🇨🇦 加拿大 · 監理</span><div class="report-title">SAAQ SAP S/4HANA</div><div class="report-system">IBM · Gallant 委員會調查</div><div class="report-meta"><div><span class="gl-score">0.052</span><br><span class="gl-label">GL 分數</span></div><div class="vendor">IBM · SAP</div></div><div class="report-desc">C$11 億花費。第 2.5/3 期取消。SAP 標前特權關係。設計未完成即啟動敏捷。</div><a href="/reports/GL_SAAQ_IBM_SAP_Diagnostic_Report_EN.pdf" class="download-btn" download>📄 下載 PDF →</a></div>
+            <div class="report-card"><span class="report-country">🇬🇧 英國 · 社會福利</span><div class="report-title">DWP 通用福利金</div><div class="report-system">IBM 基礎設施轉型</div><div class="report-meta"><div><span class="gl-score">0.074</span><br><span class="gl-label">GL 分數</span></div><div class="vendor">IBM 諮詢</div></div><div class="report-desc">每年 £227 億福利未被領取。結構性 5 週等待期。managed migration 責任在申請人。</div><a href="/reports/UK_DWP_GL_Diagnostic_Report_EN.pdf" class="download-btn" download>📄 下載 PDF →</a></div>
+            <div class="report-card"><span class="report-country">🇺🇸 美國 · 失業保險</span><div class="report-title">麻州 DUA</div><div class="report-system">失業保險系統</div><div class="report-meta"><div><span class="gl-score">0.067</span><br><span class="gl-label">GL 分數</span></div><div class="vendor">（未指定 SI）</div></div><div class="report-desc">首次給付 4–6 週。10 天申訴窗口。客服中心週五關閉。行動裝置存取受限。</div><a href="/reports/MA_DUA_GL_Snapshot.pdf" class="download-btn" download>📄 下載 PDF →</a></div>
+            <div class="report-card"><span class="report-country">🇺🇸 美國 · 醫療補助</span><div class="report-title">愛荷華 Medicaid</div><div class="report-system">Accenture 營運</div><div class="report-meta"><div><span class="gl-score">0.082</span><br><span class="gl-label">GL 分數</span></div><div class="vendor">Accenture</div></div><div class="report-desc">自動續約率 46% vs 全國平均 60%。72% 退保是程序性原因。新增工作要求成本 $2000 萬+。</div><a href="/reports/Iowa_Medicaid_GL_Diagnostic_Report_EN.pdf" class="download-btn" download>📄 下載 PDF →</a></div>
+            <div class="report-card"><span class="report-country">🇹🇼 台灣 · 長照</span><div class="report-title">長照計畫 3.0</div><div class="report-system">前端順序性評估</div><div class="report-meta"><div><span class="gl-score">0.148</span><br><span class="gl-label">GL 分數</span></div><div class="vendor">（無單一 SI）</div></div><div class="report-desc">預算 > NT$1000 億。首次服務需 4–12 週。無臨時服務啟用。A-B-C 三級碎片化。</div><a href="/reports/Taiwan_LTC3_GL_Diagnostic_Report_EN.docx.pdf" class="download-btn" download>📄 下載 PDF →</a></div>
+            <div class="report-card"><span class="report-country">🇬🇧 英國 · 地方政府</span><div class="report-title">伯明罕 Oracle Cloud Fusion</div><div class="report-system">Capgemini → KPMG</div><div class="report-meta"><div><span class="gl-score">0.071</span><br><span class="gl-label">GL 分數</span></div><div class="vendor">Oracle · Capgemini · KPMG</div></div><div class="report-desc">Section 114 破產。£1900 萬 → £1 億+。187 流程同時上線。18 個月無審計線索。</div><a href="/reports/UK_Birmingham_GL_Diagnostic_Report_EN.pdf" class="download-btn" download>📄 下載 PDF →</a></div>
+        </div>
+        <div class="footer-note"><strong>方法論說明：</strong>所有 GL 分數使用 GL = (Fs × Vn) / (Pd × Cf) 計算。數值來自公開來源 — 審計報告、國會調查、官方調查與新聞報導。無需內部系統存取。</div>
+    </div>
+</div>
+
+<!-- 简体中文 -->
+<div class="lb page" data-lang="cn">
+    <div class="container">
+        <div class="page-header">
+            <div class="page-eyebrow">GL 框架 · 公开诊断报告</div>
+            <h1 class="page-title">结构性失败<span style="color: #f08b5e;">案例库</span></h1>
+            <p class="page-desc">应用 GL 框架于真实政府 IT 失败案例的独立诊断报告。仅使用公开资料 — 无需系统访问。所有报告免费下载。</p>
+        </div>
+        <div class="reports-grid">
+            <div class="report-card"><span class="report-country">🇬🇧 英国 · 医疗</span><div class="report-title">NHS 国家 IT 计划</div><div class="report-system">Lorenzo 电子病历</div><div class="report-meta"><div><span class="gl-score">0.038</span><br><span class="gl-label">GL 分数</span></div><div class="vendor">Accenture · CSC · Fujitsu · BT</div></div><div class="report-desc">£127 亿花费，£101 亿净损失。Lorenzo 部署到 22 个信托 vs 220+ 目标。合同前无临床概念验证。</div><a href="/reports/GL_NHS_NPfIT_Diagnostic_Report_EN.pdf" class="download-btn" download>📄 下载 PDF →</a></div>
+            <div class="report-card"><span class="report-country">🇺🇸 美国 · 制造业</span><div class="report-title">Zimmer Biomet SAP S/4HANA</div><div class="report-system">Deloitte 导入失败</div><div class="report-meta"><div><span class="gl-score">0.034</span><br><span class="gl-label">GL 分数（急性期）</span></div><div class="vendor">Deloitte</div></div><div class="report-desc">$1.72 亿诉讼。医疗设备出货中断。Deloitte 终止合同无交接。无独立上线闸门。</div><a href="/reports/GL_ZimmerBiomet_Deloitte_Diagnostic_Report_EN.pdf" class="download-btn" download>📄 下载 PDF →</a></div>
+            <div class="report-card"><span class="report-country">🇨🇦 加拿大 · 监管</span><div class="report-title">SAAQ SAP S/4HANA</div><div class="report-system">IBM · Gallant 委员会调查</div><div class="report-meta"><div><span class="gl-score">0.052</span><br><span class="gl-label">GL 分数</span></div><div class="vendor">IBM · SAP</div></div><div class="report-desc">C$11 亿花费。第 2.5/3 期取消。SAP 标前特权关系。设计未完成即启动敏捷。</div><a href="/reports/GL_SAAQ_IBM_SAP_Diagnostic_Report_EN.pdf" class="download-btn" download>📄 下载 PDF →</a></div>
+            <div class="report-card"><span class="report-country">🇬🇧 英国 · 社会福利</span><div class="report-title">DWP 通用福利金</div><div class="report-system">IBM 基础设施转型</div><div class="report-meta"><div><span class="gl-score">0.074</span><br><span class="gl-label">GL 分数</span></div><div class="vendor">IBM 咨询</div></div><div class="report-desc">每年 £227 亿福利未被领取。结构性 5 周等待期。managed migration 责任在申请人。</div><a href="/reports/UK_DWP_GL_Diagnostic_Report_EN.pdf" class="download-btn" download>📄 下载 PDF →</a></div>
+            <div class="report-card"><span class="report-country">🇺🇸 美国 · 失业保险</span><div class="report-title">麻州 DUA</div><div class="report-system">失业保险系统</div><div class="report-meta"><div><span class="gl-score">0.067</span><br><span class="gl-label">GL 分数</span></div><div class="vendor">（未指定 SI）</div></div><div class="report-desc">首次给付 4–6 周。10 天申诉窗口。客服中心周五关闭。移动设备访问受限。</div><a href="/reports/MA_DUA_GL_Snapshot.pdf" class="download-btn" download>📄 下载 PDF →</a></div>
+            <div class="report-card"><span class="report-country">🇺🇸 美国 · 医疗补助</span><div class="report-title">爱荷华 Medicaid</div><div class="report-system">Accenture 运营</div><div class="report-meta"><div><span class="gl-score">0.082</span><br><span class="gl-label">GL 分数</span></div><div class="vendor">Accenture</div></div><div class="report-desc">自动续约率 46% vs 全国平均 60%。72% 退保是程序性原因。新增工作要求成本 $2000 万+。</div><a href="/reports/Iowa_Medicaid_GL_Diagnostic_Report_EN.pdf" class="download-btn" download>📄 下载 PDF →</a></div>
+            <div class="report-card"><span class="report-country">🇹🇼 台湾 · 长照</span><div class="report-title">长照计划 3.0</div><div class="report-system">前端顺序性评估</div><div class="report-meta"><div><span class="gl-score">0.148</span><br><span class="gl-label">GL 分数</span></div><div class="vendor">（无单一 SI）</div></div><div class="report-desc">预算 > NT$1000 亿。首次服务需 4–12 周。无临时服务启用。A-B-C 三级碎片化。</div><a href="/reports/Taiwan_LTC3_GL_Diagnostic_Report_EN.docx.pdf" class="download-btn" download>📄 下载 PDF →</a></div>
+            <div class="report-card"><span class="report-country">🇬🇧 英国 · 地方政府</span><div class="report-title">伯明翰 Oracle Cloud Fusion</div><div class="report-system">Capgemini → KPMG</div><div class="report-meta"><div><span class="gl-score">0.071</span><br><span class="gl-label">GL 分数</span></div><div class="vendor">Oracle · Capgemini · KPMG</div></div><div class="report-desc">Section 114 破产。£1900 万 → £1 亿+。187 流程同时上线。18 个月无审计线索。</div><a href="/reports/UK_Birmingham_GL_Diagnostic_Report_EN.pdf" class="download-btn" download>📄 下载 PDF →</a></div>
+        </div>
+        <div class="footer-note"><strong>方法论说明：</strong>所有 GL 分数使用 GL = (Fs × Vn) / (Pd × Cf) 计算。数值来自公开来源 — 审计报告、国会调查、官方调查与新闻报道。无需内部系统访问。</div>
+    </div>
+</div>
+
+<!-- ESPAÑOL -->
+<div class="lb page" data-lang="es">
+    <div class="container">
+        <div class="page-header">
+            <div class="page-eyebrow">GL Framework · Informes de Diagnóstico Público</div>
+            <h1 class="page-title">Biblioteca de <span style="color: #f08b5e;">Casos de Fracaso Estructural</span></h1>
+            <p class="page-desc">Informes de diagnóstico independientes que aplican GL Framework a fallos reales de TI gubernamental. Solo datos públicos — sin acceso a sistemas. Descarga gratuita.</p>
+        </div>
+        <div class="reports-grid">
+            <div class="report-card"><span class="report-country">🇬🇧 Reino Unido · Salud</span><div class="report-title">NHS National Programme for IT</div><div class="report-system">Lorenzo Electronic Patient Records</div><div class="report-meta"><div><span class="gl-score">0.038</span><br><span class="gl-label">GL Score</span></div><div class="vendor">Accenture · CSC · Fujitsu · BT</div></div><div class="report-desc">£12.7B gastados, £10.1B pérdida neta. Lorenzo desplegado en 22 trusts vs objetivo 220+.</div><a href="/reports/GL_NHS_NPfIT_Diagnostic_Report_EN.pdf" class="download-btn" download>📄 Descargar PDF →</a></div>
+            <div class="report-card"><span class="report-country">🇺🇸 EE.UU. · Manufactura</span><div class="report-title">Zimmer Biomet SAP S/4HANA</div><div class="report-system">Falla de Implementación de Deloitte</div><div class="report-meta"><div><span class="gl-score">0.034</span><br><span class="gl-label">GL Score</span></div><div class="vendor">Deloitte</div></div><div class="report-desc">Demanda de $172M. Envíos de dispositivos médicos detenidos. Deloitte terminó contrato sin transferencia.</div><a href="/reports/GL_ZimmerBiomet_Deloitte_Diagnostic_Report_EN.pdf" class="download-btn" download>📄 Descargar PDF →</a></div>
+            <div class="report-card"><span class="report-country">🇨🇦 Canadá · Licencias</span><div class="report-title">SAAQ SAP S/4HANA</div><div class="report-system">IBM · Hallazgos Comisión Gallant</div><div class="report-meta"><div><span class="gl-score">0.052</span><br><span class="gl-label">GL Score</span></div><div class="vendor">IBM · SAP</div></div><div class="report-desc">C$1.1B gastados. Fases 2.5 y 3 canceladas. SAP tuvo relación privilegiada pre-licitación.</div><a href="/reports/GL_SAAQ_IBM_SAP_Diagnostic_Report_EN.pdf" class="download-btn" download>📄 Descargar PDF →</a></div>
+            <div class="report-card"><span class="report-country">🇬🇧 Reino Unido · Bienestar</span><div class="report-title">DWP Universal Credit</div><div class="report-system">IBM Infraestructura</div><div class="report-meta"><div><span class="gl-score">0.074</span><br><span class="gl-label">GL Score</span></div><div class="vendor">IBM Consulting</div></div><div class="report-desc">£22.7B en beneficios no reclamados. Espera estructural de 5 semanas. Responsabilidad recae en el solicitante.</div><a href="/reports/UK_DWP_GL_Diagnostic_Report_EN.pdf" class="download-btn" download>📄 Descargar PDF →</a></div>
+            <div class="report-card"><span class="report-country">🇺🇸 EE.UU. · Seguro de Desempleo</span><div class="report-title">Massachusetts DUA</div><div class="report-system">Sistema de Seguro de Desempleo</div><div class="report-meta"><div><span class="gl-score">0.067</span><br><span class="gl-label">GL Score</span></div><div class="vendor">(SI no especificado)</div></div><div class="report-desc">Primer pago: 4–6 semanas. Ventana de apelación de 10 días. Centro de llamadas cerrado los viernes.</div><a href="/reports/MA_DUA_GL_Snapshot.pdf" class="download-btn" download>📄 Descargar PDF →</a></div>
+            <div class="report-card"><span class="report-country">🇺🇸 EE.UU. · Medicaid</span><div class="report-title">Iowa Medicaid</div><div class="report-system">Operado por Accenture</div><div class="report-meta"><div><span class="gl-score">0.082</span><br><span class="gl-label">GL Score</span></div><div class="vendor">Accenture</div></div><div class="report-desc">46% tasa ex parte vs 60% nacional. 72% de bajas fueron por razones procesales.</div><a href="/reports/Iowa_Medicaid_GL_Diagnostic_Report_EN.pdf" class="download-btn" download>📄 Descargar PDF →</a></div>
+            <div class="report-card"><span class="report-country">🇹🇼 Taiwán · Cuidado de Largo Plazo</span><div class="report-title">Plan de Cuidado Largo Plazo 3.0</div><div class="report-system">Evaluación Secuencial Front-loaded</div><div class="report-meta"><div><span class="gl-score">0.148</span><br><span class="gl-label">GL Score</span></div><div class="vendor">(Sin SI único)</div></div><div class="report-desc">Presupuesto > NT$100B anual. 4–12 semanas para primer servicio. Sin activación provisional.</div><a href="/reports/Taiwan_LTC3_GL_Diagnostic_Report_EN.docx.pdf" class="download-btn" download>📄 Descargar PDF →</a></div>
+            <div class="report-card"><span class="report-country">🇬🇧 Reino Unido · Gobierno Local</span><div class="report-title">Birmingham Oracle Cloud Fusion</div><div class="report-system">Capgemini → KPMG</div><div class="report-meta"><div><span class="gl-score">0.071</span><br><span class="gl-label">GL Score</span></div><div class="vendor">Oracle · Capgemini · KPMG</div></div><div class="report-desc">Section 114 bankruptcy. £19M → £100M+. 187 procesos simultáneos. 18+ meses sin pista de auditoría.</div><a href="/reports/UK_Birmingham_GL_Diagnostic_Report_EN.pdf" class="download-btn" download>📄 Descargar PDF →</a></div>
+        </div>
+        <div class="footer-note"><strong>Nota Metodológica:</strong> Todos los GL scores calculados con GL = (Fs × Vn) / (Pd × Cf). Fuentes públicas — informes de auditoría, investigaciones parlamentarias, reportajes. Sin acceso interno a sistemas.</div>
+    </div>
+</div>
+
+<div class="footer">
+    © 2026 GFI Flow Intelligence · Boston ·
+    <a href="about.html">About</a> ·
+    <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6178024" target="_blank" rel="noopener">SSRN</a> ·
+    <a href="mailto:ping@gfiintel.com">ping@gfiintel.com</a>
+</div>
+
+<script>
+    const btns = document.querySelectorAll('.lb-btn');
+    const blocks = document.querySelectorAll('.lb');
+    btns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const lang = btn.dataset.lang;
+            btns.forEach(b => b.classList.remove('on'));
+            blocks.forEach(b => b.classList.remove('active'));
+            btn.classList.add('on');
+            document.querySelector(`.lb[data-lang="${lang}"]`).classList.add('active');
+        });
+    });
+</script>
+</body>
+</html>
