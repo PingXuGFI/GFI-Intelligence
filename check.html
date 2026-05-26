@@ -170,7 +170,6 @@
       background:#b5ff8a;
       transform:translateY(-1px)
     }
-    /* 報告區塊 — 這就是「一頁報告」 */
     .report{
       background:linear-gradient(145deg,#0f1a24,#0b121f);
       border-radius:24px;
@@ -279,10 +278,11 @@
     <button class="lb-btn on" data-lang="en">EN</button>
     <button class="lb-btn" data-lang="tw">繁</button>
     <button class="lb-btn" data-lang="cn">简</button>
+    <button class="lb-btn" data-lang="es">ES</button>
   </div>
 </div>
 
-<!-- 多語言內容區塊 -->
+<!-- ENGLISH -->
 <div class="lb active" data-lang="en">
   <div class="container">
     <div class="hero-badge">GFI Check · One-Page Report</div>
@@ -313,6 +313,7 @@
   </div>
 </div>
 
+<!-- 繁體中文 -->
 <div class="lb" data-lang="tw">
   <div class="container">
     <div class="hero-badge">GFI Check · 一頁報告</div>
@@ -335,6 +336,7 @@
   </div>
 </div>
 
+<!-- 简体中文 -->
 <div class="lb" data-lang="cn">
   <div class="container">
     <div class="hero-badge">GFI Check · 一页报告</div>
@@ -357,6 +359,37 @@
   </div>
 </div>
 
+<!-- ESPAÑOL -->
+<div class="lb" data-lang="es">
+  <div class="container">
+    <div class="hero-badge">GFI Check · Informe de Una Página</div>
+    <h1>Informe de Eficiencia de Generalización</h1>
+    <div class="subhead">IMCR + GL Level · Basado en GEF (revisado por pares en SSRN)</div>
+
+    <div class="input-panel">
+      <div class="input-row">
+        <div class="form-group"><label>Nombre del Sistema</label><input type="text" id="sysName_es" value="Plataforma Inteligente Unificada"></div>
+        <div class="form-group"><label>Total de Servicios (N)</label><input type="number" id="serviceCount_es" value="387"></div>
+      </div>
+      <div class="input-row">
+        <div class="form-group"><label>Costo Marginal Temprano (primeros 10)</label><input type="number" id="mcEarly_es" value="100" step="any"></div>
+        <div class="form-group"><label>Costo Marginal Tardío (últimos 10)</label><input type="number" id="mcLate_es" value="12" step="any"></div>
+        <div class="form-group"><label>Unidad de Costo</label><input type="text" id="unit_es" value="CNY"></div>
+      </div>
+      <div class="gl-grid">
+        <div class="gl-item"><input type="checkbox" id="q1_es"> <label>Q1: Compartición de datos entre departamentos?</label></div>
+        <div class="gl-item"><input type="checkbox" id="q2_es"> <label>Q2: ≥3 módulos compartidos reutilizados ≥5 veces?</label></div>
+        <div class="gl-item"><input type="checkbox" id="q3_es"> <label>Q3: Reconocimiento de intención por lenguaje natural?</label></div>
+        <div class="gl-item"><input type="checkbox" id="q4_es"> <label>Q4: Orquestación dinámica (entre departamentos en tiempo real)?</label></div>
+      </div>
+      <button id="genBtn_es">Generar Informe →</button>
+    </div>
+
+    <div id="reportContainer_es"></div>
+    <div class="print-btn" id="printBtn_es" style="display:none;"><button onclick="window.print();return false;">📄 Guardar como PDF / Imprimir</button></div>
+  </div>
+</div>
+
 <div class="footer">© 2026 GFI Flow Intelligence · Boston · <a href="index.html">Home</a> · <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6178024" target="_blank">SSRN</a> · <a href="mailto:ping@gfiintel.com">ping@gfiintel.com</a></div>
 
 <script>
@@ -373,12 +406,19 @@
     });
   });
 
-  // 通用計算與呈現
+  // 通用計算與呈現函數
   function generateReport(lang, data) {
     let imcrRaw = 1 - (data.late / data.early);
     let imcrPct = Math.round(imcrRaw * 100);
     let gl = (data.q1?1:0) + (data.q2?1:0) + (data.q3?1:0) + (data.q4?1:0);
-    let glDesc = ["Pure specificity (GL0)","Shared data layer (GL1)","Shared module library (GL2)","Intent-driven (GL3)","Dynamic orchestration (GL4)"][gl];
+    let glDesc = [
+      "Pure specificity (GL0)",
+      "Shared data layer (GL1)",
+      "Shared module library (GL2)",
+      "Intent-driven (GL3)",
+      "Dynamic orchestration (GL4)"
+    ][gl];
+    
     let imcrLabel = "";
     if(imcrPct<0) imcrLabel = "Negative generalization";
     else if(imcrPct<30) imcrLabel = "Weak generalization";
@@ -387,29 +427,93 @@
     else imcrLabel = "Full generalization (MC→0)";
     
     let tier = "", tierClass = "", msg = "";
-    if(imcrPct>=90 && gl>=4) { tier = "Gold ★★★"; tierClass = "tier-gold"; msg = "Gold standard: full generalization efficiency. Suitable for enterprise orchestration."; }
-    else if(imcrPct>=70 && gl>=3) { tier = "Silver ★★"; tierClass = "tier-silver"; msg = "Silver: suitable for cross-dept procurement. Strong efficiency."; }
-    else if(imcrPct>=30 && gl>=2) { tier = "Bronze ★"; tierClass = "tier-bronze"; msg = "Bronze: basic generalization. Improvement advised."; }
-    else { tier = "Below Threshold"; tierClass = ""; msg = "Does not meet minimum threshold. Review system architecture."; }
+    if(imcrPct>=90 && gl>=4) { 
+      tier = "Gold ★★★"; 
+      tierClass = "tier-gold"; 
+      msg = "Gold standard: full generalization efficiency. Suitable for enterprise orchestration."; 
+    }
+    else if(imcrPct>=70 && gl>=3) { 
+      tier = "Silver ★★"; 
+      tierClass = "tier-silver"; 
+      msg = "Silver: suitable for cross-dept procurement. Strong efficiency."; 
+    }
+    else if(imcrPct>=30 && gl>=2) { 
+      tier = "Bronze ★"; 
+      tierClass = "tier-bronze"; 
+      msg = "Bronze: basic generalization. Improvement advised."; 
+    }
+    else { 
+      tier = "Below Threshold"; 
+      tierClass = ""; 
+      msg = "Does not meet minimum threshold. Review system architecture."; 
+    }
+
+    // 標題與子標題的語言對應
+    let titleText = "Generalization Efficiency Report";
+    let subText = "GFI-IMCR + GFI-GL · Based on GEF";
+    let oneStationLabel = "✅ One-station readiness";
+    let footerText = "© GFI Flow Intelligence · GEF framework (SSRN peer-reviewed)";
+    
+    if(lang === 'tw') {
+      titleText = "普遍化效率報告";
+      subText = "GFI-IMCR + GFI-GL · 基於 GEF";
+      oneStationLabel = "✅ 一站到位整備度";
+    } else if(lang === 'cn') {
+      titleText = "普遍化效率报告";
+      subText = "GFI-IMCR + GFI-GL · 基于 GEF";
+      oneStationLabel = "✅ 一站到位整备度";
+    } else if(lang === 'es') {
+      titleText = "Informe de Eficiencia de Generalización";
+      subText = "GFI-IMCR + GFI-GL · Basado en GEF";
+      oneStationLabel = "✅ Preparación para ventanilla única";
+      footerText = "© GFI Flow Intelligence · Marco GEF (revisado por pares en SSRN)";
+    }
+    
+    let readiness = (gl>=3 && imcrPct>=70) ? (lang==='es'?'Alta':(lang==='tw'?'高':'High')) : ((gl>=2) ? (lang==='es'?'Media':(lang==='tw'?'中':'Medium')) : (lang==='es'?'Baja':(lang==='tw'?'低':'Low')));
 
     let html = `<div class="report">
-      <div class="report-header"><div class="report-title">Generalization Efficiency Report</div>
-      <div class="report-sub">GFI-IMCR + GFI-GL · Based on GEF</div></div>
-      <div class="report-meta"><span>System: ${data.sys}</span><span>Total services (N): ${data.cnt}</span><span>Report date: ${new Date().toLocaleDateString()}</span></div>
-      <div class="metric-block"><span class="metric-label">📉 GFI-IMCR (Marginal Cost Reduction)</span><span class="metric-value imcr-big">${imcrPct}%</span></div>
-      <div class="metric-block"><span class="metric-label">Cost change (per service)</span><span>${data.early} → ${data.late} ${data.unit} (${imcrLabel})</span></div>
-      <div class="metric-block"><span class="metric-label">⚙️ GFI-GL Level</span><span class="metric-value">GL${gl} · ${glDesc}</span></div>
-      <div class="metric-block"><span class="metric-label">Maturity details</span><span>${data.q1?'✅':'❌'} Data sharing &nbsp; ${data.q2?'✅':'❌'} Shared modules &nbsp; ${data.q3?'✅':'❌'} Intent recognition &nbsp; ${data.q4?'✅':'❌'} Dynamic orchestration</span></div>
-      <div class="compliance"><span class="${tierClass}" style="font-weight:800;">${tier}</span><br><span style="font-size:12px;">${msg}</span></div>
-      <div class="metric-block" style="border-bottom:none; margin-top:12px;"><span class="metric-label">✅ One-station readiness</span><span>${gl>=3 && imcrPct>=70 ? 'High' : (gl>=2 ? 'Medium' : 'Low')}</span></div>
-      <div style="font-size:10px; text-align:center; margin-top:20px; color:var(--sub);">© GFI Flow Intelligence · GEF framework (SSRN peer-reviewed)</div>
+      <div class="report-header">
+        <div class="report-title">${titleText}</div>
+        <div class="report-sub">${subText}</div>
+      </div>
+      <div class="report-meta">
+        <span>System: ${data.sys}</span>
+        <span>Total services (N): ${data.cnt}</span>
+        <span>Report date: ${new Date().toLocaleDateString()}</span>
+      </div>
+      <div class="metric-block">
+        <span class="metric-label">📉 GFI-IMCR (Marginal Cost Reduction)</span>
+        <span class="metric-value imcr-big">${imcrPct}%</span>
+      </div>
+      <div class="metric-block">
+        <span class="metric-label">Cost change (per service)</span>
+        <span>${data.early} → ${data.late} ${data.unit} (${imcrLabel})</span>
+      </div>
+      <div class="metric-block">
+        <span class="metric-label">⚙️ GFI-GL Level</span>
+        <span class="metric-value">GL${gl} · ${glDesc}</span>
+      </div>
+      <div class="metric-block">
+        <span class="metric-label">Maturity details</span>
+        <span>${data.q1?'✅':'❌'} Data sharing &nbsp; ${data.q2?'✅':'❌'} Shared modules &nbsp; ${data.q3?'✅':'❌'} Intent recognition &nbsp; ${data.q4?'✅':'❌'} Dynamic orchestration</span>
+      </div>
+      <div class="compliance">
+        <span class="${tierClass}" style="font-weight:800;">${tier}</span><br>
+        <span style="font-size:12px;">${msg}</span>
+      </div>
+      <div class="metric-block" style="border-bottom:none; margin-top:12px;">
+        <span class="metric-label">${oneStationLabel}</span>
+        <span>${readiness}</span>
+      </div>
+      <div style="font-size:10px; text-align:center; margin-top:20px; color:var(--sub);">${footerText}</div>
     </div>`;
+    
     document.getElementById(`reportContainer_${lang}`).innerHTML = html;
     document.getElementById(`printBtn_${lang}`).style.display = 'block';
   }
 
   // 綁定各個語言的產生按鈕
-  const langs = ['en','tw','cn'];
+  const langs = ['en', 'tw', 'cn', 'es'];
   langs.forEach(lang => {
     const genBtn = document.getElementById(`genBtn_${lang}`);
     if(genBtn){
@@ -423,23 +527,23 @@
         let q2 = document.getElementById(`q2_${lang}`)?.checked || false;
         let q3 = document.getElementById(`q3_${lang}`)?.checked || false;
         let q4 = document.getElementById(`q4_${lang}`)?.checked || false;
-        if(early<=0 || late<=0){ alert(lang==='en'?"Please enter positive marginal costs":"請輸入正數邊際成本"); return; }
+        if(early<=0 || late<=0){ 
+          let errMsg = lang==='en'?"Please enter positive marginal costs":(lang==='tw'?"請輸入正數邊際成本":(lang==='cn'?"请输入正数边际成本":"Por favor, ingrese costos marginales positivos"));
+          alert(errMsg); 
+          return; 
+        }
         generateReport(lang, {sys,cnt,early,late,unit,q1,q2,q3,q4});
       });
-    }
-    // 預設生成一次（展示範例）
-    if(lang==='en'){
-      setTimeout(()=>{
-        document.getElementById(`genBtn_${lang}`).click();
-      },100);
-    } else if(lang==='tw'){
-      setTimeout(()=>{
-        document.getElementById(`genBtn_${lang}`).click();
-      },150);
-    } else {
-      setTimeout(()=>{
-        document.getElementById(`genBtn_${lang}`).click();
-      },200);
+      // 預設自動生成一次展示範例
+      if(lang === 'en'){
+        setTimeout(()=>{ document.getElementById(`genBtn_${lang}`).click(); }, 100);
+      } else if(lang === 'tw'){
+        setTimeout(()=>{ document.getElementById(`genBtn_${lang}`).click(); }, 150);
+      } else if(lang === 'cn'){
+        setTimeout(()=>{ document.getElementById(`genBtn_${lang}`).click(); }, 200);
+      } else if(lang === 'es'){
+        setTimeout(()=>{ document.getElementById(`genBtn_${lang}`).click(); }, 250);
+      }
     }
   });
 </script>
