@@ -3,1094 +3,305 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="GL Framework by GFI Flow Intelligence — independent outcome verification for digital transformation. Published on SSRN and PA Times.">
-  <title>GFI Flow Intelligence</title>
+  <meta name="description" content="GL Framework by GFI Flow Intelligence — independent outcome verification for digital transformation. Ghost GDP reveals the cost of administrative friction shifted onto citizens. Published on SSRN and PA Times.">
+  <title>GFI Flow Intelligence · GL Framework · Ghost GDP</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --bg:#0b1220;
-      --bg2:#0d1526;
-      --text:#f8fbff;
-      --muted:#c7d2e3;
-      --sub:#9fb0c8;
-      --dim:rgba(255,255,255,.06);
-      --green:#9FE870;
-      --blue:#7DD3FC;
-      --serif:'DM Serif Display',Georgia,serif;
-      --mono:'DM Mono',monospace;
-      --sans:'DM Sans',system-ui,sans-serif
-    }
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-    body{
-      background:var(--bg);
-      color:var(--text);
-      font-family:var(--sans);
-      font-size:15px;
-      line-height:1.75;
-      overflow-x:hidden
-    }
-    .nav{
-      position:fixed;
-      inset:0 0 auto 0;
-      z-index:100;
-      height:62px;
-      padding:0 clamp(18px,5vw,52px);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      background:rgba(11,18,32,.90);
-      backdrop-filter:blur(14px);
-      border-bottom:1px solid rgba(255,255,255,.07)
-    }
-    .logo{
-      color:#fff;
-      text-decoration:none;
-      font-family:var(--mono);
-      font-size:13px;
-      letter-spacing:.16em;
-      text-transform:uppercase
-    }
-    .lang-grp{display:flex;gap:6px}
-    .lb-btn{
-      font-family:var(--mono);
-      font-size:11px;
-      letter-spacing:.08em;
-      padding:5px 10px;
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:5px;
-      background:none;
-      color:var(--sub);
-      cursor:pointer;
-      transition:all .2s
-    }
-    .lb-btn:hover{color:var(--text);border-color:rgba(255,255,255,.2)}
-    .lb-btn.on{
-      color:var(--green);
-      border-color:rgba(159,232,112,.35);
-      background:rgba(159,232,112,.07)
-    }
-    .lb{display:none}
-    .lb.active{display:block}
-    .page{padding-top:62px}
-    section{
-      width:100%;
-      padding:clamp(72px,9vw,112px) clamp(20px,6vw,80px)
-    }
-    .inner{max-width:1100px;margin:0 auto}
-    .hero{
-      min-height:calc(100vh - 62px);
-      display:flex;
-      align-items:center;
-      background:
-        radial-gradient(ellipse 55% 45% at 72% 38%,rgba(159,232,112,.055),transparent),
-        radial-gradient(ellipse 40% 55% at 8% 78%,rgba(56,189,248,.045),transparent),
-        var(--bg);
-      border-bottom:1px solid var(--dim);
-      position:relative;
-      overflow:hidden
-    }
-    .hero::before{
-      content:'';
-      position:absolute;
-      inset:0;
-      background-image:
-        linear-gradient(rgba(255,255,255,.013) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.013) 1px,transparent 1px);
-      background-size:60px 60px;
-      mask-image:radial-gradient(ellipse 85% 75% at 50% 50%,black,transparent);
-      pointer-events:none
-    }
-    .hero .inner{position:relative;z-index:1}
-    .definition-block {
-      background: rgba(0,0,0,0.3);
-      border-left: 4px solid var(--green);
-      padding: 2rem 2rem 1.8rem 2rem;
-      border-radius: 24px;
-      margin-bottom: 2rem;
-      backdrop-filter: blur(4px);
-    }
-    .definition-line{
-      font-family:var(--serif);
-      font-size:clamp(28px,4vw,48px);
-      line-height:1.2;
-      font-weight:700;
-      color:#fff;
-      margin-bottom:1rem;
-      max-width:900px;
-      opacity:0;
-      animation:up .5s .05s forwards
-    }
-    .definition-line .highlight{
-      color:var(--green);
-    }
-    .definition-desc{
-      font-family:var(--sans);
-      font-size:1rem;
-      line-height:1.6;
-      color:var(--muted);
-      margin-bottom:1.2rem;
-      max-width:800px;
-      opacity:0;
-      animation:up .55s .1s forwards
-    }
-    .definition-desc strong{
-      color:var(--green);
-    }
-    .definition-source {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      color: var(--sub);
-      letter-spacing: 0.05em;
-      margin-top: 0.5rem;
-      opacity:0.7;
-      opacity:0;
-      animation:up .55s .12s forwards
-    }
-    .hero-buttons{
-      display:flex;
-      gap:20px;
-      flex-wrap:wrap;
-      margin-bottom:40px;
-      opacity:0;
-      animation:up .55s .15s forwards
-    }
-    .hero-btn{
-      display:inline-flex;
-      align-items:center;
-      gap:12px;
-      padding:12px 28px;
-      border-radius:40px;
-      text-decoration:none;
-      font-family:var(--mono);
-      font-size:13px;
-      letter-spacing:.1em;
-      text-transform:uppercase;
-      font-weight:500;
-      transition:all .22s
-    }
-    .hero-btn-primary{
-      background:#9FE870;
-      color:#0b1220;
-      border:1px solid transparent
-    }
-    .hero-btn-primary:hover{
-      background:#8fd460;
-      transform:translateY(-2px)
-    }
-    .hero-btn-secondary{
-      border:1px solid rgba(159,232,112,.5);
-      background:rgba(159,232,112,.1);
-      color:#9FE870
-    }
-    .hero-btn-secondary:hover{
-      background:rgba(159,232,112,.2);
-      border-color:#9FE870;
-      transform:translateY(-2px)
-    }
-    .sample-block{
-      display:inline-flex;
-      align-items:center;
-      gap:16px;
-      padding:16px 20px;
-      border:1px solid rgba(200,146,42,.35);
-      border-radius:10px;
-      background:rgba(200,146,42,.07);
-      text-decoration:none;
-      transition:all .22s;
-      opacity:0;
-      animation:up .55s .2s forwards;
-      margin-bottom:40px
-    }
-    .sample-block:hover{
-      border-color:rgba(200,146,42,.65);
-      background:rgba(200,146,42,.13);
-      transform:translateY(-2px)
-    }
-    .sample-icon{font-size:28px;line-height:1;flex-shrink:0}
-    .sample-label{
-      font-family:var(--mono);
-      font-size:10px;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color:rgba(200,146,42,.7);
-      margin-bottom:3px
-    }
-    .sample-title{
-      font-family:var(--sans);
-      font-size:14px;
-      font-weight:500;
-      color:#f5e6c8
-    }
-    .sample-sub{
-      font-family:var(--mono);
-      font-size:11px;
-      color:rgba(200,146,42,.6);
-      margin-top:2px
-    }
-    .sample-arr{
-      font-size:18px;
-      color:rgba(200,146,42,.6);
-      flex-shrink:0;
-      transition:transform .2s
-    }
-    .sample-block:hover .sample-arr{transform:translateX(4px)}
-    .book-block{
-      border-color:rgba(125,211,252,.35);
-      background:rgba(125,211,252,.08)
-    }
-    .book-block:hover{
-      border-color:rgba(125,211,252,.65);
-      background:rgba(125,211,252,.14)
-    }
-    .book-block .sample-label{
-      color:rgba(125,211,252,.75)
-    }
-    .book-block .sample-title{
-      color:#eaf6ff
-    }
-    .book-block .sample-sub{
-      color:rgba(125,211,252,.65)
-    }
-    .book-block .sample-arr{
-      color:rgba(125,211,252,.7)
-    }
-    .hero-diagram{
-      opacity:0;
-      animation:up .6s .25s forwards;
-      max-width:80%;
-      margin:0 auto;
-      text-align:center;
-    }
-    .hero-diagram img{
-      width:100%;
-      max-width:500px;
-      border-radius:14px;
-      box-shadow:0 8px 40px rgba(0,0,0,.45);
-      display:block;
-      margin:0 auto;
-    }
-    .arr{display:inline-block;transition:transform .2s}
-    .gate-section{
-      background:var(--bg2);
-      border-bottom:1px solid var(--dim)
-    }
-    .section-eyebrow{
-      font-family:var(--mono);
-      font-size:10px;
-      letter-spacing:.22em;
-      text-transform:uppercase;
-      color:rgba(255,255,255,.28);
-      margin-bottom:20px;
-      display:flex;
-      align-items:center;
-      gap:14px
-    }
-    .section-eyebrow::after{
-      content:'';
-      flex:1;
-      height:1px;
-      background:rgba(255,255,255,.07)
-    }
-    .gl-tool-box {
-      background: rgba(125,211,252,.05);
-      border-left: 4px solid #7DD3FC;
-      border-radius: 16px;
-      padding: 1.5rem;
-      margin: 2rem 0;
-      font-size: 0.9rem;
-      line-height: 1.6;
-      max-width: 1100px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .gl-tool-box .formula {
-      font-family: var(--mono);
-      color: var(--green);
-      margin: 1rem 0;
-      font-size: 1rem;
-    }
-    .gl-core-definition {
-      background: rgba(159,232,112,.08);
-      border-left: 4px solid var(--green);
-      border-radius: 12px;
-      padding: 1rem 1.2rem;
-      margin-bottom: 1.5rem;
-      font-size: 0.85rem;
-      line-height: 1.5;
-    }
-    .gl-core-definition p {
-      margin-bottom: 0.5rem;
-    }
-    .independence-declaration {
-      background: rgba(255,255,255,.02);
-      border: 1px solid rgba(159,232,112,.2);
-      border-radius: 20px;
-      padding: 1.8rem;
-      margin: 2rem 0;
-      text-align: center;
-    }
-    .independence-declaration .declaration-line {
-      font-family: var(--serif);
-      font-size: 1.2rem;
-      font-weight: 500;
-      color: var(--green);
-      margin: 0.5rem 0;
-    }
-    .gate-cards{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:20px;
-      max-width:1100px
-    }
-    .gate-card{
-      display:flex;
-      flex-direction:column;
-      min-height:250px;
-      border-radius:18px;
-      padding:28px 26px 24px;
-      text-decoration:none;
-      border:1px solid rgba(255,255,255,.09);
-      transition:transform .25s,border-color .25s,box-shadow .25s
-    }
-    .gate-card:hover{
-      transform:translateY(-4px);
-      box-shadow:0 14px 40px rgba(0,0,0,.25)
-    }
-    .gate-card.gov{
-      background:
-        radial-gradient(circle at top right,rgba(159,232,112,.09),transparent 40%),
-        linear-gradient(160deg,#131f18,#101a15);
-      border-color:rgba(159,232,112,.2)
-    }
-    .gate-card.gov:hover{border-color:rgba(159,232,112,.42)}
-    .gate-card.univ{
-      background:
-        radial-gradient(circle at top right,rgba(125,211,252,.07),transparent 40%),
-        linear-gradient(160deg,#151b28,#101827);
-      border-color:rgba(159,232,112,.2)
-    }
-    .gate-card.univ:hover{border-color:rgba(159,232,112,.4)}
-    .gate-card.diagnostic{
-      background:
-        radial-gradient(circle at top right,rgba(200,146,42,.09),transparent 40%),
-        linear-gradient(160deg,#1f1a12,#1a1610);
-      border-color:rgba(200,146,42,.25)
-    }
-    .gate-card.diagnostic:hover{border-color:rgba(200,146,42,.5)}
-    .gc-sector{
-      font-family:var(--mono);
-      font-size:10px;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      margin-bottom:12px
-    }
-    .gate-card.gov .gc-sector{color:var(--green)}
-    .gate-card.univ .gc-sector{color:var(--green)}
-    .gate-card.diagnostic .gc-sector{color:rgba(200,146,42,.8)}
-    .gc-title{
-      font-family:var(--serif);
-      font-size:clamp(18px,1.8vw,23px);
-      line-height:1.2;
-      margin-bottom:10px
-    }
-    .gate-card.gov .gc-title{color:#f0ffe8}
-    .gate-card.univ .gc-title{color:#f3f8ff}
-    .gate-card.diagnostic .gc-title{color:#f5e6c8}
-    .gc-desc{
-      font-size:13px;
-      color:rgba(255,255,255,.45);
-      line-height:1.7;
-      margin-bottom:16px;
-      flex:1
-    }
-    .gc-cta{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      font-family:var(--mono);
-      font-size:11px;
-      letter-spacing:.1em;
-      text-transform:uppercase;
-      margin-top:auto
-    }
-    .gate-card.gov .gc-cta{color:var(--green)}
-    .gate-card.univ .gc-cta{color:var(--green)}
-    .gate-card.diagnostic .gc-cta{color:rgba(200,146,42,.8)}
-    .gate-card:hover .arr{transform:translateX(3px)}
-    .rfp-section{
-      background:linear-gradient(180deg,rgba(200,146,42,.06),rgba(255,255,255,.01));
-      border-top:1px solid rgba(200,146,42,.2);
-      border-bottom:1px solid rgba(200,146,42,.2)
-    }
-    .rfp-inner{
-      max-width:1040px;
-      margin:0 auto;
-      padding:clamp(48px,6vw,72px) clamp(20px,6vw,80px);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:32px;
-      flex-wrap:wrap
-    }
-    .rfp-label{
-      font-family:var(--mono);
-      font-size:10px;
-      letter-spacing:.22em;
-      text-transform:uppercase;
-      color:rgba(200,146,42,.8);
-      margin-bottom:10px
-    }
-    .rfp-title{
-      font-family:var(--serif);
-      font-size:clamp(18px,2.2vw,26px);
-      color:#fff;
-      line-height:1.25;
-      margin-bottom:8px;
-      max-width:520px
-    }
-    .rfp-sub{
-      font-family:var(--mono);
-      font-size:11px;
-      color:var(--sub);
-      letter-spacing:.04em
-    }
-    .rfp-btn{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:13px 26px;
-      border-radius:10px;
-      border:1px solid rgba(200,146,42,.4);
-      background:rgba(200,146,42,.1);
-      color:#f5e6c8;
-      text-decoration:none;
-      font-family:var(--mono);
-      font-size:12px;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      white-space:nowrap;
-      transition:all .22s;
-      flex-shrink:0
-    }
-    .rfp-btn:hover{
-      border-color:rgba(200,146,42,.7);
-      background:rgba(200,146,42,.18);
-      transform:translateY(-2px)
-    }
-    .rfp-btn:hover .arr{transform:translateX(4px)}
-    .gfi-check-section{
-      background:linear-gradient(145deg, rgba(159,232,112,.03), transparent);
-      border-top:1px solid rgba(159,232,112,.12);
-      border-bottom:1px solid rgba(159,232,112,.08)
-    }
-    .gfi-check-inner{
-      max-width:1040px;
-      margin:0 auto;
-      padding:clamp(48px,6vw,72px) clamp(20px,6vw,80px);
-      text-align:center
-    }
-    .gfi-check-label{
-      font-family:var(--mono);
-      font-size:10px;
-      letter-spacing:.22em;
-      text-transform:uppercase;
-      color:var(--green);
-      margin-bottom:12px;
-      display:inline-block
-    }
-    .gfi-check-title{
-      font-family:var(--serif);
-      font-size:clamp(20px,2.2vw,28px);
-      color:#fff;
-      line-height:1.25;
-      margin-bottom:12px
-    }
-    .gfi-check-desc{
-      font-family:var(--mono);
-      font-size:11px;
-      color:var(--sub);
-      letter-spacing:.04em;
-      margin-bottom:24px
-    }
-    .gfi-check-btn{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:13px 32px;
-      border-radius:40px;
-      border:1px solid rgba(159,232,112,.5);
-      background:rgba(159,232,112,.12);
-      color:var(--green);
-      text-decoration:none;
-      font-family:var(--mono);
-      font-size:12px;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      transition:all .22s
-    }
-    .gfi-check-btn:hover{
-      background:rgba(159,232,112,.22);
-      border-color:var(--green);
-      transform:translateY(-2px)
-    }
-    .gfi-check-btn:hover .arr{transform:translateX(4px)}
-    .footer{
-      text-align:center;
-      padding:24px 20px 32px;
-      font-family:var(--mono);
-      font-size:11px;
-      color:rgba(255,255,255,.2);
-      letter-spacing:.05em;
-      border-top:1px solid rgba(255,255,255,.05)
-    }
-    .footer a{
-      color:rgba(255,255,255,.32);
-      text-decoration:none;
-      transition:color .2s
-    }
-    .footer a:hover{color:#fff}
-    @keyframes up{
-      from{opacity:0;transform:translateY(14px)}
-      to{opacity:1;transform:translateY(0)}
-    }
-    @media(max-width:900px){.gate-cards{grid-template-columns:repeat(2,1fr)}}
-    @media(max-width:600px){.gate-cards{grid-template-columns:1fr}}
-    @media(max-width:480px){section{padding:52px 18px}}
+    :root {
+      --bg: #0b1220;
+      --bg2: #0d1526;
+      --text: #f8fbff;
+      --muted: #c7d2e3;
+      --sub: #9fb0c8;
+      --dim: rgba(255,255,255,.06);
+      --green: #9FE870;
+      --blue: #7DD3FC;
+      --serif: 'DM Serif Display', Georgia, serif;
+      --mono: 'DM Mono', monospace;
+      --sans: 'DM Sans', system-ui, sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 15px; line-height: 1.6; overflow-x: hidden; }
+    .nav { position: fixed; inset: 0 0 auto 0; z-index: 100; height: 62px; padding: 0 clamp(18px, 5vw, 52px); display: flex; align-items: center; justify-content: space-between; background: rgba(11,18,32,0.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--dim); }
+    .logo { color: #fff; text-decoration: none; font-family: var(--mono); font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; }
+    .lang-grp { display: flex; gap: 6px; }
+    .lb-btn { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; padding: 5px 10px; border: 1px solid rgba(255,255,255,0.1); border-radius: 5px; background: none; color: var(--sub); cursor: pointer; transition: all 0.2s; }
+    .lb-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+    .lb-btn.on { color: var(--green); border-color: rgba(159,232,112,0.35); background: rgba(159,232,112,0.07); }
+    .lb { display: none; }
+    .lb.active { display: block; }
+    .page { padding-top: 62px; }
+    section { width: 100%; padding: clamp(72px, 9vw, 112px) clamp(20px, 6vw, 80px); }
+    .inner { max-width: 1100px; margin: 0 auto; }
+    .hero { min-height: calc(100vh - 62px); display: flex; align-items: center; background: radial-gradient(ellipse 55% 45% at 72% 38%, rgba(159,232,112,0.055), transparent), radial-gradient(ellipse 40% 55% at 8% 78%, rgba(56,189,248,0.045), transparent), var(--bg); border-bottom: 1px solid var(--dim); position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.013) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.013) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 85% 75% at 50% 50%, black, transparent); pointer-events: none; }
+    .definition-block { background: rgba(0,0,0,0.3); border-left: 4px solid var(--green); padding: 2rem; border-radius: 24px; margin-bottom: 2rem; backdrop-filter: blur(4px); }
+    .definition-desc { font-size: 1rem; color: var(--muted); margin-bottom: 1rem; opacity: 0; animation: up 0.55s 0.1s forwards; }
+    .definition-desc strong { color: var(--green); }
+    .definition-source { font-family: var(--mono); font-size: 0.7rem; color: var(--sub); opacity: 0; animation: up 0.55s 0.12s forwards; }
+    .hero-buttons { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 40px; opacity: 0; animation: up 0.55s 0.15s forwards; }
+    .hero-btn { display: inline-flex; align-items: center; gap: 12px; padding: 12px 28px; border-radius: 40px; text-decoration: none; font-family: var(--mono); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; transition: all 0.22s; }
+    .hero-btn-primary { background: #9FE870; color: #0b1220; border: 1px solid transparent; }
+    .hero-btn-primary:hover { background: #8fd460; transform: translateY(-2px); }
+    .hero-btn-secondary { border: 1px solid rgba(159,232,112,0.5); background: rgba(159,232,112,0.1); color: #9FE870; }
+    .hero-btn-secondary:hover { background: rgba(159,232,112,0.2); border-color: #9FE870; transform: translateY(-2px); }
+    .sample-block { display: inline-flex; align-items: center; gap: 16px; padding: 16px 20px; border: 1px solid rgba(200,146,42,0.35); border-radius: 10px; background: rgba(200,146,42,0.07); text-decoration: none; transition: all 0.22s; margin-bottom: 40px; opacity: 0; animation: up 0.55s 0.2s forwards; }
+    .sample-block:hover { border-color: rgba(200,146,42,0.65); background: rgba(200,146,42,0.13); transform: translateY(-2px); }
+    .sample-icon { font-size: 28px; flex-shrink: 0; }
+    .sample-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(200,146,42,0.7); }
+    .sample-title { font-size: 14px; font-weight: 500; color: #f5e6c8; }
+    .sample-sub { font-family: var(--mono); font-size: 11px; color: rgba(200,146,42,0.6); }
+    .sample-arr { font-size: 18px; color: rgba(200,146,42,0.6); transition: transform 0.2s; }
+    .sample-block:hover .sample-arr { transform: translateX(4px); }
+    .book-block { border-color: rgba(125,211,252,0.35); background: rgba(125,211,252,0.08); }
+    .book-block .sample-label { color: rgba(125,211,252,0.75); }
+    .book-block .sample-title { color: #eaf6ff; }
+    .hero-diagram { text-align: center; opacity: 0; animation: up 0.6s 0.25s forwards; }
+    .hero-diagram img { max-width: 500px; width: 100%; border-radius: 14px; box-shadow: 0 8px 40px rgba(0,0,0,0.45); }
+    .declaration-box { background: rgba(255,255,255,0.02); border: 1px solid rgba(159,232,112,0.2); border-radius: 20px; padding: 1.8rem; margin: 2rem 0; text-align: center; }
+    .declaration-line { font-family: var(--serif); font-size: 1.2rem; font-weight: 500; color: var(--green); }
+    .gl-tool-box { background: rgba(125,211,252,0.05); border-left: 4px solid #7DD3FC; border-radius: 16px; padding: 2rem; margin: 2rem 0; }
+    .claim-block { background: rgba(159,232,112,0.06); border-radius: 20px; padding: 1.5rem; margin-bottom: 1.8rem; }
+    .claim-line { font-family: var(--serif); font-size: 1.4rem; font-weight: 600; color: var(--green); text-align: center; line-height: 1.3; }
+    .claim-sub { text-align: center; font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em; color: var(--sub); margin-top: 0.5rem; }
+    .three-pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin: 1.5rem 0; }
+    .pillar { background: rgba(0,0,0,0.25); border-radius: 16px; padding: 1.2rem; border: 1px solid rgba(255,255,255,0.05); }
+    .pillar-icon { font-size: 1.6rem; margin-bottom: 0.5rem; }
+    .pillar-title { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 0.75rem; }
+    .pillar-text { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
+    .waste-layer { background: rgba(159,232,112,0.04); border-radius: 16px; padding: 1.2rem; margin: 1.5rem 0; border: 1px solid rgba(159,232,112,0.15); }
+    .waste-title { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green); margin-bottom: 0.75rem; text-align: center; }
+    .waste-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; text-align: center; }
+    .waste-item { background: rgba(0,0,0,0.2); border-radius: 12px; padding: 0.8rem; }
+    .waste-item-icon { font-size: 1.2rem; margin-bottom: 0.3rem; }
+    .waste-item-title { font-weight: 600; font-size: 0.8rem; color: #e0f0e0; margin-bottom: 0.3rem; }
+    .waste-item-desc { font-size: 0.7rem; color: var(--muted); line-height: 1.4; }
+    .waste-note { text-align: center; font-size: 0.7rem; color: var(--sub); margin-top: 0.8rem; font-style: italic; }
+    .gl-bridge { background: rgba(125,211,252,0.1); border-left: 3px solid #7DD3FC; padding: 1rem 1.2rem; border-radius: 12px; font-size: 0.85rem; color: var(--muted); }
+    .gl-bridge strong { color: #7DD3FC; }
+    .formula { font-family: var(--mono); color: var(--green); margin: 1rem 0; font-size: 1rem; text-align: center; }
+    .formula-note { text-align: center; font-size: 0.7rem; color: #4a6080; margin-top: -0.5rem; font-family: var(--mono); }
+    .highlight-quote { background: rgba(159,232,112,0.08); border-left: 3px solid #9FE870; padding: 0.8rem 1.2rem; margin: 1rem 0; border-radius: 0 12px 12px 0; font-size: 0.9rem; color: #e0f0e0; }
+    .verdict-question { background: rgba(125,211,252,0.08); border-left: 3px solid #7DD3FC; padding: 0.8rem 1.2rem; margin: 1rem 0; border-radius: 0 12px 12px 0; font-style: italic; color: #c7e2ff; }
+    .dual-buttons { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin: 1.8rem 0 1rem; }
+    .author-credit { text-align: center; color: var(--sub); font-size: 0.75rem; border-top: 1px solid var(--dim); padding-top: 1rem; margin-top: 1rem; }
+    .gate-section { background: var(--bg2); border-bottom: 1px solid var(--dim); }
+    .section-eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.28); margin-bottom: 20px; display: flex; align-items: center; gap: 14px; }
+    .section-eyebrow::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.07); }
+    .gate-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .gate-card { display: flex; flex-direction: column; border-radius: 18px; padding: 28px 26px 24px; text-decoration: none; border: 1px solid rgba(255,255,255,0.09); transition: 0.25s; }
+    .gate-card:hover { transform: translateY(-4px); box-shadow: 0 14px 40px rgba(0,0,0,0.25); }
+    .gate-card.gov { background: radial-gradient(circle at top right, rgba(159,232,112,0.09), transparent 40%), linear-gradient(160deg, #131f18, #101a15); border-color: rgba(159,232,112,0.2); }
+    .gate-card.univ { background: radial-gradient(circle at top right, rgba(125,211,252,0.07), transparent 40%), linear-gradient(160deg, #151b28, #101827); border-color: rgba(159,232,112,0.2); }
+    .gate-card.diagnostic { background: radial-gradient(circle at top right, rgba(200,146,42,0.09), transparent 40%), linear-gradient(160deg, #1f1a12, #1a1610); border-color: rgba(200,146,42,0.25); }
+    .gc-sector { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 12px; }
+    .gate-card.gov .gc-sector { color: var(--green); }
+    .gate-card.univ .gc-sector { color: var(--green); }
+    .gate-card.diagnostic .gc-sector { color: rgba(200,146,42,0.8); }
+    .gc-title { font-family: var(--serif); font-size: clamp(18px, 1.8vw, 23px); margin-bottom: 10px; }
+    .gate-card.gov .gc-title { color: #f0ffe8; }
+    .gate-card.univ .gc-title { color: #f3f8ff; }
+    .gate-card.diagnostic .gc-title { color: #f5e6c8; }
+    .gc-desc { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.7; margin-bottom: 16px; flex: 1; }
+    .gc-cta { display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; }
+    .gate-card.gov .gc-cta { color: var(--green); }
+    .gate-card.univ .gc-cta { color: var(--green); }
+    .gate-card.diagnostic .gc-cta { color: rgba(200,146,42,0.8); }
+    .rfp-section { background: linear-gradient(180deg, rgba(200,146,42,0.06), rgba(255,255,255,0.01)); border-top: 1px solid rgba(200,146,42,0.2); border-bottom: 1px solid rgba(200,146,42,0.2); }
+    .rfp-inner { max-width: 1040px; margin: 0 auto; padding: clamp(48px, 6vw, 72px) clamp(20px, 6vw, 80px); display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+    .rfp-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(200,146,42,0.8); }
+    .rfp-title { font-family: var(--serif); font-size: clamp(18px, 2.2vw, 26px); color: #fff; line-height: 1.25; }
+    .rfp-btn { display: inline-flex; align-items: center; gap: 10px; padding: 13px 26px; border-radius: 10px; border: 1px solid rgba(200,146,42,0.4); background: rgba(200,146,42,0.1); color: #f5e6c8; text-decoration: none; font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; transition: 0.22s; }
+    .rfp-btn:hover { border-color: rgba(200,146,42,0.7); transform: translateY(-2px); }
+    .gfi-check-section { background: linear-gradient(145deg, rgba(159,232,112,0.03), transparent); border-top: 1px solid rgba(159,232,112,0.12); }
+    .gfi-check-inner { max-width: 1040px; margin: 0 auto; padding: clamp(48px, 6vw, 72px) clamp(20px, 6vw, 80px); text-align: center; }
+    .gfi-check-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--green); }
+    .gfi-check-title { font-family: var(--serif); font-size: clamp(20px, 2.2vw, 28px); color: #fff; }
+    .gfi-check-btn { display: inline-flex; align-items: center; gap: 10px; padding: 13px 32px; border-radius: 40px; border: 1px solid rgba(159,232,112,0.5); background: rgba(159,232,112,0.12); color: var(--green); text-decoration: none; font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; transition: 0.22s; }
+    .gfi-check-btn:hover { background: rgba(159,232,112,0.22); border-color: var(--green); transform: translateY(-2px); }
+    .footer { text-align: center; padding: 24px 20px 32px; font-family: var(--mono); font-size: 11px; color: rgba(255,255,255,0.2); border-top: 1px solid rgba(255,255,255,0.05); }
+    .footer a { color: rgba(255,255,255,0.32); text-decoration: none; }
+    .footer a:hover { color: #fff; }
+    @keyframes up { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 900px) { .gate-cards { grid-template-columns: repeat(2, 1fr); } .waste-grid { grid-template-columns: 1fr; gap: 0.8rem; } }
+    @media (max-width: 600px) { .gate-cards { grid-template-columns: 1fr; } .three-pillars { grid-template-columns: 1fr; } .claim-line { font-size: 1.2rem; } }
   </style>
 </head>
 <body>
-  <div class="nav">
-    <a href="index.html" class="logo">GFI Flow Intelligence</a>
-    <div class="lang-grp">
-      <button class="lb-btn on" data-lang="en">EN</button>
-      <button class="lb-btn" data-lang="tw">繁</button>
-      <button class="lb-btn" data-lang="cn">简</button>
-      <button class="lb-btn" data-lang="es">ES</button>
-    </div>
+<div class="nav">
+  <a href="index.html" class="logo">GFI Flow Intelligence</a>
+  <div class="lang-grp">
+    <button class="lb-btn on" data-lang="en">EN</button>
+    <button class="lb-btn" data-lang="tw">繁</button>
+    <button class="lb-btn" data-lang="cn">简</button>
+    <button class="lb-btn" data-lang="es">ES</button>
   </div>
+</div>
 
-  <!-- ENGLISH -->
-  <div class="lb active page" data-lang="en">
-    <section class="hero">
-      <div class="inner">
-        <div class="definition-block">
-          <div class="definition-desc" style="font-size:0.9rem; margin-bottom:0.5rem;">
-            <strong>OECD identified a structural gap.</strong>
-          </div>
-          <div class="definition-desc" style="margin-bottom:0.5rem;">
-            Legal independence <strong>≠</strong> independence in practice. Existing tools cannot measure what actually happens in governance systems.
-          </div>
-          <div class="definition-source">— OECD/IDI Report, May 27, 2026</div>
-          
-          <div style="height: 1.5rem;"></div>
-          
-          <div class="definition-desc" style="font-size:0.9rem; margin-bottom:0.5rem;">
-            <strong>EO 14402 made independent outcome verification a regulatory necessity.</strong>
-          </div>
-          <div class="definition-desc" style="margin-bottom:0.5rem;">
-            Fixed-price contracts as default require someone to verify whether public investment actually improved citizens' ability to access services.
-          </div>
-          <div class="definition-source">— EO 14402, April 30, 2026</div>
-          
-          <div style="height: 1.5rem;"></div>
-          
-          <div class="definition-desc" style="font-size:1rem; margin-top:0.5rem;">
-            <strong>GL Framework is the only method that closes this gap.</strong> It translates governance performance into measurable, comparable, verifiable parameters.
-          </div>
-        </div>
-        
-        <div class="hero-buttons">
-          <a href="gl-verifier.html" class="hero-btn hero-btn-primary">📋 Become a GL Verifier</a>
-          <a href="taskforce.html" class="hero-btn hero-btn-secondary">⚡ Where to Start</a>
-        </div>
-        <a href="Real_Digital_Transformation.pdf" target="_blank" rel="noopener" class="sample-block book-block">
-          <div class="sample-icon">📘</div>
-          <div class="sample-text-wrap">
-            <div class="sample-label">Free Book</div>
-            <div class="sample-title">Real Digital Transformation</div>
-            <div class="sample-sub">Free PDF · 107 pages · Governance in the AI Era</div>
-          </div>
-          <div class="sample-arr">→</div>
-        </a>
-        <a href="UK_DWP_GL_Diagnostic_Report_EN.pdf" target="_blank" rel="noopener" class="sample-block">
-          <div class="sample-icon">📄</div>
-          <div class="sample-text-wrap">
-            <div class="sample-label">Sample Report</div>
-            <div class="sample-title">UK DWP — Universal Credit Diagnostic Report</div>
-            <div class="sample-sub">GL: 0.074 · Structural Failure · 6 pages · PDF</div>
-          </div>
-          <div class="sample-arr">→</div>
-        </a>
-        <div class="hero-diagram">
-          <img src="missing-layer.png" alt="The Missing Layer in Digital Transformation">
-        </div>
+<!-- ================= ENGLISH ================= -->
+<div class="lb active page" data-lang="en">
+  <section class="hero"><div class="inner"><div class="definition-block"><div class="definition-desc"><strong>OECD identified a structural gap.</strong> Legal independence <strong>≠</strong> independence in practice. Existing tools cannot measure what actually happens in governance systems.</div><div class="definition-source">— OECD/IDI Report, May 27, 2026</div><div style="height: 1rem;"></div><div class="definition-desc"><strong>EO 14402 made independent outcome verification a regulatory necessity.</strong> Fixed-price contracts as default require someone to verify whether public investment actually improved citizens' ability to access services.</div><div class="definition-source">— EO 14402, April 30, 2026</div><div style="height: 1rem;"></div><div class="definition-desc"><strong>GL Framework closes this gap.</strong> It translates governance performance into measurable, comparable, verifiable parameters — and reveals who actually bears the cost.</div></div><div class="hero-buttons"><a href="gl-verifier.html" class="hero-btn hero-btn-primary">📋 Become a GL Verifier</a><a href="taskforce.html" class="hero-btn hero-btn-secondary">⚡ Where to Start</a></div><a href="Real_Digital_Transformation.pdf" class="sample-block book-block"><div class="sample-icon">📘</div><div><div class="sample-label">Free Book</div><div class="sample-title">Real Digital Transformation</div><div class="sample-sub">Free PDF · 107 pages</div></div><div class="sample-arr">→</div></a><a href="UK_DWP_GL_Diagnostic_Report_EN.pdf" class="sample-block"><div class="sample-icon">📄</div><div><div class="sample-label">Sample Report</div><div class="sample-title">UK DWP — Universal Credit Diagnostic</div><div class="sample-sub">GL: 0.074 · Structural Failure</div></div><div class="sample-arr">→</div></a><div class="hero-diagram"><img src="missing-layer.png" alt="The Missing Layer"></div></div></section>
+  <div class="inner"><div class="declaration-box"><div class="declaration-line">No party. No ideology. Just math.</div></div></div>
+  <div class="inner"><div class="gl-tool-box">
+    <div class="claim-block">
+      <div class="claim-line">"GDP measures recorded transactions.<br>It does not ask: <em>who bears the cost?</em>"</div>
+      <div class="claim-sub">GL Framework asks that question. And measures the answer.</div>
+      <div class="three-pillars">
+        <div class="pillar"><div class="pillar-icon">🏭</div><div class="pillar-title">The structural gap</div><div class="pillar-text">Systems often transfer costs outward as an unmeasured consequence of process design. This can appear in environmental impact, labor classification, or administrative friction left with citizens.</div></div>
+        <div class="pillar"><div class="pillar-icon">📊</div><div class="pillar-title">Why GDP never sees it</div><div class="pillar-text">GDP records the final transaction. It does not track what happened before — who waited, who re-filed, who gave up. Those costs are real, but they remain invisible in national accounts.</div></div>
+        <div class="pillar"><div class="pillar-icon">🕳️</div><div class="pillar-title">A gap across disciplines</div><div class="pillar-text">Economics does not measure who bears the cost. Procurement rarely tracks post-signature outcomes. Auditors focus on compliance, not friction. Most existing tools focus on business compliance, not citizen burden. The missing piece is <strong>transferred cost</strong>.</div></div>
       </div>
-    </section>
-
-    <div class="inner">
-      <div class="independence-declaration">
-        <div class="declaration-line">No party. No ideology. Just math.</div>
+      
+      <!-- 新區塊：三層浪費 -->
+      <div class="waste-layer">
+        <div class="waste-title">📉 What GL Measures: Three Layers of Waste</div>
+        <div class="waste-grid">
+          <div class="waste-item"><div class="waste-item-icon">⏱️</div><div class="waste-item-title">Visible waste</div><div class="waste-item-desc">Redundant steps, waiting, rework — directly measurable in staff hours and budget.</div></div>
+          <div class="waste-item"><div class="waste-item-icon">👻</div><div class="waste-item-title">Hidden waste</div><div class="waste-item-desc">Abandoned applications, lost bids — foregone value never tracked.</div></div>
+          <div class="waste-item"><div class="waste-item-icon">🏛️</div><div class="waste-item-title">Structural waste</div><div class="waste-item-desc">Information asymmetry, psychological friction, opportunity cost — erosion of trust and long-term efficiency.</div></div>
+        </div>
+        <div class="waste-note">GL does not accuse. It adds a layer of visibility that standard accounting was never designed to provide.</div>
       </div>
+      
+      <div class="gl-bridge"><strong>🔗 GL Framework closes this gap — across all of them.</strong><br>Its denominator — <strong>Pd × Cf</strong> (Pain Duration × Cognitive Friction) — measures <strong>how much cost the system has shifted onto the user</strong>. A low GL indicates that friction is being transferred outward rather than resolved.</div>
     </div>
+    <div class="formula"><strong>GL = (Fs × Vn) / (Pd × Cf)</strong></div>
+    <div class="formula-note">↓ Low GL = the system is shifting cost onto you ↓</div>
+    <div class="highlight-quote"><strong>Ghost GDP</strong> is that shifted cost — never recorded in any national ledger. Not an accounting error. A blind spot in how GDP accounts for economic activity.</div>
+    <div class="verdict-question"><strong>GL Verifier</strong> turns independent verification from a checkbox into a single question:<br><em>Is the system delivering value to the public — or simply shifting friction outward instead of solving it?</em></div>
+    <div class="dual-buttons"><a href="ghost-gdp.html" class="hero-btn-primary">📐 Calculate Your Ghost GDP →</a><a href="ghost-gdp-paper.html" class="hero-btn-secondary">📄 Read the Full Ghost GDP Paper →</a></div>
+    <div class="author-credit">Ping Xu · Founder, GFI Flow Intelligence · Inventor, GL Framework<br>For government and media inquiries: <a href="mailto:ping@gfiintel.com">ping@gfiintel.com</a></div>
+  </div></div>
+  <section class="gate-section"><div class="inner"><div class="section-eyebrow">Case Studies & Analysis</div><div class="gate-cards"><a href="government.html" class="gate-card gov"><div class="gc-sector">Public Sector</div><div class="gc-title">For Government</div><div class="gc-desc">Procurement, accountability, and outcome verification after deployment.</div><div class="gc-cta">View page <span class="arr">→</span></div></a><a href="university-research.html" class="gate-card univ"><div class="gc-sector">Research & Institution</div><div class="gc-title">For University & Research</div><div class="gc-desc">Train GL Verifiers, anchor methodology, build governance labs.</div><div class="gc-cta">View page <span class="arr">→</span></div></a><a href="public-diagnostic.html" class="gate-card diagnostic"><div class="gc-sector">Public Diagnostic</div><div class="gc-title">Public Case Diagnostic Demo</div><div class="gc-desc">Structured cases from UK, Canada, Australia, US, Germany, Taiwan.</div><div class="gc-cta">Explore cases <span class="arr">→</span></div></a></div></div></section>
+  <section class="rfp-section"><div class="rfp-inner"><div class="rfp-text"><div class="rfp-label">For Procurement Officers & Vendors</div><div class="rfp-title">Add a 90-Day Outcome Verification Requirement to Your RFP</div></div><a href="RFP_Insert_90Day_Outcome_Verification.pdf" class="rfp-btn">Get Procurement Insert →</a></div></section>
+  <section class="gfi-check-section"><div class="gfi-check-inner"><div class="gfi-check-label">GFI Check · Free Assessment Tool</div><div class="gfi-check-title">Measure Your System's Generalization Efficiency</div><div class="gfi-check-desc">IMCR + GL Level · Based on GEF (SSRN peer-reviewed)</div><a href="check.html" class="gfi-check-btn">Launch GFI Check →</a></div></section>
+</div>
 
-    <div class="inner">
-      <div class="gl-tool-box">
-        <div class="gl-core-definition">
-          <p><strong>GL Framework is not a process optimization tool.</strong></p>
-          <p><strong>It is a measurement layer for governance legitimacy.</strong></p>
-          <p>It turns public trust, administrative friction, and institutional effectiveness into observable, verifiable, comparable outcomes.</p>
-          <p><strong>Not: "Did the system go live?"</strong><br>
-          <strong>But: "Did governance actually reduce friction for citizens?"</strong></p>
-        </div>
-        <div class="formula"><strong>GL = (Fs × Vn) / (Pd × Cf)</strong></div>
-        <p>The GL Framework has been applied to public system cases including the NHS, Queensland Health, and SAAQ, and published in PA Times and SSRN — forming an openly verifiable independent governance diagnostic method.</p>
-        <div class="author" style="margin-top: 1rem; color: var(--sub);">Ping Xu · Founder, GFI Flow Intelligence · Inventor, GL Framework</div>
-        <p style="margin-top: 1rem; font-size: 0.8rem;">For government and media inquiries: <a href="mailto:ping@gfiintel.com" style="color: #9FE870;">ping@gfiintel.com</a></p>
+<!-- ================= 繁體中文 ================= -->
+<div class="lb page" data-lang="tw">
+  <section class="hero"><div class="inner"><div class="definition-block"><div class="definition-desc"><strong>OECD 指出了結構性缺口。</strong> 法律上的獨立 <strong>≠</strong> 實踐中的獨立。現有工具無法測量治理體系中實際發生的情況。</div><div class="definition-source">— OECD/IDI 報告，2026年5月27日</div><div style="height: 1rem;"></div><div class="definition-desc"><strong>EO 14402 讓獨立成果驗證成為法規上的必須。</strong> 固定價格合約為預設，需要有人驗證公共投資是否真的改善了民眾獲得服務的能力。</div><div class="definition-source">— EO 14402，2026年4月30日</div><div style="height: 1rem;"></div><div class="definition-desc"><strong>GL Framework 填補這個缺口。</strong> 它將治理績效轉化為可測量、可比較、可驗證的參數——並揭露誰在真正承受成本。</div></div><div class="hero-buttons"><a href="gl-verifier.html" class="hero-btn hero-btn-primary">📋 成為 GL 驗證師</a><a href="taskforce.html" class="hero-btn hero-btn-secondary">⚡ 從這裡開始</a></div><a href="Real_Digital_Transformation.pdf" class="sample-block book-block"><div class="sample-icon">📘</div><div><div class="sample-label">免費書籍</div><div class="sample-title">真正的數位轉型</div><div class="sample-sub">免費 PDF · 107頁</div></div><div class="sample-arr">→</div></a><a href="UK_DWP_GL_Diagnostic_Report_EN.pdf" class="sample-block"><div class="sample-icon">📄</div><div><div class="sample-label">範本報告</div><div class="sample-title">英國 DWP — 通用福利金診斷</div><div class="sample-sub">GL: 0.074 · 結構性失敗</div></div><div class="sample-arr">→</div></a><div class="hero-diagram"><img src="missinglayerCH.png" alt="數位轉型中的缺失層"></div></div></section>
+  <div class="inner"><div class="declaration-box"><div class="declaration-line">無黨無派。只有數學。</div></div></div>
+  <div class="inner"><div class="gl-tool-box">
+    <div class="claim-block">
+      <div class="claim-line">「GDP 只記錄交易。<br>它從不問：<em>誰在承受成本？</em>」</div>
+      <div class="claim-sub">GL Framework 問這個問題。並且測量答案。</div>
+      <div class="three-pillars">
+        <div class="pillar"><div class="pillar-icon">🏭</div><div class="pillar-title">結構性缺口</div><div class="pillar-text">系統在設計時，經常將成本向外轉移，形成未被測量的後果。這可能出現在環境影響、勞動分類，或是留給公民的行政摩擦上。</div></div>
+        <div class="pillar"><div class="pillar-icon">📊</div><div class="pillar-title">為什麼 GDP 看不見</div><div class="pillar-text">GDP 只記錄最終交易。它不追蹤交易之前發生的事——誰在等？誰重複申報？誰放棄了？那些成本是真實的，但在國家帳本中始終是隱形的。</div></div>
+        <div class="pillar"><div class="pillar-icon">🕳️</div><div class="pillar-title">跨領域的共同缺口</div><div class="pillar-text">經濟學不測量誰承受成本。採購很少追蹤簽約後的結果。審計聚焦合規，而非摩擦。多數現有工具只看企業合規，不看公民負擔。缺的那一塊都是<strong>被轉嫁的成本</strong>。</div></div>
       </div>
+      <div class="waste-layer">
+        <div class="waste-title">📉 GL 測量什麼：三層浪費</div>
+        <div class="waste-grid">
+          <div class="waste-item"><div class="waste-item-icon">⏱️</div><div class="waste-item-title">看得見的浪費</div><div class="waste-item-desc">重複步驟、等待、重工——可直接換算為人力與預算成本。</div></div>
+          <div class="waste-item"><div class="waste-item-icon">👻</div><div class="waste-item-title">看不見的浪費</div><div class="waste-item-desc">放棄的申請、流失的標案——從未被追蹤的隱性損失。</div></div>
+          <div class="waste-item"><div class="waste-item-icon">🏛️</div><div class="waste-item-title">結構性浪費</div><div class="waste-item-desc">資訊不對稱、心理摩擦、機會成本——長期侵蝕信任與效能。</div></div>
+        </div>
+        <div class="waste-note">GL 不指責。它增加一層標準會計從未設計要提供的可視性。</div>
+      </div>
+      <div class="gl-bridge"><strong>🔗 GL Framework 補上這個缺口——跨所有領域。</strong><br>它的分母——<strong>Pd × Cf</strong>（痛苦持續時間 × 認知摩擦）——測量的是<strong>系統轉嫁給使用者的成本有多少</strong>。GL 越低，代表摩擦被往外轉嫁而非被解決。</div>
     </div>
+    <div class="formula"><strong>GL = (Fs × Vn) / (Pd × Cf)</strong></div>
+    <div class="formula-note">↓ GL 越低 = 系統正在把成本轉嫁給你 ↓</div>
+    <div class="highlight-quote"><strong>幽靈GDP</strong> 就是那個被轉嫁的成本——從未出現在任何國家的帳本上。不是計算錯誤。是 GDP 統計經濟活動時的一個盲點。</div>
+    <div class="verdict-question"><strong>GL Verifier</strong> 把獨立驗證從「打勾」變成一個問題：<br><em>系統是在為公眾創造價值——還是只是把摩擦往外推，而不是解決它？</em></div>
+    <div class="dual-buttons"><a href="ghost-gdp.html" class="hero-btn-primary">📐 試算你的幽靈GDP →</a><a href="ghost-gdp-paper.html" class="hero-btn-secondary">📄 閱讀完整論文 (四語系) →</a></div>
+    <div class="author-credit">Ping Xu · GFI Flow Intelligence 創辦人 · GL Framework 發明者<br>政府與媒體查詢：<a href="mailto:ping@gfiintel.com">ping@gfiintel.com</a></div>
+  </div></div>
+  <section class="gate-section"><div class="inner"><div class="section-eyebrow">個案研究與分析</div><div class="gate-cards"><a href="government.html" class="gate-card gov"><div class="gc-sector">公部門</div><div class="gc-title">政府入口</div><div class="gc-desc">聚焦採購、問責與部署後成果驗證。</div><div class="gc-cta">查看頁面 <span class="arr">→</span></div></a><a href="university-research.html" class="gate-card univ"><div class="gc-sector">研究與機構</div><div class="gc-title">大學與研究入口</div><div class="gc-desc">培訓 GL 驗證師、錨定方法論、建立治理實驗室。</div><div class="gc-cta">查看頁面 <span class="arr">→</span></div></a><a href="public-diagnostic.html" class="gate-card diagnostic"><div class="gc-sector">公共診斷</div><div class="gc-title">公共案例診斷示範</div><div class="gc-desc">英國、加拿大、澳洲、美國、德國、台灣的結構化案例。</div><div class="gc-cta">瀏覽案例 <span class="arr">→</span></div></a></div></div></section>
+  <section class="rfp-section"><div class="rfp-inner"><div class="rfp-text"><div class="rfp-label">給採購官員與 Vendor</div><div class="rfp-title">在你的 RFP 中加入90天成果驗證要求</div></div><a href="RFP_Insert_90Day_Outcome_Verification.pdf" class="rfp-btn">取得採購條款 →</a></div></section>
+  <section class="gfi-check-section"><div class="gfi-check-inner"><div class="gfi-check-label">GFI Check · 免費評估工具</div><div class="gfi-check-title">衡量你的系統普遍化效率</div><div class="gfi-check-desc">IMCR + GL Level · 基於 GEF (SSRN 同儕審查)</div><a href="check.html" class="gfi-check-btn">開啟 GFI Check →</a></div></section>
+</div>
 
-    <section class="gate-section">
-      <div class="inner">
-        <div class="section-eyebrow">Case Studies &amp; Analysis</div>
-        <div class="gate-cards">
-          <a href="government.html" class="gate-card gov">
-            <div class="gc-sector">Public Sector</div>
-            <div class="gc-title">For Government</div>
-            <div class="gc-desc">Procurement, accountability, and outcome verification for public systems after deployment.</div>
-            <div class="gc-cta">View page <span class="arr">→</span></div>
-          </a>
-          <a href="university-research.html" class="gate-card univ">
-            <div class="gc-sector">Research & Institution</div>
-            <div class="gc-title">For University & Research</div>
-            <div class="gc-desc">Train GL Verifiers, anchor methodology, and build governance labs for public outcome verification.</div>
-            <div class="gc-cta">View page <span class="arr">→</span></div>
-          </a>
-          <a href="public-diagnostic.html" class="gate-card diagnostic">
-            <div class="gc-sector">Public Diagnostic</div>
-            <div class="gc-title">Public Case Diagnostic Demo</div>
-            <div class="gc-desc">Structured diagnostic cases from UK, Canada, Australia, US, Germany, Taiwan. Standardized format with GL diagnosis and structural lessons.</div>
-            <div class="gc-cta">Explore cases <span class="arr">→</span></div>
-          </a>
-        </div>
+<!-- ================= 简体中文 ================= -->
+<div class="lb page" data-lang="cn">
+  <section class="hero"><div class="inner"><div class="definition-block"><div class="definition-desc"><strong>OECD 指出了结构性缺口。</strong> 法律上的独立 <strong>≠</strong> 实践中的独立。现有工具无法衡量治理体系中实际发生的情况。</div><div class="definition-source">— OECD/IDI 报告，2026年5月27日</div><div style="height: 1rem;"></div><div class="definition-desc"><strong>EO 14402 让独立成果验证成为法规上的必须。</strong> 固定价格合约为预设，需要有人验证公共投资是否真的改善了民众获得服务的能力。</div><div class="definition-source">— EO 14402，2026年4月30日</div><div style="height: 1rem;"></div><div class="definition-desc"><strong>GL Framework 填补这个缺口。</strong> 它将治理绩效转化为可测量、可比较、可验证的参数——并揭露谁在真正承受成本。</div></div><div class="hero-buttons"><a href="gl-verifier.html" class="hero-btn hero-btn-primary">📋 成为 GL 验证师</a><a href="taskforce.html" class="hero-btn hero-btn-secondary">⚡ 从这里开始</a></div><a href="Real_Digital_Transformation.pdf" class="sample-block book-block"><div class="sample-icon">📘</div><div><div class="sample-label">免费书籍</div><div class="sample-title">真正的数字转型</div><div class="sample-sub">免费 PDF · 107页</div></div><div class="sample-arr">→</div></a><a href="UK_DWP_GL_Diagnostic_Report_EN.pdf" class="sample-block"><div class="sample-icon">📄</div><div><div class="sample-label">样本报告</div><div class="sample-title">英国 DWP — 通用福利金诊断</div><div class="sample-sub">GL: 0.074 · 结构性失败</div></div><div class="sample-arr">→</div></a><div class="hero-diagram"><img src="missinglayerCH.png" alt="数字化转型中的缺失层"></div></div></section>
+  <div class="inner"><div class="declaration-box"><div class="declaration-line">无党无派。只有数学。</div></div></div>
+  <div class="inner"><div class="gl-tool-box">
+    <div class="claim-block">
+      <div class="claim-line">「GDP 只记录交易。<br>它从不问：<em>谁在承受成本？</em>」</div>
+      <div class="claim-sub">GL Framework 问这个问题。并且测量答案。</div>
+      <div class="three-pillars">
+        <div class="pillar"><div class="pillar-icon">🏭</div><div class="pillar-title">结构性缺口</div><div class="pillar-text">系统在设计时，经常将成本向外转移，形成未被测量的后果。这可能出现在环境影响、劳动分类，或是留给公民的行政摩擦上。</div></div>
+        <div class="pillar"><div class="pillar-icon">📊</div><div class="pillar-title">为什么 GDP 看不见</div><div class="pillar-text">GDP 只记录最终交易。它不追踪交易之前发生的事——谁在等？谁重复申报？谁放弃了？那些成本是真实的，但在国家账本中始终是隐形的。</div></div>
+        <div class="pillar"><div class="pillar-icon">🕳️</div><div class="pillar-title">跨领域的共同缺口</div><div class="pillar-text">经济学不测量谁承受成本。采购很少追踪签约后的结果。审计聚焦合规，而非摩擦。多数现有工具只看企业合规，不看公民负担。缺的那一块都是<strong>被转嫁的成本</strong>。</div></div>
       </div>
-    </section>
-    <section class="rfp-section">
-      <div class="rfp-inner">
-        <div class="rfp-text">
-          <div class="rfp-label">For Procurement Officers &amp; Vendors</div>
-          <div class="rfp-title">Add a 90-Day Outcome Verification Requirement to Your RFP</div>
-          <div class="rfp-sub">One-page procurement insert · Open the PDF directly</div>
+      <div class="waste-layer">
+        <div class="waste-title">📉 GL 测量什么：三层浪费</div>
+        <div class="waste-grid">
+          <div class="waste-item"><div class="waste-item-icon">⏱️</div><div class="waste-item-title">看得见的浪费</div><div class="waste-item-desc">重复步骤、等待、返工——可直接换算为人力与预算成本。</div></div>
+          <div class="waste-item"><div class="waste-item-icon">👻</div><div class="waste-item-title">看不见的浪费</div><div class="waste-item-desc">放弃的申请、流失的标案——从未被追踪的隐性损失。</div></div>
+          <div class="waste-item"><div class="waste-item-icon">🏛️</div><div class="waste-item-title">结构性浪费</div><div class="waste-item-desc">信息不对称、心理摩擦、机会成本——长期侵蚀信任与效能。</div></div>
         </div>
-        <a href="RFP_Insert_90Day_Outcome_Verification.pdf" target="_blank" rel="noopener" class="rfp-btn">Get Procurement Insert <span class="arr">→</span></a>
+        <div class="waste-note">GL 不指责。它增加一层标准会计从未设计要提供的可视性。</div>
       </div>
-    </section>
-    <section class="gfi-check-section">
-      <div class="gfi-check-inner">
-        <div class="gfi-check-label">GFI Check · Free Assessment Tool</div>
-        <div class="gfi-check-title">Measure Your System's Generalization Efficiency</div>
-        <div class="gfi-check-desc">IMCR + GL Level · One-page report · Based on GEF (SSRN peer-reviewed)</div>
-        <a href="check.html" class="gfi-check-btn">Launch GFI Check →</a>
-      </div>
-    </section>
-  </div>
-
-  <!-- 繁體中文 -->
-  <div class="lb page" data-lang="tw">
-    <section class="hero">
-      <div class="inner">
-        <div class="definition-block">
-          <div class="definition-desc" style="font-size:0.9rem; margin-bottom:0.5rem;">
-            <strong>OECD 指出了結構性缺口。</strong>
-          </div>
-          <div class="definition-desc" style="margin-bottom:0.5rem;">
-            法律上的獨立 <strong>≠</strong> 實踐中的獨立。現有工具無法測量治理體系中實際發生的情況。
-          </div>
-          <div class="definition-source">— OECD/IDI 報告，2026年5月27日</div>
-          
-          <div style="height: 1.5rem;"></div>
-          
-          <div class="definition-desc" style="font-size:0.9rem; margin-bottom:0.5rem;">
-            <strong>EO 14402 讓獨立成果驗證成為法規上的必須。</strong>
-          </div>
-          <div class="definition-desc" style="margin-bottom:0.5rem;">
-            固定價格合約為預設，需要有人驗證公共投資是否真的改善了民眾獲得服務的能力。
-          </div>
-          <div class="definition-source">— EO 14402，2026年4月30日</div>
-          
-          <div style="height: 1.5rem;"></div>
-          
-          <div class="definition-desc" style="font-size:1rem; margin-top:0.5rem;">
-            <strong>GL Framework 是唯一能填補這個缺口的方法。</strong> 它將治理績效轉化為可測量、可比較、可驗證的參數。
-          </div>
-        </div>
-        
-        <div class="hero-buttons">
-          <a href="gl-verifier.html" class="hero-btn hero-btn-primary">📋 成為 GL 驗證師</a>
-          <a href="taskforce.html" class="hero-btn hero-btn-secondary">⚡ 從這裡開始</a>
-        </div>
-        <a href="Real_Digital_Transformation.pdf" target="_blank" rel="noopener" class="sample-block book-block">
-          <div class="sample-icon">📘</div>
-          <div class="sample-text-wrap">
-            <div class="sample-label">免費書籍</div>
-            <div class="sample-title">真正的數位轉型</div>
-            <div class="sample-sub">免費 PDF · 107頁 · AI 時代的治理革命</div>
-          </div>
-          <div class="sample-arr">→</div>
-        </a>
-        <a href="UK_DWP_GL_Diagnostic_Report_EN.pdf" target="_blank" rel="noopener" class="sample-block">
-          <div class="sample-icon">📄</div>
-          <div class="sample-text-wrap">
-            <div class="sample-label">範本報告</div>
-            <div class="sample-title">英國 DWP — 通用福利金診斷報告</div>
-            <div class="sample-sub">GL: 0.074 · 結構性失敗 · 6頁 · PDF</div>
-          </div>
-          <div class="sample-arr">→</div>
-        </a>
-        <div class="hero-diagram">
-          <img src="missinglayerCH.png" alt="數位轉型中的缺失層">
-        </div>
-      </div>
-    </section>
-
-    <div class="inner">
-      <div class="independence-declaration">
-        <div class="declaration-line">無黨無派。只有數學。</div>
-      </div>
+      <div class="gl-bridge"><strong>🔗 GL Framework 补上这个缺口——跨所有领域。</strong><br>它的分母——<strong>Pd × Cf</strong>（痛苦持续时间 × 认知摩擦）——测量的是<strong>系统转嫁给使用者的成本有多少</strong>。GL 越低，代表摩擦被往外转嫁而非被解决。</div>
     </div>
+    <div class="formula"><strong>GL = (Fs × Vn) / (Pd × Cf)</strong></div>
+    <div class="formula-note">↓ GL 越低 = 系统正在把成本转嫁给你 ↓</div>
+    <div class="highlight-quote"><strong>幽灵GDP</strong> 就是那个被转嫁的成本——从未出现在任何国家的账本上。不是计算错误。是 GDP 统计经济活动时的一个盲点。</div>
+    <div class="verdict-question"><strong>GL Verifier</strong> 把独立验证从「打勾」变成一个问題：<br><em>系统是在为公众创造价值——还是只是把摩擦往外推，而不是解决它？</em></div>
+    <div class="dual-buttons"><a href="ghost-gdp.html" class="hero-btn-primary">📐 测算你的幽灵GDP →</a><a href="ghost-gdp-paper.html" class="hero-btn-secondary">📄 阅读完整论文 (四语系) →</a></div>
+    <div class="author-credit">Ping Xu · GFI Flow Intelligence 创办人 · GL Framework 发明者<br>政府与媒体查询：<a href="mailto:ping@gfiintel.com">ping@gfiintel.com</a></div>
+  </div></div>
+  <section class="gate-section"><div class="inner"><div class="section-eyebrow">案例研究与分析</div><div class="gate-cards"><a href="government.html" class="gate-card gov"><div class="gc-sector">公共部门</div><div class="gc-title">政府入口</div><div class="gc-desc">聚焦采购、问责与部署后成果验证。</div><div class="gc-cta">查看页面 <span class="arr">→</span></div></a><a href="university-research.html" class="gate-card univ"><div class="gc-sector">研究与机构</div><div class="gc-title">大学与研究入口</div><div class="gc-desc">培训 GL 验证师、锚定方法论、建立治理实验室。</div><div class="gc-cta">查看页面 <span class="arr">→</span></div></a><a href="public-diagnostic.html" class="gate-card diagnostic"><div class="gc-sector">公共诊断</div><div class="gc-title">公共案例诊断示范</div><div class="gc-desc">英国、加拿大、澳大利亚、美国、德国、台湾的结构化案例。</div><div class="gc-cta">浏览案例 <span class="arr">→</span></div></a></div></div></section>
+  <section class="rfp-section"><div class="rfp-inner"><div class="rfp-text"><div class="rfp-label">给采购官员与 Vendor</div><div class="rfp-title">在你的 RFP 中加入90天成果验证要求</div></div><a href="RFP_Insert_90Day_Outcome_Verification.pdf" class="rfp-btn">获取采购条款 →</a></div></section>
+  <section class="gfi-check-section"><div class="gfi-check-inner"><div class="gfi-check-label">GFI Check · 免费评估工具</div><div class="gfi-check-title">衡量你的系统普遍化效率</div><div class="gfi-check-desc">IMCR + GL Level · 基于 GEF (SSRN 同行评审)</div><a href="check.html" class="gfi-check-btn">开启 GFI Check →</a></div></section>
+</div>
 
-    <div class="inner">
-      <div class="gl-tool-box">
-        <div class="gl-core-definition">
-          <p><strong>GL Framework 不是流程優化工具。</strong></p>
-          <p><strong>它是治理正當性的測量層。</strong></p>
-          <p>把公共信任、行政摩擦、制度有效性，變成可觀察、可驗證、可比較的結果。</p>
-          <p><strong>不是：「系統上線了嗎？」</strong><br>
-          <strong>而是：「治理行為，真的降低了人民完成事情的摩擦嗎？」</strong></p>
-        </div>
-        <div class="formula"><strong>GL = (Fs × Vn) / (Pd × Cf)</strong></div>
-        <p>GL Framework 已被應用於 NHS、Queensland Health、SAAQ 等公共系統案例，並透過 PA Times 與 SSRN 發表，形成一套可公開檢驗的獨立治理診斷方法。</p>
-        <div class="author" style="margin-top: 1rem; color: var(--sub);">Ping Xu · GFI Flow Intelligence 創辦人 · GL Framework 發明者</div>
-        <p style="margin-top: 1rem; font-size: 0.8rem;">政府與媒體查詢：<a href="mailto:ping@gfiintel.com" style="color: #9FE870;">ping@gfiintel.com</a></p>
+<!-- ================= Español ================= -->
+<div class="lb page" data-lang="es">
+  <section class="hero"><div class="inner"><div class="definition-block"><div class="definition-desc"><strong>La OCDE identificó una brecha estructural.</strong> La independencia legal <strong>≠</strong> la independencia en la práctica. Las herramientas existentes no pueden medir lo que realmente sucede en los sistemas de gobernanza.</div><div class="definition-source">— Informe OCDE/IDI, 27 de mayo de 2026</div><div style="height: 1rem;"></div><div class="definition-desc"><strong>EO 14402 hizo de la verificación independiente de resultados una necesidad regulatoria.</strong> Los contratos de precio fijo requieren que alguien verifique si la inversión pública realmente mejoró la capacidad de los ciudadanos para acceder a los servicios.</div><div class="definition-source">— EO 14402, 30 de abril de 2026</div><div style="height: 1rem;"></div><div class="definition-desc"><strong>GL Framework cierra esta brecha.</strong> Traduce el rendimiento de la gobernanza en parámetros medibles, comparables y verificables — y revela quién soporta realmente el costo.</div></div><div class="hero-buttons"><a href="gl-verifier.html" class="hero-btn hero-btn-primary">📋 Conviértase en GL Verifier</a><a href="taskforce.html" class="hero-btn hero-btn-secondary">⚡ Por dónde empezar</a></div><a href="Real_Digital_Transformation.pdf" class="sample-block book-block"><div class="sample-icon">📘</div><div><div class="sample-label">Libro Gratuito</div><div class="sample-title">Real Digital Transformation</div><div class="sample-sub">PDF gratuito · 107 páginas</div></div><div class="sample-arr">→</div></a><a href="UK_DWP_GL_Diagnostic_Report_EN.pdf" class="sample-block"><div class="sample-icon">📄</div><div><div class="sample-label">Informe de Muestra</div><div class="sample-title">DWP Reino Unido — Universal Credit</div><div class="sample-sub">GL: 0.074 · Falla Estructural</div></div><div class="sample-arr">→</div></a><div class="hero-diagram"><img src="missing-layer.png" alt="La capa faltante"></div></div></section>
+  <div class="inner"><div class="declaration-box"><div class="declaration-line">Sin partidos. Sin ideologías. Solo matemáticas.</div></div></div>
+  <div class="inner"><div class="gl-tool-box">
+    <div class="claim-block">
+      <div class="claim-line">"El PIB mide transacciones registradas.<br>No pregunta: <em>¿quién soporta el costo?</em>"</div>
+      <div class="claim-sub">GL Framework hace esa pregunta. Y mide la respuesta.</div>
+      <div class="three-pillars">
+        <div class="pillar"><div class="pillar-icon">🏭</div><div class="pillar-title">La brecha estructural</div><div class="pillar-text">Los sistemas a menudo transfieren costos hacia afuera como una consecuencia no medida del diseño de procesos. Esto puede aparecer en el impacto ambiental, la clasificación laboral o la fricción administrativa dejada en los ciudadanos.</div></div>
+        <div class="pillar"><div class="pillar-icon">📊</div><div class="pillar-title">Por qué el PIB nunca lo ve</div><div class="pillar-text">El PIB registra la transacción final. No rastrea lo que sucedió antes — quién esperó, quién volvió a presentar, quién se rindió. Esos costos son reales, pero permanecen invisibles en las cuentas nacionales.</div></div>
+        <div class="pillar"><div class="pillar-icon">🕳️</div><div class="pillar-title">Una brecha entre disciplinas</div><div class="pillar-text">La economía no mide quién soporta el costo. Las compras rara vez rastrean los resultados posteriores a la firma. Los auditores se centran en el cumplimiento, no en la fricción. La mayoría de las herramientas existentes se centran en el cumplimiento empresarial, no en la carga ciudadana. La pieza faltante es el <strong>costo transferido</strong>.</div></div>
       </div>
+      <div class="waste-layer">
+        <div class="waste-title">📉 Qué mide GL: Tres capas de desperdicio</div>
+        <div class="waste-grid">
+          <div class="waste-item"><div class="waste-item-icon">⏱️</div><div class="waste-item-title">Desperdicio visible</div><div class="waste-item-desc">Pasos redundantes, esperas, retrabajo — medibles directamente en horas de personal y presupuesto.</div></div>
+          <div class="waste-item"><div class="waste-item-icon">👻</div><div class="waste-item-title">Desperdicio oculto</div><div class="waste-item-desc">Solicitudes abandonadas, ofertas perdidas — valor perdido nunca rastreado.</div></div>
+          <div class="waste-item"><div class="waste-item-icon">🏛️</div><div class="waste-item-title">Desperdicio estructural</div><div class="waste-item-desc">Asimetría de información, fricción psicológica, costo de oportunidad — erosión de la confianza y la eficiencia a largo plazo.</div></div>
+        </div>
+        <div class="waste-note">GL no acusa. Añade una capa de visibilidad que la contabilidad estándar nunca fue diseñada para proporcionar.</div>
+      </div>
+      <div class="gl-bridge"><strong>🔗 GL Framework cierra la brecha — en todas ellas.</strong><br>Su denominador — <strong>Pd × Cf</strong> (Duración del Dolor × Fricción Cognitiva) — mide <strong>cuánto costo ha transferido el sistema al usuario</strong>. Un GL bajo indica que la fricción se está transfiriendo hacia afuera en lugar de resolverse.</div>
     </div>
+    <div class="formula"><strong>GL = (Fs × Vn) / (Pd × Cf)</strong></div>
+    <div class="formula-note">↓ GL bajo = el sistema te está transfiriendo el costo ↓</div>
+    <div class="highlight-quote"><strong>PIB Fantasma</strong> es ese costo transferido — nunca registrado en ningún libro mayor nacional. No es un error contable. Un punto ciego en la forma en que el PIB contabiliza la actividad económica.</div>
+    <div class="verdict-question"><strong>GL Verifier</strong> convierte la verificación independiente de una casilla de verificación en una sola pregunta:<br><em>¿El sistema está entregando valor al público — o simplemente transfiriendo la fricción hacia afuera en lugar de resolverla?</em></div>
+    <div class="dual-buttons"><a href="ghost-gdp.html" class="hero-btn-primary">📐 Calcule su PIB Fantasma →</a><a href="ghost-gdp-paper.html" class="hero-btn-secondary">📄 Lea el artículo completo (4 idiomas) →</a></div>
+    <div class="author-credit">Ping Xu · Fundadora, GFI Flow Intelligence · Inventora, GL Framework<br>Consultas de gobiernos y medios: <a href="mailto:ping@gfiintel.com">ping@gfiintel.com</a></div>
+  </div></div>
+  <section class="gate-section"><div class="inner"><div class="section-eyebrow">Casos de Estudio y Análisis</div><div class="gate-cards"><a href="government.html" class="gate-card gov"><div class="gc-sector">Sector Público</div><div class="gc-title">Para Gobierno</div><div class="gc-desc">Contratación, rendición de cuentas y verificación de resultados.</div><div class="gc-cta">Ver página <span class="arr">→</span></div></a><a href="university-research.html" class="gate-card univ"><div class="gc-sector">Investigación e Institución</div><div class="gc-title">Para Universidad e Investigación</div><div class="gc-desc">Capacite a GL Verifiers, ancle la metodología, construya laboratorios.</div><div class="gc-cta">Ver página <span class="arr">→</span></div></a><a href="public-diagnostic.html" class="gate-card diagnostic"><div class="gc-sector">Diagnóstico Público</div><div class="gc-title">Demostración de Diagnóstico de Caso Público</div><div class="gc-desc">Casos estructurados de Reino Unido, Canadá, Australia, EE. UU., Alemania, Taiwán.</div><div class="gc-cta">Explorar casos <span class="arr">→</span></div></a></div></div></section>
+  <section class="rfp-section"><div class="rfp-inner"><div class="rfp-text"><div class="rfp-label">Para Oficiales de Contratación y Vendors</div><div class="rfp-title">Añade un Requisito de Verificación de 90 Días a tu RFP</div></div><a href="RFP_Insert_90Day_Outcome_Verification.pdf" class="rfp-btn">Obtener Inserto de Contratación →</a></div></section>
+  <section class="gfi-check-section"><div class="gfi-check-inner"><div class="gfi-check-label">GFI Check · Herramienta Gratuita</div><div class="gfi-check-title">Mide la Eficiencia de Generalización de tu Sistema</div><div class="gfi-check-desc">IMCR + GL Level · Basado en GEF (revisado por SSRN)</div><a href="check.html" class="gfi-check-btn">Abrir GFI Check →</a></div></section>
+</div>
 
-    <section class="gate-section">
-      <div class="inner">
-        <div class="section-eyebrow">個案研究與分析</div>
-        <div class="gate-cards">
-          <a href="government.html" class="gate-card gov">
-            <div class="gc-sector">公部門</div>
-            <div class="gc-title">政府入口</div>
-            <div class="gc-desc">聚焦採購、問責與部署後成果驗證，提供公共系統的外部可見性。</div>
-            <div class="gc-cta">查看頁面 <span class="arr">→</span></div>
-          </a>
-          <a href="university-research.html" class="gate-card univ">
-            <div class="gc-sector">研究與機構</div>
-            <div class="gc-title">大學與研究入口</div>
-            <div class="gc-desc">培訓 GL 驗證師、錨定方法論、建立治理實驗室以支持公共成果驗證。</div>
-            <div class="gc-cta">查看頁面 <span class="arr">→</span></div>
-          </a>
-          <a href="public-diagnostic.html" class="gate-card diagnostic">
-            <div class="gc-sector">公共診斷</div>
-            <div class="gc-title">公共案例診斷示範</div>
-            <div class="gc-desc">英國、加拿大、澳洲、美國、德國、台灣的結構化診斷案例。標準化格式包含 GL 診斷與結構性教訓。</div>
-            <div class="gc-cta">瀏覽案例 <span class="arr">→</span></div>
-          </a>
-        </div>
-      </div>
-    </section>
-    <section class="rfp-section">
-      <div class="rfp-inner">
-        <div class="rfp-text">
-          <div class="rfp-label">給採購官員與 Vendor</div>
-          <div class="rfp-title">在你的 RFP 中加入90天成果驗證要求</div>
-          <div class="rfp-sub">一頁採購插入條款 · 直接開啟 PDF</div>
-        </div>
-        <a href="RFP_Insert_90Day_Outcome_Verification.pdf" target="_blank" rel="noopener" class="rfp-btn">取得採購條款 <span class="arr">→</span></a>
-      </div>
-    </section>
-    <section class="gfi-check-section">
-      <div class="gfi-check-inner">
-        <div class="gfi-check-label">GFI Check · 免費評估工具</div>
-        <div class="gfi-check-title">衡量你的系統普遍化效率</div>
-        <div class="gfi-check-desc">IMCR + GL Level · 單頁報告 · 基於 GEF (SSRN 同儕審查)</div>
-        <a href="check.html" class="gfi-check-btn">開啟 GFI Check →</a>
-      </div>
-    </section>
-  </div>
+<div class="footer">© 2026 GFI Flow Intelligence · Boston · <a href="about.html">About</a> · <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6178024" target="_blank">SSRN</a> · <a href="mailto:ping@gfiintel.com">ping@gfiintel.com</a></div>
 
-  <!-- 简体中文 -->
-  <div class="lb page" data-lang="cn">
-    <section class="hero">
-      <div class="inner">
-        <div class="definition-block">
-          <div class="definition-desc" style="font-size:0.9rem; margin-bottom:0.5rem;">
-            <strong>OECD 指出了结构性缺口。</strong>
-          </div>
-          <div class="definition-desc" style="margin-bottom:0.5rem;">
-            法律上的独立 <strong>≠</strong> 实践中的独立。现有工具无法衡量治理体系中实际发生的情况。
-          </div>
-          <div class="definition-source">— OECD/IDI 报告，2026年5月27日</div>
-          
-          <div style="height: 1.5rem;"></div>
-          
-          <div class="definition-desc" style="font-size:0.9rem; margin-bottom:0.5rem;">
-            <strong>EO 14402 让独立成果验证成为法规上的必须。</strong>
-          </div>
-          <div class="definition-desc" style="margin-bottom:0.5rem;">
-            固定价格合约为预设，需要有人验证公共投资是否真的改善了民众获得服务的能力。
-          </div>
-          <div class="definition-source">— EO 14402，2026年4月30日</div>
-          
-          <div style="height: 1.5rem;"></div>
-          
-          <div class="definition-desc" style="font-size:1rem; margin-top:0.5rem;">
-            <strong>GL Framework 是唯一能填补这个缺口的方法。</strong> 它将治理绩效转化为可测量、可比较、可验证的参数。
-          </div>
-        </div>
-        
-        <div class="hero-buttons">
-          <a href="gl-verifier.html" class="hero-btn hero-btn-primary">📋 成为 GL 验证师</a>
-          <a href="taskforce.html" class="hero-btn hero-btn-secondary">⚡ 从这里开始</a>
-        </div>
-        <a href="Real_Digital_Transformation.pdf" target="_blank" rel="noopener" class="sample-block book-block">
-          <div class="sample-icon">📘</div>
-          <div class="sample-text-wrap">
-            <div class="sample-label">免费书籍</div>
-            <div class="sample-title">真正的数字转型</div>
-            <div class="sample-sub">免费 PDF · 107页 · AI 时代的治理革命</div>
-          </div>
-          <div class="sample-arr">→</div>
-        </a>
-        <a href="UK_DWP_GL_Diagnostic_Report_EN.pdf" target="_blank" rel="noopener" class="sample-block">
-          <div class="sample-icon">📄</div>
-          <div class="sample-text-wrap">
-            <div class="sample-label">样本报告</div>
-            <div class="sample-title">英国 DWP — 通用福利金诊断报告</div>
-            <div class="sample-sub">GL: 0.074 · 结构性失败 · 6页 · PDF</div>
-          </div>
-          <div class="sample-arr">→</div>
-        </a>
-        <div class="hero-diagram">
-          <img src="missinglayerCH.png" alt="数字化转型中的缺失层">
-        </div>
-      </div>
-    </section>
-
-    <div class="inner">
-      <div class="independence-declaration">
-        <div class="declaration-line">无党无派。只有数学。</div>
-      </div>
-    </div>
-
-    <div class="inner">
-      <div class="gl-tool-box">
-        <div class="gl-core-definition">
-          <p><strong>GL Framework 不是流程优化工具。</strong></p>
-          <p><strong>它是治理正当性的测量层。</strong></p>
-          <p>把公共信任、行政摩擦、制度有效性，变成可观察、可验证、可比较的结果。</p>
-          <p><strong>不是：「系统上线了吗？」</strong><br>
-          <strong>而是：「治理行为，真的降低了人民完成事情的摩擦吗？」</strong></p>
-        </div>
-        <div class="formula"><strong>GL = (Fs × Vn) / (Pd × Cf)</strong></div>
-        <p>GL Framework 已被应用于 NHS、Queensland Health、SAAQ 等公共系统案例，并通过 PA Times 与 SSRN 发表，形成一套可公开检验的独立治理诊断方法。</p>
-        <div class="author" style="margin-top: 1rem; color: var(--sub);">Ping Xu · GFI Flow Intelligence 创办人 · GL Framework 发明者</div>
-        <p style="margin-top: 1rem; font-size: 0.8rem;">政府与媒体查询：<a href="mailto:ping@gfiintel.com" style="color: #9FE870;">ping@gfiintel.com</a></p>
-      </div>
-    </div>
-
-    <section class="gate-section">
-      <div class="inner">
-        <div class="section-eyebrow">案例研究与分析</div>
-        <div class="gate-cards">
-          <a href="government.html" class="gate-card gov">
-            <div class="gc-sector">公共部门</div>
-            <div class="gc-title">政府入口</div>
-            <div class="gc-desc">聚焦采购、问责与部署后成果验证，为公共系统提供外部可见性。</div>
-            <div class="gc-cta">查看页面 <span class="arr">→</span></div>
-          </a>
-          <a href="university-research.html" class="gate-card univ">
-            <div class="gc-sector">研究与机构</div>
-            <div class="gc-title">大学与研究入口</div>
-            <div class="gc-desc">培训 GL 验证师、锚定方法论、建立治理实验室以支持公共成果验证。</div>
-            <div class="gc-cta">查看页面 <span class="arr">→</span></div>
-          </a>
-          <a href="public-diagnostic.html" class="gate-card diagnostic">
-            <div class="gc-sector">公共诊断</div>
-            <div class="gc-title">公共案例诊断示范</div>
-            <div class="gc-desc">英国、加拿大、澳大利亚、美国、德国、台湾的结构化诊断案例。标准化格式包含 GL 诊断与结构性教训。</div>
-            <div class="gc-cta">浏览案例 <span class="arr">→</span></div>
-          </a>
-        </div>
-      </div>
-    </section>
-    <section class="rfp-section">
-      <div class="rfp-inner">
-        <div class="rfp-text">
-          <div class="rfp-label">给采购官员与 Vendor</div>
-          <div class="rfp-title">在你的 RFP 中加入90天成果验证要求</div>
-          <div class="rfp-sub">一页采购插入条款 · 直接打开 PDF</div>
-        </div>
-        <a href="RFP_Insert_90Day_Outcome_Verification.pdf" target="_blank" rel="noopener" class="rfp-btn">获取采购条款 <span class="arr">→</span></a>
-      </div>
-    </section>
-    <section class="gfi-check-section">
-      <div class="gfi-check-inner">
-        <div class="gfi-check-label">GFI Check · 免费评估工具</div>
-        <div class="gfi-check-title">衡量你的系统普遍化效率</div>
-        <div class="gfi-check-desc">IMCR + GL Level · 单页报告 · 基于 GEF (SSRN 同行评审)</div>
-        <a href="check.html" class="gfi-check-btn">开启 GFI Check →</a>
-      </div>
-    </section>
-  </div>
-
-  <!-- ESPAÑOL -->
-  <div class="lb page" data-lang="es">
-    <section class="hero">
-      <div class="inner">
-        <div class="definition-block">
-          <div class="definition-desc" style="font-size:0.9rem; margin-bottom:0.5rem;">
-            <strong>La OCDE identificó una brecha estructural.</strong>
-          </div>
-          <div class="definition-desc" style="margin-bottom:0.5rem;">
-            La independencia legal <strong>≠</strong> la independencia en la práctica. Las herramientas existentes no pueden medir lo que realmente sucede en los sistemas de gobernanza.
-          </div>
-          <div class="definition-source">— Informe OCDE/IDI, 27 de mayo de 2026</div>
-          
-          <div style="height: 1.5rem;"></div>
-          
-          <div class="definition-desc" style="font-size:0.9rem; margin-bottom:0.5rem;">
-            <strong>EO 14402 hizo de la verificación independiente de resultados una necesidad regulatoria.</strong>
-          </div>
-          <div class="definition-desc" style="margin-bottom:0.5rem;">
-            Los contratos de precio fijo requieren que alguien verifique si la inversión pública realmente mejoró la capacidad de los ciudadanos para acceder a los servicios.
-          </div>
-          <div class="definition-source">— EO 14402, 30 de abril de 2026</div>
-          
-          <div style="height: 1.5rem;"></div>
-          
-          <div class="definition-desc" style="font-size:1rem; margin-top:0.5rem;">
-            <strong>GL Framework es el único método que cierra esta brecha.</strong> Traduce el rendimiento de la gobernanza en parámetros medibles, comparables y verificables.
-          </div>
-        </div>
-        
-        <div class="hero-buttons">
-          <a href="gl-verifier.html" class="hero-btn hero-btn-primary">📋 Conviértase en GL Verifier</a>
-          <a href="taskforce.html" class="hero-btn hero-btn-secondary">⚡ Por dónde empezar</a>
-        </div>
-        <a href="Real_Digital_Transformation.pdf" target="_blank" rel="noopener" class="sample-block book-block">
-          <div class="sample-icon">📘</div>
-          <div class="sample-text-wrap">
-            <div class="sample-label">Libro Gratuito</div>
-            <div class="sample-title">Real Digital Transformation</div>
-            <div class="sample-sub">PDF gratuito · 107 páginas · Gobernanza en la era de IA</div>
-          </div>
-          <div class="sample-arr">→</div>
-        </a>
-        <a href="UK_DWP_GL_Diagnostic_Report_EN.pdf" target="_blank" rel="noopener" class="sample-block">
-          <div class="sample-icon">📄</div>
-          <div class="sample-text-wrap">
-            <div class="sample-label">Informe de Muestra</div>
-            <div class="sample-title">DWP Reino Unido — Informe Diagnóstico de Universal Credit</div>
-            <div class="sample-sub">GL: 0.074 · Falla Estructural · 6 páginas · PDF</div>
-          </div>
-          <div class="sample-arr">→</div>
-        </a>
-        <div class="hero-diagram">
-          <img src="missing-layer.png" alt="La capa faltante en la transformación digital">
-        </div>
-      </div>
-    </section>
-
-    <div class="inner">
-      <div class="independence-declaration">
-        <div class="declaration-line">Sin partidos. Sin ideologías. Solo matemáticas.</div>
-      </div>
-    </div>
-
-    <div class="inner">
-      <div class="gl-tool-box">
-        <div class="gl-core-definition">
-          <p><strong>GL Framework no es una herramienta de optimización de procesos.</strong></p>
-          <p><strong>Es una capa de medición para la legitimidad gubernamental.</strong></p>
-          <p>Convierte la confianza pública, la fricción administrativa y la efectividad institucional en resultados observables, verificables y comparables.</p>
-          <p><strong>No: "¿El sistema se puso en marcha?"</strong><br>
-          <strong>Sino: "¿La gobernanza realmente redujo la fricción para los ciudadanos?"</strong></p>
-        </div>
-        <div class="formula"><strong>GL = (Fs × Vn) / (Pd × Cf)</strong></div>
-        <p>El GL Framework se ha aplicado a casos de sistemas públicos como el NHS, Queensland Health y SAAQ, y se ha publicado en PA Times y SSRN — formando un método de diagnóstico de gobernanza independiente y verificable abiertamente.</p>
-        <div class="author" style="margin-top: 1rem; color: var(--sub);">Ping Xu · Fundadora, GFI Flow Intelligence · Inventora, GL Framework</div>
-        <p style="margin-top: 1rem; font-size: 0.8rem;">Consultas de gobiernos y medios: <a href="mailto:ping@gfiintel.com" style="color: #9FE870;">ping@gfiintel.com</a></p>
-      </div>
-    </div>
-
-    <section class="gate-section">
-      <div class="inner">
-        <div class="section-eyebrow">Casos de Estudio y Análisis</div>
-        <div class="gate-cards">
-          <a href="government.html" class="gate-card gov">
-            <div class="gc-sector">Sector Público</div>
-            <div class="gc-title">Para Gobierno</div>
-            <div class="gc-desc">Contratación, rendición de cuentas y verificación de resultados para sistemas públicos después del despliegue.</div>
-            <div class="gc-cta">Ver página <span class="arr">→</span></div>
-          </a>
-          <a href="university-research.html" class="gate-card univ">
-            <div class="gc-sector">Investigación e Institución</div>
-            <div class="gc-title">Para Universidad e Investigación</div>
-            <div class="gc-desc">Capacite a GL Verifiers, ancle la metodología y construya laboratorios de gobernanza para la verificación de resultados públicos.</div>
-            <div class="gc-cta">Ver página <span class="arr">→</span></div>
-          </a>
-          <a href="public-diagnostic.html" class="gate-card diagnostic">
-            <div class="gc-sector">Diagnóstico Público</div>
-            <div class="gc-title">Demostración de Diagnóstico de Caso Público</div>
-            <div class="gc-desc">Casos de diagnóstico estructurados de Reino Unido, Canadá, Australia, EE. UU., Alemania, Taiwán. Formato estandarizado con diagnóstico GL y lecciones estructurales.</div>
-            <div class="gc-cta">Explorar casos <span class="arr">→</span></div>
-          </a>
-        </div>
-      </div>
-    </section>
-    <section class="rfp-section">
-      <div class="rfp-inner">
-        <div class="rfp-text">
-          <div class="rfp-label">Para Oficiales de Contratación y Vendors</div>
-          <div class="rfp-title">Añade un Requisito de Verificación de 90 Días a tu RFP</div>
-          <div class="rfp-sub">Inserto de contratación de una página · Abrir PDF directamente</div>
-        </div>
-        <a href="RFP_Insert_90Day_Outcome_Verification.pdf" target="_blank" rel="noopener" class="rfp-btn">Obtener Inserto de Contratación <span class="arr">→</span></a>
-      </div>
-    </section>
-    <section class="gfi-check-section">
-      <div class="gfi-check-inner">
-        <div class="gfi-check-label">GFI Check · Herramienta Gratuita</div>
-        <div class="gfi-check-title">Mide la Eficiencia de Generalización de tu Sistema</div>
-        <div class="gfi-check-desc">IMCR + GL Level · Informe de una página · Basado en GEF (revisado por SSRN)</div>
-        <a href="check.html" class="gfi-check-btn">Abrir GFI Check →</a>
-      </div>
-    </section>
-  </div>
-
-  <div class="footer">
-    © 2026 GFI Flow Intelligence · Boston ·
-    <a href="about.html">About</a> ·
-    <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6178024" target="_blank" rel="noopener">SSRN</a> ·
-    <a href="mailto:ping@gfiintel.com">ping@gfiintel.com</a>
-  </div>
-
-  <script>
-    const btns = document.querySelectorAll('.lb-btn');
-    const blocks = document.querySelectorAll('.lb');
-    btns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const lang = btn.dataset.lang;
-        btns.forEach(b => b.classList.remove('on'));
-        blocks.forEach(b => b.classList.remove('active'));
-        btn.classList.add('on');
-        document.querySelector(`.lb[data-lang="${lang}"]`).classList.add('active');
-      });
+<script>
+  const btns = document.querySelectorAll('.lb-btn');
+  const blocks = document.querySelectorAll('.lb');
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const lang = btn.dataset.lang;
+      btns.forEach(b => b.classList.remove('on'));
+      blocks.forEach(b => b.classList.remove('active'));
+      btn.classList.add('on');
+      document.querySelector(`.lb[data-lang="${lang}"]`).classList.add('active');
     });
-  </script>
+  });
+</script>
 </body>
 </html>
