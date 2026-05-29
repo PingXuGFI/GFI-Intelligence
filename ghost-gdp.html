@@ -1,921 +1,444 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Ghost GDP Calculator — Measure how much structural friction is absorbing your process value. The GL Framework is the only tool that quantifies the denominator problem: GL = (Fs × Vn) / (Pd × Cf). GFI Flow Intelligence.">
-<meta name="keywords" content="Ghost GDP, Ghost GDP calculator, governance friction, GL framework, policy friction, administrative waste, structural friction, governance legitimacy index, measure policy efficiency, denominator problem">
-<meta property="og:title" content="Ghost GDP Calculator | GL Framework">
-<meta property="og:description" content="How much of your process output is friction in disguise? Calculate your Ghost GDP % using the GL Framework — GL = (Fs × Vn) / (Pd × Cf).">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Ghost GDP Calculator | GL Framework">
-<meta name="twitter:description" content="Rework, corrections, and waiting are counted as output — but deliver nothing. Calculate your Ghost GDP % free.">
-<link rel="alternate" hreflang="en" href="https://gfiintel.com/ghost-gdp.html" />
-<link rel="alternate" hreflang="zh-TW" href="https://gfiintel.com/ghost-gdp.html?lang=tw" />
-<link rel="alternate" hreflang="zh-CN" href="https://gfiintel.com/ghost-gdp.html?lang=cn" />
-<link rel="alternate" hreflang="es" href="https://gfiintel.com/ghost-gdp.html?lang=es" />
-<link rel="alternate" hreflang="x-default" href="https://gfiintel.com/ghost-gdp.html" />
-<title>Ghost GDP Calculator | GL Framework | GFI Flow Intelligence</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg:#141d2e;--surf:#1c2740;--surf2:#22304e;
-  --border:rgba(255,255,255,0.08);--text:#edf0f8;
-  --muted:#8fa3c0;--dim:#4a6080;--accent:#c8f542;--blue:#4da3ff;
-  --red:#ff6b6b;--amber:#ffb347;
-  --serif:'DM Serif Display',Georgia,serif;
-  --mono:'DM Mono',monospace;
-  --sans:'DM Sans',system-ui,sans-serif;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.75;overflow-x:hidden}
-
-/* LANG VISIBILITY */
-.lb{display:none}.lb.on{display:block}
-
-/* HEADER */
-header{position:fixed;inset:0 0 auto 0;z-index:100;height:60px;padding:0 24px;display:flex;align-items:center;justify-content:space-between;background:rgba(20,29,46,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
-.logo{display:flex;align-items:center;text-decoration:none}
-.logo img{height:38px;width:auto;display:block}
-.header-right{display:flex;align-items:center;gap:16px}
-nav{display:flex;align-items:center;gap:4px}
-nav a{font-size:13px;color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:6px;transition:color .2s,background .2s}
-nav a:hover{color:var(--text);background:rgba(255,255,255,0.05)}
-nav a.active{color:var(--accent)}
-
-/* LANG BUTTONS */
-.lang-grp{display:flex;gap:4px;align-items:center}
-.lb-btn{font-family:var(--mono);font-size:11px;letter-spacing:.08em;padding:4px 9px;border:1px solid var(--border);border-radius:4px;background:none;color:var(--muted);cursor:pointer;transition:all .2s}
-.lb-btn:hover{color:var(--text);border-color:rgba(255,255,255,0.2)}
-.lb-btn.on{color:var(--accent);border-color:rgba(200,245,66,0.4);background:rgba(200,245,66,0.07)}
-
-.ham{display:none;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;padding:6px;background:none;border:none;cursor:pointer}
-.ham span{display:block;height:2px;background:var(--text);border-radius:2px;transition:transform .25s,opacity .2s}
-.ham.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-.ham.open span:nth-child(2){opacity:0}
-.ham.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-.drawer{display:none;position:fixed;top:60px;left:0;right:0;z-index:99;background:rgba(20,29,46,0.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:16px 24px 24px;flex-direction:column}
-.drawer.open{display:flex}
-.drawer a{font-size:16px;color:var(--muted);text-decoration:none;padding:14px 0;border-bottom:1px solid var(--border);transition:color .2s}
-.drawer a:hover{color:var(--text)}
-.drawer .lang-grp{padding:16px 0 0;gap:8px}
-.drawer .lb-btn{font-size:13px;padding:6px 14px}
-
-.wrap{max-width:900px;margin:0 auto;padding:0 clamp(20px,5vw,60px)}
-
-/* HERO */
-.hero{position:relative;padding:clamp(100px,16vh,140px) 0 clamp(48px,8vh,72px);overflow:hidden}
-.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:52px 52px;mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,black 20%,transparent 75%);pointer-events:none}
-.hero-glow{position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(255,107,107,.04) 0%,transparent 70%);top:-200px;right:-100px;pointer-events:none}
-.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
-.hero h1{font-family:var(--serif);font-size:clamp(28px,4.5vw,56px);line-height:1.08;letter-spacing:-.02em;margin-bottom:clamp(16px,3vh,24px);opacity:0;animation:up .6s .1s forwards}
-.hero h1 em{font-style:italic;color:var(--red)}
-.hero-sub{font-size:clamp(15px,1.8vw,17px);color:var(--muted);max-width:620px;line-height:1.8;margin-bottom:clamp(20px,3vh,28px);opacity:0;animation:up .6s .25s forwards}
-.formula-row{display:flex;flex-wrap:wrap;gap:clamp(12px,2vw,24px);opacity:0;animation:up .6s .4s forwards}
-.formula-pill{font-family:var(--mono);font-size:12px;padding:8px 16px;border-radius:6px;border:1px solid var(--border);color:var(--muted);background:rgba(255,255,255,.02)}
-.formula-pill strong{color:var(--text)}
-.formula-pill.ghost{border-color:rgba(255,107,107,.3);background:rgba(255,107,107,.05);color:#ff9090}
-.formula-pill.ghost strong{color:var(--red)}
-
-/* EXPLAINER */
-.explainer{padding:clamp(40px,7vh,72px) 0;border-top:1px solid var(--border)}
-.ex-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,64px);align-items:start}
-.ex-label{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
-.ex-title{font-family:var(--serif);font-size:clamp(18px,2.5vw,26px);color:var(--text);line-height:1.3;margin-bottom:14px}
-.ex-body{font-size:clamp(14px,1.6vw,15px);color:var(--muted);line-height:1.85}
-.ex-body strong{color:var(--text)}
-.ghost-eq{font-family:var(--mono);font-size:clamp(13px,1.7vw,15px);background:rgba(255,107,107,.06);border:1px solid rgba(255,107,107,.2);border-radius:8px;padding:clamp(16px,2.5vh,22px) clamp(18px,2.5vw,26px);margin-top:20px;line-height:2;color:#ff9090}
-.ghost-eq strong{color:var(--red);font-size:1.1em}
-
-/* CALCULATOR */
-.calc-section{padding:clamp(40px,7vh,72px) 0;border-top:1px solid var(--border)}
-.calc-wrap{background:var(--surf);border:1px solid var(--border);border-radius:12px;overflow:hidden}
-.calc-head{padding:clamp(22px,3.5vh,32px) clamp(24px,3.5vw,40px);border-bottom:1px solid var(--border)}
-.calc-head-label{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
-.calc-head-title{font-family:var(--serif);font-size:clamp(18px,2.5vw,24px);color:var(--text);line-height:1.3}
-.calc-body{padding:clamp(22px,3.5vh,36px) clamp(24px,3.5vw,40px)}
-.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2vw,22px);margin-bottom:clamp(20px,3vh,28px)}
-.field{display:flex;flex-direction:column;gap:6px}
-.field-label{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.field-hint{font-size:12px;color:var(--dim);line-height:1.4;margin-top:2px}
-.field input{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:10px 14px;font-family:var(--mono);font-size:14px;color:var(--text);width:100%;transition:border-color .2s;-moz-appearance:textfield}
-.field input:focus{outline:none;border-color:rgba(200,245,66,.4)}
-.field input::-webkit-outer-spin-button,.field input::-webkit-inner-spin-button{-webkit-appearance:none}
-.calc-divider{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding:clamp(14px,2vh,20px) 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:clamp(14px,2vh,20px)}
-.calc-btn{width:100%;padding:clamp(14px,2.2vh,18px);background:var(--accent);color:#0d1117;font-weight:700;font-size:clamp(14px,1.7vw,16px);border:none;border-radius:8px;cursor:pointer;font-family:var(--sans);letter-spacing:.02em;transition:opacity .2s,transform .2s;margin-top:8px}
-.calc-btn:hover{opacity:.88;transform:translateY(-1px)}
-
-/* RESULT */
-.result-wrap{display:none;padding:clamp(28px,4vh,44px) clamp(24px,3.5vw,40px);border-top:1px solid var(--border);animation:up .5s forwards}
-.result-wrap.show{display:block}
-.result-row{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:clamp(20px,3vh,28px)}
-.result-cell{background:var(--bg);padding:clamp(18px,2.5vh,26px) clamp(18px,2.5vw,26px)}
-.result-cell-label{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
-.result-num{font-family:var(--serif);font-size:clamp(32px,5vw,52px);line-height:1;margin-bottom:4px}
-.result-num.hi{color:var(--accent)}
-.result-num.mid{color:var(--amber)}
-.result-num.lo{color:var(--red)}
-.result-num.ghost{color:var(--red)}
-.result-sub{font-family:var(--mono);font-size:11px;color:var(--dim)}
-.result-verdict{font-family:var(--serif);font-size:clamp(17px,2.2vw,22px);color:var(--text);line-height:1.4;margin-bottom:12px}
-.result-finding{font-size:clamp(14px,1.6vw,15px);color:var(--muted);line-height:1.85;margin-bottom:clamp(20px,3vh,28px)}
-.result-finding strong{color:var(--text)}
-.result-cta{display:flex;flex-wrap:wrap;gap:10px}
-.btn-solid{display:inline-flex;align-items:center;padding:12px 24px;background:var(--accent);color:#0d1117;font-weight:600;font-size:14px;border-radius:8px;text-decoration:none;transition:opacity .2s}
-.btn-solid:hover{opacity:.88}
-.btn-ghost-btn{display:inline-flex;align-items:center;padding:12px 24px;border:1px solid var(--border);color:var(--muted);font-size:14px;border-radius:8px;text-decoration:none;transition:all .2s;background:none;cursor:pointer}
-.btn-ghost-btn:hover{border-color:rgba(255,255,255,.2);color:var(--text)}
-
-footer{padding:clamp(28px,5vh,44px) clamp(20px,5vw,60px);border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;color:var(--muted);font-size:13px;margin-top:clamp(48px,8vh,80px)}
-footer a{color:var(--muted);text-decoration:none}
-footer a:hover{color:var(--text)}
-.footer-links{display:flex;gap:24px;flex-wrap:wrap}
-
-@keyframes up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-
-@media(max-width:768px){
-  nav{display:none}.ham{display:flex}
-  .ex-grid{grid-template-columns:1fr}
-  .field-grid{grid-template-columns:1fr}
-  .result-row{grid-template-columns:1fr}
-  footer{flex-direction:column;text-align:center}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>幽靈GDP · Ghost GDP | GL Framework | GFI Flow Intelligence</title>
+    <meta name="description" content="幽靈GDP：因行政摩擦而摧毀、但從未被計入GDP的經濟價值。GL Framework 是唯一能實地診斷八參數的工具。">
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+    <!-- 引入與其他頁面一致的 Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #141d2e;
+            --surf: #1c2740;
+            --surf2: #22304e;
+            --border: rgba(255,255,255,0.08);
+            --text: #edf0f8;
+            --muted: #8fa3c0;
+            --dim: #4a6080;
+            --accent: #c8f542;
+            --blue: #4da3ff;
+            --red: #ff6b6b;
+            --amber: #ffb347;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --mono: 'DM Mono', monospace;
+            --sans: 'DM Sans', system-ui, sans-serif;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 16px;
+            line-height: 1.5;
+            padding: 2rem 1rem;
+        }
+        .paper {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: var(--surf);
+            border-radius: 32px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.3);
+            padding: 2rem 2rem 3rem;
+            border: 1px solid var(--border);
+        }
+        .lang-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .lang-btn {
+            background: none;
+            border: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            transition: 0.2s;
+            color: var(--muted);
+            font-family: var(--mono);
+        }
+        .lang-btn.active {
+            background: rgba(200,245,66,0.15);
+            color: var(--accent);
+            border: 1px solid rgba(200,245,66,0.3);
+        }
+        .lang-btn:hover:not(.active) {
+            background: rgba(255,255,255,0.05);
+            color: var(--text);
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .ghost-link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(20,29,46,0.8);
+            border: 1px solid rgba(200,245,66,0.3);
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--accent);
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .ghost-link-btn:hover {
+            background: #1c2a3a;
+            border-color: var(--accent);
+            color: #ffffff;
+        }
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+            font-family: var(--serif);
+        }
+        .subhead {
+            font-size: 1.2rem;
+            color: var(--accent);
+            border-left: 4px solid var(--accent);
+            padding-left: 1rem;
+            margin: 0.5rem 0 0.8rem 0;
+            font-weight: 500;
+        }
+        .author-line {
+            font-size: 0.9rem;
+            color: var(--muted);
+            margin-top: 1rem;
+        }
+        .date {
+            font-size: 0.8rem;
+            color: var(--dim);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem 0;
+            border-bottom: 2px solid rgba(200,245,66,0.2);
+            padding-bottom: 0.3rem;
+            color: var(--text);
+            font-family: var(--serif);
+        }
+        h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.75rem;
+            color: var(--accent);
+        }
+        p {
+            margin-bottom: 1rem;
+            text-align: justify;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+        .highlight-box {
+            background: rgba(200,245,66,0.08);
+            padding: 1.2rem 1.8rem;
+            border-left: 6px solid var(--accent);
+            border-radius: 0 18px 18px 0;
+            margin: 1.5rem 0;
+            font-size: 1rem;
+            color: var(--text);
+        }
+        .param-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+            gap: 1.2rem;
+            margin: 1.8rem 0;
+        }
+        .param-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 1.2rem;
+            transition: 0.2s;
+        }
+        .param-card:hover {
+            border-color: rgba(200,245,66,0.3);
+            background: rgba(200,245,66,0.02);
+        }
+        .param-title {
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--accent);
+            border-left: 3px solid var(--accent);
+            padding-left: 0.7rem;
+            margin-bottom: 0.6rem;
+            font-family: var(--mono);
+        }
+        .footer-note {
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            font-size: 0.85rem;
+            color: var(--dim);
+        }
+        .footer-note a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .footer-note a:hover {
+            text-decoration: underline;
+        }
+        .lang-content {
+            display: none;
+        }
+        .lang-content.active-lang {
+            display: block;
+        }
+        @media (max-width: 700px) {
+            .paper { padding: 1.3rem; }
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.5rem; }
+            .nav-buttons { justify-content: center; }
+        }
+        strong, b {
+            color: var(--text);
+        }
+        .param-card strong {
+            color: var(--text);
+        }
+        a {
+            color: var(--accent);
+        }
+    </style>
 </head>
 <body>
-
-<!-- ══════════ HEADER ══════════ -->
-<header>
-  <a href="index.html" class="logo">
-    <img src="GFIbanner.png" alt="GFI Flow Intelligence" onerror="this.src='GFILOGO.png'">
-  </a>
-  <div class="header-right">
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="government.html">Public Sector</a>
-      <a href="enterprise.html">Private Sector</a>
-      <a href="about.html">Founder</a>
-      <a href="ghost-gdp.html" class="active">Ghost GDP</a>
-    </nav>
-    <div class="lang-grp">
-      <button class="lb-btn on"  onclick="setLang('en',this)">EN</button>
-      <button class="lb-btn"     onclick="setLang('tw',this)">繁</button>
-      <button class="lb-btn"     onclick="setLang('cn',this)">简</button>
-      <button class="lb-btn"     onclick="setLang('es',this)">ES</button>
+<div class="paper">
+    <!-- 語言切換列，按鈕順序：EN / 繁 / 簡 / ES -->
+    <div class="lang-bar">
+        <button class="lang-btn" data-lang="en">🇬🇧 EN</button>
+        <button class="lang-btn active" data-lang="zh-Hant">🇹🇼 繁</button>
+        <button class="lang-btn" data-lang="zh-Hans">🇨🇳 简</button>
+        <button class="lang-btn" data-lang="es">🇪🇸 ES</button>
     </div>
-    <button class="ham" id="ham" aria-label="Menu" onclick="toggleDrawer()">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</header>
 
-<div class="drawer" id="drawer">
-  <a href="index.html" onclick="closeDrawer()">Home</a>
-  <a href="government.html" onclick="closeDrawer()">Public Sector</a>
-  <a href="enterprise.html" onclick="closeDrawer()">Private Sector</a>
-  <a href="about.html" onclick="closeDrawer()">Founder</a>
-  <a href="ghost-gdp.html" onclick="closeDrawer()">Ghost GDP</a>
-  <div class="lang-grp">
-    <button class="lb-btn on"  onclick="setLang('en',this);closeDrawer()">EN</button>
-    <button class="lb-btn"     onclick="setLang('tw',this);closeDrawer()">繁</button>
-    <button class="lb-btn"     onclick="setLang('cn',this);closeDrawer()">简</button>
-    <button class="lb-btn"     onclick="setLang('es',this);closeDrawer()">ES</button>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════ -->
-<!-- ENGLISH                                    -->
-<!-- ══════════════════════════════════════════ -->
-<div class="lb on" data-lang="en">
-
-<div class="hero">
-  <div class="hero-grid"></div>
-  <div class="hero-glow"></div>
-  <div class="wrap" style="position:relative">
-    <div class="eyebrow">GL Framework · Structural Friction Analysis</div>
-    <h1>GDP counted it.<br>Nobody received it.<br>That's <em>Ghost GDP.</em></h1>
-    <p class="hero-sub">Rework, waiting, re-filing, corrections — these activities register as economic output but deliver no real value. The GL Framework measures exactly how much of a process's intended value is absorbed by structural friction.</p>
-    <div class="formula-row">
-      <div class="formula-pill"><strong>GL</strong> = (Fs × Vn) / (Pd × Cf)</div>
-      <div class="formula-pill ghost"><strong>Ghost GDP %</strong> = friction cost / total process cost</div>
-      <div class="formula-pill">When GL &lt; 1 → Ghost GDP is forming</div>
+    <!-- 連結按鈕區塊：連到 Ghost GDP 計算機頁面 -->
+    <div class="nav-buttons">
+        <a href="ghost-gdp.html" class="ghost-link-btn" target="_blank" rel="noopener noreferrer">
+            📐 試算你的幽靈GDP → Ghost GDP Calculator
+        </a>
+        <a href="https://ssrn.com/author=9564632" class="ghost-link-btn" target="_blank" rel="noopener noreferrer" style="background:transparent;color:var(--muted);border-color:var(--border);">
+            📄 SSRN 系列論文
+        </a>
     </div>
-  </div>
-</div>
 
-<div class="wrap">
+    <!-- ================= 繁體中文 ================= -->
+    <div id="lang-zh-Hant" class="lang-content active-lang">
+        <h1>幽靈GDP<br><span style="font-size:1.8rem;">行政摩擦摧毀的價值，GDP從未計算</span></h1>
+        <div class="subhead">GL Framework — 唯一能夠實地診斷行政摩擦八參數的工具</div>
+        <div class="author-line">Ping Xu · GL Framework 發明者 · GFI Flow Intelligence 創辦人</div>
+        <div class="date">2026年6月 · SSRN 作者頁面：<a href="https://ssrn.com/author=9564632" target="_blank">author/9564632</a></div>
 
-  <div class="explainer">
-    <div class="ex-grid">
-      <div>
-        <div class="ex-label">The Problem</div>
-        <div class="ex-title">Output that reaches no one</div>
-        <p class="ex-body">Standard economic measurement counts activity — not delivery. Every hour spent re-filing a rejected application, waiting on hold, correcting a system error, or navigating an unclear form is counted as productive output. <strong>But none of it reached the person who needed it.</strong></p>
-        <p class="ex-body" style="margin-top:14px">This is Ghost GDP: economic activity that appears in the numerator of productivity calculations while functioning as pure denominator cost for the people experiencing it.</p>
-      </div>
-      <div>
-        <div class="ex-label">The GL Connection</div>
-        <div class="ex-title">The same formula detects both</div>
-        <p class="ex-body">The GL Framework was designed to measure structural friction in governance and enterprise systems. Its denominator — <strong>Pd × Cf</strong> (Pain Duration × Cognitive Friction) — is precisely the component that generates Ghost GDP.</p>
-        <div class="ghost-eq">
-          Ghost GDP % = <strong>(Pd × Cf) / [(Fs × Vn) + (Pd × Cf)]</strong><br>
-          <span style="font-size:11px;color:var(--dim)">When GL is low, this ratio is high. The same friction that collapses GL inflates Ghost GDP.</span>
+        <h2>什麼是幽靈GDP？</h2>
+        <p>GDP只記錄「已經發生的交易」。它從不計算「在交易發生之前就被摧毀的經濟價值」。行政摩擦——等待、重複填表、流程崩潰、資訊不對稱、心理成本、錯失的機會——每天都在消耗預算、薪資與生產力，但沒有任何國家的統計局把它算進GDP。</p>
+        <div class="highlight-box">
+            <strong>💡 幽靈GDP的定義：</strong> 因行政摩擦而損失、但從未被計入官方GDP的經濟價值。它不是貪腐，而是流程設計不良造成的沉默損失。
         </div>
-      </div>
+
+        <h2>GDP的兩個黑洞</h2>
+        <p><strong>第一種幽靈GDP（Citrini，2026年2月）</strong>：AI提升生產率，但消費崩潰。IBM單日暴跌13%。這種幽靈尚無解法。<br>
+        <strong>第二種幽靈GDP（本文）</strong>：行政摩擦消耗資源卻沒有產出——公務員等待簽章、企業放棄投標、補貼發錯對象。這種幽靈<strong>可以被測量、可以被修復</strong>。</p>
+
+        <h2>GL Framework 八參數：將幽靈GDP轉為可量化數字</h2>
+        <p>GL Framework是唯一公開的行政摩擦診斷工具。以下每個參數直接對應一筆幽靈GDP。</p>
+        <div class="param-grid">
+            <div class="param-card"><div class="param-title">❶ 節點數 · 碎裂損失</div> <strong>算法</strong>：(實際節點−必要節點) × 時間 × 時薪。<br>📌 補助案經過7個部門（必要只需3個），每年多耗2000小時，時薪$50 → <strong>$100,000</strong></div>
+            <div class="param-card"><div class="param-title">❷ 等待時間 · 閒置損失</div> <strong>算法</strong>：等待時數 × 人數 × 時薪。<br>📌 許可證等待5天，100家企業各40小時，時薪$60 → <strong>$240,000</strong></div>
+            <div class="param-card"><div class="param-title">❸ 重複率 · 重複處理損失</div> <strong>算法</strong>：(重複次數−1) × 每次成本。<br>📌 同一份財報要求3次，每次企業成本$200 → <strong>$400／每家</strong></div>
+            <div class="param-card"><div class="param-title">❹ 崩潰點 · 放棄損失</div> <strong>算法</strong>：放棄數量 × 平均交易價值 × 轉換率。<br>📌 500家企業放棄投標，標案均值$50k，正常轉換率20% → <strong>$5,000,000</strong></div>
+            <div class="param-card"><div class="param-title">❺ 資料準備負擔 · 生產力轉移</div> <strong>算法</strong>：準備時數 × 時薪。<br>📌 會計師花100小時整理政府格式，時薪$150 → <strong>$15,000／每家</strong></div>
+            <div class="param-card"><div class="param-title">❻ 資訊不對稱成本 · 錯置損失</div> 因資訊落差而產生的錯誤決策金額。<br>📌 補助發給不需要的人$10,000 → <strong>$10,000</strong></div>
+            <div class="param-card"><div class="param-title">❼ 心理摩擦成本 · 退縮損失</div> <strong>算法</strong>：退縮數量 × 潛在交易價值。<br>📌 50家企業因流程混亂不投標，平均訂單$30k → <strong>$1,500,000</strong></div>
+            <div class="param-card"><div class="param-title">❽ 機會成本 · 機會損失</div> 最佳選擇價值 − 實際選擇價值。<br>📌 政府選了比最佳方案貴$50k的供應商 → <strong>$50,000</strong></div>
+        </div>
+
+        <h2>為什麼現有工具抓不到幽靈GDP？</h2>
+        <p>✔ 標準成本模型（歐盟、德國）——只算「填表時間」，抓不到崩潰點與心理摩擦。<br>
+        ✔ 加拿大REP平台——從法條文字推測，不是實地診斷。<br>
+        ✔ OECD問卷——依賴主觀感受，無法量化。<br>
+        ✔ 各國統計局——根本沒有「行政摩擦」這個科目。<br>
+        <strong>GL Framework 是目前唯一能夠實地、逐項診斷八參數的工具。</strong></p>
+
+        <h2>幽靈GDP與UBI：為什麼這不是技術問題，而是制度缺口</h2>
+        <p>如果行政摩擦每年消耗5–15%的公共預算，那麼「政府沒有錢發UBI」就不是事實——錢被浪費在看不見的流程黑洞裡。GL Framework的目的不是批評政府，而是提供一張地圖：浪費在哪裡、多少錢、怎麼修。修復摩擦釋放的資源，就是UBI的真實財源。</p>
+
+        <h2>政策路徑：從診斷到獨立驗證</h2>
+        <p>🔹 美國 EO 14402（2026/4/30）將固定價格合約設為聯邦採購預設——這需要<strong>獨立成果驗證</strong>。GL Framework 提供的診斷方法與獨立驗證制度正是為此設計。<br>
+        🔹 OMB 指南（2026/6/14）將要求獨立驗證。GL Framework 是目前唯一準備好的診斷標準。<br>
+        🔹 OECD 已承認現有測量工具不足，而 GL Framework 可直接填補缺口。</p>
+
+        <div class="highlight-box">
+            <strong>🎯 核心主張：</strong> 幽靈GDP是一個新的經濟學概念。GL Framework 是測量它的方法。獨立驗證制度是政府採購需要的標準。
+        </div>
+
+        <div class="footer-note">
+            📄 本文為 GL Framework SSRN 系列之一（技術白皮書 SSRN 6343960、採購慣性 6652780、GL標準 6674719 等）。<br>
+            ✉️ 政府試點診斷或獨立驗證合作：<a href="mailto:ping@gfiintel.com">ping@gfiintel.com</a><br>
+            🔗 SSRN 作者頁面：<a href="https://ssrn.com/author=9564632" target="_blank">https://ssrn.com/author=9564632</a>
+        </div>
     </div>
-  </div>
 
-  <div class="calc-section">
-    <div class="eyebrow">Calculator</div>
-    <h2 style="font-family:var(--serif);font-size:clamp(22px,3vw,34px);letter-spacing:-.02em;margin-bottom:clamp(20px,3vh,32px)">What is your Ghost GDP %?</h2>
-
-    <div class="calc-wrap">
-      <div class="calc-head">
-        <div class="calc-head-label">GL Formula Inputs</div>
-        <div class="calc-head-title">Enter values for your policy, process, or administrative system</div>
-      </div>
-      <div class="calc-body">
-        <div class="field-grid">
-          <div class="field">
-            <div class="field-label">Fs · Flow Success Rate</div>
-            <input type="number" id="fs" value="0.65" min="0" max="1" step="0.01">
-            <div class="field-hint">% of cases that complete without rework or rejection (0–1). E.g. 0.65 = 65% success rate.</div>
-          </div>
-          <div class="field">
-            <div class="field-label">Vn · Strategic Value</div>
-            <input type="number" id="vn" value="8.0" min="0" max="10" step="0.1">
-            <div class="field-hint">Importance of this process to your core mission (0–10). E.g. 8.0 = high strategic value.</div>
-          </div>
-          <div class="field">
-            <div class="field-label">Pd · Pain Duration (hours)</div>
-            <input type="number" id="pd" value="12" min="0" step="0.5">
-            <div class="field-hint">Average staff or citizen hours spent on exceptions, corrections, and waiting per case.</div>
-          </div>
-          <div class="field">
-            <div class="field-label">Cf · Cognitive Friction</div>
-            <input type="number" id="cf" value="3.0" min="0" max="10" step="0.1">
-            <div class="field-hint">Complexity and judgment required (1–10). E.g. 3.0 = moderate; 6.0 = high; 9.0 = expert-level.</div>
-          </div>
+    <!-- ================= 简体中文 ================= -->
+    <div id="lang-zh-Hans" class="lang-content">
+        <h1>幽灵GDP<br><span style="font-size:1.8rem;">行政摩擦摧毁的价值，GDP从未计算</span></h1>
+        <div class="subhead">GL Framework — 唯一能够实地诊断行政摩擦八参数的工具</div>
+        <div class="author-line">Ping Xu · GL Framework 发明者 · GFI Flow Intelligence 创办人</div>
+        <div class="date">2026年6月 · SSRN 作者页面：<a href="https://ssrn.com/author=9564632" target="_blank">author/9564632</a></div>
+        <h2>什么是幽灵GDP？</h2>
+        <p>GDP只记录“已经发生的交易”，从不计算“交易发生前就被摧毁的经济价值”。行政摩擦——等待、重复填表、流程崩溃、信息不对称、心理成本、错失机会——每天都在消耗预算和生产力，但没有任何国家的统计局把它算进GDP。</p>
+        <div class="highlight-box"><strong>💡 幽灵GDP定义：</strong> 因行政摩擦而损失、但从未被计入官方GDP的经济价值。它不是腐败，而是流程设计不良造成的沉默损失。</div>
+        <h2>GDP的两个黑洞</h2>
+        <p><strong>第一种幽灵GDP（Citrini，2026年2月）</strong>：AI提升生产率，但消费崩溃。IBM单日暴跌13%。尚无解法。<br><strong>第二种幽灵GDP（本文）</strong>：行政摩擦消耗资源却无产出——可测量、可修复。</p>
+        <h2>GL Framework 八参数 → 幽灵GDP量化</h2>
+        <div class="param-grid">
+            <div class="param-card"><div class="param-title">❶ 节点数</div> (实际−必要)×时间×时薪。7部门 vs 3 → $100,000</div>
+            <div class="param-card"><div class="param-title">❷ 等待时间</div> 时数×人数×时薪。100家企业等待5天 → $240,000</div>
+            <div class="param-card"><div class="param-title">❸ 重复率</div> (重复−1)×每次成本。财报3次 → $400/家</div>
+            <div class="param-card"><div class="param-title">❹ 崩溃点</div> 放弃数量×价值×转化率。500家放弃投标 → $5,000,000</div>
+            <div class="param-card"><div class="param-title">❺ 数据准备负担</div> 时数×时薪。会计100小时 → $15,000/家</div>
+            <div class="param-card"><div class="param-title">❻ 信息不对称</div> 错误决策金额。补贴错配 → $10,000</div>
+            <div class="param-card"><div class="param-title">❼ 心理摩擦</div> 退缩×潜在价值。50家不投标 → $1,500,000</div>
+            <div class="param-card"><div class="param-title">❽ 机会成本</div> 最佳−实际。多付$50k供应商 → $50,000</div>
         </div>
-        <div class="calc-divider">Optional — for dollar cost estimate</div>
-        <div class="field-grid">
-          <div class="field">
-            <div class="field-label">Hourly cost ($/hr)</div>
-            <input type="number" id="wage" value="45" min="0" step="1">
-            <div class="field-hint">Average loaded cost per staff hour. Leave at 0 to skip cost estimate.</div>
-          </div>
-          <div class="field">
-            <div class="field-label">Cases per month</div>
-            <input type="number" id="volume" value="500" min="0" step="1">
-            <div class="field-hint">Monthly transaction or case volume for this process.</div>
-          </div>
-        </div>
-        <button class="calc-btn" onclick="calculate()">Calculate Ghost GDP % →</button>
-
-        <div class="result-wrap" id="result-wrap">
-          <div class="result-row">
-            <div class="result-cell">
-              <div class="result-cell-label">GL Score</div>
-              <div class="result-num" id="res-gl">—</div>
-              <div class="result-sub" id="res-gl-bench"></div>
-            </div>
-            <div class="result-cell">
-              <div class="result-cell-label">Ghost GDP %</div>
-              <div class="result-num ghost" id="res-ghost">—</div>
-              <div class="result-sub">of process cost produces no real value</div>
-            </div>
-            <div class="result-cell">
-              <div class="result-cell-label">Friction absorbing</div>
-              <div class="result-num lo" id="res-friction">—</div>
-              <div class="result-sub">of intended value lost to denominator</div>
-            </div>
-            <div class="result-cell">
-              <div class="result-cell-label">Monthly Ghost Cost</div>
-              <div class="result-num" id="res-cost" style="font-size:clamp(20px,3vw,32px)">—</div>
-              <div class="result-sub" id="res-cost-sub"></div>
-            </div>
-          </div>
-          <div class="result-verdict" id="res-verdict"></div>
-          <div class="result-finding" id="res-finding"></div>
-          <div class="result-cta">
-            <a href="https://buy.stripe.com/8x25kFbp0dM4gQl0fB3VC00" target="_blank" rel="noopener" class="btn-solid">Get Full GL Diagnosis — $999 →</a>
-            <a href="enterprise.html" class="btn-solid" style="background:transparent;border:1px solid var(--border);color:var(--muted)">Learn about GL verification</a>
-            <button class="btn-ghost-btn" onclick="resetCalc()">← Recalculate</button>
-          </div>
-        </div>
-      </div>
+        <h2>为什么现有工具抓不到？</h2>
+        <p>标准成本模型只算填表时间；REP平台靠法条推测；OECD问卷主观；各国统计局无此科目。<strong>GL Framework是唯一能实地诊断八参数的工具。</strong></p>
+        <h2>幽灵GDP与UBI</h2>
+        <p>如果行政摩擦每年消耗5–15%的公共预算，那么“政府没钱发UBI”就不是事实——钱被浪费在看不见的流程黑洞里。修复摩擦释放的资源就是UBI的真正财源。</p>
+        <h2>政策路径：诊断与独立验证</h2>
+        <p>🔹 美国EO 14402要求独立成果验证，GL Framework提供的诊断方法和独立验证制度正是为此建立。<br>🔹 OMB指南即将要求独立验证，GL Framework是目前唯一准备好的诊断标准。<br>🔹 OECD承认现有工具不足，GL Framework可直接填补缺口。</p>
+        <div class="footer-note">✉️ 政府试点合作: <a href="mailto:ping@gfiintel.com">ping@gfiintel.com</a> | SSRN: author/9564632</div>
     </div>
-  </div>
-</div>
 
-<footer>
-  <span>© 2026 GFI Flow Intelligence · Boston</span>
-  <div class="footer-links">
-    <a href="index.html">Home</a>
-    <a href="government.html">Public Sector</a>
-    <a href="enterprise.html">Private Sector</a>
-    <a href="about.html">Founder</a>
-    <a href="mailto:gfi@gfiintel.com">Contact</a>
-  </div>
-</footer>
-
-</div>
-
-<!-- ══════════════════════════════════════════ -->
-<!-- 繁體中文                                    -->
-<!-- ══════════════════════════════════════════ -->
-<div class="lb" data-lang="tw">
-
-<div class="hero">
-  <div class="hero-grid"></div>
-  <div class="hero-glow"></div>
-  <div class="wrap" style="position:relative">
-    <div class="eyebrow">GL 框架 · 結構摩擦分析</div>
-    <h1>GDP 計入了它。<br>但沒有人收到它。<br>這就是<em>幽靈 GDP。</em></h1>
-    <p class="hero-sub">重工、等待、重新申報、更正——這些活動都被計入經濟產出，卻沒有交付任何真實價值。GL 框架精確測量一個流程中有多少預期價值被結構摩擦所吸收。</p>
-    <div class="formula-row">
-      <div class="formula-pill"><strong>GL</strong> = (Fs × Vn) / (Pd × Cf)</div>
-      <div class="formula-pill ghost"><strong>幽靈GDP %</strong> = 摩擦成本 / 總流程成本</div>
-      <div class="formula-pill">當 GL &lt; 1 → 幽靈GDP 正在形成</div>
+    <!-- ================= ENGLISH ================= -->
+    <div id="lang-en" class="lang-content">
+        <h1>Ghost GDP<br><span style="font-size:1.8rem;">The Value Destroyed by Administrative Friction — Never Counted in GDP</span></h1>
+        <div class="subhead">GL Framework — The only on‑the‑ground diagnostic tool for the 8 parameters of administrative friction</div>
+        <div class="author-line">Ping Xu · GL Framework Inventor · Founder of GFI Flow Intelligence</div>
+        <div class="date">June 2026 · SSRN Author Page: <a href="https://ssrn.com/author=9564632" target="_blank">author/9564632</a></div>
+        <h2>What is Ghost GDP?</h2>
+        <p>GDP records transactions that happen. It never records value destroyed before a transaction can happen. Administrative friction — waiting, repetition, process collapse, information asymmetry, psychological cost, foregone opportunities — consumes budgets and productivity every day, yet no statistical office includes it in GDP.</p>
+        <div class="highlight-box"><strong>💡 Ghost GDP:</strong> Economic losses caused by administrative friction, never recorded in official GDP. Not corruption — the silent cost of poor process design.</div>
+        <h2>Two Black Holes in GDP</h2>
+        <p><strong>Ghost GDP Type 1 (Citrini, Feb 2026):</strong> AI increases productivity but consumption collapses. No clear solution.<br><strong>Ghost GDP Type 2 (this paper):</strong> Administrative friction consumes resources with zero output — measurable and recoverable.</p>
+        <h2>GL Framework’s 8 Parameters → Ghost GDP</h2>
+        <div class="param-grid">
+            <div class="param-card"><div class="param-title">1 Node Count</div> (Actual−Necessary)×time×wage. 7 vs 3 nodes → $100k</div>
+            <div class="param-card"><div class="param-title">2 Waiting Time</div> hours×people×wage. 100 firms, 5 days → $240k</div>
+            <div class="param-card"><div class="param-title">3 Repetition Rate</div> (repetitions−1)×cost each. 3 requests → $400/firm</div>
+            <div class="param-card"><div class="param-title">4 Collapse Points</div> abandonments×value×conversion. 500 firms → $5M</div>
+            <div class="param-card"><div class="param-title">5 Data Prep Burden</div> hours×wage. Accountant 100h → $15k/firm</div>
+            <div class="param-card"><div class="param-title">6 Information Asymmetry</div> Misallocation amount. Wrong subsidy → $10k</div>
+            <div class="param-card"><div class="param-title">7 Psychological Friction</div> retreats×potential value. 50 firms → $1.5M</div>
+            <div class="param-card"><div class="param-title">8 Opportunity Cost</div> Best option − actual. Overpay supplier $50k → $50k</div>
+        </div>
+        <h2>Why existing tools fail</h2>
+        <p>Standard Cost Model (EU/Germany) — only form‑filling time. Canada’s REP — infers from regulation text, not on‑ground diagnosis. OECD surveys — subjective. National stats offices — no “friction” category. <strong>GL Framework is the only tool that diagnoses all 8 parameters on the ground.</strong></p>
+        <h2>Ghost GDP & UBI</h2>
+        <p>If administrative friction consumes 5–15% of public budgets every year, then “no money for UBI” is false — the money is lost in invisible process black holes. Fixing friction releases real resources. That is the funding source for UBI.</p>
+        <h2>Policy pathway: from diagnosis to independent verification</h2>
+        <p>🔹 US EO 14402 (April 30, 2026) makes fixed‑price contracts the default for federal procurement — requiring <strong>independent outcome verification</strong>. The GL diagnostic methodology and independent verification framework are built for that purpose.<br>
+        🔹 OMB guidelines (June 14, 2026) will require independent verification. GL Framework is the only diagnostic standard ready.<br>
+        🔹 OECD admits existing tools are insufficient. GL Framework fills the gap.</p>
+        <div class="highlight-box"><strong>🎯 Core argument:</strong> Ghost GDP is a new economic concept. GL Framework measures it. Independent verification is the standard procurement needs.</div>
+        <div class="footer-note">✉️ Pilot friction diagnosis or independent verification: <a href="mailto:ping@gfiintel.com">ping@gfiintel.com</a> | SSRN: author/9564632</div>
     </div>
-  </div>
-</div>
 
-<div class="wrap">
-  <div class="explainer">
-    <div class="ex-grid">
-      <div>
-        <div class="ex-label">問題所在</div>
-        <div class="ex-title">沒有送達任何人的產出</div>
-        <p class="ex-body">標準經濟測量計算的是活動，而非交付成果。每一個花在重新申報被駁回申請、等待接聽、修正系統錯誤或填寫不清楚表格的小時，都被計入生產性產出。<strong>但這些都沒有送達真正需要的人。</strong></p>
-        <p class="ex-body" style="margin-top:14px">這就是幽靈GDP：出現在生產力計算分子中的經濟活動，卻以純粹的分母成本形式作用於承受這一切的人身上。</p>
-      </div>
-      <div>
-        <div class="ex-label">GL 的連結</div>
-        <div class="ex-title">同一個公式，偵測兩種問題</div>
-        <p class="ex-body">GL 框架的設計初衷，是測量治理與企業系統中的結構摩擦。其分母——<strong>Pd × Cf</strong>（痛苦持續時間 × 認知摩擦）——正是產生幽靈GDP的核心組件。</p>
-        <div class="ghost-eq">
-          幽靈GDP % = <strong>(Pd × Cf) / [(Fs × Vn) + (Pd × Cf)]</strong><br>
-          <span style="font-size:11px;color:var(--dim)">GL 越低，這個比率越高。壓垮 GL 的摩擦，同時也在膨脹幽靈GDP。</span>
+    <!-- ================= ESPAÑOL ================= -->
+    <div id="lang-es" class="lang-content">
+        <h1>PIB Fantasma<br><span style="font-size:1.8rem;">El valor destruido por la fricción administrativa que el PIB jamás cuenta</span></h1>
+        <div class="subhead">GL Framework — La única herramienta de diagnóstico sobre el terreno para los 8 parámetros de fricción administrativa</div>
+        <div class="author-line">Ping Xu · Inventor de GL Framework · Fundador de GFI Flow Intelligence</div>
+        <div class="date">Junio 2026 · SSRN Autor: <a href="https://ssrn.com/author=9564632" target="_blank">author/9564632</a></div>
+        <h2>¿Qué es el PIB Fantasma?</h2>
+        <p>El PIB registra transacciones realizadas, no el valor destruido antes de que una transacción ocurra. La fricción administrativa —esperas, repeticiones, colapsos, asimetría de información, costes psicológicos, oportunidades perdidas— consume presupuestos y productividad a diario, pero ninguna oficina estadística lo incluye en el PIB.</p>
+        <div class="highlight-box"><strong>💡 PIB Fantasma:</strong> Pérdidas económicas por fricción administrativa nunca registradas en el PIB oficial. No es corrupción, es el coste silencioso del mal diseño de procesos.</div>
+        <h2>Dos agujeros negros del PIB</h2>
+        <p><strong>Tipo 1 (Citrini, feb 2026):</strong> IA aumenta productividad pero colapsa consumo. Sin solución clara.<br><strong>Tipo 2 (este artículo):</strong> Fricción administrativa consume recursos sin producción — medible y recuperable.</p>
+        <h2>8 parámetros de GL Framework → PIB Fantasma</h2>
+        <div class="param-grid">
+            <div class="param-card"><div class="param-title">❶ Nodos</div> (Real−Necesario)×tiempo×salario. 7 vs 3 → $100k</div>
+            <div class="param-card"><div class="param-title">❷ Espera</div> horas×personas×salario. 100 empresas → $240k</div>
+            <div class="param-card"><div class="param-title">❸ Repetición</div> (repeticiones−1)×coste. 3 solicitudes → $400/empresa</div>
+            <div class="param-card"><div class="param-title">❹ Puntos colapso</div> abandonos×valor×conversión. 500 empresas → $5M</div>
+            <div class="param-card"><div class="param-title">❺ Carga datos</div> horas×salario. Contador 100h → $15k/empresa</div>
+            <div class="param-card"><div class="param-title">❻ Asimetría info</div> Error asignación. Subsidio mal dirigido → $10k</div>
+            <div class="param-card"><div class="param-title">❼ Fricción psicológica</div> retiradas×valor potencial. 50 empresas → $1.5M</div>
+            <div class="param-card"><div class="param-title">❽ Coste oportunidad</div> Mejor opción − real. Sobreprecio $50k proveedor → $50k</div>
         </div>
-      </div>
+        <h2>¿Por qué fallan las herramientas actuales?</h2>
+        <p>Modelo de Coste Estándar (UE) solo mide tiempo de formularios. REP de Canadá infiere desde textos legales, no diagnóstico sobre el terreno. Encuestas OECD subjetivas. Oficinas estadísticas nacionales no tienen categoría de “fricción”. <strong>GL Framework es la única que diagnostica los 8 parámetros in situ.</strong></p>
+        <h2>PIB Fantasma y RBU</h2>
+        <p>Si la fricción administrativa consume entre el 5% y el 15% del presupuesto público cada año, entonces “no hay dinero para la RBU” es falso — el dinero se pierde en agujeros negros invisibles. Reparar la fricción libera recursos reales para la RBU.</p>
+        <h2>Ruta política: del diagnóstico a la verificación independiente</h2>
+        <p>🔹 La EO 14402 de EE. UU. exige verificación independiente de resultados. La metodología de diagnóstico GL y el marco de verificación independiente han sido diseñados para ello.<br>
+        🔹 Las próximas directrices de la OMB requerirán verificación independiente. GL Framework es el único estándar de diagnóstico listo.<br>
+        🔹 La OCDE reconoce que las herramientas actuales son insuficientes. GL Framework llena ese vacío.</p>
+        <div class="footer-note">✉️ Pilotos gubernamentales o verificación independiente: <a href="mailto:ping@gfiintel.com">ping@gfiintel.com</a> | SSRN: author/9564632</div>
     </div>
-  </div>
-
-  <div class="calc-section">
-    <div class="eyebrow">試算工具</div>
-    <h2 style="font-family:var(--serif);font-size:clamp(22px,3vw,34px);letter-spacing:-.02em;margin-bottom:clamp(20px,3vh,32px)">你的幽靈GDP % 是多少？</h2>
-
-    <div class="calc-wrap">
-      <div class="calc-head">
-        <div class="calc-head-label">GL 公式輸入值</div>
-        <div class="calc-head-title">輸入你的政策、流程或行政系統的數值</div>
-      </div>
-      <div class="calc-body">
-        <div class="field-grid">
-          <div class="field">
-            <div class="field-label">Fs · 流程成功率</div>
-            <input type="number" id="tw-fs" value="0.65" min="0" max="1" step="0.01">
-            <div class="field-hint">無需重工或被退件即完成的案件比例（0–1）。例：0.65 = 65% 成功率。</div>
-          </div>
-          <div class="field">
-            <div class="field-label">Vn · 戰略價值</div>
-            <input type="number" id="tw-vn" value="8.0" min="0" max="10" step="0.1">
-            <div class="field-hint">此流程對核心任務的重要性（0–10）。例：8.0 = 高戰略價值。</div>
-          </div>
-          <div class="field">
-            <div class="field-label">Pd · 痛苦持續時間（小時）</div>
-            <input type="number" id="tw-pd" value="12" min="0" step="0.5">
-            <div class="field-hint">每件案例中，員工或民眾花在例外處理、更正與等待的平均小時數。</div>
-          </div>
-          <div class="field">
-            <div class="field-label">Cf · 認知摩擦</div>
-            <input type="number" id="tw-cf" value="3.0" min="0" max="10" step="0.1">
-            <div class="field-hint">所需複雜度與判斷力（1–10）。例：3.0 = 中等；6.0 = 高；9.0 = 專家級。</div>
-          </div>
-        </div>
-        <div class="calc-divider">選填——用於估算金錢成本</div>
-        <div class="field-grid">
-          <div class="field">
-            <div class="field-label">每小時成本（美元）</div>
-            <input type="number" id="tw-wage" value="45" min="0" step="1">
-            <div class="field-hint">每位員工每小時的完整成本。留 0 則略過金錢估算。</div>
-          </div>
-          <div class="field">
-            <div class="field-label">每月案件量</div>
-            <input type="number" id="tw-volume" value="500" min="0" step="1">
-            <div class="field-hint">此流程每月的交易或案件數量。</div>
-          </div>
-        </div>
-        <button class="calc-btn" onclick="calculateTw()">計算幽靈GDP % →</button>
-
-        <div class="result-wrap" id="tw-result-wrap">
-          <div class="result-row">
-            <div class="result-cell">
-              <div class="result-cell-label">GL 分數</div>
-              <div class="result-num" id="tw-res-gl">—</div>
-              <div class="result-sub" id="tw-res-gl-bench"></div>
-            </div>
-            <div class="result-cell">
-              <div class="result-cell-label">幽靈GDP %</div>
-              <div class="result-num ghost" id="tw-res-ghost">—</div>
-              <div class="result-sub">的流程成本未產生任何真實價值</div>
-            </div>
-            <div class="result-cell">
-              <div class="result-cell-label">摩擦吸收比率</div>
-              <div class="result-num lo" id="tw-res-friction">—</div>
-              <div class="result-sub">的預期價值被分母吸收消耗</div>
-            </div>
-            <div class="result-cell">
-              <div class="result-cell-label">每月幽靈成本</div>
-              <div class="result-num" id="tw-res-cost" style="font-size:clamp(20px,3vw,32px)">—</div>
-              <div class="result-sub" id="tw-res-cost-sub"></div>
-            </div>
-          </div>
-          <div class="result-verdict" id="tw-res-verdict"></div>
-          <div class="result-finding" id="tw-res-finding"></div>
-          <div class="result-cta">
-            <a href="https://buy.stripe.com/8x25kFbp0dM4gQl0fB3VC00" target="_blank" rel="noopener" class="btn-solid">取得完整 GL 診斷 — $999 →</a>
-            <a href="enterprise.html" class="btn-solid" style="background:transparent;border:1px solid var(--border);color:var(--muted)">了解 GL 驗證服務</a>
-            <button class="btn-ghost-btn" onclick="resetCalcTw()">← 重新試算</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<footer>
-  <span>© 2026 GFI Flow Intelligence · 波士頓</span>
-  <div class="footer-links">
-    <a href="index.html">首頁</a>
-    <a href="government.html">公部門</a>
-    <a href="enterprise.html">私部門</a>
-    <a href="about.html">創辦人</a>
-    <a href="mailto:gfi@gfiintel.com">聯絡我們</a>
-  </div>
-</footer>
-
-</div>
-
-<!-- ══════════════════════════════════════════ -->
-<!-- 简体中文                                    -->
-<!-- ══════════════════════════════════════════ -->
-<div class="lb" data-lang="cn">
-
-<div class="hero">
-  <div class="hero-grid"></div>
-  <div class="hero-glow"></div>
-  <div class="wrap" style="position:relative">
-    <div class="eyebrow">GL 框架 · 结构摩擦分析</div>
-    <h1>GDP 计入了它。<br>但没有人收到它。<br>这就是<em>幽灵 GDP。</em></h1>
-    <p class="hero-sub">返工、等待、重新申报、更正——这些活动都被计入经济产出，却没有交付任何真实价值。GL 框架精确测量一个流程中有多少预期价值被结构摩擦所吸收。</p>
-    <div class="formula-row">
-      <div class="formula-pill"><strong>GL</strong> = (Fs × Vn) / (Pd × Cf)</div>
-      <div class="formula-pill ghost"><strong>幽灵GDP %</strong> = 摩擦成本 / 总流程成本</div>
-      <div class="formula-pill">当 GL &lt; 1 → 幽灵GDP 正在形成</div>
-    </div>
-  </div>
-</div>
-
-<div class="wrap">
-  <div class="explainer">
-    <div class="ex-grid">
-      <div>
-        <div class="ex-label">问题所在</div>
-        <div class="ex-title">没有送达任何人的产出</div>
-        <p class="ex-body">标准经济测量计算的是活动，而非交付成果。每一个花在重新申报被驳回申请、等待接听、修正系统错误或填写不清楚表格的小时，都被计入生产性产出。<strong>但这些都没有送达真正需要的人。</strong></p>
-        <p class="ex-body" style="margin-top:14px">这就是幽灵GDP：出现在生产力计算分子中的经济活动，却以纯粹的分母成本形式作用于承受这一切的人身上。</p>
-      </div>
-      <div>
-        <div class="ex-label">GL 的连结</div>
-        <div class="ex-title">同一个公式，检测两种问题</div>
-        <p class="ex-body">GL 框架的设计初衷，是测量治理与企业系统中的结构摩擦。其分母——<strong>Pd × Cf</strong>（痛苦持续时间 × 认知摩擦）——正是产生幽灵GDP的核心组件。</p>
-        <div class="ghost-eq">
-          幽灵GDP % = <strong>(Pd × Cf) / [(Fs × Vn) + (Pd × Cf)]</strong><br>
-          <span style="font-size:11px;color:var(--dim)">GL 越低，这个比率越高。压垮 GL 的摩擦，同时也在膨胀幽灵GDP。</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="calc-section">
-    <div class="eyebrow">测算工具</div>
-    <h2 style="font-family:var(--serif);font-size:clamp(22px,3vw,34px);letter-spacing:-.02em;margin-bottom:clamp(20px,3vh,32px)">你的幽灵GDP % 是多少？</h2>
-
-    <div class="calc-wrap">
-      <div class="calc-head">
-        <div class="calc-head-label">GL 公式输入值</div>
-        <div class="calc-head-title">输入你的政策、流程或行政系统的数值</div>
-      </div>
-      <div class="calc-body">
-        <div class="field-grid">
-          <div class="field">
-            <div class="field-label">Fs · 流程成功率</div>
-            <input type="number" id="cn-fs" value="0.65" min="0" max="1" step="0.01">
-            <div class="field-hint">无需返工或被退件即完成的案件比例（0–1）。例：0.65 = 65% 成功率。</div>
-          </div>
-          <div class="field">
-            <div class="field-label">Vn · 战略价值</div>
-            <input type="number" id="cn-vn" value="8.0" min="0" max="10" step="0.1">
-            <div class="field-hint">此流程对核心任务的重要性（0–10）。例：8.0 = 高战略价值。</div>
-          </div>
-          <div class="field">
-            <div class="field-label">Pd · 痛苦持续时间（小时）</div>
-            <input type="number" id="cn-pd" value="12" min="0" step="0.5">
-            <div class="field-hint">每件案例中，员工或公民花在例外处理、更正与等待的平均小时数。</div>
-          </div>
-          <div class="field">
-            <div class="field-label">Cf · 认知摩擦</div>
-            <input type="number" id="cn-cf" value="3.0" min="0" max="10" step="0.1">
-            <div class="field-hint">所需复杂度与判断力（1–10）。例：3.0 = 中等；6.0 = 高；9.0 = 专家级。</div>
-          </div>
-        </div>
-        <div class="calc-divider">选填——用于估算金钱成本</div>
-        <div class="field-grid">
-          <div class="field">
-            <div class="field-label">每小时成本（美元）</div>
-            <input type="number" id="cn-wage" value="45" min="0" step="1">
-            <div class="field-hint">每位员工每小时的完整成本。留 0 则略过金钱估算。</div>
-          </div>
-          <div class="field">
-            <div class="field-label">每月案件量</div>
-            <input type="number" id="cn-volume" value="500" min="0" step="1">
-            <div class="field-hint">此流程每月的交易或案件数量。</div>
-          </div>
-        </div>
-        <button class="calc-btn" onclick="calculateCn()">计算幽灵GDP % →</button>
-
-        <div class="result-wrap" id="cn-result-wrap">
-          <div class="result-row">
-            <div class="result-cell">
-              <div class="result-cell-label">GL 分数</div>
-              <div class="result-num" id="cn-res-gl">—</div>
-              <div class="result-sub" id="cn-res-gl-bench"></div>
-            </div>
-            <div class="result-cell">
-              <div class="result-cell-label">幽灵GDP %</div>
-              <div class="result-num ghost" id="cn-res-ghost">—</div>
-              <div class="result-sub">的流程成本未产生任何真实价值</div>
-            </div>
-            <div class="result-cell">
-              <div class="result-cell-label">摩擦吸收比率</div>
-              <div class="result-num lo" id="cn-res-friction">—</div>
-              <div class="result-sub">的预期价值被分母吸收消耗</div>
-            </div>
-            <div class="result-cell">
-              <div class="result-cell-label">每月幽灵成本</div>
-              <div class="result-num" id="cn-res-cost" style="font-size:clamp(20px,3vw,32px)">—</div>
-              <div class="result-sub" id="cn-res-cost-sub"></div>
-            </div>
-          </div>
-          <div class="result-verdict" id="cn-res-verdict"></div>
-          <div class="result-finding" id="cn-res-finding"></div>
-          <div class="result-cta">
-            <a href="https://buy.stripe.com/8x25kFbp0dM4gQl0fB3VC00" target="_blank" rel="noopener" class="btn-solid">获取完整 GL 诊断 — $999 →</a>
-            <a href="enterprise.html" class="btn-solid" style="background:transparent;border:1px solid var(--border);color:var(--muted)">了解 GL 验证服务</a>
-            <button class="btn-ghost-btn" onclick="resetCalcCn()">← 重新测算</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<footer>
-  <span>© 2026 GFI Flow Intelligence · 波士顿</span>
-  <div class="footer-links">
-    <a href="index.html">首页</a>
-    <a href="government.html">公共部门</a>
-    <a href="enterprise.html">私营部门</a>
-    <a href="about.html">创始人</a>
-    <a href="mailto:gfi@gfiintel.com">联系我们</a>
-  </div>
-</footer>
-
-</div>
-
-<!-- ══════════════════════════════════════════ -->
-<!-- ESPAÑOL                                    -->
-<!-- ══════════════════════════════════════════ -->
-<div class="lb" data-lang="es">
-
-<div class="hero">
-  <div class="hero-grid"></div>
-  <div class="hero-glow"></div>
-  <div class="wrap" style="position:relative">
-    <div class="eyebrow">GL Framework · Análisis de Fricción Estructural</div>
-    <h1>El PIB lo contabilizó.<br>Nadie lo recibió.<br>Eso es <em>PIB Fantasma.</em></h1>
-    <p class="hero-sub">Rework, esperas, re‑presentaciones, correcciones — estas actividades se registran como producción económica pero no generan valor real. GL Framework mide exactamente cuánto valor esperado de un proceso es absorbido por la fricción estructural.</p>
-    <div class="formula-row">
-      <div class="formula-pill"><strong>GL</strong> = (Fs × Vn) / (Pd × Cf)</div>
-      <div class="formula-pill ghost"><strong>PIB Fantasma %</strong> = coste de fricción / coste total del proceso</div>
-      <div class="formula-pill">Cuando GL &lt; 1 → PIB Fantasma en formación</div>
-    </div>
-  </div>
-</div>
-
-<div class="wrap">
-  <div class="explainer">
-    <div class="ex-grid">
-      <div>
-        <div class="ex-label">El problema</div>
-        <div class="ex-title">Producción que no llega a nadie</div>
-        <p class="ex-body">La medición económica estándar cuenta actividad, no entrega. Cada hora dedicada a volver a presentar una solicitud rechazada, esperar en espera, corregir un error del sistema o navegar por un formulario confuso se contabiliza como producción productiva. <strong>Pero nada de eso llegó a la persona que lo necesitaba.</strong></p>
-        <p class="ex-body" style="margin-top:14px">Esto es PIB Fantasma: actividad económica que aparece en el numerador de los cálculos de productividad mientras funciona como costo de denominador puro para quienes la padecen.</p>
-      </div>
-      <div>
-        <div class="ex-label">La conexión con GL</div>
-        <div class="ex-title">La misma fórmula detecta ambos</div>
-        <p class="ex-body">GL Framework fue diseñado para medir la fricción estructural en sistemas de gobernanza y empresariales. Su denominador — <strong>Pd × Cf</strong> (Duración del Dolor × Fricción Cognitiva) — es precisamente el componente que genera el PIB Fantasma.</p>
-        <div class="ghost-eq">
-          PIB Fantasma % = <strong>(Pd × Cf) / [(Fs × Vn) + (Pd × Cf)]</strong><br>
-          <span style="font-size:11px;color:var(--dim)">Cuando GL es bajo, esta relación es alta. La misma fricción que colapsa GL infla el PIB Fantasma.</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="calc-section">
-    <div class="eyebrow">Calculadora</div>
-    <h2 style="font-family:var(--serif);font-size:clamp(22px,3vw,34px);letter-spacing:-.02em;margin-bottom:clamp(20px,3vh,32px)">¿Cuál es tu % de PIB Fantasma?</h2>
-
-    <div class="calc-wrap">
-      <div class="calc-head">
-        <div class="calc-head-label">Entradas de la fórmula GL</div>
-        <div class="calc-head-title">Introduce valores para tu política, proceso o sistema administrativo</div>
-      </div>
-      <div class="calc-body">
-        <div class="field-grid">
-          <div class="field">
-            <div class="field-label">Fs · Tasa de éxito del flujo</div>
-            <input type="number" id="es-fs" value="0.65" min="0" max="1" step="0.01">
-            <div class="field-hint">% de casos que se completan sin retrabajo o rechazo (0–1). Ej: 0.65 = 65% éxito.</div>
-          </div>
-          <div class="field">
-            <div class="field-label">Vn · Valor estratégico</div>
-            <input type="number" id="es-vn" value="8.0" min="0" max="10" step="0.1">
-            <div class="field-hint">Importancia de este proceso para tu misión (0–10). Ej: 8.0 = alto valor estratégico.</div>
-          </div>
-          <div class="field">
-            <div class="field-label">Pd · Duración del dolor (horas)</div>
-            <input type="number" id="es-pd" value="12" min="0" step="0.5">
-            <div class="field-hint">Horas promedio de personal o ciudadanos dedicadas a excepciones, correcciones y esperas por caso.</div>
-          </div>
-          <div class="field">
-            <div class="field-label">Cf · Fricción cognitiva</div>
-            <input type="number" id="es-cf" value="3.0" min="0" max="10" step="0.1">
-            <div class="field-hint">Complejidad y juicio requerido (1–10). Ej: 3.0 = moderado; 6.0 = alto; 9.0 = experto.</div>
-          </div>
-        </div>
-        <div class="calc-divider">Opcional — para estimación de coste monetario</div>
-        <div class="field-grid">
-          <div class="field">
-            <div class="field-label">Coste por hora ($/hora)</div>
-            <input type="number" id="es-wage" value="45" min="0" step="1">
-            <div class="field-hint">Coste total medio por hora de trabajo. Deja 0 para omitir estimación de coste.</div>
-          </div>
-          <div class="field">
-            <div class="field-label">Casos por mes</div>
-            <input type="number" id="es-volume" value="500" min="0" step="1">
-            <div class="field-hint">Volumen mensual de transacciones o casos para este proceso.</div>
-          </div>
-        </div>
-        <button class="calc-btn" onclick="calculateEs()">Calcular PIB Fantasma % →</button>
-
-        <div class="result-wrap" id="es-result-wrap">
-          <div class="result-row">
-            <div class="result-cell">
-              <div class="result-cell-label">Puntuación GL</div>
-              <div class="result-num" id="es-res-gl">—</div>
-              <div class="result-sub" id="es-res-gl-bench"></div>
-            </div>
-            <div class="result-cell">
-              <div class="result-cell-label">PIB Fantasma %</div>
-              <div class="result-num ghost" id="es-res-ghost">—</div>
-              <div class="result-sub">del coste del proceso no produce valor real</div>
-            </div>
-            <div class="result-cell">
-              <div class="result-cell-label">Fricción absorbente</div>
-              <div class="result-num lo" id="es-res-friction">—</div>
-              <div class="result-sub">del valor esperado perdido en el denominador</div>
-            </div>
-            <div class="result-cell">
-              <div class="result-cell-label">Coste Fantasma mensual</div>
-              <div class="result-num" id="es-res-cost" style="font-size:clamp(20px,3vw,32px)">—</div>
-              <div class="result-sub" id="es-res-cost-sub"></div>
-            </div>
-          </div>
-          <div class="result-verdict" id="es-res-verdict"></div>
-          <div class="result-finding" id="es-res-finding"></div>
-          <div class="result-cta">
-            <a href="https://buy.stripe.com/8x25kFbp0dM4gQl0fB3VC00" target="_blank" rel="noopener" class="btn-solid">Obtener diagnóstico GL completo — $999 →</a>
-            <a href="enterprise.html" class="btn-solid" style="background:transparent;border:1px solid var(--border);color:var(--muted)">Conoce la verificación GL</a>
-            <button class="btn-ghost-btn" onclick="resetCalcEs()">← Recalcular</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<footer>
-  <span>© 2026 GFI Flow Intelligence · Boston</span>
-  <div class="footer-links">
-    <a href="index.html">Inicio</a>
-    <a href="government.html">Sector Público</a>
-    <a href="enterprise.html">Sector Privado</a>
-    <a href="about.html">Fundador</a>
-    <a href="mailto:gfi@gfiintel.com">Contacto</a>
-  </div>
-</footer>
-
 </div>
 
 <script>
-/* ── LANG SWITCHING ── */
-function setLang(lang, btn) {
-  document.querySelectorAll('.lb').forEach(el => el.classList.remove('on'));
-  document.querySelectorAll('.lb[data-lang="' + lang + '"]').forEach(el => el.classList.add('on'));
-  document.querySelectorAll('.lb-btn').forEach(b => {
-    b.classList.toggle('on', b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + lang + "'"));
-  });
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  if (lang === 'en') document.documentElement.lang = 'en';
-  else if (lang === 'tw') document.documentElement.lang = 'zh-TW';
-  else if (lang === 'cn') document.documentElement.lang = 'zh-CN';
-  else if (lang === 'es') document.documentElement.lang = 'es';
-}
-
-/* ── SHARED CALC LOGIC ── */
-function runCalc(prefix) {
-  const fs = parseFloat(document.getElementById(prefix + 'fs').value) || 0;
-  const vn = parseFloat(document.getElementById(prefix + 'vn').value) || 0;
-  const pd = parseFloat(document.getElementById(prefix + 'pd').value) || 0;
-  const cf = parseFloat(document.getElementById(prefix + 'cf').value) || 0;
-  const wage = parseFloat(document.getElementById(prefix + 'wage').value) || 0;
-  const volume = parseFloat(document.getElementById(prefix + 'volume').value) || 0;
-
-  if (!fs || !vn || !pd || !cf) return false;
-
-  const numerator = fs * vn;
-  const denominator = pd * cf;
-  const gl = numerator / denominator;
-  const glR = Math.round(gl * 100) / 100;
-  const ghostPct = Math.round((denominator / (numerator + denominator)) * 100);
-  const frictionPct = Math.min(Math.round((denominator / (numerator + denominator)) * 100), 99);
-  const monthlyCost = wage > 0 && volume > 0 ? Math.round(pd * cf * wage * volume) : null;
-
-  return { gl, glR, ghostPct, frictionPct, monthlyCost };
-}
-
-function applyResult(prefix, data, strings) {
-  const { gl, glR, ghostPct, frictionPct, monthlyCost } = data;
-
-  const glEl = document.getElementById(prefix + 'res-gl');
-  glEl.textContent = glR;
-  if (gl >= 1.5) glEl.className = 'result-num hi';
-  else if (gl >= 0.5) glEl.className = 'result-num mid';
-  else glEl.className = 'result-num lo';
-
-  document.getElementById(prefix + 'res-gl-bench').textContent =
-    gl >= 1.5 ? strings.healthy : gl >= 0.5 ? strings.warning : strings.critical;
-
-  document.getElementById(prefix + 'res-ghost').textContent = ghostPct + '%';
-  document.getElementById(prefix + 'res-friction').textContent = frictionPct + '%';
-
-  const costEl = document.getElementById(prefix + 'res-cost');
-  const costSub = document.getElementById(prefix + 'res-cost-sub');
-  if (monthlyCost) {
-    costEl.textContent = '$' + monthlyCost.toLocaleString();
-    costSub.textContent = strings.perMonth;
-  } else {
-    costEl.textContent = '—';
-    costSub.textContent = strings.enterCost;
-  }
-
-  const verdict = document.getElementById(prefix + 'res-verdict');
-  const finding = document.getElementById(prefix + 'res-finding');
-
-  if (gl >= 1.5) {
-    verdict.textContent = strings.v_hi;
-    finding.innerHTML = strings.f_hi(glR);
-  } else if (gl >= 0.5) {
-    verdict.textContent = strings.v_mid;
-    finding.innerHTML = strings.f_mid(glR, ghostPct);
-  } else {
-    verdict.textContent = strings.v_lo;
-    finding.innerHTML = strings.f_lo(glR, ghostPct);
-  }
-
-  document.getElementById(prefix + 'result-wrap').classList.add('show');
-  document.getElementById(prefix + 'result-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-/* ── ENGLISH ── */
-const strEN = {
-  healthy: 'Healthy (≥ 1.5)', warning: 'Warning (0.5–1.5)', critical: 'Critical (< 0.5)',
-  perMonth: 'per month in friction cost', enterCost: 'enter hourly cost + volume to calculate',
-  v_hi: 'Your process is delivering efficiently.',
-  v_mid: 'Friction is accumulating — value is leaking.',
-  v_lo: 'Ghost GDP is active. Your denominator is outpacing your numerator.',
-  f_hi: (g) => `A GL of <strong>${g}</strong> indicates your flow is outpacing friction. Structural efficiency is high — Ghost GDP formation in this process is limited. A full GL diagnosis can confirm whether this holds across all sub-processes or whether specific layers are pulling the score down.`,
-  f_mid: (g, p) => `A GL of <strong>${g}</strong> means your denominator is absorbing a significant share of process capacity. An estimated <strong>${p}%</strong> of total process cost is generating no real outcome — it exists in operational records but never reaches its intended recipient. This is the formation stage of Ghost GDP: activity without delivery.`,
-  f_lo: (g, p) => `A GL of <strong>${g}</strong> means structural friction has overtaken intended value delivery. Approximately <strong>${p}%</strong> of total process cost is producing no real outcome. Rework, corrections, and re-processing are being counted as output — but nothing is being delivered. If automation has been introduced, it is likely accelerating this cycle rather than breaking it. This is the operational definition of Ghost GDP inside an organization.`
-};
-
-function calculate() {
-  const data = runCalc('');
-  if (data) applyResult('', data, strEN);
-}
-function resetCalc() {
-  document.getElementById('result-wrap').classList.remove('show');
-}
-
-/* ── 繁體中文 ── */
-const strTW = {
-  healthy: '健康（≥ 1.5）', warning: '警示（0.5–1.5）', critical: '危機（< 0.5）',
-  perMonth: '每月的摩擦成本', enterCost: '輸入時薪與案件量以計算',
-  v_hi: '你的流程正在高效交付。',
-  v_mid: '摩擦正在累積——價值正在外洩。',
-  v_lo: '幽靈GDP已活躍。你的分母正在超越分子。',
-  f_hi: (g) => `GL 分數 <strong>${g}</strong> 顯示你的流程效率超越摩擦。結構效率高——此流程中的幽靈GDP形成有限。完整 GL 診斷可確認這是否在所有子流程中都成立，或是否有特定環節正在拖低分數。`,
-  f_mid: (g, p) => `GL 分數 <strong>${g}</strong> 表示你的分母正在吸收相當大比例的流程產能。估計總流程成本中有 <strong>${p}%</strong> 未產生任何真實成果——它存在於作業紀錄中，但從未送達預期的受益人。這是幽靈GDP的形成階段：有活動，但沒有交付。`,
-  f_lo: (g, p) => `GL 分數 <strong>${g}</strong> 意味結構摩擦已超越預期的價值交付。約 <strong>${p}%</strong> 的總流程成本沒有產生任何真實成果。重工、更正與重新處理都被計入產出——但什麼都沒有交付。若已導入自動化，它很可能正在加速這個循環，而非打破它。這就是幽靈GDP在組織內部的作業定義。`
-};
-
-function calculateTw() {
-  const data = runCalc('tw-');
-  if (data) applyResult('tw-', data, strTW);
-}
-function resetCalcTw() {
-  document.getElementById('tw-result-wrap').classList.remove('show');
-}
-
-/* ── 简体中文 ── */
-const strCN = {
-  healthy: '健康（≥ 1.5）', warning: '警示（0.5–1.5）', critical: '危机（< 0.5）',
-  perMonth: '每月的摩擦成本', enterCost: '输入时薪与案件量以计算',
-  v_hi: '你的流程正在高效交付。',
-  v_mid: '摩擦正在累积——价值正在外泄。',
-  v_lo: '幽灵GDP已活跃。你的分母正在超越分子。',
-  f_hi: (g) => `GL 分数 <strong>${g}</strong> 显示你的流程效率超越摩擦。结构效率高——此流程中的幽灵GDP形成有限。完整 GL 诊断可确认这是否在所有子流程中都成立，或是否有特定环节正在拖低分数。`,
-  f_mid: (g, p) => `GL 分数 <strong>${g}</strong> 表示你的分母正在吸收相当大比例的流程产能。估计总流程成本中有 <strong>${p}%</strong> 未产生任何真实成果——它存在于作业记录中，但从未送达预期的受益人。这是幽灵GDP的形成阶段：有活动，但没有交付。`,
-  f_lo: (g, p) => `GL 分数 <strong>${g}</strong> 意味结构摩擦已超越预期的价值交付。约 <strong>${p}%</strong> 的总流程成本没有产生任何真实成果。返工、更正与重新处理都被计入产出——但什么都没有交付。若已引入自动化，它很可能正在加速这个循环，而非打破它。这就是幽灵GDP在组织内部的作业定义。`
-};
-
-function calculateCn() {
-  const data = runCalc('cn-');
-  if (data) applyResult('cn-', data, strCN);
-}
-function resetCalcCn() {
-  document.getElementById('cn-result-wrap').classList.remove('show');
-}
-
-/* ── ESPAÑOL ── */
-const strES = {
-  healthy: 'Saludable (≥ 1.5)', warning: 'Advertencia (0.5–1.5)', critical: 'Crítico (< 0.5)',
-  perMonth: 'por mes en coste de fricción', enterCost: 'introduce coste por hora + volumen para calcular',
-  v_hi: 'Tu proceso está entregando eficientemente.',
-  v_mid: 'La fricción se está acumulando — el valor se está filtrando.',
-  v_lo: 'El PIB Fantasma está activo. Tu denominador supera a tu numerador.',
-  f_hi: (g) => `Una GL de <strong>${g}</strong> indica que tu flujo supera la fricción. La eficiencia estructural es alta — la formación de PIB Fantasma en este proceso es limitada. Un diagnóstico GL completo puede confirmar si esto se mantiene en todos los subprocesos o si capas específicas están bajando la puntuación.`,
-  f_mid: (g, p) => `Una GL de <strong>${g}</strong> significa que tu denominador está absorbiendo una parte significativa de la capacidad del proceso. Se estima que <strong>${p}%</strong> del coste total del proceso no genera ningún resultado real — existe en los registros operativos pero nunca llega a su destinatario previsto. Esta es la fase de formación del PIB Fantasma: actividad sin entrega.`,
-  f_lo: (g, p) => `Una GL de <strong>${g}</strong> significa que la fricción estructural ha superado la entrega de valor prevista. Aproximadamente <strong>${p}%</strong> del coste total del proceso no produce ningún resultado real. El retrabajo, las correcciones y el reprocesamiento se cuentan como producción — pero no se entrega nada. Si se ha introducido automatización, es probable que esté acelerando este ciclo en lugar de romperlo. Esta es la definición operativa del PIB Fantasma dentro de una organización.`
-};
-
-function calculateEs() {
-  const data = runCalc('es-');
-  if (data) applyResult('es-', data, strES);
-}
-function resetCalcEs() {
-  document.getElementById('es-result-wrap').classList.remove('show');
-}
-
-/* ── MOBILE DRAWER ── */
-function toggleDrawer() {
-  const ham = document.getElementById('ham');
-  const drawer = document.getElementById('drawer');
-  ham.classList.toggle('open');
-  drawer.classList.toggle('open');
-}
-function closeDrawer() {
-  document.getElementById('ham').classList.remove('open');
-  document.getElementById('drawer').classList.remove('open');
-}
-
-/* ── AUTO DETECT LANG FROM URL param ── */
-(function () {
-  const p = new URLSearchParams(window.location.search).get('lang');
-  if (p === 'tw' || p === 'cn' || p === 'es') {
-    const btn = document.querySelector(`.lb-btn[onclick*="'${p}'"]`);
-    if (btn) setLang(p, btn);
-  }
-})();
+    (function() {
+        const langBtns = document.querySelectorAll('.lang-btn');
+        const contents = {
+            'zh-Hant': document.getElementById('lang-zh-Hant'),
+            'zh-Hans': document.getElementById('lang-zh-Hans'),
+            'en': document.getElementById('lang-en'),
+            'es': document.getElementById('lang-es')
+        };
+        function activateLang(lang) {
+            Object.keys(contents).forEach(key => {
+                if (contents[key]) contents[key].classList.remove('active-lang');
+            });
+            if (contents[lang]) contents[lang].classList.add('active-lang');
+            langBtns.forEach(btn => {
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            if (lang === 'zh-Hant') document.documentElement.lang = 'zh-TW';
+            else if (lang === 'zh-Hans') document.documentElement.lang = 'zh-CN';
+            else if (lang === 'en') document.documentElement.lang = 'en';
+            else if (lang === 'es') document.documentElement.lang = 'es';
+        }
+        langBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.getAttribute('data-lang');
+                if (lang && contents[lang]) activateLang(lang);
+            });
+        });
+        // 預設為繁體中文
+        activateLang('zh-Hant');
+    })();
 </script>
 </body>
 </html>
