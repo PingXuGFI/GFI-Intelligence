@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>幽靈GDP · Ghost GDP | GL Framework | GFI Flow Intelligence</title>
+    <meta name="description" content="幽靈GDP：因行政摩擦而摧毀、但從未被計入GDP的經濟價值。GL Framework 是唯一能實地診斷八參數的工具。">
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+    <!-- 引入與其他頁面一致的 Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #141d2e;
+            --surf: #1c2740;
+            --surf2: #22304e;
+            --border: rgba(255,255,255,0.08);
+            --text: #edf0f8;
+            --muted: #8fa3c0;
+            --dim: #4a6080;
+            --accent: #c8f542;
+            --blue: #4da3ff;
+            --red: #ff6b6b;
+            --amber: #ffb347;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --mono: 'DM Mono', monospace;
+            --sans: 'DM Sans', system-ui, sans-serif;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 16px;
+            line-height: 1.5;
+            padding: 2rem 1rem;
+        }
+        .paper {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: var(--surf);
+            border-radius: 32px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.3);
+            padding: 2rem 2rem 3rem;
+            border: 1px solid var(--border);
+        }
+        .lang-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .lang-btn {
+            background: none;
+            border: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            transition: 0.2s;
+            color: var(--muted);
+            font-family: var(--mono);
+        }
+        .lang-btn.active {
+            background: rgba(200,245,66,0.15);
+            color: var(--accent);
+            border: 1px solid rgba(200,245,66,0.3);
+        }
+        .lang-btn:hover:not(.active) {
+            background: rgba(255,255,255,0.05);
+            color: var(--text);
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .ghost-link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(20,29,46,0.8);
+            border: 1px solid rgba(200,245,66,0.3);
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--accent);
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .ghost-link-btn:hover {
+            background: #1c2a3a;
+            border-color: var(--accent);
+            color: #ffffff;
+        }
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+            font-family: var(--serif);
+        }
+        .subhead {
+            font-size: 1.2rem;
+            color: var(--accent);
+            border-left: 4px solid var(--accent);
+            padding-left: 1rem;
+            margin: 0.5rem 0 0.8rem 0;
+            font-weight: 500;
+        }
+        .author-line {
+            font-size: 0.9rem;
+            color: var(--muted);
+            margin-top: 1rem;
+        }
+        .date {
+            font-size: 0.8rem;
+            color: var(--dim);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem 0;
+            border-bottom: 2px solid rgba(200,245,66,0.2);
+            padding-bottom: 0.3rem;
+            color: var(--text);
+            font-family: var(--serif);
+        }
+        h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.75rem;
+            color: var(--accent);
+        }
+        p {
+            margin-bottom: 1rem;
+            text-align: justify;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+        .highlight-box {
+            background: rgba(200,245,66,0.08);
+            padding: 1.2rem 1.8rem;
+            border-left: 6px solid var(--accent);
+            border-radius: 0 18px 18px 0;
+            margin: 1.5rem 0;
+            font-size: 1rem;
+            color: var(--text);
+        }
+        .param-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+            gap: 1.2rem;
+            margin: 1.8rem 0;
+        }
+        .param-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 1.2rem;
+            transition: 0.2s;
+        }
+        .param-card:hover {
+            border-color: rgba(200,245,66,0.3);
+            background: rgba(200,245,66,0.02);
+        }
+        .param-title {
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--accent);
+            border-left: 3px solid var(--accent);
+            padding-left: 0.7rem;
+            margin-bottom: 0.6rem;
+            font-family: var(--mono);
+        }
+        .footer-note {
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            font-size: 0.85rem;
+            color: var(--dim);
+        }
+        .footer-note a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .footer-note a:hover {
+            text-decoration: underline;
+        }
+        .lang-content {
+            display: none;
+        }
+        .lang-content.active-lang {
+            display: block;
+        }
+        @media (max-width: 700px) {
+            .paper { padding: 1.3rem; }
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.5rem; }
+            .nav-buttons { justify-content: center; }
+        }
+        strong, b {
+            color: var(--text);
+        }
+        .param-card strong {
+            color: var(--text);
+        }
+        a {
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+<div class="paper">
+    <!-- 語言切換列，按鈕順序：EN / 繁 / 簡 / ES -->
+    <div class="lang-bar">
+        <button class="lang-btn" data-lang="en">🇬🇧 EN</button>
+        <button class="lang-btn active" data-lang="zh-Hant">🇹🇼 繁</button>
+        <button class="lang-btn" data-lang="zh-Hans">🇨🇳 简</button>
+        <button class="lang-btn" data-lang="es">🇪🇸 ES</button>
+    </div>
+
+    <!-- 連結按鈕區塊：連到 Ghost GDP 計算機頁面 -->
+    <div class="nav-buttons">
+        <a href="ghost-gdp.html" class="ghost-link-btn" target="_blank" rel="noopener noreferrer">
+            📐 試算你的幽靈GDP → Ghost GDP Calculator
+        </a>
+        <a href="https://ssrn.com/author=9564632" class="ghost-link-btn" target="_blank" rel="noopener noreferrer" style="background:transparent;color:var(--muted);border-color:var(--border);">
+            📄 SSRN 系列論文
+        </a>
+    </div>
+
+    <!-- ================= 繁體中文 ================= -->
+    <div id="lang-zh-Hant" class="lang-content active-lang">
+        <h1>幽靈GDP<br><span style="font-size:1.8rem;">行政摩擦摧毀的價值，GDP從未計算</span></h1>
+        <div class="subhead">GL Framework — 唯一能夠實地診斷行政摩擦八參數的工具</div>
+        <div class="author-line">Ping Xu · GL Framework 發明者 · GFI Flow Intelligence 創辦人</div>
+        <div class="date">2026年6月 · SSRN 作者頁面：<a href="https://ssrn.com/author=9564632" target="_blank">author/9564632</a></div>
+
+        <h2>什麼是幽靈GDP？</h2>
+        <p>GDP只記錄「已經發生的交易」。它從不計算「在交易發生之前就被摧毀的經濟價值」。行政摩擦——等待、重複填表、流程崩潰、資訊不對稱、心理成本、錯失的機會——每天都在消耗預算、薪資與生產力，但沒有任何國家的統計局把它算進GDP。</p>
+        <div class="highlight-box">
+            <strong>💡 幽靈GDP的定義：</strong> 因行政摩擦而損失、但從未被計入官方GDP的經濟價值。它不是貪腐，而是流程設計不良造成的沉默損失。
+        </div>
+
+        <h2>GDP的兩個黑洞</h2>
+        <p><strong>第一種幽靈GDP（Citrini，2026年2月）</strong>：AI提升生產率，但消費崩潰。IBM單日暴跌13%。這種幽靈尚無解法。<br>
+        <strong>第二種幽靈GDP（本文）</strong>：行政摩擦消耗資源卻沒有產出——公務員等待簽章、企業放棄投標、補貼發錯對象。這種幽靈<strong>可以被測量、可以被修復</strong>。</p>
+
+        <h2>GL Framework 八參數：將幽靈GDP轉為可量化數字</h2>
+        <p>GL Framework是唯一公開的行政摩擦診斷工具。以下每個參數直接對應一筆幽靈GDP。</p>
+        <div class="param-grid">
+            <div class="param-card"><div class="param-title">❶ 節點數 · 碎裂損失</div> <strong>算法</strong>：(實際節點−必要節點) × 時間 × 時薪。<br>📌 補助案經過7個部門（必要只需3個），每年多耗2000小時，時薪$50 → <strong>$100,000</strong></div>
+            <div class="param-card"><div class="param-title">❷ 等待時間 · 閒置損失</div> <strong>算法</strong>：等待時數 × 人數 × 時薪。<br>📌 許可證等待5天，100家企業各40小時，時薪$60 → <strong>$240,000</strong></div>
+            <div class="param-card"><div class="param-title">❸ 重複率 · 重複處理損失</div> <strong>算法</strong>：(重複次數−1) × 每次成本。<br>📌 同一份財報要求3次，每次企業成本$200 → <strong>$400／每家</strong></div>
+            <div class="param-card"><div class="param-title">❹ 崩潰點 · 放棄損失</div> <strong>算法</strong>：放棄數量 × 平均交易價值 × 轉換率。<br>📌 500家企業放棄投標，標案均值$50k，正常轉換率20% → <strong>$5,000,000</strong></div>
+            <div class="param-card"><div class="param-title">❺ 資料準備負擔 · 生產力轉移</div> <strong>算法</strong>：準備時數 × 時薪。<br>📌 會計師花100小時整理政府格式，時薪$150 → <strong>$15,000／每家</strong></div>
+            <div class="param-card"><div class="param-title">❻ 資訊不對稱成本 · 錯置損失</div> 因資訊落差而產生的錯誤決策金額。<br>📌 補助發給不需要的人$10,000 → <strong>$10,000</strong></div>
+            <div class="param-card"><div class="param-title">❼ 心理摩擦成本 · 退縮損失</div> <strong>算法</strong>：退縮數量 × 潛在交易價值。<br>📌 50家企業因流程混亂不投標，平均訂單$30k → <strong>$1,500,000</strong></div>
+            <div class="param-card"><div class="param-title">❽ 機會成本 · 機會損失</div> 最佳選擇價值 − 實際選擇價值。<br>📌 政府選了比最佳方案貴$50k的供應商 → <strong>$50,000</strong></div>
+        </div>
+
+        <h2>為什麼現有工具抓不到幽靈GDP？</h2>
+        <p>✔ 標準成本模型（歐盟、德國）——只算「填表時間」，抓不到崩潰點與心理摩擦。<br>
+        ✔ 加拿大REP平台——從法條文字推測，不是實地診斷。<br>
+        ✔ OECD問卷——依賴主觀感受，無法量化。<br>
+        ✔ 各國統計局——根本沒有「行政摩擦」這個科目。<br>
+        <strong>GL Framework 是目前唯一能夠實地、逐項診斷八參數的工具。</strong></p>
+
+        <h2>幽靈GDP與UBI：為什麼這不是技術問題，而是制度缺口</h2>
+        <p>如果行政摩擦每年消耗5–15%的公共預算，那麼「政府沒有錢發UBI」就不是事實——錢被浪費在看不見的流程黑洞裡。GL Framework的目的不是批評政府，而是提供一張地圖：浪費在哪裡、多少錢、怎麼修。修復摩擦釋放的資源，就是UBI的真實財源。</p>
+
+        <h2>政策路徑：從診斷到獨立驗證</h2>
+        <p>🔹 美國 EO 14402（2026/4/30）將固定價格合約設為聯邦採購預設——這需要<strong>獨立成果驗證</strong>。GL Framework 提供的診斷方法與獨立驗證制度正是為此設計。<br>
+        🔹 OMB 指南（2026/6/14）將要求獨立驗證。GL Framework 是目前唯一準備好的診斷標準。<br>
+        🔹 OECD 已承認現有測量工具不足，而 GL Framework 可直接填補缺口。</p>
+
+        <div class="highlight-box">
+            <strong>🎯 核心主張：</strong> 幽靈GDP是一個新的經濟學概念。GL Framework 是測量它的方法。獨立驗證制度是政府採購需要的標準。
+        </div>
+
+        <div class="footer-note">
+            📄 本文為 GL Framework SSRN 系列之一（技術白皮書 SSRN 6343960、採購慣性 6652780、GL標準 6674719 等）。<br>
+            ✉️ 政府試點診斷或獨立驗證合作：<a href="mailto:ping@gfiintel.com">ping@gfiintel.com</a><br>
+            🔗 SSRN 作者頁面：<a href="https://ssrn.com/author=9564632" target="_blank">https://ssrn.com/author=9564632</a>
+        </div>
+    </div>
+
+    <!-- ================= 简体中文 ================= -->
+    <div id="lang-zh-Hans" class="lang-content">
+        <h1>幽灵GDP<br><span style="font-size:1.8rem;">行政摩擦摧毁的价值，GDP从未计算</span></h1>
+        <div class="subhead">GL Framework — 唯一能够实地诊断行政摩擦八参数的工具</div>
+        <div class="author-line">Ping Xu · GL Framework 发明者 · GFI Flow Intelligence 创办人</div>
+        <div class="date">2026年6月 · SSRN 作者页面：<a href="https://ssrn.com/author=9564632" target="_blank">author/9564632</a></div>
+        <h2>什么是幽灵GDP？</h2>
+        <p>GDP只记录“已经发生的交易”，从不计算“交易发生前就被摧毁的经济价值”。行政摩擦——等待、重复填表、流程崩溃、信息不对称、心理成本、错失机会——每天都在消耗预算和生产力，但没有任何国家的统计局把它算进GDP。</p>
+        <div class="highlight-box"><strong>💡 幽灵GDP定义：</strong> 因行政摩擦而损失、但从未被计入官方GDP的经济价值。它不是腐败，而是流程设计不良造成的沉默损失。</div>
+        <h2>GDP的两个黑洞</h2>
+        <p><strong>第一种幽灵GDP（Citrini，2026年2月）</strong>：AI提升生产率，但消费崩溃。IBM单日暴跌13%。尚无解法。<br><strong>第二种幽灵GDP（本文）</strong>：行政摩擦消耗资源却无产出——可测量、可修复。</p>
+        <h2>GL Framework 八参数 → 幽灵GDP量化</h2>
+        <div class="param-grid">
+            <div class="param-card"><div class="param-title">❶ 节点数</div> (实际−必要)×时间×时薪。7部门 vs 3 → $100,000</div>
+            <div class="param-card"><div class="param-title">❷ 等待时间</div> 时数×人数×时薪。100家企业等待5天 → $240,000</div>
+            <div class="param-card"><div class="param-title">❸ 重复率</div> (重复−1)×每次成本。财报3次 → $400/家</div>
+            <div class="param-card"><div class="param-title">❹ 崩溃点</div> 放弃数量×价值×转化率。500家放弃投标 → $5,000,000</div>
+            <div class="param-card"><div class="param-title">❺ 数据准备负担</div> 时数×时薪。会计100小时 → $15,000/家</div>
+            <div class="param-card"><div class="param-title">❻ 信息不对称</div> 错误决策金额。补贴错配 → $10,000</div>
+            <div class="param-card"><div class="param-title">❼ 心理摩擦</div> 退缩×潜在价值。50家不投标 → $1,500,000</div>
+            <div class="param-card"><div class="param-title">❽ 机会成本</div> 最佳−实际。多付$50k供应商 → $50,000</div>
+        </div>
+        <h2>为什么现有工具抓不到？</h2>
+        <p>标准成本模型只算填表时间；REP平台靠法条推测；OECD问卷主观；各国统计局无此科目。<strong>GL Framework是唯一能实地诊断八参数的工具。</strong></p>
+        <h2>幽灵GDP与UBI</h2>
+        <p>如果行政摩擦每年消耗5–15%的公共预算，那么“政府没钱发UBI”就不是事实——钱被浪费在看不见的流程黑洞里。修复摩擦释放的资源就是UBI的真正财源。</p>
+        <h2>政策路径：诊断与独立验证</h2>
+        <p>🔹 美国EO 14402要求独立成果验证，GL Framework提供的诊断方法和独立验证制度正是为此建立。<br>🔹 OMB指南即将要求独立验证，GL Framework是目前唯一准备好的诊断标准。<br>🔹 OECD承认现有工具不足，GL Framework可直接填补缺口。</p>
+        <div class="footer-note">✉️ 政府试点合作: <a href="mailto:ping@gfiintel.com">ping@gfiintel.com</a> | SSRN: author/9564632</div>
+    </div>
+
+    <!-- ================= ENGLISH ================= -->
+    <div id="lang-en" class="lang-content">
+        <h1>Ghost GDP<br><span style="font-size:1.8rem;">The Value Destroyed by Administrative Friction — Never Counted in GDP</span></h1>
+        <div class="subhead">GL Framework — The only on‑the‑ground diagnostic tool for the 8 parameters of administrative friction</div>
+        <div class="author-line">Ping Xu · GL Framework Inventor · Founder of GFI Flow Intelligence</div>
+        <div class="date">June 2026 · SSRN Author Page: <a href="https://ssrn.com/author=9564632" target="_blank">author/9564632</a></div>
+        <h2>What is Ghost GDP?</h2>
+        <p>GDP records transactions that happen. It never records value destroyed before a transaction can happen. Administrative friction — waiting, repetition, process collapse, information asymmetry, psychological cost, foregone opportunities — consumes budgets and productivity every day, yet no statistical office includes it in GDP.</p>
+        <div class="highlight-box"><strong>💡 Ghost GDP:</strong> Economic losses caused by administrative friction, never recorded in official GDP. Not corruption — the silent cost of poor process design.</div>
+        <h2>Two Black Holes in GDP</h2>
+        <p><strong>Ghost GDP Type 1 (Citrini, Feb 2026):</strong> AI increases productivity but consumption collapses. No clear solution.<br><strong>Ghost GDP Type 2 (this paper):</strong> Administrative friction consumes resources with zero output — measurable and recoverable.</p>
+        <h2>GL Framework’s 8 Parameters → Ghost GDP</h2>
+        <div class="param-grid">
+            <div class="param-card"><div class="param-title">1 Node Count</div> (Actual−Necessary)×time×wage. 7 vs 3 nodes → $100k</div>
+            <div class="param-card"><div class="param-title">2 Waiting Time</div> hours×people×wage. 100 firms, 5 days → $240k</div>
+            <div class="param-card"><div class="param-title">3 Repetition Rate</div> (repetitions−1)×cost each. 3 requests → $400/firm</div>
+            <div class="param-card"><div class="param-title">4 Collapse Points</div> abandonments×value×conversion. 500 firms → $5M</div>
+            <div class="param-card"><div class="param-title">5 Data Prep Burden</div> hours×wage. Accountant 100h → $15k/firm</div>
+            <div class="param-card"><div class="param-title">6 Information Asymmetry</div> Misallocation amount. Wrong subsidy → $10k</div>
+            <div class="param-card"><div class="param-title">7 Psychological Friction</div> retreats×potential value. 50 firms → $1.5M</div>
+            <div class="param-card"><div class="param-title">8 Opportunity Cost</div> Best option − actual. Overpay supplier $50k → $50k</div>
+        </div>
+        <h2>Why existing tools fail</h2>
+        <p>Standard Cost Model (EU/Germany) — only form‑filling time. Canada’s REP — infers from regulation text, not on‑ground diagnosis. OECD surveys — subjective. National stats offices — no “friction” category. <strong>GL Framework is the only tool that diagnoses all 8 parameters on the ground.</strong></p>
+        <h2>Ghost GDP & UBI</h2>
+        <p>If administrative friction consumes 5–15% of public budgets every year, then “no money for UBI” is false — the money is lost in invisible process black holes. Fixing friction releases real resources. That is the funding source for UBI.</p>
+        <h2>Policy pathway: from diagnosis to independent verification</h2>
+        <p>🔹 US EO 14402 (April 30, 2026) makes fixed‑price contracts the default for federal procurement — requiring <strong>independent outcome verification</strong>. The GL diagnostic methodology and independent verification framework are built for that purpose.<br>
+        🔹 OMB guidelines (June 14, 2026) will require independent verification. GL Framework is the only diagnostic standard ready.<br>
+        🔹 OECD admits existing tools are insufficient. GL Framework fills the gap.</p>
+        <div class="highlight-box"><strong>🎯 Core argument:</strong> Ghost GDP is a new economic concept. GL Framework measures it. Independent verification is the standard procurement needs.</div>
+        <div class="footer-note">✉️ Pilot friction diagnosis or independent verification: <a href="mailto:ping@gfiintel.com">ping@gfiintel.com</a> | SSRN: author/9564632</div>
+    </div>
+
+    <!-- ================= ESPAÑOL ================= -->
+    <div id="lang-es" class="lang-content">
+        <h1>PIB Fantasma<br><span style="font-size:1.8rem;">El valor destruido por la fricción administrativa que el PIB jamás cuenta</span></h1>
+        <div class="subhead">GL Framework — La única herramienta de diagnóstico sobre el terreno para los 8 parámetros de fricción administrativa</div>
+        <div class="author-line">Ping Xu · Inventor de GL Framework · Fundador de GFI Flow Intelligence</div>
+        <div class="date">Junio 2026 · SSRN Autor: <a href="https://ssrn.com/author=9564632" target="_blank">author/9564632</a></div>
+        <h2>¿Qué es el PIB Fantasma?</h2>
+        <p>El PIB registra transacciones realizadas, no el valor destruido antes de que una transacción ocurra. La fricción administrativa —esperas, repeticiones, colapsos, asimetría de información, costes psicológicos, oportunidades perdidas— consume presupuestos y productividad a diario, pero ninguna oficina estadística lo incluye en el PIB.</p>
+        <div class="highlight-box"><strong>💡 PIB Fantasma:</strong> Pérdidas económicas por fricción administrativa nunca registradas en el PIB oficial. No es corrupción, es el coste silencioso del mal diseño de procesos.</div>
+        <h2>Dos agujeros negros del PIB</h2>
+        <p><strong>Tipo 1 (Citrini, feb 2026):</strong> IA aumenta productividad pero colapsa consumo. Sin solución clara.<br><strong>Tipo 2 (este artículo):</strong> Fricción administrativa consume recursos sin producción — medible y recuperable.</p>
+        <h2>8 parámetros de GL Framework → PIB Fantasma</h2>
+        <div class="param-grid">
+            <div class="param-card"><div class="param-title">❶ Nodos</div> (Real−Necesario)×tiempo×salario. 7 vs 3 → $100k</div>
+            <div class="param-card"><div class="param-title">❷ Espera</div> horas×personas×salario. 100 empresas → $240k</div>
+            <div class="param-card"><div class="param-title">❸ Repetición</div> (repeticiones−1)×coste. 3 solicitudes → $400/empresa</div>
+            <div class="param-card"><div class="param-title">❹ Puntos colapso</div> abandonos×valor×conversión. 500 empresas → $5M</div>
+            <div class="param-card"><div class="param-title">❺ Carga datos</div> horas×salario. Contador 100h → $15k/empresa</div>
+            <div class="param-card"><div class="param-title">❻ Asimetría info</div> Error asignación. Subsidio mal dirigido → $10k</div>
+            <div class="param-card"><div class="param-title">❼ Fricción psicológica</div> retiradas×valor potencial. 50 empresas → $1.5M</div>
+            <div class="param-card"><div class="param-title">❽ Coste oportunidad</div> Mejor opción − real. Sobreprecio $50k proveedor → $50k</div>
+        </div>
+        <h2>¿Por qué fallan las herramientas actuales?</h2>
+        <p>Modelo de Coste Estándar (UE) solo mide tiempo de formularios. REP de Canadá infiere desde textos legales, no diagnóstico sobre el terreno. Encuestas OECD subjetivas. Oficinas estadísticas nacionales no tienen categoría de “fricción”. <strong>GL Framework es la única que diagnostica los 8 parámetros in situ.</strong></p>
+        <h2>PIB Fantasma y RBU</h2>
+        <p>Si la fricción administrativa consume entre el 5% y el 15% del presupuesto público cada año, entonces “no hay dinero para la RBU” es falso — el dinero se pierde en agujeros negros invisibles. Reparar la fricción libera recursos reales para la RBU.</p>
+        <h2>Ruta política: del diagnóstico a la verificación independiente</h2>
+        <p>🔹 La EO 14402 de EE. UU. exige verificación independiente de resultados. La metodología de diagnóstico GL y el marco de verificación independiente han sido diseñados para ello.<br>
+        🔹 Las próximas directrices de la OMB requerirán verificación independiente. GL Framework es el único estándar de diagnóstico listo.<br>
+        🔹 La OCDE reconoce que las herramientas actuales son insuficientes. GL Framework llena ese vacío.</p>
+        <div class="footer-note">✉️ Pilotos gubernamentales o verificación independiente: <a href="mailto:ping@gfiintel.com">ping@gfiintel.com</a> | SSRN: author/9564632</div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const langBtns = document.querySelectorAll('.lang-btn');
+        const contents = {
+            'zh-Hant': document.getElementById('lang-zh-Hant'),
+            'zh-Hans': document.getElementById('lang-zh-Hans'),
+            'en': document.getElementById('lang-en'),
+            'es': document.getElementById('lang-es')
+        };
+        function activateLang(lang) {
+            Object.keys(contents).forEach(key => {
+                if (contents[key]) contents[key].classList.remove('active-lang');
+            });
+            if (contents[lang]) contents[lang].classList.add('active-lang');
+            langBtns.forEach(btn => {
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            if (lang === 'zh-Hant') document.documentElement.lang = 'zh-TW';
+            else if (lang === 'zh-Hans') document.documentElement.lang = 'zh-CN';
+            else if (lang === 'en') document.documentElement.lang = 'en';
+            else if (lang === 'es') document.documentElement.lang = 'es';
+        }
+        langBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.getAttribute('data-lang');
+                if (lang && contents[lang]) activateLang(lang);
+            });
+        });
+        // 預設為繁體中文
+        activateLang('zh-Hant');
+    })();
+</script>
+</body>
+</html>
