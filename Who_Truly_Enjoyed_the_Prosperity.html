@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>誰真正享受了繁榮？ · Who Truly Enjoyed the Prosperity? · GL Framework · GFI Flow Intelligence</title>
+    <title>Who Truly Enjoyed the Prosperity? · GL Framework · GFI Flow Intelligence</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -40,7 +40,7 @@
             justify-content: space-between;
             align-items: baseline;
             flex-wrap: wrap;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
             padding-bottom: 1rem;
             border-bottom: 1px solid var(--dim);
         }
@@ -77,7 +77,7 @@
         .content-lang.active { display: block; }
         h1 {
             font-family: var(--serif);
-            font-size: 3.2rem;
+            font-size: 2.8rem;
             font-weight: 500;
             letter-spacing: -0.02em;
             line-height: 1.2;
@@ -85,7 +85,7 @@
         }
         .subhead {
             font-family: var(--serif);
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             color: var(--green);
             margin-bottom: 1rem;
             font-style: italic;
@@ -100,7 +100,7 @@
         }
         h2 {
             font-family: var(--serif);
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             margin: 2rem 0 1rem;
             border-left: 4px solid var(--green);
             padding-left: 1rem;
@@ -118,7 +118,6 @@
             padding: 1.3rem;
             transition: 0.2s;
         }
-        .country-card:hover { border-color: rgba(159,232,112,0.3); transform: translateY(-2px); }
         .card-title {
             font-family: var(--serif);
             font-size: 1.3rem;
@@ -163,11 +162,27 @@
             color: var(--sub);
             letter-spacing: 0.5px;
         }
+        .gl-score {
+            font-family: var(--mono);
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--green);
+            margin-top: 0.5rem;
+            text-align: right;
+        }
         .ghost-badge {
             font-family: var(--mono);
             font-size: 0.7rem;
             color: var(--gold);
             margin-top: 0.5rem;
+        }
+        .who-enjoyed {
+            font-size: 0.8rem;
+            padding: 0.5rem;
+            background: rgba(0,0,0,0.2);
+            border-radius: 0.6rem;
+            margin-top: 0.5rem;
+            border-left: 2px solid var(--green);
         }
         .quote-block {
             background: rgba(159,232,112,0.06);
@@ -194,6 +209,82 @@
             .container { padding: 1rem; }
             h1 { font-size: 2rem; }
             .subhead { font-size: 1rem; }
+            .card-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ========== 列印樣式 ========== */
+        @media print {
+            /* 強制白底黑字 */
+            body {
+                background: white !important;
+                color: black !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .container {
+                max-width: 100%;
+                padding: 0.5in;
+                background: white !important;
+            }
+            /* 隱藏語言切換按鈕 */
+            .lang-switch, .lang-btn {
+                display: none !important;
+            }
+            /* 移除背景色與邊框效果 */
+            .country-card {
+                background: white !important;
+                border: 1px solid #ccc !important;
+                box-shadow: none !important;
+            }
+            .card-mechanism, .ghost-badge {
+                background: #f0f0f0 !important;
+                border: 1px solid #ccc;
+                color: black !important;
+            }
+            .card-stats {
+                border-top: 1px solid #ccc !important;
+                border-bottom: 1px solid #ccc !important;
+            }
+            .stat-value {
+                color: #b33 !important;
+            }
+            .gl-score {
+                color: #2c5e2e !important;
+            }
+            .who-enjoyed {
+                background: #f9f9f9 !important;
+                border-left: 2px solid #2c5e2e !important;
+            }
+            .quote-block {
+                background: #f9f9f9 !important;
+                border-left: 4px solid #2c5e2e !important;
+            }
+            .header {
+                border-bottom: 1px solid #ccc !important;
+            }
+            .byline {
+                border-bottom: 1px solid #ccc !important;
+            }
+            .footer {
+                border-top: 1px solid #ccc !important;
+            }
+            hr {
+                border-top: 1px solid #ccc !important;
+            }
+            /* 確保連結顯示網址 */
+            a {
+                text-decoration: none !important;
+                color: black !important;
+            }
+            a[href]:after {
+                content: " (" attr(href) ")";
+                font-size: 0.8rem;
+                color: #555;
+            }
+            /* 避免頁面內分頁斷裂 */
+            .country-card, h2, h3 {
+                page-break-inside: avoid;
+            }
         }
     </style>
 </head>
@@ -213,123 +304,90 @@
     <div id="lang-en" class="content-lang active">
         <h1>Who Truly Enjoyed the Prosperity?</h1>
         <div class="subhead">The Silent Ledger of Land, Infrastructure, and Institutions</div>
-        <div class="byline">Ping Xu · Boston · GFI Flow Intelligence · June 2026</div>
-        <div class="quote-block"><strong>GL Framework asks:</strong> “Did the people actually receive the service?”<br>Not “was the transaction completed?” Not “was the process followed?” — but whether public investment actually reached the citizen as usable, timely Access.</div>
-        <h2>1. Six Institutions, Six Cost‑Shift Pathways</h2>
+        <div class="byline">Ping Xu · GFI Flow Intelligence · June 2026</div>
+        <div class="quote-block"><strong>GL Framework asks:</strong> “Did the citizen receive value for every dollar paid?”<br>Not “was the process followed?” — but whether the system serves the citizen, or the citizen serves the system.</div>
+        <h2>Seven Systems, Seven Cost‑Shift Pathways</h2>
         <div class="card-grid">
-            <div class="country-card"><div class="card-title">🇬🇧 United Kingdom</div><div class="card-mechanism">Concentrated land holding + planning permission</div><div class="card-stats"><div class="stat"><div class="stat-value">Aristocracy, Crown, developers</div><div class="stat-label">truly enjoyed prosperity</div></div><div class="stat"><div class="stat-value">Renters, taxpayers</div><div class="stat-label">bore the cost</div></div></div><div class="ghost-badge">Ghost GDP: waiting tax · rental tax · anxiety tax</div><div>Planning permission turns £23k/ha farmland into £2.67M/ha — a public decision, privately captured. 50% of England owned by <1%.</div></div>
-            <div class="country-card"><div class="card-title">🇺🇸 United States</div><div class="card-mechanism">Market mechanisms + capital gains tax preference</div><div class="card-stats"><div class="stat"><div class="stat-value">Capital, REITs</div><div class="stat-label">truly enjoyed prosperity</div></div><div class="stat"><div class="stat-value">Latecomer generations</div><div class="stat-label">bore the cost</div></div></div><div class="ghost-badge">Ghost GDP: commuting tax · anxiety tax</div><div>Homestead Act (1862) dispersed land, but interstate highways and REITs reconcentrated value. Land financialization turned housing into a speculative asset.</div></div>
-            <div class="country-card"><div class="card-title">🇭🇰 Hong Kong</div><div class="card-mechanism">Leasehold system + rail‑plus‑property</div><div class="card-stats"><div class="stat"><div class="stat-value">Government + 4 developers</div><div class="stat-label">truly enjoyed prosperity</div></div><div class="stat"><div class="stat-value">Young renters</div><div class="stat-label">bore the cost</div></div></div><div class="ghost-badge">Ghost GDP: 5.5‑year waiting tax · rental tax</div><div>MTR captures some increment, but 400 sq ft apartment consumes 50‑70% of a young professional’s salary. Public housing wait >5 years.</div></div>
-            <div class="country-card"><div class="card-title">🇹🇼 Taiwan</div><div class="card-mechanism">Private ownership + announced land value</div><div class="card-stats"><div class="stat"><div class="stat-value">Landlords, developers</div><div class="stat-label">truly enjoyed prosperity</div></div><div class="stat"><div class="stat-value">Younger generation</div><div class="stat-label">bore the cost</div></div></div><div class="ghost-badge">Ghost GDP: childbirth tax · commuting tax</div><div>“Increment returns to the public” is in the Constitution. Announced land value is 50‑70% below market price. Effective capture rate ~5%.</div></div>
-            <div class="country-card"><div class="card-title">🇨🇳 China</div><div class="card-mechanism">State land + land finance</div><div class="card-stats"><div class="stat"><div class="stat-value">Public system (reinvested)</div><div class="stat-label">truly enjoyed prosperity</div></div><div class="stat"><div class="stat-value">Local govt, land‑lost farmers</div><div class="stat-label">bore the cost</div></div></div><div class="ghost-badge">Ghost GDP: privacy tax · maturity mismatch</div><div>Land finance built 45,000 km HSR in 20 years. Maturity mismatch and tech‑driven friction elimination carry unmeasured costs.</div></div>
-            <div class="country-card"><div class="card-title">🌍 Global Commons</div><div class="card-mechanism">First‑come, no effective governance</div><div class="card-stats"><div class="stat"><div class="stat-value">First arrivers, those with capacity</div><div class="stat-label">truly enjoyed prosperity</div></div><div class="stat"><div class="stat-value">All humanity</div><div class="stat-label">bore the cost</div></div></div><div class="ghost-badge">Ghost GDP: ecological tax · future tax</div><div>High seas, Antarctica, deep‑sea minerals, outer space — “common heritage of all humanity” in law, but whoever has capacity gets the value.</div></div>
+            <div class="country-card"><div class="card-title">🇬🇧 United Kingdom</div><div class="card-mechanism">Redundancy · Cancel & Return</div><div class="card-stats"><div class="stat"><div class="stat-value">£102</div><div class="stat-label">Cost</div></div><div class="stat"><div class="stat-value">3 weeks</div><div class="stat-label">Wait</div></div><div class="stat"><div class="stat-value">0.082</div><div class="stat-label">GL Score</div></div></div><div class="ghost-badge">📉 Ghost GDP: £28.4M/year wasted on redundant postage</div><div>Mandatory return of cancelled passport. No legal purpose. No one asked “why?”</div><div class="who-enjoyed">✨ Enjoys prosperity: Postal service, HM Passport Office (process counted as “complete”)<br>😞 Bears the cost: Every applicant — postage, time, confusion</div><div class="gl-score">↳ Reform: Eliminate the step. Save millions.</div></div>
+            <div class="country-card"><div class="card-title">🇺🇸 United States</div><div class="card-mechanism">Cognitive Friction · Complex Rules</div><div class="card-stats"><div class="stat"><div class="stat-value">$130</div><div class="stat-label">Cost</div></div><div class="stat"><div class="stat-value">6–8 weeks</div><div class="stat-label">Wait</div></div><div class="stat"><div class="stat-value">0.12</div><div class="stat-label">GL Score</div></div></div><div class="ghost-badge">📉 Ghost GDP: 500,000+ delays from correctable errors</div><div>Eligibility matrix forces citizens to guess which form to use. Errors cause rework.</div><div class="who-enjoyed">✨ Enjoys prosperity: Passport acceptance facilities, courier services (error = new fee)<br>😞 Bears the cost: Applicants who make a mistake — time, re-filing, travel</div><div class="gl-score">↳ Reform: One wizard. One answer.</div></div>
+            <div class="country-card"><div class="card-title">🇨🇦 Canada</div><div class="card-mechanism">Wait Time · Pickup Fee</div><div class="card-stats"><div class="stat"><div class="stat-value">$120–160</div><div class="stat-label">Cost</div></div><div class="stat"><div class="stat-value">20 days</div><div class="stat-label">Wait</div></div><div class="stat"><div class="stat-value">0.15</div><div class="stat-label">GL Score</div></div></div><div class="ghost-badge">📉 Ghost GDP: $20 pickup fee — a tax on speed</div><div>In-person required for most renewals. Urgent service costs extra.</div><div class="who-enjoyed">✨ Enjoys prosperity: Service Canada (fee revenue), couriers<br>😞 Bears the cost: Citizens needing faster service, those far from offices</div><div class="gl-score">↳ Reform: Online renewal. No hidden fees.</div></div>
+            <div class="country-card"><div class="card-title">🇦🇺 Australia</div><div class="card-mechanism">Economic Barrier · World’s Most Expensive</div><div class="card-stats"><div class="stat"><div class="stat-value">$412 AUD</div><div class="stat-label">Cost</div></div><div class="stat"><div class="stat-value">6 weeks</div><div class="stat-label">Wait</div></div><div class="stat"><div class="stat-value">0.11</div><div class="stat-label">GL Score</div></div></div><div class="ghost-badge">📉 Ghost GDP: 34% fee increase in 3 years — no service improvement</div><div>Justified as “security” — but price does not equal safety.</div><div class="who-enjoyed">✨ Enjoys prosperity: Government budget (fee as revenue source)<br>😞 Bears the cost: Low‑income citizens, families needing multiple passports</div><div class="gl-score">↳ Reform: Justify pricing. Or lower it.</div></div>
+            <div class="country-card"><div class="card-title">🇩🇪 Germany</div><div class="card-mechanism">State Monopoly · Strict Photo Rules</div><div class="card-stats"><div class="stat"><div class="stat-value">€60–80</div><div class="stat-label">Cost</div></div><div class="stat"><div class="stat-value">4–6 weeks</div><div class="stat-label">Wait</div></div><div class="stat"><div class="stat-value">0.10</div><div class="stat-label">GL Score</div></div></div><div class="ghost-badge">📉 Ghost GDP: Photo rejection rates as high as 30% — mandatory retakes</div><div>Strict biometric specs. No digital pre-check. In-person application required.</div><div class="who-enjoyed">✨ Enjoys prosperity: Photo studios (re-take fees), Bundesdruckerei (monopoly)<br>😞 Bears the cost: Applicants whose photos are rejected — time, studio fees, delays</div><div class="gl-score">↳ Reform: AI pre-screening. Reduce in-person requirement.</div></div>
+            <div class="country-card"><div class="card-title">🇫🇷 France</div><div class="card-mechanism">Appointment Scarcity · Digital Divide</div><div class="card-stats"><div class="stat"><div class="stat-value">€86</div><div class="stat-label">Cost</div></div><div class="stat"><div class="stat-value">3–4 weeks</div><div class="stat-label">Wait</div></div><div class="stat"><div class="stat-value">0.13</div><div class="stat-label">GL Score</div></div></div><div class="ghost-badge">📉 Ghost GDP: Appointment wait times can exceed 2 months in major cities</div><div>Online renewal available, but digital literacy and ID verification create barriers.</div><div class="who-enjoyed">✨ Enjoys prosperity: ANTS (digital platform operators), those who can navigate the system<br>😞 Bears the cost: Elderly, rural citizens, those without digital skills — appointment scarcity</div><div class="gl-score">↳ Reform: Expand online eligibility. Scale appointment capacity.</div></div>
+            <div class="country-card"><div class="card-title">🇨🇳 China</div><div class="card-mechanism">Digital Divide · Systemic Exclusion</div><div class="card-stats"><div class="stat"><div class="stat-value">¥120 (~$18)</div><div class="stat-label">Cost</div></div><div class="stat"><div class="stat-value">7–20 days</div><div class="stat-label">Wait</div></div><div class="stat"><div class="stat-value">—</div><div class="stat-label">GL Score</div></div></div><div class="ghost-badge">📉 Ghost GDP: Elders, rural citizens left behind by app-only renewal</div><div>Fully digital. Efficient. Cheap. But only for those who can use the app.</div><div class="who-enjoyed">✨ Enjoys prosperity: Digitally literate citizens (speed, low cost), government (efficiency metrics)<br>😞 Bears the cost: Those excluded by the digital door — elders, rural, low‑tech users</div><div class="gl-score">↳ Reform: Keep digital. Keep a human door open.</div></div>
         </div>
-        <h2>2. The Prosperity Table — Who Truly Enjoyed It (by Institutional Logic)</h2>
-        <div class="card-grid">
-            <div class="country-card"><div class="card-title">🇬🇧 UK</div><div class="stat-value">Aristocracy, Crown, developers</div><div>Concentrated land holding — prosperity automatically flows to existing landowners since 1066.</div></div>
-            <div class="country-card"><div class="card-title">🇺🇸 US</div><div class="stat-value">Capital (developers, REITs)</div><div>Market mechanisms + capital gains tax preference. Prosperity captured before infrastructure is announced.</div></div>
-            <div class="country-card"><div class="card-title">🇭🇰 Hong Kong</div><div class="stat-value">Government + 4 developers</div><div>Land revenue + property development profits. Government auctions land; developers capture residual value.</div></div>
-            <div class="country-card"><div class="card-title">🇹🇼 Taiwan</div><div class="stat-value">Landlords + developers</div><div>Announced land value artificially low, insufficient tax capture. Most prosperity stays private.</div></div>
-            <div class="country-card"><div class="card-title">🇨🇳 China</div><div class="stat-value">Public system (reinvested)</div><div>Land concession fees fund next round of infrastructure. Closed loop, but dependent on rising asset prices.</div></div>
-            <div class="country-card"><div class="card-title">🌍 Global Commons</div><div class="stat-value">First arrivers, those with capacity</div><div>No effective international management mechanism. Whoever can extract, takes.</div></div>
-        </div>
-        <h2>3. The Ghost GDP Table — Who Bore the Unrecorded Cost</h2>
-        <div class="card-grid">
-            <div class="country-card"><div class="card-title">🇬🇧 UK</div><div class="ghost-badge">Waiting tax · rental tax · anxiety tax</div><div>Renters pay inflated rents while waiting years for public housing. Inefficient transport systems.</div></div>
-            <div class="country-card"><div class="card-title">🇺🇸 US</div><div class="ghost-badge">Commuting tax · anxiety tax</div><div>Car‑dependent infrastructure forces low‑income families into high transport costs.</div></div>
-            <div class="country-card"><div class="card-title">🇭🇰 Hong Kong</div><div class="ghost-badge">5.5‑year waiting tax · rental tax</div><div>Young professionals spend 50‑70% of income on rent. Public housing wait exceeds half a decade.</div></div>
-            <div class="country-card"><div class="card-title">🇹🇼 Taiwan</div><div class="ghost-badge">Childbirth tax · commuting tax</div><div>Fertility rate 0.87. Young couples delay children because housing, commuting, childcare costs are prohibitive.</div></div>
-            <div class="country-card"><div class="card-title">🇨🇳 China</div><div class="ghost-badge">Privacy tax · maturity mismatch</div><div>Technology eliminates friction but extracts data. Local government debt from land‑financed infrastructure.</div></div>
-            <div class="country-card"><div class="card-title">🌍 Global Commons</div><div class="ghost-badge">Ecological tax · future tax</div><div>Overfishing, deep‑sea mining, space resource extraction — costs born by all humanity, benefits taken by first movers.</div></div>
-        </div>
-        <h2>4. GL Framework — The Denominator That Was Never Measured</h2>
-        <div class="quote-block"><strong>GL = (Fs × Vn) / (Pd × Cf)</strong><br>Fs = Flow success rate — proportion of budget reaching citizens as usable Access.<br>Vn = Strategic value (1.5 = max).<br>Pd = Pain duration — waiting, redundancy, uncertainty.<br>Cf = Cognitive friction — complexity, info asymmetry, officer discretion.</div>
-        <p>A low GL means the system shifts cost outward instead of solving friction. <strong>Ghost GDP</strong> is that shifted cost — never recorded in any national ledger. A blind spot in how GDP accounts for economic activity.</p>
-        <div class="quote-block">“GDP asks: <strong>Was the transaction completed?</strong>”<br>“Traditional auditing asks: <strong>Was the process followed?</strong>”<br>“GL Framework asks: <strong>Did the people actually receive the service?</strong>”</div>
-        <p style="font-family: var(--serif); font-size: 1.5rem; color: var(--green); text-align: center; margin: 2rem 0;"><strong>Who truly enjoyed the prosperity?</strong></p>
-        <p>If you start asking, this book has achieved its purpose.</p>
+        <h2>The Benchmark: Estonia — GL 4.2</h2>
+        <div class="card-grid"><div class="country-card"><div class="card-title">🇪🇪 Estonia</div><div class="card-mechanism">Denominator-First Design</div><div class="card-stats"><div class="stat"><div class="stat-value">€35</div><div class="stat-label">Cost</div></div><div class="stat"><div class="stat-value">5 days</div><div class="stat-label">Wait</div></div><div class="stat"><div class="stat-value">4.2</div><div class="stat-label">GL Score</div></div></div><div class="ghost-badge">✅ Digital cancellation · Online renewal · Optional physical return · Transparent pricing</div><div>No redundancy. No cognitive friction. No hidden fees. No digital exclusion (hybrid option).</div><div class="who-enjoyed">✨ Enjoys prosperity: Every citizen — equally, without friction<br>😞 Bears the cost: No one. The system is designed to shift cost to itself, not to citizens.</div></div></div>
+        <h2>What GL Measures</h2>
+        <div class="quote-block"><strong>GL = (Fs × Vn) / (Pd × Cf)</strong><br>Fs = Flow success rate — value delivered vs. friction created.<br>Vn = Strategic value — necessity of the service.<br>Pd = Pain duration — waiting, uncertainty, redundancy.<br>Cf = Cognitive friction — complexity, information asymmetry, hidden rules.</div>
+        <div class="quote-block">“GDP asks: <strong>Was the transaction completed?</strong>”<br>“Traditional auditing asks: <strong>Was the process followed?</strong>”<br>“GL Framework asks: <strong>Did the citizen receive value for every dollar paid?</strong>”</div>
+        <p style="font-family: var(--serif); font-size: 1.5rem; color: var(--green); text-align: center; margin: 2rem 0;"><strong>Passport renewal should not be a test of endurance.</strong></p>
         <hr><div style="text-align: right;">Ping Xu<br>GFI Flow Intelligence · Boston · June 2026</div>
-        <div class="footer">Contact: <a href="mailto:ping@gfiintel.com" style="color: var(--green);">ping@gfiintel.com</a> · <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6178024" style="color: var(--green);">SSRN</a></div>
+        <div class="footer">Contact: <a href="mailto:ping@gfiintel.com">ping@gfiintel.com</a> · <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6178024">SSRN</a></div>
     </div>
 
-    <!-- ================= 繁體中文（治理合理性框架 · 通路） ================= -->
+    <!-- ================= 繁體中文 ================= -->
     <div id="lang-tw" class="content-lang">
         <h1>誰真正享受了繁榮？</h1>
         <div class="subhead">土地、基建與制度的沉默帳本</div>
-        <div class="byline">Ping Xu · 波士頓 · GFI Flow Intelligence · 2026年6月</div>
-        <div class="quote-block"><strong>治理合理性框架（GL Framework）問的是：</strong>「人民真的得到服務了嗎？」<br>不是「交易完成了嗎？」也不是「程序走完了嗎？」——而是公共投資是否真正轉化為民眾可用的、即時的<strong>通路（Access）</strong>。</div>
-        <h2>1. 六種制度，六種成本轉嫁路徑</h2>
+        <div class="byline">Ping Xu · GFI Flow Intelligence · 2026年6月</div>
+        <div class="quote-block"><strong>治理合理性框架問的是：</strong>「公民花的每一塊錢，真的得到了對應的價值嗎？」<br>不是「程序走完了嗎？」——是系統在服務人民，還是人民在服務系統？</div>
+        <h2>七種制度，七種成本轉嫁路徑</h2>
         <div class="card-grid">
-            <div class="country-card"><div class="card-title">🇬🇧 英國</div><div class="card-mechanism">土地集中持有＋開發許可</div><div class="card-stats"><div class="stat"><div class="stat-value">貴族、皇室、開發商</div><div class="stat-label">真正享受繁榮</div></div><div class="stat"><div class="stat-value">租客、納稅人</div><div class="stat-label">承擔成本</div></div></div><div class="ghost-badge">幽靈GDP：等待稅 · 租房稅 · 焦慮稅</div><div>開發許可讓農地從每公頃2.3萬英鎊暴漲至267萬英鎊。英格蘭一半土地集中在不到1%人口手中。</div></div>
-            <div class="country-card"><div class="card-title">🇺🇸 美國</div><div class="card-mechanism">市場機制＋資本利得稅優惠</div><div class="card-stats"><div class="stat"><div class="stat-value">資本、REIT</div><div class="stat-label">真正享受繁榮</div></div><div class="stat"><div class="stat-value">晚進場的年輕世代</div><div class="stat-label">承擔成本</div></div></div><div class="ghost-badge">幽靈GDP：通勤稅 · 焦慮稅</div><div>宅地法（1862）分散了土地，但州際公路與REIT讓價值重新集中。土地金融化把住房變成投機工具。</div></div>
-            <div class="country-card"><div class="card-title">🇭🇰 香港</div><div class="card-mechanism">批地制度＋鐵路加物業</div><div class="card-stats"><div class="stat"><div class="stat-value">政府＋四大開發商</div><div class="stat-label">真正享受繁榮</div></div><div class="stat"><div class="stat-value">年輕租客</div><div class="stat-label">承擔成本</div></div></div><div class="ghost-badge">幽靈GDP：5.5年等待稅 · 租房稅</div><div>MTR捕獲部分增值，但400平方呎公寓耗掉年輕專業人士50–70%月薪。公屋輪候超過五年。</div></div>
-            <div class="country-card"><div class="card-title">🇹🇼 台灣</div><div class="card-mechanism">私有制＋公告地價</div><div class="card-stats"><div class="stat"><div class="stat-value">地主、建商</div><div class="stat-label">真正享受繁榮</div></div><div class="stat"><div class="stat-value">青年世代</div><div class="stat-label">承擔成本</div></div></div><div class="ghost-badge">幽靈GDP：生育稅 · 通勤稅</div><div>「漲價歸公」寫在憲法裡。公告地價低於市價50–70%。真實捕獲率約5%。</div></div>
-            <div class="country-card"><div class="card-title">🇨🇳 中國</div><div class="card-mechanism">土地國有＋土地財政</div><div class="card-stats"><div class="stat"><div class="stat-value">公共體系（再投入基建）</div><div class="stat-label">真正享受繁榮</div></div><div class="stat"><div class="stat-value">地方財政、失地農民</div><div class="stat-label">承擔成本</div></div></div><div class="ghost-badge">幽靈GDP：隱私稅 · 期限錯配</div><div>土地財政20年建成4.5萬公里高鐵。期限錯配與技術消除摩擦的代價未被完整計算。</div></div>
-            <div class="country-card"><div class="card-title">🌍 全球公域</div><div class="card-mechanism">先占原則，無有效治理</div><div class="card-stats"><div class="stat"><div class="stat-value">先到者、有能力者</div><div class="stat-label">真正享受繁榮</div></div><div class="stat"><div class="stat-value">全人類</div><div class="stat-label">承擔成本</div></div></div><div class="ghost-badge">幽靈GDP：生態稅 · 未來稅</div><div>公海、南極、深海礦產、太空——法律上「全人類共同遺產」，實務上誰有能力到達，增值就歸誰。</div></div>
+            <div class="country-card"><div class="card-title">🇬🇧 英國</div><div class="card-mechanism">流程冗餘 · 剪角寄回</div><div class="card-stats"><div class="stat"><div class="stat-value">£102</div><div class="stat-label">費用</div></div><div class="stat"><div class="stat-value">3週</div><div class="stat-label">等待</div></div><div class="stat"><div class="stat-value">0.082</div><div class="stat-label">GL分數</div></div></div><div class="ghost-badge">📉 幽靈GDP：每年£28.4M浪費在多餘郵資</div><div>強制剪角寄回舊護照。沒有法律目的。沒有人問「為什麼」。</div><div class="who-enjoyed">✨ 享受繁榮：郵政服務、護照辦公室（流程被算作「完成」）<br>😞 承擔成本：每一位申請人——郵資、時間、困惑</div><div class="gl-score">↳ 改革：刪除這一步。每年省下數百萬英鎊。</div></div>
+            <div class="country-card"><div class="card-title">🇺🇸 美國</div><div class="card-mechanism">認知摩擦 · 複雜規則</div><div class="card-stats"><div class="stat"><div class="stat-value">$130</div><div class="stat-label">費用</div></div><div class="stat"><div class="stat-value">6–8週</div><div class="stat-label">等待</div></div><div class="stat"><div class="stat-value">0.12</div><div class="stat-label">GL分數</div></div></div><div class="ghost-badge">📉 幽靈GDP：超過50萬次因可避免錯誤延誤</div><div>資格矩陣讓公民猜測該用哪張表格。錯誤導致重來。</div><div class="who-enjoyed">✨ 享受繁榮：護照受理機構、快遞服務（錯誤＝新費用）<br>😞 承擔成本：犯錯的申請人——時間、重送、交通</div><div class="gl-score">↳ 改革：簡化。一個精靈，一個答案。</div></div>
+            <div class="country-card"><div class="card-title">🇨🇦 加拿大</div><div class="card-mechanism">等待成本 · 加收領取費</div><div class="card-stats"><div class="stat"><div class="stat-value">$120–160</div><div class="stat-label">費用</div></div><div class="stat"><div class="stat-value">20天</div><div class="stat-label">等待</div></div><div class="stat"><div class="stat-value">0.15</div><div class="stat-label">GL分數</div></div></div><div class="ghost-badge">📉 幽靈GDP：$20領取費——對速度課稅</div><div>多數換發需親自到場。急件加價。</div><div class="who-enjoyed">✨ 享受繁榮：Service Canada（規費收入）、快遞業者<br>😞 承擔成本：需要更快服務的公民、遠離服務據點的人</div><div class="gl-score">↳ 改革：線上換發。取消隱藏費用。</div></div>
+            <div class="country-card"><div class="card-title">🇦🇺 澳洲</div><div class="card-mechanism">經濟壁壘 · 全球最貴</div><div class="card-stats"><div class="stat"><div class="stat-value">$412 AUD</div><div class="stat-label">費用</div></div><div class="stat"><div class="stat-value">6週</div><div class="stat-label">等待</div></div><div class="stat"><div class="stat-value">0.11</div><div class="stat-label">GL分數</div></div></div><div class="ghost-badge">📉 幽靈GDP：三年漲價34%——服務沒變好</div><div>用「安全」當藉口，但價格不等於安全。</div><div class="who-enjoyed">✨ 享受繁榮：政府預算（規費作為收入來源）<br>😞 承擔成本：低收入公民、需要多本護照的家庭</div><div class="gl-score">↳ 改革：公開成本。不然就降價。</div></div>
+            <div class="country-card"><div class="card-title">🇩🇪 德國</div><div class="card-mechanism">聯邦印刷局壟斷 · 照片規則嚴苛</div><div class="card-stats"><div class="stat"><div class="stat-value">€60–80</div><div class="stat-label">費用</div></div><div class="stat"><div class="stat-value">4–6週</div><div class="stat-label">等待</div></div><div class="stat"><div class="stat-value">0.10</div><div class="stat-label">GL分數</div></div></div><div class="ghost-badge">📉 幽靈GDP：照片退件率高達30%——強制重拍</div><div>嚴格的生物特徵規格，無數位預審。多數人需親自到場。</div><div class="who-enjoyed">✨ 享受繁榮：照相館（重拍費用）、Bundesdruckerei（壟斷）<br>😞 承擔成本：照片被退件的申請人——時間、重拍費、延遲</div><div class="gl-score">↳ 改革：AI預審照片。減少親自到場要求。</div></div>
+            <div class="country-card"><div class="card-title">🇫🇷 法國</div><div class="card-mechanism">預約困難 · 數位落差</div><div class="card-stats"><div class="stat"><div class="stat-value">€86</div><div class="stat-label">費用</div></div><div class="stat"><div class="stat-value">3–4週</div><div class="stat-label">等待</div></div><div class="stat"><div class="stat-value">0.13</div><div class="stat-label">GL分數</div></div></div><div class="ghost-badge">📉 幽靈GDP：大城市預約等待可超過2個月</div><div>線上換發可行，但數位落差與身分驗證構成障礙。</div><div class="who-enjoyed">✨ 享受繁榮：ANTS（數位平台營運者）、能夠駕馭系統的人<br>😞 承擔成本：老年人、偏鄉居民、不熟悉數位工具的人——預約稀缺</div><div class="gl-score">↳ 改革：擴大線上資格。增加預約容量。</div></div>
+            <div class="country-card"><div class="card-title">🇨🇳 中國</div><div class="card-mechanism">數位落差 · 系統性排除</div><div class="card-stats"><div class="stat"><div class="stat-value">¥120</div><div class="stat-label">費用</div></div><div class="stat"><div class="stat-value">7–20日</div><div class="stat-label">等待</div></div><div class="stat"><div class="stat-value">—</div><div class="stat-label">GL分數</div></div></div><div class="ghost-badge">📉 幽靈GDP：老人家、偏鄉居民被App排除</div><div>全數位。效率高。便宜。但只有會用App的人享受得到。</div><div class="who-enjoyed">✨ 享受繁榮：數位 literate 的公民（速度、低成本）、政府（效率指標）<br>😞 承擔成本：被數位之門排除的人——老年人、偏鄉、低科技使用者</div><div class="gl-score">↳ 改革：保留數位效率。保留一扇人的門。</div></div>
         </div>
-        <h2>2. 繁榮表 —— 誰真正享受了繁榮（依制度邏輯）</h2>
-        <div class="card-grid"><div class="country-card"><div class="card-title">🇬🇧 英國</div><div>貴族、皇室、開發商 — 土地集中持有，繁榮自動流向既有地主</div></div>
-        <div class="country-card"><div class="card-title">🇺🇸 美國</div><div>資本（開發商、REIT）— 市場機制＋資本利得稅優惠</div></div>
-        <div class="country-card"><div class="card-title">🇭🇰 香港</div><div>政府＋四大開發商 — 批地收入＋物業發展利潤</div></div>
-        <div class="country-card"><div class="card-title">🇹🇼 台灣</div><div>地主＋建商 — 公告地價偏低，增值稅捕獲不足</div></div>
-        <div class="country-card"><div class="card-title">🇨🇳 中國</div><div>公共體系（再投入基建）— 土地出讓金再投入下一輪基礎設施</div></div>
-        <div class="country-card"><div class="card-title">🌍 全球公域</div><div>先到者 — 先占原則，無有效國際管理機制</div></div></div>
-        <h2>3. 幽靈GDP 表 —— 誰在承受未被記錄的成本</h2>
-        <div class="card-grid"><div class="country-card"><div class="card-title">🇬🇧 英國</div><div class="ghost-badge">等待稅 · 租房稅 · 焦慮稅</div><div>租客支付高額租金，同時等待公共住宅。低效運輸系統造成通勤稅。</div></div>
-        <div class="country-card"><div class="card-title">🇺🇸 美國</div><div class="ghost-badge">通勤稅 · 焦慮稅</div><div>汽車依賴型基礎設施迫使低收入家庭負擔高昂交通成本。</div></div>
-        <div class="country-card"><div class="card-title">🇭🇰 香港</div><div class="ghost-badge">5.5年等待稅 · 租房稅</div><div>年輕專業人士月薪50–70%用於房租。公屋輪候超過五年。</div></div>
-        <div class="country-card"><div class="card-title">🇹🇼 台灣</div><div class="ghost-badge">生育稅 · 通勤稅</div><div>總生育率0.87。年輕夫婦因住房、通勤、托育成本而不敢生育。</div></div>
-        <div class="country-card"><div class="card-title">🇨🇳 中國</div><div class="ghost-badge">隱私稅 · 期限錯配</div><div>技術消除行政摩擦，但以數據為代價。土地財政累積地方債務。</div></div>
-        <div class="country-card"><div class="card-title">🌍 全球公域</div><div class="ghost-badge">生態稅 · 未來稅</div><div>過度捕撈、深海採礦、太空資源——成本由全人類負擔，利益由先到者獨享。</div></div></div>
-        <h2>4. 治理合理性框架 —— 從未被測量的分母</h2>
-        <div class="quote-block"><strong>GL = (Fs × Vn) / (Pd × Cf)</strong><br>Fs = 流程成功率 — 預算中真正轉化為民眾可用<strong>通路</strong>的比例<br>Vn = 策略價值（最高1.5）<br>Pd = 痛苦持續時間 — 等待、重複、不確定性<br>Cf = 認知摩擦 — 複雜度、資訊不對稱、官員裁量權</div>
-        <div class="quote-block">「GDP 問：<strong>交易完成了嗎？</strong>」<br>「傳統審計問：<strong>程序完成了嗎？</strong>」<br>「治理合理性框架問：<strong>人民真的得到服務了嗎？</strong>」</div>
-        <p style="font-family: var(--serif); font-size: 1.5rem; color: var(--green); text-align: center; margin: 2rem 0;"><strong>誰真正享受了繁榮？</strong></p>
-        <p>如果你開始問了，這本書就達成了它的目的。</p>
+        <div class="quote-block">「GDP問：<strong>交易完成了嗎？</strong>」<br>「傳統審計問：<strong>程序完成了嗎？</strong>」<br>「治理合理性框架問：<strong>公民花的每一塊錢，真的得到了對應的價值嗎？</strong>」</div>
+        <p style="font-family: var(--serif); font-size: 1.5rem; color: var(--green); text-align: center; margin: 2rem 0;"><strong>換護照不應該是耐力測試。</strong></p>
         <hr><div style="text-align: right;">Ping Xu<br>GFI Flow Intelligence · 波士頓 · 2026年6月</div>
-        <div class="footer">聯絡：<a href="mailto:ping@gfiintel.com" style="color: var(--green);">ping@gfiintel.com</a> · <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6178024" style="color: var(--green);">SSRN</a></div>
+        <div class="footer">聯絡：<a href="mailto:ping@gfiintel.com">ping@gfiintel.com</a> · <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6178024">SSRN</a></div>
     </div>
 
-    <!-- ================= 简体中文（治理合理性框架 · 通路） ================= -->
+    <!-- ================= 简体中文 ================= -->
     <div id="lang-cn" class="content-lang">
         <h1>谁真正享受了繁荣？</h1>
         <div class="subhead">土地、基建与制度的沉默账本</div>
-        <div class="byline">Ping Xu · 波士顿 · GFI Flow Intelligence · 2026年6月</div>
-        <div class="quote-block"><strong>治理合理性框架（GL Framework）问的是：</strong>「人民真的得到服务了吗？」<br>不是「交易完成了吗？」也不是「程序走完了吗？」——而是公共投资是否真正转化为民众可用的、即时的<strong>通路（Access）</strong>。</div>
-        <h2>1. 六种制度，六种成本转嫁路径</h2>
-        <div class="card-grid">
-            <div class="country-card"><div class="card-title">🇬🇧 英国</div><div class="card-mechanism">土地集中持有＋开发许可</div><div class="card-stats"><div class="stat"><div class="stat-value">贵族、皇室、开发商</div><div class="stat-label">真正享受繁荣</div></div><div class="stat"><div class="stat-value">租客、纳税人</div><div class="stat-label">承担成本</div></div></div><div class="ghost-badge">幽灵GDP：等待税 · 租房税 · 焦虑税</div><div>开发许可让农地从每公顷2.3万英镑暴涨至267万英镑。英格兰一半土地集中在不到1%人口手中。</div></div>
-            <div class="country-card"><div class="card-title">🇺🇸 美国</div><div class="card-mechanism">市场机制＋资本利得税优惠</div><div class="card-stats"><div class="stat"><div class="stat-value">资本、REIT</div><div class="stat-label">真正享受繁荣</div></div><div class="stat"><div class="stat-value">晚进场的年轻世代</div><div class="stat-label">承担成本</div></div></div><div class="ghost-badge">幽灵GDP：通勤税 · 焦虑税</div><div>宅地法（1862）分散了土地，但州际公路与REIT让价值重新集中。土地金融化把住房变成投机工具。</div></div>
-            <div class="country-card"><div class="card-title">🇭🇰 香港</div><div class="card-mechanism">批地制度＋铁路加物业</div><div class="card-stats"><div class="stat"><div class="stat-value">政府＋四大开发商</div><div class="stat-label">真正享受繁荣</div></div><div class="stat"><div class="stat-value">年轻租客</div><div class="stat-label">承担成本</div></div></div><div class="ghost-badge">幽灵GDP：5.5年等待税 · 租房税</div><div>MTR捕获部分增值，但400平方呎公寓耗掉年轻专业人士50–70%月薪。公屋轮候超过五年。</div></div>
-            <div class="country-card"><div class="card-title">🇹🇼 台湾</div><div class="card-mechanism">私有制＋公告地价</div><div class="card-stats"><div class="stat"><div class="stat-value">地主、建商</div><div class="stat-label">真正享受繁荣</div></div><div class="stat"><div class="stat-value">青年世代</div><div class="stat-label">承担成本</div></div></div><div class="ghost-badge">幽灵GDP：生育税 · 通勤税</div><div>「涨价归公」写在宪法里。公告地价低于市价50–70%。真实捕获率约5%。</div></div>
-            <div class="country-card"><div class="card-title">🇨🇳 中国</div><div class="card-mechanism">土地国有＋土地财政</div><div class="card-stats"><div class="stat"><div class="stat-value">公共体系（再投入基建）</div><div class="stat-label">真正享受繁荣</div></div><div class="stat"><div class="stat-value">地方财政、失地农民</div><div class="stat-label">承担成本</div></div></div><div class="ghost-badge">幽灵GDP：隐私税 · 期限错配</div><div>土地财政20年建成4.5万公里高铁。期限错配与技术消除摩擦的代价未被完整计算。</div></div>
-            <div class="country-card"><div class="card-title">🌍 全球公域</div><div class="card-mechanism">先占原则，无有效治理</div><div class="card-stats"><div class="stat"><div class="stat-value">先到者、有能力者</div><div class="stat-label">真正享受繁荣</div></div><div class="stat"><div class="stat-value">全人类</div><div class="stat-label">承担成本</div></div></div><div class="ghost-badge">幽灵GDP：生态税 · 未来税</div><div>公海、南极、深海矿产、太空——法律上「全人类共同遗产」，实务上谁有能力到达，增值就归谁。</div></div>
+        <div class="byline">Ping Xu · GFI Flow Intelligence · 2026年6月</div>
+        <div class="quote-block"><strong>治理合理性框架问的是：</strong>「公民花的每一块钱，真的得到了对应的价值吗？」<br>不是「程序走完了吗？」——是系统在服务人民，还是人民在服务系统？</div>
+        <h2>七种制度，七种成本转嫁路径</h2>
+        <div class="card-grid"><div class="country-card"><div class="card-title">🇬🇧 英国</div><div class="card-mechanism">流程冗余 · 剪角寄回</div><div class="card-stats"><div class="stat"><div class="stat-value">£102</div><div class="stat-label">费用</div></div><div class="stat"><div class="stat-value">3周</div><div class="stat-label">等待</div></div><div class="stat"><div class="stat-value">0.082</div><div class="stat-label">GL分数</div></div></div><div class="ghost-badge">📉 幽灵GDP：每年£28.4M浪费在多余邮资</div><div>强制剪角寄回旧护照。没有法律目的。没有人问「为什么」。</div><div class="who-enjoyed">✨ 享受繁荣：邮政服务、护照办公室（流程被算作「完成」）<br>😞 承担成本：每一位申请人——邮资、时间、困惑</div><div class="gl-score">↳ 改革：删除这一步。每年节省数百万英镑。</div></div>
+            <div class="country-card"><div class="card-title">🇺🇸 美国</div><div class="card-mechanism">认知摩擦 · 复杂规则</div><div class="card-stats"><div class="stat"><div class="stat-value">$130</div><div class="stat-label">费用</div></div><div class="stat"><div class="stat-value">6–8周</div><div class="stat-label">等待</div></div><div class="stat"><div class="stat-value">0.12</div><div class="stat-label">GL分数</div></div></div><div class="ghost-badge">📉 幽灵GDP：超过50万次因可避免错误延误</div><div>资格矩阵让公民猜测该用哪张表格。错误导致重来。</div><div class="who-enjoyed">✨ 享受繁荣：护照受理机构、快递服务（错误＝新费用）<br>😞 承担成本：犯错的申请人——时间、重送、交通</div><div class="gl-score">↳ 改革：简化。一个向导，一个答案。</div></div>
+            <div class="country-card"><div class="card-title">🇨🇦 加拿大</div><div class="card-mechanism">等待成本 · 加收取件费</div><div class="card-stats"><div class="stat"><div class="stat-value">$120–160</div><div class="stat-label">费用</div></div><div class="stat"><div class="stat-value">20天</div><div class="stat-label">等待</div></div><div class="stat"><div class="stat-value">0.15</div><div class="stat-label">GL分数</div></div></div><div class="ghost-badge">📉 幽灵GDP：$20取件费——对速度征税</div><div>多数换发需亲自到场。急件加价。</div><div class="who-enjoyed">✨ 享受繁荣：Service Canada（规费收入）、快递业者<br>😞 承担成本：需要更快服务的公民、远离服务据点的人</div><div class="gl-score">↳ 改革：在线换发。取消隐藏费用。</div></div>
+            <div class="country-card"><div class="card-title">🇦🇺 澳大利亚</div><div class="card-mechanism">经济壁垒 · 全球最贵</div><div class="card-stats"><div class="stat"><div class="stat-value">$412 AUD</div><div class="stat-label">费用</div></div><div class="stat"><div class="stat-value">6周</div><div class="stat-label">等待</div></div><div class="stat"><div class="stat-value">0.11</div><div class="stat-label">GL分数</div></div></div><div class="ghost-badge">📉 幽灵GDP：三年涨价34%——服务没变好</div><div>用「安全」当借口，但价格不等于安全。</div><div class="who-enjoyed">✨ 享受繁荣：政府预算（规费作为收入来源）<br>😞 承担成本：低收入公民、需要多本护照的家庭</div><div class="gl-score">↳ 改革：公开成本。不然就降价。</div></div>
+            <div class="country-card"><div class="card-title">🇩🇪 德国</div><div class="card-mechanism">联邦印刷局垄断 · 照片规则严苛</div><div class="card-stats"><div class="stat"><div class="stat-value">€60–80</div><div class="stat-label">费用</div></div><div class="stat"><div class="stat-value">4–6周</div><div class="stat-label">等待</div></div><div class="stat"><div class="stat-value">0.10</div><div class="stat-label">GL分数</div></div></div><div class="ghost-badge">📉 幽灵GDP：照片退件率高达30%——强制重拍</div><div>严格的生物特征规格，无数位预审。多数人需亲自到场。</div><div class="who-enjoyed">✨ 享受繁荣：照相馆（重拍费用）、Bundesdruckerei（垄断）<br>😞 承担成本：照片被退件的申请人——时间、重拍费、延迟</div><div class="gl-score">↳ 改革：AI预审照片。减少亲自到场要求。</div></div>
+            <div class="country-card"><div class="card-title">🇫🇷 法国</div><div class="card-mechanism">预约困难 · 数字鸿沟</div><div class="card-stats"><div class="stat"><div class="stat-value">€86</div><div class="stat-label">费用</div></div><div class="stat"><div class="stat-value">3–4周</div><div class="stat-label">等待</div></div><div class="stat"><div class="stat-value">0.13</div><div class="stat-label">GL分数</div></div></div><div class="ghost-badge">📉 幽灵GDP：大城市预约等待可超过2个月</div><div>在线换发可行，但数字鸿沟与身份验证构成障碍。</div><div class="who-enjoyed">✨ 享受繁荣：ANTS（数字平台运营者）、能够驾驭系统的人<br>😞 承担成本：老年人、偏远居民、不熟悉数字工具的人——预约稀缺</div><div class="gl-score">↳ 改革：扩大在线资格。增加预约容量。</div></div>
+            <div class="country-card"><div class="card-title">🇨🇳 中国</div><div class="card-mechanism">数字鸿沟 · 系统性排除</div><div class="card-stats"><div class="stat"><div class="stat-value">¥120</div><div class="stat-label">费用</div></div><div class="stat"><div class="stat-value">7–20日</div><div class="stat-label">等待</div></div><div class="stat"><div class="stat-value">—</div><div class="stat-label">GL分数</div></div></div><div class="ghost-badge">📉 幽灵GDP：老年人、偏远居民被App排除</div><div>全数字。效率高。便宜。但只有会用App的人享受得到。</div><div class="who-enjoyed">✨ 享受繁荣：数字 literate 的公民（速度、低成本）、政府（效率指标）<br>😞 承担成本：被数字之门排除的人——老年人、偏远、低科技使用者</div><div class="gl-score">↳ 改革：保留数字效率。保留一扇人的门。</div></div>
         </div>
-        <div class="quote-block">「GDP 问：<strong>交易完成了吗？</strong>」<br>「传统审计问：<strong>程序完成了吗？</strong>」<br>「治理合理性框架问：<strong>人民真的得到服务了吗？</strong>」</div>
-        <p style="font-family: var(--serif); font-size: 1.5rem; color: var(--green); text-align: center; margin: 2rem 0;"><strong>谁真正享受了繁荣？</strong></p>
+        <div class="quote-block">「GDP问：<strong>交易完成了吗？</strong>」<br>「传统审计问：<strong>程序完成了吗？</strong>」<br>「治理合理性框架问：<strong>公民花的每一块钱，真的得到了对应的价值吗？</strong>」</div>
+        <p style="font-family: var(--serif); font-size: 1.5rem; color: var(--green); text-align: center; margin: 2rem 0;"><strong>换护照不应该是耐力测试。</strong></p>
         <hr><div style="text-align: right;">Ping Xu<br>GFI Flow Intelligence · 波士顿 · 2026年6月</div>
-        <div class="footer">联系：<a href="mailto:ping@gfiintel.com" style="color: var(--green);">ping@gfiintel.com</a> · <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6178024" style="color: var(--green);">SSRN</a></div>
+        <div class="footer">联系：<a href="mailto:ping@gfiintel.com">ping@gfiintel.com</a> · <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6178024">SSRN</a></div>
     </div>
 
     <!-- ================= ESPAÑOL ================= -->
     <div id="lang-es" class="content-lang">
         <h1>¿Quién disfrutó verdaderamente la prosperidad?</h1>
         <div class="subhead">El libro mayor silencioso de la tierra, la infraestructura y las instituciones</div>
-        <div class="byline">Ping Xu · Boston · GFI Flow Intelligence · Junio 2026</div>
-        <div class="quote-block"><strong>GL Framework pregunta:</strong> «¿Realmente la gente recibió el servicio?»<br>No «¿se completó la transacción?» ni «¿se siguió el proceso?» — sino si la inversión pública realmente llegó al ciudadano como <strong>Acceso (Access)</strong> usable y oportuno.</div>
-        <h2>1. Seis instituciones, seis vías de transferencia de costos</h2>
-        <div class="card-grid">
-            <div class="country-card"><div class="card-title">🇬🇧 Reino Unido</div><div class="card-mechanism">Tierra concentrada + permiso de planificación</div><div class="card-stats"><div class="stat"><div class="stat-value">Aristocracia, Corona, promotores</div><div class="stat-label">disfrutaron la prosperidad</div></div><div class="stat"><div class="stat-value">Inquilinos, contribuyentes</div><div class="stat-label">soportaron el costo</div></div></div><div class="ghost-badge">Ghost GDP: impuesto de espera · impuesto de alquiler · impuesto de ansiedad</div><div>El permiso de planificación convierte tierra agrícola de £23k/ha en £2.67M/ha — una decisión pública, capturada privadamente. 50% de Inglaterra propiedad de <1%.</div></div>
-            <div class="country-card"><div class="card-title">🇺🇸 Estados Unidos</div><div class="card-mechanism">Mercado + preferencia fiscal a ganancias de capital</div><div class="card-stats"><div class="stat"><div class="stat-value">Capital, REITs</div><div class="stat-label">disfrutaron la prosperidad</div></div><div class="stat"><div class="stat-value">Generaciones tardías</div><div class="stat-label">soportaron costo</div></div></div><div class="ghost-badge">Ghost GDP: impuesto de commuting · impuesto de ansiedad</div><div>La Homestead Act (1862) dispersó la tierra, pero las interestatales y los REITs reconcentraron el valor. La financiarización del suelo convirtió la vivienda en activo especulativo.</div></div>
-            <div class="country-card"><div class="card-title">🇭🇰 Hong Kong</div><div class="card-mechanism">Enfiteusis + ferrocarril‑más‑propiedad</div><div class="card-stats"><div class="stat"><div class="stat-value">Gobierno + 4 grandes promotores</div><div class="stat-label">disfrutaron la prosperidad</div></div><div class="stat"><div class="stat-value">Jóvenes inquilinos</div><div class="stat-label">soportaron costo</div></div></div><div class="ghost-badge">Ghost GDP: impuesto de espera 5.5 años · impuesto de alquiler</div><div>MTR captura parte del incremento, pero un piso de 400 pies² consume 50‑70% del salario de un joven profesional. Espera de vivienda pública >5 años.</div></div>
-            <div class="country-card"><div class="card-title">🇹🇼 Taiwán</div><div class="card-mechanism">Propiedad privada + valor de suelo declarado</div><div class="card-stats"><div class="stat"><div class="stat-value">Terratenientes, promotores</div><div class="stat-label">disfrutaron la prosperidad</div></div><div class="stat"><div class="stat-value">Generación joven</div><div class="stat-label">soportó costo</div></div></div><div class="ghost-badge">Ghost GDP: impuesto de natalidad · impuesto de commuting</div><div>«El incremento vuelve al público» está en la Constitución. El valor de suelo declarado está 50‑70% por debajo del mercado. Captura efectiva ~5%.</div></div>
-            <div class="country-card"><div class="card-title">🇨🇳 China</div><div class="card-mechanism">Tierra estatal + financiación del suelo</div><div class="card-stats"><div class="stat"><div class="stat-value">Sistema público (reinvertido)</div><div class="stat-label">disfrutó la prosperidad</div></div><div class="stat"><div class="stat-value">Gobierno local, campesinos sin tierra</div><div class="stat-label">soportaron costo</div></div></div><div class="ghost-badge">Ghost GDP: impuesto de privacidad · descalce de plazos</div><div>La financiación del suelo construyó 45.000 km de AVE en 20 años. El descalce de plazos y la eliminación tecnológica de fricciones tienen costos no medidos.</div></div>
-            <div class="country-card"><div class="card-title">🌍 Bienes Comunes Globales</div><div class="card-mechanism">Quien llega primero, sin gobernanza efectiva</div><div class="card-stats"><div class="stat"><div class="stat-value">Primeros en llegar, los que tienen capacidad</div><div class="stat-label">disfrutaron la prosperidad</div></div><div class="stat"><div class="stat-value">Toda la humanidad</div><div class="stat-label">soportó costo</div></div></div><div class="ghost-badge">Ghost GDP: impuesto ecológico · impuesto futuro</div><div>Alta mar, Antártida, minerales de aguas profundas, espacio exterior — «patrimonio común de la humanidad» en la ley, pero quien tiene capacidad se lleva el valor.</div></div>
+        <div class="byline">Ping Xu · GFI Flow Intelligence · Junio 2026</div>
+        <div class="quote-block"><strong>GL Framework pregunta:</strong> «¿El ciudadano recibió valor por cada dólar pagado?»<br>No «¿se siguió el proceso?» — sino si el sistema sirve al ciudadano, o el ciudadano sirve al sistema.</div>
+        <h2>Siete sistemas, siete vías de transferencia de costos</h2>
+        <div class="card-grid"><div class="country-card"><div class="card-title">🇬🇧 Reino Unido</div><div class="card-mechanism">Redundancia · Cancelar y Devolver</div><div class="card-stats"><div class="stat"><div class="stat-value">£102</div><div class="stat-label">Coste</div></div><div class="stat"><div class="stat-value">3 semanas</div><div class="stat-label">Espera</div></div><div class="stat"><div class="stat-value">0.082</div><div class="stat-label">GL Score</div></div></div><div class="ghost-badge">📉 Ghost GDP: £28.4M/año en franqueo redundante</div><div>Devolución obligatoria del pasaporte cancelado. Sin propósito legal.</div><div class="who-enjoyed">✨ Disfruta la prosperidad: Servicio postal, HM Passport Office (proceso contado como «completo»)<br>😞 Soporta el costo: Cada solicitante — franqueo, tiempo, confusión</div><div class="gl-score">↳ Reforma: Eliminar el paso. Ahorrar millones.</div></div>
+            <div class="country-card"><div class="card-title">🇺🇸 Estados Unidos</div><div class="card-mechanism">Fricción Cognitiva · Reglas Complejas</div><div class="card-stats"><div class="stat"><div class="stat-value">$130</div><div class="stat-label">Coste</div></div><div class="stat"><div class="stat-value">6–8 semanas</div><div class="stat-label">Espera</div></div><div class="stat"><div class="stat-value">0.12</div><div class="stat-label">GL Score</div></div></div><div class="ghost-badge">📉 Ghost GDP: 500,000+ demoras por errores evitables</div><div>Matriz de elegibilidad confusa. Errores causan retrabajo.</div><div class="who-enjoyed">✨ Disfruta la prosperidad: Oficinas de aceptación, servicios de mensajería (error = nueva tarifa)<br>😞 Soporta el costo: Solicitantes que cometen errores — tiempo, reenvío, viaje</div><div class="gl-score">↳ Reforma: Simplificar. Un asistente, una respuesta.</div></div>
+            <div class="country-card"><div class="card-title">🇨🇦 Canadá</div><div class="card-mechanism">Tiempo de Espera · Tarifa de Retiro</div><div class="card-stats"><div class="stat"><div class="stat-value">$120–160</div><div class="stat-label">Coste</div></div><div class="stat"><div class="stat-value">20 días</div><div class="stat-label">Espera</div></div><div class="stat"><div class="stat-value">0.15</div><div class="stat-label">GL Score</div></div></div><div class="ghost-badge">📉 Ghost GDP: $20 tarifa de retiro — impuesto a la velocidad</div><div>Servicio urgente con costo extra. Renovación presencial requerida.</div><div class="who-enjoyed">✨ Disfruta la prosperidad: Service Canada (ingresos por tarifas), mensajerías<br>😞 Soporta el costo: Ciudadanos que necesitan servicio rápido, alejados de oficinas</div><div class="gl-score">↳ Reforma: Renovación online. Sin tarifas ocultas.</div></div>
+            <div class="country-card"><div class="card-title">🇦🇺 Australia</div><div class="card-mechanism">Barrera Económica · Más Caro del Mundo</div><div class="card-stats"><div class="stat"><div class="stat-value">$412 AUD</div><div class="stat-label">Coste</div></div><div class="stat"><div class="stat-value">6 semanas</div><div class="stat-label">Espera</div></div><div class="stat"><div class="stat-value">0.11</div><div class="stat-label">GL Score</div></div></div><div class="ghost-badge">📉 Ghost GDP: 34% de aumento en 3 años — mismo servicio</div><div>Justificado como «seguridad», pero el precio no es seguridad.</div><div class="who-enjoyed">✨ Disfruta la prosperidad: Presupuesto gubernamental (tarifa como fuente de ingresos)<br>😞 Soporta el costo: Ciudadanos de bajos ingresos, familias con múltiples pasaportes</div><div class="gl-score">↳ Reforma: Justificar el precio. O bajarlo.</div></div>
+            <div class="country-card"><div class="card-title">🇩🇪 Alemania</div><div class="card-mechanism">Monopolio Estatal · Reglas Estrictas de Foto</div><div class="card-stats"><div class="stat"><div class="stat-value">€60–80</div><div class="stat-label">Coste</div></div><div class="stat"><div class="stat-value">4–6 semanas</div><div class="stat-label">Espera</div></div><div class="stat"><div class="stat-value">0.10</div><div class="stat-label">GL Score</div></div></div><div class="ghost-badge">📉 Ghost GDP: Tasa de rechazo de fotos hasta 30% — retomas obligatorias</div><div>Especificaciones biométricas estrictas. Sin pre-verificación digital. Presencial requerido.</div><div class="who-enjoyed">✨ Disfruta la prosperidad: Estudios de fotografía (tarifas por retoma), Bundesdruckerei (monopolio)<br>😞 Soporta el costo: Solicitantes con fotos rechazadas — tiempo, tarifas de estudio, demoras</div><div class="gl-score">↳ Reforma: IA para pre-verificación. Reducir requisito presencial.</div></div>
+            <div class="country-card"><div class="card-title">🇫🇷 Francia</div><div class="card-mechanism">Escasez de Citas · Brecha Digital</div><div class="card-stats"><div class="stat"><div class="stat-value">€86</div><div class="stat-label">Coste</div></div><div class="stat"><div class="stat-value">3–4 semanas</div><div class="stat-label">Espera</div></div><div class="stat"><div class="stat-value">0.13</div><div class="stat-label">GL Score</div></div></div><div class="ghost-badge">📉 Ghost GDP: Tiempo de espera para citas >2 meses en grandes ciudades</div><div>Renovación online disponible, pero barreras digitales y de identificación.</div><div class="who-enjoyed">✨ Disfruta la prosperidad: ANTS (operadores de plataforma digital), quienes pueden navegar el sistema<br>😞 Soporta el costo: Ancianos, rurales, sin habilidades digitales — escasez de citas</div><div class="gl-score">↳ Reforma: Ampliar elegibilidad online. Aumentar capacidad de citas.</div></div>
+            <div class="country-card"><div class="card-title">🇨🇳 China</div><div class="card-mechanism">Brecha Digital · Exclusión Sistémica</div><div class="card-stats"><div class="stat"><div class="stat-value">¥120</div><div class="stat-label">Coste</div></div><div class="stat"><div class="stat-value">7–20 días</div><div class="stat-label">Espera</div></div><div class="stat"><div class="stat-value">—</div><div class="stat-label">GL Score</div></div></div><div class="ghost-badge">📉 Ghost GDP: Ancianos, rurales excluidos por la app</div><div>Totalmente digital. Eficiente. Barato. Solo para quienes pueden usar la app.</div><div class="who-enjoyed">✨ Disfruta la prosperidad: Ciudadanos digitalmente alfabetizados (rapidez, bajo costo), gobierno (métricas de eficiencia)<br>😞 Soporta el costo: Excluidos por la puerta digital — ancianos, rurales, usuarios de baja tecnología</div><div class="gl-score">↳ Reforma: Mantener lo digital. Mantener una puerta humana.</div></div>
         </div>
-        <div class="quote-block">«El PIB pregunta: <strong>¿Se completó la transacción?</strong>»<br>«La auditoría tradicional pregunta: <strong>¿Se siguió el proceso?</strong>»<br>«GL Framework pregunta: <strong>¿Realmente la gente recibió el servicio?</strong>»</div>
-        <p style="font-family: var(--serif); font-size: 1.5rem; color: var(--green); text-align: center; margin: 2rem 0;"><strong>¿Quién disfrutó verdaderamente la prosperidad?</strong></p>
+        <div class="quote-block">«El PIB pregunta: <strong>¿Se completó la transacción?</strong>»<br>«La auditoría tradicional pregunta: <strong>¿Se siguió el proceso?</strong>»<br>«GL Framework pregunta: <strong>¿El ciudadano recibió valor por cada dólar pagado?</strong>»</div>
+        <p style="font-family: var(--serif); font-size: 1.5rem; color: var(--green); text-align: center; margin: 2rem 0;"><strong>Renovar el pasaporte no debería ser una prueba de resistencia.</strong></p>
         <hr><div style="text-align: right;">Ping Xu<br>GFI Flow Intelligence · Boston · Junio 2026</div>
-        <div class="footer">Contacto: <a href="mailto:ping@gfiintel.com" style="color: var(--green);">ping@gfiintel.com</a> · <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6178024" style="color: var(--green);">SSRN</a></div>
+        <div class="footer">Contacto: <a href="mailto:ping@gfiintel.com">ping@gfiintel.com</a> · <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6178024">SSRN</a></div>
     </div>
 </div>
 
