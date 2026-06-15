@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="UK Institutional Diagnostic Reports — GL Framework. Universal Credit, ETA, NHS NPfIT, Birmingham Oracle ERP, NHS Waiting List.">
+  <title>UK Diagnostic Reports · GL Framework | GFI Flow Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#0b1220;
+      --bg2:#0d1526;
+      --text:#f8fbff;
+      --muted:#c7d2e3;
+      --sub:#9fb0c8;
+      --dim:rgba(255,255,255,.06);
+      --green:#9FE870;
+      --blue:#7DD3FC;
+      --serif:'DM Serif Display',Georgia,serif;
+      --mono:'DM Mono',monospace;
+      --sans:'DM Sans',system-ui,sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 15px; line-height: 1.6; overflow-x: hidden; }
+    .nav { position: fixed; inset: 0 0 auto 0; z-index: 100; height: 62px; padding: 0 clamp(18px, 5vw, 52px); display: flex; align-items: center; justify-content: space-between; background: rgba(11,18,32,0.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--dim); }
+    .logo { color: #fff; text-decoration: none; font-family: var(--mono); font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; }
+    .logo:hover { opacity: 0.8; }
+    .lang-grp { display: flex; gap: 6px; }
+    .lb-btn { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; padding: 5px 10px; border: 1px solid rgba(255,255,255,0.1); border-radius: 5px; background: none; color: var(--sub); cursor: pointer; transition: all 0.2s; }
+    .lb-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+    .lb-btn.active { color: var(--green); border-color: rgba(159,232,112,0.35); background: rgba(159,232,112,0.07); }
+    .lb { display: none; }
+    .lb.active { display: block; }
+    .page { padding-top: 82px; padding-bottom: 60px; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    
+    .page-header { text-align: center; margin-bottom: 3rem; }
+    h1 { font-family: var(--serif); font-size: 2.2rem; font-weight: 500; color: #fff; margin-bottom: 0.5rem; }
+    .subhead { color: var(--sub); font-size: 0.9rem; max-width: 700px; margin: 0 auto; }
+    .badge-uk { display: inline-block; background: rgba(159,232,112,0.15); border: 1px solid rgba(159,232,112,0.3); border-radius: 40px; padding: 0.2rem 1rem; font-size: 0.7rem; font-family: var(--mono); color: var(--green); margin-bottom: 1rem; }
+    
+    .stats-row { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; margin-bottom: 3rem; }
+    .stat-card { background: rgba(255,255,255,0.03); border: 1px solid var(--dim); border-radius: 20px; padding: 1rem 1.5rem; text-align: center; min-width: 140px; }
+    .stat-number { font-family: var(--mono); font-size: 1.6rem; font-weight: 500; color: var(--green); }
+    .stat-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+    
+    .reports-grid { display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 3rem; }
+    .report-card { background: rgba(255,255,255,0.02); border: 1px solid var(--dim); border-radius: 20px; padding: 1.5rem; transition: all 0.2s; }
+    .report-card:hover { background: rgba(255,255,255,0.04); border-color: rgba(159,232,112,0.3); }
+    .report-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; margin-bottom: 0.75rem; }
+    .report-title { font-family: var(--serif); font-size: 1.3rem; font-weight: 500; color: #fff; }
+    .report-gl { font-family: var(--mono); font-size: 1.1rem; font-weight: 500; color: var(--green); background: rgba(159,232,112,0.1); padding: 0.2rem 0.6rem; border-radius: 20px; }
+    .report-desc { color: var(--muted); font-size: 0.85rem; margin-bottom: 1rem; }
+    .report-meta { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 1.25rem; font-size: 0.75rem; color: var(--sub); font-family: var(--mono); }
+    .report-meta span { display: inline-flex; align-items: center; gap: 6px; }
+    .download-btn { display: inline-flex; align-items: center; gap: 8px; background: transparent; border: 1px solid rgba(125,211,252,0.4); padding: 0.5rem 1.2rem; border-radius: 40px; font-family: var(--mono); font-size: 0.7rem; color: var(--blue); text-decoration: none; transition: all 0.2s; }
+    .download-btn:hover { border-color: var(--blue); background: rgba(125,211,252,0.1); transform: translateY(-1px); }
+    
+    .note-box { background: rgba(0,0,0,0.3); border-left: 3px solid var(--green); padding: 1.5rem; border-radius: 16px; margin-top: 2rem; }
+    .note-box p { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.5rem; }
+    .note-box a { color: var(--blue); text-decoration: none; }
+    .note-box a:hover { text-decoration: underline; }
+    
+    .back-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 1rem; font-family: var(--mono); font-size: 0.7rem; color: var(--sub); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.2); }
+    .back-link:hover { color: var(--green); border-bottom-color: var(--green); }
+    
+    footer { text-align: center; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--dim); font-family: var(--mono); font-size: 0.65rem; color: rgba(255,255,255,0.25); }
+    footer a { color: rgba(255,255,255,0.35); text-decoration: none; }
+    footer a:hover { color: var(--green); }
+    
+    @media (max-width: 700px) {
+      .report-header { flex-direction: column; gap: 8px; }
+      .container { padding: 0 20px; }
+      h1 { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="nav">
+  <a href="index.html" class="logo">GFI Flow Intelligence</a>
+  <div class="lang-grp">
+    <button class="lb-btn active" data-lang="en">EN</button>
+    <button class="lb-btn" data-lang="tw">繁</button>
+    <button class="lb-btn" data-lang="cn">简</button>
+    <button class="lb-btn" data-lang="es">ES</button>
+  </div>
+</div>
+
+<!-- ENGLISH -->
+<div class="lb active page" data-lang="en">
+  <div class="container">
+    <div class="page-header">
+      <div class="badge-uk">United Kingdom · Institutional Diagnostics</div>
+      <h1>UK System Failure Reports</h1>
+      <div class="subhead">GL Framework structural diagnostics across five core UK institutions. Each report independently verifiable. Free download. No registration.</div>
+    </div>
+    
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-number">5</div><div class="stat-label">Reports</div></div>
+      <div class="stat-card"><div class="stat-number">0.038–0.09</div><div class="stat-label">GL Score Range</div></div>
+      <div class="stat-card"><div class="stat-number">£12.7B+</div><div class="stat-label">Documented Waste</div></div>
+      <div class="stat-card"><div class="stat-number">8.34M</div><div class="stat-label">Households Affected (UC)</div></div>
+    </div>
+    
+    <div class="reports-grid">
+      <!-- 1. Universal Credit -->
+      <div class="report-card">
+        <div class="report-header">
+          <div class="report-title">Universal Credit · DWP</div>
+          <div class="report-gl">GL = 0.074</div>
+        </div>
+        <div class="report-desc">Structural failure in Britain's primary working-age welfare system. £22.7 billion in unclaimed benefits annually. 5-week structural wait. 110,000+ reassessment backlog. IBM infrastructure modernized — denominator untouched.</div>
+        <div class="report-meta">
+          <span>📄 May 2026</span>
+          <span>🎯 8.34M households</span>
+          <span>🔍 Source: NAO, HoC Library, DWP data</span>
+        </div>
+        <a href="UK_DWP_GL_Diagnostic_Report_EN.pdf" class="download-btn" download>↓ Download PDF (EN)</a>
+      </div>
+      
+      <!-- 2. ETA Border System -->
+      <div class="report-card">
+        <div class="report-header">
+          <div class="report-title">ETA Border System · Home Office</div>
+          <div class="report-gl">GL = 0.04–0.09</div>
+        </div>
+        <div class="report-desc">Pseudo-digitalisation exposed. June 3–5, 2026 collapse: 60+ hour delays, no fallback, no official notice. Citizens missed flights, denied boarding. "No permission, no travel" enforcement with zero system-fault grace protocol.</div>
+        <div class="report-meta">
+          <span>📄 June 2026</span>
+          <span>🎯 84 visa-exempt countries</span>
+          <span>🔍 Incident: 60hr+ queue, Reddit self-diagnosis</span>
+        </div>
+        <a href="UK_ETA_GL_Diagnostic_Report_June2026.pdf" class="download-btn" download>↓ Download PDF (EN)</a>
+      </div>
+      
+      <!-- 3. NHS NPfIT Lorenzo -->
+      <div class="report-card">
+        <div class="report-header">
+          <div class="report-title">NHS NPfIT · Lorenzo EPR</div>
+          <div class="report-gl">GL = 0.038</div>
+        </div>
+        <div class="report-desc">£12.7 billion spent. £2.6 billion benefits realised. 22 trusts received Lorenzo vs 220+ target. System selected from paper descriptions. Accenture withdrew after $450M loss. The largest civilian IT failure in history — measured.</div>
+        <div class="report-meta">
+          <span>📄 May 2026</span>
+          <span>🎯 NHS England clinicians</span>
+          <span>🔍 Source: NAO, PAC 2007–2014, iSoft</span>
+        </div>
+        <a href="GL_NHS_NPfIT_Diagnostic_Report_EN_fixed.pdf" class="download-btn" download>↓ Download PDF (EN)</a>
+      </div>
+      
+      <!-- 4. Birmingham Oracle ERP -->
+      <div class="report-card">
+        <div class="report-header">
+          <div class="report-title">Birmingham City Council · Oracle ERP</div>
+          <div class="report-gl">GL = 0.071</div>
+        </div>
+        <div class="report-desc">Section 114 notice — only second in UK local government history. £760 million unquantified equal pay liability. 187 new processes at simultaneous go-live. Accounts not signed off for 18+ months. Oracle/Capgemini delivered infrastructure — not financial control.</div>
+        <div class="report-meta">
+          <span>📄 2025–2026</span>
+          <span>🎯 1.1M residents, £3.8B budget</span>
+          <span>🔍 Source: Grant Thornton, LGA peer review</span>
+        </div>
+        <a href="UK_Birmingham_GL_Diagnostic_Report_EN.pdf" class="download-btn" download>↓ Download PDF (EN)</a>
+      </div>
+      
+      <!-- 5. NHS Waiting List Crisis -->
+      <div class="report-card">
+        <div class="report-header">
+          <div class="report-title">NHS Waiting List · Care Crisis</div>
+          <div class="report-gl">GL ≈ 0.149</div>
+        </div>
+        <div class="report-desc">7.11 million waiting for treatment. 48,000 patients waiting 12+ hours in A&E — 108x increase since 2019. Bed occupancy >90% sustained. Government response: abolish NHS England, centralise power. Denominator not redesigned.</div>
+        <div class="report-meta">
+          <span>📄 June 2026</span>
+          <span>🎯 Entire UK population</span>
+          <span>🔍 Source: NHS England, BMJ, Health Service Journal</span>
+        </div>
+        <a href="UK_NHS_Waiting_GL_Diagnostic_Report_EN.pdf" class="download-btn" download>↓ Download PDF (EN)</a>
+      </div>
+    </div>
+    
+    <div class="note-box">
+      <p>📌 <strong>About these reports</strong><br>
+      All reports use the <strong>Governance Legitimacy (GL) Framework</strong> — eight parameters: wait, repetition, collapse, information asymmetry, psychological cost, opportunity cost, transfer path, systemic exclusion.<br>
+      GL = (Fs × Vn) / (Pd × Cf). Estonia benchmark: 4.20.<br>
+      No internal access required. Independent verification using public records (NAO, PAC, HoC, audited accounts, official statistics).<br>
+      <a href="index.html">← Return to main page</a></p>
+    </div>
+    
+    <footer>
+      <span>GFI Flow Intelligence · The ruler stays. Do not shift cost to the voiceless.</span><br>
+      <span>gfiintel.com | Free to use, no authorization required</span>
+    </footer>
+  </div>
+</div>
+
+<!-- 繁體中文 -->
+<div class="lb page" data-lang="tw">
+  <div class="container">
+    <div class="page-header">
+      <div class="badge-uk">英國 · 制度診斷報告</div>
+      <h1>英國系統失靈報告</h1>
+      <div class="subhead">GL框架結構性診斷——英國五個核心制度。獨立可驗證。免費下載。免註冊。</div>
+    </div>
+    
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-number">5</div><div class="stat-label">報告數量</div></div>
+      <div class="stat-card"><div class="stat-number">0.038–0.09</div><div class="stat-label">GL 分數範圍</div></div>
+      <div class="stat-card"><div class="stat-number">£127億+</div><div class="stat-label">可追溯浪費</div></div>
+      <div class="stat-card"><div class="stat-number">834萬</div><div class="stat-label">受影響家庭 (UC)</div></div>
+    </div>
+    
+    <div class="reports-grid">
+      <div class="report-card">
+        <div class="report-header"><div class="report-title">通用福利 · DWP</div><div class="report-gl">GL = 0.074</div></div>
+        <div class="report-desc">英國主要工作年齡福利系統的結構性失敗。每年 £227億 福利金未領取。5週結構性等待。11萬+ 重新評估積壓。IBM 基礎設施現代化——分母未觸及。</div>
+        <div class="report-meta"><span>📄 2026年5月</span><span>🎯 834萬家庭</span><span>🔍 來源：NAO、國會圖書館、DWP</span></div>
+        <a href="UK_DWP_GL_Diagnostic_Report_EN.pdf" class="download-btn" download>↓ 下載 PDF (英文)</a>
+      </div>
+      
+      <div class="report-card">
+        <div class="report-header"><div class="report-title">ETA 邊境系統 · 內政部</div><div class="report-gl">GL = 0.04–0.09</div></div>
+        <div class="report-desc">偽數位化現形。2026年6月3–5日崩潰：延遲60+小時、無後備、無官方公告。公民錯過航班、被拒登機。「無許可不得旅行」——系統故障無寬限期。</div>
+        <div class="report-meta"><span>📄 2026年6月</span><span>🎯 84個免簽國家</span><span>🔍 事件：60hr+排隊、Reddit自行診斷</span></div>
+        <a href="UK_ETA_GL_Diagnostic_Report_June2026.pdf" class="download-btn" download>↓ 下載 PDF (英文)</a>
+      </div>
+      
+      <div class="report-card">
+        <div class="report-header"><div class="report-title">NHS NPfIT · Lorenzo</div><div class="report-gl">GL = 0.038</div></div>
+        <div class="report-desc">支出 £127億，實現效益 £26億。僅22個信託機構收到Lorenzo，原目標220+。系統從紙上描述選型。Accenture認列 $4.5億虧損後退出。史上最大民用IT失敗——已測量。</div>
+        <div class="report-meta"><span>📄 2026年5月</span><span>🎯 英格蘭NHS臨床人員</span><span>🔍 來源：NAO、PAC 2007–2014、iSoft</span></div>
+        <a href="GL_NHS_NPfIT_Diagnostic_Report_EN_fixed.pdf" class="download-btn" download>↓ 下載 PDF (英文)</a>
+      </div>
+      
+      <div class="report-card">
+        <div class="report-header"><div class="report-title">伯明罕市議會 · Oracle ERP</div><div class="report-gl">GL = 0.071</div></div>
+        <div class="report-desc">第114條通知——英國地方政府史上第二次。£7.6億 未量化同工同酬負債。187項新流程同時上線。帳目18個月以上無法簽核。Oracle/Capgemini交付基礎設施——未交付財務控制。</div>
+        <div class="report-meta"><span>📄 2025–2026</span><span>🎯 110萬居民、£38億預算</span><span>🔍 來源：Grant Thornton、LGA同儕審查</span></div>
+        <a href="UK_Birmingham_GL_Diagnostic_Report_EN.pdf" class="download-btn" download>↓ 下載 PDF (英文)</a>
+      </div>
+      
+      <div class="report-card">
+        <div class="report-header"><div class="report-title">NHS 等待名單 · 照護危機</div><div class="report-gl">GL ≈ 0.149</div></div>
+        <div class="report-desc">711萬人等待治療。48,000名患者在急診等待12小時以上——自2019年增長108倍。床位佔用率持續 >90%。政府回應：廢除NHS England，權力集中。分母未重新設計。</div>
+        <div class="report-meta"><span>📄 2026年6月</span><span>🎯 全英國人口</span><span>🔍 來源：NHS England、BMJ、HSJ</span></div>
+        <a href="UK_NHS_Waiting_GL_Diagnostic_Report_EN.pdf" class="download-btn" download>↓ 下載 PDF (英文)</a>
+      </div>
+    </div>
+    
+    <div class="note-box">
+      <p>📌 <strong>關於這些報告</strong><br>
+      所有報告均使用治理正當性框架——八個參數：等待、重複、崩潰、資訊不對稱、心理成本、機會成本、轉移路徑、系統性排除。<br>
+      GL = (Fs × Vn) / (Pd × Cf)。愛沙尼亞基準：4.20。<br>
+      無需內部權限。使用公開記錄獨立驗證（NAO、PAC、國會、審計帳目、官方統計）。<br>
+      <a href="index.html">← 返回首頁</a></p>
+    </div>
+    
+    <footer>GFI Flow Intelligence · 尺在。不轉嫁成本給無聲的弱勢。<br>gfiintel.com | 免費使用，無需授權</footer>
+  </div>
+</div>
+
+<!-- 简体中文 -->
+<div class="lb page" data-lang="cn">
+  <div class="container">
+    <div class="page-header">
+      <div class="badge-uk">英国 · 制度诊断报告</div>
+      <h1>英国系统失灵报告</h1>
+      <div class="subhead">GL框架结构性诊断——英国五个核心制度。独立可验证。免费下载。免注册。</div>
+    </div>
+    
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-number">5</div><div class="stat-label">报告数量</div></div>
+      <div class="stat-card"><div class="stat-number">0.038–0.09</div><div class="stat-label">GL 分数范围</div></div>
+      <div class="stat-card"><div class="stat-number">£127亿+</div><div class="stat-label">可追溯浪费</div></div>
+      <div class="stat-card"><div class="stat-number">834万</div><div class="stat-label">受影响家庭 (UC)</div></div>
+    </div>
+    
+    <div class="reports-grid">
+      <div class="report-card">
+        <div class="report-header"><div class="report-title">通用福利 · DWP</div><div class="report-gl">GL = 0.074</div></div>
+        <div class="report-desc">英国主要工作年龄福利系统的结构性失败。每年 £227亿 福利金未领取。5周结构性等待。11万+ 重新评估积压。IBM 基础设施现代化——分母未触及。</div>
+        <div class="report-meta"><span>📄 2026年5月</span><span>🎯 834万家庭</span><span>🔍 来源：NAO、国会图书馆、DWP</span></div>
+        <a href="UK_DWP_GL_Diagnostic_Report_EN.pdf" class="download-btn" download>↓ 下载 PDF (英文)</a>
+      </div>
+      
+      <div class="report-card">
+        <div class="report-header"><div class="report-title">ETA 边境系统 · 内政部</div><div class="report-gl">GL = 0.04–0.09</div></div>
+        <div class="report-desc">伪数字化现形。2026年6月3–5日崩溃：延迟60+小时、无后备、无官方公告。公民错过航班、被拒登机。「无许可不得旅行」——系统故障无宽限期。</div>
+        <div class="report-meta"><span>📄 2026年6月</span><span>🎯 84个免签国家</span><span>🔍 事件：60hr+排队、Reddit自行诊断</span></div>
+        <a href="UK_ETA_GL_Diagnostic_Report_June2026.pdf" class="download-btn" download>↓ 下载 PDF (英文)</a>
+      </div>
+      
+      <div class="report-card">
+        <div class="report-header"><div class="report-title">NHS NPfIT · Lorenzo</div><div class="report-gl">GL = 0.038</div></div>
+        <div class="report-desc">支出 £127亿，实现效益 £26亿。仅22个信托机构收到Lorenzo，原目标220+。系统从纸面描述选型。Accenture认列 $4.5亿亏损后退出。史上最大民用IT失败——已测量。</div>
+        <div class="report-meta"><span>📄 2026年5月</span><span>🎯 英格兰NHS临床人员</span><span>🔍 来源：NAO、PAC 2007–2014、iSoft</span></div>
+        <a href="GL_NHS_NPfIT_Diagnostic_Report_EN_fixed.pdf" class="download-btn" download>↓ 下载 PDF (英文)</a>
+      </div>
+      
+      <div class="report-card">
+        <div class="report-header"><div class="report-title">伯明翰市议会 · Oracle ERP</div><div class="report-gl">GL = 0.071</div></div>
+        <div class="report-desc">第114条通知——英国地方政府史上第二次。£7.6亿 未量化同工同酬负债。187项新流程同时上线。账目18个月以上无法签核。Oracle/Capgemini交付基础设施——未交付财务控制。</div>
+        <div class="report-meta"><span>📄 2025–2026</span><span>🎯 110万居民、£38亿预算</span><span>🔍 来源：Grant Thornton、LGA同侪审查</span></div>
+        <a href="UK_Birmingham_GL_Diagnostic_Report_EN.pdf" class="download-btn" download>↓ 下载 PDF (英文)</a>
+      </div>
+      
+      <div class="report-card">
+        <div class="report-header"><div class="report-title">NHS 等待名单 · 照护危机</div><div class="report-gl">GL ≈ 0.149</div></div>
+        <div class="report-desc">711万人等待治疗。48,000名患者在急诊等待12小时以上——自2019年增长108倍。床位占用率持续 >90%。政府回应：废除NHS England，权力集中。分母未重新设计。</div>
+        <div class="report-meta"><span>📄 2026年6月</span><span>🎯 全英国人口</span><span>🔍 来源：NHS England、BMJ、HSJ</span></div>
+        <a href="UK_NHS_Waiting_GL_Diagnostic_Report_EN.pdf" class="download-btn" download>↓ 下载 PDF (英文)</a>
+      </div>
+    </div>
+    
+    <div class="note-box">
+      <p>📌 <strong>关于这些报告</strong><br>
+      所有报告均使用治理正当性框架——八个参数：等待、重复、崩溃、信息不对称、心理成本、机会成本、转移路径、系统性排除。<br>
+      GL = (Fs × Vn) / (Pd × Cf)。爱沙尼亚基准：4.20。<br>
+      无需内部权限。使用公开记录独立验证（NAO、PAC、国会、审计账目、官方统计）。<br>
+      <a href="index.html">← 返回首页</a></p>
+    </div>
+    
+    <footer>GFI Flow Intelligence · 尺在。不转嫁成本给无声的弱势。<br>gfiintel.com | 免费使用，无需授权</footer>
+  </div>
+</div>
+
+<!-- ESPAÑOL -->
+<div class="lb page" data-lang="es">
+  <div class="container">
+    <div class="page-header">
+      <div class="badge-uk">Reino Unido · Diagnósticos Institucionales</div>
+      <h1>Informes de Fallos del Sistema Británico</h1>
+      <div class="subhead">Diagnósticos estructurales del marco GL en cinco instituciones británicas. Verificables independientemente. Descarga gratuita. Sin registro.</div>
+    </div>
+    
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-number">5</div><div class="stat-label">Informes</div></div>
+      <div class="stat-card"><div class="stat-number">0.038–0.09</div><div class="stat-label">Rango GL</div></div>
+      <div class="stat-card"><div class="stat-number">£12.7B+</div><div class="stat-label">Desperdicio documentado</div></div>
+      <div class="stat-card"><div class="stat-number">8.34M</div><div class="stat-label">Hogares afectados (UC)</div></div>
+    </div>
+    
+    <div class="reports-grid">
+      <div class="report-card">
+        <div class="report-header"><div class="report-title">Universal Credit · DWP</div><div class="report-gl">GL = 0.074</div></div>
+        <div class="report-desc">Fallo estructural en el sistema de bienestar para población activa. £22.7 mil millones en beneficios no reclamados. Espera estructural de 5 semanas. 110,000+ casos atrasados.</div>
+        <div class="report-meta"><span>📄 Mayo 2026</span><span>🎯 8.34M hogares</span><span>🔍 Fuente: NAO, HoC Library, DWP</span></div>
+        <a href="UK_DWP_GL_Diagnostic_Report_EN.pdf" class="download-btn" download>↓ Descargar PDF (EN)</a>
+      </div>
+      
+      <div class="report-card">
+        <div class="report-header"><div class="report-title">ETA · Home Office</div><div class="report-gl">GL = 0.04–0.09</div></div>
+        <div class="report-desc">Pseudo-digitalización expuesta. Colapso del 3 al 5 de junio de 2026: demoras de 60+ horas, sin respaldo, sin aviso oficial.</div>
+        <div class="report-meta"><span>📄 Junio 2026</span><span>🎯 84 países exentos de visa</span><span>🔍 Incidente: cola 60hr+, autodiagnóstico en Reddit</span></div>
+        <a href="UK_ETA_GL_Diagnostic_Report_June2026.pdf" class="download-btn" download>↓ Descargar PDF (EN)</a>
+      </div>
+      
+      <div class="report-card">
+        <div class="report-header"><div class="report-title">NHS NPfIT · Lorenzo</div><div class="report-gl">GL = 0.038</div></div>
+        <div class="report-desc">£12.7 mil millones gastados, £2.6 mil millones en beneficios. Solo 22 fideicomisos recibieron Lorenzo frente a 220+. Seleccionado de descripciones en papel.</div>
+        <div class="report-meta"><span>📄 Mayo 2026</span><span>🎯 Clínicos NHS Inglaterra</span><span>🔍 Fuente: NAO, PAC 2007–2014</span></div>
+        <a href="GL_NHS_NPfIT_Diagnostic_Report_EN_fixed.pdf" class="download-btn" download>↓ Descargar PDF (EN)</a>
+      </div>
+      
+      <div class="report-card">
+        <div class="report-header"><div class="report-title">Birmingham · Oracle ERP</div><div class="report-gl">GL = 0.071</div></div>
+        <div class="report-desc">Aviso Section 114. £760M en pasivos por igualdad salarial. 187 nuevos procesos simultáneos. Cuentas no auditables por 18+ meses.</div>
+        <div class="report-meta"><span>📄 2025–2026</span><span>🎯 1.1M residentes, £3.8B presupuesto</span><span>🔍 Fuente: Grant Thornton, LGA</span></div>
+        <a href="UK_Birmingham_GL_Diagnostic_Report_EN.pdf" class="download-btn" download>↓ Descargar PDF (EN)</a>
+      </div>
+      
+      <div class="report-card">
+        <div class="report-header"><div class="report-title">Lista de Espera NHS</div><div class="report-gl">GL ≈ 0.149</div></div>
+        <div class="report-desc">7.11 millones esperando tratamiento. 48,000 pacientes esperando 12+ horas en urgencias — aumento de 108x desde 2019.</div>
+        <div class="report-meta"><span>📄 Junio 2026</span><span>🎯 Toda la población británica</span><span>🔍 Fuente: NHS England, BMJ, HSJ</span></div>
+        <a href="UK_NHS_Waiting_GL_Diagnostic_Report_EN.pdf" class="download-btn" download>↓ Descargar PDF (EN)</a>
+      </div>
+    </div>
+    
+    <div class="note-box">
+      <p>📌 <strong>Sobre estos informes</strong><br>
+      Todos los informes utilizan el Marco de Legitimidad Gubernamental (GL). Ocho parámetros: espera, repetición, colapso, asimetría de información, costo psicológico, costo de oportunidad, ruta de transferencia, exclusión sistémica.<br>
+      GL = (Fs × Vn) / (Pd × Cf). Referencia Estonia: 4.20.<br>
+      <a href="index.html">← Volver a la página principal</a></p>
+    </div>
+    
+    <footer>GFI Flow Intelligence · La regla persiste. No traslade costos a los vulnerables.<br>gfiintel.com | Uso libre, sin autorización</footer>
+  </div>
+</div>
+
+<script>
+  const btns = document.querySelectorAll('.lb-btn');
+  const blocks = document.querySelectorAll('.lb');
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const lang = btn.dataset.lang;
+      btns.forEach(b => b.classList.remove('active'));
+      blocks.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelector(`.lb[data-lang="${lang}"]`).classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
