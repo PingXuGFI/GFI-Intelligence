@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <meta name="description" content="GL Pseudo-Digitalisation Diagnostic Module · GFI Flow Intelligence">
+  <title>Pseudo-Digitalisation · GL Diagnostic Module | GFI Flow Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b1220;
+      --bg2: #0d1526;
+      --text: #f8fbff;
+      --muted: #c7d2e3;
+      --sub: #9fb0c8;
+      --dim: rgba(255,255,255,.06);
+      --green: #9FE870;
+      --blue: #7DD3FC;
+      --serif: 'DM Serif Display', Georgia, serif;
+      --mono: 'DM Mono', monospace;
+      --sans: 'DM Sans', system-ui, sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 15px; line-height: 1.6; overflow-x: hidden; }
+    
+    /* navigation */
+    .nav { position: fixed; inset: 0 0 auto 0; z-index: 100; height: 62px; padding: 0 clamp(18px, 5vw, 52px); display: flex; align-items: center; justify-content: space-between; background: rgba(11,18,32,0.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--dim); }
+    .logo { color: #fff; text-decoration: none; font-family: var(--mono); font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; }
+    .logo:hover { opacity: 0.8; }
+    .lang-grp { display: flex; gap: 6px; }
+    .lb-btn { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; padding: 5px 10px; border: 1px solid rgba(255,255,255,0.1); border-radius: 5px; background: none; color: var(--sub); cursor: pointer; transition: all 0.2s; }
+    .lb-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+    .lb-btn.active { color: var(--green); border-color: rgba(159,232,112,0.35); background: rgba(159,232,112,0.07); }
+    
+    /* main container */
+    .page-container { padding-top: 82px; max-width: 1300px; margin: 0 auto; padding-left: clamp(20px, 5vw, 40px); padding-right: clamp(20px, 5vw, 40px); padding-bottom: 60px; }
+    
+    /* header */
+    .hero { text-align: center; margin-bottom: 2rem; }
+    h1 { font-family: var(--serif); font-size: 2.2rem; font-weight: 500; color: #fff; letter-spacing: -0.01em; margin-bottom: 0.5rem; }
+    .sub { color: var(--sub); font-size: 0.9rem; border-bottom: 1px solid var(--dim); display: inline-block; padding-bottom: 0.5rem; margin-bottom: 1rem; }
+    
+    .definition-card { background: rgba(0,0,0,0.3); border-left: 4px solid var(--green); padding: 1.5rem; border-radius: 24px; margin-bottom: 2rem; backdrop-filter: blur(4px); text-align: center; max-width: 900px; margin-left: auto; margin-right: auto; }
+    .definition-text { font-size: 1.1rem; font-weight: 500; color: var(--muted); }
+    
+    /* two columns */
+    .two-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0; }
+    @media (max-width: 800px) { .two-columns { grid-template-columns: 1fr; gap: 2rem; } }
+    
+    .card { background: rgba(255,255,255,0.03); border: 1px solid var(--dim); border-radius: 28px; padding: 1.5rem; backdrop-filter: blur(2px); transition: 0.2s; }
+    .card h3 { font-family: var(--serif); font-size: 1.4rem; font-weight: 500; margin-bottom: 1rem; color: var(--green); border-left: 3px solid var(--green); padding-left: 12px; }
+    
+    /* questions */
+    .question-row { background: rgba(255,255,255,0.04); border-radius: 18px; padding: 1rem; margin-bottom: 1rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.8rem; border: 1px solid rgba(255,255,255,0.05); }
+    .question-text { font-weight: 500; flex: 2; min-width: 200px; font-size: 0.9rem; }
+    .btn-group { display: flex; gap: 0.6rem; }
+    .option-btn { border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.4); padding: 0.4rem 1rem; border-radius: 40px; font-size: 0.8rem; font-weight: 500; cursor: pointer; min-width: 70px; color: var(--muted); transition: all 0.15s; }
+    .option-btn.selected-yes { background: #b95f3a; border-color: #b95f3a; color: white; }
+    .option-btn.selected-no { background: #2f5b52; border-color: #2f5b52; color: white; }
+    .option-btn.selected-unknown { background: #8f7a66; border-color: #8f7a66; color: white; }
+    .option-btn:hover:not(.selected-yes):not(.selected-no):not(.selected-unknown) { border-color: rgba(159,232,112,0.5); color: var(--green); }
+    
+    .result-area { background: rgba(0,0,0,0.45); border: 1px solid rgba(159,232,112,0.25); border-radius: 28px; padding: 1.5rem; margin: 1.5rem 0; text-align: center; }
+    .diagnosis-badge { font-size: 1.3rem; font-weight: 700; font-family: var(--mono); letter-spacing: -0.3px; }
+    .risk-level { font-size: 1rem; margin-top: 0.5rem; opacity: 0.9; color: var(--blue); }
+    .flex-between { display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem; }
+    .reset-btn { background: transparent; border: 1px solid rgba(255,255,255,0.2); padding: 0.3rem 0.9rem; border-radius: 40px; cursor: pointer; font-size: 0.75rem; color: var(--sub); font-family: var(--mono); transition: 0.2s; }
+    .reset-btn:hover { border-color: var(--green); color: var(--green); }
+    
+    /* case table */
+    .case-table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+    .case-table th, .case-table td { text-align: left; padding: 0.6rem 0.3rem; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 0.8rem; }
+    .case-table th { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em; color: var(--green); }
+    .badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 30px; font-size: 0.7rem; font-weight: 600; color: white; background: #b95f3a; }
+    .badge-border { background: #c9a43b; }
+    .badge-suspect { background: #6f4e3a; }
+    .badge-negative { background: #2f5b52; }
+    
+    /* template area */
+    .diagnostic-template { background: rgba(0,0,0,0.35); border-radius: 20px; padding: 1.25rem; margin-top: 1rem; font-family: var(--mono); font-size: 0.75rem; white-space: pre-wrap; border: 1px solid rgba(255,255,255,0.08); color: var(--muted); line-height: 1.5; }
+    .template-header { font-weight: 700; margin-bottom: 0.75rem; color: var(--green); border-bottom: 1px solid rgba(159,232,112,0.2); padding-bottom: 0.5rem; font-size: 0.8rem; }
+    .copy-btn { background: rgba(159,232,112,0.12); border: 1px solid rgba(159,232,112,0.3); color: var(--green); padding: 0.4rem 1rem; border-radius: 40px; font-size: 0.7rem; font-family: var(--mono); cursor: pointer; margin-top: 0.75rem; transition: 0.2s; }
+    .copy-btn:hover { background: rgba(159,232,112,0.25); border-color: var(--green); }
+    
+    .back-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 2rem; font-family: var(--mono); font-size: 0.7rem; color: var(--blue); text-decoration: none; border-bottom: 1px solid rgba(125,211,252,0.3); }
+    .back-link:hover { border-bottom-color: var(--blue); color: var(--green); }
+    
+    footer { text-align: center; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--dim); font-family: var(--mono); font-size: 0.65rem; color: rgba(255,255,255,0.25); }
+    footer a { color: rgba(255,255,255,0.35); text-decoration: none; }
+    footer a:hover { color: var(--green); }
+  </style>
+</head>
+<body>
+<div class="nav">
+  <a href="index.html" class="logo">GFI Flow Intelligence</a>
+  <div class="lang-grp">
+    <button class="lb-btn active" data-lang="en">EN</button>
+    <button class="lb-btn" data-lang="tw">繁</button>
+    <button class="lb-btn" data-lang="cn">简</button>
+    <button class="lb-btn" data-lang="es">ES</button>
+  </div>
+</div>
+
+<div class="page-container" id="app">
+  <div class="hero">
+    <h1 id="mainTitle">Pseudo-Digitalisation · GL Diagnostic Module</h1>
+    <div class="sub" id="subTitle">Quick scan: who bears the cost when the system fails?</div>
+  </div>
+
+  <div class="definition-card">
+    <div class="definition-text" id="defText">▸ A system that works smoothly under normal conditions but shifts all failure costs to users under pressure.</div>
+  </div>
+
+  <div class="two-columns">
+    <!-- LEFT: Quick Scan -->
+    <div class="card">
+      <h3 id="scanTitle">Quick Scan</h3>
+      <div id="questionsContainer"></div>
+      <div class="flex-between">
+        <button class="reset-btn" id="resetBtn">⟳ <span id="resetText">Reset</span></button>
+        <div style="font-size: 0.7rem; color: var(--sub);" id="statusText">0 / 5 unanswered</div>
+      </div>
+      <div class="result-area">
+        <div class="diagnosis-badge" id="diagnosisResult">—</div>
+        <div class="risk-level" id="riskResult">Awaiting answers</div>
+        <div style="font-size:0.7rem; margin-top: 0.75rem; color: var(--sub);" id="glHint">GL = (Fs×Vn)/(Pd×Cf) · detecting cost-shifting</div>
+      </div>
+      <div style="margin-top: 1rem;">
+        <div style="font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.08em; color: var(--green); margin-bottom: 0.5rem;" id="caseLabel">REFERENCE CASES</div>
+        <table class="case-table" id="caseTable">
+          <thead><tr id="caseHeader"><th>System</th><th>Verdict</th><th>Risk</th></tr></thead>
+          <tbody id="caseBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- RIGHT: Diagnostic Template -->
+    <div class="card">
+      <h3 id="templateTitle">GL Diagnostic Template</h3>
+      <div class="diagnostic-template" id="diagnosticTemplate">
+        <div class="template-header" id="templateHeader">▸ GL Pseudo-Digitalisation Checklist</div>
+        <div id="templateContent">Loading...</div>
+      </div>
+      <button class="copy-btn" id="copyTemplateBtn">📋 <span id="copyText">Copy Template</span></button>
+      <p style="font-size: 0.6rem; margin-top: 0.75rem; color: var(--sub); text-align: center;" id="templateNote">Free · No registration · Use offline</p>
+      <a href="index.html" class="back-link" id="backLink">← Back to main page</a>
+    </div>
+  </div>
+
+  <footer>
+    <span id="footerText">GFI Flow Intelligence · The ruler stays. Do not shift cost to the voiceless.</span><br>
+    <span id="footerLink">gfiintel.com | Free to use, no authorization required</span>
+  </footer>
+</div>
+
+<script>
+  // ======================= MULTI-LANGUAGE DATABASE =======================
+  const texts = {
+    en: {
+      mainTitle: "Pseudo-Digitalisation · GL Diagnostic Module",
+      subTitle: "Quick scan: who bears the cost when the system fails?",
+      defText: "▸ A system that works smoothly under normal conditions but shifts all failure costs to users under pressure.",
+      scanTitle: "Quick Scan",
+      reset: "Reset",
+      statusPending: "unanswered",
+      diagnosisPending: "—",
+      riskPending: "Awaiting answers",
+      glHint: "GL = (Fs×Vn)/(Pd×Cf) · detecting cost-shifting",
+      caseLabel: "REFERENCE CASES",
+      templateTitle: "GL Diagnostic Template",
+      templateHeader: "▸ GL Pseudo-Digitalisation Checklist",
+      copyText: "Copy Template",
+      templateNote: "Free · No registration · Use offline",
+      backLink: "← Back to main page",
+      footerText: "GFI Flow Intelligence · The ruler stays. Do not shift cost to the voiceless.",
+      footerLink: "gfiintel.com | Free to use, no authorization required",
+      questions: [
+        "1. Under traffic surge, does the system freeze or cause infinite queues?",
+        "2. Is there a manual/offline fallback when the system is down?",
+        "3. Does the user bear the loss when the system fails?",
+        "4. Do performance metrics only count 'processed items', not user outcomes?",
+        "5. Is there no official outage notice, forcing users to search online?"
+      ],
+      btnYes: "Yes",
+      btnNo: "No",
+      btnUnknown: "Unknown",
+      verdictPrefix: "Verdict: ",
+      confirmed: "Pseudo-Digitalisation CONFIRMED",
+      borderline: "Borderline · Medium Risk",
+      negative: "Negative · Low Risk",
+      riskHigh: "High Risk",
+      riskMedium: "Medium Risk",
+      riskLow: "Low Risk",
+      scoreHint: (score) => `Score ${score}/5 · Cost-shifting embedded.`,
+      scoreHint2: (score) => `Score ${score}/5 · Mixed signals. Fallback may be partial.`,
+      scoreHint3: (score) => `Score ${score}/5 · Resilient design. Cost not shifted to users.`,
+      cases: [
+        { sys: "UK ETA (June 2026)", verdict: "Confirmed", risk: "High", class: "" },
+        { sys: "US ESTA", verdict: "Borderline", risk: "Medium-High", class: "badge-border" },
+        { sys: "EU ETIAS (not live)", verdict: "Highly Suspected", risk: "High", class: "badge-suspect" },
+        { sys: "Estonia e-Government", verdict: "Negative", risk: "Low", class: "badge-negative" }
+      ]
+    },
+    tw: {
+      mainTitle: "偽數位化 · GL 診斷模組",
+      subTitle: "快速掃描：系統崩潰時，誰承擔成本？",
+      defText: "▸ 正常時順暢，壓力下把全部崩潰成本轉嫁給使用者的系統。",
+      scanTitle: "快速掃描",
+      reset: "重置",
+      statusPending: "未答",
+      diagnosisPending: "—",
+      riskPending: "等待作答",
+      glHint: "GL = (Fs×Vn)/(Pd×Cf) · 偵測成本轉嫁",
+      caseLabel: "參考案例",
+      templateTitle: "GL 診斷模板",
+      templateHeader: "▸ GL 偽數位化檢查清單",
+      copyText: "複製模板",
+      templateNote: "免費 · 免註冊 · 離線使用",
+      backLink: "← 返回首頁",
+      footerText: "GFI Flow Intelligence · 尺在。不轉嫁成本給無聲的弱勢。",
+      footerLink: "gfiintel.com | 免費使用，無需授權",
+      questions: [
+        "1. 流量暴增時系統會卡死或無限排隊？",
+        "2. 系統掛掉時有手動/離線替代方案？",
+        "3. 系統出錯導致的損失，使用者自己吞？",
+        "4. 績效只看「處理完幾件」，不看使用者結果？",
+        "5. 異常時沒有官方公告，使用者自行去網路找答案？"
+      ],
+      btnYes: "是",
+      btnNo: "否",
+      btnUnknown: "未知",
+      verdictPrefix: "診斷：",
+      confirmed: "偽數位化 確診",
+      borderline: "邊緣 · 中度風險",
+      negative: "陰性 · 低風險",
+      riskHigh: "高風險",
+      riskMedium: "中風險",
+      riskLow: "低風險",
+      scoreHint: (score) => `得分 ${score}/5 · 結構性成本轉嫁確立。`,
+      scoreHint2: (score) => `得分 ${score}/5 · 部分韌性缺失，需謹慎。`,
+      scoreHint3: (score) => `得分 ${score}/5 · 制度吸收成本，非轉嫁使用者。`,
+      cases: [
+        { sys: "英國 ETA (2026年6月)", verdict: "確診", risk: "高", class: "" },
+        { sys: "美國 ESTA", verdict: "邊緣", risk: "中高", class: "badge-border" },
+        { sys: "歐盟 ETIAS (未上線)", verdict: "高度疑似", risk: "高", class: "badge-suspect" },
+        { sys: "愛沙尼亞 e-政府", verdict: "陰性", risk: "低", class: "badge-negative" }
+      ]
+    },
+    cn: {
+      mainTitle: "伪数字化 · GL 诊断模块",
+      subTitle: "快速扫描：系统崩溃时，谁承担成本？",
+      defText: "▸ 正常时顺畅，压力下把全部崩溃成本转嫁给使用者的系统。",
+      scanTitle: "快速扫描",
+      reset: "重置",
+      statusPending: "未答",
+      diagnosisPending: "—",
+      riskPending: "等待作答",
+      glHint: "GL = (Fs×Vn)/(Pd×Cf) · 侦测成本转嫁",
+      caseLabel: "参考案例",
+      templateTitle: "GL 诊断模板",
+      templateHeader: "▸ GL 伪数字化检查清单",
+      copyText: "复制模板",
+      templateNote: "免费 · 免注册 · 离线使用",
+      backLink: "← 返回首页",
+      footerText: "GFI Flow Intelligence · 尺在。不转嫁成本给无声的弱势。",
+      footerLink: "gfiintel.com | 免费使用，无需授权",
+      questions: [
+        "1. 流量暴增时系统会卡死或无限排队？",
+        "2. 系统挂掉时有手动/离线替代方案？",
+        "3. 系统出错导致的损失，使用者自己承担？",
+        "4. 绩效只看「处理完几件」，不看使用者结果？",
+        "5. 异常时没有官方公告，使用者自行去网络找答案？"
+      ],
+      btnYes: "是",
+      btnNo: "否",
+      btnUnknown: "未知",
+      verdictPrefix: "诊断：",
+      confirmed: "伪数字化 确诊",
+      borderline: "边缘 · 中度风险",
+      negative: "阴性 · 低风险",
+      riskHigh: "高风险",
+      riskMedium: "中风险",
+      riskLow: "低风险",
+      scoreHint: (score) => `得分 ${score}/5 · 结构性成本转嫁确立。`,
+      scoreHint2: (score) => `得分 ${score}/5 · 部分韧性缺失，需谨慎。`,
+      scoreHint3: (score) => `得分 ${score}/5 · 制度吸收成本，非转嫁使用者。`,
+      cases: [
+        { sys: "英国 ETA (2026年6月)", verdict: "确诊", risk: "高", class: "" },
+        { sys: "美国 ESTA", verdict: "边缘", risk: "中高", class: "badge-border" },
+        { sys: "欧盟 ETIAS (未上线)", verdict: "高度疑似", risk: "高", class: "badge-suspect" },
+        { sys: "爱沙尼亚 e-政府", verdict: "阴性", risk: "低", class: "badge-negative" }
+      ]
+    },
+    es: {
+      mainTitle: "Pseudo-Digitalización · Módulo de Diagnóstico GL",
+      subTitle: "Escaneo rápido: ¿quién asume el costo cuando el sistema falla?",
+      defText: "▸ Un sistema que funciona bien en condiciones normales pero traslada todos los costos de falla al usuario bajo presión.",
+      scanTitle: "Escaneo rápido",
+      reset: "Reiniciar",
+      statusPending: "sin responder",
+      diagnosisPending: "—",
+      riskPending: "Esperando respuestas",
+      glHint: "GL = (Fs×Vn)/(Pd×Cf) · detectando traslado de costos",
+      caseLabel: "CASOS DE REFERENCIA",
+      templateTitle: "Plantilla de Diagnóstico GL",
+      templateHeader: "▸ Lista de verificación de pseudo-digitalización GL",
+      copyText: "Copiar plantilla",
+      templateNote: "Gratis · Sin registro · Usar sin conexión",
+      backLink: "← Volver a la página principal",
+      footerText: "GFI Flow Intelligence · La regla persiste. No traslade costos a los vulnerables.",
+      footerLink: "gfiintel.com | Uso libre, sin autorización",
+      questions: [
+        "1. ¿El sistema se congela o genera colas infinitas ante un aumento de tráfico?",
+        "2. ¿Hay una alternativa manual fuera de línea cuando el sistema falla?",
+        "3. ¿El usuario asume la pérdida cuando el sistema falla?",
+        "4. ¿Las métricas solo cuentan 'casos tramitados' sin medir resultados reales?",
+        "5. ¿No hay aviso oficial de interrupción y el usuario debe buscar en internet?"
+      ],
+      btnYes: "Sí",
+      btnNo: "No",
+      btnUnknown: "Descon.",
+      verdictPrefix: "Diagnóstico: ",
+      confirmed: "Pseudo-Digitalización CONFIRMADA",
+      borderline: "Marginal · Riesgo Medio",
+      negative: "Negativo · Riesgo Bajo",
+      riskHigh: "Riesgo Alto",
+      riskMedium: "Riesgo Medio",
+      riskLow: "Riesgo Bajo",
+      scoreHint: (score) => `Puntuación ${score}/5 · Traslado de costos establecido.`,
+      scoreHint2: (score) => `Puntuación ${score}/5 · Señales mixtas. Respaldo parcial.`,
+      scoreHint3: (score) => `Puntuación ${score}/5 · Diseño resiliente. El costo no se traslada.`,
+      cases: [
+        { sys: "UK ETA (junio 2026)", verdict: "Confirmado", risk: "Alto", class: "" },
+        { sys: "ESTA EE.UU.", verdict: "Marginal", risk: "Medio-Alto", class: "badge-border" },
+        { sys: "ETIAS UE (no activo)", verdict: "Altamente Sospechoso", risk: "Alto", class: "badge-suspect" },
+        { sys: "Estonia e-Gobierno", verdict: "Negativo", risk: "Bajo", class: "badge-negative" }
+      ]
+    }
+  };
+
+  let currentLang = "en";
+  let answers = [null, null, null, null, null];
+
+  // Helper: update entire UI language
+  function updateUILanguage() {
+    const t = texts[currentLang];
+    document.getElementById("mainTitle").innerText = t.mainTitle;
+    document.getElementById("subTitle").innerText = t.subTitle;
+    document.getElementById("defText").innerHTML = t.defText;
+    document.getElementById("scanTitle").innerText = t.scanTitle;
+    document.getElementById("resetText").innerText = t.reset;
+    document.getElementById("caseLabel").innerText = t.caseLabel;
+    document.getElementById("templateTitle").innerText = t.templateTitle;
+    document.getElementById("templateHeader").innerHTML = t.templateHeader;
+    document.getElementById("copyText").innerText = t.copyText;
+    document.getElementById("templateNote").innerText = t.templateNote;
+    document.getElementById("backLink").innerHTML = t.backLink;
+    document.getElementById("footerText").innerHTML = t.footerText;
+    document.getElementById("footerLink").innerHTML = t.footerLink;
+    renderQuestions();
+    updateCaseTable();
+    updateTemplateContent();
+    updateResultDisplay();
+  }
+
+  function renderQuestions() {
+    const t = texts[currentLang];
+    const container = document.getElementById("questionsContainer");
+    container.innerHTML = "";
+    for (let i = 0; i < t.questions.length; i++) {
+      const div = document.createElement("div");
+      div.className = "question-row";
+      div.innerHTML = `
+        <div class="question-text">${t.questions[i]}</div>
+        <div class="btn-group" data-qidx="${i}">
+          <button class="option-btn" data-val="yes">${t.btnYes}</button>
+          <button class="option-btn" data-val="no">${t.btnNo}</button>
+          <button class="option-btn" data-val="unknown">${t.btnUnknown}</button>
+        </div>
+      `;
+      container.appendChild(div);
+    }
+    attachEvents();
+    updateButtonsHighlight();
+  }
+
+  function attachEvents() {
+    for (let i = 0; i < texts[currentLang].questions.length; i++) {
+      const btnGroup = document.querySelector(`.btn-group[data-qidx="${i}"]`);
+      if (!btnGroup) continue;
+      const btns = btnGroup.querySelectorAll(".option-btn");
+      btns.forEach(btn => {
+        btn.removeEventListener("click", btn._listener);
+        const handler = () => {
+          let val = null;
+          if (btn.dataset.val === "yes") val = true;
+          else if (btn.dataset.val === "no") val = false;
+          else if (btn.dataset.val === "unknown") val = null;
+          answers[i] = val;
+          updateButtonsHighlight();
+          updateResultDisplay();
+        };
+        btn.addEventListener("click", handler);
+        btn._listener = handler;
+      });
+    }
+  }
+
+  function updateButtonsHighlight() {
+    for (let i = 0; i < texts[currentLang].questions.length; i++) {
+      const answer = answers[i];
+      const btnGroup = document.querySelector(`.btn-group[data-qidx="${i}"]`);
+      if (!btnGroup) continue;
+      const btns = btnGroup.querySelectorAll(".option-btn");
+      btns.forEach(btn => {
+        btn.classList.remove("selected-yes", "selected-no", "selected-unknown");
+        if (answer === true && btn.dataset.val === "yes") btn.classList.add("selected-yes");
+        else if (answer === false && btn.dataset.val === "no") btn.classList.add("selected-no");
+        else if (answer === null && btn.dataset.val === "unknown") btn.classList.add("selected-unknown");
+      });
+    }
+    const answeredCount = answers.filter(a => a !== null).length;
+    const t = texts[currentLang];
+    document.getElementById("statusText").innerHTML = `${answeredCount} / 5 ${t.statusPending}`;
+  }
+
+  function computeScore() {
+    if (answers.some(a => a === null)) return null;
+    let score = 0;
+    if (answers[0] === true) score++;
+    if (answers[1] === false) score++;
+    if (answers[2] === true) score++;
+    if (answers[3] === true) score++;
+    if (answers[4] === true) score++;
+    return score;
+  }
+
+  function updateResultDisplay() {
+    const t = texts[currentLang];
+    const score = computeScore();
+    const answeredCount = answers.filter(a => a !== null).length;
+    let diagnosisText = t.diagnosisPending;
+    let riskText = t.riskPending;
+    let hintText = t.glHint;
+
+    if (answeredCount === 5 && score !== null) {
+      if (score >= 3) {
+        diagnosisText = t.confirmed;
+        riskText = t.riskHigh;
+        hintText = t.scoreHint(score);
+      } else if (score === 2) {
+        diagnosisText = t.borderline;
+        riskText = t.riskMedium;
+        hintText = t.scoreHint2(score);
+      } else {
+        diagnosisText = t.negative;
+        riskText = t.riskLow;
+        hintText = t.scoreHint3(score);
+      }
+    } else if (answeredCount < 5) {
+      diagnosisText = t.diagnosisPending;
+      riskText = `${answeredCount}/5 ${t.statusPending}`;
+    }
+    document.getElementById("diagnosisResult").innerHTML = `${t.verdictPrefix}${diagnosisText}`;
+    document.getElementById("riskResult").innerText = riskText;
+    document.getElementById("glHint").innerHTML = hintText;
+  }
+
+  function resetDiagnostic() {
+    answers = [null, null, null, null, null];
+    renderQuestions();
+    updateResultDisplay();
+  }
+
+  function updateCaseTable() {
+    const t = texts[currentLang];
+    const tbody = document.getElementById("caseBody");
+    tbody.innerHTML = "";
+    t.cases.forEach(c => {
+      const row = `<tr><td>${c.sys}</td><td><span class="badge ${c.class}">${c.verdict}</span></td><td>${c.risk}</td></tr>`;
+      tbody.innerHTML += row;
+    });
+  }
+
+  function getTemplateText(lang) {
+    const t = texts[lang];
+    if (!t) return "";
+    const lines = [];
+    lines.push(`GL PSEUDO-DIGITALISATION DIAGNOSTIC TEMPLATE`);
+    lines.push(`==============================================`);
+    lines.push(``);
+    lines.push(`DEFINITION:`);
+    lines.push(t.defText.replace("▸ ", "").trim());
+    lines.push(``);
+    lines.push(`FIVE INDICATORS (check if "yes" for pseudo-digital trait):`);
+    lines.push(``);
+    t.questions.forEach((q, idx) => {
+      lines.push(`[ ] ${q}`);
+    });
+    lines.push(``);
+    lines.push(`SCORING:`);
+    lines.push(`0-1 point  → Negative / Low Risk`);
+    lines.push(`2 points   → Borderline / Medium Risk`);
+    lines.push(`3-5 points → Pseudo-Digitalisation CONFIRMED / High Risk`);
+    lines.push(``);
+    lines.push(`GL FORMULA REFERENCE:`);
+    lines.push(`GL = (Fs × Vn) / (Pd × Cf)`);
+    lines.push(`- Fs: Flow success rate`);
+    lines.push(`- Vn: Strategic value (necessity)`);
+    lines.push(`- Pd: Pain duration (how long failure hurts)`);
+    lines.push(`- Cf: Cognitive friction (how hard to navigate failure)`);
+    lines.push(``);
+    lines.push(`CORE QUESTION:`);
+    lines.push(`"Who bears the cost when the system breaks?"`);
+    lines.push(``);
+    lines.push(`---`);
+    lines.push(`Generated by GFI Flow Intelligence · gfiintel.com`);
+    lines.push(`Free to use, copy, distribute. No registration required.`);
+    return lines.join('\n');
+  }
+
+  function updateTemplateContent() {
+    const content = getTemplateText(currentLang);
+    document.getElementById("templateContent").innerText = content;
+  }
+
+  function copyTemplate() {
+    const text = getTemplateText(currentLang);
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById("copyTemplateBtn");
+      const originalHtml = btn.innerHTML;
+      btn.innerHTML = "✓ Copied!";
+      setTimeout(() => { btn.innerHTML = originalHtml; }, 2000);
+    }).catch(() => { alert("Manual copy: select the template text above."); });
+  }
+
+  // Language switch event
+  document.querySelectorAll(".lb-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".lb-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      const lang = btn.getAttribute("data-lang");
+      if (lang === "en") currentLang = "en";
+      else if (lang === "tw") currentLang = "tw";
+      else if (lang === "cn") currentLang = "cn";
+      else if (lang === "es") currentLang = "es";
+      updateUILanguage();
+    });
+  });
+
+  document.getElementById("resetBtn").addEventListener("click", resetDiagnostic);
+  document.getElementById("copyTemplateBtn").addEventListener("click", copyTemplate);
+
+  // initial load
+  updateUILanguage();
+</script>
+</body>
+</html>
