@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>泰恩特與GL框架：38年後，同一把尺 · Tainter and GL Framework · GFI Flow Intelligence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0b1220;
+            color: #f8fbff;
+            font-family: 'DM Sans', system-ui, sans-serif;
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+        .logo a {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.12em;
+            color: #9FE870;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+        .lang-switch {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .lang-btn {
+            background: none;
+            border: 1px solid rgba(255,255,255,.1);
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            padding: 0.25rem 0.7rem;
+            border-radius: 2rem;
+            color: #9fb0c8;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,.3); color: #fff; }
+        .lang-btn.active {
+            background: #9FE870;
+            color: #0b1220;
+            border-color: #9FE870;
+        }
+        .content-lang { display: none; }
+        .content-lang.active { display: block; }
+
+        .article-header {
+            margin-bottom: 2rem;
+        }
+        .article-tag {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: #f08b5e;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.04em;
+        }
+        h1 {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 2.2rem;
+            font-weight: 500;
+            line-height: 1.2;
+            margin-bottom: 0.75rem;
+        }
+        .date {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: #9fb0c8;
+            margin-bottom: 1rem;
+        }
+        .essay-content p {
+            color: #c7d2e3;
+            margin-bottom: 1.2rem;
+            line-height: 1.9;
+            font-size: 1.05rem;
+        }
+        .essay-content strong {
+            color: #9FE870;
+            font-weight: 500;
+        }
+        .essay-content em {
+            color: #7DD3FC;
+            font-style: italic;
+        }
+        .gl-block {
+            background: rgba(159,232,112,0.05);
+            border-left: 3px solid #9FE870;
+            padding: 1rem 1.2rem;
+            margin: 1.5rem 0;
+            border-radius: 0 0.8rem 0.8rem 0;
+        }
+        .gl-block code {
+            font-family: 'DM Mono', monospace;
+            color: #9FE870;
+            font-size: 0.9rem;
+        }
+        .quote-block {
+            background: rgba(125,211,252,0.04);
+            border-left: 3px solid #7DD3FC;
+            padding: 1rem 1.2rem;
+            margin: 1.5rem 0;
+            border-radius: 0 0.8rem 0.8rem 0;
+            font-style: italic;
+            color: #eaf6ff;
+        }
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .comparison-item {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,.06);
+            border-radius: 0.8rem;
+            padding: 1rem;
+        }
+        .comparison-item h3 {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            color: #7DD3FC;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.04em;
+        }
+        .comparison-item ul {
+            margin: 0 0 0 1rem;
+        }
+        .comparison-item li {
+            font-size: 0.85rem;
+            color: #c7d2e3;
+            margin-bottom: 0.25rem;
+        }
+        .conclusion-box {
+            background: rgba(159,232,112,0.04);
+            border: 1px solid rgba(159,232,112,0.15);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: #9fb0c8;
+            border-top: 1px solid rgba(255,255,255,.06);
+            margin-top: 2rem;
+        }
+        .footer a { color: #9fb0c8; text-decoration: none; }
+        .footer a:hover { color: #9FE870; }
+        @media (max-width: 700px) {
+            .container { padding: 1rem; }
+            h1 { font-size: 1.5rem; }
+            .comparison-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .essay-content p { font-size: 0.95rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="logo"><a href="index.html">GFI Flow Intelligence</a></div>
+        <div class="lang-switch">
+            <button class="lang-btn active" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="tw">繁</button>
+            <button class="lang-btn" data-lang="cn">简</button>
+            <button class="lang-btn" data-lang="es">ES</button>
+        </div>
+    </div>
+
+    <!-- ================= ENGLISH ================= -->
+    <div id="lang-en" class="content-lang active">
+        <div class="article-header">
+            <div class="article-tag">GL FRAMEWORK · TAINTER · SYSTEMS THINKING</div>
+            <h1>38 Years Later, the Same Ruler</h1>
+            <div class="date">June 17, 2026 · GFI Flow Intelligence</div>
+        </div>
+        <div class="essay-content">
+
+            <p>In 1988, Joseph Tainter published <em>The Collapse of Complex Societies</em>. He asked a question that still haunts us: why do advanced civilizations fall apart?</p>
+
+            <p>His answer was simple and devastating. Complex societies don't collapse despite being complex. <strong>They collapse because they are complex.</strong></p>
+
+            <p>Tainter observed that societies add layers of complexity to solve problems. Bureaucracy. Specialization. Infrastructure. Regulation. Each layer generates returns — at first. But the easiest problems are solved first. The remaining problems are harder. They require more complexity to solve. The returns diminish.</p>
+
+            <div class="quote-block">
+                "In a situation of diminishing returns, collapse may be the most appropriate response."
+            </div>
+
+            <p>At some point, the cost of maintaining complexity exceeds the benefit it produces. The system becomes <strong>too complex to simplify</strong>. And when an external shock arrives — drought, invasion, economic crisis — the system cannot adapt. Collapse is not a failure. <strong>Collapse is the last remaining form of simplification.</strong></p>
+
+            <p>Tainter studied Rome. The Maya. The Chaco culture. He diagnosed ancient collapses. But he did not leave us a ruler.</p>
+
+            <div class="gl-block">
+                <strong>GL = (Fs × Vn) / (Pd × Cf)</strong>
+            </div>
+
+            <p>The GL Framework is that ruler. It measures what Tainter could only describe.</p>
+
+            <p><strong>Tainter described complexity.</strong> GL measures its effects.<br>
+            <strong>Tainter described diminishing returns.</strong> GL measures flow success.<br>
+            <strong>Tainter described the cost of maintenance.</strong> GL measures pain duration.<br>
+            <strong>Tainter described why collapse becomes inevitable.</strong> GL measures when the system is moving toward zero.</p>
+
+            <div class="comparison-grid">
+                <div class="comparison-item">
+                    <h3>Tainter (1988)</h3>
+                    <ul>
+                        <li>Complexity accumulates to solve problems</li>
+                        <li>Returns diminish over time</li>
+                        <li>Maintenance cost exceeds benefit</li>
+                        <li>System becomes too complex to simplify</li>
+                        <li>Collapse is the last simplification</li>
+                    </ul>
+                </div>
+                <div class="comparison-item">
+                    <h3>GL Framework (2026)</h3>
+                    <ul>
+                        <li>Cognitive friction rises (Cf ↑)</li>
+                        <li>Flow success declines (Fs ↓)</li>
+                        <li>Pain duration lengthens (Pd ↑)</li>
+                        <li>Transfer paths multiply — cost shifts to the weak</li>
+                        <li>GL moves toward zero</li>
+                    </ul>
+                </div>
+            </div>
+
+            <p>The alignment is not accidental. Tainter was diagnosing the same thing — he just didn't have a ruler. He had to describe. We can measure.</p>
+
+            <p>When Tainter studied Rome, he found a society that had added layer after layer of bureaucracy, military expenditure, and administrative complexity. Each layer kept the empire running — but the cost of running it was consuming more and more of what it produced. By the time the external pressures arrived, Rome had no room to maneuver. It couldn't simplify because the complexity had locked itself into place. Collapse was the only way out.</p>
+
+            <p>Look at what we are seeing today.</p>
+
+            <ul>
+                <li><strong>UK Universal Credit:</strong> GL 0.074. A five-week structural wait. £22.7 billion unclaimed annually. The complexity of the system has made access prohibitive.</li>
+                <li><strong>UK ETA:</strong> GL 0.04–0.09. Five vendors. Each delivered their contract. No one verified whether citizens boarded their flights. The system was "complete" — and completely broken.</li>
+                <li><strong>NHS NPfIT:</strong> GL 0.038. £12.7 billion spent. £10.1 billion net loss. The largest civilian IT failure in history — measured.</li>
+                <li><strong>Birmingham Oracle ERP:</strong> GL 0.071. Section 114 bankruptcy. 187 processes at simultaneous go-live. The system was delivered. The outcome was not.</li>
+            </ul>
+
+            <p>Tainter described the pattern. GL Framework measures it.</p>
+
+            <p>Rome could not simplify. The elites who benefited from the complexity resisted any change. The cost of maintaining the system grew faster than the system's ability to generate value. The same pattern appears in every one of these cases. The complexity exists because it serves someone. The someone resists removing it. The cost is transferred to someone else. The system degrades. GL moves toward zero.</p>
+
+            <div class="quote-block">
+                "Collapse is not a failure. It is the last remaining form of simplification — when all other forms have been blocked by those who benefit from complexity."
+            </div>
+
+            <p>What Tainter described as inevitable, GL Framework offers a way to measure and intervene.</p>
+
+            <ul>
+                <li><strong>You cannot simplify Rome.</strong> But you can ask: who verifies outcomes?</li>
+                <li><strong>You cannot undo the complexity of Universal Credit.</strong> But you can ask: who is waiting, and for how long?</li>
+                <li><strong>You cannot stop the OMB delay.</strong> But you can ask: who is accountable for verification?</li>
+            </ul>
+
+            <p>This is what the GL Verifier does. It does not attempt to reform the whole system at once. It inserts a question that the system cannot answer — and makes that question visible. It measures the denominator that was never designed.</p>
+
+            <div class="conclusion-box">
+                <p style="font-size:0.95rem;color:#eaf6ff;">
+                    Tainter diagnosed collapse.<br>
+                    <strong style="color:#9FE870;">GL Framework measures it.</strong>
+                </p>
+                <p style="font-size:0.95rem;color:#eaf6ff;margin-top:0.5rem;">
+                    He described the pattern.<br>
+                    <strong style="color:#9FE870;">We put a ruler on it.</strong>
+                </p>
+                <p style="font-size:0.75rem;color:#7DD3FC;margin-top:0.75rem;">
+                    GL = (Fs × Vn) / (Pd × Cf)
+                </p>
+            </div>
+
+            <p style="margin-top:1.5rem;"><strong>Ping Xu</strong><br>GFI Flow Intelligence</p>
+
+        </div>
+    </div>
+
+    <!-- ================= 繁體中文 ================= -->
+    <div id="lang-tw" class="content-lang">
+        <div class="article-header">
+            <div class="article-tag">GL 框架 · 泰恩特 · 系統思維</div>
+            <h1>38年後，同一把尺</h1>
+            <div class="date">2026年6月17日 · GFI Flow Intelligence</div>
+        </div>
+        <div class="essay-content">
+
+            <p>1988年，約瑟夫·泰恩特出版了《複雜社會的崩潰》。他問了一個至今仍困擾我們的問題：為什麼先進文明會瓦解？</p>
+
+            <p>他的答案簡潔而殘酷。複雜社會不是「儘管複雜卻崩潰」。<strong>它們正因為複雜才崩潰。</strong></p>
+
+            <p>泰恩特觀察到，社會為了解決問題，會不斷疊加複雜性。官僚體制、專業分工、基礎設施、監管機制。每一層在初期都能帶來效益。但最容易的問題最先被解決。剩下的問題越來越難，需要更多複雜性才能應付，效益卻越來越低。</p>
+
+            <div class="quote-block">
+                「在邊際報酬遞減的情況下，崩潰可能是最恰當的回應。」
+            </div>
+
+            <p>到了某個臨界點，維持複雜性的成本超過了它產生的效益。系統變得<strong>太複雜而無法簡化</strong>。當外部衝擊來臨——乾旱、入侵、經濟危機——系統無法適應。崩潰不是失敗。<strong>崩潰是最後剩下的簡化方式。</strong></p>
+
+            <p>泰恩特研究了羅馬、馬雅、查科文化。他診斷了古代崩潰。但他沒有留給我們一把尺。</p>
+
+            <div class="gl-block">
+                <strong>GL = (Fs × Vn) / (Pd × Cf)</strong>
+            </div>
+
+            <p>GL 框架就是那把尺。它測量了泰恩特只能描述的東西。</p>
+
+            <p><strong>泰恩特描述了複雜性。</strong> GL 測量它的效應。<br>
+            <strong>泰恩特描述了報酬遞減。</strong> GL 測量流量成功率。<br>
+            <strong>泰恩特描述了維繫成本。</strong> GL 測量痛苦持續。<br>
+            <strong>泰恩特描述了崩潰為何不可避免。</strong> GL 測量系統何時往零移動。</p>
+
+            <div class="comparison-grid">
+                <div class="comparison-item">
+                    <h3>泰恩特（1988）</h3>
+                    <ul>
+                        <li>複雜性疊加來解決問題</li>
+                        <li>報酬隨時間遞減</li>
+                        <li>維繫成本超過效益</li>
+                        <li>系統太複雜而無法簡化</li>
+                        <li>崩潰是最後的簡化</li>
+                    </ul>
+                </div>
+                <div class="comparison-item">
+                    <h3>GL 框架（2026）</h3>
+                    <ul>
+                        <li>認知摩擦升高（Cf ↑）</li>
+                        <li>流量成功率下降（Fs ↓）</li>
+                        <li>痛苦持續拉長（Pd ↑）</li>
+                        <li>轉移路徑倍增——成本轉嫁給弱勢</li>
+                        <li>GL 往零移動</li>
+                    </ul>
+                </div>
+            </div>
+
+            <p>這個對應不是巧合。泰恩特診斷的是同一件事——他只是沒有尺。他必須描述。我們可以測量。</p>
+
+            <p>泰恩特研究羅馬時，發現一個不斷疊加官僚體系、軍事支出、行政複雜性的社會。每一層都維持了帝國的運作——但維持帝國的運作成本，正在消耗帝國產出中越來越大的比例。當外部壓力來臨時，羅馬已經沒有空間可以應變。它無法簡化，因為複雜性已經鎖死自己。崩潰是唯一的出路。</p>
+
+            <p>看看我們今天看到的。</p>
+
+            <ul>
+                <li><strong>英國 Universal Credit：</strong> GL 0.074。結構性五週等待。每年 £227 億福利未領取。系統的複雜性讓取得福利變得遙不可及。</li>
+                <li><strong>英國 ETA：</strong> GL 0.04–0.09。五家供應商。每一家都交付了合約。沒有人驗證公民是否登機。系統「完成了」——也徹底失靈了。</li>
+                <li><strong>NHS NPfIT：</strong> GL 0.038。£127 億花費。£101 億淨損失。史上最大的民用 IT 失敗——已測量。</li>
+                <li><strong>伯明罕 Oracle ERP：</strong> GL 0.071。第114條破產通知。187項流程同時上線。系統交付了。成果沒有。</li>
+            </ul>
+
+            <p>泰恩特描述了模式。GL 框架測量了它。</p>
+
+            <p>羅馬無法簡化。從複雜性中獲益的精英抵制任何改變。維持系統的成本增長速度，超過了系統創造價值的能力。同樣的模式出現在每一個案例中。複雜性存在，因為它服務於某些人。某些人抵制移除它。成本被轉嫁給其他人。系統退化。GL 往零移動。</p>
+
+            <div class="quote-block">
+                「崩潰不是失敗。它是最後剩下的簡化方式——當所有其他簡化方式都被從複雜性中獲益的人阻擋之後。」
+            </div>
+
+            <p>泰恩特認為不可避免的東西，GL 框架提供了一個測量和介入的方式。</p>
+
+            <ul>
+                <li><strong>你無法簡化羅馬。</strong> 但你可以問：誰來驗證成果？</li>
+                <li><strong>你無法 undo Universal Credit 的複雜性。</strong> 但你可以問：誰在等待？等多久？</li>
+                <li><strong>你無法阻止 OMB 延遲。</strong> 但你可以問：誰對驗證負責？</li>
+            </ul>
+
+            <p>這就是 GL Verifier 在做的事。它不是試圖一次性改革整個系統。它插入一個系統無法回答的問題——然後讓這個問題被看見。它測量了從未被設計的分母。</p>
+
+            <div class="conclusion-box">
+                <p style="font-size:0.95rem;color:#eaf6ff;">
+                    泰恩特診斷了崩潰。<br>
+                    <strong style="color:#9FE870;">GL 框架測量了它。</strong>
+                </p>
+                <p style="font-size:0.95rem;color:#eaf6ff;margin-top:0.5rem;">
+                    他描述了模式。<br>
+                    <strong style="color:#9FE870;">我們放了一把尺上去。</strong>
+                </p>
+                <p style="font-size:0.75rem;color:#7DD3FC;margin-top:0.75rem;">
+                    GL = (Fs × Vn) / (Pd × Cf)
+                </p>
+            </div>
+
+            <p style="margin-top:1.5rem;"><strong>Ping Xu</strong><br>GFI Flow Intelligence</p>
+
+        </div>
+    </div>
+
+    <!-- ================= 简体中文 ================= -->
+    <div id="lang-cn" class="content-lang">
+        <div class="article-header">
+            <div class="article-tag">GL 框架 · 泰恩特 · 系统思维</div>
+            <h1>38年后，同一把尺</h1>
+            <div class="date">2026年6月17日 · GFI Flow Intelligence</div>
+        </div>
+        <div class="essay-content">
+
+            <p>1988年，约瑟夫·泰恩特出版了《复杂社会的崩溃》。他问了一个至今仍困扰我们的问题：为什么先进文明会瓦解？</p>
+
+            <p>他的答案简洁而残酷。复杂社会不是「尽管复杂却崩溃」。<strong>它们正因为复杂才崩溃。</strong></p>
+
+            <p>泰恩特观察到，社会为了解决 问题，会不断叠加复杂性。官僚体制、专业分工、基础设施、监管机制。每一层在初期都能带来效益。但最容易的问题最先被解决。剩下的问题越来越难，需要更多复杂性才能应付，效益却越来越低。</p>
+
+            <div class="quote-block">
+                「在边际报酬递减的情况下，崩溃可能是最恰当的回 应。」
+            </div>
+
+            <p>到了某个临界点，维持复杂性的成本超过了它产生的效益。系统变得<strong>太复杂而无法简化</strong>。当外部冲击来临时——干旱、入侵、经济危机——系统无法适应。崩溃不是失败。<strong>崩溃是最后剩下的简化方式。</strong></p>
+
+            <p>泰恩特研究了罗马、马雅、查科文化。他诊断了古代崩溃。但他没有留给我们一把尺。</p>
+
+            <div class="gl-block">
+                <strong>GL = (Fs × Vn) / (Pd × Cf)</strong>
+            </div>
+
+            <p>GL 框架就是那把尺。它测量了泰恩特只能描述的东西。</p>
+
+            <p><strong>泰恩特描述了复杂性。</strong> GL 测量它的效应。<br>
+            <strong>泰恩特描述了报酬递减。</strong> GL 测量流量成功率。<br>
+            <strong>泰恩特描述了维系成本。</strong> GL 测量痛苦持续。<br>
+            <strong>泰恩特描述了崩溃为何不可避免。</strong> GL 测量系统何时往零移动。</p>
+
+            <div class="comparison-grid">
+                <div class="comparison-item">
+                    <h3>泰恩特（1988）</h3>
+                    <ul>
+                        <li>复杂性叠加来解决问题</li>
+                        <li>报酬随时间递减</li>
+                        <li>维系成本超过效益</li>
+                        <li>系统太复杂而无法简化</li>
+                        <li>崩溃是最后的简化</li>
+                    </ul>
+                </div>
+                <div class="comparison-item">
+                    <h3>GL 框架（2026）</h3>
+                    <ul>
+                        <li>认知摩擦升高（Cf ↑）</li>
+                        <li>流量成功率下降（Fs ↓）</li>
+                        <li>痛苦持续拉长（Pd ↑）</li>
+                        <li>转移路径倍增——成本转嫁给弱势</li>
+                        <li>GL 往零移动</li>
+                    </ul>
+                </div>
+            </div>
+
+            <p>这个对应不是巧合。泰恩特诊断的是同一件事——他只是没有尺。他必须描述。我们可以测量。</p>
+
+            <p>泰恩特研究罗马时，发现一个不断叠加官僚体系、军事支出、行政复杂性的社会。每一层都维持了帝国的运作——但维持帝国的运作成本，正在消耗帝国产出中越来越大的比例。当外部压力来临时，罗马已经没有空间可以应变。它无法简化，因为复杂性已经锁死自己。崩溃是唯一的出路。</p>
+
+            <p>看看我们今天看到的。</p>
+
+            <ul>
+                <li><strong>英国 Universal Credit：</strong> GL 0.074。结构性五周等待。每年 £227 亿福利未领取。系统的复杂性让取得福利变得遥不可及。</li>
+                <li><strong>英国 ETA：</strong> GL 0.04–0.09。五家供应商。每一家都交付了合约。没有人验证公民是否登机。系统「完成了」——也彻底失灵了。</li>
+                <li><strong>NHS NPfIT：</strong> GL 0.038。£127 亿花费。£101 亿净损失。史上最大的民用 IT 失败——已测量。</li>
+                <li><strong>伯明翰 Oracle ERP：</strong> GL 0.071。第114条破产通知。187项流程同时上线。系统交付了。成果没有。</li>
+            </ul>
+
+            <p>泰恩特描述了模式。GL 框架测量了它。</p>
+
+            <p>罗马无法简化。从复杂性中获益的精英抵制任何改变。维持系统的成本增长速度，超过了系统创造价值的能力。同样的模式出现在每一个案例中。复杂性存在，因为它服务于某些人。某些人抵制移除它。成本被转嫁给其他人。系统退化。GL 往零移动。</p>
+
+            <div class="quote-block">
+                「崩溃不是失败。它是最后剩下的简化方式——当所有其他简化方式都被从复杂性中获益的人阻挡之后。」
+            </div>
+
+            <p>泰恩特认为不可避免的东西，GL 框架提供了一个测量和介入的方式。</p>
+
+            <ul>
+                <li><strong>你无法简化罗马。</strong> 但你可以问：谁来验证成果？</li>
+                <li><strong>你无法 undo Universal Credit 的复杂性。</strong> 但你可以问：谁在等待？等多久？</li>
+                <li><strong>你无法阻止 OMB 延迟。</strong> 但你可以问：谁对验证负责？</li>
+            </ul>
+
+            <p>这就是 GL Verifier 在做的事。它不是试图一次性改革整个系统。它插入一个系统无法回答的问题——然后让这个问题被看见。它测量了从未被设计的分母。</p>
+
+            <div class="conclusion-box">
+                <p style="font-size:0.95rem;color:#eaf6ff;">
+                    泰恩特诊断了崩溃。<br>
+                    <strong style="color:#9FE870;">GL 框架测量了它。</strong>
+                </p>
+                <p style="font-size:0.95rem;color:#eaf6ff;margin-top:0.5rem;">
+                    他描述了模式。<br>
+                    <strong style="color:#9FE870;">我们放了一把尺上去。</strong>
+                </p>
+                <p style="font-size:0.75rem;color:#7DD3FC;margin-top:0.75rem;">
+                    GL = (Fs × Vn) / (Pd × Cf)
+                </p>
+            </div>
+
+            <p style="margin-top:1.5rem;"><strong>Ping Xu</strong><br>GFI Flow Intelligence</p>
+
+        </div>
+    </div>
+
+    <!-- ================= ESPAÑOL ================= -->
+    <div id="lang-es" class="content-lang">
+        <div class="article-header">
+            <div class="article-tag">GL FRAMEWORK · TAINTER · PENSAMIENTO SISTÉMICO</div>
+            <h1>38 Años Después, la Misma Regla</h1>
+            <div class="date">17 de junio de 2026 · GFI Flow Intelligence</div>
+        </div>
+        <div class="essay-content">
+
+            <p>En 1988, Joseph Tainter publicó <em>The Collapse of Complex Societies</em>. Planteó una pregunta que aún nos persigue: ¿por qué se desmoronan las civilizaciones avanzadas?</p>
+
+            <p>Su respuesta fue simple y devastadora. Las sociedades complejas no colapsan a pesar de ser complejas. <strong>Colapsan porque son complejas.</strong></p>
+
+            <p>Tainter observó que las sociedades añaden capas de complejidad para resolver problemas. Burocracia. Especialización. Infraestructura. Regulación. Cada capa genera retornos — al principio. Pero los problemas más fáciles se resuelven primero. Los problemas restantes son más difíciles. Requieren más complejidad para resolverse. Los retornos disminuyen.</p>
+
+            <div class="quote-block">
+                "En una situación de rendimientos decrecientes, el colapso puede ser la respuesta más apropiada."
+            </div>
+
+            <p>En algún punto, el costo de mantener la complejidad supera el beneficio que produce. El sistema se vuelve <strong>demasiado complejo para simplificarse</strong>. Y cuando llega un shock externo — sequía, invasión, crisis económica — el sistema no puede adaptarse. El colapso no es un fracaso. <strong>El colapso es la última forma de simplificación.</strong></p>
+
+            <p>Tainter estudió Roma. Los mayas. La cultura Chaco. Diagnosticó colapsos antiguos. Pero no nos dejó una regla.</p>
+
+            <div class="gl-block">
+                <strong>GL = (Fs × Vn) / (Pd × Cf)</strong>
+            </div>
+
+            <p>GL Framework es esa regla. Mide lo que Tainter solo pudo describir.</p>
+
+            <p><strong>Tainter describió la complejidad.</strong> GL mide sus efectos.<br>
+            <strong>Tainter describió los rendimientos decrecientes.</strong> GL mide el éxito del flujo.<br>
+            <strong>Tainter describió el costo de mantenimiento.</strong> GL mide la duración del dolor.<br>
+            <strong>Tainter describió por qué el colapso se vuelve inevitable.</strong> GL mide cuándo el sistema se mueve hacia cero.</p>
+
+            <div class="comparison-grid">
+                <div class="comparison-item">
+                    <h3>Tainter (1988)</h3>
+                    <ul>
+                        <li>La complejidad se acumula para resolver problemas</li>
+                        <li>Los rendimientos disminuyen con el tiempo</li>
+                        <li>El costo de mantenimiento supera el beneficio</li>
+                        <li>El sistema se vuelve demasiado complejo para simplificarse</li>
+                        <li>El colapso es la última simplificación</li>
+                    </ul>
+                </div>
+                <div class="comparison-item">
+                    <h3>GL Framework (2026)</h3>
+                    <ul>
+                        <li>La fricción cognitiva aumenta (Cf ↑)</li>
+                        <li>El éxito del flujo disminuye (Fs ↓)</li>
+                        <li>La duración del dolor se alarga (Pd ↑)</li>
+                        <li>Las rutas de transferencia se multiplican</li>
+                        <li>GL se mueve hacia cero</li>
+                    </ul>
+                </div>
+            </div>
+
+            <p>Esta alineación no es accidental. Tainter estaba diagnosticando lo mismo — solo que no tenía una regla. Tuvo que describir. Nosotros podemos medir.</p>
+
+            <div class="conclusion-box">
+                <p style="font-size:0.95rem;color:#eaf6ff;">
+                    Tainter diagnosticó el colapso.<br>
+                    <strong style="color:#9FE870;">GL Framework lo mide.</strong>
+                </p>
+                <p style="font-size:0.95rem;color:#eaf6ff;margin-top:0.5rem;">
+                    Él describió el patrón.<br>
+                    <strong style="color:#9FE870;">Nosotros le pusimos una regla.</strong>
+                </p>
+                <p style="font-size:0.75rem;color:#7DD3FC;margin-top:0.75rem;">
+                    GL = (Fs × Vn) / (Pd × Cf)
+                </p>
+            </div>
+
+            <p style="margin-top:1.5rem;"><strong>Ping Xu</strong><br>GFI Flow Intelligence</p>
+
+        </div>
+    </div>
+
+</div>
+<div class="footer">
+    <a href="index.html">← Back to Home</a> · <a href="#">gfiintel.com</a>
+</div>
+
+<script>
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const lang = this.dataset.lang;
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            document.querySelectorAll('.content-lang').forEach(el => el.classList.remove('active'));
+            document.getElementById(`lang-${lang}`).classList.add('active');
+        });
+    });
+</script>
+
+</body>
+</html>
