@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GDP 是半套帳本 · GL Framework · Ping Xu · GFI Flow Intelligence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0b1220;
+            color: #f8fbff;
+            font-family: 'DM Sans', system-ui, sans-serif;
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+        .logo a {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.12em;
+            color: #9FE870;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+        .lang-switch {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .lang-btn {
+            background: none;
+            border: 1px solid rgba(255,255,255,.1);
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            padding: 0.25rem 0.7rem;
+            border-radius: 2rem;
+            color: #9fb0c8;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,.3); color: #fff; }
+        .lang-btn.active {
+            background: #9FE870;
+            color: #0b1220;
+            border-color: #9FE870;
+        }
+        .content-lang { display: none; }
+        .content-lang.active { display: block; }
+        .book-container {
+            background: #0d1526;
+            padding: 3rem 2.5rem;
+            border-radius: 4px;
+            border: 1px solid rgba(255,255,255,.06);
+        }
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            color: #9FE870;
+            letter-spacing: 0.02em;
+            font-family: 'DM Serif Display', Georgia, serif;
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 1rem;
+            color: #9fb0c8;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+        .author-line {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #7DD3FC;
+            margin-bottom: 2rem;
+        }
+        h2 {
+            font-size: 1.4rem;
+            color: #9FE870;
+            margin: 2rem 0 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+            padding-bottom: 0.3rem;
+            font-family: 'DM Serif Display', Georgia, serif;
+        }
+        h3 {
+            font-size: 1.1rem;
+            color: #7DD3FC;
+            margin: 1.5rem 0 0.75rem 0;
+            font-family: 'DM Serif Display', Georgia, serif;
+        }
+        p {
+            color: #c7d2e3;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        .quote-block {
+            border-left: 3px solid #9FE870;
+            padding-left: 1.2rem;
+            margin: 1.2rem 0;
+            color: #eaf6ff;
+            font-style: italic;
+        }
+        .highlight-box {
+            background: rgba(159, 232, 112, 0.06);
+            border: 1px solid rgba(159, 232, 112, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        .highlight-box p {
+            color: #eaf6ff;
+            margin-bottom: 0.25rem;
+        }
+        .highlight-box strong {
+            color: #9FE870;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.85rem;
+        }
+        th, td {
+            border: 1px solid rgba(255,255,255,.08);
+            padding: 0.6rem;
+            text-align: left;
+            vertical-align: top;
+            color: #c7d2e3;
+        }
+        th {
+            background: rgba(255,255,255,.03);
+            color: #9FE870;
+            font-weight: 600;
+        }
+        ul, ol {
+            margin: 1rem 0 1rem 1.5rem;
+            color: #c7d2e3;
+        }
+        li { margin-bottom: 0.25rem; }
+        .footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,.06);
+            text-align: center;
+            font-size: 0.75rem;
+            color: #9fb0c8;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 1.5rem;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: #9fb0c8;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,.06);
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            transition: 0.2s;
+        }
+        .back-link:hover {
+            border-color: rgba(255,255,255,.2);
+            color: #fff;
+        }
+        .divider {
+            border: 0;
+            border-top: 1px solid rgba(255,255,255,.08);
+            margin: 2.5rem 0;
+        }
+        .formula {
+            font-family: 'DM Mono', monospace;
+            font-size: 1.1rem;
+            color: #9FE870;
+            text-align: center;
+            padding: 0.5rem 0;
+        }
+        @media (max-width: 700px) {
+            .container { padding: 1rem; }
+            .book-container { padding: 1.5rem; }
+            h1 { font-size: 1.6rem; }
+            .highlight-box { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="logo"><a href="index.html">GFI Flow Intelligence</a></div>
+        <div class="lang-switch">
+            <button class="lang-btn active" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="tw">繁</button>
+            <button class="lang-btn" data-lang="cn">简</button>
+            <button class="lang-btn" data-lang="es">ES</button>
+        </div>
+    </div>
+
+    <!-- ================= ENGLISH ================= -->
+    <div id="lang-en" class="content-lang active">
+        <div class="book-container">
+            <h1>GDP Is a Half-Ledger</h1>
+            <div class="subtitle">Why the World's Most Important Economic Metric Is Missing Half the Story</div>
+            <div class="author-line">Ping Xu · GFI Flow Intelligence · June 2026</div>
+
+            <h2>Introduction</h2>
+            <p>GDP is a half-ledger.</p>
+            <p>Traditional GDP only records what has been transacted at market price. But governance costs, institutional friction, and legitimacy depletion are not recorded — even though they are real costs.</p>
+
+            <h2>What GDP Records</h2>
+            <p>The GDP expenditure identity is:</p>
+            <div class="formula">GDP = C + I + G + (X − M)</div>
+            <p>It only counts:</p>
+            <ul>
+                <li>Consumption</li>
+                <li>Investment</li>
+                <li>Government spending</li>
+                <li>Net exports</li>
+            </ul>
+
+            <h2>What GDP Does Not Record</h2>
+            <ul>
+                <li>Hidden losses from failed policies</li>
+                <li>Time consumed by administrative friction</li>
+                <li>Sunk costs from procurement failures</li>
+                <li>Citizens' lost trust</li>
+                <li>Organizations gaming KPIs</li>
+                <li>Land misallocation</li>
+                <li>Compliance theater</li>
+            </ul>
+            <p>These often have no market price, do not appear in financial statements, and do not enter GDP — but they are real costs.</p>
+
+            <div class="highlight-box">
+                <p><strong>Traditional GDP records credits, not debits.</strong></p>
+            </div>
+
+            <h2>A Company Analogy</h2>
+            <p>If a company only prepared an income statement and no balance sheet, it might show high revenue and fast growth. But its accounts receivable could be rotting, liabilities could be exploding, and assets could be empty. Then it suddenly collapses.</p>
+            <p>Countries are no different.</p>
+
+            <h2>GDP vs GL</h2>
+            <table>
+                <thead><tr><th>GDP</th><th>GL Framework</th></tr></thead>
+                <tbody>
+                    <tr><td>Cash flow statement</td><td>Full accounting system</td></tr>
+                    <tr><td>Money is flowing</td><td>Is the flow healthy, or is it burning institutional capital?</td></tr>
+                </tbody>
+            </table>
+
+            <div class="quote-block">
+                <p><strong>GDP says "money is moving." GL asks: "Is this movement healthy? Or is it burning institutional capital?"</strong></p>
+            </div>
+
+            <h2>Ghost GDP</h2>
+            <p>Some GDP growth is actually:</p>
+            <ul>
+                <li>Future extraction</li>
+                <li>Institutional depletion</li>
+                <li>Hidden subsidy</li>
+                <li>Governance debt</li>
+            </ul>
+            <p>Suppose a country has surging housing prices, booming construction, and GDP growth of 8%. Conventional economists say: "Great growth."</p>
+            <p>GL might say:</p>
+            <div class="quote-block">
+                <p><strong>"No. You are just pre-borrowing future governance costs."</strong></p>
+            </div>
+
+            <h2>Conclusion</h2>
+            <p>GDP is not "incomplete." GDP is "half a ledger by design."</p>
+            <p>Modern macroeconomics has a dashboard that, from its inception, was missing half the story.</p>
+
+            <hr class="divider">
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · Creator of the GL Framework · June 2026</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · Free download · Free distribution · Please retain author attribution</p>
+                <a href="index.html" class="back-link">← Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= 繁體中文 ================= -->
+    <div id="lang-tw" class="content-lang">
+        <div class="book-container">
+            <h1>GDP 是半套帳本</h1>
+            <div class="subtitle">為什麼全世界最重要的經濟指標漏掉了另一半</div>
+            <div class="author-line">Ping Xu · GFI Flow Intelligence · 2026年6月</div>
+
+            <h2>導論</h2>
+            <p>GDP 是半套帳本。</p>
+            <p>傳統 GDP 只記錄了有被市場交易的價值。但治理成本、制度摩擦、正當性耗損——這些都沒有被記錄，但它們是真實的成本。</p>
+
+            <h2>GDP 記錄了什麼</h2>
+            <p>GDP 的支出面恆等式是：</p>
+            <div class="formula">GDP = C + I + G + (X − M)</div>
+            <p>它只算了：</p>
+            <ul>
+                <li>消費</li>
+                <li>投資</li>
+                <li>政府支出</li>
+                <li>淨出口</li>
+            </ul>
+
+            <h2>GDP 沒有記錄什麼</h2>
+            <ul>
+                <li>錯誤政策造成的隱性損失</li>
+                <li>行政摩擦消耗的時間</li>
+                <li>採購失靈的沉沒成本</li>
+                <li>公民流失的信任</li>
+                <li>組織玩弄 KPI</li>
+                <li>土地錯配</li>
+                <li>合規表演</li>
+            </ul>
+            <p>這些東西常常沒有市場價格、不進財報、不進 GDP——但它們是真實成本。</p>
+
+            <div class="highlight-box">
+                <p><strong>傳統 GDP 只記 credit（貸項），不記 debit（借項）。</strong></p>
+            </div>
+
+            <h2>企業的比喻</h2>
+            <p>一家公司如果只做收入表，不做資產負債表，會怎樣？收入很高、成長很快，但應收帳款爛掉、負債爆炸、資產是空的。最後突然崩潰。</p>
+            <p>國家也是一樣。</p>
+
+            <h2>GDP vs GL</h2>
+            <table>
+                <thead><tr><th>GDP</th><th>GL Framework</th></tr></thead>
+                <tbody>
+                    <tr><td>現金流量表</td><td>完整會計系統</td></tr>
+                    <tr><td>錢在流動</td><td>這個流動健康嗎？還是在燃燒制度資本？</td></tr>
+                </tbody>
+            </table>
+
+            <div class="quote-block">
+                <p><strong>GDP 說「錢在流動」。GL 問：「這個流動是健康的嗎？還是在燃燒制度資本？」</strong></p>
+            </div>
+
+            <h2>Ghost GDP</h2>
+            <p>有些 GDP 成長，本質上是：</p>
+            <ul>
+                <li>未來的被提前提取</li>
+                <li>制度資本的耗損</li>
+                <li>隱藏補貼</li>
+                <li>治理負債</li>
+            </ul>
+            <p>假設一個國家：房價暴漲、建設暴增、GDP 上升 8%。傳統經濟學家會說：「Great growth。」</p>
+            <p>GL 可能會說：</p>
+            <div class="quote-block">
+                <p><strong>「不。你只是把未來的治理成本提前透支了。」</strong></p>
+            </div>
+
+            <h2>結論</h2>
+            <p>GDP 不是「不完整」。GDP 是「從設計上就漏掉了半套帳」。</p>
+            <p>現代宏觀經濟學的核心儀表板，從設計上就漏掉了另一半。</p>
+
+            <hr class="divider">
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · GL Framework 創建者 · 2026年6月</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · 免費下載 · 自由轉載 · 請保留作者署名</p>
+                <a href="index.html" class="back-link">← 返回首頁</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= 简体中文 ================= -->
+    <div id="lang-cn" class="content-lang">
+        <div class="book-container">
+            <h1>GDP 是半套账本</h1>
+            <div class="subtitle">为什么全世界最重要的经济指标漏掉了另一半</div>
+            <div class="author-line">Ping Xu · GFI Flow Intelligence · 2026年6月</div>
+
+            <h2>导论</h2>
+            <p>GDP 是半套账本。</p>
+            <p>传统 GDP 只记录了有被市场交易的价值。但治理成本、制度摩擦、正当性耗损——这些都没有被记录，但它们是真实的成本。</p>
+
+            <h2>GDP 记录了什么</h2>
+            <p>GDP 的支出面恒等式是：</p>
+            <div class="formula">GDP = C + I + G + (X − M)</div>
+            <p>它只算了：</p>
+            <ul>
+                <li>消费</li>
+                <li>投资</li>
+                <li>政府支出</li>
+                <li>净出口</li>
+            </ul>
+
+            <h2>GDP 没有记录什么</h2>
+            <ul>
+                <li>错误政策造成的隐性损失</li>
+                <li>行政摩擦消耗的时间</li>
+                <li>采购失灵的沉没成本</li>
+                <li>公民流失的信任</li>
+                <li>组织玩弄 KPI</li>
+                <li>土地错配</li>
+                <li>合规表演</li>
+            </ul>
+            <p>这些东西常常没有市场价格、不进财报、不进 GDP——但它们是真实的成本。</p>
+
+            <div class="highlight-box">
+                <p><strong>传统 GDP 只记 credit（贷项），不记 debit（借项）。</strong></p>
+            </div>
+
+            <h2>企业的比喻</h2>
+            <p>一家公司如果只做收入表，不做资产负债表，会怎样？收入很高、成长很快，但应收帐款烂掉、负债爆炸、资产是空的。最后突然崩溃。</p>
+            <p>国家也是一样。</p>
+
+            <h2>GDP vs GL</h2>
+            <table>
+                <thead><tr><th>GDP</th><th>GL Framework</th></tr></thead>
+                <tbody>
+                    <tr><td>现金流量表</td><td>完整会计系统</td></tr>
+                    <tr><td>钱在流动</td><td>这个流动健康吗？还是在燃烧制度资本？</td></tr>
+                </tbody>
+            </table>
+
+            <div class="quote-block">
+                <p><strong>GDP 说「钱在流动」。GL 问：「这个流动是健康的吗？还是在燃烧制度资本？」</strong></p>
+            </div>
+
+            <h2>Ghost GDP</h2>
+            <p>有些 GDP 成长，本质上是：</p>
+            <ul>
+                <li>未来的被提前提取</li>
+                <li>制度资本的耗损</li>
+                <li>隐藏补贴</li>
+                <li>治理负债</li>
+            </ul>
+            <p>假设一个国家：房价暴涨、建设暴增、GDP 上升 8%。传统经济学家会说：「Great growth。」</p>
+            <p>GL 可能会说：</p>
+            <div class="quote-block">
+                <p><strong>「不。你只是把未来的治理成本提前透支了。」</strong></p>
+            </div>
+
+            <h2>结论</h2>
+            <p>GDP 不是「不完整」。GDP 是「从设计上就漏掉了半套账」。</p>
+            <p>现代宏观经济学的核心仪表板，从设计上就漏掉了另一半。</p>
+
+            <hr class="divider">
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · GL Framework 创建者 · 2026年6月</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · 免费下载 · 自由转载 · 请保留作者署名</p>
+                <a href="index.html" class="back-link">← 返回首页</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= ESPAÑOL ================= -->
+    <div id="lang-es" class="content-lang">
+        <div class="book-container">
+            <h1>El PIB es un Libro Mayor a Medias</h1>
+            <div class="subtitle">Por qué el indicador económico más importante del mundo omite la mitad de la historia</div>
+            <div class="author-line">Ping Xu · GFI Flow Intelligence · Junio 2026</div>
+
+            <h2>Introducción</h2>
+            <p>El PIB es un libro mayor a medias.</p>
+            <p>El PIB tradicional solo registra lo que ha sido transado a precio de mercado. Pero los costos de gobernanza, la fricción institucional y el agotamiento de la legitimidad no se registran, aunque son costos reales.</p>
+
+            <h2>Qué registra el PIB</h2>
+            <p>La identidad del gasto del PIB es:</p>
+            <div class="formula">PIB = C + I + G + (X − M)</div>
+            <p>Solo cuenta:</p>
+            <ul>
+                <li>Consumo</li>
+                <li>Inversión</li>
+                <li>Gasto público</li>
+                <li>Exportaciones netas</li>
+            </ul>
+
+            <h2>Qué no registra el PIB</h2>
+            <ul>
+                <li>Pérdidas ocultas por políticas fallidas</li>
+                <li>Tiempo consumido por fricción administrativa</li>
+                <li>Costos hundidos por fallas en adquisiciones</li>
+                <li>Confianza perdida por los ciudadanos</li>
+                <li>Organizaciones que manipulan KPI</li>
+                <li>Mala asignación de tierras</li>
+                <li>Teatro de cumplimiento</li>
+            </ul>
+            <p>Estos a menudo no tienen precio de mercado, no aparecen en los estados financieros y no entran en el PIB — pero son costos reales.</p>
+
+            <div class="highlight-box">
+                <p><strong>El PIB tradicional registra créditos, no débitos.</strong></p>
+            </div>
+
+            <h2>Una analogía empresarial</h2>
+            <p>Si una empresa solo preparara una cuenta de resultados y ningún balance general, podría mostrar altos ingresos y rápido crecimiento. Pero sus cuentas por cobrar podrían estar pudriéndose, sus pasivos explotando y sus activos vacíos. Entonces colapsa repentinamente.</p>
+            <p>Los países no son diferentes.</p>
+
+            <h2>PIB vs GL</h2>
+            <table>
+                <thead><tr><th>PIB</th><th>GL Framework</th></tr></thead>
+                <tbody>
+                    <tr><td>Estado de flujo de efectivo</td><td>Sistema contable completo</td></tr>
+                    <tr><td>El dinero fluye</td><td>¿Es saludable ese flujo o está quemando capital institucional?</td></tr>
+                </tbody>
+            </table>
+
+            <div class="quote-block">
+                <p><strong>El PIB dice "el dinero se mueve". GL pregunta: "¿Es saludable este movimiento? ¿O está quemando capital institucional?"</strong></p>
+            </div>
+
+            <h2>PIB Fantasma</h2>
+            <p>Algunos crecimientos del PIB son en realidad:</p>
+            <ul>
+                <li>Extracción futura</li>
+                <li>Agotamiento institucional</li>
+                <li>Subsidio oculto</li>
+                <li>Deuda de gobernanza</li>
+            </ul>
+            <p>Supongamos que un país tiene precios de vivienda en aumento, construcción en auge y un crecimiento del PIB del 8%. Los economistas convencionales dirían: "Gran crecimiento".</p>
+            <p>GL podría decir:</p>
+            <div class="quote-block">
+                <p><strong>"No. Solo estás pre-endeudando los costos de gobernanza del futuro."</strong></p>
+            </div>
+
+            <h2>Conclusión</h2>
+            <p>El PIB no es "incompleto". El PIB es "medio libro mayor por diseño".</p>
+            <p>El tablero de control central de la macroeconomía moderna, desde su diseño, omite la otra mitad de la historia.</p>
+
+            <hr class="divider">
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · Creadora del GL Framework · Junio 2026</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · Descarga gratuita · Distribución libre · Por favor, mantenga la atribución del autor</p>
+                <a href="index.html" class="back-link">← Volver al Inicio</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const lang = this.dataset.lang;
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            document.querySelectorAll('.content-lang').forEach(el => el.classList.remove('active'));
+            document.getElementById(`lang-${lang}`).classList.add('active');
+        });
+    });
+</script>
+</body>
+</html>
