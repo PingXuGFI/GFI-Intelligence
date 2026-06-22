@@ -3,288 +3,345 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UK ETA System Collapse — GL Diagnostic Report | GFI Flow Intelligence</title>
+    <title>UK ETA System Collapse · GL Diagnostic · GFI Flow Intelligence</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --bg: #0b1220;
+            --bg2: #0d1526;
+            --text: #f8fbff;
+            --muted: #c7d2e3;
+            --sub: #9fb0c8;
+            --dim: rgba(255,255,255,.06);
+            --green: #9FE870;
+            --blue: #7DD3FC;
+            --gold: #c89a2a;
+            --red: #f87171;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --mono: 'DM Mono', monospace;
+            --sans: 'DM Sans', system-ui, sans-serif;
         }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
-            background: #fafaf8;
-            color: #1a1a1a;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 16px;
             line-height: 1.5;
-            padding: 2rem;
+            padding: 2rem 1rem;
         }
-        .report-container {
+        .container {
             max-width: 1100px;
             margin: 0 auto;
-            background: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            background: var(--bg2);
+            border: 1px solid var(--dim);
+            border-radius: 28px;
+            padding: 2rem;
         }
-        /* Print optimization */
-        @media print {
-            body {
-                padding: 0;
-                background: white;
-            }
-            .report-container {
-                box-shadow: none;
-                padding: 0;
-            }
-            .print-break {
-                page-break-before: always;
-            }
-            .no-break {
-                page-break-inside: avoid;
-            }
-        }
-        h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            border-left: 4px solid #c0392b;
-            padding-left: 1rem;
-            color: #1a1a1a;
-        }
-        h2 {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin: 1.5rem 0 0.75rem 0;
-            color: #2c3e50;
-            border-bottom: 1px solid #e0e0e0;
-            padding-bottom: 0.3rem;
-        }
-        h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            margin: 1rem 0 0.5rem 0;
-            color: #2c3e50;
-        }
-        .meta-bar {
+        @media (min-width: 768px) { .container { padding: 3rem; } }
+        .header {
             display: flex;
+            justify-content: space-between;
+            align-items: baseline;
             flex-wrap: wrap;
-            gap: 2rem;
-            background: #f0f0ec;
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            color: #2c3e50;
-            border: 1px solid #e0dcd5;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--dim);
         }
-        .meta-bar strong {
-            color: #1a1a1a;
+        .logo a {
+            font-family: var(--mono);
+            font-size: 1rem;
+            letter-spacing: 0.12em;
+            color: var(--green);
+            text-transform: uppercase;
+            white-space: pre-line;
+            line-height: 1.3;
+            text-decoration: none;
+        }
+        .contact {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            color: var(--sub);
+        }
+        .contact a { color: var(--green); text-decoration: none; }
+        h1, h2, h3 { font-family: var(--serif); font-weight: normal; letter-spacing: -0.01em; }
+        h1 { font-size: 2.8rem; margin-bottom: 0.5rem; color: #fff; }
+        h2 { font-size: 1.8rem; margin: 1.8rem 0 1rem; border-left: 4px solid var(--green); padding-left: 1rem; }
+        h3 { font-size: 1.3rem; margin: 1.5rem 0 0.8rem; color: var(--green); }
+        .meta {
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            color: var(--sub);
+            border-bottom: 1px solid var(--dim);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
         .gl-score-box {
-            background: #1a3a3a;
-            color: #e8f5e9;
-            padding: 1rem;
+            background: rgba(248, 113, 113, 0.08);
+            border: 1px solid var(--red);
+            border-radius: 20px;
+            padding: 1.2rem;
+            margin: 1.5rem 0;
             text-align: center;
-            border-radius: 4px;
-            margin: 1rem 0;
         }
-        .gl-score {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #d4e157;
+        .gl-score-number {
+            font-family: var(--mono);
+            font-size: 3.5rem;
+            font-weight: 500;
+            color: var(--red);
+            line-height: 1;
+        }
+        .gl-score-label {
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            color: var(--sub);
+        }
+        .formula {
+            font-family: var(--mono);
+            background: var(--bg);
+            padding: 0.8rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 1rem 0;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 1rem 0;
+            margin: 1.2rem 0;
+            font-size: 0.85rem;
         }
         th, td {
-            border: 1px solid #ddd;
-            padding: 0.6rem;
+            border: 1px solid var(--dim);
+            padding: 0.7rem;
             text-align: left;
             vertical-align: top;
-            font-size: 0.85rem;
         }
-        th {
-            background: #f5f5f0;
-            font-weight: 600;
-            color: #2c3e50;
+        th { background: rgba(255,255,255,0.05); font-family: var(--mono); font-weight: 500; }
+        .badge {
+            display: inline-block;
+            background: rgba(159,232,112,0.15);
+            color: var(--green);
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            margin-right: 0.5rem;
         }
-        td {
-            color: #333;
-        }
-        .note {
-            background: #fef9e6;
-            padding: 1rem;
-            border-left: 3px solid #c0392b;
-            margin: 1rem 0;
-            font-size: 0.85rem;
-            color: #2c3e50;
-        }
-        .supplier-section {
-            background: #f8f8f5;
-            padding: 1rem;
-            margin: 1rem 0;
-            border: 1px solid #e0dcd5;
-        }
-        .supplier-section h3 {
-            color: #c0392b;
-            margin-top: 0;
-        }
-        .footer {
+        hr { border: none; border-top: 1px solid var(--dim); margin: 2rem 0; }
+        .footer-note {
             margin-top: 2rem;
             padding-top: 1rem;
-            font-size: 0.7rem;
-            color: #888;
+            font-size: 0.75rem;
+            color: var(--sub);
+            border-top: 1px solid var(--dim);
             text-align: center;
-            border-top: 1px solid #eee;
         }
-        @media (max-width: 700px) {
-            body { padding: 1rem; }
-            th, td { font-size: 0.7rem; padding: 0.4rem; }
+        a { color: var(--green); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .home-link {
+            margin-top: 2rem;
+            text-align: center;
+            font-family: var(--mono);
+            font-size: 0.8rem;
+        }
+        .download-pdf {
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 24px;
+            background: rgba(159,232,112,0.1);
+            border: 1px solid var(--green);
+            border-radius: 40px;
+            color: var(--green);
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .download-btn:hover {
+            background: rgba(159,232,112,0.2);
+            border-color: var(--green);
+            transform: translateY(-2px);
+        }
+        .incident-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1.2rem 0;
+        }
+        .incident-card {
+            background: rgba(255,255,255,.02);
+            border: 1px solid var(--dim);
+            border-radius: 12px;
+            padding: 1rem;
+        }
+        .incident-card .label {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--sub);
+        }
+        .incident-card .value {
+            font-size: 0.9rem;
+            color: #fff;
+            margin-top: 0.2rem;
+        }
+        .case-block {
+            background: rgba(125,211,252,0.04);
+            border-left: 3px solid var(--blue);
+            padding: 1rem 1.2rem;
+            margin: 0.8rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .case-block p { color: #eaf6ff; font-size: 0.9rem; margin-bottom: 0.25rem; }
+        .case-block strong { color: var(--blue); }
+        .comparison-highlight { background: rgba(248, 113, 113, 0.04); }
+        @media (max-width: 700px) { .incident-grid { grid-template-columns: 1fr; } }
+        @media print {
+            body { background: white; color: black; padding: 0; }
+            .container { background: white; border: none; }
+            .gl-score-box { border-color: #ccc; background: #f9f9f9; }
+            .gl-score-number { color: #cc0000; }
+            .badge { background: #eef; color: #2c5e2e; }
+            .formula { background: #f4f4f4; }
+            th, td { border-color: #ccc; }
+            .download-pdf { display: none; }
         }
     </style>
 </head>
 <body>
-<div class="report-container" style="padding: 2rem;">
-
-<h1>UK Electronic Travel Authorisation (ETA) System Collapse — June 2026</h1>
-<p><strong>Public Diagnostic Brief · GFI Flow Intelligence</strong></p>
-
-<div class="meta-bar">
-    <span><strong>INCIDENT DATE:</strong> June 3–5, 2026</span>
-    <span><strong>SYSTEM:</strong> UK Home Office ETA – GOV.UK portal + mobile app</span>
-    <span><strong>SCALE:</strong> 84 visa-exempt countries · millions of annual applicants</span>
-    <span><strong>ENFORCEMENT:</strong> "No permission, no travel" – strict boarding denial</span>
-</div>
-
-<div class="gl-score-box">
-    <div class="gl-score">GL = 0.04–0.09</div>
-    <div>Acute Structural Failure — Pseudo-Digitalisation Exposed</div>
-</div>
-
-<p>The UK ETA system digitised a border permission process without building resilience into the delivery layer. When demand spiked, the system did not degrade gracefully — it blocked citizens at the point of highest consequence: the boarding gate. Missed flights, denied boarding, and unacknowledged outages are not edge cases. They are the cost of treating implementation as delivery.</p>
-
-<h2>WHAT HAPPENED</h2>
-<p>Beginning June 3, 2026, the UK Home Office ETA portal — the mandatory gateway for 84 visa-exempt nationalities including US and Canadian citizens — began displaying "currently busy" errors. Virtual queue wait times exceeded 60 minutes. The companion mobile application simultaneously logged out users repeatedly or blocked access entirely. Processing times stretched past 60 hours for some applicants.</p>
-<p>The Home Office did not issue a formal outage notice. Its spokesperson later confirmed only that "the service had still met its published standard for processing applications within three working days" — a statement that provided no relief to travelers with same-day or next-day departures.</p>
-<p>Because the UK operates a strict "no permission, no travel" enforcement regime — requiring airlines, trains, and ferry operators to deny boarding to any passenger without an approved ETA — a processing delay became a travel denial. There was no fallback. No manual override. No grace period. The system's failure was the citizen's problem.</p>
-
-<h2>AFFECTED INDIVIDUALS — DOCUMENTED CASES</h2>
-<ul>
-    <li><strong>Australian traveller, Barcelona → London:</strong> "Rosey" applied June 2 for a June 3 flight. ETA did not arrive. She missed a concert she had waited 17 years to see. Home Office later confirmed system issues during her application window.</li>
-    <li><strong>Multiple families, international airports:</strong> Split approvals — some members approved, others pending. Carriers enforced ETA requirement individually, resulting in partial family boarding denials.</li>
-    <li><strong>Business and transit travellers:</strong> Turned away at check-in with applications still processing. Several purchased new flights, forfeited non-refundable hotels, rebooked at significant personal cost.</li>
-</ul>
-
-<h2>GL CALCULATION — INCIDENT WINDOW</h2>
-<p><strong>GL = (Fs × Vn) / (Pd × Cf)</strong></p>
-<table>
-    <thead><tr><th width="20%">Parameter</th><th>Value</th><th>Definition</th></tr></thead>
-    <tbody>
-        <tr><td>Fs — Flow success rate</span></td><td>0.08</td><td>Estimated proportion receiving timely approval during June 3–5. Tens of thousands stuck in queue or denied boarding.</td></tr>
-        <tr><td>Vn — Strategic value</td><td>1.8</td><td>Border access is high-necessity. Cannot be deferred or substituted. Failure is total, not partial.</td></tr>
-        <tr><td>Pd — Pain duration</td><td>2.0x</td><td>60+ hour delays when applicants had hours to departure. Consequences irreversible (missed flights, connections).</td></tr>
-        <tr><td>Cf — Cognitive friction</td><td>1.8x</td><td>No official outage notice. No manual fallback. Citizens self-diagnosed via Reddit and travel forums.</td></tr>
-    </tbody>
-</table>
-<p><strong>GL = (0.08 × 1.8) / (2.0 × 1.8) = 0.144 / 3.6 = 0.04</strong> (incident window lower bound; normal operation GL ≈ 1.20)</p>
-
-<h2>COMPARATIVE GL SCORES</h2>
-<table>
-    <thead>
-        <tr><th>System</th><th>GL Score</th><th>Key Characteristic</th></tr>
-    </thead>
-    <tbody>
-        <tr><td>Estonia Digital Government</td><td>4.20</td><td>Pre-loaded eligibility. Citizen receives, does not apply. Zero queue.</td></tr>
-        <tr><td>UK ETA — normal operation (pre-incident)</td><td>1.20</td><td>Fast approval (minutes). Adequate under normal load.</td></tr>
-        <tr><td>UK ETA — June 3–5, 2026 (incident window)</td><td>0.04–0.09</td><td>System busy. 60+ hour delays. No fallback. Boarding denial.</td></tr>
-        <tr><td>UK Universal Credit (structural benchmark)</td><td>0.074</td><td>Same pattern: infrastructure modernised, denominator ignored.</td></tr>
-    </tbody>
-</table>
-
-<!-- Supplier ecosystem section -->
-<div class="supplier-section">
-    <h3>SUPPLIER ECOSYSTEM — WHERE ACCOUNTABILITY WAS FRAGMENTED</h3>
-    <p>The UK ETA system was not built by a single contractor. It was assembled from five layers, each delivered by a different vendor. Each vendor met its contractual obligations. No vendor was responsible for whether a citizen could board their flight.</p>
-    
-    <table>
-        <thead>
-            <tr><th>Layer</th><th>Vendor</th><th>Contract Scope</th><th>GL Accountability Gap</th></tr>
-        </thead>
-        <tbody>
-            <tr><td>Digital Identity Platform</td><td><strong>Entrust</strong></td><td>Citizen identity orchestration, ETA/eVISA integration</td><td>Verified identity. Did not verify boarding outcome.</td></tr>
-            <tr><td>Facial Recognition</td><td><strong>Paravision</strong></td><td>Biometric matching algorithm</td><td>Matched faces. Did not handle system overload.</td></tr>
-            <tr><td>Cloud Infrastructure</td><td><strong>AWS</strong></td><td>EBSA platform hosting</td><td>Infrastructure ran. Did not manage application queue.</td></tr>
-            <tr><td>Platform Operations</td><td><strong>Capgemini</strong></td><td>EBSA environment build, support, management (awarded 2025)</td><td>Managed uptime. Did not design fallback.</td></tr>
-            <tr><td>System Integration</td><td><strong>Home Office DDaT (internal)</strong></td><td>Overall delivery coordination</td><td>Coordinated go-live. Did not specify resilience requirements.</td></tr>
-        </tbody>
-    </table>
-
-    <h3 style="margin-top:1rem;">What Each Vendor Was Paid For — vs — What GL Measures</h3>
-    <table>
-        <thead>
-            <tr><th>Vendor</th><th>Paid For</th><th>Not Required To Deliver</th></tr>
-        </thead>
-        <tbody>
-            <tr><td>Entrust</td><td>Identity verification platform</td><td>Whether citizens received approval before departure</td></tr>
-            <tr><td>Paravision</td><td>Face matching accuracy</td><td>Whether rejected matches had a manual appeal path</td></tr>
-            <tr><td>AWS</td><td>Cloud uptime</td><td>Whether queue logic degraded gracefully under surge</td></tr>
-            <tr><td>Capgemini</td><td>Environment support</td><td>Whether system-fault grace protocol existed</td></tr>
-            <tr><td>Home Office DDaT</td><td>Programme delivery</td><td>Independent outcome verification after go-live</td></tr>
-        </tbody>
-    </table>
-
-    <div class="note">
-        <strong>THE STRUCTURAL PROBLEM:</strong><br>
-        Every vendor met its contract. No vendor was accountable for the citizen's outcome.<br>
-        This is not vendor failure. This is <strong>procurement architecture failure</strong>. The Home Office specified technology layers — identity, biometrics, cloud, operations. It did not specify a resilience layer: fallback, grace period, outage notification, or outcome verification.<br>
-        GL identifies the missing layer: <strong>denominator design was never tendered.</strong>
+<div class="container">
+    <div class="header">
+        <div class="logo"><a href="/">GFI<br>Flow Intelligence</a></div>
+        <div class="contact"><a href="mailto:ping@gfiintel.com">ping@gfiintel.com</a></div>
     </div>
-</div>
 
-<h2>DENOMINATOR ANATOMY — WHERE FAILURE OCCURRED</h2>
-<table>
-    <thead>
-        <tr><th>Friction Source</th><th>What Happened</th><th>Missing Layer</th></tr>
-    </thead>
-    <tbody>
-        <tr><td>No surge capacity</td><td>Summer 2026 travel demand overwhelmed servers. No elastic scaling deployed.</td><td>Load-adaptive infrastructure. Demand for border entry is predictable.</td></tr>
-        <tr><td>No official outage acknowledgment</td><td>Home Office did not declare outage. Citizens learned from Reddit and travel forums.</td><td>Real-time status page. Proactive citizen notification. Honest communication.</td></tr>
-        <tr><td>No manual fallback</td><td>"No permission, no travel" with zero grace mechanism during system failure.</td><td>Emergency override protocol. Border Force empowered to verify identity manually.</td></tr>
-        <tr><td>No grace period for processing delays</td><td>Applications submitted within official 3-day window still resulted in boarding denial.</td><td>System-fault carve-out: if delay caused by system, carrier cannot deny boarding.</td></tr>
-        <tr><td>Split-family approvals</td><td>Family members processed at different speeds. Carriers enforced individually.</td><td>Household-linked processing. Group travel flagged for simultaneous review.</td></tr>
-        <tr><td>No citizen recourse at point of failure</td><td>Travelers at airport with pending ETA had no escalation path, no contact number, no fix.</td><td>Airport-level ETA helpdesk. Real-time override authority for Border Force officers.</td></tr>
-    </tbody>
-</table>
+    <h1>UK Electronic Travel Authorisation (ETA) System Collapse — June 2026</h1>
+    <div style="font-family: var(--mono); font-size: 0.9rem; color: var(--gold); margin-bottom: 0.25rem;">Public Diagnostic Brief · GFI Flow Intelligence</div>
+    <div class="meta">
+        <strong>Incident Date:</strong> June 3–5, 2026 &nbsp;·&nbsp; <strong>System:</strong> UK Home Office ETA – GOV.UK portal + mobile app<br>
+        <strong>Scale:</strong> 84 visa-exempt countries · millions of annual applicants &nbsp;·&nbsp; <strong>Enforcement:</strong> "No permission, no travel" – strict boarding denial<br>
+        <strong>Method:</strong> External data only · No system access required
+    </div>
 
-<h2>STRUCTURAL DIAGNOSIS — PSEUDO-DIGITALISATION</h2>
-<p>Pseudo-digitalisation: the system appearance of modernity without delivery resilience. The ETA incident is not primarily a technology failure. It is a governance design failure. The UK built a system that works well under normal conditions and collapses under predictable stress — because resilience, fallback, and citizen recourse were never included in the delivery specification.</p>
-<p>This is the same structural pattern as Universal Credit: infrastructure is modernised, but the denominator — the friction borne by citizens when the system breaks — is not measured, not contracted, and not corrected until the failure becomes politically visible.</p>
+    <div class="download-pdf">
+        <a href="/UK_ETA_GL_Diagnostic_Report_June2026.pdf" class="download-btn" download>📄 Download PDF Version →</a>
+    </div>
 
-<h2>RECOMMENDATIONS — CLOSING THE DENOMINATOR GAP</h2>
-<table>
-    <thead>
-        <tr><th>#</th><th>Recommendation</th><th>Priority</th></tr>
-    </thead>
-    <tbody>
-        <tr><td>01</td><td><strong>Elastic infrastructure mandate:</strong> ETA processing capacity must scale automatically with demand. Summer travel peaks are predictable. Server failure during peak is a design choice, not bad luck. Target: Fs → 0.95+ during peak periods.</td><td>HIGHEST</td></tr>
-        <tr><td>02</td><td><strong>Real-time status transparency:</strong> A public status page must show ETA processing times and system health in real time. Citizens should not learn of outages from Reddit. Target: Cf → 0 during incidents.</td><td>HIGHEST</td></tr>
-        <tr><td>03</td><td><strong>System-fault grace protocol:</strong> When ETA processing delays are caused by system failure, carriers must be instructed not to deny boarding to applicants with pending applications submitted within the official window. Target: Pd → 0 for affected applicants.</td><td>HIGHEST</td></tr>
-        <tr><td>04</td><td><strong>Airport-level override authority:</strong> Border Force officers must have authority to manually verify identity and grant temporary entry permission when the ETA system is confirmed to be experiencing issues.</td><td>HIGH</td></tr>
-        <tr><td>05</td><td><strong>Independent outcome verification — post-deployment:</strong> ETA system performance should be subject to independent review: not just "applications processed within 3 days" but "did travellers successfully board?"</td><td>MEDIUM</td></tr>
-    </tbody>
-</table>
+    <div class="gl-score-box">
+        <div class="gl-score-number">0.04</div>
+        <div class="gl-score-label">GL SCORE · ACUTE STRUCTURAL FAILURE</div>
+        <div class="formula" style="margin-top: 12px;">GL = (Fs × Vn) / (Pd × Cf) = 0.04</div>
+    </div>
 
-<h2>THE BROADER SIGNAL</h2>
-<p>This incident is a preview, not an anomaly. The EU is preparing ETIAS. Japan is rolling out JESTA. As more countries move to mandatory digital border permissions with strict "no permission, no travel" enforcement, the structural gap exposed by the UK ETA incident becomes a global governance risk. Every system in this category shares the same architecture: a digital gatekeeping function with high consequence for failure, strict enforcement with no manual fallback, and procurement specifications that define go-live but not resilience.</p>
-<p>The missing layer is not more technology. It is independent outcome verification: a structured mechanism to ask, after deployment, whether citizens successfully completed the process — and to require accountability when they did not.</p>
+    <p style="font-size: 1.05rem; color: #c7d2e3;"><strong>The UK ETA system digitised a border permission process without building resilience into the delivery layer.</strong> When demand spiked, the system did not degrade gracefully — it blocked citizens at the point of highest consequence: the boarding gate. Missed flights, denied boarding, and unacknowledged outages are not edge cases. They are the cost of treating implementation as delivery.</p>
 
-<div class="note">
-    <strong>Methodology Note:</strong> All GL scores computed using GL = (Fs × Vn) / (Pd × Cf). Input values derived from publicly available sources — Home Office statements, news reporting, user testimony, and procurement records. No internal system access required. GL Framework published in PA Times (ASPA, March & April 2026) and SSRN.
-</div>
+    <h2>What Happened</h2>
+    <p><strong>Three days that exposed the missing delivery layer</strong></p>
+    <p>Beginning June 3, 2026, the UK Home Office ETA portal — the mandatory gateway for 84 visa-exempt nationalities including US and Canadian citizens — began displaying "currently busy" errors. Virtual queue wait times exceeded 60 minutes. The companion mobile application simultaneously logged out users repeatedly or blocked access entirely. Processing times stretched past 60 hours for some applicants.</p>
+    <p>The Home Office did not issue a formal outage notice. Its spokesperson later confirmed only that "the service had still met its published standard for processing applications within three working days" — a statement that provided no relief to travelers with same-day or next-day departures.</p>
+    <p>Because the UK operates a strict <strong>"no permission, no travel"</strong> enforcement regime — requiring airlines, trains, and ferry operators to deny boarding to any passenger without an approved ETA — a processing delay became a travel denial. There was no fallback. No manual override. No grace period. The system's failure was the citizen's problem.</p>
 
-<div class="footer">
-    © 2026 GFI Flow Intelligence · Independent Diagnostic Report · Free to distribute · gfiintel.com
-</div>
+    <h2>Documented Cases</h2>
+    <div class="case-block">
+        <p><strong>🇦🇺 Australian traveller, Barcelona → London</strong><br>
+        "Rosey" had booked a last-minute flight for June 3 to attend a concert she had waited 17 years to see. She applied on June 2 — a day ahead, consistent with widely reported approval times of minutes. The ETA had not arrived by the time her flight departed. She missed the concert. The Home Office later confirmed the system was experiencing issues during the period she applied.</p>
+    </div>
+    <div class="case-block">
+        <p><strong>👨‍👩‍👧‍👦 Multiple families, international airports</strong><br>
+        Families travelling together reported split approvals: some members received authorisation earlier in the week; others remained in processing. Carriers enforced the requirement individually, resulting in partial family boarding denials at foreign gates.</p>
+    </div>
+    <div class="case-block">
+        <p><strong>💼 Business and transit travellers, multiple nationalities</strong><br>
+        Travellers reaching airports or terminals with applications still in processing were turned away at check-in. In several documented cases, individuals purchased new flights, forfeited non-refundable hotel reservations, and rebooked at significant personal cost.</p>
+    </div>
 
+    <h2>GL Calculation — Incident Window</h2>
+    <div class="formula">GL = (Fs × Vn) / (Pd × Cf) = 0.04</div>
+    <table>
+        <thead><tr><th>Variable</th><th>Score</th><th>Definition</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Fs</strong> — Flow success rate</td><td>0.08</td><td>Estimated proportion of applicants receiving timely approval during the incident window (June 3–5). Tens of thousands stuck in queue or denied boarding.</td></tr>
+            <tr><td><strong>Vn</strong> — Strategic value</td><td>1.8</td><td>Border access is a high-necessity process. Cannot be deferred. Cannot be substituted. Failure at this point is total, not partial.</td></tr>
+            <tr><td><strong>Pd</strong> — Pain duration</td><td>2.0×</td><td>Processing delays of 60+ hours during a window when applicants had hours to departure. Consequence duration: irreversible (missed flights, concerts, connections).</td></tr>
+            <tr><td><strong>Cf</strong> — Cognitive friction</td><td>1.8×</td><td>No official outage notice. No manual fallback. No grace period. Citizens had to self-diagnose the problem through Reddit and travel forums while standing in airports.</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Comparative GL Scores</h2>
+    <table>
+        <thead><tr><th>System</th><th>GL Score</th><th>Characteristic</th></tr></thead>
+        <tbody>
+            <tr><td>Estonia Digital Government</td><td>4.20</td><td>Pre-loaded eligibility. Citizen receives, does not apply. Zero queue.</td></tr>
+            <tr><td>UK ETA — normal operation (pre-incident)</td><td>1.20</td><td>Fast approval (minutes). Simple app. Single gateway. Adequate under normal load.</td></tr>
+            <tr><td class="comparison-highlight"><strong>UK ETA — June 3–5, 2026 (incident window)</strong></td><td class="comparison-highlight"><strong>0.04</strong></td><td class="comparison-highlight">System busy. 60+ hour delays. No fallback. Boarding denial. No official notice.</td></tr>
+            <tr><td>UK Universal Credit (2010s)</td><td>0.074</td><td>Structural delivery failure. Same pattern: infrastructure modernised, denominator ignored.</td></tr>
+            <tr><td>Turkey SGK (current)</td><td>0.067</td><td>43 programs, manual application, 1–12 month waits. Chronic structural failure.</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Denominator Anatomy — Where Failure Occurred</h2>
+    <table>
+        <thead><tr><th>Friction Source</th><th>What Happened</th><th>Missing Layer</th></tr></thead>
+        <tbody>
+            <tr><td>No surge capacity</td><td>Summer 2026 travel demand overwhelmed servers. No elastic scaling deployed.</td><td>Load-adaptive infrastructure. Demand for border entry is predictable.</td></tr>
+            <tr><td>No official outage acknowledgment</td><td>Home Office did not declare outage. Citizens learned from Reddit and travel forums.</td><td>Real-time status page. Proactive citizen notification. Honest communication.</td></tr>
+            <tr><td>No manual fallback</td><td>"No permission, no travel" with zero grace mechanism during system failure.</td><td>Emergency override protocol. Border Force empowered to verify identity manually.</td></tr>
+            <tr><td>No grace period for processing delays</td><td>Applications submitted within official 3-day window still resulted in boarding denial.</td><td>System-fault carve-out: if delay caused by system, carrier cannot deny boarding.</td></tr>
+            <tr><td>Split-family approvals</td><td>Family members processed at different speeds. Carriers enforced individually.</td><td>Household-linked processing. Group travel flagged for simultaneous review.</td></tr>
+            <tr><td>No citizen recourse at point of failure</td><td>Travelers at airport with pending ETA had no escalation path, no contact number, no fix.</td><td>Airport-level ETA helpdesk. Real-time override authority for Border Force officers.</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Structural Diagnosis</h2>
+    <p><strong>Pseudo-digitalisation: the system appearance of modernity without delivery resilience</strong></p>
+    <p>The ETA incident is not primarily a technology failure. It is a <strong>governance design failure</strong>. The UK built a system that works well under normal conditions and collapses under predictable stress — because resilience, fallback, and citizen recourse were never included in the delivery specification. The procurement defined the portal. It did not define what happens when the portal fails.</p>
+    <p>This is the same structural pattern as Universal Credit (2010s): infrastructure is modernised, but the denominator — the friction borne by citizens when the system breaks — is not measured, not contracted, and not corrected until the failure becomes politically visible.</p>
+    <p>The Home Office's statement that it "met its published standard of three working days" during an active outage is the clearest possible demonstration of the missing layer: implementation metrics that measure process compliance while delivery outcomes — did the citizen board their flight? — remain unverified.</p>
+
+    <h2>Structural Recommendations</h2>
+    <table>
+        <thead><tr><th>#</th><th>Recommendation</th><th>Target Variable</th><th>Impact</th></tr></thead>
+        <tbody>
+            <tr><td>1</td><td><strong>Elastic infrastructure mandate</strong> — ETA processing capacity must scale automatically with demand. Summer travel peaks are predictable. Server failure during peak is a design choice, not bad luck.</td><td>Fs → 0.95+</td><td>HIGHEST</td></tr>
+            <tr><td>2</td><td><strong>Real-time status transparency</strong> — A public status page must show ETA processing times and system health in real time. Citizens should not learn of outages from Reddit.</td><td>Cf → 0</td><td>HIGHEST</td></tr>
+            <tr><td>3</td><td><strong>System-fault grace protocol</strong> — When ETA processing delays are caused by system failure, carriers must be instructed not to deny boarding to applicants with pending applications submitted within the official window.</td><td>Pd → 0</td><td>HIGHEST</td></tr>
+            <tr><td>4</td><td><strong>Airport-level override authority</strong> — Border Force officers must have the authority to manually verify identity and grant boarding override during verified system outages.</td><td>Pd → 0</td><td>HIGH</td></tr>
+            <tr><td>5</td><td><strong>Independent outcome verification — post-deployment</strong> — ETA system delivery outcomes should be independently verified quarterly, with public reporting.</td><td>Fs continuous</td><td>MEDIUM</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Closing Statement</h2>
+    <p>24.8 million authorisations between October 2023 and end of 2025. That record of operational success made the June 2026 collapse more damaging, not less: citizens and carriers had been trained to rely on the system without a fallback. When it failed, there was nothing underneath it.</p>
+    <p><strong>A system that works 99% of the time and produces irreversible harm in the remaining 1% has not solved the delivery problem. It has concealed it until the denominator becomes visible.</strong></p>
+
+    <hr>
+    <div style="text-align: right; font-family: var(--serif); font-size: 1.2rem; margin: 1rem 0;">
+        Ping Xu<br>
+        GFI Flow Intelligence<br>
+        June 2026
+    </div>
+
+    <div class="download-pdf">
+        <a href="/UK_ETA_GL_Diagnostic_Report_June2026.pdf" class="download-btn" download>📄 Download PDF Version →</a>
+    </div>
+
+    <div class="footer-note">
+        <strong>Methodology Note:</strong> GL scores computed using GL = (Fs × Vn) / (Pd × Cf). Input values derived from publicly available sources — audit reports, parliamentary inquiries, official investigations, and news reporting. No internal system access required. GL Framework published in PA Times (ASPA, March & April 2026) and SSRN.<br>
+        Contact: <a href="mailto:ping@gfiintel.com">ping@gfiintel.com</a>
+    </div>
+
+    <div class="home-link">
+        <a href="/">← Back to GFI Flow Intelligence Home</a>
+    </div>
 </div>
 </body>
 </html>
