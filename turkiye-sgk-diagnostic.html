@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GL Diagnostic Report: Türkiye SGK & Social Assistance System</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0b1220;
+            --bg2: #0d1526;
+            --text: #f8fbff;
+            --muted: #c7d2e3;
+            --sub: #9fb0c8;
+            --dim: rgba(255,255,255,.06);
+            --green: #9FE870;
+            --blue: #7DD3FC;
+            --gold: #c89a2a;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --mono: 'DM Mono', monospace;
+            --sans: 'DM Sans', system-ui, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 16px;
+            line-height: 1.5;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: var(--bg2);
+            border: 1px solid var(--dim);
+            border-radius: 28px;
+            padding: 2rem;
+        }
+        @media (min-width: 768px) { .container { padding: 3rem; } }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--dim);
+        }
+        .logo a {
+            font-family: var(--mono);
+            font-size: 1rem;
+            letter-spacing: 0.12em;
+            color: var(--green);
+            text-transform: uppercase;
+            white-space: pre-line;
+            line-height: 1.3;
+            text-decoration: none;
+        }
+        .contact {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            color: var(--sub);
+        }
+        .contact a { color: var(--green); text-decoration: none; }
+        h1, h2, h3 { font-family: var(--serif); font-weight: normal; letter-spacing: -0.01em; }
+        h1 { font-size: 2.8rem; margin-bottom: 0.5rem; color: #fff; }
+        h2 { font-size: 1.8rem; margin: 1.8rem 0 1rem; border-left: 4px solid var(--green); padding-left: 1rem; }
+        h3 { font-size: 1.3rem; margin: 1.5rem 0 0.8rem; color: var(--green); }
+        .meta {
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            color: var(--sub);
+            border-bottom: 1px solid var(--dim);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .gl-score-box {
+            background: rgba(240, 139, 94, 0.12);
+            border: 1px solid #f08b5e;
+            border-radius: 20px;
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        .gl-score-number {
+            font-family: var(--mono);
+            font-size: 3.5rem;
+            font-weight: 500;
+            color: #f08b5e;
+            line-height: 1;
+        }
+        .gl-score-label {
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            color: var(--sub);
+        }
+        .formula {
+            font-family: var(--mono);
+            background: var(--bg);
+            padding: 0.8rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 1rem 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0;
+            font-size: 0.85rem;
+        }
+        th, td {
+            border: 1px solid var(--dim);
+            padding: 0.7rem;
+            text-align: left;
+            vertical-align: top;
+        }
+        th { background: rgba(255,255,255,0.05); font-family: var(--mono); font-weight: 500; }
+        .badge {
+            display: inline-block;
+            background: rgba(159,232,112,0.15);
+            color: var(--green);
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            margin-right: 0.5rem;
+        }
+        hr { border: none; border-top: 1px solid var(--dim); margin: 2rem 0; }
+        .footer-note {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            font-size: 0.75rem;
+            color: var(--sub);
+            border-top: 1px solid var(--dim);
+            text-align: center;
+        }
+        a { color: var(--green); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .home-link {
+            margin-top: 2rem;
+            text-align: center;
+            font-family: var(--mono);
+            font-size: 0.8rem;
+        }
+        .download-pdf {
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 24px;
+            background: rgba(159,232,112,0.1);
+            border: 1px solid var(--green);
+            border-radius: 40px;
+            color: var(--green);
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .download-btn:hover {
+            background: rgba(159,232,112,0.2);
+            border-color: var(--green);
+            transform: translateY(-2px);
+        }
+        @media print {
+            body { background: white; color: black; padding: 0; }
+            .container { background: white; border: none; }
+            .gl-score-box { border-color: #ccc; background: #f9f9f9; }
+            .badge { background: #eef; color: #2c5e2e; }
+            .formula { background: #f4f4f4; }
+            th, td { border-color: #ccc; }
+            .download-pdf { display: none; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="logo"><a href="/">GFI<br>Flow Intelligence</a></div>
+        <div class="contact"><a href="mailto:ping@gfiintel.com">ping@gfiintel.com</a></div>
+    </div>
+
+    <h1>GL Diagnostic Report</h1>
+    <div style="font-family: var(--mono); font-size: 0.9rem; color: var(--gold); margin-bottom: 0.25rem;">Türkiye Social Security Institution (SGK) & Social Assistance System</div>
+    <div class="meta">
+        Report No.: GL2026-TR-SGK-02<br>
+        Date: June 4, 2026<br>
+        Data Sources: TurkStat 2025, SGK 2025 Statistical Yearbook, Ministry of Family and Social Services, OECD Economic Survey of Türkiye, World Bank Public Finance Reports
+    </div>
+
+    <!-- 下载按钮（顶部） -->
+    <div class="download-pdf">
+        <a href="/GL_Diagnostic_Report_Turkiye_SGK_Social_Assistance.pdf" class="download-btn" download>📄 Download PDF Version →</a>
+    </div>
+
+    <h2>Executive Summary</h2>
+    <p>Türkiye's social assistance system scores <strong>GL = 0.067 — Structural Failure</strong>.</p>
+    <p>For every 100 TL of social protection intent, only <strong>6.7 TL</strong> of value reaches the citizen as timely, usable access to essentials. The remainder is consumed by administrative friction: waiting, redundancy, collapse, information asymmetry, psychological cost, and opportunity cost.</p>
+    <p>The system is not designed to fail. It is designed to <strong>filter</strong>. Filtering produces friction. Friction shifts cost to those least able to bear it.</p>
+
+    <div class="gl-score-box">
+        <div class="gl-score-number">0.067</div>
+        <div class="gl-score-label">GL SCORE · STRUCTURAL FAILURE</div>
+        <div class="formula" style="margin-top: 12px;">GL = (Fs × Vn) / (Pd × Cf)</div>
+    </div>
+
+    <table>
+        <thead><tr><th>Variable</th><th>Score</th><th>Definition</th></tr></thead>
+        <tbody>
+            <tr><td>Fs — Flow Success Rate</th><td>0.12</th><td>Proportion of social protection budget reaching citizens as usable access within reasonable time</th></tr>
+            <tr><td>Vn — Strategic Value</th><td>1.5</th><td>Social protection as critical economic stability mechanism (maximum necessity)</th></tr>
+            <tr><td>Pd — Pain Duration</th><td>1.8×</th><td>Years of waiting, repeated applications, uncertainty borne by citizens</th></tr>
+            <tr><td>Cf — Cognitive Friction</th><td>1.5×</th><td>Complexity of navigating 43 programs, different eligibility rules, officer discretion</th></tr>
+        </tbody>
+    </table>
+
+    <h2>International Benchmark Comparison</h2>
+    <table>
+        <thead><tr><th>System</th><th>GL Score</th><th>Key Characteristic</th></tr></thead>
+        <tbody>
+            <tr><td>Estonia Digital Government</th><td>4.20</th><td>Pre‑loaded eligibility; automatic disbursement</th></tr>
+            <tr><td>Denmark e-Health</th><td>3.45</th><td>Integrated health and social data</th></tr>
+            <tr><td><strong>Türkiye SGK (current)</strong></th><td><strong>0.067</strong></th><td>43 programs; manual application; 1‑12 month waits</th></tr>
+            <tr><td>UK Universal Credit (2010s)</th><td>0.074</th><td>Same pattern: infrastructure modernized, denominator ignored</th></tr>
+        </tbody>
+    </table>
+    <p>Estonia's GL is <strong>63×</strong> Türkiye's current performance. Denominator‑first design works.</p>
+
+    <h2>Denominator Anatomy — Where Failure Occurs</h2>
+    <table>
+        <thead><tr><th>Friction Source</th><th>Leverage</th><th>Reform Pathway</th></tr></thead>
+        <tbody>
+            <tr><td>43 fragmented programs — citizen must guess</th><td>HIGHEST</th><td>Single eligibility engine: AI determines qualification automatically.</th></tr>
+            <tr><td>Document burden (lease, bank statement)</th><td>HIGHEST</th><td>Data‑first eligibility: tax, employment, health data auto‑pull. No documents.</th></tr>
+            <tr><td>Officer discretion — outcome depends on who you talk to</th><td>HIGH</th><td>Rule‑based auto‑approval. Eligibility coded into system.</th></tr>
+            <tr><td>1‑12 month wait — citizen waits while system processes</th><td>HIGH</th><td>Zero‑wait design: Access granted immediately, post‑hoc AI audit.</th></tr>
+            <tr><td>Recertification every 3‑12 months</th><td>MEDIUM</th><td>Continuous eligibility: system auto‑updates from live data.</th></tr>
+            <tr><td>No appeal — 85% of rejected eligible do not appeal</th><td>MEDIUM</th><td>No rejection. No appeal. Auto‑approval based on data.</th></tr>
+        </tbody>
+    </table>
+
+    <h2>What the System Addresses vs. What GL Measures</h2>
+    <table>
+        <thead><tr><th>Current System Deliverables (Infrastructure Layer)</th><th>GL Diagnostic (Outcome Layer)</th></tr></thead>
+        <tbody>
+            <tr><td>Kızılaykart cards issued to 1.7M beneficiaries</th><td>Citizen waits 1‑12 months before receiving card</th></tr>
+            <tr><td>e-Devlet portal with 9,200 services</th><td>Citizen does not know which of 43 programs apply</th></tr>
+            <tr><td>Social Risk Map with 648 indicators</th><td>Data exists but does not trigger automatic disbursement</th></tr>
+            <tr><td>43 different aid programs</th><td>Citizen must navigate fragmented rules, no single entry</th></tr>
+            <tr><td>ESSN cash transfers</th><td>Cash can be withdrawn and spent on non‑essentials</th></tr>
+        </tbody>
+    </table>
+
+    <h2>Reform Scenario Simulation</h2>
+    <table>
+        <thead><tr><th>Scenario</th><th>Intervention</th><th>GL Score</th><th>Gain vs Current</th></tr></thead>
+        <tbody>
+            <tr><td>Current</th><td>Manual application, officer review, 1‑12 month wait</th><td>0.067</th><td>—</th></tr>
+            <tr><td>A</th><td>Data‑first eligibility (auto‑ID, no documents)</th><td>0.12</th><td>+79%</th></tr>
+            <tr><td><strong>B (Recommended)</strong></th><td>Scenario A + zero‑wait + auto‑approval</th><td><strong>0.48</strong></th><td><strong>+616%</strong></th></tr>
+            <tr><td>C</th><td>Scenario B + full cross‑agency data integration, single engine</th><td>1.28</th><td>+1,810%</th></tr>
+        </tbody>
+    </table>
+    <p>Scenario B requires no new technology. It requires denominator redesign: measuring citizen access before payment, not after.</p>
+
+    <h2>Structural Recommendations</h2>
+    <table>
+        <thead><tr><th>#</th><th>Recommendation</th><th>Target Variable</th><th>Expected Impact</th></tr></thead>
+        <tbody>
+            <tr><td>1</th><td><strong>Data‑first eligibility</strong> – auto‑identify from tax/employment/health data. No application forms.</th><td>Drop‑out rate → 0</th><td>Prevents collapse at document stage</th></tr>
+            <tr><td>2</th><td><strong>Zero‑wait design</strong> – grant Access immediately (food, healthcare, transit). Post‑hoc AI audit.</th><td>Wait time → 0</th><td>Eliminates waiting tax</th></tr>
+            <tr><td>3</th><td><strong>Single eligibility engine</strong> – AI determines qualification, citizen only receives notification.</th><td>Info asymmetry → 0</th><td>Eliminates broker culture</th></tr>
+            <tr><td>4</th><td><strong>Purpose‑locked Access</strong> – QR codes locked to supermarkets, pharmacies, transit, childcare. No cash conversion.</th><td>Resource waste → 0</th><td>Eliminates leakage and secondary markets</th></tr>
+            <tr><td>5</th><td><strong>Annual reset</strong> – Access resets to zero each year. No accumulation. No permanent liability.</th><td>Psychological cost → 0</th><td>Government controls risk; citizen cannot hoard</th></tr>
+            <tr><td>6</th><td><strong>Real‑time GL dashboard</strong> – published quarterly for all social assistance programs above 1B TL. Accessible to Parliament, Court of Accounts.</th><td>Fs = continuous governance</th><td>Converts GL from diagnostic to accountability instrument</th></tr>
+        </tbody>
+    </table>
+
+    <h2>Implementation Path (14‑Day Rapid Pilot)</h2>
+    <p>We do not ask Türkiye to redesign its entire system overnight. We ask for <strong>one pilot</strong>: one province or city. 10 administrative processes. 14 days.</p>
+    <ul>
+        <li><span class="badge">What Türkiye provides</span> 10 process names + 1‑page outline for each.</li>
+        <li><span class="badge">What GFI provides</span> Friction map + GL estimate + cost‑shift analysis for each process.</li>
+    </ul>
+    <p><strong>No system access needed. No upfront cost. No commitment.</strong></p>
+    <p>After 14 days, Türkiye will see where friction is highest, who bears the cost, and the first step to remove it. Then decide: pilot, scale, or walk away.</p>
+
+    <h2>Closing Statement</h2>
+    <p>The current system asks citizens to pay the cost of government coordination. GL + AI flips this: the government pays the coordination cost in the background. The citizen only receives and uses.</p>
+    <p>Türkiye's traffic data shows your institutions are already downloading. They are already studying. They are already preparing.</p>
+    <p>This diagnostic is not a theory. It is a working blueprint, ready for a 14‑day pilot.</p>
+
+    <hr>
+    <div style="text-align: right; font-family: var(--serif); font-size: 1.2rem; margin: 1rem 0;">
+        Ping Xu<br>
+        GFI Flow Intelligence<br>
+        June 4, 2026
+    </div>
+
+    <!-- 下载按钮（底部） -->
+    <div class="download-pdf">
+        <a href="/GL_Diagnostic_Report_Turkiye_SGK_Social_Assistance.pdf" class="download-btn" download>📄 Download PDF Version →</a>
+    </div>
+
+    <div class="footer-note">
+        <strong>Methodology Note:</strong> GL scores computed using GL = (Fs × Vn) / (Pd × Cf). Input values derived from publicly available sources — audit reports, parliamentary inquiries, official investigations, and news reporting. No internal system access required. GL Framework published in PA Times (ASPA, March & April 2026) and SSRN.<br>
+        Contact: <a href="mailto:ping@gfiintel.com">ping@gfiintel.com</a>
+    </div>
+
+    <div class="home-link">
+        <a href="/">← Back to GFI Flow Intelligence Home</a>
+    </div>
+</div>
+</body>
+</html>
