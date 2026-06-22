@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>診斷聯合國 · GL Framework · GFI Flow Intelligence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0b1220;
+            color: #f8fbff;
+            font-family: 'DM Sans', system-ui, sans-serif;
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+        .logo a {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.12em;
+            color: #9FE870;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+        .lang-switch {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .lang-btn {
+            background: none;
+            border: 1px solid rgba(255,255,255,.1);
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            padding: 0.25rem 0.7rem;
+            border-radius: 2rem;
+            color: #9fb0c8;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,.3); color: #fff; }
+        .lang-btn.active {
+            background: #9FE870;
+            color: #0b1220;
+            border-color: #9FE870;
+        }
+        .content-lang { display: none; }
+        .content-lang.active { display: block; }
+        .book-container {
+            background: #0d1526;
+            padding: 3rem 2.5rem;
+            border-radius: 4px;
+            border: 1px solid rgba(255,255,255,.06);
+        }
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            color: #9FE870;
+            letter-spacing: 0.02em;
+            font-family: 'DM Serif Display', Georgia, serif;
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 1rem;
+            color: #9fb0c8;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+        .author-line {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #7DD3FC;
+            margin-bottom: 2rem;
+        }
+        h2 {
+            font-size: 1.4rem;
+            color: #9FE870;
+            margin: 2rem 0 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+            padding-bottom: 0.3rem;
+            font-family: 'DM Serif Display', Georgia, serif;
+        }
+        h3 {
+            font-size: 1.1rem;
+            color: #7DD3FC;
+            margin: 1.5rem 0 0.75rem 0;
+            font-family: 'DM Serif Display', Georgia, serif;
+        }
+        p {
+            color: #c7d2e3;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        .quote-block {
+            border-left: 3px solid #9FE870;
+            padding-left: 1.2rem;
+            margin: 1.2rem 0;
+            color: #eaf6ff;
+            font-style: italic;
+        }
+        .highlight-box {
+            background: rgba(159, 232, 112, 0.06);
+            border: 1px solid rgba(159, 232, 112, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        .highlight-box p {
+            color: #eaf6ff;
+            margin-bottom: 0.25rem;
+        }
+        .highlight-box strong {
+            color: #9FE870;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.85rem;
+        }
+        th, td {
+            border: 1px solid rgba(255,255,255,.08);
+            padding: 0.6rem;
+            text-align: left;
+            vertical-align: top;
+            color: #c7d2e3;
+        }
+        th {
+            background: rgba(255,255,255,.03);
+            color: #9FE870;
+            font-weight: 600;
+        }
+        ul, ol {
+            margin: 1rem 0 1rem 1.5rem;
+            color: #c7d2e3;
+        }
+        li { margin-bottom: 0.25rem; }
+        .footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,.06);
+            text-align: center;
+            font-size: 0.75rem;
+            color: #9fb0c8;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 1.5rem;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: #9fb0c8;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,.06);
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            transition: 0.2s;
+        }
+        .back-link:hover {
+            border-color: rgba(255,255,255,.2);
+            color: #fff;
+        }
+        .divider {
+            border: 0;
+            border-top: 1px solid rgba(255,255,255,.08);
+            margin: 2.5rem 0;
+        }
+        .gl-box {
+            background: rgba(159, 232, 112, 0.04);
+            border-left: 3px solid #9FE870;
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .gl-box p {
+            color: #eaf6ff;
+            margin-bottom: 0.5rem;
+        }
+        .gl-box strong {
+            color: #9FE870;
+        }
+        .rating-box {
+            background: rgba(248, 113, 113, 0.04);
+            border-left: 3px solid #f87171;
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .rating-box p {
+            color: #f0d0d0;
+            margin-bottom: 0.5rem;
+        }
+        .rating-box strong {
+            color: #f87171;
+        }
+        @media (max-width: 700px) {
+            .container { padding: 1rem; }
+            .book-container { padding: 1.5rem; }
+            h1 { font-size: 1.6rem; }
+            .highlight-box { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="logo"><a href="index.html">GFI Flow Intelligence</a></div>
+        <div class="lang-switch">
+            <button class="lang-btn active" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="tw">繁</button>
+            <button class="lang-btn" data-lang="cn">简</button>
+            <button class="lang-btn" data-lang="es">ES</button>
+        </div>
+    </div>
+
+    <!-- ================= ENGLISH ================= -->
+    <div id="lang-en" class="content-lang active">
+        <div class="book-container">
+            <h1>Diagnosing the UN "Beyond GDP" Project</h1>
+            <div class="subtitle">A GL Framework Diagnostic Report on the UN High-Level Expert Group (HLEG)</div>
+            <div class="author-line">Ping Xu · GFI Flow Intelligence · June 2026</div>
+
+            <p><strong>Report Subject:</strong> UN Secretary-General's High-Level Expert Group on "Beyond GDP"</p>
+            <p><strong>Diagnostic Tool:</strong> GL Framework (Governance Legitimacy Framework)</p>
+            <p><strong>Report Date:</strong> June 2026</p>
+
+            <h2>I. Project Overview and Achievements</h2>
+            <p>The HLEG was established in May 2025 with 14 experts, producing its final report in May 2026: <em>Counting What Counts: A Compass of Progress for People and Planet</em>.</p>
+            <ul>
+                <li><strong>31-indicator dashboard</strong> — approximately half drawn from SDGs, organized into four dimensions: Foundational Principles, Current Well-being, Equity & Inclusion, Sustainability & Resilience</li>
+                <li><strong>Three GDP adjustments</strong> — v-GDP (excluding goods with no intrinsic value), e-GDP (inequality-adjusted), s-GDP (sustainability-adjusted)</li>
+                <li><strong>Explicit recognition of GDP's flaws</strong> — ignoring inequality, poverty, environmental degradation, and non-monetary well-being</li>
+            </ul>
+            <p>These are achievements. They deserve acknowledgment.</p>
+
+            <h2>II. GL Framework Diagnosis: Structural Deficits</h2>
+
+            <h3>Diagnosis 1: Defined what to measure — but did not build the tool to measure it</h3>
+            <p>The HLEG admits its framework is a "dashboard" requiring each country to collect its own data and interpret it. Over half the indicators are not yet routinely reported by countries. The report itself states that "Beyond GDP is a process, not a single step" — meaning they know the problem is not solved.</p>
+            <div class="gl-box">
+                <p><strong>GL Diagnosis:</strong> A dashboard does not automatically generate policy decisions. It displays data, but it does not tell decision-makers what to do when the data shows system failure.</p>
+            </div>
+
+            <h3>Diagnosis 2: Governance is relegated to "enabling factor"</h3>
+            <p>The HLEG positions governance as an "enabling factor," alongside technology and innovation, rather than a core measurement dimension. UNU-CPR analysis notes that "a well-being framework should not treat governance as a contributing factor only, but as a measure of equity, participation, and trust."</p>
+            <div class="gl-box">
+                <p><strong>GL Diagnosis:</strong> Governance is the core of whether a system is actually functioning. Relegating it to "enabling factor" is like removing the engine light from the dashboard.</p>
+            </div>
+
+            <h3>Diagnosis 3: The dashboard is too complex to compete with GDP's simplicity</h3>
+            <p>GDP dominates global decision-making because it is a "single, widely understood number." The HLEG's 31-indicator dashboard, while more comprehensive, lacks GDP's simplicity. The report admits that the expert group could not reach a consensus on a "headline composite indicator."</p>
+            <div class="gl-box">
+                <p><strong>GL Diagnosis:</strong> If you cannot answer "is the system working?" with a single number, decision-makers will continue to use GDP — because at least GDP gives them a number.</p>
+            </div>
+
+            <h3>Diagnosis 4: Implementation relies on intergovernmental negotiation</h3>
+            <p>The report now enters the "intergovernmental consultation" phase, co-facilitated by Spain and Guyana. Developed countries support it, but Global South countries worry about the indicators being used as economic pressure tools. There is no clear timeline.</p>
+            <div class="gl-box">
+                <p><strong>GL Diagnosis:</strong> When a global tool requires consensus from all countries before it can start, it is effectively frozen.</p>
+            </div>
+
+            <h2>III. GL Framework Positioning: Not a Competitor — the Missing Engine</h2>
+            <p>The HLEG defined the problem. It did not build the solution. GL Framework fills that gap:</p>
+            <table>
+                <thead><tr><th>UN HLEG "Beyond GDP"</th><th>GL Framework</th></tr></thead>
+                <tbody>
+                    <tr><td>31-indicator dashboard</td><td>1 formula, 8 parameters</td></tr>
+                    <tr><td>Requires countries to collect their own data</td><td>Uses publicly available data only</td></tr>
+                    <tr><td>Requires intergovernmental negotiation</td><td>Already running in 65 countries</td></tr>
+                    <tr><td>Tells you "how things are now"</td><td>Tells you "why the system is failing"</td></tr>
+                    <tr><td>Defines the problem</td><td>Delivers the solution</td></tr>
+                </tbody>
+            </table>
+            <div class="highlight-box">
+                <p><strong>GL Framework Recommendation:</strong> Integrate the GL score into the HLEG dashboard as a quantitative metric for institutional delivery effectiveness — a dimension currently missing from the 31 indicators. The GL score directly answers the HLEG's own question: "Why does GDP grow while citizens are dissatisfied?"</p>
+            </div>
+
+            <h2>IV. Conclusion</h2>
+            <div class="quote-block">
+                <p>The HLEG defined what to measure. GL Framework defined how to measure it — and what to do after measurement.</p>
+                <p>They made the problem more complex. GL makes the problem solvable.</p>
+                <p>They are still discussing. GL is already running.</p>
+            </div>
+
+            <h2>V. GL Rating</h2>
+            <div class="rating-box">
+                <p><strong>GL Score: 0.24</strong></p>
+                <p>The UN HLEG "Beyond GDP" project is structurally well-intentioned but institutionally stuck. It defines the right problem but fails to deliver a usable tool. It is a diagnosis without a prescription — a compass without an engine.</p>
+                <p><strong>GL rating: Diagnosis complete. Solution missing.</strong></p>
+            </div>
+
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · Creator of the GL Framework · June 2026</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · Free download · Free distribution · Please retain author attribution</p>
+                <a href="index.html" class="back-link">← Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= 繁體中文 ================= -->
+    <div id="lang-tw" class="content-lang">
+        <div class="book-container">
+            <h1>診斷聯合國「超越GDP」專案</h1>
+            <div class="subtitle">GL 框架對聯合國高階專家組（HLEG）的診斷報告</div>
+            <div class="author-line">Ping Xu · GFI Flow Intelligence · 2026年6月</div>
+
+            <p><strong>報告對象：</strong>聯合國秘書長「超越GDP」高階專家組（HLEG）</p>
+            <p><strong>診斷工具：</strong>GL 框架（治理正當性框架）</p>
+            <p><strong>報告日期：</strong>2026年6月</p>
+
+            <h2>一、專案概述與成就</h2>
+            <p>HLEG於2025年5月成立，由14位專家組成，歷時一年產出最終報告《Counting What Counts: A Compass of Progress for People and Planet》。核心成果包括：</p>
+            <ul>
+                <li><strong>31項指標儀表板</strong>，約一半來自SDG框架，分為四大維度：基礎原則、當前福祉、公平與包容、永續與韌性</li>
+                <li><strong>三項GDP調整建議</strong>：v-GDP（納入無內在價值商品）、e-GDP（不平等調整）、s-GDP（永續調整）</li>
+                <li><strong>明確承認GDP的缺陷</strong>：忽略不平等、貧窮、環境惡化、非貨幣福祉維度</li>
+            </ul>
+            <p>這些是成就，值得肯定。</p>
+
+            <h2>二、GL框架診斷：結構性缺陷</h2>
+
+            <h3>診斷一：定義了「該測量什麼」，但沒有建立「如何測量」的工具</h3>
+            <p>HLEG承認其框架是「儀表板」，需要各國自行收集數據並解讀。超過一半的指標尚未被各國常態化報告。報告本身指出「超越GDP是一個過程，不是單一步驟」——這意味著他們知道問題沒有解決。</p>
+            <div class="gl-box">
+                <p><strong>GL診斷：</strong>儀表板不會自動產生政策決策。它顯示數據，但沒有告訴決策者「數據顯示系統失靈時該怎麼做」。</p>
+            </div>
+
+            <h3>診斷二：治理指標被降級為「促成因素」，而非核心測量維度</h3>
+            <p>HLEG將治理定位為「促成因素」，與科技、創新並列，而非核心測量指標。UNU-CPR的分析指出，「一個福祉框架不應只將治理視為促成因素，而應作為公平、參與和信任的衡量標準」。</p>
+            <div class="gl-box">
+                <p><strong>GL診斷：</strong>治理是系統是否在運作的核心。將其降級為「促成因素」，等於在儀表板上拿掉引擎燈。</p>
+            </div>
+
+            <h3>診斷三：儀表板過於複雜，無法與GDP的簡潔性競爭</h3>
+            <p>GDP之所以主導全球決策，是因為它是一個「單一、廣泛理解的數字」。HLEG的31項指標儀表板雖然更全面，但缺乏GDP的簡潔性。報告本身承認專家組未能就「標題綜合指標」達成共識。</p>
+            <div class="gl-box">
+                <p><strong>GL診斷：</strong>如果無法用一個數字回答「系統是否在運作」，決策者會繼續使用GDP，因為GDP至少給了一個數字。</p>
+            </div>
+
+            <h3>診斷四：實施路徑依賴政府間協商，缺乏立即行動的機制</h3>
+            <p>報告現在進入會員國「政府間協商」階段，由西班牙和蓋亞那共同協調。已開發國家支持，但全球南方國家擔心指標被用作經濟壓力工具。協商沒有明確的時間表。</p>
+            <div class="gl-box">
+                <p><strong>GL診斷：</strong>當一個全球性工具需要所有國家達成共識才能啟動時，它實際上是被凍結的。</p>
+            </div>
+
+            <h2>三、GL框架定位：不是競爭者，是缺失的引擎</h2>
+            <p>HLEG定義了問題，但沒有建立解決工具。GL框架填補的正是這個缺口：</p>
+            <table>
+                <thead><tr><th>聯合國HLEG「超越GDP」</th><th>GL框架</th></tr></thead>
+                <tbody>
+                    <tr><td>31項指標儀表板</td><td>1個公式、8個參數</td></tr>
+                    <tr><td>需要各國自行收集數據</td><td>只使用公開數據</td></tr>
+                    <tr><td>需要政府間協商才能採用</td><td>已在65國運轉</td></tr>
+                    <tr><td>告訴你「現在狀況如何」</td><td>告訴你「系統為什麼失靈」</td></tr>
+                    <tr><td>定義問題</td><td>解決問題</td></tr>
+                </tbody>
+            </table>
+            <div class="highlight-box">
+                <p><strong>GL框架建議：</strong>將GL分數納入HLEG儀表板，作為「制度交付效能」的量化指標——這是目前31項指標中完全缺失的維度。GL分數可以直接回答HLEG自己提出的問題：「為什麼GDP成長但人民不滿？」</p>
+            </div>
+
+            <h2>四、結論</h2>
+            <div class="quote-block">
+                <p>HLEG定義了「該測量什麼」。GL框架定義了「怎麼測量，以及測完之後該怎麼辦」。</p>
+                <p>他們讓問題變得更複雜。GL讓問題變得可解決。</p>
+                <p>他們還在討論。GL已經在運轉。</p>
+            </div>
+
+            <h2>五、GL評級</h2>
+            <div class="rating-box">
+                <p><strong>GL分數：0.24</strong></p>
+                <p>聯合國HLEG「超越GDP」專案立意良善，但制度上卡住了。它定義了正確的問題，卻無法交付可用的工具。這是一個有診斷卻沒有處方籤的報告——一個沒有引擎的指南針。</p>
+                <p><strong>GL評級：診斷完整，解決方案缺失。</strong></p>
+            </div>
+
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · GL Framework 創建者 · 2026年6月</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · 免費下載 · 自由轉載 · 請保留作者署名</p>
+                <a href="index.html" class="back-link">← 返回首頁</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= 简体中文 ================= -->
+    <div id="lang-cn" class="content-lang">
+        <div class="book-container">
+            <h1>诊断联合国「超越GDP」项目</h1>
+            <div class="subtitle">GL 框架对联合国高阶专家组（HLEG）的诊断报告</div>
+            <div class="author-line">Ping Xu · GFI Flow Intelligence · 2026年6月</div>
+
+            <p><strong>报告对象：</strong>联合国秘书长「超越GDP」高阶专家组（HLEG）</p>
+            <p><strong>诊断工具：</strong>GL 框架（治理正当性框架）</p>
+            <p><strong>报告日期：</strong>2026年6月</p>
+
+            <h2>一、项目概述与成就</h2>
+            <p>HLEG于2025年5月成立，由14位专家组成，历时一年产出最终报告《Counting What Counts: A Compass of Progress for People and Planet》。核心成果包括：</p>
+            <ul>
+                <li><strong>31项指标仪表板</strong>，约一半来自SDG框架，分为四大维度：基础原则、当前福祉、公平与包容、永续与韧性</li>
+                <li><strong>三项GDP调整建议</strong>：v-GDP（纳入无内在价值商品）、e-GDP（不平等调整）、s-GDP（永续调整）</li>
+                <li><strong>明确承认GDP的缺陷</strong>：忽略不平等、贫穷、环境恶化、非货币福祉维度</li>
+            </ul>
+            <p>这些是成就，值得肯定。</p>
+
+            <h2>二、GL框架诊断：结构性缺陷</h2>
+
+            <h3>诊断一：定义了「该测量什么」，但没有建立「如何测量」的工具</h3>
+            <p>HLEG承认其框架是「仪表板」，需要各国自行收集数据并解读。超过一半的指标尚未被各国常态化报告。报告本身指出「超越GDP是一个过程，不是单一步骤」——这意味着他们知道问题没有解决。</p>
+            <div class="gl-box">
+                <p><strong>GL诊断：</strong>仪表板不会自动产生政策决策。它显示数据，但没有告诉决策者「数据显示系统失灵时该怎么做」。</p>
+            </div>
+
+            <h3>诊断二：治理指标被降级为「促成因素」，而非核心测量维度</h3>
+            <p>HLEG将治理定位为「促成因素」，与科技、创新并列，而非核心测量指标。UNU-CPR的分析指出，「一个福祉框架不应只将治理视为促成因素，而应作为公平、参与和信任的衡量标准」。</p>
+            <div class="gl-box">
+                <p><strong>GL诊断：</strong>治理是系统是否在运作的核心。将其降级为「促成因素」，等于在仪表板上拿掉引擎灯。</p>
+            </div>
+
+            <h3>诊断三：仪表板过于复杂，无法与GDP的简洁性竞争</h3>
+            <p>GDP之所以主导全球决策，是因为它是一个「单一、广泛理解的数字」。HLEG的31项指标仪表板虽然更全面，但缺乏GDP的简洁性。报告本身承认专家组未能就「标题综合指标」达成共识。</p>
+            <div class="gl-box">
+                <p><strong>GL诊断：</strong>如果无法用一个数字回答「系统是否在运作」，决策者会继续使用GDP，因为GDP至少给了一个数字。</p>
+            </div>
+
+            <h3>诊断四：实施路径依赖政府间协商，缺乏立即行动的机制</h3>
+            <p>报告现在进入会员国「政府间协商」阶段，由西班牙和盖亚那共同协调。已开发国家支持，但全球南方国家担心指标被用作经济压力工具。协商没有明确的时间表。</p>
+            <div class="gl-box">
+                <p><strong>GL诊断：</strong>当一个全球性工具需要所有国家达成共识才能启动时，它实际上是被冻结的。</p>
+            </div>
+
+            <h2>三、GL框架定位：不是竞争者，是缺失的引擎</h2>
+            <p>HLEG定义了问题，但没有建立解决工具。GL框架填补的正是这个缺口：</p>
+            <table>
+                <thead><tr><th>联合国HLEG「超越GDP」</th><th>GL框架</th></tr></thead>
+                <tbody>
+                    <tr><td>31项指标仪表板</td><td>1个公式、8个参数</td></tr>
+                    <tr><td>需要各国自行收集数据</td><td>只使用公开数据</td></tr>
+                    <tr><td>需要政府间协商才能采用</td><td>已在65国运转</td></tr>
+                    <tr><td>告诉你「现在状况如何」</td><td>告诉你「系统为什么失灵」</td></tr>
+                    <tr><td>定义问题</td><td>解决问题</td></tr>
+                </tbody>
+            </table>
+            <div class="highlight-box">
+                <p><strong>GL框架建议：</strong>将GL分数纳入HLEG仪表板，作为「制度交付效能」的量化指标——这是目前31项指标中完全缺失的维度。GL分数可以直接回答HLEG自己提出的问题：「为什么GDP成长但人民不满？」</p>
+            </div>
+
+            <h2>四、结论</h2>
+            <div class="quote-block">
+                <p>HLEG定义了「该测量什么」。GL框架定义了「怎么测量，以及测完之后该怎么办」。</p>
+                <p>他们让问题变得更复杂。GL让问题变得可解决。</p>
+                <p>他们还在讨论。GL已经在运转。</p>
+            </div>
+
+            <h2>五、GL评级</h2>
+            <div class="rating-box">
+                <p><strong>GL分数：0.24</strong></p>
+                <p>联合国HLEG「超越GDP」项目立意良善，但制度上卡住了。它定义了正确的问题，却无法交付可用的工具。这是一个有诊断却没有处方签的报告——一个没有引擎的指南针。</p>
+                <p><strong>GL评级：诊断完整，解决方案缺失。</strong></p>
+            </div>
+
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · GL Framework 创建者 · 2026年6月</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · 免费下载 · 自由转载 · 请保留作者署名</p>
+                <a href="index.html" class="back-link">← 返回首页</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= ESPAÑOL ================= -->
+    <div id="lang-es" class="content-lang">
+        <div class="book-container">
+            <h1>Diagnosticando el Proyecto "Más allá del PIB" de la ONU</h1>
+            <div class="subtitle">Informe de diagnóstico de GL Framework sobre el Grupo de Expertos de Alto Nivel (HLEG) de la ONU</div>
+            <div class="author-line">Ping Xu · GFI Flow Intelligence · Junio 2026</div>
+
+            <p><strong>Asunto del Informe:</strong> Grupo de Expertos de Alto Nivel sobre "Más allá del PIB" del Secretario General de la ONU</p>
+            <p><strong>Herramienta de Diagnóstico:</strong> GL Framework (Marco de Legitimidad Gubernamental)</p>
+            <p><strong>Fecha del Informe:</strong> Junio 2026</p>
+
+            <h2>I. Resumen y Logros del Proyecto</h2>
+            <p>El HLEG se estableció en mayo de 2025 con 14 expertos, produciendo su informe final en mayo de 2026: <em>Counting What Counts: A Compass of Progress for People and Planet</em>.</p>
+            <ul>
+                <li><strong>Panel de 31 indicadores</strong> — aproximadamente la mitad provienen de los ODS, organizados en cuatro dimensiones: Principios Fundamentales, Bienestar Actual, Equidad e Inclusión, Sostenibilidad y Resiliencia</li>
+                <li><strong>Tres ajustes al PIB</strong> — v-PIB (excluyendo bienes sin valor intrínseco), e-PIB (ajustado por desigualdad), s-PIB (ajustado por sostenibilidad)</li>
+                <li><strong>Reconocimiento explícito de las fallas del PIB</strong> — ignorando la desigualdad, la pobreza, el deterioro ambiental y las dimensiones de bienestar no monetarias</li>
+            </ul>
+            <p>Estos son logros. Merecen reconocimiento.</p>
+
+            <h2>II. Diagnóstico del GL Framework: Déficits Estructurales</h2>
+
+            <h3>Diagnóstico 1: Definieron qué medir — pero no construyeron la herramienta para medirlo</h3>
+            <p>El HLEG admite que su marco es un "panel de control" que requiere que cada país recoja sus propios datos y los interprete. Más de la mitad de los indicadores aún no son reportados rutinariamente por los países. El propio informe señala que "Más allá del PIB es un proceso, no un paso único" — lo que significa que saben que el problema no está resuelto.</p>
+            <div class="gl-box">
+                <p><strong>Diagnóstico GL:</strong> Un panel de control no genera automáticamente decisiones políticas. Muestra datos, pero no les dice a los responsables políticos qué hacer cuando los datos muestran fallas del sistema.</p>
+            </div>
+
+            <h3>Diagnóstico 2: La gobernanza es relegada a "factor facilitador"</h3>
+            <p>El HLEG posiciona la gobernanza como un "factor facilitador", junto con la tecnología y la innovación, en lugar de una dimensión de medición central. UNU-CPR señala que "un marco de bienestar no debería tratar la gobernanza solo como un factor contribuyente, sino como una medida de equidad, participación y confianza".</p>
+            <div class="gl-box">
+                <p><strong>Diagnóstico GL:</strong> La gobernanza es el núcleo de si un sistema realmente está funcionando. Reducirla a "factor facilitador" es como quitar la luz del motor del tablero.</p>
+            </div>
+
+            <h3>Diagnóstico 3: El panel es demasiado complejo para competir con la simplicidad del PIB</h3>
+            <p>El PIB domina la toma de decisiones global porque es un "número único y ampliamente comprendido". El panel de 31 indicadores del HLEG, aunque más completo, carece de la simplicidad del PIB. El informe admite que el grupo de expertos no pudo llegar a un consenso sobre un "indicador compuesto principal".</p>
+            <div class="gl-box">
+                <p><strong>Diagnóstico GL:</strong> Si no puedes responder "¿está funcionando el sistema?" con un solo número, los responsables políticos seguirán usando el PIB — porque al menos el PIB les da un número.</p>
+            </div>
+
+            <h3>Diagnóstico 4: La implementación depende de la negociación intergubernamental</h3>
+            <p>El informe ahora entra en la fase de "consulta intergubernamental", co-facilitada por España y Guyana. Los países desarrollados lo apoyan, pero los países del Sur Global temen que los indicadores se utilicen como herramientas de presión económica. No hay un cronograma claro.</p>
+            <div class="gl-box">
+                <p><strong>Diagnóstico GL:</strong> Cuando una herramienta global requiere el consenso de todos los países para poder iniciar, está efectivamente congelada.</p>
+            </div>
+
+            <h2>III. Posicionamiento de GL Framework: No es un Competidor — es el Motor Faltante</h2>
+            <p>El HLEG definió el problema. No construyó la solución. GL Framework llena ese vacío:</p>
+            <table>
+                <thead><tr><th>ONU HLEG "Más allá del PIB"</th><th>GL Framework</th></tr></thead>
+                <tbody>
+                    <tr><td>Panel de 31 indicadores</td><td>1 fórmula, 8 parámetros</td></tr>
+                    <tr><td>Requiere que los países recopilen sus propios datos</td><td>Utiliza solo datos públicos</td></tr>
+                    <tr><td>Requiere negociación intergubernamental</td><td>Ya está funcionando en 65 países</td></tr>
+                    <tr><td>Te dice "cómo están las cosas ahora"</td><td>Te dice "por qué el sistema está fallando"</td></tr>
+                    <tr><td>Define el problema</td><td>Ofrece la solución</td></tr>
+                </tbody>
+            </table>
+            <div class="highlight-box">
+                <p><strong>Recomendación de GL Framework:</strong> Integrar la puntuación GL en el panel del HLEG como una métrica cuantitativa para la efectividad de la entrega institucional — una dimensión que actualmente falta en los 31 indicadores. La puntuación GL responde directamente a la propia pregunta del HLEG: "¿Por qué crece el PIB mientras los ciudadanos están insatisfechos?"</p>
+            </div>
+
+            <h2>IV. Conclusión</h2>
+            <div class="quote-block">
+                <p>El HLEG definió qué medir. GL Framework definió cómo medirlo — y qué hacer después de la medición.</p>
+                <p>Ellos hicieron el problema más complejo. GL hace el problema soluble.</p>
+                <p>Ellos todavía están discutiendo. GL ya está funcionando.</p>
+            </div>
+
+            <h2>V. Calificación GL</h2>
+            <div class="rating-box">
+                <p><strong>Puntuación GL: 0.24</strong></p>
+                <p>El proyecto "Más allá del PIB" del HLEG de la ONU está estructuralmente bien intencionado pero institucionalmente estancado. Define el problema correcto pero no logra entregar una herramienta utilizable. Es un diagnóstico sin receta — una brújula sin motor.</p>
+                <p><strong>Calificación GL: Diagnóstico completo. Solución ausente.</strong></p>
+            </div>
+
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · Creadora del GL Framework · Junio 2026</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · Descarga gratuita · Distribución libre · Por favor, mantenga la atribución del autor</p>
+                <a href="index.html" class="back-link">← Volver al Inicio</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const lang = this.dataset.lang;
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            document.querySelectorAll('.content-lang').forEach(el => el.classList.remove('active'));
+            document.getElementById(`lang-${lang}`).classList.add('active');
+        });
+    });
+</script>
+</body>
+</html>
