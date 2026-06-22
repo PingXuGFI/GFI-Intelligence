@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系統不交付 · 失去年輕一代 · 四語分析 · GL 框架</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0b1220;
+            color: #f8fbff;
+            font-family: 'DM Sans', system-ui, sans-serif;
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+        .logo a {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.12em;
+            color: #9FE870;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+        .lang-switch {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .lang-btn {
+            background: none;
+            border: 1px solid rgba(255,255,255,.1);
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            padding: 0.25rem 0.7rem;
+            border-radius: 2rem;
+            color: #9fb0c8;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,.3); color: #fff; }
+        .lang-btn.active {
+            background: #9FE870;
+            color: #0b1220;
+            border-color: #9FE870;
+        }
+        .content-lang { display: none; }
+        .content-lang.active { display: block; }
+        .book-container {
+            background: #0d1526;
+            padding: 3rem 2.5rem;
+            border-radius: 4px;
+            border: 1px solid rgba(255,255,255,.06);
+        }
+        .opening-statement {
+            background: rgba(248, 113, 113, 0.06);
+            border: 1px solid rgba(248, 113, 113, 0.2);
+            border-radius: 12px;
+            padding: 1.8rem 2rem;
+            margin-bottom: 2rem;
+        }
+        .opening-statement p {
+            color: #f0d0d0;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+        .opening-statement .highlight-red {
+            color: #f87171;
+            font-weight: 600;
+        }
+        .opening-statement .signature {
+            color: #9fb0c8;
+            font-style: italic;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+        h1 {
+            font-size: 2.6rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 0.25rem;
+            color: #f87171;
+            letter-spacing: 0.02em;
+            font-family: 'DM Serif Display', Georgia, serif;
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 1rem;
+            color: #9fb0c8;
+            margin-bottom: 0.5rem;
+            font-style: italic;
+        }
+        .author-line {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #7DD3FC;
+            margin-bottom: 2rem;
+        }
+        .theme-line {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.6rem;
+            color: #f87171;
+            text-align: center;
+            margin: 1.5rem 0;
+            line-height: 1.3;
+        }
+        h2 {
+            font-size: 1.4rem;
+            color: #9FE870;
+            margin: 2rem 0 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+            padding-bottom: 0.3rem;
+            font-family: 'DM Serif Display', Georgia, serif;
+        }
+        h3 {
+            font-size: 1.1rem;
+            color: #7DD3FC;
+            margin: 1.5rem 0 0.75rem 0;
+            font-family: 'DM Serif Display', Georgia, serif;
+        }
+        p {
+            color: #c7d2e3;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        .quote-block {
+            border-left: 3px solid #9FE870;
+            padding-left: 1.2rem;
+            margin: 1.2rem 0;
+            color: #eaf6ff;
+            font-style: italic;
+        }
+        .highlight-box {
+            background: rgba(159, 232, 112, 0.06);
+            border: 1px solid rgba(159, 232, 112, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        .highlight-box p {
+            color: #eaf6ff;
+            margin-bottom: 0.25rem;
+        }
+        .highlight-box strong {
+            color: #9FE870;
+        }
+        .gl-box {
+            background: rgba(159, 232, 112, 0.04);
+            border-left: 3px solid #9FE870;
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .gl-box p {
+            color: #eaf6ff;
+            margin-bottom: 0.5rem;
+        }
+        .gl-box strong {
+            color: #9FE870;
+        }
+        .big4-box {
+            background: rgba(248, 113, 113, 0.04);
+            border-left: 3px solid #f87171;
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .big4-box p {
+            color: #f0d0d0;
+            margin-bottom: 0.5rem;
+        }
+        .big4-box strong {
+            color: #f87171;
+        }
+        .case-card {
+            background: rgba(125, 211, 252, 0.04);
+            border-left: 3px solid #7DD3FC;
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .case-card p {
+            color: #eaf6ff;
+            margin-bottom: 0.5rem;
+        }
+        .case-card strong {
+            color: #7DD3FC;
+        }
+        .data-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .data-item {
+            background: rgba(255,255,255,.02);
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            text-align: center;
+        }
+        .data-item .number {
+            font-family: 'DM Mono', monospace;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #f87171;
+        }
+        .data-item .label {
+            font-size: 0.75rem;
+            color: #9fb0c8;
+            line-height: 1.4;
+        }
+        .data-item .label .highlight {
+            color: #f87171;
+            font-weight: 600;
+        }
+        .pm-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.8rem;
+            margin: 1.5rem 0;
+        }
+        .pm-item {
+            background: rgba(255,255,255,.02);
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 10px;
+            padding: 0.8rem 1rem;
+            text-align: center;
+        }
+        .pm-item .name { font-weight: 600; color: #fff; }
+        .pm-item .tenure { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: #9fb0c8; }
+        .pm-item .reason { font-size: 0.75rem; color: #f87171; }
+        .prescription-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .prescription-item {
+            background: rgba(255,255,255,.02);
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+        }
+        .prescription-item .number {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #7DD3FC;
+        }
+        .prescription-item .title { font-weight: 600; color: #fff; margin: 0.2rem 0; }
+        .prescription-item .desc { font-size: 0.85rem; color: #c7d2e3; }
+        .prescription-item .gl-link {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: #9FE870;
+            margin-top: 0.3rem;
+        }
+        .footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,.06);
+            text-align: center;
+            font-size: 0.75rem;
+            color: #9fb0c8;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 1.5rem;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: #9fb0c8;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,.06);
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            transition: 0.2s;
+        }
+        .back-link:hover { border-color: rgba(255,255,255,.2); color: #fff; }
+        .divider { border: 0; border-top: 1px solid rgba(255,255,255,.08); margin: 2.5rem 0; }
+
+        .closing-statement {
+            background: rgba(248, 113, 113, 0.04);
+            border: 1px solid rgba(248, 113, 113, 0.15);
+            border-radius: 12px;
+            padding: 2rem 2rem;
+            margin: 2rem 0 1rem 0;
+        }
+        .closing-statement p {
+            color: #f0d0d0;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+        .closing-statement .big-red {
+            color: #f87171;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .closing-statement .gold {
+            color: #9FE870;
+            font-weight: 600;
+        }
+
+        .five-promises {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.5rem;
+            margin: 1rem 0 1rem 1.5rem;
+        }
+        .five-promises li {
+            color: #c7d2e3;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            list-style-type: none;
+        }
+        .five-promises li::before {
+            content: "▸ ";
+            color: #f87171;
+        }
+
+        @media (max-width: 700px) {
+            .container { padding: 1rem; }
+            .book-container { padding: 1.5rem; }
+            h1 { font-size: 1.8rem; }
+            .theme-line { font-size: 1.2rem; }
+            .data-grid { grid-template-columns: 1fr; }
+            .pm-grid { grid-template-columns: 1fr 1fr; }
+            .prescription-grid { grid-template-columns: 1fr; }
+            .opening-statement { padding: 1.2rem; }
+            .closing-statement { padding: 1.2rem; }
+        }
+        @media print {
+            .header { display: none !important; }
+            .footer { display: none !important; }
+            .back-link { display: none !important; }
+            .book-container { background: transparent !important; border: none !important; padding: 0 !important; }
+            body { background: #fff !important; color: #000 !important; }
+            h1, h2, h3, p, .data-item .label, .pm-item .tenure { color: #000 !important; }
+            .gl-box, .highlight-box, .case-card, .big4-box { background: #f5f5f5 !important; border-color: #ccc !important; }
+            .gl-box p, .highlight-box p, .case-card p, .big4-box p { color: #000 !important; }
+            .quote-block { border-left-color: #666 !important; }
+            .data-item { border-color: #ccc !important; }
+            .data-item .number { color: #cc0000 !important; }
+            .data-item .label .highlight { color: #cc0000 !important; }
+            .prescription-item { border-color: #ccc !important; }
+            .pm-item { border-color: #ccc !important; }
+            .pm-item .name { color: #000 !important; }
+            .pm-item .reason { color: #cc0000 !important; }
+            .theme-line { color: #cc0000 !important; }
+            .opening-statement { border-color: #ccc !important; background: #f5f5f5 !important; }
+            .opening-statement p { color: #000 !important; }
+            .closing-statement { border-color: #ccc !important; background: #f5f5f5 !important; }
+            .closing-statement p { color: #000 !important; }
+            .closing-statement .big-red { color: #cc0000 !important; }
+            .closing-statement .gold { color: #006600 !important; }
+            .five-promises li { color: #000 !important; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="logo"><a href="#">GL · 系統不交付</a></div>
+        <div class="lang-switch">
+            <button class="lang-btn active" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="tw">繁</button>
+            <button class="lang-btn" data-lang="cn">简</button>
+            <button class="lang-btn" data-lang="es">ES</button>
+        </div>
+    </div>
+
+    <!-- ====== ENGLISH ====== -->
+    <div id="lang-en" class="content-lang active">
+        <div class="book-container">
+
+            <!-- OPENING STATEMENT -->
+            <div class="opening-statement">
+                <p><span class="highlight-red">"System Failure to Deliver"</span> is not a problem unique to the UK.</p>
+                <p>Young people in many countries face the same predicament: education devalued, employment scarce, housing unaffordable, debt soaring, politics paralyzed, policies reversed.</p>
+                <p>They are constantly told to "try harder" — but the problem was never with them. <span class="highlight-red">It is with the system itself.</span></p>
+                <p class="signature">— This report is not about the UK. It is about <strong>any nation that is losing its young generation.</strong> · Ping Xu · GFI Flow Intelligence</p>
+            </div>
+
+            <h1>The Lost Generation</h1>
+            <div class="subtitle">When a nation fails its youth, it fails its future.</div>
+            <div class="author-line">Ping Xu · GFI Flow Intelligence · June 2026</div>
+
+            <div class="quote-block">
+                <p><strong>"I don't see a world where I move back to the UK."</strong></p>
+                <p>— James Deverell, 23, business graduate. £59,000 debt. 80+ applications. One offer: £27,000 in London.</p>
+                <p>He is now in Guangzhou, China. Teaching. Starting an import-export business.</p>
+            </div>
+
+            <p>This is not one young man's story. It is a system that is <strong>actively expelling its own youth</strong>.</p>
+
+            <div class="theme-line">The sun never set on the empire. Now it sets on the system.</div>
+
+            <h2>Why the Nation Loses Its Young</h2>
+
+            <h3>1. Land Monopoly — 70% of land, 0.6% of people</h3>
+            <p>In England, <strong>70% of the land</strong> is owned by <strong>0.6% of the population</strong> — aristocrats who have held it since the Norman Conquest. The Crown leases land to the NHS, prisons, and schools. <strong>Public institutions pay rent to the Crown.</strong></p>
+            <div class="gl-box">
+                <p><strong>GL Diagnosis:</strong> The monarchy survives as a landlord class that has never been dispossessed. This is not democracy. This is landlordism with elections. Young people are priced out before they start.</p>
+            </div>
+
+            <h3>2. Political Paralysis — 10 years, 6 prime ministers</h3>
+            <p>The aristocracy traded political power for permanent control of land and wealth. Every policy on housing, tax, or inequality hits the same wall: <strong>the landed class will not allow it.</strong></p>
+            <div class="gl-box">
+                <p><strong>GL Diagnosis:</strong> The UK is trapped in a structural equilibrium where reform costs more than failure. The beneficiaries of failure block reform.</p>
+            </div>
+
+            <h3>3. Governance Outsourcing — the state that lost its hands</h3>
+            <p>Government outsourced policy, systems, and services to Deloitte, PwC, EY, and KPMG. <strong>The civil service was hollowed out.</strong> Decision-making became dependent on consultants who extend contracts, not solve problems.</p>
+            <div class="big4-box">
+                <p><strong>Frontline staff face a tangled, monstrous system — moving mountains from miles away, with no leverage.</strong></p>
+            </div>
+            <div class="gl-box">
+                <p><strong>GL Diagnosis:</strong> When government outsources delivery, Fs × Vn explodes. Pd × Cf collapses. The GL score falls toward zero — not from bad intent, but structural design.</p>
+            </div>
+
+            <div class="theme-line">Ten years. Six PMs. No accumulation. Only friction.</div>
+
+            <h2>The Moving Family</h2>
+            <p>UK's governing class is like a family that moves house every two years. They spend all their time packing and arguing — while the house itself belongs to someone else.</p>
+            <div class="pm-grid">
+                <div class="pm-item"><div class="name">Cameron</div><div class="tenure">2010–2016</div><div class="reason">Brexit referendum</div></div>
+                <div class="pm-item"><div class="name">May</div><div class="tenure">2016–2019</div><div class="reason">Brexit deal failure</div></div>
+                <div class="pm-item"><div class="name">Johnson</div><div class="tenure">2019–2022</div><div class="reason">Partygate</div></div>
+                <div class="pm-item"><div class="name">Truss</div><div class="tenure">2022 (45d)</div><div class="reason">Budget collapse</div></div>
+                <div class="pm-item"><div class="name">Sunak</div><div class="tenure">2022–2024</div><div class="reason">Election defeat</div></div>
+                <div class="pm-item"><div class="name">Starmer</div><div class="tenure">2024–2026</div><div class="reason">Party revolt</div></div>
+            </div>
+            <p><strong>No accumulation. Only friction. No governance. Only paralysis.</strong></p>
+
+            <h2>The Exodus — Youth Voting with Their Feet</h2>
+            <div class="data-grid">
+                <div class="data-item">
+                    <div class="number">10.2%</div>
+                    <div class="label">UK grads planning to work abroad <span class="highlight">↑ 33%</span></div>
+                </div>
+                <div class="data-item">
+                    <div class="number">£59k</div>
+                    <div class="label">Average student debt</div>
+                </div>
+                <div class="data-item">
+                    <div class="number">80+</div>
+                    <div class="label">Jobs applied — <span class="highlight">only 1 offer</span></div>
+                </div>
+                <div class="data-item">
+                    <div class="number">1/4</div>
+                    <div class="label">China cost of living <span class="highlight">= 1/4 of London</span> (with housing)</div>
+                </div>
+            </div>
+            <div class="case-card">
+                <p><strong>Jean, Oxford modern languages graduate.</strong> Skipped UK job market. Found work in China before graduation.</p>
+                <p><strong>"The UK job market is just a load of applications and sitting at home."</strong></p>
+            </div>
+            <p><strong>The system is not delivering. So the young are leaving.</strong></p>
+            <div class="highlight-box">
+                <p><strong>They have a common Crown and no common ground.</strong></p>
+                <p>70% of the land. 0.6% of the people. 10% of graduates leaving.</p>
+                <p><strong>That is not governance. That is a rent-seeking machine — and the young are voting with their feet.</strong></p>
+            </div>
+
+            <h2>The Prescription</h2>
+            <div class="prescription-grid">
+                <div class="prescription-item"><div class="number">01</div><div class="title">Land Reform</div><div class="desc">Break the landed monopoly. Full registration. Progressive land value tax.</div><div class="gl-link">→ GL: Reduce Vn</div></div>
+                <div class="prescription-item"><div class="number">02</div><div class="title">Abolish the Lords</div><div class="desc">Remove hereditary aristocrats from legislative power.</div><div class="gl-link">→ GL: Reduce Vn</div></div>
+                <div class="prescription-item"><div class="number">03</div><div class="title">Policy Consistency</div><div class="desc">Welfare, health, education need cross-party consensus to change.</div><div class="gl-link">→ GL: Increase Pd, Cf</div></div>
+                <div class="prescription-item"><div class="number">04</div><div class="title">Outcome Verification</div><div class="desc">Every major policy independently verified within 90 days.</div><div class="gl-link">→ GL: Increase Cf</div></div>
+                <div class="prescription-item"><div class="number">05</div><div class="title">GL Dashboard</div><div class="desc">Publish quarterly GL scores. Let the people see system health.</div><div class="gl-link">→ GL: Accountability</div></div>
+                <div class="prescription-item"><div class="number">06</div><div class="title">Rebuild Capacity</div><div class="desc">Restore civil service capability. Reduce consultant dependency.</div><div class="gl-link">→ GL: Reduce Fs, Vn</div></div>
+            </div>
+
+            <!-- CLOSING STATEMENT -->
+            <div class="closing-statement">
+                <p><span class="gold">What is a nation's "essential function"?</span></p>
+                <p>Not GDP growth. Not stock market indices. Not international rankings.</p>
+                <p><span class="gold">It is giving young people the belief that:</span></p>
+                <ul class="five-promises">
+                    <li>If I study hard, I can find a job.</li>
+                    <li>If I work hard, I can support myself.</li>
+                    <li>If I save, I can afford a home.</li>
+                    <li>If I plan for the future, policies won't suddenly reverse.</li>
+                    <li>Staying here is better than leaving.</li>
+                </ul>
+                <p><span class="big-red">When a nation cannot deliver these five things, it has lost its essential function.</span></p>
+                <p style="margin-top: 1rem;"><span class="big-red">"System Failure to Deliver"</span> = the state writes checks it cannot cash. Young people realize they cannot be cashed — so they leave.</p>
+                <p><span class="big-red">It is not that the young are not trying. It is that the system is designed in a way that prevents the state from fulfilling its essential function.</span></p>
+                <p class="signature" style="margin-top: 1rem; color: #9fb0c8; font-style: italic;">— This is not the story of the UK. It is the story of <strong>any nation that is losing its young generation.</strong></p>
+            </div>
+
+            <div class="theme-line">The sun never set on the empire. Now it sets on the system.</div>
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · Creator of the GL Framework · June 2026</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · Free download · Free distribution</p>
+                <a href="#" class="back-link">← Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== 繁體中文 ====== -->
+    <div id="lang-tw" class="content-lang">
+        <div class="book-container">
+
+            <div class="opening-statement">
+                <p><span class="highlight-red">「系統不交付」</span>不是英國獨有的問題。</p>
+                <p>許多國家的年輕人都面對同樣的困境：教育貶值、就業困難、房價高漲、債務纏身、政治失能、政策翻盤。</p>
+                <p>年輕人不斷被要求「更努力一點」——但問題從來不在他們身上。<span class="highlight-red">問題在系統本身。</span></p>
+                <p class="signature">— 這份報告不是關於英國。它是關於 <strong>任何一個正在失去年輕一代的國家。</strong> · Ping Xu · GFI Flow Intelligence</p>
+            </div>
+
+            <h1>失落的一代</h1>
+            <div class="subtitle">當國家辜負年輕人，就是辜負自己的未來。</div>
+            <div class="author-line">Ping Xu · GFI Flow Intelligence · 2026年6月</div>
+
+            <div class="quote-block">
+                <p><strong>「我不覺得我會回英國了。」</strong></p>
+                <p>— James Deverell，23歲，商學畢業。學貸£59,000。80多個申請。唯一錄取：倫敦£27,000。</p>
+                <p>他現在在中國廣州。教英語。創業做進出口。</p>
+            </div>
+
+            <p>這不只是一個年輕人的故事。這是一個 <strong>正在驅逐自己年輕世代</strong> 的系統。</p>
+
+            <div class="theme-line">昔日不落，現日落西山。</div>
+
+            <h2>國家為什麼失去年輕一代</h2>
+
+            <h3>一、土地壟斷——70%的土地，0.6%的人口</h3>
+            <p>英格蘭 <strong>70% 的土地</strong> 由 <strong>0.6% 的人口</strong> 持有——貴族世家，從諾曼征服至今。皇室把土地租給NHS、監獄、學校。<strong>公共機構向皇室繳租。</strong></p>
+            <div class="gl-box">
+                <p><strong>GL診斷：</strong>皇室之所以存活，是因為它是從未被剝奪的地主階級。這不是民主，這是帶有選舉的地主制。年輕人還沒開始就被房價排除在外。</p>
+            </div>
+
+            <h3>二、政治癱瘓——十年六任首相</h3>
+            <p>貴族用政治權力換取土地和財富的永久控制。所有住房、稅收、不平等政策都撞上同一堵牆：<strong>地主階級不會允許。</strong></p>
+            <div class="gl-box">
+                <p><strong>GL診斷：</strong>英國被困在結構性均衡中——改革成本高於失敗成本。失敗的受益者就是阻礙改革的人。</p>
+            </div>
+
+            <h3>三、治理外包——失去雙手</h3>
+            <p>政府把政策、系統、服務外包給Deloitte、PwC、EY、KPMG。<strong>公務體系被掏空。</strong>決策依賴顧問，而顧問的激勵是延長合約，不是解決問題。</p>
+            <div class="big4-box">
+                <p><strong>第一線人員面對龐雜系統——隔山打牛，完全使不上力。</strong></p>
+            </div>
+            <div class="gl-box">
+                <p><strong>GL診斷：</strong>當政府外包交付能力，Fs × Vn 爆炸，Pd × Cf 崩潰。GL分數趨近零——不是意圖不良，而是結構設計。</p>
+            </div>
+
+            <div class="theme-line">十年六任。沒有累積。只有摩擦。</div>
+
+            <h2>搬家的家庭</h2>
+            <p>英國執政階級像每兩年搬一次家的家庭。所有時間花在打包、爭論——而房子本身屬於別人。</p>
+            <div class="pm-grid">
+                <div class="pm-item"><div class="name">卡梅倫</div><div class="tenure">2010–2016</div><div class="reason">脫歐公投</div></div>
+                <div class="pm-item"><div class="name">文翠珊</div><div class="tenure">2016–2019</div><div class="reason">脫歐協議失敗</div></div>
+                <div class="pm-item"><div class="name">約翰遜</div><div class="tenure">2019–2022</div><div class="reason">派對門</div></div>
+                <div class="pm-item"><div class="name">卓慧思</div><div class="tenure">2022（45天）</div><div class="reason">預算崩潰</div></div>
+                <div class="pm-item"><div class="name">辛偉誠</div><div class="tenure">2022–2024</div><div class="reason">大選慘敗</div></div>
+                <div class="pm-item"><div class="name">施紀賢</div><div class="tenure">2024–2026</div><div class="reason">黨內逼宮</div></div>
+            </div>
+            <p><strong>沒有累積。只有摩擦。沒有治理。只有癱瘓。</strong></p>
+
+            <h2>出走潮——年輕人用腳投票</h2>
+            <div class="data-grid">
+                <div class="data-item">
+                    <div class="number">10.2%</div>
+                    <div class="label">應屆畢業生計劃出國就業 <span class="highlight">↑ 33%</span></div>
+                </div>
+                <div class="data-item">
+                    <div class="number">£59k</div>
+                    <div class="label">平均學貸</div>
+                </div>
+                <div class="data-item">
+                    <div class="number">80+</div>
+                    <div class="label">申請工作數 — <span class="highlight">只拿到一個錄取</span></div>
+                </div>
+                <div class="data-item">
+                    <div class="number">1/4</div>
+                    <div class="label">中國生活成本 <span class="highlight">= 倫敦的 1/4</span>（含住房）</div>
+                </div>
+            </div>
+            <div class="case-card">
+                <p><strong>Jean，牛津大學現代語言系畢業。</strong>跳過英國求職市場，畢業前在中國找到工作。</p>
+                <p><strong>「英國求職市場就是一堆申請、一堆待在家裡。」</strong></p>
+            </div>
+            <p><strong>系統不交付。所以年輕人走了。</strong></p>
+            <div class="highlight-box">
+                <p><strong>他們有共同的皇冠，卻沒有共同的立場。</strong></p>
+                <p>70% 的土地。0.6% 的人口。10% 的畢業生正在離開。</p>
+                <p><strong>這不是治理。這是尋租機器——年輕人正在用腳投票。</strong></p>
+            </div>
+
+            <h2>處方</h2>
+            <div class="prescription-grid">
+                <div class="prescription-item"><div class="number">01</div><div class="title">土地改革</div><div class="desc">打破地主壟斷。全面登記。累進土地價值稅。</div><div class="gl-link">→ GL：降低 Vn</div></div>
+                <div class="prescription-item"><div class="number">02</div><div class="title">廢除上議院</div><div class="desc">將世襲貴族從立法權力中移除。</div><div class="gl-link">→ GL：降低 Vn</div></div>
+                <div class="prescription-item"><div class="number">03</div><div class="title">政策一致性</div><div class="desc">社福、醫療、教育需跨黨派共識才能更動。</div><div class="gl-link">→ GL：提高 Pd、Cf</div></div>
+                <div class="prescription-item"><div class="number">04</div><div class="title">成果驗證</div><div class="desc">每個重大政策90天內獨立驗證。</div><div class="gl-link">→ GL：提高 Cf</div></div>
+                <div class="prescription-item"><div class="number">05</div><div class="title">GL儀表板</div><div class="desc">每季發布國家治理GL分數。</div><div class="gl-link">→ GL：問責工具</div></div>
+                <div class="prescription-item"><div class="number">06</div><div class="title">重建內部能力</div><div class="desc">重建公務體系自身能力，減少顧問依賴。</div><div class="gl-link">→ GL：降低 Fs、Vn</div></div>
+            </div>
+
+            <div class="closing-statement">
+                <p><span class="gold">一個國家的「應有功能」是什麼？</span></p>
+                <p>不是 GDP 成長率，不是股市指數，不是國際排名。</p>
+                <p><span class="gold">是讓年輕人相信：</span></p>
+                <ul class="five-promises">
+                    <li>我努力讀書，能找到工作。</li>
+                    <li>我認真工作，能養活自己。</li>
+                    <li>我存錢，能買得起房。</li>
+                    <li>我規劃未來，政策不會突然翻盤。</li>
+                    <li>我留在這裡，比離開更好。</li>
+                </ul>
+                <p><span class="big-red">當這五件事做不到，國家就失去了「應有功能」。</span></p>
+                <p style="margin-top: 1rem;"><span class="big-red">「系統不交付」</span> = 國家機器開了一堆空頭支票，年輕人發現兌現不了，於是選擇離開。</p>
+                <p><span class="big-red">不是年輕人不努力，是系統設計上無法發揮國家應有功能。</span></p>
+                <p class="signature" style="margin-top: 1rem; color: #9fb0c8; font-style: italic;">— 這不是英國的故事。這是 <strong>任何一個正在失去年輕一代的國家</strong> 的故事。</p>
+            </div>
+
+            <div class="theme-line">昔日不落，現日落西山。</div>
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · GL框架創建者 · 2026年6月</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · 免費下載 · 免費傳播</p>
+                <a href="#" class="back-link">← 回首頁</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== 简体中文 ====== -->
+    <div id="lang-cn" class="content-lang">
+        <div class="book-container">
+
+            <div class="opening-statement">
+                <p><span class="highlight-red">「系统不交付」</span>不是英国独有的问题。</p>
+                <p>许多国家的年轻人都面对同样的困境：教育贬值、就业困难、房价高涨、债务缠身、政治失能、政策翻盘。</p>
+                <p>年轻人不断被要求「更努力一点」——但问题从来不在他们身上。<span class="highlight-red">问题在系统本身。</span></p>
+                <p class="signature">— 这份报告不是关于英国。它是关于 <strong>任何一个正在失去年轻一代的国家。</strong> · Ping Xu · GFI Flow Intelligence</p>
+            </div>
+
+            <h1>失落的一代</h1>
+            <div class="subtitle">当国家辜负年轻人，就是辜负自己的未来。</div>
+            <div class="author-line">Ping Xu · GFI Flow Intelligence · 2026年6月</div>
+
+            <div class="quote-block">
+                <p><strong>「我不觉得我会回英国了。」</strong></p>
+                <p>— James Deverell，23岁，商学毕业。学贷£59,000。80多个申请。唯一录取：伦敦£27,000。</p>
+                <p>他现在在中国广州。教英语。创业做进出口。</p>
+            </div>
+
+            <p>这不只是一个年轻人的故事。这是一个 <strong>正在驱逐自己年轻世代</strong> 的系统。</p>
+
+            <div class="theme-line">昔日不落，现日落西山。</div>
+
+            <h2>国家为什么失去年轻一代</h2>
+
+            <h3>一、土地垄断——70%的土地，0.6%的人口</h3>
+            <p>英格兰 <strong>70% 的土地</strong> 由 <strong>0.6% 的人口</strong> 持有——贵族世家，从诺曼征服至今。皇室把土地租给NHS、监狱、学校。<strong>公共机构向皇室缴租。</strong></p>
+            <div class="gl-box">
+                <p><strong>GL诊断：</strong>皇室之所以存活，是因为它是从未被剥夺的地主阶级。这不是民主，这是带有选举的地主制。年轻人还没开始就被房价排除在外。</p>
+            </div>
+
+            <h3>二、政治瘫痪——十年六任首相</h3>
+            <p>贵族用政治权力换取土地和财富的永久控制。所有住房、税收、不平等政策都撞上同一堵墙：<strong>地主阶级不会允许。</strong></p>
+            <div class="gl-box">
+                <p><strong>GL诊断：</strong>英国被困在结构性均衡中——改革成本高于失败成本。失败的受益者就是阻碍改革的人。</p>
+            </div>
+
+            <h3>三、治理外包——失去双手</h3>
+            <p>政府把政策、系统、服务外包给Deloitte、PwC、EY、KPMG。<strong>公务体系被掏空。</strong>决策依赖顾问，而顾问的激励是延长合约，不是解决问题。</p>
+            <div class="big4-box">
+                <p><strong>第一线人员面对庞杂系统——隔山打牛，完全使不上力。</strong></p>
+            </div>
+            <div class="gl-box">
+                <p><strong>GL诊断：</strong>当政府外包交付能力，Fs × Vn 爆炸，Pd × Cf 崩溃。GL分数趋近零——不是意图不良，而是结构设计。</p>
+            </div>
+
+            <div class="theme-line">十年六任。没有累积。只有摩擦。</div>
+
+            <h2>搬家的家庭</h2>
+            <p>英国执政阶级像每两年搬一次家的家庭。所有时间花在打包、争论——而房子本身属于别人。</p>
+            <div class="pm-grid">
+                <div class="pm-item"><div class="name">卡梅伦</div><div class="tenure">2010–2016</div><div class="reason">脱欧公投</div></div>
+                <div class="pm-item"><div class="name">特蕾莎·梅</div><div class="tenure">2016–2019</div><div class="reason">脱欧协议失败</div></div>
+                <div class="pm-item"><div class="name">约翰逊</div><div class="tenure">2019–2022</div><div class="reason">派对门</div></div>
+                <div class="pm-item"><div class="name">特拉斯</div><div class="tenure">2022（45天）</div><div class="reason">预算崩溃</div></div>
+                <div class="pm-item"><div class="name">苏纳克</div><div class="tenure">2022–2024</div><div class="reason">大选惨败</div></div>
+                <div class="pm-item"><div class="name">斯塔默</div><div class="tenure">2024–2026</div><div class="reason">党内逼宫</div></div>
+            </div>
+            <p><strong>没有累积。只有摩擦。没有治理。只有瘫痪。</strong></p>
+
+            <h2>出走潮——年轻人用脚投票</h2>
+            <div class="data-grid">
+                <div class="data-item">
+                    <div class="number">10.2%</div>
+                    <div class="label">应届毕业生计划出国就业 <span class="highlight">↑ 33%</span></div>
+                </div>
+                <div class="data-item">
+                    <div class="number">£59k</div>
+                    <div class="label">平均学贷</div>
+                </div>
+                <div class="data-item">
+                    <div class="number">80+</div>
+                    <div class="label">申请工作数 — <span class="highlight">只拿到一个录取</span></div>
+                </div>
+                <div class="data-item">
+                    <div class="number">1/4</div>
+                    <div class="label">中国生活成本 <span class="highlight">= 伦敦的 1/4</span>（含住房）</div>
+                </div>
+            </div>
+            <div class="case-card">
+                <p><strong>Jean，牛津大学现代语言系毕业。</strong>跳过英国求职市场，毕业前在中国找到工作。</p>
+                <p><strong>「英国求职市场就是一堆申请、一堆待在家里。」</strong></p>
+            </div>
+            <p><strong>系统不交付。所以年轻人走了。</strong></p>
+            <div class="highlight-box">
+                <p><strong>他们有共同的皇冠，却没有共同的立场。</strong></p>
+                <p>70% 的土地。0.6% 的人口。10% 的毕业生正在离开。</p>
+                <p><strong>这不是治理。这是寻租机器——年轻人正在用脚投票。</strong></p>
+            </div>
+
+            <h2>处方</h2>
+            <div class="prescription-grid">
+                <div class="prescription-item"><div class="number">01</div><div class="title">土地改革</div><div class="desc">打破地主垄断。全面登记。累进土地价值税。</div><div class="gl-link">→ GL：降低 Vn</div></div>
+                <div class="prescription-item"><div class="number">02</div><div class="title">废除上议院</div><div class="desc">将世袭贵族从立法权力中移除。</div><div class="gl-link">→ GL：降低 Vn</div></div>
+                <div class="prescription-item"><div class="number">03</div><div class="title">政策一致性</div><div class="desc">社福、医疗、教育需跨党派共识才能更动。</div><div class="gl-link">→ GL：提高 Pd、Cf</div></div>
+                <div class="prescription-item"><div class="number">04</div><div class="title">成果验证</div><div class="desc">每个重大政策90天内独立验证。</div><div class="gl-link">→ GL：提高 Cf</div></div>
+                <div class="prescription-item"><div class="number">05</div><div class="title">GL仪表板</div><div class="desc">每季发布国家治理GL分数。</div><div class="gl-link">→ GL：问责工具</div></div>
+                <div class="prescription-item"><div class="number">06</div><div class="title">重建内部能力</div><div class="desc">重建公务体系自身能力，减少顾问依赖。</div><div class="gl-link">→ GL：降低 Fs、Vn</div></div>
+            </div>
+
+            <div class="closing-statement">
+                <p><span class="gold">一个国家的「应有功能」是什么？</span></p>
+                <p>不是 GDP 成长率，不是股市指数，不是国际排名。</p>
+                <p><span class="gold">是让年轻人相信：</span></p>
+                <ul class="five-promises">
+                    <li>我努力读书，能找到工作。</li>
+                    <li>我认真工作，能养活自己。</li>
+                    <li>我存钱，能买得起房。</li>
+                    <li>我规划未来，政策不会突然翻盘。</li>
+                    <li>我留在这里，比离开更好。</li>
+                </ul>
+                <p><span class="big-red">当这五件事做不到，国家就失去了「应有功能」。</span></p>
+                <p style="margin-top: 1rem;"><span class="big-red">「系统不交付」</span> = 国家机器开了一堆空头支票，年轻人发现兑现不了，于是选择离开。</p>
+                <p><span class="big-red">不是年轻人不努力，是系统设计上无法发挥国家应有功能。</span></p>
+                <p class="signature" style="margin-top: 1rem; color: #9fb0c8; font-style: italic;">— 这不是英国的故事。这是 <strong>任何一个正在失去年轻一代的国家</strong> 的故事。</p>
+            </div>
+
+            <div class="theme-line">昔日不落，现日落西山。</div>
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · GL框架创建者 · 2026年6月</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · 免费下载 · 免费传播</p>
+                <a href="#" class="back-link">← 回首页</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== ESPAÑOL ====== -->
+    <div id="lang-es" class="content-lang">
+        <div class="book-container">
+
+            <div class="opening-statement">
+                <p><span class="highlight-red">"El sistema no entrega"</span> no es un problema exclusivo del Reino Unido.</p>
+                <p>Jóvenes en muchos países enfrentan la misma situación: educación devaluada, empleo escaso, vivienda inasequible, deuda creciente, política paralizada, políticas revertidas.</p>
+                <p>Se les dice constantemente que "se esfuercen más" — pero el problema nunca fue con ellos. <span class="highlight-red">Es con el sistema mismo.</span></p>
+                <p class="signature">— Este informe no trata sobre el Reino Unido. Trata sobre <strong>cualquier nación que está perdiendo a su joven generación.</strong> · Ping Xu · GFI Flow Intelligence</p>
+            </div>
+
+            <h1>La Generación Perdida</h1>
+            <div class="subtitle">Cuando una nación falla a su juventud, falla a su futuro.</div>
+            <div class="author-line">Ping Xu · GFI Flow Intelligence · Junio 2026</div>
+
+            <div class="quote-block">
+                <p><strong>"No veo un mundo en el que regrese al Reino Unido."</strong></p>
+                <p>— James Deverell, 23, graduado en negocios. Deuda de £59,000. 80+ solicitudes. Una oferta: £27,000 en Londres.</p>
+                <p>Ahora está en Guangzhou, China. Enseñando inglés. Emprendiendo import-export.</p>
+            </div>
+
+            <p>Esta no es solo la historia de un joven. Es un sistema que <strong>está expulsando activamente a su propia juventud</strong>.</p>
+
+            <div class="theme-line">El sol nunca se puso en el imperio. Ahora se pone en el sistema.</div>
+
+            <h2>Por qué la nación pierde a sus jóvenes</h2>
+
+            <h3>1. Monopolio de la tierra — 70% de la tierra, 0.6% de la población</h3>
+            <p>En Inglaterra, el <strong>70% de la tierra</strong> pertenece al <strong>0.6% de la población</strong> — aristócratas que la poseen desde la conquista normanda. La Corona arrienda tierras al NHS, prisiones y escuelas. <strong>Las instituciones públicas pagan renta a la Corona.</strong></p>
+            <div class="gl-box">
+                <p><strong>Diagnóstico GL:</strong> La monarquía sobrevive como clase terrateniente nunca desposeída. Esto no es democracia. Es terratenencia con elecciones. Los jóvenes son excluidos por el precio de la vivienda.</p>
+            </div>
+
+            <h3>2. Parálisis política — 10 años, 6 primeros ministros</h3>
+            <p>La aristocracia intercambió poder político por control permanente de la tierra y la riqueza. Toda política de vivienda, impuestos o desigualdad choca contra el mismo muro: <strong>la clase terrateniente no lo permitirá.</strong></p>
+            <div class="gl-box">
+                <p><strong>Diagnóstico GL:</strong> El Reino Unido está atrapado en un equilibrio estructural donde reformar cuesta más que fracasar. Los beneficiarios del fracaso bloquean la reforma.</p>
+            </div>
+
+            <h3>3. Externalización de la gobernanza — el estado que perdió sus manos</h3>
+            <p>El gobierno subcontrató políticas, sistemas y servicios a Deloitte, PwC, EY y KPMG. <strong>El servicio civil fue vaciado.</strong> La toma de decisiones depende de consultores que extienden contratos, no resuelven problemas.</p>
+            <div class="big4-box">
+                <p><strong>El personal de primera línea enfrenta un sistema monstruoso — moviendo montañas desde lejos, sin palanca.</strong></p>
+            </div>
+            <div class="gl-box">
+                <p><strong>Diagnóstico GL:</strong> Cuando el gobierno subcontrata la entrega, Fs × Vn explota. Pd × Cf colapsa. La puntuación GL cae a cero — no por mala intención, sino por diseño estructural.</p>
+            </div>
+
+            <div class="theme-line">Diez años. Seis PM. Sin acumulación. Solo fricción.</div>
+
+            <h2>La familia que se muda</h2>
+            <p>La clase gobernante del Reino Unido es como una familia que se muda cada dos años. Pasan todo el tiempo empacando y discutiendo — mientras la casa pertenece a otro.</p>
+            <div class="pm-grid">
+                <div class="pm-item"><div class="name">Cameron</div><div class="tenure">2010–2016</div><div class="reason">Referéndum Brexit</div></div>
+                <div class="pm-item"><div class="name">May</div><div class="tenure">2016–2019</div><div class="reason">Fracaso del acuerdo</div></div>
+                <div class="pm-item"><div class="name">Johnson</div><div class="tenure">2019–2022</div><div class="reason">Partygate</div></div>
+                <div class="pm-item"><div class="name">Truss</div><div class="tenure">2022 (45d)</div><div class="reason">Colapso presupuestario</div></div>
+                <div class="pm-item"><div class="name">Sunak</div><div class="tenure">2022–2024</div><div class="reason">Derrota electoral</div></div>
+                <div class="pm-item"><div class="name">Starmer</div><div class="tenure">2024–2026</div><div class="reason">Rebelión interna</div></div>
+            </div>
+            <p><strong>Sin acumulación. Solo fricción. Sin gobernanza. Solo parálisis.</strong></p>
+
+            <h2>El éxodo — los jóvenes votan con los pies</h2>
+            <div class="data-grid">
+                <div class="data-item">
+                    <div class="number">10.2%</div>
+                    <div class="label">Graduados que planean trabajar en el extranjero <span class="highlight">↑ 33%</span></div>
+                </div>
+                <div class="data-item">
+                    <div class="number">£59k</div>
+                    <div class="label">Deuda estudiantil promedio</div>
+                </div>
+                <div class="data-item">
+                    <div class="number">80+</div>
+                    <div class="label">Solicitudes de empleo — <span class="highlight">una oferta</span></div>
+                </div>
+                <div class="data-item">
+                    <div class="number">1/4</div>
+                    <div class="label">Costo de vida en China <span class="highlight">= 1/4 de Londres</span> (con vivienda)</div>
+                </div>
+            </div>
+            <div class="case-card">
+                <p><strong>Jean, graduada en lenguas modernas de Oxford.</strong> Saltó el mercado laboral del Reino Unido. Encontró trabajo en China antes de graduarse.</p>
+                <p><strong>"El mercado laboral del Reino Unido es solo un montón de solicitudes y estar sentado en casa."</strong></p>
+            </div>
+            <p><strong>El sistema no está entregando. Así que los jóvenes se van.</strong></p>
+            <div class="highlight-box">
+                <p><strong>Tienen una Corona común y ningún terreno común.</strong></p>
+                <p>70% de la tierra. 0.6% de la población. 10% de graduados se van.</p>
+                <p><strong>Eso no es gobernanza. Es una máquina de búsqueda de rentas — y los jóvenes votan con sus pies.</strong></p>
+            </div>
+
+            <h2>La prescripción</h2>
+            <div class="prescription-grid">
+                <div class="prescription-item"><div class="number">01</div><div class="title">Reforma agraria</div><div class="desc">Romper el monopolio terrateniente. Registro completo. Impuesto progresivo al valor de la tierra.</div><div class="gl-link">→ GL: Reducir Vn</div></div>
+                <div class="prescription-item"><div class="number">02</div><div class="title">Abolir la Cámara de los Lores</div><div class="desc">Eliminar a los aristócratas hereditarios del poder legislativo.</div><div class="gl-link">→ GL: Reducir Vn</div></div>
+                <div class="prescription-item"><div class="number">03</div><div class="title">Consistencia política</div><div class="desc">Bienestar, salud, educación necesitan consenso multipartidista para cambiar.</div><div class="gl-link">→ GL: Aumentar Pd, Cf</div></div>
+                <div class="prescription-item"><div class="number">04</div><div class="title">Verificación de resultados</div><div class="desc">Cada política importante verificada independientemente en 90 días.</div><div class="gl-link">→ GL: Aumentar Cf</div></div>
+                <div class="prescription-item"><div class="number">05</div><div class="title">Panel GL</div><div class="desc">Publicar puntuaciones GL trimestrales. Que el pueblo vea la salud del sistema.</div><div class="gl-link">→ GL: Rendición de cuentas</div></div>
+                <div class="prescription-item"><div class="number">06</div><div class="title">Reconstruir capacidad</div><div class="desc">Restaurar la capacidad del servicio civil. Reducir dependencia de consultores.</div><div class="gl-link">→ GL: Reducir Fs, Vn</div></div>
+            </div>
+
+            <div class="closing-statement">
+                <p><span class="gold">¿Cuál es la "función esencial" de una nación?</span></p>
+                <p>No es el crecimiento del PIB. No son los índices bursátiles. No son los rankings internacionales.</p>
+                <p><span class="gold">Es dar a los jóvenes la creencia de que:</span></p>
+                <ul class="five-promises">
+                    <li>Si estudio duro, puedo encontrar trabajo.</li>
+                    <li>Si trabajo duro, puedo mantenerme a mí mismo.</li>
+                    <li>Si ahorro, puedo comprar una vivienda.</li>
+                    <li>Si planifico el futuro, las políticas no se revertirán de repente.</li>
+                    <li>Quedarme aquí es mejor que irme.</li>
+                </ul>
+                <p><span class="big-red">Cuando una nación no puede cumplir estas cinco cosas, ha perdido su función esencial.</span></p>
+                <p style="margin-top: 1rem;"><span class="big-red">"El sistema no entrega"</span> = el estado escribe cheques que no puede cobrar. Los jóvenes descubren que no pueden cobrarlos — así que se van.</p>
+                <p><span class="big-red">No es que los jóvenes no se esfuercen. Es que el sistema está diseñado de manera que impide que el estado cumpla su función esencial.</span></p>
+                <p class="signature" style="margin-top: 1rem; color: #9fb0c8; font-style: italic;">— Esta no es la historia del Reino Unido. Es la historia de <strong>cualquier nación que está perdiendo a su joven generación.</strong></p>
+            </div>
+
+            <div class="theme-line">El sol nunca se puso en el imperio. Ahora se pone en el sistema.</div>
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · Creador del Marco GL · Junio 2026</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · Descarga gratuita · Distribución gratuita</p>
+                <a href="#" class="back-link">← Volver al Inicio</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                document.querySelectorAll('.content-lang').forEach(el => el.classList.remove('active'));
+                const lang = this.dataset.lang;
+                const target = document.getElementById('lang-' + lang);
+                if (target) target.classList.add('active');
+            });
+        });
+    </script>
+</div>
+</body>
+</html>
