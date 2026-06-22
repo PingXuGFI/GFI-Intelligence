@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Government Failure, Inc. · GL Framework · GFI Flow Intelligence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0b1220;
+            color: #f8fbff;
+            font-family: 'DM Sans', system-ui, sans-serif;
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+        .logo a {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.12em;
+            color: #9FE870;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+        .lang-switch {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .lang-btn {
+            background: none;
+            border: 1px solid rgba(255,255,255,.1);
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            padding: 0.25rem 0.7rem;
+            border-radius: 2rem;
+            color: #9fb0c8;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,.3); color: #fff; }
+        .lang-btn.active {
+            background: #9FE870;
+            color: #0b1220;
+            border-color: #9FE870;
+        }
+        .content-lang { display: none; }
+        .content-lang.active { display: block; }
+        .book-container {
+            background: #0d1526;
+            padding: 3rem 2.5rem;
+            border-radius: 4px;
+            border: 1px solid rgba(255,255,255,.06);
+        }
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            color: #f87171;
+            letter-spacing: 0.02em;
+            font-family: 'DM Serif Display', Georgia, serif;
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 1rem;
+            color: #9fb0c8;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+        .author-line {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #7DD3FC;
+            margin-bottom: 2rem;
+        }
+        h2 {
+            font-size: 1.4rem;
+            color: #9FE870;
+            margin: 2rem 0 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+            padding-bottom: 0.3rem;
+            font-family: 'DM Serif Display', Georgia, serif;
+        }
+        h3 {
+            font-size: 1.1rem;
+            color: #7DD3FC;
+            margin: 1.5rem 0 0.75rem 0;
+            font-family: 'DM Serif Display', Georgia, serif;
+        }
+        p {
+            color: #c7d2e3;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        .quote-block {
+            border-left: 3px solid #9FE870;
+            padding-left: 1.2rem;
+            margin: 1.2rem 0;
+            color: #eaf6ff;
+            font-style: italic;
+        }
+        .highlight-box {
+            background: rgba(159, 232, 112, 0.06);
+            border: 1px solid rgba(159, 232, 112, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        .highlight-box p {
+            color: #eaf6ff;
+            margin-bottom: 0.25rem;
+        }
+        .highlight-box strong {
+            color: #9FE870;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.85rem;
+        }
+        th, td {
+            border: 1px solid rgba(255,255,255,.08);
+            padding: 0.6rem;
+            text-align: left;
+            vertical-align: top;
+            color: #c7d2e3;
+        }
+        th {
+            background: rgba(255,255,255,.03);
+            color: #9FE870;
+            font-weight: 600;
+        }
+        ul, ol {
+            margin: 1rem 0 1rem 1.5rem;
+            color: #c7d2e3;
+        }
+        li { margin-bottom: 0.25rem; }
+        .footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,.06);
+            text-align: center;
+            font-size: 0.75rem;
+            color: #9fb0c8;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 1.5rem;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: #9fb0c8;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,.06);
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            transition: 0.2s;
+        }
+        .back-link:hover {
+            border-color: rgba(255,255,255,.2);
+            color: #fff;
+        }
+        .divider {
+            border: 0;
+            border-top: 1px solid rgba(255,255,255,.08);
+            margin: 2.5rem 0;
+        }
+        .formula {
+            font-family: 'DM Mono', monospace;
+            font-size: 1.1rem;
+            color: #9FE870;
+            text-align: center;
+            padding: 0.5rem 0;
+        }
+        .big4-box {
+            background: rgba(248, 113, 113, 0.04);
+            border-left: 3px solid #f87171;
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .big4-box p {
+            color: #f0d0d0;
+            margin-bottom: 0.5rem;
+        }
+        .big4-box strong {
+            color: #f87171;
+        }
+        .china-box {
+            background: rgba(125, 211, 252, 0.04);
+            border-left: 3px solid #7DD3FC;
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .china-box p {
+            color: #eaf6ff;
+            margin-bottom: 0.5rem;
+        }
+        .china-box strong {
+            color: #7DD3FC;
+        }
+        .gl-box {
+            background: rgba(159, 232, 112, 0.04);
+            border-left: 3px solid #9FE870;
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .gl-box p {
+            color: #eaf6ff;
+            margin-bottom: 0.5rem;
+        }
+        .gl-box strong {
+            color: #9FE870;
+        }
+        .case-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .case-item {
+            background: rgba(255,255,255,.02);
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+        }
+        .case-item .country {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #9fb0c8;
+        }
+        .case-item .title {
+            font-weight: 600;
+            color: #fff;
+            margin: 0.2rem 0;
+        }
+        .case-item .desc {
+            font-size: 0.85rem;
+            color: #c7d2e3;
+        }
+        @media (max-width: 700px) {
+            .container { padding: 1rem; }
+            .book-container { padding: 1.5rem; }
+            h1 { font-size: 1.6rem; }
+            .case-grid { grid-template-columns: 1fr; }
+        }
+        @media print {
+            .header { display: none !important; }
+            .footer { display: none !important; }
+            .back-link { display: none !important; }
+            .book-container { background: transparent !important; border: none !important; padding: 0 !important; }
+            body { background: #fff !important; color: #000 !important; }
+            h1, h2, h3, p, li, td, th { color: #000 !important; }
+            .big4-box, .china-box, .gl-box, .highlight-box { background: #f5f5f5 !important; border-color: #ccc !important; }
+            .big4-box p, .china-box p, .gl-box p, .highlight-box p { color: #000 !important; }
+            .quote-block { border-left-color: #666 !important; }
+            table { border-color: #ccc !important; }
+            th, td { border-color: #ccc !important; color: #000 !important; }
+            th { background: #eee !important; }
+            .container { padding: 0 !important; }
+            .formula { color: #000 !important; }
+            .case-item { border-color: #ccc !important; }
+            .case-item .title { color: #000 !important; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="logo"><a href="index.html">GFI Flow Intelligence</a></div>
+        <div class="lang-switch">
+            <button class="lang-btn active" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="tw">繁</button>
+            <button class="lang-btn" data-lang="cn">简</button>
+            <button class="lang-btn" data-lang="es">ES</button>
+        </div>
+    </div>
+
+    <!-- ================= ENGLISH ================= -->
+    <div id="lang-en" class="content-lang active">
+        <div class="book-container">
+            <h1>Government Failure, Inc.</h1>
+            <div class="subtitle">How Consultants Broke the State — and Why GL Framework Diagnoses the Rot</div>
+            <div class="author-line">Ping Xu · GFI Flow Intelligence · June 2026</div>
+
+            <h2>The Question</h2>
+            <p>Why do governments keep failing — not in elections, not in policy, but in <strong>delivery</strong>?</p>
+            <p>Why do they spend more, hire more consultants, launch more digital transformations — and still fail to deliver?</p>
+            <p>The answer is not incompetence. The answer is <strong>structural</strong>.</p>
+
+            <h2>The Structural Problem</h2>
+            <p>Over the past three decades, governments outsourced their delivery capacity to a small group of firms: Deloitte, PwC, EY, and KPMG — the Big 4.</p>
+            <p>This was not a conspiracy. It was a procurement logic. When governments needed expertise, they bought it. When they needed efficiency, they contracted it. When they needed digital transformation, they outsourced it.</p>
+            <p>But something went wrong.</p>
+            <div class="big4-box">
+                <p><strong>Governments outsourced their ability to do the work. Over time, they lost sight of what they had outsourced.</strong></p>
+                <p><strong>Frontline staff are left facing a tangled, monstrous system — trying to move mountains from miles away, with no leverage at all.</strong></p>
+                <p>A state that can pay consultants to design systems, but cannot verify whether those systems actually work.</p>
+            </div>
+
+            <h2>What China Does Differently — Another Path</h2>
+            <p>China took a different path. It did not outsource the government's core capabilities to private consulting firms. Instead, through a "whole-of-nation" top-down design, it kept digital capacity firmly within the state.</p>
+            <div class="china-box">
+                <p><strong>Centralized construction, not outsourcing.</strong> China's digital government development emphasizes resource integration and optimized allocation. The National E-Government Network now covers all provinces, cities, and counties. Government clouds cover all provincial and municipal levels, providing a unified digital foundation for cross-level and cross-department collaborative governance.</p>
+                <p><strong>Technology as enabler, not a black box.</strong> In the Western model, after outsourcing system construction, frontline staff face an impenetrable monolith. China uses AI and big data to turn these systems into decision-support tools. AI automatically generates bidding documents for businesses, provides policy Q&A, segments policy documents, and enables precision targeting based on company profiles. Frontline staff can actually act.</p>
+                <p><strong>Breaking data silos, not creating them.</strong> To address the pain point of businesses repeatedly submitting qualifications across different platforms, China is using blockchain to establish information-sharing mechanisms. Once company credentials, credit history, and performance are on-chain, they enable single authentication, universal access.</p>
+            </div>
+            <p>From the GL Framework perspective, China's approach reduces <strong>Fs</strong> (process steps) and <strong>Vn</strong> (layers) through top-down design, while using technology to increase <strong>Pd</strong> (decision efficiency) — avoiding the structural trap of "outsource → lose control → lose capacity."</p>
+
+            <h2>What the Big 4 Sell — and What They Actually Deliver</h2>
+            <table>
+                <thead><tr><th>What They Sell</th><th>What They Deliver</th></tr></thead>
+                <tbody>
+                    <tr><td>Process excellence</td><td>Process complexity. More steps, more approval layers, more billable hours.</td></tr>
+                    <tr><td>Digital transformation</td><td>Pseudo-digitalisation. Systems that look modern but fail under stress.</td></tr>
+                    <tr><td>Strategic advice</td><td>Standardised templates that transfer risk to governments.</td></tr>
+                    <tr><td>Accountability</td><td>Opaque project management that makes failure invisible until it's too late.</td></tr>
+                    <tr><td>Value for money</td><td>Cost-plus contracts that reward higher costs, not better outcomes.</td></tr>
+                </tbody>
+            </table>
+
+            <h2>The Data: What the Market Shows</h2>
+            <p>In Australia, the Big 4's new federal government contracts collapsed from <strong>$637 million (2024) to $348 million (2025)</strong> — a 45% drop. The market is waking up.</p>
+            <p>But the damage is already done. The institutional memory is gone. The internal capacity is hollowed out. Governments now depend on consultants to tell them what they need — and to tell them whether it worked.</p>
+
+            <h2>Case Studies: The Big 4 in Action</h2>
+            <div class="case-grid">
+                <div class="case-item">
+                    <div class="country">🇦🇺 Australia</div>
+                    <div class="title">PwC Tax Leak Scandal</div>
+                    <div class="desc">PwC used confidential government tax information to win private sector contracts. Government response: continued hiring. PwC's government advisory business was sold for $1.</div>
+                </div>
+                <div class="case-item">
+                    <div class="country">🇦🇺 Australia</div>
+                    <div class="title">KPMG Confidentiality Breach</div>
+                    <div class="desc">KPMG leaked confidential client data to win audit contracts. Banned from federal government work until September 2026. CEO resigned.</div>
+                </div>
+                <div class="case-item">
+                    <div class="country">🇬🇧 UK</div>
+                    <div class="title">Grenfell Tower Inquiry</div>
+                    <div class="desc">Consultants provided safety certifications for materials that later caused a fire that killed 72 people. Government initiated debarment proceedings.</div>
+                </div>
+                <div class="case-item">
+                    <div class="country">🇺🇸 US</div>
+                    <div class="title">KPMG Drops Federal Audit Practice</div>
+                    <div class="desc">Lost $60 million Pentagon contract. Could not compete. Exited federal audit business entirely — 450 jobs affected.</div>
+                </div>
+            </div>
+
+            <h2>The GL Framework Diagnosis</h2>
+            <div class="formula">GL = (Fs × Vn) / (Pd × Cf)</div>
+            <p>When a government outsources its delivery capacity to consultants, the system shifts:</p>
+            <ul>
+                <li><strong>Fs (Process Steps)</strong> increases — more layers, more approvals, more complexity</li>
+                <li><strong>Vn (Layers)</strong> increases — consultants, sub-consultants, managers, reviewers</li>
+                <li><strong>Pd (Decision Efficiency)</strong> decreases — decisions require consultant validation</li>
+                <li><strong>Cf (Completion Rate)</strong> decreases — contracts end, but outcomes are not verified</li>
+            </ul>
+            <div class="gl-box">
+                <p><strong>GL Result:</strong> Fs × Vn explodes. Pd × Cf collapses.</p>
+                <p><strong>The government's GL score falls toward zero — not because of bad intentions, but because of structural design.</strong></p>
+            </div>
+
+            <h2>The Vicious Cycle</h2>
+            <ol>
+                <li><strong>Hollow out</strong> — governments cut internal capacity to save money</li>
+                <li><strong>Outsource</strong> — governments hire consultants to fill the gap</li>
+                <li><strong>Lose visibility</strong> — governments can no longer assess whether work is being delivered</li>
+                <li><strong>Fail</strong> — projects fail, but failure is attributed to "implementation challenges"</li>
+                <li><strong>Hire more consultants</strong> — to "fix" the failure</li>
+                <li><strong>Repeat</strong> — the cycle continues</li>
+            </ol>
+
+            <div class="quote-block">
+                <p><strong>"Government failure is not a bug. It is a feature of the procurement logic."</strong></p>
+            </div>
+
+            <h2>What This Means for GL Framework</h2>
+            <p>GL Framework does not diagnose "bad government." It diagnoses <strong>structural friction</strong> — the friction that consultants are paid to create, and then paid to manage.</p>
+            <p>When you measure GL, you are not measuring intent. You are measuring the system. And the system, in many countries, has been designed by consultants to require consultants.</p>
+
+            <h2>Conclusion</h2>
+            <p>Governments did not fail because they are incompetent. They failed because they outsourced their competence to firms that profit from failure.</p>
+            <p><strong>GL Framework is the tool that sees through the smoke.</strong></p>
+            <p>It measures what consultants refuse to measure: whether the system actually delivers.</p>
+
+            <div class="highlight-box">
+                <p><strong>Governments outsourced delivery. GL Framework measures whether delivery happened.</strong></p>
+                <p style="font-size:0.85rem; color:#9fb0c8;">The diagnosis is not political. It is mathematical.</p>
+            </div>
+
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · Creator of the GL Framework · June 2026</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · Free download · Free distribution · Please retain author attribution</p>
+                <a href="index.html" class="back-link">← Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= 繁體中文 ================= -->
+    <div id="lang-tw" class="content-lang">
+        <div class="book-container">
+            <h1>政府失靈公司</h1>
+            <div class="subtitle">顧問如何搞垮國家——以及 GL 框架如何診斷這個病灶</div>
+            <div class="author-line">Ping Xu · GFI Flow Intelligence · 2026年6月</div>
+
+            <h2>問題</h2>
+            <p>為什麼政府一直在失靈——不是選舉，不是政策，而是 <strong>交付</strong>？</p>
+            <p>為什麼它們花更多錢、雇更多顧問、推動更多數位轉型——卻仍然無法交付？</p>
+            <p>答案不是無能。答案是 <strong>結構性</strong> 的。</p>
+
+            <h2>結構性問題</h2>
+            <p>過去三十年，政府將其交付能力外包給一小群公司：Deloitte、PwC、EY、KPMG——四大會計師事務所。</p>
+            <p>這不是陰謀。這是一種採購邏輯。當政府需要專業知識時，它們買；需要效率時，它們外包；需要數位轉型時，它們委外。</p>
+            <p>但事情出了差錯。</p>
+            <div class="big4-box">
+                <p><strong>政府先把「做事」的能力外包了。隨著時間推移，連自己外包了什麼都搞不清楚。</strong></p>
+                <p><strong>第一線人員面對一個糾結複雜的龐然大物系統，隔山打牛，完全使不上力。</strong></p>
+                <p>一個能付錢給顧問設計系統的國家，卻無法驗證這些系統是否真的有用。</p>
+            </div>
+
+            <h2>中國怎麼做？——另一條路</h2>
+            <p>中國走了一條不同的路。它沒有把政府的核心能力外包給私人顧問公司，而是透過「全國一盤棋」的頂層設計，把數位化的能力牢牢掌握在政府自己手中。</p>
+            <div class="china-box">
+                <p><strong>集約化建設，而非外包。</strong> 中國的數位政府建設強調整合資源與優化配置。國家電子政務外網已實現省市縣三級全覆蓋，政務雲也基本實現省市兩級全覆蓋，為跨層級、跨部門的協同治理提供了統一的數位底座。</p>
+                <p><strong>技術賦能，而非隔山打牛。</strong> 西方模式中，政府將系統建置外包後，一線人員面對的是無法穿透的龐然大物。中國則利用人工智慧、大數據等技術，將這些系統變成輔助決策的工具。AI 為企業自動生成標書、提供政策問答；AI 對政策文件進行細分，結合企業畫像實現精準推送。一線人員使得上力。</p>
+                <p><strong>打破數據壁壘，而非製造孤島。</strong> 針對企業在不同平台重複提交資質、資訊無法互通的痛點，中國正在用區塊鏈技術建立資訊共享機制。企業資質、信用、業績一旦上鏈，即可實現一次認證、全網通行。</p>
+            </div>
+            <p>從 GL 框架來看，中國的做法是透過頂層設計來降低 <strong>Fs</strong>（流程步驟）和 <strong>Vn</strong>（層級數），並用技術手段提高 <strong>Pd</strong>（決策效率），從根源上避免西方那種「外包 → 失控 → 失能」的結構性困境。</p>
+
+            <h2>四大賣什麼——以及它們實際上交付什麼</h2>
+            <table>
+                <thead><tr><th>它們賣的</th><th>它們實際交付的</th></tr></thead>
+                <tbody>
+                    <tr><td>流程卓越</td><td>流程複雜化。更多步驟、更多審批層級、更多計費時數。</td></tr>
+                    <tr><td>數位轉型</td><td>偽數位化。看起來現代，但在壓力下崩潰的系統。</td></tr>
+                    <tr><td>策略建議</td><td>標準化模板，將風險轉移給政府。</td></tr>
+                    <tr><td>問責制</td><td>不透明的專案管理，讓失敗隱形到為時已晚。</td></tr>
+                    <tr><td>物有所值</td><td>成本加成合約，獎勵較高成本，而非較好成果。</td></tr>
+                </tbody>
+            </table>
+
+            <h2>數據：市場顯示了什麼</h2>
+            <p>在澳洲，四大從聯邦政府獲得的新合約總價值從 <strong>6.37億澳元（2024年）暴跌至3.48億澳元（2025年）</strong>——跌幅達45%。市場正在覺醒。</p>
+            <p>但傷害已經造成。制度記憶消失了。內部能力被掏空了。政府現在依賴顧問來告訴它們需要什麼——以及告訴它們是否有效。</p>
+
+            <h2>案例研究：四大的實際運作</h2>
+            <div class="case-grid">
+                <div class="case-item">
+                    <div class="country">🇦🇺 澳洲</div>
+                    <div class="title">PwC 稅務洩密醜聞</div>
+                    <div class="desc">PwC 使用機密政府稅務資訊贏取私部門合約。政府回應：繼續雇用。PwC 的政府諮詢業務以 1 澳元出售。</div>
+                </div>
+                <div class="case-item">
+                    <div class="country">🇦🇺 澳洲</div>
+                    <div class="title">KPMG 機密洩露</div>
+                    <div class="desc">KPMG 洩露機密客戶數據以贏得審計合約。被禁止參與聯邦政府工作至 2026 年 9 月。執行長辭職。</div>
+                </div>
+                <div class="case-item">
+                    <div class="country">🇬🇧 英國</div>
+                    <div class="title">格倫費爾大樓調查</div>
+                    <div class="desc">顧問為後來導致 72 人喪生火災的材料提供安全認證。政府啟動除名程序。</div>
+                </div>
+                <div class="case-item">
+                    <div class="country">🇺🇸 美國</div>
+                    <div class="title">KPMG 退出聯邦審計業務</div>
+                    <div class="desc">失去 6000 萬美元五角大廈合約。無法競爭。完全退出聯邦審計業務——影響 450 個工作崗位。</div>
+                </div>
+            </div>
+
+            <h2>GL 框架診斷</h2>
+            <div class="formula">GL = (Fs × Vn) / (Pd × Cf)</div>
+            <p>當政府將其交付能力外包給顧問時，系統發生變化：</p>
+            <ul>
+                <li><strong>Fs（流程步驟數）</strong>增加——更多層級、更多審批、更多複雜性</li>
+                <li><strong>Vn（層級數）</strong>增加——顧問、分包顧問、經理、審查者</li>
+                <li><strong>Pd（決策效率）</strong>降低——決策需要顧問驗證</li>
+                <li><strong>Cf（完成率）</strong>降低——合約結束，但成果未經驗證</li>
+            </ul>
+            <div class="gl-box">
+                <p><strong>GL 結果：</strong>Fs × Vn 爆炸性成長。Pd × Cf 崩潰。</p>
+                <p><strong>政府的 GL 分數趨近於零——不是因為意圖不良，而是因為結構性設計。</strong></p>
+            </div>
+
+            <h2>惡性循環</h2>
+            <ol>
+                <li><strong>掏空</strong>——政府削減內部能力以節省開支</li>
+                <li><strong>外包</strong>——政府雇用顧問填補缺口</li>
+                <li><strong>失去可見性</strong>——政府無法評估工作是否正在交付</li>
+                <li><strong>失敗</strong>——專案失敗，但失敗被歸因於「執行挑戰」</li>
+                <li><strong>雇用更多顧問</strong>——來「修復」失敗</li>
+                <li><strong>重複</strong>——循環持續</li>
+            </ol>
+
+            <div class="quote-block">
+                <p><strong>「政府失靈不是 bug。它是採購邏輯的功能。」</strong></p>
+            </div>
+
+            <h2>這對 GL 框架意味著什麼</h2>
+            <p>GL 框架不是診斷「爛政府」。它診斷 <strong>結構性摩擦</strong>——顧問被付費創造、然後被付費管理的摩擦。</p>
+            <p>當你測量 GL 時，你不是在測量意圖。你是在測量系統。而在許多國家，這個系統已經被顧問設計成需要顧問。</p>
+
+            <h2>結論</h2>
+            <p>政府沒有因為無能而失敗。它們因為外包了自己的能力給從失敗中獲利的公司而失敗。</p>
+            <p><strong>GL 框架是看穿煙霧的工具。</strong></p>
+            <p>它測量顧問拒絕測量的東西：系統是否真的在交付。</p>
+
+            <div class="highlight-box">
+                <p><strong>政府外包了交付。GL 框架測量交付是否真的發生了。</strong></p>
+                <p style="font-size:0.85rem; color:#9fb0c8;">診斷不是政治的。它是數學的。</p>
+            </div>
+
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · GL Framework 創建者 · 2026年6月</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · 免費下載 · 自由轉載 · 請保留作者署名</p>
+                <a href="index.html" class="back-link">← 返回首頁</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= 简体中文 ================= -->
+    <div id="lang-cn" class="content-lang">
+        <div class="book-container">
+            <h1>政府失灵公司</h1>
+            <div class="subtitle">顾问如何搞垮国家——以及 GL 框架如何诊断这个病灶</div>
+            <div class="author-line">Ping Xu · GFI Flow Intelligence · 2026年6月</div>
+
+            <h2>问题</h2>
+            <p>为什么政府一直在失灵——不是选举，不是政策，而是 <strong>交付</strong>？</p>
+            <p>为什么它们花更多钱、雇更多顾问、推动更多数字转型——却仍然无法交付？</p>
+            <p>答案不是无能。答案是 <strong>结构性</strong> 的。</p>
+
+            <h2>结构性问题</h2>
+            <p>过去三十年，政府将其交付能力外包给一小群公司：Deloitte、PwC、EY、KPMG——四大会计师事务所。</p>
+            <p>这不是阴谋。这是一种采购逻辑。当政府需要专业知识时，它们买；需要效率时，它们外包；需要数字转型时，它们委外。</p>
+            <p>但事情出了差错。</p>
+            <div class="big4-box">
+                <p><strong>政府先把「做事」的能力外包了。随着时间的推移，连自己外包了什么都搞不清楚。</strong></p>
+                <p><strong>第一线人员面对一个纠结复杂的庞然大物系统，隔山打牛，完全使不上力。</strong></p>
+                <p>一个能付钱给顾问设计系统的国家，却无法验证这些系统是否真的有用。</p>
+            </div>
+
+            <h2>中国怎么做？——另一条路</h2>
+            <p>中国走了一条不同的路。它没有把政府的核心能力外包给私人顾问公司，而是通过「全国一盘棋」的顶层设计，把数字化的能力牢牢掌握在政府自己手中。</p>
+            <div class="china-box">
+                <p><strong>集约化建设，而非外包。</strong> 中国的数字政府建设强调整合资源与优化配置。国家电子政务外网已实现省市县三级全覆盖，政务云也基本实现省市两级全覆盖，为跨层级、跨部门的协同治理提供了统一的数字底座。</p>
+                <p><strong>技术赋能，而非隔山打牛。</strong> 西方模式中，政府将系统建置外包后，一线人员面对的是无法穿透的庞然大物。中国则利用人工智能、大数据等技术，将这些系统变成辅助决策的工具。AI 为企业自动生成标书、提供政策问答；AI 对政策文件进行细分，结合企业画像实现精准推送。一线人员使得上力。</p>
+                <p><strong>打破数据壁垒，而非制造孤岛。</strong> 针对企业在不同平台重复提交资质、信息无法互通的痛点，中国正在用区块链技术建立信息共享机制。企业资质、信用、业绩一旦上链，即可实现一次认证、全网通行。</p>
+            </div>
+            <p>从 GL 框架来看，中国的做法是通过顶层设计来降低 <strong>Fs</strong>（流程步骤）和 <strong>Vn</strong>（层级数），并用技术手段提高 <strong>Pd</strong>（决策效率），从根源上避免西方那种「外包 → 失控 → 失能」的结构性困境。</p>
+
+            <h2>四大卖什么——以及它们实际上交付什么</h2>
+            <table>
+                <thead><tr><th>它们卖的</th><th>它们实际交付的</th></tr></thead>
+                <tbody>
+                    <tr><td>流程卓越</td><td>流程复杂化。更多步骤、更多审批层级、更多计费时数。</td></tr>
+                    <tr><td>数字转型</td><td>伪数字化。看起来现代，但在压力下崩溃的系统。</td></tr>
+                    <tr><td>策略建议</td><td>标准化模板，将风险转移给政府。</td></tr>
+                    <tr><td>问责制</td><td>不透明的项目管理，让失败隐形到为时已晚。</td></tr>
+                    <tr><td>物有所值</td><td>成本加成合约，奖励较高成本，而非较好成果。</td></tr>
+                </tbody>
+            </table>
+
+            <h2>数据：市场显示了什么</h2>
+            <p>在澳洲，四大从联邦政府获得的新合约总价值从 <strong>6.37亿澳元（2024年）暴跌至3.48亿澳元（2025年）</strong>——跌幅达45%。市场正在觉醒。</p>
+            <p>但伤害已经造成。制度记忆消失了。内部能力被掏空了。政府现在依赖顾问来告诉它们需要什么——以及告诉它们是否有效。</p>
+
+            <h2>案例研究：四大的实际运作</h2>
+            <div class="case-grid">
+                <div class="case-item">
+                    <div class="country">🇦🇺 澳洲</div>
+                    <div class="title">PwC 税务泄密丑闻</div>
+                    <div class="desc">PwC 使用机密政府税务信息赢取私部门合约。政府回应：继续雇用。PwC 的政府咨询业务以 1 澳元出售。</div>
+                </div>
+                <div class="case-item">
+                    <div class="country">🇦🇺 澳洲</div>
+                    <div class="title">KPMG 机密泄露</div>
+                    <div class="desc">KPMG 泄露机密客户数据以赢得审计合约。被禁止参与联邦政府工作至 2026 年 9 月。首席执行官辞职。</div>
+                </div>
+                <div class="case-item">
+                    <div class="country">🇬🇧 英国</div>
+                    <div class="title">格伦费尔大楼调查</div>
+                    <div class="desc">顾问为后来导致 72 人丧生火灾的材料提供安全认证。政府启动除名程序。</div>
+                </div>
+                <div class="case-item">
+                    <div class="country">🇺🇸 美国</div>
+                    <div class="title">KPMG 退出联邦审计业务</div>
+                    <div class="desc">失去 6000 万美元五角大楼合约。无法竞争。完全退出联邦审计业务——影响 450 个工作岗位。</div>
+                </div>
+            </div>
+
+            <h2>GL 框架诊断</h2>
+            <div class="formula">GL = (Fs × Vn) / (Pd × Cf)</div>
+            <p>当政府将其交付能力外包给顾问时，系统发生变化：</p>
+            <ul>
+                <li><strong>Fs（流程步骤数）</strong>增加——更多层级、更多审批、更多复杂性</li>
+                <li><strong>Vn（层级数）</strong>增加——顾问、分包顾问、经理、审查者</li>
+                <li><strong>Pd（决策效率）</strong>降低——决策需要顾问验证</li>
+                <li><strong>Cf（完成率）</strong>降低——合约结束，但成果未经验证</li>
+            </ul>
+            <div class="gl-box">
+                <p><strong>GL 结果：</strong>Fs × Vn 爆炸性成长。Pd × Cf 崩溃。</p>
+                <p><strong>政府的 GL 分数趋近于零——不是因为意图不良，而是因为结构性设计。</strong></p>
+            </div>
+
+            <h2>恶性循环</h2>
+            <ol>
+                <li><strong>掏空</strong>——政府削减内部能力以节省开支</li>
+                <li><strong>外包</strong>——政府雇用顾问填补缺口</li>
+                <li><strong>失去可见性</strong>——政府无法评估工作是否正在交付</li>
+                <li><strong>失败</strong>——项目失败，但失败被归因于「执行挑战」</li>
+                <li><strong>雇用更多顾问</strong>——来「修复」失败</li>
+                <li><strong>重复</strong>——循环持续</li>
+            </ol>
+
+            <div class="quote-block">
+                <p><strong>「政府失灵不是 bug。它是采购逻辑的功能。」</strong></p>
+            </div>
+
+            <h2>这对 GL 框架意味着什么</h2>
+            <p>GL 框架不是诊断「烂政府」。它诊断 <strong>结构性摩擦</strong>——顾问被付费创造、然后被付费管理的摩擦。</p>
+            <p>当你测量 GL 时，你不是在测量意图。你是在测量系统。而在许多国家，这个系统已经被顾问设计成需要顾问。</p>
+
+            <h2>结论</h2>
+            <p>政府没有因为无能而失败。它们因为外包了自己的能力给从失败中获利的公司而失败。</p>
+            <p><strong>GL 框架是看穿烟雾的工具。</strong></p>
+            <p>它测量顾问拒绝测量的东西：系统是否真的在交付。</p>
+
+            <div class="highlight-box">
+                <p><strong>政府外包了交付。GL 框架测量交付是否真的发生了。</strong></p>
+                <p style="font-size:0.85rem; color:#9fb0c8;">诊断不是政治的。它是数学的。</p>
+            </div>
+
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · GL Framework 创建者 · 2026年6月</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · 免费下载 · 自由转载 · 请保留作者署名</p>
+                <a href="index.html" class="back-link">← 返回首页</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= ESPAÑOL ================= -->
+    <div id="lang-es" class="content-lang">
+        <div class="book-container">
+            <h1>Fracaso Gubernamental, S.A.</h1>
+            <div class="subtitle">Cómo los Consultores Quebraron el Estado — y Por Qué GL Framework Diagnostica la Podredumbre</div>
+            <div class="author-line">Ping Xu · GFI Flow Intelligence · Junio 2026</div>
+
+            <h2>La Pregunta</h2>
+            <p>¿Por qué los gobiernos siguen fracasando — no en elecciones, no en políticas, sino en <strong>entrega</strong>?</p>
+            <p>¿Por qué gastan más, contratan más consultores, lanzan más transformaciones digitales — y siguen sin entregar?</p>
+            <p>La respuesta no es incompetencia. La respuesta es <strong>estructural</strong>.</p>
+
+            <h2>El Problema Estructural</h2>
+            <p>Durante las últimas tres décadas, los gobiernos subcontrataron su capacidad de entrega a un pequeño grupo de firmas: Deloitte, PwC, EY y KPMG — las Big 4.</p>
+            <p>Esto no fue una conspiración. Fue una lógica de adquisición. Cuando los gobiernos necesitaban experiencia, la compraron. Cuando necesitaban eficiencia, la contrataron. Cuando necesitaban transformación digital, la subcontrataron.</p>
+            <p>Pero algo salió mal.</p>
+            <div class="big4-box">
+                <p><strong>Los gobiernos subcontrataron su capacidad de hacer. Con el tiempo, perdieron de vista lo que habían subcontratado.</strong></p>
+                <p><strong>El personal de primera línea se enfrenta a un sistema enmarañado y monstruoso — tratando de mover montañas desde lejos, sin palanca alguna.</strong></p>
+                <p>Un estado que puede pagar a consultores para diseñar sistemas, pero no puede verificar si esos sistemas realmente funcionan.</p>
+            </div>
+
+            <h2>Qué Hace China de Diferente — Otro Camino</h2>
+            <p>China tomó un camino diferente. No subcontrató las capacidades centrales del gobierno a firmas consultoras privadas. En cambio, a través de un diseño centralizado "de todo el país", mantuvo la capacidad digital firmemente en manos del estado.</p>
+            <div class="china-box">
+                <p><strong>Construcción centralizada, no subcontratación.</strong> El desarrollo del gobierno digital de China enfatiza la integración de recursos y la asignación optimizada. La Red Nacional de Gobierno Electrónico ahora cubre todas las provincias, ciudades y condados. Las nubes gubernamentales cubren todos los niveles provinciales y municipales, proporcionando una base digital unificada para la gobernanza colaborativa entre niveles y departamentos.</p>
+                <p><strong>Tecnología como facilitador, no como caja negra.</strong> En el modelo occidental, después de subcontratar la construcción del sistema, el personal de primera línea se enfrenta a un monolito impenetrable. China utiliza IA y big data para convertir estos sistemas en herramientas de apoyo a la toma de decisiones. La IA genera automáticamente documentos de licitación para las empresas, proporciona preguntas y respuestas sobre políticas, segmenta documentos políticos y permite la segmentación precisa basada en perfiles de empresas. El personal de primera línea puede realmente actuar.</p>
+                <p><strong>Rompiendo silos de datos, no creándolos.</strong> Para abordar el problema de las empresas que presentan repetidamente calificaciones en diferentes plataformas, China está utilizando blockchain para establecer mecanismos de intercambio de información. Una vez que las credenciales, el historial crediticio y el rendimiento de la empresa están en la cadena, permiten una autenticación única y acceso universal.</p>
+            </div>
+            <p>Desde la perspectiva de GL Framework, el enfoque de China reduce <strong>Fs</strong> (pasos del proceso) y <strong>Vn</strong> (capas) a través del diseño centralizado, mientras utiliza la tecnología para aumentar <strong>Pd</strong> (eficiencia decisoria) — evitando la trampa estructural de "subcontratar → perder control → perder capacidad".</p>
+
+            <h2>Qué Venden las Big 4 — y Qué Entregan Realmente</h2>
+            <table>
+                <thead><tr><th>Lo que venden</th><th>Lo que entregan</th></tr></thead>
+                <tbody>
+                    <tr><td>Excelencia en procesos</td><td>Complejidad de procesos. Más pasos, más capas de aprobación, más horas facturables.</td></tr>
+                    <tr><td>Transformación digital</td><td>Pseudo-digitalización. Sistemas que se ven modernos pero fallan bajo estrés.</td></tr>
+                    <tr><td>Asesoramiento estratégico</td><td>Plantillas estandarizadas que transfieren el riesgo a los gobiernos.</td></tr>
+                    <tr><td>Rendición de cuentas</td><td>Gestión de proyectos opaca que oculta el fracaso hasta que es demasiado tarde.</td></tr>
+                    <tr><td>Valor por dinero</td><td>Contratos de costo incrementado que recompensan costos más altos, no mejores resultados.</td></tr>
+                </tbody>
+            </table>
+
+            <h2>Los Datos: Lo que Muestra el Mercado</h2>
+            <p>En Australia, los nuevos contratos federales de las Big 4 colapsaron de <strong>$637 millones (2024) a $348 millones (2025)</strong> — una caída del 45%. El mercado está despertando.</p>
+            <p>Pero el daño ya está hecho. La memoria institucional se ha ido. La capacidad interna está vaciada. Los gobiernos ahora dependen de los consultores para decirles lo que necesitan — y para decirles si funcionó.</p>
+
+            <h2>Estudios de Caso: Las Big 4 en Acción</h2>
+            <div class="case-grid">
+                <div class="case-item">
+                    <div class="country">🇦🇺 Australia</div>
+                    <div class="title">Escándalo de Filtración Fiscal de PwC</div>
+                    <div class="desc">PwC utilizó información fiscal gubernamental confidencial para ganar contratos en el sector privado. Respuesta del gobierno: continuó contratando. El negocio de asesoría gubernamental de PwC se vendió por $1.</div>
+                </div>
+                <div class="case-item">
+                    <div class="country">🇦🇺 Australia</div>
+                    <div class="title">Violación de Confidencialidad de KPMG</div>
+                    <div class="desc">KPMG filtró datos confidenciales de clientes para ganar contratos de auditoría. Prohibido de trabajar para el gobierno federal hasta septiembre de 2026. El CEO renunció.</div>
+                </div>
+                <div class="case-item">
+                    <div class="country">🇬🇧 Reino Unido</div>
+                    <div class="title">Investigación de la Torre Grenfell</div>
+                    <div class="desc">Los consultores proporcionaron certificaciones de seguridad para materiales que luego causaron un incendio que mató a 72 personas. El gobierno inició procedimientos de exclusión.</div>
+                </div>
+                <div class="case-item">
+                    <div class="country">🇺🇸 EE.UU.</div>
+                    <div class="title">KPMG Abandona la Práctica de Auditoría Federal</div>
+                    <div class="desc">Perdió un contrato de $60 millones con el Pentágono. No pudo competir. Salió por completo del negocio de auditoría federal — 450 empleos afectados.</div>
+                </div>
+            </div>
+
+            <h2>El Diagnóstico de GL Framework</h2>
+            <div class="formula">GL = (Fs × Vn) / (Pd × Cf)</div>
+            <p>Cuando un gobierno subcontrata su capacidad de entrega a consultores, el sistema cambia:</p>
+            <ul>
+                <li><strong>Fs (Pasos del proceso)</strong> aumenta — más capas, más aprobaciones, más complejidad</li>
+                <li><strong>Vn (Capas)</strong> aumenta — consultores, subconsultores, gerentes, revisores</li>
+                <li><strong>Pd (Eficiencia decisoria)</strong> disminuye — las decisiones requieren validación de consultores</li>
+                <li><strong>Cf (Tasa de finalización)</strong> disminuye — los contratos terminan, pero los resultados no se verifican</li>
+            </ul>
+            <div class="gl-box">
+                <p><strong>Resultado GL:</strong> Fs × Vn explota. Pd × Cf colapsa.</p>
+                <p><strong>El puntaje GL del gobierno cae hacia cero — no por malas intenciones, sino por diseño estructural.</strong></p>
+            </div>
+
+            <h2>El Ciclo Vicioso</h2>
+            <ol>
+                <li><strong>Vaciar</strong> — los gobiernos reducen la capacidad interna para ahorrar dinero</li>
+                <li><strong>Subcontratar</strong> — los gobiernos contratan consultores para llenar el vacío</li>
+                <li><strong>Perder visibilidad</strong> — los gobiernos ya no pueden evaluar si el trabajo se está entregando</li>
+                <li><strong>Fallar</strong> — los proyectos fallan, pero el fracaso se atribuye a "desafíos de implementación"</li>
+                <li><strong>Contratar más consultores</strong> — para "arreglar" el fracaso</li>
+                <li><strong>Repetir</strong> — el ciclo continúa</li>
+            </ol>
+
+            <div class="quote-block">
+                <p><strong>"El fracaso gubernamental no es un error. Es una característica de la lógica de adquisición."</strong></p>
+            </div>
+
+            <h2>Lo que Esto Significa para GL Framework</h2>
+            <p>GL Framework no diagnostica "mal gobierno". Diagnostica <strong>fricción estructural</strong> — la fricción que los consultores son pagados para crear, y luego pagados para gestionar.</p>
+            <p>Cuando mides GL, no estás midiendo la intención. Estás midiendo el sistema. Y el sistema, en muchos países, ha sido diseñado por consultores para requerir consultores.</p>
+
+            <h2>Conclusión</h2>
+            <p>Los gobiernos no fracasaron porque son incompetentes. Fracasaron porque subcontrataron su competencia a firmas que se benefician del fracaso.</p>
+            <p><strong>GL Framework es la herramienta que ve a través del humo.</strong></p>
+            <p>Mide lo que los consultores se niegan a medir: si el sistema realmente entrega.</p>
+
+            <div class="highlight-box">
+                <p><strong>Los gobiernos subcontrataron la entrega. GL Framework mide si la entrega ocurrió.</strong></p>
+                <p style="font-size:0.85rem; color:#9fb0c8;">El diagnóstico no es político. Es matemático.</p>
+            </div>
+
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · Creadora del GL Framework · Junio 2026</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · Descarga gratuita · Distribución libre · Por favor, mantenga la atribución del autor</p>
+                <a href="index.html" class="back-link">← Volver al Inicio</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const lang = this.dataset.lang;
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            document.querySelectorAll('.content-lang').forEach(el => el.classList.remove('active'));
+            document.getElementById(`lang-${lang}`).classList.add('active');
+        });
+    });
+</script>
+</body>
+</html>
