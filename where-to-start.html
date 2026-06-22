@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Independent Verification · New Government Function | GFI Flow Intelligence</title>
+    <meta name="description" content="A new government function — independent verification and delivery assurance. GL Framework provides the diagnostic standard.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0b1220;
+            font-family: 'DM Sans', system-ui, sans-serif;
+            color: #f8fbff;
+            padding-top: 62px;
+            line-height: 1.6;
+        }
+
+        .nav {
+            position: fixed;
+            inset: 0 0 auto 0;
+            z-index: 100;
+            height: 62px;
+            padding: 0 clamp(18px, 5vw, 52px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(11, 18, 32, .92);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(255, 255, 255, .07);
+        }
+
+        .logo {
+            color: #fff;
+            text-decoration: none;
+            font-family: 'DM Mono', monospace;
+            font-size: 13px;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+        }
+
+        .logo:hover {
+            color: #9FE870;
+        }
+
+        .lang-grp {
+            display: flex;
+            gap: 6px;
+        }
+
+        .lang-btn-nav {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            letter-spacing: .08em;
+            padding: 5px 10px;
+            border: 1px solid rgba(255, 255, 255, .10);
+            border-radius: 5px;
+            background: none;
+            color: #9fb0c8;
+            cursor: pointer;
+            transition: all .2s;
+        }
+
+        .lang-btn-nav:hover {
+            color: #f8fbff;
+            border-color: rgba(255, 255, 255, .2);
+        }
+
+        .lang-btn-nav.on {
+            color: #9FE870;
+            border-color: rgba(159, 232, 112, .35);
+            background: rgba(159, 232, 112, .07);
+        }
+
+        .page {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        .eyebrow {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: #7DD3FC;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: clamp(2.2rem, 4vw, 3.2rem);
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .subhead {
+            font-size: 1.2rem;
+            color: #c7d2e3;
+            max-width: 720px;
+            margin-bottom: 2rem;
+            border-left: 4px solid #9FE870;
+            padding-left: 1.2rem;
+        }
+
+        .section {
+            margin: 3rem 0;
+        }
+
+        .section-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 10px;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: #9fb0c8;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, .08);
+        }
+
+        h2 {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        h3 {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.2rem;
+            color: #9FE870;
+            margin-bottom: 0.5rem;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, .03);
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 20px;
+            padding: 1.8rem;
+            transition: border-color .2s, transform .2s;
+        }
+
+        .card:hover {
+            border-color: rgba(159, 232, 112, .25);
+            transform: translateY(-3px);
+        }
+
+        .card .icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card h4 {
+            font-family: 'DM Serif Display', Georgia, serif;
+            color: #fff;
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            color: #c7d2e3;
+            line-height: 1.7;
+        }
+
+        .card .highlight {
+            color: #9FE870;
+        }
+
+        .comparison-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .comparison-item {
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+
+        .comparison-item.wrong {
+            background: rgba(240, 139, 94, .06);
+            border-left: 4px solid #f08b5e;
+        }
+
+        .comparison-item.correct {
+            background: rgba(159, 232, 112, .06);
+            border-left: 4px solid #9FE870;
+        }
+
+        .comparison-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .comparison-item.wrong .comparison-label {
+            color: #f08b5e;
+        }
+
+        .comparison-item.correct .comparison-label {
+            color: #9FE870;
+        }
+
+        .comparison-item ul {
+            list-style: none;
+            padding: 0;
+            font-size: 0.9rem;
+            color: #c7d2e3;
+        }
+
+        .comparison-item ul li {
+            padding: 0.2rem 0;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, .08);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            min-width: 600px;
+        }
+
+        th {
+            background: rgba(255, 255, 255, .04);
+            padding: 12px 16px;
+            text-align: left;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: .06em;
+            color: #9fb0c8;
+            border-bottom: 1px solid rgba(255, 255, 255, .08);
+        }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, .04);
+            color: #c7d2e3;
+            vertical-align: top;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-family: 'DM Mono', monospace;
+            background: rgba(159, 232, 112, .12);
+            color: #9FE870;
+        }
+
+        .badge-blue {
+            background: rgba(125, 211, 252, .12);
+            color: #7DD3FC;
+        }
+
+        .gl-box {
+            background: linear-gradient(145deg, rgba(159, 232, 112, .06), rgba(125, 211, 252, .04));
+            border: 1px solid rgba(159, 232, 112, .2);
+            border-radius: 24px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .gl-box h3 {
+            margin-top: 0;
+        }
+
+        .gl-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .gl-item {
+            background: rgba(255, 255, 255, .03);
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            border: 1px solid rgba(255, 255, 255, .06);
+        }
+
+        .gl-item strong {
+            color: #9FE870;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+        }
+
+        .gl-item p {
+            font-size: 0.85rem;
+            color: #c7d2e3;
+            margin-top: 0.2rem;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: #9FE870;
+            color: #0b1220;
+            padding: 12px 32px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: background .2s, transform .2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: #8fd460;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            display: inline-block;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, .15);
+            color: #fff;
+            padding: 12px 32px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.85rem;
+            transition: border-color .2s, color .2s;
+        }
+
+        .btn-outline:hover {
+            border-color: #9FE870;
+            color: #9FE870;
+        }
+
+        .cta-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem 1.5rem;
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            color: rgba(255, 255, 255, .15);
+            border-top: 1px solid rgba(255, 255, 255, .05);
+            margin-top: 3rem;
+        }
+
+        .footer a {
+            color: rgba(255, 255, 255, .25);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            color: #fff;
+        }
+
+        @media (max-width: 800px) {
+            .grid-2, .grid-3, .comparison-box, .gl-grid {
+                grid-template-columns: 1fr;
+            }
+            .page {
+                padding: 1.5rem 1rem 3rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .subhead {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="index.html" class="logo">GFI Flow Intelligence</a>
+        <div class="lang-grp">
+            <button class="lang-btn-nav on" data-lang="en">EN</button>
+            <button class="lang-btn-nav" data-lang="tw">繁</button>
+            <button class="lang-btn-nav" data-lang="cn">简</button>
+            <button class="lang-btn-nav" data-lang="es">ES</button>
+        </div>
+    </div>
+
+    <!-- ENGLISH -->
+    <div class="page" id="page-en">
+        <div class="eyebrow">New Government Function</div>
+        <h1>Independent Verification &amp; Delivery Assurance</h1>
+        <div class="subhead">
+            A dedicated government function — separate from procurement, separate from vendors — with the authority to verify whether systems actually deliver before they are accepted.
+        </div>
+
+        <!-- Section 1: What is this new function -->
+        <div class="section">
+            <div class="section-label">The Emerging Consensus</div>
+            <p style="color:#c7d2e3; max-width:800px;">
+                Governments across the UK, US, Canada, Australia, and New Zealand are building <strong>independent verification and validation (IV&amp;V)</strong> or <strong>delivery assurance</strong> functions. This is not a consulting role. It is a <strong>permanent, independent government function</strong> — with legal mandate, separate budget, and direct reporting lines to Congress or Parliament.
+            </p>
+        </div>
+
+        <!-- Section 2: Key Features -->
+        <div class="section">
+            <h2>What Makes It Independent</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <div class="icon">⚖️</div>
+                    <h4>Legal Mandate</h4>
+                    <p>Protected by law, not by administrative discretion. Verification reports go directly to Congress or Parliament.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">💰</div>
+                    <h4>Separate Budget</h4>
+                    <p>Appropriated directly, not through the agencies being verified. No financial dependence on the entities being assessed.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">🔒</div>
+                    <h4>Protected Tenure</h4>
+                    <p>Verification staff cannot be retaliated against for their findings. Independence is institutional, not personal.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">📋</div>
+                    <h4>Full Lifecycle Coverage</h4>
+                    <p>From pre-procurement requirements review to post-deployment outcome verification — not just a final check.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">🎯</div>
+                    <h4>Risk-Based</h4>
+                    <p>Higher risk, higher scrutiny. Not all projects need the same level of verification.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">📐</div>
+                    <h4>Standardized Tools</h4>
+                    <p>A unified diagnostic language across all projects. Transparent, replicable, based on public data.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Comparison -->
+        <div class="section">
+            <h2>What This Is — and What It Is Not</h2>
+            <div class="comparison-box">
+                <div class="comparison-item wrong">
+                    <div class="comparison-label">❌ NOT this</div>
+                    <ul>
+                        <li>Another consulting contract</li>
+                        <li>Advising on how to build systems</li>
+                        <li>Replacing procurement or program management</li>
+                        <li>Relying on vendor-provided data</li>
+                        <li>Closing the file after system acceptance</li>
+                    </ul>
+                </div>
+                <div class="comparison-item correct">
+                    <div class="comparison-label">✅ THIS</div>
+                    <ul>
+                        <li>A permanent, independent government function</li>
+                        <li>Diagnosing whether systems actually deliver</li>
+                        <li>Separate from procurement and vendors</li>
+                        <li>Using external or publicly available data</li>
+                        <li>Verifying outcomes after deployment</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Global Examples -->
+        <div class="section">
+            <h2>Already in Motion</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Country</th><th>Function</th><th>Key Feature</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>🇺🇸 US</strong></td><td>GAO · IV&amp;V mandates</td><td>Reports directly to Congress. Conflict-of-interest clauses prevent vendors from verifying their own work.</td></tr>
+                        <tr><td><strong>🇬🇧 UK</strong></td><td>NAO · Delivery Assurance Teams</td><td>Independent verification built into major IT contracts. Reports directly to Parliament.</td></tr>
+                        <tr><td><strong>🇨🇦 Canada</strong></td><td>OAG · Independent reviews</td><td>Auditor General provides independent oversight of major government programs.</td></tr>
+                        <tr><td><strong>🇦🇺 Australia</strong></td><td>ANAO · Assurance reviews</td><td>Independent assurance of major projects. Not tied to program management.</td></tr>
+                        <tr><td><strong>🇳🇿 New Zealand</strong></td><td>GCDO Assurance</td><td>Pre-qualified independent reviewers available to all agencies. Strong conflicts checks.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Section 5: The GL Framework as the Diagnostic Tool -->
+        <div class="gl-box">
+            <h3>📐 The Missing Piece: A Unified Diagnostic Standard</h3>
+            <p style="color:#c7d2e3;">
+                These new departments have mandate, budget, and authority. But they lack a <strong>unified, replicable, transparent diagnostic tool</strong> — a standard way to measure whether systems are actually delivering.
+            </p>
+            <p style="color:#c7d2e3; margin-top:0.5rem;">
+                <strong>GL Framework fills that gap.</strong> It provides a single diagnostic language across all projects, based on public data, with a fixed formula and 8 parameters. No vendor access required. No conflict of interest.
+            </p>
+
+            <div class="gl-grid">
+                <div class="gl-item">
+                    <strong>🔢 GL Formula</strong>
+                    <p>GL = (Fs × Vn) ÷ (Pd × Cf) — a single, replicable diagnostic metric.</p>
+                </div>
+                <div class="gl-item">
+                    <strong>📊 8 Parameters</strong>
+                    <p>Eight measurable inputs — all based on external or publicly available data.</p>
+                </div>
+                <div class="gl-item">
+                    <strong>🌍 65 Countries</strong>
+                    <p>Already validated across 65 countries. Zero marketing. Institutional adoption.</p>
+                </div>
+                <div class="gl-item">
+                    <strong>🔓 No System Access</strong>
+                    <p>Verification based on public data — no conflict of interest, no vendor dependency.</p>
+                </div>
+                <div class="gl-item">
+                    <strong>🔄 Full Lifecycle</strong>
+                    <p>From pre-procurement diagnostics to post-deployment outcome verification.</p>
+                </div>
+                <div class="gl-item">
+                    <strong>📈 Risk-Based</strong>
+                    <p>Diagnostic scores inform risk levels — higher risk = higher scrutiny.</p>
+                </div>
+            </div>
+
+            <p style="color:#9FE870; font-family:'DM Mono',monospace; margin-top:1rem;">
+                → GL Framework is the diagnostic standard this new function needs.
+            </p>
+        </div>
+
+        <!-- Section 6: The Gap It Fills -->
+        <div class="section">
+            <h2>What Procurement Reform Built — and What It Still Needs</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <h4>✅ Built</h4>
+                    <ul style="color:#c7d2e3; list-style:none; padding:0; font-size:0.9rem; line-height:2;">
+                        <li>✓ Debarment lists</li>
+                        <li>✓ Transparency requirements</li>
+                        <li>✓ Social value criteria</li>
+                        <li>✓ Flexible procurement procedures</li>
+                    </ul>
+                </div>
+                <div class="card" style="border-color:rgba(159,232,112,.3);">
+                    <h4 style="color:#9FE870;">❌ Still Missing</h4>
+                    <ul style="color:#c7d2e3; list-style:none; padding:0; font-size:0.9rem; line-height:2;">
+                        <li>✗ A unified diagnostic standard</li>
+                        <li>✗ Post-deployment outcome verification</li>
+                        <li>✗ Replicable, public-data-based measurement</li>
+                        <li>✗ Independent of vendors and implementers</li>
+                    </ul>
+                </div>
+            </div>
+            <p style="color:#9FE870; font-family:'DM Mono',monospace; margin-top:1rem; font-size:0.9rem;">
+                → GL Framework is what's still missing.
+            </p>
+        </div>
+
+        <!-- Section 7: Call to Action -->
+        <div class="section" style="background:rgba(255,255,255,.02); border-radius:24px; padding:2rem; border:1px solid rgba(255,255,255,.06);">
+            <h2 style="margin-bottom:0.5rem;">Build the Verification Function Now</h2>
+            <p style="color:#c7d2e3; max-width:700px;">
+                Whether you are a government agency, a sovereign fund, or a multilateral institution — the diagnostic function is already needed. GL Framework is the tool.
+            </p>
+            <div class="cta-row">
+                <a href="https://www.linkedin.com/in/gfiping/" class="btn-primary" target="_blank" rel="noopener">Start a Conversation →</a>
+                <a href="government.html" class="btn-outline">Government Page</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            © 2026 GFI Flow Intelligence · Boston ·
+            <a href="about.html">About</a> ·
+            <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6178024" target="_blank">SSRN</a> ·
+            <a href="https://www.linkedin.com/in/gfiping/" target="_blank">LinkedIn</a>
+        </div>
+    </div>
+
+    <!-- 繁體中文 -->
+    <div class="page" id="page-tw" style="display:none;">
+        <div class="eyebrow">政府新職能部門</div>
+        <h1>獨立驗證與交付保證</h1>
+        <div class="subhead">
+            一個專門的政府部門——獨立於採購、獨立於廠商——有權力、有能力在系統驗收之前，驗證它是否真的能用。
+        </div>
+
+        <div class="section">
+            <div class="section-label">正在形成的全球共識</div>
+            <p style="color:#c7d2e3; max-width:800px;">
+                英國、美國、加拿大、澳洲、紐西蘭等國政府，正在建立<strong>獨立驗證與確認（IV&amp;V）</strong>或<strong>交付保證</strong>職能。這不是顧問角色，而是一個<strong>常設的、獨立的政府部門</strong>——具有法律授權、獨立預算，並直屬國會或議會。
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>獨立性的核心要素</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <div class="icon">⚖️</div>
+                    <h4>法律授權</h4>
+                    <p>受法律保護，不受行政裁量干預。驗證報告直送國會或議會。</p>
+                </div>
+                <div class="card">
+                    <div class="icon">💰</div>
+                    <h4>獨立預算</h4>
+                    <p>由國會／議會直接編列，不經過被驗證機關。</p>
+                </div>
+                <div class="card">
+                    <div class="icon">🔒</div>
+                    <h4>職位保障</h4>
+                    <p>驗證人員不得因驗證結果被報復。獨立性來自制度設計，不是個人。</p>
+                </div>
+                <div class="card">
+                    <div class="icon">📋</div>
+                    <h4>全生命週期覆蓋</h4>
+                    <p>從採購前需求審查，到部署後成果驗證——不只做最終檢查。</p>
+                </div>
+                <div class="card">
+                    <div class="icon">🎯</div>
+                    <h4>風險導向</h4>
+                    <p>高風險、高檢視。不是所有專案都需要相同程度的驗證。</p>
+                </div>
+                <div class="card">
+                    <div class="icon">📐</div>
+                    <h4>標準化工具</h4>
+                    <p>跨專案統一的診斷語言。透明、可複製、基於公開數據。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>這是什麼——不是什麼</h2>
+            <div class="comparison-box">
+                <div class="comparison-item wrong">
+                    <div class="comparison-label">❌ 不是這個</div>
+                    <ul>
+                        <li>又一個顧問合約</li>
+                        <li>教人怎麼建系統</li>
+                        <li>取代採購或專案管理</li>
+                        <li>依賴廠商提供的數據</li>
+                        <li>系統驗收後就結案</li>
+                    </ul>
+                </div>
+                <div class="comparison-item correct">
+                    <div class="comparison-label">✅ 是這個</div>
+                    <ul>
+                        <li>一個常設的獨立政府部門</li>
+                        <li>診斷系統是否真的能用</li>
+                        <li>獨立於採購與廠商</li>
+                        <li>使用外部或公開數據</li>
+                        <li>驗證部署後的成果</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>已經在發生</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>國家</th><th>職能</th><th>關鍵特徵</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>🇺🇸 美國</strong></td><td>GAO · IV&amp;V 強制</td><td>直屬國會。利益衝突條款防止廠商驗證自己的工作。</td></tr>
+                        <tr><td><strong>🇬🇧 英國</strong></td><td>NAO · 交付保證團隊</td><td>重大IT合約內建獨立驗證。直屬議會。</td></tr>
+                        <tr><td><strong>🇨🇦 加拿大</strong></td><td>OAG · 獨立審查</td><td>審計長提供重大政府計畫的獨立監督。</td></tr>
+                        <tr><td><strong>🇦🇺 澳洲</strong></td><td>ANAO · 保證審查</td><td>重大專案的獨立保證。不隸屬專案管理。</td></tr>
+                        <tr><td><strong>🇳🇿 紐西蘭</strong></td><td>GCDO 保證服務</td><td>預審合格的獨立評估者，供各機關使用。嚴格的利益衝突檢查。</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="gl-box">
+            <h3>📐 缺的那一塊：統一的診斷標準</h3>
+            <p style="color:#c7d2e3;">
+                這些新部門有授權、預算、權力。但它們缺少一個<strong>統一的、可複製的、透明的診斷工具</strong>——一套標準方法來衡量系統是否真的在運作。
+            </p>
+            <p style="color:#c7d2e3; margin-top:0.5rem;">
+                <strong>GL框架填補了這個缺口。</strong>它提供了一套跨專案的統一診斷語言，基於公開數據、固定公式、八個參數。不需要廠商權限。沒有利益衝突。
+            </p>
+
+            <div class="gl-grid">
+                <div class="gl-item">
+                    <strong>🔢 GL 公式</strong>
+                    <p>GL = (Fs × Vn) ÷ (Pd × Cf) — 一個可複製的診斷指標。</p>
+                </div>
+                <div class="gl-item">
+                    <strong>📊 八個參數</strong>
+                    <p>八個可測量的輸入——全部基於外部或公開數據。</p>
+                </div>
+                <div class="gl-item">
+                    <strong>🌍 65 國</strong>
+                    <p>已在65國驗證。零推廣。機構自主採用。</p>
+                </div>
+                <div class="gl-item">
+                    <strong>🔓 不需系統權限</strong>
+                    <p>驗證基於公開數據——沒有利益衝突，不依賴廠商。</p>
+                </div>
+                <div class="gl-item">
+                    <strong>🔄 全生命週期</strong>
+                    <p>從採購前診斷到部署後成果驗證。</p>
+                </div>
+                <div class="gl-item">
+                    <strong>📈 風險導向</strong>
+                    <p>診斷分數反映風險等級——高風險 = 高檢視。</p>
+                </div>
+            </div>
+
+            <p style="color:#9FE870; font-family:'DM Mono',monospace; margin-top:1rem;">
+                → GL框架就是這個新部門需要的診斷標準。
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>採購改革已經建立的——以及還缺的</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <h4>✅ 已經建立</h4>
+                    <ul style="color:#c7d2e3; list-style:none; padding:0; font-size:0.9rem; line-height:2;">
+                        <li>✓ 除名清單</li>
+                        <li>✓ 透明度要求</li>
+                        <li>✓ 社會價值標準</li>
+                        <li>✓ 靈活採購程序</li>
+                    </ul>
+                </div>
+                <div class="card" style="border-color:rgba(159,232,112,.3);">
+                    <h4 style="color:#9FE870;">❌ 仍然缺的</h4>
+                    <ul style="color:#c7d2e3; list-style:none; padding:0; font-size:0.9rem; line-height:2;">
+                        <li>✗ 統一的診斷標準</li>
+                        <li>✗ 部署後的成果驗證</li>
+                        <li>✗ 可複製、基於公開數據的測量</li>
+                        <li>✗ 獨立於廠商與執行者</li>
+                    </ul>
+                </div>
+            </div>
+            <p style="color:#9FE870; font-family:'DM Mono',monospace; margin-top:1rem; font-size:0.9rem;">
+                → GL框架就是那個還缺的東西。
+            </p>
+        </div>
+
+        <div class="section" style="background:rgba(255,255,255,.02); border-radius:24px; padding:2rem; border:1px solid rgba(255,255,255,.06);">
+            <h2 style="margin-bottom:0.5rem;">現在就建立驗證職能</h2>
+            <p style="color:#c7d2e3; max-width:700px;">
+                無論你是政府機關、主權基金，還是跨國機構——診斷職能已經是剛需。GL框架就是那個工具。
+            </p>
+            <div class="cta-row">
+                <a href="https://www.linkedin.com/in/gfiping/" class="btn-primary" target="_blank" rel="noopener">開啟對話 →</a>
+                <a href="government.html" class="btn-outline">政府頁面</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            © 2026 GFI Flow Intelligence · Boston ·
+            <a href="about.html">About</a> ·
+            <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6178024" target="_blank">SSRN</a> ·
+            <a href="https://www.linkedin.com/in/gfiping/" target="_blank">LinkedIn</a>
+        </div>
+    </div>
+
+    <!-- 简体中文 -->
+    <div class="page" id="page-cn" style="display:none;">
+        <div class="eyebrow">政府新职能部门</div>
+        <h1>独立验证与交付保证</h1>
+        <div class="subhead">
+            一个专门的政府部门——独立于采购、独立于厂商——有权力、有能力在系统验收之前，验证它是否真的能用。
+        </div>
+
+        <div class="section">
+            <div class="section-label">正在形成的全球共识</div>
+            <p style="color:#c7d2e3; max-width:800px;">
+                英国、美国、加拿大、澳洲、新西兰等国政府，正在建立<strong>独立验证与确认（IV&amp;V）</strong>或<strong>交付保证</strong>职能。这不是顾问角色，而是一个<strong>常设的、独立的政府部门</strong>——具有法律授权、独立预算，并直属国会或议会。
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>独立性的核心要素</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <div class="icon">⚖️</div>
+                    <h4>法律授权</h4>
+                    <p>受法律保护，不受行政裁量干预。验证报告直送国会或议会。</p>
+                </div>
+                <div class="card">
+                    <div class="icon">💰</div>
+                    <h4>独立预算</h4>
+                    <p>由国会／议会直接编列，不经过被验证机关。</p>
+                </div>
+                <div class="card">
+                    <div class="icon">🔒</div>
+                    <h4>职位保障</h4>
+                    <p>验证人员不得因验证结果被报复。独立性来自制度设计，不是个人。</p>
+                </div>
+                <div class="card">
+                    <div class="icon">📋</div>
+                    <h4>全生命周期覆盖</h4>
+                    <p>从采购前需求审查，到部署后成果验证——不只做最终检查。</p>
+                </div>
+                <div class="card">
+                    <div class="icon">🎯</div>
+                    <h4>风险导向</h4>
+                    <p>高风险、高检视。不是所有项目都需要相同程度的验证。</p>
+                </div>
+                <div class="card">
+                    <div class="icon">📐</div>
+                    <h4>标准化工具</h4>
+                    <p>跨项目统一的诊断语言。透明、可复制、基于公开数据。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>这是什么——不是什么</h2>
+            <div class="comparison-box">
+                <div class="comparison-item wrong">
+                    <div class="comparison-label">❌ 不是这个</div>
+                    <ul>
+                        <li>又一个顾问合同</li>
+                        <li>教人怎么建系统</li>
+                        <li>取代采购或项目管理</li>
+                        <li>依赖厂商提供的数据</li>
+                        <li>系统验收后就结案</li>
+                    </ul>
+                </div>
+                <div class="comparison-item correct">
+                    <div class="comparison-label">✅ 是这个</div>
+                    <ul>
+                        <li>一个常设的独立政府部门</li>
+                        <li>诊断系统是否真的能用</li>
+                        <li>独立于采购与厂商</li>
+                        <li>使用外部或公开数据</li>
+                        <li>验证部署后的成果</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>已经在发生</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>国家</th><th>职能</th><th>关键特征</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>🇺🇸 美国</strong></td><td>GAO · IV&amp;V 强制</td><td>直属国会。利益冲突条款防止厂商验证自己的工作。</td></tr>
+                        <tr><td><strong>🇬🇧 英国</strong></td><td>NAO · 交付保证团队</td><td>重大IT合同内建独立验证。直属议会。</td></tr>
+                        <tr><td><strong>🇨🇦 加拿大</strong></td><td>OAG · 独立审查</td><td>审计长提供重大政府计划的独立监督。</td></tr>
+                        <tr><td><strong>🇦🇺 澳洲</strong></td><td>ANAO · 保证审查</td><td>重大项目的独立保证。不隶属项目管理。</td></tr>
+                        <tr><td><strong>🇳🇿 新西兰</strong></td><td>GCDO 保证服务</td><td>预审合格的独立评估者，供各机关使用。严格的利益冲突检查。</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="gl-box">
+            <h3>📐 缺的那一块：统一的诊断标准</h3>
+            <p style="color:#c7d2e3;">
+                这些新部门有授权、预算、权力。但它们缺少一个<strong>统一的、可复制的、透明的诊断工具</strong>——一套标准方法来衡量系统是否真的在运作。
+            </p>
+            <p style="color:#c7d2e3; margin-top:0.5rem;">
+                <strong>GL框架填补了这个缺口。</strong>它提供了一套跨项目的统一诊断语言，基于公开数据、固定公式、八个参数。不需要厂商权限。没有利益冲突。
+            </p>
+
+            <div class="gl-grid">
+                <div class="gl-item">
+                    <strong>🔢 GL 公式</strong>
+                    <p>GL = (Fs × Vn) ÷ (Pd × Cf) — 一个可复制的诊断指标。</p>
+                </div>
+                <div class="gl-item">
+                    <strong>📊 八个参数</strong>
+                    <p>八个可测量的输入——全部基于外部或公开数据。</p>
+                </div>
+                <div class="gl-item">
+                    <strong>🌍 65 国</strong>
+                    <p>已在65国验证。零推广。机构自主采用。</p>
+                </div>
+                <div class="gl-item">
+                    <strong>🔓 不需系统权限</strong>
+                    <p>验证基于公开数据——没有利益冲突，不依赖厂商。</p>
+                </div>
+                <div class="gl-item">
+                    <strong>🔄 全生命周期</strong>
+                    <p>从采购前诊断到部署后成果验证。</p>
+                </div>
+                <div class="gl-item">
+                    <strong>📈 风险导向</strong>
+                    <p>诊断分数反映风险等级——高风险 = 高检视。</p>
+                </div>
+            </div>
+
+            <p style="color:#9FE870; font-family:'DM Mono',monospace; margin-top:1rem;">
+                → GL框架就是这个新部门需要的诊断标准。
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>采购改革已经建立的——以及还缺的</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <h4>✅ 已经建立</h4>
+                    <ul style="color:#c7d2e3; list-style:none; padding:0; font-size:0.9rem; line-height:2;">
+                        <li>✓ 除名清单</li>
+                        <li>✓ 透明度要求</li>
+                        <li>✓ 社会价值标准</li>
+                        <li>✓ 灵活采购程序</li>
+                    </ul>
+                </div>
+                <div class="card" style="border-color:rgba(159,232,112,.3);">
+                    <h4 style="color:#9FE870;">❌ 仍然缺的</h4>
+                    <ul style="color:#c7d2e3; list-style:none; padding:0; font-size:0.9rem; line-height:2;">
+                        <li>✗ 统一的诊断标准</li>
+                        <li>✗ 部署后的成果验证</li>
+                        <li>✗ 可复制、基于公开数据的测量</li>
+                        <li>✗ 独立于厂商与执行者</li>
+                    </ul>
+                </div>
+            </div>
+            <p style="color:#9FE870; font-family:'DM Mono',monospace; margin-top:1rem; font-size:0.9rem;">
+                → GL框架就是那个还缺的东西。
+            </p>
+        </div>
+
+        <div class="section" style="background:rgba(255,255,255,.02); border-radius:24px; padding:2rem; border:1px solid rgba(255,255,255,.06);">
+            <h2 style="margin-bottom:0.5rem;">现在就建立验证职能</h2>
+            <p style="color:#c7d2e3; max-width:700px;">
+                无论你是政府机关、主权基金，还是跨国机构——诊断职能已经是刚需。GL框架就是那个工具。
+            </p>
+            <div class="cta-row">
+                <a href="https://www.linkedin.com/in/gfiping/" class="btn-primary" target="_blank" rel="noopener">开启对话 →</a>
+                <a href="government.html" class="btn-outline">政府页面</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            © 2026 GFI Flow Intelligence · Boston ·
+            <a href="about.html">About</a> ·
+            <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6178024" target="_blank">SSRN</a> ·
+            <a href="https://www.linkedin.com/in/gfiping/" target="_blank">LinkedIn</a>
+        </div>
+    </div>
+
+    <!-- ESPAÑOL -->
+    <div class="page" id="page-es" style="display:none;">
+        <div class="eyebrow">Nueva Función Gubernamental</div>
+        <h1>Verificación Independiente y Garantía de Entrega</h1>
+        <div class="subhead">
+            Un departamento gubernamental dedicado — separado de las adquisiciones, separado de los proveedores — con la autoridad para verificar si los sistemas realmente funcionan antes de ser aceptados.
+        </div>
+
+        <div class="section">
+            <div class="section-label">El Consenso Emergente</div>
+            <p style="color:#c7d2e3; max-width:800px;">
+                Gobiernos del Reino Unido, EE.UU., Canadá, Australia y Nueva Zelanda están estableciendo funciones de <strong>verificación y validación independiente (IV&amp;V)</strong> o <strong>garantía de entrega</strong>. No es un rol de consultoría. Es una <strong>función gubernamental permanente e independiente</strong> — con mandato legal, presupuesto separado y líneas de reporte directas al Congreso o Parlamento.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>Lo Que La Hace Independiente</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <div class="icon">⚖️</div>
+                    <h4>Mandato Legal</h4>
+                    <p>Protegido por ley, no por discreción administrativa. Los informes van directamente al Congreso o Parlamento.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">💰</div>
+                    <h4>Presupuesto Separado</h4>
+                    <p>Asignado directamente, no a través de las agencias verificadas. Sin dependencia financiera.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">🔒</div>
+                    <h4>Mandato Protegido</h4>
+                    <p>El personal no puede ser represaliado por sus hallazgos. La independencia es institucional.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">📋</div>
+                    <h4>Cobertura de Ciclo Completo</h4>
+                    <p>Desde la revisión de requisitos previos a la compra hasta la verificación posterior al despliegue.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">🎯</div>
+                    <h4>Basado en Riesgos</h4>
+                    <p>Mayor riesgo, mayor escrutinio. No todos los proyectos necesitan el mismo nivel de verificación.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">📐</div>
+                    <h4>Herramientas Estandarizadas</h4>
+                    <p>Un lenguaje diagnóstico unificado para todos los proyectos. Transparente, replicable, basado en datos públicos.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Qué Es — y Qué No Es</h2>
+            <div class="comparison-box">
+                <div class="comparison-item wrong">
+                    <div class="comparison-label">❌ NO es esto</div>
+                    <ul>
+                        <li>Otro contrato de consultoría</li>
+                        <li>Asesorar sobre cómo construir sistemas</li>
+                        <li>Reemplazar adquisiciones o gestión de proyectos</li>
+                        <li>Depender de datos proporcionados por proveedores</li>
+                        <li>Cerrar el caso después de la aceptación del sistema</li>
+                    </ul>
+                </div>
+                <div class="comparison-item correct">
+                    <div class="comparison-label">✅ ES ESTO</div>
+                    <ul>
+                        <li>Una función gubernamental permanente e independiente</li>
+                        <li>Diagnosticar si los sistemas realmente funcionan</li>
+                        <li>Separada de adquisiciones y proveedores</li>
+                        <li>Usar datos externos o públicamente disponibles</li>
+                        <li>Verificar resultados después del despliegue</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Ya en Movimiento</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>País</th><th>Función</th><th>Característica Clave</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>🇺🇸 EE.UU.</strong></td><td>GAO · Mandatos IV&amp;V</td><td>Reporta directamente al Congreso. Clausulas contra conflicto de intereses.</td></tr>
+                        <tr><td><strong>🇬🇧 Reino Unido</strong></td><td>NAO · Equipos de Garantía</td><td>Verificación independiente integrada en grandes contratos de TI. Reporta al Parlamento.</td></tr>
+                        <tr><td><strong>🇨🇦 Canadá</strong></td><td>OAG · Revisiones independientes</td><td>El Auditor General proporciona supervisión independiente.</td></tr>
+                        <tr><td><strong>🇦🇺 Australia</strong></td><td>ANAO · Revisiones de garantía</td><td>Garantía independiente de grandes proyectos. No vinculada a la gestión del proyecto.</td></tr>
+                        <tr><td><strong>🇳🇿 Nueva Zelanda</strong></td><td>GCDO Assurance</td><td>Revisores independientes precalificados para todas las agencias. Fuertes controles de conflicto.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="gl-box">
+            <h3>📐 La Pieza Faltante: Un Estándar Diagnóstico Unificado</h3>
+            <p style="color:#c7d2e3;">
+                Estos nuevos departamentos tienen mandato, presupuesto y autoridad. Pero carecen de una <strong>herramienta diagnóstica unificada, replicable y transparente</strong> — una forma estándar de medir si los sistemas realmente están funcionando.
+            </p>
+            <p style="color:#c7d2e3; margin-top:0.5rem;">
+                <strong>GL Framework llena ese vacío.</strong> Proporciona un lenguaje diagnóstico único para todos los proyectos, basado en datos públicos, con una fórmula fija y 8 parámetros. Sin acceso a proveedores. Sin conflicto de intereses.
+            </p>
+
+            <div class="gl-grid">
+                <div class="gl-item">
+                    <strong>🔢 Fórmula GL</strong>
+                    <p>GL = (Fs × Vn) ÷ (Pd × Cf) — una métrica diagnóstica replicable.</p>
+                </div>
+                <div class="gl-item">
+                    <strong>📊 8 Parámetros</strong>
+                    <p>Ocho entradas medibles — todas basadas en datos externos o públicos.</p>
+                </div>
+                <div class="gl-item">
+                    <strong>🌍 65 Países</strong>
+                    <p>Ya validado en 65 países. Cero marketing. Adopción institucional.</p>
+                </div>
+                <div class="gl-item">
+                    <strong>🔓 Sin Acceso a Sistemas</strong>
+                    <p>Verificación basada en datos públicos — sin conflicto de intereses, sin dependencia de proveedores.</p>
+                </div>
+                <div class="gl-item">
+                    <strong>🔄 Ciclo Completo</strong>
+                    <p>Desde diagnósticos previos a la compra hasta verificación posterior al despliegue.</p>
+                </div>
+                <div class="gl-item">
+                    <strong>📈 Basado en Riesgos</strong>
+                    <p>Los puntajes diagnósticos informan niveles de riesgo — mayor riesgo = mayor escrutinio.</p>
+                </div>
+            </div>
+
+            <p style="color:#9FE870; font-family:'DM Mono',monospace; margin-top:1rem;">
+                → GL Framework es el estándar diagnóstico que esta nueva función necesita.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>Lo Que la Reforma de Adquisiciones Construyó — y Lo Que Aún Necesita</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <h4>✅ Construido</h4>
+                    <ul style="color:#c7d2e3; list-style:none; padding:0; font-size:0.9rem; line-height:2;">
+                        <li>✓ Listas de exclusión</li>
+                        <li>✓ Requisitos de transparencia</li>
+                        <li>✓ Criterios de valor social</li>
+                        <li>✓ Procedimientos de compra flexibles</li>
+                    </ul>
+                </div>
+                <div class="card" style="border-color:rgba(159,232,112,.3);">
+                    <h4 style="color:#9FE870;">❌ Aún Faltante</h4>
+                    <ul style="color:#c7d2e3; list-style:none; padding:0; font-size:0.9rem; line-height:2;">
+                        <li>✗ Un estándar diagnóstico unificado</li>
+                        <li>✗ Verificación de resultados posterior al despliegue</li>
+                        <li>✗ Medición replicable basada en datos públicos</li>
+                        <li>✗ Independiente de proveedores y ejecutores</li>
+                    </ul>
+                </div>
+            </div>
+            <p style="color:#9FE870; font-family:'DM Mono',monospace; margin-top:1rem; font-size:0.9rem;">
+                → GL Framework es lo que aún falta.
+            </p>
+        </div>
+
+        <div class="section" style="background:rgba(255,255,255,.02); border-radius:24px; padding:2rem; border:1px solid rgba(255,255,255,.06);">
+            <h2 style="margin-bottom:0.5rem;">Construya la Función de Verificación Ahora</h2>
+            <p style="color:#c7d2e3; max-width:700px;">
+                Ya sea usted una agencia gubernamental, un fondo soberano o una institución multilateral — la función diagnóstica ya es necesaria. GL Framework es la herramienta.
+            </p>
+            <div class="cta-row">
+                <a href="https://www.linkedin.com/in/gfiping/" class="btn-primary" target="_blank" rel="noopener">Iniciar una Conversación →</a>
+                <a href="government.html" class="btn-outline">Página de Gobierno</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            © 2026 GFI Flow Intelligence · Boston ·
+            <a href="about.html">About</a> ·
+            <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6178024" target="_blank">SSRN</a> ·
+            <a href="https://www.linkedin.com/in/gfiping/" target="_blank">LinkedIn</a>
+        </div>
+    </div>
+
+    <script>
+        // 語言切換
+        const navBtns = document.querySelectorAll('.lang-btn-nav');
+        const pages = {
+            en: document.getElementById('page-en'),
+            tw: document.getElementById('page-tw'),
+            cn: document.getElementById('page-cn'),
+            es: document.getElementById('page-es')
+        };
+
+        function switchPage(lang) {
+            // 隱藏所有頁面
+            Object.values(pages).forEach(p => p.style.display = 'none');
+            // 顯示目標頁面
+            if (pages[lang]) pages[lang].style.display = 'block';
+            // 更新導航按鈕狀態
+            navBtns.forEach(btn => {
+                btn.classList.toggle('on', btn.dataset.lang === lang);
+            });
+        }
+
+        navBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                switchPage(btn.dataset.lang);
+            });
+        });
+
+        // 默認顯示英文
+        switchPage('en');
+    </script>
+</body>
+</html>
