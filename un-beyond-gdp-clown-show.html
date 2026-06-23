@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>聯合國 HLEG · Beyond GDP · GL 診斷 · 草台班子</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0b1220;
+            color: #f8fbff;
+            font-family: 'DM Sans', system-ui, sans-serif;
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+        .logo a {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.12em;
+            color: #9FE870;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+        .logo a .home-arrow {
+            color: #9fb0c8;
+            margin-right: 6px;
+        }
+        .logo a:hover .home-arrow {
+            color: #9FE870;
+        }
+        .lang-switch {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .lang-btn {
+            background: none;
+            border: 1px solid rgba(255,255,255,.1);
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            padding: 0.25rem 0.7rem;
+            border-radius: 2rem;
+            color: #9fb0c8;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,.3); color: #fff; }
+        .lang-btn.active {
+            background: #9FE870;
+            color: #0b1220;
+            border-color: #9FE870;
+        }
+        .content-lang { display: none; }
+        .content-lang.active { display: block; }
+        .book-container {
+            background: #0d1526;
+            padding: 3rem 2.5rem;
+            border-radius: 4px;
+            border: 1px solid rgba(255,255,255,.06);
+        }
+        .opening-statement {
+            background: rgba(248, 113, 113, 0.06);
+            border: 1px solid rgba(248, 113, 113, 0.2);
+            border-radius: 12px;
+            padding: 1.8rem 2rem;
+            margin-bottom: 2rem;
+        }
+        .opening-statement p {
+            color: #f0d0d0;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+        .opening-statement .highlight-red {
+            color: #f87171;
+            font-weight: 600;
+        }
+        .opening-statement .signature {
+            color: #9fb0c8;
+            font-style: italic;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+        h1 {
+            font-size: 2.6rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 0.25rem;
+            color: #f87171;
+            letter-spacing: 0.02em;
+            font-family: 'DM Serif Display', Georgia, serif;
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 1rem;
+            color: #9fb0c8;
+            margin-bottom: 0.5rem;
+            font-style: italic;
+        }
+        .author-line {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #7DD3FC;
+            margin-bottom: 2rem;
+        }
+        .theme-line {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.8rem;
+            color: #f87171;
+            text-align: center;
+            margin: 1.5rem 0;
+            line-height: 1.3;
+        }
+        .theme-line-small {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.3rem;
+            color: #f87171;
+            text-align: center;
+            margin: 1.5rem 0;
+            line-height: 1.3;
+        }
+        h2 {
+            font-size: 1.4rem;
+            color: #9FE870;
+            margin: 2rem 0 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+            padding-bottom: 0.3rem;
+            font-family: 'DM Serif Display', Georgia, serif;
+        }
+        h3 {
+            font-size: 1.1rem;
+            color: #7DD3FC;
+            margin: 1.5rem 0 0.75rem 0;
+            font-family: 'DM Serif Display', Georgia, serif;
+        }
+        p {
+            color: #c7d2e3;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        .quote-block {
+            border-left: 3px solid #fbbf24;
+            padding-left: 1.2rem;
+            margin: 1.2rem 0;
+            color: #eaf6ff;
+            font-style: italic;
+            background: rgba(251, 191, 36, 0.04);
+            border-radius: 0 8px 8px 0;
+        }
+        .quote-block p {
+            color: #f5e6c8;
+        }
+        .quote-block .source {
+            color: #9fb0c8;
+            font-size: 0.85rem;
+            font-style: normal;
+        }
+        .highlight-box {
+            background: rgba(159, 232, 112, 0.06);
+            border: 1px solid rgba(159, 232, 112, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        .highlight-box p {
+            color: #eaf6ff;
+            margin-bottom: 0.25rem;
+        }
+        .highlight-box strong {
+            color: #9FE870;
+        }
+        .gl-box {
+            background: rgba(159, 232, 112, 0.04);
+            border-left: 3px solid #9FE870;
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .gl-box p {
+            color: #eaf6ff;
+            margin-bottom: 0.5rem;
+        }
+        .gl-box strong {
+            color: #9FE870;
+        }
+        .gl-box .gl-score {
+            font-family: 'DM Mono', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #f87171;
+            text-align: center;
+            display: block;
+            margin: 0.3rem 0;
+        }
+        .red-box {
+            background: rgba(248, 113, 113, 0.04);
+            border-left: 3px solid #f87171;
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .red-box p {
+            color: #f0d0d0;
+            margin-bottom: 0.5rem;
+        }
+        .red-box strong {
+            color: #f87171;
+        }
+        .data-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .data-item {
+            background: rgba(255,255,255,.02);
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            text-align: center;
+        }
+        .data-item .number {
+            font-family: 'DM Mono', monospace;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #f87171;
+        }
+        .data-item .label {
+            font-size: 0.75rem;
+            color: #9fb0c8;
+            line-height: 1.4;
+        }
+        .data-item .label .highlight {
+            color: #f87171;
+            font-weight: 600;
+        }
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .comparison-item {
+            background: rgba(255,255,255,.02);
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            text-align: center;
+        }
+        .comparison-item .label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            color: #9fb0c8;
+            letter-spacing: 0.08em;
+        }
+        .comparison-item .value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #f87171;
+            margin: 0.3rem 0;
+        }
+        .comparison-item .desc {
+            font-size: 0.8rem;
+            color: #c7d2e3;
+        }
+        .footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,.06);
+            text-align: center;
+            font-size: 0.75rem;
+            color: #9fb0c8;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 1.5rem;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: #9fb0c8;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,.06);
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            transition: 0.2s;
+        }
+        .back-link:hover {
+            border-color: rgba(255,255,255,.2);
+            color: #fff;
+        }
+        .divider { border: 0; border-top: 1px solid rgba(255,255,255,.08); margin: 2.5rem 0; }
+        .laugh-line {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 2rem;
+            color: #fbbf24;
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+        @media (max-width: 700px) {
+            .container { padding: 1rem; }
+            .book-container { padding: 1.5rem; }
+            h1 { font-size: 1.8rem; }
+            .theme-line { font-size: 1.3rem; }
+            .theme-line-small { font-size: 1.1rem; }
+            .data-grid { grid-template-columns: 1fr; }
+            .comparison-grid { grid-template-columns: 1fr; }
+            .opening-statement { padding: 1.2rem; }
+        }
+        @media print {
+            .header { display: none !important; }
+            .footer { display: none !important; }
+            .back-link { display: none !important; }
+            .book-container { background: transparent !important; border: none !important; padding: 0 !important; }
+            body { background: #fff !important; color: #000 !important; }
+            h1, h2, h3, p, .data-item .label { color: #000 !important; }
+            .gl-box, .highlight-box, .red-box, .quote-block { background: #f5f5f5 !important; border-color: #ccc !important; }
+            .gl-box p, .highlight-box p, .red-box p, .quote-block p { color: #000 !important; }
+            .data-item { border-color: #ccc !important; }
+            .data-item .number { color: #cc0000 !important; }
+            .comparison-item { border-color: #ccc !important; }
+            .comparison-item .value { color: #cc0000 !important; }
+            .theme-line, .theme-line-small { color: #cc0000 !important; }
+            .laugh-line { color: #cc8800 !important; }
+            .gl-box .gl-score { color: #cc0000 !important; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="logo">
+            <a href="index.html"><span class="home-arrow">←</span> GFI Flow Intelligence</a>
+        </div>
+        <div class="lang-switch">
+            <button class="lang-btn active" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="tw">繁</button>
+            <button class="lang-btn" data-lang="cn">简</button>
+            <button class="lang-btn" data-lang="es">ES</button>
+        </div>
+    </div>
+
+    <!-- ====== ENGLISH ====== -->
+    <div id="lang-en" class="content-lang active">
+        <div class="book-container">
+            <div class="opening-statement">
+                <p><span class="highlight-red">"Beyond GDP"</span> — one year, 14 experts, 31 indicators.</p>
+                <p>And what did they produce? <span class="highlight-red">A dashboard that no one is obligated to use.</span></p>
+                <p>Nature called it "a step forward." <span class="highlight-red">We call it what it is: a clown show.</span></p>
+                <p class="signature">— GL Framework Diagnostic · Ping Xu · GFI Flow Intelligence</p>
+            </div>
+
+            <h1>Beyond GDP, Beyond Reason</h1>
+            <div class="subtitle">One Year, 14 Experts, 31 Indicators — and Nothing to Show</div>
+            <div class="author-line">Ping Xu · GFI Flow Intelligence · June 2026</div>
+
+            <div class="theme-line">14 people · 1 year · 31 indicators · zero impact</div>
+
+            <p>The UN spent an entire year, assembled a 14-member "High-Level Expert Group," and did what exactly?</p>
+
+            <p><strong>They told the world that "GDP is not enough."</strong></p>
+
+            <p>That took one year? That took 14 people?</p>
+
+            <div class="quote-block">
+                <p>"The welfare of a nation can scarcely be inferred from a measure of national income."</p>
+                <p class="source">— Simon Kuznets, 1934 — <strong>91 years ago</strong></p>
+            </div>
+
+            <div class="quote-block">
+                <p>"GDP does not capture inequality, poverty, or environmental degradation."</p>
+                <p class="source">— Amartya Sen, 2000 — <strong>26 years ago</strong></p>
+            </div>
+
+            <div class="quote-block">
+                <p>"GDP is a poor measure of well-being."</p>
+                <p class="source">— Stiglitz-Sen-Fitoussi Commission, 2008 — <strong>18 years ago</strong></p>
+            </div>
+
+            <p><strong>Now it's 2026. The UN spent a full year — and reinvented the wheel.</strong></p>
+
+            <p>Then they held a grand global launch. The Secretary-General himself stood on stage and called it a "historic milestone."</p>
+
+            <div class="laugh-line">😂</div>
+
+            <h2>What Did They Actually Produce?</h2>
+
+            <div class="red-box">
+                <p><strong>A dashboard with 31 indicators.</strong></p>
+                <p>About half are <strong>existing SDG indicators</strong> — already there. Already done. Already agreed upon years ago.</p>
+                <p>Four dimensions: current well-being, equity and inclusion, sustainability and resilience, foundational principles.</p>
+                <p><strong>Translation: they repackaged existing work, slapped a "UN" label on it, and called it their own.</strong></p>
+            </div>
+
+            <div class="data-grid">
+                <div class="data-item">
+                    <div class="number">14</div>
+                    <div class="label">"Experts" who spent a year stating the obvious</div>
+                </div>
+                <div class="data-item">
+                    <div class="number">31</div>
+                    <div class="label">Indicators — <span class="highlight">~50% from existing SDGs</span></div>
+                </div>
+                <div class="data-item">
+                    <div class="number">0</div>
+                    <div class="label">Mandatory implementation — <span class="highlight">zero enforcement</span></div>
+                </div>
+                <div class="data-item">
+                    <div class="number">0.01</div>
+                    <div class="label">GL Score — <span class="highlight">the lowest ever recorded</span></div>
+                </div>
+            </div>
+
+            <h2>But Wait — It Gets Worse</h2>
+
+            <p>The expert group themselves admitted: <strong>implementation challenges</strong> — data gaps, limited statistical capacity, countries unable to track these indicators.</p>
+
+            <div class="red-box">
+                <p><strong>They built something most countries can't use. Then declared victory.</strong></p>
+            </div>
+
+            <p>After the report was done, it wasn't ready to use. It had to:</p>
+            <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem;">
+                <li>Be handed over to Member States for discussion</li>
+                <li>Wait for Member States to decide whether to adopt it</li>
+                <li>Allow each country to decide whether to use it ("country-owned")</li>
+            </ul>
+
+            <div class="quote-block">
+                <p>"The next step belongs to Member States. The intergovernmental process starts now."</p>
+                <p class="source">— UN Secretary-General</p>
+            </div>
+
+            <div class="red-box">
+                <p><strong>Translation: "We're done. Now you continue fighting. We're not responsible."</strong></p>
+            </div>
+
+            <p>Even <em>Nature</em> couldn't hold back: <strong>"Going beyond GDP should not leave the SDGs behind."</strong></p>
+
+            <p>The experts couldn't even agree on a headline indicator — because 31 indicators are too complex to compete with GDP's "single number."</p>
+
+            <div class="highlight-box">
+                <p><strong>No headline indicator. No enforcement. No implementation plan.</strong></p>
+                <p>But they held a press conference. So that counts, right?</p>
+            </div>
+
+            <div class="laugh-line">🤡</div>
+
+            <h2>Why the US Stopped Funding This Circus</h2>
+
+            <div class="quote-block">
+                <p>"Pretending to address important issues but not achieving any real results."</p>
+                <p class="source">— White House Memorandum, January 2026 — on why the US withdrew from 66 international organizations</p>
+            </div>
+
+            <p>That sentence is <strong>the Beyond GDP report in a nutshell.</strong></p>
+
+            <p>Of the 66 organizations the US withdrew from, 31 were UN bodies. The White House statement said: <strong>"US taxpayers have spent billions on these organizations with minimal return."</strong></p>
+
+            <div class="comparison-grid">
+                <div class="comparison-item">
+                    <div class="label">Input</div>
+                    <div class="value">14 experts · 1 year</div>
+                    <div class="desc">UN budget, global launch, press coverage</div>
+                </div>
+                <div class="comparison-item">
+                    <div class="label">Output</div>
+                    <div class="value">31 indicators</div>
+                    <div class="desc">~50% existing SDGs, no one obligated to use</div>
+                </div>
+                <div class="comparison-item">
+                    <div class="label">Impact</div>
+                    <div class="value">0</div>
+                    <div class="desc">Zero enforcement, zero implementation</div>
+                </div>
+            </div>
+
+            <h2>GL Framework Diagnosis</h2>
+
+            <div class="gl-box">
+                <p><strong>Pd (Policy Delivery):</strong> 0 — no new substance, no actionable plan</p>
+                <p><strong>Cf (Consistency):</strong> 0 — Member States can overturn or ignore at will</p>
+                <p><strong>Fs (System Friction):</strong> Extreme — the expert group itself was a political product, not an execution unit</p>
+                <p><strong>Vn (Variability):</strong> Extreme — countries' implementation capacity varies wildly, results completely unpredictable</p>
+                <p style="margin-top:0.8rem; text-align:center;"><strong>GL Score</strong></p>
+                <span class="gl-score">0.01</span>
+                <p style="text-align:center; font-size:0.85rem; color:#f87171;">— The lowest ever recorded</p>
+            </div>
+
+            <div class="theme-line-small">14 people · 1 year · 31 indicators · zero impact</div>
+
+            <div class="red-box">
+                <p><strong>They reinvented the wheel, then said the wheel is too hard to use — "you figure it out."</strong></p>
+            </div>
+
+            <p>The US is refusing to be the deep pocket for this kind of nonsense. Not without reason.</p>
+
+            <div class="highlight-box">
+                <p><strong>This is not governance. This is performance art dressed up as expertise.</strong></p>
+                <p style="font-size:0.85rem; color:#9fb0c8; margin-top:0.5rem;">— GL Framework · GFI Flow Intelligence</p>
+            </div>
+
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · Creator of the GL Framework · June 2026</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · Free download · Free distribution</p>
+                <a href="index.html" class="back-link">← Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== 繁體中文 ====== -->
+    <div id="lang-tw" class="content-lang">
+        <div class="book-container">
+            <div class="opening-statement">
+                <p><span class="highlight-red">「超越 GDP」</span>— 一年、14位專家、31項指標。</p>
+                <p>然後呢？產出了什麼？<span class="highlight-red">一個沒有人有義務使用的儀表板。</span></p>
+                <p>Nature 說這是「向前一步」。<span class="highlight-red">我們說這是：草台班子。</span></p>
+                <p class="signature">— GL 框架診斷 · Ping Xu · GFI Flow Intelligence</p>
+            </div>
+
+            <h1>超越 GDP，超越常識</h1>
+            <div class="subtitle">一年、14位專家、31項指標 — 然後呢？</div>
+            <div class="author-line">Ping Xu · GFI Flow Intelligence · 2026年6月</div>
+
+            <div class="theme-line">14個人 · 一年 · 31項指標 · 影響力零</div>
+
+            <p>聯合國花了整整一年，組了一個14人的「高級專家組」，做了一件什麼事？</p>
+
+            <p><strong>告訴全世界「GDP不夠用」。</strong></p>
+
+            <p>這需要一年？這需要14個人？</p>
+
+            <div class="quote-block">
+                <p>「國家的福利無法從國民收入推斷出來。」</p>
+                <p class="source">— Simon Kuznets，1934年 — <strong>91年前</strong></p>
+            </div>
+
+            <div class="quote-block">
+                <p>「GDP無法捕捉不平等、貧窮和環境退化。」</p>
+                <p class="source">— Amartya Sen，2000年 — <strong>26年前</strong></p>
+            </div>
+
+            <div class="quote-block">
+                <p>「GDP是衡量福祉的糟糕指標。」</p>
+                <p class="source">— Stiglitz-Sen-Fitoussi 委員會，2008年 — <strong>18年前</strong></p>
+            </div>
+
+            <p><strong>現在是2026年。聯合國花了整整一年 — 重新發明了輪子。</strong></p>
+
+            <p>然後開了一場盛大的全球發布會。秘書長親自站台，說這是「歷史性的里程碑」。</p>
+
+            <div class="laugh-line">😂</div>
+
+            <h2>這一年他們到底做了什麼？</h2>
+
+            <div class="red-box">
+                <p><strong>一個31項指標的儀表板。</strong></p>
+                <p>其中大約一半是 <strong>既有的 SDG 指標</strong> — 早就有了。早就做完了。早就談好了。</p>
+                <p>四大維度：當前福祉、公平與包容、永續與韌性、基礎原則。</p>
+                <p><strong>翻譯：把別人已經做好的東西拿來重新包裝，貼上「UN」標籤，然後說這是他們的工作成果。</strong></p>
+            </div>
+
+            <div class="data-grid">
+                <div class="data-item">
+                    <div class="number">14</div>
+                    <div class="label">「專家」花一年講大家都知道的事</div>
+                </div>
+                <div class="data-item">
+                    <div class="number">31</div>
+                    <div class="label">指標 — <span class="highlight">約一半來自既有的 SDGs</span></div>
+                </div>
+                <div class="data-item">
+                    <div class="number">0</div>
+                    <div class="label">強制執行力 — <span class="highlight">零</span></div>
+                </div>
+                <div class="data-item">
+                    <div class="number">0.01</div>
+                    <div class="label">GL 分數 — <span class="highlight">有史以來最低</span></div>
+                </div>
+            </div>
+
+            <h2>更荒唐的是：他們自己知道這沒用</h2>
+
+            <p>專家組自己承認：<strong>執行有挑戰</strong> — 資料缺口、統計能力不足、各國沒有能力追蹤這些指標。</p>
+
+            <div class="red-box">
+                <p><strong>做出一個各國根本沒能力用的東西，然後說「我們成功了」。</strong></p>
+            </div>
+
+            <p>報告寫完之後，不是直接能用，而是要：</p>
+            <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem;">
+                <li>交給會員國討論</li>
+                <li>會員國決定「要不要」採用</li>
+                <li>各國再各自決定要不要用（「country-owned」）</li>
+            </ul>
+
+            <div class="quote-block">
+                <p>「下一步屬於會員國。政府間進程現在開始。」</p>
+                <p class="source">— 聯合國秘書長</p>
+            </div>
+
+            <div class="red-box">
+                <p><strong>翻譯：我做完了。接下來你們繼續吵架。我不負責。</strong></p>
+            </div>
+
+            <p>連 <em>Nature</em> 都看不下去：<strong>「超越GDP不該把SDGs晾在一邊。」</strong></p>
+
+            <p>專家組連一個「標題性總指標」都無法達成共識 — 因為31項指標太複雜，無法跟GDP的「一個數字」競爭。</p>
+
+            <div class="highlight-box">
+                <p><strong>沒有總指標。沒有強制力。沒有執行方案。</strong></p>
+                <p>但他們開了記者會。所以這樣就算數了，對吧？</p>
+            </div>
+
+            <div class="laugh-line">🤡</div>
+
+            <h2>美國為什麼不願再當冤大頭</h2>
+
+            <div class="quote-block">
+                <p>「表面上在處理重要議題，但沒有產生任何實際成果。」</p>
+                <p class="source">— 白宮備忘錄，2026年1月 — 美國退出66個國際組織的理由</p>
+            </div>
+
+            <p>這句話就是 <strong>Beyond GDP 報告的完美寫照</strong>。</p>
+
+            <p>美國退出的66個組織裡，31個是聯合國機構。白宮說：<strong>「美國納稅人花了幾十億在這些組織上，回報微乎其微。」</strong></p>
+
+            <div class="comparison-grid">
+                <div class="comparison-item">
+                    <div class="label">投入</div>
+                    <div class="value">14位專家 · 一年</div>
+                    <div class="desc">聯合國預算、全球發布會、新聞報導</div>
+                </div>
+                <div class="comparison-item">
+                    <div class="label">產出</div>
+                    <div class="value">31項指標</div>
+                    <div class="desc">約一半是既有SDGs，沒有人有義務使用</div>
+                </div>
+                <div class="comparison-item">
+                    <div class="label">影響</div>
+                    <div class="value">0</div>
+                    <div class="desc">零強制力、零執行方案</div>
+                </div>
+            </div>
+
+            <h2>GL 框架診斷</h2>
+
+            <div class="gl-box">
+                <p><strong>Pd（政策交付）：</strong> 0 — 沒有新東西，沒有可執行的行動方案</p>
+                <p><strong>Cf（一致性）：</strong> 0 — 會員國隨時可以推翻或忽略</p>
+                <p><strong>Fs（系統摩擦）：</strong> 極高 — 專家組本身就是政治協商的產物，不是執行單位</p>
+                <p><strong>Vn（變動性）：</strong> 極高 — 各國實施能力天差地別，結果完全不可預測</p>
+                <p style="margin-top:0.8rem; text-align:center;"><strong>GL 分數</strong></p>
+                <span class="gl-score">0.01</span>
+                <p style="text-align:center; font-size:0.85rem; color:#f87171;">— 有史以來最低</p>
+            </div>
+
+            <div class="theme-line-small">14個人 · 一年 · 31項指標 · 影響力零</div>
+
+            <div class="red-box">
+                <p><strong>重新發明了輪子，然後說輪子太難用 — 「你們自己看著辦」。</strong></p>
+            </div>
+
+            <p>美國不願意再當冤大頭贊助這種東西，真的不是沒道理。</p>
+
+            <div class="highlight-box">
+                <p><strong>這不是治理。這是用專家背書來掩蓋系統性失能。</strong></p>
+                <p style="font-size:0.85rem; color:#9fb0c8; margin-top:0.5rem;">— GL 框架 · GFI Flow Intelligence</p>
+            </div>
+
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · GL框架創建者 · 2026年6月</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · 免費下載 · 免費傳播</p>
+                <a href="index.html" class="back-link">← 回首頁</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== 简体中文 ====== -->
+    <div id="lang-cn" class="content-lang">
+        <div class="book-container">
+            <div class="opening-statement">
+                <p><span class="highlight-red">「超越 GDP」</span>— 一年、14位专家、31项指标。</p>
+                <p>然后呢？产出了什么？<span class="highlight-red">一个没有人有义务使用的仪表板。</span></p>
+                <p>Nature 说这是「向前一步」。<span class="highlight-red">我们说这是：草台班子。</span></p>
+                <p class="signature">— GL 框架诊断 · Ping Xu · GFI Flow Intelligence</p>
+            </div>
+
+            <h1>超越 GDP，超越常识</h1>
+            <div class="subtitle">一年、14位专家、31项指标 — 然后呢？</div>
+            <div class="author-line">Ping Xu · GFI Flow Intelligence · 2026年6月</div>
+
+            <div class="theme-line">14个人 · 一年 · 31项指标 · 影响力零</div>
+
+            <p>联合国花了整整一年，组了一个14人的「高级专家组」，做了一件什么事？</p>
+
+            <p><strong>告诉全世界「GDP不够用」。</strong></p>
+
+            <p>这需要一年？这需要14个人？</p>
+
+            <div class="quote-block">
+                <p>「国家的福利无法从国民收入推断出来。」</p>
+                <p class="source">— Simon Kuznets，1934年 — <strong>91年前</strong></p>
+            </div>
+
+            <div class="quote-block">
+                <p>「GDP无法捕捉不平等、贫穷和环境退化。」</p>
+                <p class="source">— Amartya Sen，2000年 — <strong>26年前</strong></p>
+            </div>
+
+            <div class="quote-block">
+                <p>「GDP是衡量福祉的糟糕指标。」</p>
+                <p class="source">— Stiglitz-Sen-Fitoussi 委员会，2008年 — <strong>18年前</strong></p>
+            </div>
+
+            <p><strong>现在是2026年。联合国花了整整一年 — 重新发明了轮子。</strong></p>
+
+            <p>然后开了一场盛大的全球发布会。秘书长亲自站台，说这是「历史性的里程碑」。</p>
+
+            <div class="laugh-line">😂</div>
+
+            <h2>这一年他们到底做了什么？</h2>
+
+            <div class="red-box">
+                <p><strong>一个31项指标的仪表板。</strong></p>
+                <p>其中大约一半是 <strong>既有的 SDG 指标</strong> — 早就有了。早就做完了。早就谈好了。</p>
+                <p>四大维度：当前福祉、公平与包容、永续与韧性、基础原则。</p>
+                <p><strong>翻译：把别人已经做好的东西拿来重新包装，贴上「UN」标签，然后说这是他们的工作成果。</strong></p>
+            </div>
+
+            <div class="data-grid">
+                <div class="data-item">
+                    <div class="number">14</div>
+                    <div class="label">「专家」花一年讲大家都知道的事</div>
+                </div>
+                <div class="data-item">
+                    <div class="number">31</div>
+                    <div class="label">指标 — <span class="highlight">约一半来自既有的 SDGs</span></div>
+                </div>
+                <div class="data-item">
+                    <div class="number">0</div>
+                    <div class="label">强制执行力 — <span class="highlight">零</span></div>
+                </div>
+                <div class="data-item">
+                    <div class="number">0.01</div>
+                    <div class="label">GL 分数 — <span class="highlight">有史以来最低</span></div>
+                </div>
+            </div>
+
+            <h2>更荒唐的是：他们自己知道这没用</h2>
+
+            <p>专家组自己承认：<strong>执行有挑战</strong> — 资料缺口、统计能力不足、各国没有能力追踪这些指标。</p>
+
+            <div class="red-box">
+                <p><strong>做出一个各国根本没能力用的东西，然后说「我们成功了」。</strong></p>
+            </div>
+
+            <p>报告写完之后，不是直接能用，而是要：</p>
+            <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem;">
+                <li>交给会员国讨论</li>
+                <li>会员国决定「要不要」采用</li>
+                <li>各国再各自决定要不要用（「country-owned」）</li>
+            </ul>
+
+            <div class="quote-block">
+                <p>「下一步属于会员国。政府间进程现在开始。」</p>
+                <p class="source">— 联合国秘书长</p>
+            </div>
+
+            <div class="red-box">
+                <p><strong>翻译：我做完了。接下来你们继续吵架。我不负责。</strong></p>
+            </div>
+
+            <p>连 <em>Nature</em> 都看不下去：<strong>「超越GDP不该把SDGs晾在一边。」</strong></p>
+
+            <p>专家组连一个「标题性总指标」都无法达成共识 — 因为31项指标太复杂，无法跟GDP的「一个数字」竞争。</p>
+
+            <div class="highlight-box">
+                <p><strong>没有总指标。没有强制力。没有执行方案。</strong></p>
+                <p>但他们开了记者会。所以这样就算数了，对吧？</p>
+            </div>
+
+            <div class="laugh-line">🤡</div>
+
+            <h2>美国为什么不愿再当冤大头</h2>
+
+            <div class="quote-block">
+                <p>「表面上在处理重要议题，但没有产生任何实际成果。」</p>
+                <p class="source">— 白宫备忘录，2026年1月 — 美国退出66个国际组织的理由</p>
+            </div>
+
+            <p>这句话就是 <strong>Beyond GDP 报告的完美写照</strong>。</p>
+
+            <p>美国退出的66个组织里，31个是联合国机构。白宫说：<strong>「美国纳税人花了几十亿在这些组织上，回报微乎其微。」</strong></p>
+
+            <div class="comparison-grid">
+                <div class="comparison-item">
+                    <div class="label">投入</div>
+                    <div class="value">14位专家 · 一年</div>
+                    <div class="desc">联合国预算、全球发布会、新闻报道</div>
+                </div>
+                <div class="comparison-item">
+                    <div class="label">产出</div>
+                    <div class="value">31项指标</div>
+                    <div class="desc">约一半是既有SDGs，没有人有义务使用</div>
+                </div>
+                <div class="comparison-item">
+                    <div class="label">影响</div>
+                    <div class="value">0</div>
+                    <div class="desc">零强制力、零执行方案</div>
+                </div>
+            </div>
+
+            <h2>GL 框架诊断</h2>
+
+            <div class="gl-box">
+                <p><strong>Pd（政策交付）：</strong> 0 — 没有新东西，没有可执行的行动方案</p>
+                <p><strong>Cf（一致性）：</strong> 0 — 会员国随时可以推翻或忽略</p>
+                <p><strong>Fs（系统摩擦）：</strong> 极高 — 专家组本身就是政治协商的产物，不是执行单位</p>
+                <p><strong>Vn（变动性）：</strong> 极高 — 各国实施能力天差地别，结果完全不可预测</p>
+                <p style="margin-top:0.8rem; text-align:center;"><strong>GL 分数</strong></p>
+                <span class="gl-score">0.01</span>
+                <p style="text-align:center; font-size:0.85rem; color:#f87171;">— 有史以来最低</p>
+            </div>
+
+            <div class="theme-line-small">14个人 · 一年 · 31项指标 · 影响力零</div>
+
+            <div class="red-box">
+                <p><strong>重新发明了轮子，然后说轮子太难用 — 「你们自己看着办」。</strong></p>
+            </div>
+
+            <p>美国不愿意再当冤大头赞助这种东西，真的不是没道理。</p>
+
+            <div class="highlight-box">
+                <p><strong>这不是治理。这是用专家背书来掩盖系统性失能。</strong></p>
+                <p style="font-size:0.85rem; color:#9fb0c8; margin-top:0.5rem;">— GL 框架 · GFI Flow Intelligence</p>
+            </div>
+
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · GL框架创建者 · 2026年6月</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · 免费下载 · 免费传播</p>
+                <a href="index.html" class="back-link">← 回首页</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== ESPAÑOL ====== -->
+    <div id="lang-es" class="content-lang">
+        <div class="book-container">
+            <div class="opening-statement">
+                <p><span class="highlight-red">"Más allá del PIB"</span> — un año, 14 expertos, 31 indicadores.</p>
+                <p>¿Y qué produjeron? <span class="highlight-red">Un tablero que nadie está obligado a usar.</span></p>
+                <p>Nature lo llamó "un paso adelante". <span class="highlight-red">Nosotros lo llamamos lo que es: un circo.</span></p>
+                <p class="signature">— Diagnóstico GL Framework · Ping Xu · GFI Flow Intelligence</p>
+            </div>
+
+            <h1>Más Allá del PIB, Más Allá de la Razón</h1>
+            <div class="subtitle">Un año, 14 expertos, 31 indicadores — y nada que mostrar</div>
+            <div class="author-line">Ping Xu · GFI Flow Intelligence · Junio 2026</div>
+
+            <div class="theme-line">14 personas · 1 año · 31 indicadores · impacto cero</div>
+
+            <p>La ONU pasó un año entero, reunió a un "Grupo de Expertos de Alto Nivel" de 14 miembros, e hizo exactamente qué?</p>
+
+            <p><strong>Le dijo al mundo que "el PIB no es suficiente".</strong></p>
+
+            <p>¿Eso tomó un año? ¿Eso tomó 14 personas?</p>
+
+            <div class="quote-block">
+                <p>"El bienestar de una nación difícilmente puede inferirse de una medida de ingreso nacional."</p>
+                <p class="source">— Simon Kuznets, 1934 — <strong>hace 91 años</strong></p>
+            </div>
+
+            <div class="quote-block">
+                <p>"El PIB no captura la desigualdad, la pobreza o la degradación ambiental."</p>
+                <p class="source">— Amartya Sen, 2000 — <strong>hace 26 años</strong></p>
+            </div>
+
+            <div class="quote-block">
+                <p>"El PIB es una mala medida del bienestar."</p>
+                <p class="source">— Comisión Stiglitz-Sen-Fitoussi, 2008 — <strong>hace 18 años</strong></p>
+            </div>
+
+            <p><strong>Ahora es 2026. La ONU pasó un año entero — y reinventó la rueda.</strong></p>
+
+            <p>Luego hicieron un gran lanzamiento global. El Secretario General subió al escenario y lo llamó un "hito histórico".</p>
+
+            <div class="laugh-line">😂</div>
+
+            <h2>¿Qué Produjeron Realmente?</h2>
+
+            <div class="red-box">
+                <p><strong>Un tablero con 31 indicadores.</strong></p>
+                <p>Aproximadamente la mitad son <strong>indicadores ODS existentes</strong> — ya estaban ahí. Ya hechos. Ya acordados hace años.</p>
+                <p>Cuatro dimensiones: bienestar actual, equidad e inclusión, sostenibilidad y resiliencia, principios fundamentales.</p>
+                <p><strong>Traducción: reempaquetaron trabajo existente, le pusieron una etiqueta de "ONU" y lo llamaron suyo.</strong></p>
+            </div>
+
+            <div class="data-grid">
+                <div class="data-item">
+                    <div class="number">14</div>
+                    <div class="label">"Expertos" que pasaron un año diciendo lo obvio</div>
+                </div>
+                <div class="data-item">
+                    <div class="number">31</div>
+                    <div class="label">Indicadores — <span class="highlight">~50% de ODS existentes</span></div>
+                </div>
+                <div class="data-item">
+                    <div class="number">0</div>
+                    <div class="label">Implementación obligatoria — <span class="highlight">cero</span></div>
+                </div>
+                <div class="data-item">
+                    <div class="number">0.01</div>
+                    <div class="label">Puntuación GL — <span class="highlight">la más baja jamás registrada</span></div>
+                </div>
+            </div>
+
+            <h2>Pero Espera — Empeora</h2>
+
+            <p>El grupo de expertos admitió: <strong>desafíos de implementación</strong> — brechas de datos, capacidad estadística limitada, países incapaces de rastrear estos indicadores.</p>
+
+            <div class="red-box">
+                <p><strong>Construyeron algo que la mayoría de los países no puede usar. Luego declararon la victoria.</strong></p>
+            </div>
+
+            <p>Después de que el informe estuviera listo, no estaba listo para usar. Tenía que:</p>
+            <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem;">
+                <li>Entregarse a los Estados Miembros para discusión</li>
+                <li>Esperar a que los Estados Miembros decidieran si adoptarlo</li>
+                <li>Permitir que cada país decidiera si usarlo ("country-owned")</li>
+            </ul>
+
+            <div class="quote-block">
+                <p>"El próximo paso pertenece a los Estados Miembros. El proceso intergubernamental comienza ahora."</p>
+                <p class="source">— Secretario General de la ONU</p>
+            </div>
+
+            <div class="red-box">
+                <p><strong>Traducción: "Hemos terminado. Ahora ustedes sigan peleando. No somos responsables."</strong></p>
+            </div>
+
+            <p>Incluso <em>Nature</em> no pudo contenerse: <strong>"Ir más allá del PIB no debería dejar atrás los ODS."</strong></p>
+
+            <p>Los expertos ni siquiera pudieron ponerse de acuerdo en un indicador principal — porque 31 indicadores son demasiado complejos para competir con el "número único" del PIB.</p>
+
+            <div class="highlight-box">
+                <p><strong>Sin indicador principal. Sin cumplimiento. Sin plan de implementación.</strong></p>
+                <p>Pero hicieron una conferencia de prensa. Así que eso cuenta, ¿verdad?</p>
+            </div>
+
+            <div class="laugh-line">🤡</div>
+
+            <h2>Por Qué EE.UU. Dejó de Financiar Este Circo</h2>
+
+            <div class="quote-block">
+                <p>"Fingiendo abordar problemas importantes pero sin lograr resultados reales."</p>
+                <p class="source">— Memorando de la Casa Blanca, enero de 2026 — sobre por qué EE.UU. se retiró de 66 organizaciones internacionales</p>
+            </div>
+
+            <p>Esa frase es <strong>el informe Beyond GDP en pocas palabras.</strong></p>
+
+            <p>De las 66 organizaciones de las que EE.UU. se retiró, 31 eran organismos de la ONU. La declaración de la Casa Blanca decía: <strong>"Los contribuyentes estadounidenses han gastado miles de millones en estas organizaciones con un retorno mínimo."</strong></p>
+
+            <div class="comparison-grid">
+                <div class="comparison-item">
+                    <div class="label">Entrada</div>
+                    <div class="value">14 expertos · 1 año</div>
+                    <div class="desc">Presupuesto ONU, lanzamiento global, cobertura mediática</div>
+                </div>
+                <div class="comparison-item">
+                    <div class="label">Salida</div>
+                    <div class="value">31 indicadores</div>
+                    <div class="desc">~50% ODS existentes, nadie obligado a usar</div>
+                </div>
+                <div class="comparison-item">
+                    <div class="label">Impacto</div>
+                    <div class="value">0</div>
+                    <div class="desc">Cero cumplimiento, cero implementación</div>
+                </div>
+            </div>
+
+            <h2>Diagnóstico del Marco GL</h2>
+
+            <div class="gl-box">
+                <p><strong>Pd (Entrega de Políticas):</strong> 0 — sin sustancia nueva, sin plan accionable</p>
+                <p><strong>Cf (Consistencia):</strong> 0 — los Estados Miembros pueden anular o ignorar a voluntad</p>
+                <p><strong>Fs (Fricción del Sistema):</strong> Extrema — el grupo de expertos fue un producto político, no una unidad de ejecución</p>
+                <p><strong>Vn (Variabilidad):</strong> Extrema — la capacidad de implementación varía enormemente, resultados impredecibles</p>
+                <p style="margin-top:0.8rem; text-align:center;"><strong>Puntuación GL</strong></p>
+                <span class="gl-score">0.01</span>
+                <p style="text-align:center; font-size:0.85rem; color:#f87171;">— La más baja jamás registrada</p>
+            </div>
+
+            <div class="theme-line-small">14 personas · 1 año · 31 indicadores · impacto cero</div>
+
+            <div class="red-box">
+                <p><strong>Reinventaron la rueda, luego dijeron que la rueda es demasiado difícil de usar — "ustedes resuélvanlo".</strong></p>
+            </div>
+
+            <p>EE.UU. se niega a ser el bolsillo profundo para este tipo de tonterías. No sin razón.</p>
+
+            <div class="highlight-box">
+                <p><strong>Esto no es gobernanza. Es arte escénico disfrazado de experiencia.</strong></p>
+                <p style="font-size:0.85rem; color:#9fb0c8; margin-top:0.5rem;">— Marco GL · GFI Flow Intelligence</p>
+            </div>
+
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · Creador del Marco GL · Junio 2026</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · Descarga gratuita · Distribución gratuita</p>
+                <a href="index.html" class="back-link">← Volver al Inicio</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                document.querySelectorAll('.content-lang').forEach(el => el.classList.remove('active'));
+                const lang = this.dataset.lang;
+                const target = document.getElementById('lang-' + lang);
+                if (target) target.classList.add('active');
+            });
+        });
+    </script>
+</div>
+</body>
+</html>
