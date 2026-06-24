@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GL Index 2026 · 紐西蘭診斷報告</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #0b1220; color: #f8fbff; font-family: 'DM Sans', system-ui, sans-serif; line-height: 1.7; }
+        .container { max-width: 920px; margin: 0 auto; padding: 2rem; }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+        .logo a {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.12em;
+            color: #7DD3FC;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+        .logo a .home-arrow { color: #9fb0c8; margin-right: 6px; }
+        .logo a:hover .home-arrow { color: #7DD3FC; }
+        .lang-switch { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .lang-btn {
+            background: none;
+            border: 1px solid rgba(255,255,255,.1);
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            padding: 0.25rem 0.7rem;
+            border-radius: 2rem;
+            color: #9fb0c8;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,.3); color: #fff; }
+        .lang-btn.active { background: #7DD3FC; color: #0b1220; border-color: #7DD3FC; }
+        .content-lang { display: none; }
+        .content-lang.active { display: block; }
+        .book-container { background: #0d1526; padding: 3rem 2.5rem; border-radius: 4px; border: 1px solid rgba(255,255,255,.06); }
+        .opening-statement {
+            background: rgba(125,211,252,0.06);
+            border: 1px solid rgba(125,211,252,0.2);
+            border-radius: 12px;
+            padding: 1.8rem 2rem;
+            margin-bottom: 2rem;
+        }
+        .opening-statement p { color: #d4eaff; margin-bottom: 0.5rem; font-size: 0.95rem; }
+        .opening-statement .highlight-blue { color: #7DD3FC; font-weight: 600; }
+        .opening-statement .signature { color: #9fb0c8; font-style: italic; font-size: 0.85rem; margin-top: 0.5rem; }
+        h1 { font-size: 2.6rem; font-weight: 700; text-align: center; margin-bottom: 0.25rem; color: #7DD3FC; letter-spacing: 0.02em; font-family: 'DM Serif Display', Georgia, serif; }
+        .subtitle { text-align: center; font-size: 1rem; color: #9fb0c8; margin-bottom: 0.5rem; font-style: italic; }
+        .author-line { text-align: center; font-size: 0.9rem; color: #7DD3FC; margin-bottom: 2rem; }
+        .theme-line { font-family: 'DM Serif Display', Georgia, serif; font-size: 1.8rem; color: #7DD3FC; text-align: center; margin: 1.5rem 0; line-height: 1.3; }
+        h2 { font-size: 1.4rem; color: #7DD3FC; margin: 2rem 0 1rem 0; border-bottom: 1px solid rgba(255,255,255,.06); padding-bottom: 0.3rem; font-family: 'DM Serif Display', Georgia, serif; }
+        p { color: #c7d2e3; margin-bottom: 1rem; line-height: 1.8; }
+        .quote-block { border-left: 3px solid #7DD3FC; padding-left: 1.2rem; margin: 1.2rem 0; color: #eaf6ff; font-style: italic; background: rgba(125,211,252,0.04); border-radius: 0 8px 8px 0; }
+        .quote-block p { color: #d4eaff; }
+        .quote-block .source { color: #9fb0c8; font-size: 0.85rem; font-style: normal; }
+        .highlight-box { background: rgba(125,211,252,0.06); border: 1px solid rgba(125,211,252,0.2); border-radius: 8px; padding: 1.5rem 2rem; margin: 1.5rem 0; text-align: center; }
+        .highlight-box p { color: #d4eaff; margin-bottom: 0.25rem; }
+        .highlight-box strong { color: #7DD3FC; }
+        .gl-box { background: rgba(125,211,252,0.04); border-left: 3px solid #7DD3FC; padding: 1.2rem 1.5rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0; }
+        .gl-box p { color: #d4eaff; margin-bottom: 0.5rem; }
+        .gl-box strong { color: #7DD3FC; }
+        .gl-box .gl-score { font-family: 'DM Mono', monospace; font-size: 2.5rem; font-weight: 700; color: #7DD3FC; text-align: center; display: block; margin: 0.3rem 0; }
+        .red-box { background: rgba(248, 113, 113, 0.04); border-left: 3px solid #f87171; padding: 1.2rem 1.5rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0; }
+        .red-box p { color: #f0d0d0; margin-bottom: 0.5rem; }
+        .red-box strong { color: #f87171; }
+        .parameter-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
+        .parameter-item { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: 1rem 1.2rem; text-align: center; }
+        .parameter-item .number { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: #9fb0c8; }
+        .parameter-item .title { font-weight: 600; color: #fff; margin: 0.2rem 0; }
+        .parameter-item .desc { font-size: 0.85rem; color: #c7d2e3; }
+        .parameter-item .score { font-family: 'DM Mono', monospace; font-size: 1.1rem; font-weight: 700; color: #7DD3FC; margin-top: 0.3rem; }
+        .footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,.06); text-align: center; font-size: 0.75rem; color: #9fb0c8; }
+        .back-link { display: inline-block; margin-top: 1.5rem; font-family: 'DM Mono', monospace; font-size: 0.7rem; color: #9fb0c8; text-decoration: none; border: 1px solid rgba(255,255,255,.06); padding: 0.4rem 1rem; border-radius: 2rem; transition: 0.2s; }
+        .back-link:hover { border-color: rgba(255,255,255,.2); color: #fff; }
+        .divider { border: 0; border-top: 1px solid rgba(255,255,255,.08); margin: 2.5rem 0; }
+        .score-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+        .score-table th, .score-table td { border: 1px solid rgba(255,255,255,.1); padding: 0.75rem; text-align: left; }
+        .score-table th { background: rgba(255,255,255,.05); font-weight: 600; }
+        .score-table .weight-col { text-align: center; }
+        .score-table .score-col { text-align: center; font-weight: 700; color: #7DD3FC; }
+        .score-table .weighted-col { text-align: center; font-weight: 700; color: #7DD3FC; }
+        .grade-b { color: #7DD3FC; font-weight: 700; }
+        @media (max-width: 700px) {
+            .container { padding: 1rem; }
+            .book-container { padding: 1.5rem; }
+            h1 { font-size: 1.8rem; }
+            .theme-line { font-size: 1.3rem; }
+            .parameter-grid { grid-template-columns: 1fr; }
+            .opening-statement { padding: 1.2rem; }
+        }
+        @media print {
+            .header { display: none !important; }
+            .footer { display: none !important; }
+            .back-link { display: none !important; }
+            .book-container { background: transparent !important; border: none !important; padding: 0 !important; }
+            body { background: #fff !important; color: #000 !important; }
+            h1, h2, h3, p { color: #000 !important; }
+            .gl-box, .highlight-box, .red-box, .quote-block { background: #f5f5f5 !important; border-color: #ccc !important; }
+            .gl-box p, .highlight-box p, .red-box p, .quote-block p { color: #000 !important; }
+            .parameter-item { border-color: #ccc !important; }
+            .parameter-item .title { color: #000 !important; }
+            .parameter-item .score { color: #0055aa !important; }
+            .theme-line { color: #0055aa !important; }
+            .gl-box .gl-score { color: #0055aa !important; }
+            .score-table th, .score-table td { border-color: #ccc !important; color: #000 !important; }
+            .score-table th { background: #eee !important; }
+            .score-table .score-col { color: #0055aa !important; }
+            .score-table .weighted-col { color: #0055aa !important; }
+            .grade-b { color: #0055aa !important; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="logo"><a href="index.html"><span class="home-arrow">←</span> GFI Flow Intelligence</a></div>
+        <div class="lang-switch">
+            <button class="lang-btn active" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="tw">繁</button>
+            <button class="lang-btn" data-lang="cn">简</button>
+            <button class="lang-btn" data-lang="es">ES</button>
+        </div>
+    </div>
+
+    <!-- ====== ENGLISH ====== -->
+    <div id="lang-en" class="content-lang active">
+        <div class="book-container">
+            <div class="opening-statement">
+                <p><span class="highlight-blue">GL Index 2026 · New Zealand</span></p>
+                <p>A diagnostic report on governance friction, value capture, and cost shifting.</p>
+                <p class="signature">— GL Framework Diagnostic · Ping Xu · GFI Flow Intelligence</p>
+            </div>
+            <div style="text-align:center; margin:2rem 0;">
+                <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#7DD3FC; line-height:1;">0.70</div>
+                <div style="font-size:1.2rem; color:#7DD3FC; font-weight:600;">B · Good</div>
+                <div style="font-size:0.85rem; color:#9fb0c8; margin-top:0.25rem;">out of 1.00</div>
+            </div>
+            <div class="theme-line">Transparency is the default. Trust is the outcome.</div>
+            <p>New Zealand scores <span class="highlight-blue">0.70</span> on the GL Index — a B grade. It is one of the most transparent countries in the English-speaking world. Its governance model is built on trust, accountability, and a unique bicultural arrangement with the Māori people.</p>
+            <h2>Eight Parameters · New Zealand</h2>
+            <table class="score-table">
+                <thead><tr><th>Parameter</th><th>Weight</th><th>Score (0–100)</th><th>Weighted</th></tr></thead>
+                <tbody>
+                    <tr><td>1. Waiting Cost</td><td class="weight-col">15%</td><td class="score-col">75</td><td class="weighted-col">11.25</td></tr>
+                    <tr><td>2. Repetition Cost</td><td class="weight-col">15%</td><td class="score-col">72</td><td class="weighted-col">10.80</td></tr>
+                    <tr><td>3. Collapse Cost</td><td class="weight-col">15%</td><td class="score-col">78</td><td class="weighted-col">11.70</td></tr>
+                    <tr><td>4. Information Asymmetry Cost</td><td class="weight-col">10%</td><td class="score-col">82</td><td class="weighted-col">8.20</td></tr>
+                    <tr><td>5. Psychological Cost</td><td class="weight-col">10%</td><td class="score-col">70</td><td class="weighted-col">7.00</td></tr>
+                    <tr><td>6. Opportunity Cost</td><td class="weight-col">10%</td><td class="score-col">68</td><td class="weighted-col">6.80</td></tr>
+                    <tr><td>7. Shift Pathway</td><td class="weight-col">15%</td><td class="score-col">75</td><td class="weighted-col">11.25</td></tr>
+                    <tr><td>8. Loop Closure</td><td class="weight-col">10%</td><td class="score-col">72</td><td class="weighted-col">7.20</td></tr>
+                    <tr style="border-top:2px solid rgba(255,255,255,0.2); font-weight:700;">
+                        <td colspan="3" style="text-align:right;">TOTAL</td>
+                        <td class="weighted-col" style="font-size:1.2rem;">70.20 / 100</td>
+                    </tr>
+                    <tr style="border-top:2px solid #7DD3FC; font-weight:700;">
+                        <td colspan="3" style="text-align:right;">GL Index</td>
+                        <td class="weighted-col" style="font-size:1.8rem; color:#7DD3FC;">0.70</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2>Key Findings</h2>
+            <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem; line-height:1.8;">
+                <li><strong>Transparency</strong> — One of the most transparent governments in the world. The Official Information Act sets the standard.</li>
+                <li><strong>Māori Participation</strong> — Bicultural governance arrangements (Te Tiriti o Waitangi) are a unique form of institutional inclusion.</li>
+                <li><strong>Social Trust</strong> — High trust in institutions. The system works because citizens believe it works.</li>
+                <li><strong>Economic Isolation</strong> — Small economy, geographically isolated. Infrastructure is aging.</li>
+                <li><strong>Housing Affordability</strong> — Major weakness. Housing prices have risen rapidly in recent years.</li>
+                <li><strong>Indigenous Governance</strong> — The Māori partnership is a work in progress. Full inclusion is not yet complete.</li>
+            </ul>
+            <div class="gl-box">
+                <p><strong>What 0.70 Means</strong></p>
+                <p>New Zealand is one of the most transparent countries in the world. Its bicultural governance model is a unique experiment in institutional inclusion. But the economy is small, infrastructure is aging, and housing affordability is a growing crisis. The model is good — but it is not robust.</p>
+            </div>
+            <div class="highlight-box">
+                <p><strong>Grade Key</strong></p>
+                <p>A (0.90–1.00) — Value returns. Costs are absorbed. Citizens trust governance.</p>
+                <p>B (0.70–0.89) — Most value returns. Some cost shifting.</p>
+                <p>C (0.50–0.69) — Half returns. Half shifts.</p>
+                <p>D (0.30–0.49) — Most value captured. Most costs shifted.</p>
+                <p>F (0.00–0.29) — Value captured. Costs shifted. Citizens exhausted.</p>
+                <p style="margin-top:0.5rem;"><span class="grade-b">New Zealand: 0.70 — B</span></p>
+            </div>
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · Creator of the GL Framework · June 2026</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · Free download · Free distribution</p>
+                <a href="index.html" class="back-link">← Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== 繁體中文 ====== -->
+    <div id="lang-tw" class="content-lang">
+        <div class="book-container">
+            <div class="opening-statement">
+                <p><span class="highlight-blue">GL Index 2026 · 紐西蘭</span></p>
+                <p>治理摩擦、價值捕獲與成本轉嫁的診斷報告。</p>
+                <p class="signature">— GL 框架診斷 · Ping Xu · GFI Flow Intelligence</p>
+            </div>
+            <div style="text-align:center; margin:2rem 0;">
+                <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#7DD3FC; line-height:1;">0.70</div>
+                <div style="font-size:1.2rem; color:#7DD3FC; font-weight:600;">B · 良好</div>
+                <div style="font-size:0.85rem; color:#9fb0c8; margin-top:0.25rem;">滿分 1.00</div>
+            </div>
+            <div class="theme-line">透明度是預設。信任是結果。</div>
+            <p>紐西蘭在 GL Index 得分 <span class="highlight-blue">0.70</span> — B 級。它是英語世界最透明的國家之一。它的治理模式建立在信任、問責和與毛利人之間獨特的雙文化安排之上。</p>
+            <h2>八個參數 · 紐西蘭</h2>
+            <table class="score-table">
+                <thead><tr><th>參數</th><th>權重</th><th>分數 (0–100)</th><th>加權</th></tr></thead>
+                <tbody>
+                    <tr><td>1. 等待成本</td><td class="weight-col">15%</td><td class="score-col">75</td><td class="weighted-col">11.25</td></tr>
+                    <tr><td>2. 重複成本</td><td class="weight-col">15%</td><td class="score-col">72</td><td class="weighted-col">10.80</td></tr>
+                    <tr><td>3. 崩潰成本</td><td class="weight-col">15%</td><td class="score-col">78</td><td class="weighted-col">11.70</td></tr>
+                    <tr><td>4. 資訊不對稱成本</td><td class="weight-col">10%</td><td class="score-col">82</td><td class="weighted-col">8.20</td></tr>
+                    <tr><td>5. 心理成本</td><td class="weight-col">10%</td><td class="score-col">70</td><td class="weighted-col">7.00</td></tr>
+                    <tr><td>6. 機會成本</td><td class="weight-col">10%</td><td class="score-col">68</td><td class="weighted-col">6.80</td></tr>
+                    <tr><td>7. 轉嫁路徑</td><td class="weight-col">15%</td><td class="score-col">75</td><td class="weighted-col">11.25</td></tr>
+                    <tr><td>8. 迴路閉合</td><td class="weight-col">10%</td><td class="score-col">72</td><td class="weighted-col">7.20</td></tr>
+                    <tr style="border-top:2px solid rgba(255,255,255,0.2); font-weight:700;">
+                        <td colspan="3" style="text-align:right;">總計</td>
+                        <td class="weighted-col" style="font-size:1.2rem;">70.20 / 100</td>
+                    </tr>
+                    <tr style="border-top:2px solid #7DD3FC; font-weight:700;">
+                        <td colspan="3" style="text-align:right;">GL Index</td>
+                        <td class="weighted-col" style="font-size:1.8rem; color:#7DD3FC;">0.70</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2>關鍵發現</h2>
+            <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem; line-height:1.8;">
+                <li><strong>透明度</strong> — 全世界最透明的政府之一。官方資訊法樹立了標準。</li>
+                <li><strong>毛利人參與</strong> — 雙文化治理安排（懷唐伊條約）是制度包容的獨特形式。</li>
+                <li><strong>社會信任</strong> — 對制度高度信任。系統有效，因為小民相信它有效。</li>
+                <li><strong>經濟孤立</strong> — 經濟體小，地理孤立。基礎設施老化。</li>
+                <li><strong>住房負擔能力</strong> — 主要弱點。近年房價快速上漲。</li>
+                <li><strong>原住民治理</strong> — 毛利人夥伴關係仍在進行中。完全包容尚未完成。</li>
+            </ul>
+            <div class="gl-box">
+                <p><strong>0.70 代表的意義</strong></p>
+                <p>紐西蘭是世界上最透明的國家之一。它的雙文化治理模式是制度包容的獨特實驗。但經濟規模小，基礎設施老化，住房負擔能力是日益嚴重的危機。這個模式是好的——但它不是穩健的。</p>
+            </div>
+            <div class="highlight-box">
+                <p><strong>等級說明</strong></p>
+                <p>A (0.90–1.00) — 價值回流。成本被吸收。小民信任治理。</p>
+                <p>B (0.70–0.89) — 大部分價值回流。少部分成本轉嫁。</p>
+                <p>C (0.50–0.69) — 一半回流。一半轉嫁。</p>
+                <p>D (0.30–0.49) — 大部分價值被拿走。大部分成本被轉嫁。</p>
+                <p>F (0.00–0.29) — 價值被拿走。成本被轉嫁。小民精疲力竭。</p>
+                <p style="margin-top:0.5rem;"><span class="grade-b">紐西蘭：0.70 — B</span></p>
+            </div>
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · GL框架創建者 · 2026年6月</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · 免費下載 · 免費傳播</p>
+                <a href="index.html" class="back-link">← 回首頁</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== 简体中文 ====== -->
+    <div id="lang-cn" class="content-lang">
+        <div class="book-container">
+            <div class="opening-statement">
+                <p><span class="highlight-blue">GL Index 2026 · 新西兰</span></p>
+                <p>治理摩擦、价值捕获与成本转嫁的诊断报告。</p>
+                <p class="signature">— GL 框架诊断 · Ping Xu · GFI Flow Intelligence</p>
+            </div>
+            <div style="text-align:center; margin:2rem 0;">
+                <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#7DD3FC; line-height:1;">0.70</div>
+                <div style="font-size:1.2rem; color:#7DD3FC; font-weight:600;">B · 良好</div>
+                <div style="font-size:0.85rem; color:#9fb0c8; margin-top:0.25rem;">满分 1.00</div>
+            </div>
+            <div class="theme-line">透明度是预设。信任是结果。</div>
+            <p>新西兰在 GL Index 得分 <span class="highlight-blue">0.70</span> — B 级。它是英语世界最透明的国家之一。它的治理模式建立在信任、问责和与毛利人之间独特的双文化安排之上。</p>
+            <h2>八个参数 · 新西兰</h2>
+            <table class="score-table">
+                <thead><tr><th>参数</th><th>权重</th><th>分数 (0–100)</th><th>加权</th></tr></thead>
+                <tbody>
+                    <tr><td>1. 等待成本</td><td class="weight-col">15%</td><td class="score-col">75</td><td class="weighted-col">11.25</td></tr>
+                    <tr><td>2. 重复成本</td><td class="weight-col">15%</td><td class="score-col">72</td><td class="weighted-col">10.80</td></tr>
+                    <tr><td>3. 崩溃成本</td><td class="weight-col">15%</td><td class="score-col">78</td><td class="weighted-col">11.70</td></tr>
+                    <tr><td>4. 信息不对称成本</td><td class="weight-col">10%</td><td class="score-col">82</td><td class="weighted-col">8.20</td></tr>
+                    <tr><td>5. 心理成本</td><td class="weight-col">10%</td><td class="score-col">70</td><td class="weighted-col">7.00</td></tr>
+                    <tr><td>6. 机会成本</td><td class="weight-col">10%</td><td class="score-col">68</td><td class="weighted-col">6.80</td></tr>
+                    <tr><td>7. 转嫁路径</td><td class="weight-col">15%</td><td class="score-col">75</td><td class="weighted-col">11.25</td></tr>
+                    <tr><td>8. 回路闭合</td><td class="weight-col">10%</td><td class="score-col">72</td><td class="weighted-col">7.20</td></tr>
+                    <tr style="border-top:2px solid rgba(255,255,255,0.2); font-weight:700;">
+                        <td colspan="3" style="text-align:right;">总计</td>
+                        <td class="weighted-col" style="font-size:1.2rem;">70.20 / 100</td>
+                    </tr>
+                    <tr style="border-top:2px solid #7DD3FC; font-weight:700;">
+                        <td colspan="3" style="text-align:right;">GL Index</td>
+                        <td class="weighted-col" style="font-size:1.8rem; color:#7DD3FC;">0.70</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2>关键发现</h2>
+            <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem; line-height:1.8;">
+                <li><strong>透明度</strong> — 全世界最透明的政府之一。官方信息法树立了标准。</li>
+                <li><strong>毛利人参与</strong> — 双文化治理安排（怀唐伊条约）是制度包容的独特形式。</li>
+                <li><strong>社会信任</strong> — 对制度高度信任。系统有效，因为小民相信它有效。</li>
+                <li><strong>经济孤立</strong> — 经济体小，地理孤立。基础设施老化。</li>
+                <li><strong>住房负担能力</strong> — 主要弱点。近年房价快速上涨。</li>
+                <li><strong>原住民治理</strong> — 毛利人伙伴关系仍在进行中。完全包容尚未完成。</li>
+            </ul>
+            <div class="gl-box">
+                <p><strong>0.70 代表的意义</strong></p>
+                <p>新西兰是世界上最透明的国家之一。它的双文化治理模式是制度包容的独特实验。但经济规模小，基础设施老化，住房负担能力是日益严重的危机。这个模式是好的——但它不是稳健的。</p>
+            </div>
+            <div class="highlight-box">
+                <p><strong>等级说明</strong></p>
+                <p>A (0.90–1.00) — 价值回流。成本被吸收。小民信任治理。</p>
+                <p>B (0.70–0.89) — 大部分价值回流。少部分成本转嫁。</p>
+                <p>C (0.50–0.69) — 一半回流。一半转嫁。</p>
+                <p>D (0.30–0.49) — 大部分价值被拿走。大部分成本被转嫁。</p>
+                <p>F (0.00–0.29) — 价值被拿走。成本被转嫁。小民精疲力竭。</p>
+                <p style="margin-top:0.5rem;"><span class="grade-b">新西兰：0.70 — B</span></p>
+            </div>
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · GL框架创建者 · 2026年6月</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · 免费下载 · 免费传播</p>
+                <a href="index.html" class="back-link">← 回首页</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== ESPAÑOL ====== -->
+    <div id="lang-es" class="content-lang">
+        <div class="book-container">
+            <div class="opening-statement">
+                <p><span class="highlight-blue">GL Index 2026 · Nueva Zelanda</span></p>
+                <p>Un informe de diagnóstico sobre fricción gubernamental, captura de valor y transferencia de costos.</p>
+                <p class="signature">— Diagnóstico del Marco GL · Ping Xu · GFI Flow Intelligence</p>
+            </div>
+            <div style="text-align:center; margin:2rem 0;">
+                <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#7DD3FC; line-height:1;">0.70</div>
+                <div style="font-size:1.2rem; color:#7DD3FC; font-weight:600;">B · Bueno</div>
+                <div style="font-size:0.85rem; color:#9fb0c8; margin-top:0.25rem;">sobre 1.00</div>
+            </div>
+            <div class="theme-line">La transparencia es la norma. La confianza es el resultado.</div>
+            <p>Nueva Zelanda obtiene <span class="highlight-blue">0.70</span> en el GL Index — una calificación B. Es uno de los países más transparentes del mundo de habla inglesa. Su modelo de gobernanza se basa en la confianza, la responsabilidad y un acuerdo bicultural único con el pueblo maorí.</p>
+            <h2>Ocho Parámetros · Nueva Zelanda</h2>
+            <table class="score-table">
+                <thead><tr><th>Parámetro</th><th>Peso</th><th>Puntuación (0–100)</th><th>Ponderado</th></tr></thead>
+                <tbody>
+                    <tr><td>1. Costo de Espera</td><td class="weight-col">15%</td><td class="score-col">75</td><td class="weighted-col">11.25</td></tr>
+                    <tr><td>2. Costo de Repetición</td><td class="weight-col">15%</td><td class="score-col">72</td><td class="weighted-col">10.80</td></tr>
+                    <tr><td>3. Costo de Colapso</td><td class="weight-col">15%</td><td class="score-col">78</td><td class="weighted-col">11.70</td></tr>
+                    <tr><td>4. Costo de Asimetría</td><td class="weight-col">10%</td><td class="score-col">82</td><td class="weighted-col">8.20</td></tr>
+                    <tr><td>5. Costo Psicológico</td><td class="weight-col">10%</td><td class="score-col">70</td><td class="weighted-col">7.00</td></tr>
+                    <tr><td>6. Costo de Oportunidad</td><td class="weight-col">10%</td><td class="score-col">68</td><td class="weighted-col">6.80</td></tr>
+                    <tr><td>7. Vía de Transferencia</td><td class="weight-col">15%</td><td class="score-col">75</td><td class="weighted-col">11.25</td></tr>
+                    <tr><td>8. Cierre de Circuito</td><td class="weight-col">10%</td><td class="score-col">72</td><td class="weighted-col">7.20</td></tr>
+                    <tr style="border-top:2px solid rgba(255,255,255,0.2); font-weight:700;">
+                        <td colspan="3" style="text-align:right;">TOTAL</td>
+                        <td class="weighted-col" style="font-size:1.2rem;">70.20 / 100</td>
+                    </tr>
+                    <tr style="border-top:2px solid #7DD3FC; font-weight:700;">
+                        <td colspan="3" style="text-align:right;">GL Index</td>
+                        <td class="weighted-col" style="font-size:1.8rem; color:#7DD3FC;">0.70</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2>Hallazgos Clave</h2>
+            <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem; line-height:1.8;">
+                <li><strong>Transparencia</strong> — Uno de los gobiernos más transparentes del mundo. La Ley de Información Oficial establece el estándar.</li>
+                <li><strong>Participación Maorí</strong> — Los acuerdos de gobernanza bicultural (Te Tiriti o Waitangi) son una forma única de inclusión institucional.</li>
+                <li><strong>Confianza Social</strong> — Alta confianza en las instituciones. El sistema funciona porque los ciudadanos creen que funciona.</li>
+                <li><strong>Aislamiento Económico</strong> — Economía pequeña, geográficamente aislada. La infraestructura está envejeciendo.</li>
+                <li><strong>Asequibilidad de la Vivienda</strong> — Principal debilidad. Los precios de la vivienda han aumentado rápidamente en los últimos años.</li>
+                <li><strong>Gobernanza Indígena</strong> — La asociación maorí es un trabajo en progreso. La inclusión total aún no está completa.</li>
+            </ul>
+            <div class="gl-box">
+                <p><strong>Qué significa 0.70</strong></p>
+                <p>Nueva Zelanda es uno de los países más transparentes del mundo. Su modelo de gobernanza bicultural es un experimento único de inclusión institucional. Pero la economía es pequeña, la infraestructura está envejeciendo y la asequibilidad de la vivienda es una crisis creciente. El modelo es bueno — pero no es robusto.</p>
+            </div>
+            <div class="highlight-box">
+                <p><strong>Clave de Grados</strong></p>
+                <p>A (0.90–1.00) — El valor regresa. Los costos son absorbidos. Los ciudadanos confían en la gobernanza.</p>
+                <p>B (0.70–0.89) — La mayoría del valor regresa. Algo de transferencia de costos.</p>
+                <p>C (0.50–0.69) — La mitad regresa. La mitad se transfiere.</p>
+                <p>D (0.30–0.49) — La mayoría del valor es capturado. La mayoría de los costos se transfieren.</p>
+                <p>F (0.00–0.29) — Valor capturado. Costos transferidos. Ciudadanos agotados.</p>
+                <p style="margin-top:0.5rem;"><span class="grade-b">Nueva Zelanda: 0.70 — B</span></p>
+            </div>
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · Creador del Marco GL · Junio 2026</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · Descarga gratuita · Distribución gratuita</p>
+                <a href="index.html" class="back-link">← Volver al Inicio</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                document.querySelectorAll('.content-lang').forEach(el => el.classList.remove('active'));
+                const lang = this.dataset.lang;
+                const target = document.getElementById('lang-' + lang);
+                if (target) target.classList.add('active');
+            });
+        });
+    </script>
+</div>
+</body>
+</html>
