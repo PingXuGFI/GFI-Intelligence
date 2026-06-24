@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>政府霸凌 · 等待時間 · GL框架第八參數</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0b1220;
+            color: #f8fbff;
+            font-family: 'DM Sans', system-ui, sans-serif;
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+        .logo a {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.12em;
+            color: #9FE870;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+        .logo a .home-arrow {
+            color: #9fb0c8;
+            margin-right: 6px;
+        }
+        .logo a:hover .home-arrow {
+            color: #9FE870;
+        }
+        .lang-switch {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .lang-btn {
+            background: none;
+            border: 1px solid rgba(255,255,255,.1);
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            padding: 0.25rem 0.7rem;
+            border-radius: 2rem;
+            color: #9fb0c8;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,.3); color: #fff; }
+        .lang-btn.active {
+            background: #9FE870;
+            color: #0b1220;
+            border-color: #9FE870;
+        }
+        .content-lang { display: none; }
+        .content-lang.active { display: block; }
+        .book-container {
+            background: #0d1526;
+            padding: 3rem 2.5rem;
+            border-radius: 4px;
+            border: 1px solid rgba(255,255,255,.06);
+        }
+        .opening-statement {
+            background: rgba(248, 113, 113, 0.06);
+            border: 1px solid rgba(248, 113, 113, 0.2);
+            border-radius: 12px;
+            padding: 1.8rem 2rem;
+            margin-bottom: 2rem;
+        }
+        .opening-statement p {
+            color: #f0d0d0;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+        .opening-statement .highlight-red {
+            color: #f87171;
+            font-weight: 600;
+        }
+        .opening-statement .signature {
+            color: #9fb0c8;
+            font-style: italic;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+        h1 {
+            font-size: 2.6rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 0.25rem;
+            color: #f87171;
+            letter-spacing: 0.02em;
+            font-family: 'DM Serif Display', Georgia, serif;
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 1rem;
+            color: #9fb0c8;
+            margin-bottom: 0.5rem;
+            font-style: italic;
+        }
+        .author-line {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #7DD3FC;
+            margin-bottom: 2rem;
+        }
+        .theme-line {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.8rem;
+            color: #f87171;
+            text-align: center;
+            margin: 1.5rem 0;
+            line-height: 1.3;
+        }
+        .theme-line-small {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.3rem;
+            color: #f87171;
+            text-align: center;
+            margin: 1.5rem 0;
+            line-height: 1.3;
+        }
+        h2 {
+            font-size: 1.4rem;
+            color: #9FE870;
+            margin: 2rem 0 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+            padding-bottom: 0.3rem;
+            font-family: 'DM Serif Display', Georgia, serif;
+        }
+        h3 {
+            font-size: 1.1rem;
+            color: #7DD3FC;
+            margin: 1.5rem 0 0.75rem 0;
+            font-family: 'DM Serif Display', Georgia, serif;
+        }
+        p {
+            color: #c7d2e3;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        .quote-block {
+            border-left: 3px solid #fbbf24;
+            padding-left: 1.2rem;
+            margin: 1.2rem 0;
+            color: #eaf6ff;
+            font-style: italic;
+            background: rgba(251, 191, 36, 0.04);
+            border-radius: 0 8px 8px 0;
+        }
+        .quote-block p {
+            color: #f5e6c8;
+        }
+        .quote-block .source {
+            color: #9fb0c8;
+            font-size: 0.85rem;
+            font-style: normal;
+        }
+        .highlight-box {
+            background: rgba(159, 232, 112, 0.06);
+            border: 1px solid rgba(159, 232, 112, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        .highlight-box p {
+            color: #eaf6ff;
+            margin-bottom: 0.25rem;
+        }
+        .highlight-box strong {
+            color: #9FE870;
+        }
+        .gl-box {
+            background: rgba(159, 232, 112, 0.04);
+            border-left: 3px solid #9FE870;
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .gl-box p {
+            color: #eaf6ff;
+            margin-bottom: 0.5rem;
+        }
+        .gl-box strong {
+            color: #9FE870;
+        }
+        .gl-box .gl-score {
+            font-family: 'DM Mono', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #f87171;
+            text-align: center;
+            display: block;
+            margin: 0.3rem 0;
+        }
+        .red-box {
+            background: rgba(248, 113, 113, 0.04);
+            border-left: 3px solid #f87171;
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .red-box p {
+            color: #f0d0d0;
+            margin-bottom: 0.5rem;
+        }
+        .red-box strong {
+            color: #f87171;
+        }
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .comparison-item {
+            background: rgba(255,255,255,.02);
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            text-align: center;
+        }
+        .comparison-item .label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            color: #9fb0c8;
+            letter-spacing: 0.08em;
+        }
+        .comparison-item .value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #f87171;
+            margin: 0.3rem 0;
+        }
+        .comparison-item .desc {
+            font-size: 0.8rem;
+            color: #c7d2e3;
+        }
+        .footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,.06);
+            text-align: center;
+            font-size: 0.75rem;
+            color: #9fb0c8;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 1.5rem;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: #9fb0c8;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,.06);
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            transition: 0.2s;
+        }
+        .back-link:hover {
+            border-color: rgba(255,255,255,.2);
+            color: #fff;
+        }
+        .divider { border: 0; border-top: 1px solid rgba(255,255,255,.08); margin: 2.5rem 0; }
+        .parameter-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .parameter-item {
+            background: rgba(255,255,255,.02);
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            text-align: center;
+        }
+        .parameter-item .number {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #7DD3FC;
+        }
+        .parameter-item .title {
+            font-weight: 600;
+            color: #fff;
+            margin: 0.2rem 0;
+        }
+        .parameter-item .desc {
+            font-size: 0.85rem;
+            color: #c7d2e3;
+        }
+        .parameter-item .gl-link {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: #9FE870;
+            margin-top: 0.3rem;
+        }
+        @media (max-width: 700px) {
+            .container { padding: 1rem; }
+            .book-container { padding: 1.5rem; }
+            h1 { font-size: 1.8rem; }
+            .theme-line { font-size: 1.3rem; }
+            .theme-line-small { font-size: 1.1rem; }
+            .comparison-grid { grid-template-columns: 1fr; }
+            .parameter-grid { grid-template-columns: 1fr; }
+            .opening-statement { padding: 1.2rem; }
+        }
+        @media print {
+            .header { display: none !important; }
+            .footer { display: none !important; }
+            .back-link { display: none !important; }
+            .book-container { background: transparent !important; border: none !important; padding: 0 !important; }
+            body { background: #fff !important; color: #000 !important; }
+            h1, h2, h3, p { color: #000 !important; }
+            .gl-box, .highlight-box, .red-box, .quote-block { background: #f5f5f5 !important; border-color: #ccc !important; }
+            .gl-box p, .highlight-box p, .red-box p, .quote-block p { color: #000 !important; }
+            .comparison-item { border-color: #ccc !important; }
+            .comparison-item .value { color: #cc0000 !important; }
+            .parameter-item { border-color: #ccc !important; }
+            .parameter-item .title { color: #000 !important; }
+            .theme-line, .theme-line-small { color: #cc0000 !important; }
+            .gl-box .gl-score { color: #cc0000 !important; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="logo">
+            <a href="index.html"><span class="home-arrow">←</span> GFI Flow Intelligence</a>
+        </div>
+        <div class="lang-switch">
+            <button class="lang-btn active" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="tw">繁</button>
+            <button class="lang-btn" data-lang="cn">简</button>
+            <button class="lang-btn" data-lang="es">ES</button>
+        </div>
+    </div>
+
+    <!-- ====== ENGLISH ====== -->
+    <div id="lang-en" class="content-lang active">
+        <div class="book-container">
+            <div class="opening-statement">
+                <p><span class="highlight-red">"Suffering Waiting Time"</span> — the eighth parameter of the GL Framework.</p>
+                <p>Big 4 consultants bill by the hour. Citizens' waiting time is expropriated for free.</p>
+                <p><span class="highlight-red">This is not inefficiency. This is institutional bullying.</span></p>
+                <p class="signature">— GL Framework Diagnostic · Ping Xu · GFI Flow Intelligence</p>
+            </div>
+
+            <h1>Government Bullying</h1>
+            <div class="subtitle">How the State Expropriates Citizens' Waiting Time</div>
+            <div class="author-line">Ping Xu · GFI Flow Intelligence · June 2026</div>
+
+            <div class="theme-line">Big 4 bills by the hour. Citizens wait for free.</div>
+
+            <p>There is a form of governance violence that is rarely recognized as violence. It does not involve physical force. It does not involve threats. It involves something more ordinary: <strong>waiting.</strong></p>
+
+            <p>When a citizen applies for a benefit, renews a license, appeals a decision, or simply tries to get an answer from a government agency, they wait. They wait in line. They wait on hold. They wait for a letter. They wait for a decision. They wait for an appeal. They wait for a second appeal. They wait for someone to call back. They wait for a form to be processed. They wait for an appointment. They wait for a review. They wait for a reconsideration. They wait for a final determination.</p>
+
+            <div class="quote-block">
+                <p>"I applied for unemployment benefits three months ago. I have called fourteen times. I have been transferred nine times. I am still waiting."</p>
+                <p class="source">— Anonymous caller to a state benefits hotline, recorded June 2026</p>
+            </div>
+
+            <p>Waiting is not neutral. It is a transfer of cost. Every hour a citizen spends waiting is an hour they cannot spend working, caring for a child, sleeping, or recovering from illness. That hour has value. Someone is paying for it. But the government does not record that cost. It does not appear on any ledger. It is simply expropriated.</p>
+
+            <div class="red-box">
+                <p><strong>Waiting is a tax. It is just not collected by the Ministry of Finance.</strong></p>
+                <p>It is collected by institutional design.</p>
+            </div>
+
+            <h2>The Two Time Economies</h2>
+
+            <div class="comparison-grid">
+                <div class="comparison-item">
+                    <div class="label">Big 4 Consultants</div>
+                    <div class="value">$$$$</div>
+                    <div class="desc">Bill by the hour. Their time is a cost to the government.</div>
+                </div>
+                <div class="comparison-item">
+                    <div class="label">Ordinary Citizens</div>
+                    <div class="value">$0</div>
+                    <div class="desc">Wait for free. Their time is a resource the government can consume without limit.</div>
+                </div>
+            </div>
+
+            <p>This is the structural asymmetry of the waiting economy. One group's time is valuable enough to be compensated. The other group's time is treated as if it has no value at all. The difference is not based on productivity. It is based on power. The government can make citizens wait because they have no choice. The government cannot make consultants wait because consultants can bill for it.</p>
+
+            <h2>Waiting as Institutional Bullying</h2>
+
+            <p>The word "bullying" is often reserved for individual acts. But institutions can bully too. Institutional bullying occurs when a system imposes costs on people who cannot avoid them, without any mechanism for those people to recover those costs or even to be recognized as having paid them.</p>
+
+            <p>Waiting is institutional bullying. The citizen cannot opt out. They cannot demand compensation. They cannot even force the system to acknowledge that their time has been taken. They simply wait. And the system continues as if nothing has happened.</p>
+
+            <p>This is not a bug. It is a design feature. The system is built to allow waiting. It is built to allow indefinite deferral. It is built to exhaust the person who is waiting. Because an exhausted person is less likely to appeal, less likely to pursue, less likely to persist. Waiting functions as a filter. It filters out those who do not have the time, energy, or resources to keep waiting.</p>
+
+            <div class="quote-block">
+                <p>"I gave up. I couldn't keep calling. I couldn't keep waiting. So I just stopped."</p>
+                <p class="source">— Applicant who abandoned a benefits claim after eight months of waiting</p>
+            </div>
+
+            <h2>The Big 4 Contrast</h2>
+
+            <p>The consulting industry provides a perfect contrast. Big 4 consultants bill by the hour. Every minute they spend on a project is tracked, recorded, and invoiced. Their time is valuable because someone has to pay for it. When a consultant waits — for a document, for a meeting, for a decision — someone is paying for that wait.</p>
+
+            <p>When a citizen waits — for a decision, for a call back, for a letter — no one is paying. The cost is simply absorbed by the citizen. The government offloads the cost of its own inefficiency onto the people it is supposed to serve. This is cost shifting. Pure and simple.</p>
+
+            <div class="red-box">
+                <p><strong>Big 4 time is a billable asset. Citizen time is a free resource to be consumed.</strong></p>
+                <p>That asymmetry is the signature of a system that does not view citizens as equals.</p>
+            </div>
+
+            <h2>GL Framework Parameter 8: Suffering Waiting Time</h2>
+
+            <div class="gl-box">
+                <p><strong>Parameter 8: Suffering Waiting Time (SWT)</strong></p>
+                <p>The eighth parameter of the GL Framework measures:</p>
+                <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:0.5rem; line-height:1.8;">
+                    <li>The average waiting time for a citizen to receive a decision</li>
+                    <li>The number of follow-ups required before a response</li>
+                    <li>The percentage of citizens who abandon their claims due to waiting fatigue</li>
+                    <li>The total waiting time shifted from the state to the citizen</li>
+                </ul>
+                <p style="margin-top:0.8rem;"><strong>Formula:</strong> SWT = ∑(waiting time per citizen) × (number of citizens affected)</p>
+                <p>This cost is never recorded in GDP. It is paid exclusively by the citizen. It is one of the most reliable indicators of institutional bullying.</p>
+            </div>
+
+            <h2>The Hidden Violence</h2>
+
+            <p>Waiting is not just an inconvenience. It is a form of violence. It consumes the finite hours of a human life. It cannot be recovered. The person who waited three hours for a five-minute transaction will never get those three hours back. The person who waited six months for a disability determination will never get those six months back.</p>
+
+            <p>This is what makes waiting a form of governance violence. It takes something irreplaceable — time — and gives nothing in return. It does not even acknowledge that it has taken it. The person waits, the system processes, and life continues. But the waiting is gone. It cannot be recovered. It cannot be repaid.</p>
+
+            <div class="highlight-box">
+                <p><strong>Waiting is the theft of life. And it is sanctioned by the state.</strong></p>
+            </div>
+
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · Creator of the GL Framework · June 2026</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · Free download · Free distribution</p>
+                <a href="index.html" class="back-link">← Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== 繁體中文 ====== -->
+    <div id="lang-tw" class="content-lang">
+        <div class="book-container">
+            <div class="opening-statement">
+                <p><span class="highlight-red">「受苦等待時間」</span> — GL框架的第八個參數。</p>
+                <p>四大顧問按小時計費。小民的等待時間被無償徵用。</p>
+                <p><span class="highlight-red">這不是效率問題。這是制度性霸凌。</span></p>
+                <p class="signature">— GL 框架診斷 · Ping Xu · GFI Flow Intelligence</p>
+            </div>
+
+            <h1>政府霸凌</h1>
+            <div class="subtitle">國家如何無償徵用小民的等待時間</div>
+            <div class="author-line">Ping Xu · GFI Flow Intelligence · 2026年6月</div>
+
+            <div class="theme-line">四大按小時計費。小民免費等待。</div>
+
+            <p>有一種治理暴力，很少被認為是暴力。它不涉及肢體。不涉及威脅。它涉及更平凡的東西：<strong>等待。</strong></p>
+
+            <p>當小民申請福利、更新執照、上訴決定、或只是試圖從政府機構得到一個答覆時，他們在等。排隊等。電話等。等信。等決定。等上訴。等第二次上訴。等人回電。等表格被處理。等預約。等審查。等重新審議。等最終裁定。</p>
+
+            <div class="quote-block">
+                <p>「我三個月前申請失業補助。打了十四通電話。被轉接九次。還在等。」</p>
+                <p class="source">— 某州福利專線匿名來電者，2026年6月錄音</p>
+            </div>
+
+            <p>等待不是中性的。它是成本轉嫁。小民等待的每一小時，都是他們無法工作、照顧孩子、睡覺或從病中恢復的一小時。那一小時有價值。有人正在為它付出代價。但政府不記錄那筆成本。它不出現在任何帳本上。它只是被無償徵用了。</p>
+
+            <div class="red-box">
+                <p><strong>等待是一種稅。只是它不是由財政部徵收的。</strong></p>
+                <p>它是由制度設計徵收的。</p>
+            </div>
+
+            <h2>兩種時間經濟</h2>
+
+            <div class="comparison-grid">
+                <div class="comparison-item">
+                    <div class="label">四大顧問</div>
+                    <div class="value">$$$$</div>
+                    <div class="desc">按小時計費。他們的時間是政府的成本。</div>
+                </div>
+                <div class="comparison-item">
+                    <div class="label">普通小民</div>
+                    <div class="value">$0</div>
+                    <div class="desc">免費等待。他們的時間是政府可以無限消耗的資源。</div>
+                </div>
+            </div>
+
+            <p>這就是等待經濟的結構性不對稱。一方的時間有價值到可以被補償。另一方的時間被當作毫無價值。差異不是基於生產力。是基於權力。政府可以讓小民等，因為他們別無選擇。政府不能讓顧問等，因為顧問可以為此開帳單。</p>
+
+            <h2>等待作為制度性霸凌</h2>
+
+            <p>「霸凌」這個詞通常用於個人行為。但機構也可以霸凌。制度性霸凌發生在一個系統對無法避開它的人施加成本，卻沒有任何機制讓那些人收回成本，甚至被承認已經支付了成本。</p>
+
+            <p>等待就是制度性霸凌。小民不能退出。不能要求補償。甚至不能迫使系統承認他們的時間已經被拿走。他們只是等。系統繼續運作，好像什麼事都沒發生過。</p>
+
+            <p>這不是漏洞。這是設計特徵。系統被設計成允許等待。被設計成允許無限期拖延。被設計成耗盡正在等待的人。因為一個被耗盡的人不太可能上訴、不太可能追究、不太可能堅持。等待是一個過濾器。它過濾掉那些沒有時間、精力或資源繼續等待的人。</p>
+
+            <div class="quote-block">
+                <p>「我放棄了。我不能再打了。不能再等了。所以我就停了。」</p>
+                <p class="source">— 等待八個月後放棄福利申請的申請人</p>
+            </div>
+
+            <h2>四大顧問的對照</h2>
+
+            <p>顧問產業提供了一個完美的對照。四大顧問按小時計費。他們花在專案上的每一分鐘都被追蹤、記錄、開立發票。他們的時間有價值，因為有人必須為它付錢。當顧問在等待——等文件、等會議、等決定——有人在為那個等待付錢。</p>
+
+            <p>當小民在等待——等決定、等回電、等信——沒有人付錢。成本只是被小民吸收了。政府把自己低效率的成本轉嫁給它應該服務的人民。這是成本轉嫁。純粹而簡單。</p>
+
+            <div class="red-box">
+                <p><strong>四大時間是可計費資產。小民時間是免費資源，可以被消費。</strong></p>
+                <p>這種不對稱，是一個不把小民視為平等者的系統的標記。</p>
+            </div>
+
+            <h2>GL框架第八參數：受苦等待時間</h2>
+
+            <div class="gl-box">
+                <p><strong>第八參數：受苦等待時間（Suffering Waiting Time, SWT）</strong></p>
+                <p>GL框架的第八個參數測量：</p>
+                <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:0.5rem; line-height:1.8;">
+                    <li>小民等待決定的平均時間</li>
+                    <li>獲得回覆前需要的追蹤次數</li>
+                    <li>因等待疲勞而放棄申請的小民比例</li>
+                    <li>從國家轉嫁到小民的總等待時間</li>
+                </ul>
+                <p style="margin-top:0.8rem;"><strong>公式：</strong> SWT = ∑(每位小民等待時間) × (受影響人數)</p>
+                <p>這筆成本從未被GDP記錄。完全由小民支付。它是制度性霸凌最可靠的指標之一。</p>
+            </div>
+
+            <h2>隱藏的暴力</h2>
+
+            <p>等待不只是不便。它是一種暴力。它消耗人類生命中有限的小時。它無法被收回。為了五分鐘的服務等了三個小時的人，永遠無法拿回那三個小時。為了身心障礙認定等了六個月的人，永遠無法拿回那六個月。</p>
+
+            <p>這就是為什麼等待是一種治理暴力。它奪走了某種無可替代的東西——時間——而且沒有給予任何回報。它甚至不承認它已經拿走了它。人等了，系統處理了，生活繼續了。但等待已經消失了。無法被恢復。無法被償還。</p>
+
+            <div class="highlight-box">
+                <p><strong>等待是生命的竊盜。而且它被國家認可。</strong></p>
+            </div>
+
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · GL框架創建者 · 2026年6月</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · 免費下載 · 免費傳播</p>
+                <a href="index.html" class="back-link">← 回首頁</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== 简体中文 ====== -->
+    <div id="lang-cn" class="content-lang">
+        <div class="book-container">
+            <div class="opening-statement">
+                <p><span class="highlight-red">「受苦等待时间」</span> — GL框架的第八个参数。</p>
+                <p>四大顾问按小时计费。小民的等待时间被无偿征用。</p>
+                <p><span class="highlight-red">这不是效率问题。这是制度性霸凌。</span></p>
+                <p class="signature">— GL 框架诊断 · Ping Xu · GFI Flow Intelligence</p>
+            </div>
+
+            <h1>政府霸凌</h1>
+            <div class="subtitle">国家如何无偿征用小民的等待时间</div>
+            <div class="author-line">Ping Xu · GFI Flow Intelligence · 2026年6月</div>
+
+            <div class="theme-line">四大按小时计费。小民免费等待。</div>
+
+            <p>有一种治理暴力，很少被认为是暴力。它不涉及肢体。不涉及威胁。它涉及更平凡的东西：<strong>等待。</strong></p>
+
+            <p>当小民申请福利、更新执照、上诉决定、或只是试图从政府机构得到一个答复时，他们在等。排队等。电话等。等信。等决定。等上诉。等第二次上诉。等人回电。等表格被处理。等预约。等审查。等重新审议。等最终裁定。</p>
+
+            <div class="quote-block">
+                <p>「我三个月前申请失业补助。打了十四通电话。被转接九次。还在等。」</p>
+                <p class="source">— 某州福利专线匿名来电者，2026年6月录音</p>
+            </div>
+
+            <p>等待不是中性的。它是成本转嫁。小民等待的每一小时，都是他们无法工作、照顾孩子、睡觉或从病中恢复的一小时。那一小时有价值。有人正在为它付出代价。但政府不记录那笔成本。它不出现在任何账本上。它只是被无偿征用了。</p>
+
+            <div class="red-box">
+                <p><strong>等待是一种税。只是它不是由财政部征收的。</strong></p>
+                <p>它是由制度设计征收的。</p>
+            </div>
+
+            <h2>两种时间经济</h2>
+
+            <div class="comparison-grid">
+                <div class="comparison-item">
+                    <div class="label">四大顾问</div>
+                    <div class="value">$$$$</div>
+                    <div class="desc">按小时计费。他们的时间是政府的成本。</div>
+                </div>
+                <div class="comparison-item">
+                    <div class="label">普通小民</div>
+                    <div class="value">$0</div>
+                    <div class="desc">免费等待。他们的时间是政府可以无限消耗的资源。</div>
+                </div>
+            </div>
+
+            <p>这就是等待经济的结构性不对称。一方的时间有价值到可以被补偿。另一方的时间被当作毫无价值。差异不是基于生产力。是基于权力。政府可以让小民等，因为他们别无选择。政府不能让顾问等，因为顾问可以为此开账单。</p>
+
+            <h2>等待作为制度性霸凌</h2>
+
+            <p>「霸凌」这个词通常用于个人行为。但机构也可以霸凌。制度性霸凌发生在一个系统对无法避开它的人施加成本，却没有任何机制让那些人收回成本，甚至被承认已经支付了成本。</p>
+
+            <p>等待就是制度性霸凌。小民不能退出。不能要求补偿。甚至不能迫使系统承认他们的时间已经被拿走。他们只是等。系统继续运作，好像什么事都没发生过。</p>
+
+            <p>这不是漏洞。这是设计特征。系统被设计成允许等待。被设计成允许无限期拖延。被设计成耗尽正在等待的人。因为一个被耗尽的人不太可能上诉、不太可能追究、不太可能坚持。等待是一个过滤器。它过滤掉那些没有时间、精力或资源继续等待的人。</p>
+
+            <div class="quote-block">
+                <p>「我放弃了。我不能再打了。不能再等了。所以我就停了。」</p>
+                <p class="source">— 等待八个月后放弃福利申请的申请人</p>
+            </div>
+
+            <h2>四大顾问的对照</h2>
+
+            <p>顾问产业提供了一个完美的对照。四大顾问按小时计费。他们花在项目上的每一分钟都被追踪、记录、开具发票。他们的时间有价值，因为有人必须为它付钱。当顾问在等待——等文件、等会议、等决定——有人在为那个等待付钱。</p>
+
+            <p>当小民在等待——等决定、等回电、等信——没有人付钱。成本只是被小民吸收了。政府把自己低效率的成本转嫁给它应该服务的人民。这是成本转嫁。纯粹而简单。</p>
+
+            <div class="red-box">
+                <p><strong>四大时间是可计费资产。小民时间是免费资源，可以被消费。</strong></p>
+                <p>这种不对称，是一个不把小民视为平等者的系统的标记。</p>
+            </div>
+
+            <h2>GL框架第八参数：受苦等待时间</h2>
+
+            <div class="gl-box">
+                <p><strong>第八参数：受苦等待时间（Suffering Waiting Time, SWT）</strong></p>
+                <p>GL框架的第八个参数测量：</p>
+                <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:0.5rem; line-height:1.8;">
+                    <li>小民等待决定的平均时间</li>
+                    <li>获得回复前需要的追踪次数</li>
+                    <li>因等待疲劳而放弃申请的小民比例</li>
+                    <li>从国家转嫁到小民的总等待时间</li>
+                </ul>
+                <p style="margin-top:0.8rem;"><strong>公式：</strong> SWT = ∑(每位小民等待时间) × (受影响人数)</p>
+                <p>这笔成本从未被GDP记录。完全由小民支付。它是制度性霸凌最可靠的指标之一。</p>
+            </div>
+
+            <h2>隐藏的暴力</h2>
+
+            <p>等待不只是不便。它是一种暴力。它消耗人类生命中有限的小时。它无法被收回。为了五分钟的服务等了三个小时的人，永远无法拿回那三个小时。为了身心障碍认定等了六个月的人，永远无法拿回那六个月。</p>
+
+            <p>这就是为什么等待是一种治理暴力。它夺走了某种无可替代的东西——时间——而且没有给予任何回报。它甚至不承认它已经拿走了它。人等了，系统处理了，生活继续了。但等待已经消失了。无法被恢复。无法被偿还。</p>
+
+            <div class="highlight-box">
+                <p><strong>等待是生命的窃盗。而且它被国家认可。</strong></p>
+            </div>
+
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · GL框架创建者 · 2026年6月</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · 免费下载 · 免费传播</p>
+                <a href="index.html" class="back-link">← 回首页</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== ESPAÑOL ====== -->
+    <div id="lang-es" class="content-lang">
+        <div class="book-container">
+            <div class="opening-statement">
+                <p><span class="highlight-red">"Tiempo de Espera Sufrido"</span> — el octavo parámetro del Marco GL.</p>
+                <p>Las consultoras Big 4 facturan por hora. El tiempo de espera de los ciudadanos es expropiado gratis.</p>
+                <p><span class="highlight-red">Esto no es ineficiencia. Es acoso institucional.</span></p>
+                <p class="signature">— Diagnóstico del Marco GL · Ping Xu · GFI Flow Intelligence</p>
+            </div>
+
+            <h1>Acoso Gubernamental</h1>
+            <div class="subtitle">Cómo el Estado Expropia el Tiempo de Espera de los Ciudadanos</div>
+            <div class="author-line">Ping Xu · GFI Flow Intelligence · Junio 2026</div>
+
+            <div class="theme-line">Big 4 factura por hora. Los ciudadanos esperan gratis.</div>
+
+            <p>Hay una forma de violencia gubernamental que rara vez se reconoce como violencia. No implica fuerza física. No implica amenazas. Implica algo más ordinario: <strong>esperar.</strong></p>
+
+            <p>Cuando un ciudadano solicita un beneficio, renueva una licencia, apela una decisión, o simplemente intenta obtener una respuesta de una agencia gubernamental, espera. Espera en la fila. Espera en espera. Espera una carta. Espera una decisión. Espera una apelación. Espera una segunda apelación. Espera que alguien le devuelva la llamada. Espera que se procese un formulario. Espera una cita. Espera una revisión. Espera una reconsideración. Espera una determinación final.</p>
+
+            <div class="quote-block">
+                <p>"Solicité beneficios de desempleo hace tres meses. He llamado catorce veces. Me han transferido nueve veces. Sigo esperando."</p>
+                <p class="source">— Llamada anónima a una línea de beneficios estatal, grabada en junio de 2026</p>
+            </div>
+
+            <p>Esperar no es neutral. Es una transferencia de costo. Cada hora que un ciudadano espera es una hora que no puede dedicar a trabajar, cuidar a un niño, dormir o recuperarse de una enfermedad. Esa hora tiene valor. Alguien está pagando por ella. Pero el gobierno no registra ese costo. No aparece en ningún libro mayor. Simplemente es expropiada.</p>
+
+            <div class="red-box">
+                <p><strong>Esperar es un impuesto. Simplemente no es recaudado por el Ministerio de Hacienda.</strong></p>
+                <p>Es recaudado por el diseño institucional.</p>
+            </div>
+
+            <h2>Las Dos Economías del Tiempo</h2>
+
+            <div class="comparison-grid">
+                <div class="comparison-item">
+                    <div class="label">Consultores Big 4</div>
+                    <div class="value">$$$$</div>
+                    <div class="desc">Facturan por hora. Su tiempo es un costo para el gobierno.</div>
+                </div>
+                <div class="comparison-item">
+                    <div class="label">Ciudadanos Comunes</div>
+                    <div class="value">$0</div>
+                    <div class="desc">Esperan gratis. Su tiempo es un recurso que el gobierno puede consumir sin límite.</div>
+                </div>
+            </div>
+
+            <p>Esta es la asimetría estructural de la economía de la espera. El tiempo de un grupo es lo suficientemente valioso como para ser compensado. El tiempo del otro grupo es tratado como si no tuviera valor alguno. La diferencia no se basa en la productividad. Se basa en el poder. El gobierno puede hacer esperar a los ciudadanos porque no tienen otra opción. El gobierno no puede hacer esperar a los consultores porque pueden facturarlo.</p>
+
+            <h2>Esperar como Acoso Institucional</h2>
+
+            <p>La palabra "acoso" a menudo se reserva para actos individuales. Pero las instituciones también pueden acosar. El acoso institucional ocurre cuando un sistema impone costos a personas que no pueden evitarlos, sin ningún mecanismo para que esas personas recuperen esos costos o incluso para que se les reconozca que los han pagado.</p>
+
+            <p>Esperar es acoso institucional. El ciudadano no puede optar por no hacerlo. No puede exigir compensación. Ni siquiera puede obligar al sistema a reconocer que su tiempo ha sido tomado. Simplemente espera. Y el sistema continúa como si nada hubiera pasado.</p>
+
+            <p>Esto no es un error. Es una característica de diseño. El sistema está construido para permitir la espera. Está construido para permitir la dilación indefinida. Está construido para agotar a la persona que está esperando. Porque una persona agotada tiene menos probabilidades de apelar, menos probabilidades de perseguir, menos probabilidades de persistir. Esperar funciona como un filtro. Filtra a aquellos que no tienen el tiempo, la energía o los recursos para seguir esperando.</p>
+
+            <div class="quote-block">
+                <p>"Me rendí. No podía seguir llamando. No podía seguir esperando. Así que me detuve."</p>
+                <p class="source">— Solicitante que abandonó una reclamación de beneficios después de ocho meses de espera</p>
+            </div>
+
+            <h2>El Contraste de las Big 4</h2>
+
+            <p>La industria de la consultoría proporciona un contraste perfecto. Los consultores de las Big 4 facturan por hora. Cada minuto que pasan en un proyecto es rastreado, registrado y facturado. Su tiempo es valioso porque alguien tiene que pagar por él. Cuando un consultor espera — por un documento, por una reunión, por una decisión — alguien está pagando por esa espera.</p>
+
+            <p>Cuando un ciudadano espera — por una decisión, por una devolución de llamada, por una carta — nadie paga. El costo es simplemente absorbido por el ciudadano. El gobierno transfiere el costo de su propia ineficiencia a las personas a las que se supone que debe servir. Esto es transferencia de costos. Pura y simple.</p>
+
+            <div class="red-box">
+                <p><strong>El tiempo de las Big 4 es un activo facturable. El tiempo del ciudadano es un recurso gratuito para ser consumido.</strong></p>
+                <p>Esa asimetría es la firma de un sistema que no considera a los ciudadanos como iguales.</p>
+            </div>
+
+            <h2>Parámetro 8 del Marco GL: Tiempo de Espera Sufrido</h2>
+
+            <div class="gl-box">
+                <p><strong>Parámetro 8: Tiempo de Espera Sufrido (Suffering Waiting Time, SWT)</strong></p>
+                <p>El octavo parámetro del Marco GL mide:</p>
+                <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:0.5rem; line-height:1.8;">
+                    <li>El tiempo promedio de espera para que un ciudadano reciba una decisión</li>
+                    <li>El número de seguimientos necesarios antes de una respuesta</li>
+                    <li>El porcentaje de ciudadanos que abandonan sus reclamos debido a la fatiga de espera</li>
+                    <li>El tiempo total de espera transferido del estado al ciudadano</li>
+                </ul>
+                <p style="margin-top:0.8rem;"><strong>Fórmula:</strong> SWT = ∑(tiempo de espera por ciudadano) × (número de ciudadanos afectados)</p>
+                <p>Este costo nunca se registra en el PIB. Es pagado exclusivamente por el ciudadano. Es uno de los indicadores más confiables de acoso institucional.</p>
+            </div>
+
+            <h2>La Violencia Oculta</h2>
+
+            <p>Esperar no es solo una molestia. Es una forma de violencia. Consume las horas finitas de una vida humana. No se puede recuperar. La persona que esperó tres horas por una transacción de cinco minutos nunca recuperará esas tres horas. La persona que esperó seis meses por una determinación de discapacidad nunca recuperará esos seis meses.</p>
+
+            <p>Esto es lo que hace que la espera sea una violencia gubernamental. Toma algo irremplazable — el tiempo — y no da nada a cambio. Ni siquiera reconoce que lo ha tomado. La persona espera, el sistema procesa, y la vida continúa. Pero la espera se ha ido. No se puede recuperar. No se puede devolver.</p>
+
+            <div class="highlight-box">
+                <p><strong>Esperar es el robo de la vida. Y está sancionado por el estado.</strong></p>
+            </div>
+
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · Creador del Marco GL · Junio 2026</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · Descarga gratuita · Distribución gratuita</p>
+                <a href="index.html" class="back-link">← Volver al Inicio</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                document.querySelectorAll('.content-lang').forEach(el => el.classList.remove('active'));
+                const lang = this.dataset.lang;
+                const target = document.getElementById('lang-' + lang);
+                if (target) target.classList.add('active');
+            });
+        });
+    </script>
+</div>
+</body>
+</html>
