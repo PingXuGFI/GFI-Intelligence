@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GL Index 2026 · 智利診斷報告</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #0b1220; color: #f8fbff; font-family: 'DM Sans', system-ui, sans-serif; line-height: 1.7; }
+        .container { max-width: 920px; margin: 0 auto; padding: 2rem; }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+        .logo a {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.12em;
+            color: #f97316;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+        .logo a .home-arrow { color: #9fb0c8; margin-right: 6px; }
+        .logo a:hover .home-arrow { color: #f97316; }
+        .lang-switch { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .lang-btn {
+            background: none;
+            border: 1px solid rgba(255,255,255,.1);
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            padding: 0.25rem 0.7rem;
+            border-radius: 2rem;
+            color: #9fb0c8;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,.3); color: #fff; }
+        .lang-btn.active { background: #f97316; color: #0b1220; border-color: #f97316; }
+        .content-lang { display: none; }
+        .content-lang.active { display: block; }
+        .book-container { background: #0d1526; padding: 3rem 2.5rem; border-radius: 4px; border: 1px solid rgba(255,255,255,.06); }
+        .opening-statement {
+            background: rgba(249,115,22,0.06);
+            border: 1px solid rgba(249,115,22,0.2);
+            border-radius: 12px;
+            padding: 1.8rem 2rem;
+            margin-bottom: 2rem;
+        }
+        .opening-statement p { color: #f5e6c8; margin-bottom: 0.5rem; font-size: 0.95rem; }
+        .opening-statement .highlight-orange { color: #f97316; font-weight: 600; }
+        .opening-statement .signature { color: #9fb0c8; font-style: italic; font-size: 0.85rem; margin-top: 0.5rem; }
+        h1 { font-size: 2.6rem; font-weight: 700; text-align: center; margin-bottom: 0.25rem; color: #f97316; letter-spacing: 0.02em; font-family: 'DM Serif Display', Georgia, serif; }
+        .subtitle { text-align: center; font-size: 1rem; color: #9fb0c8; margin-bottom: 0.5rem; font-style: italic; }
+        .author-line { text-align: center; font-size: 0.9rem; color: #7DD3FC; margin-bottom: 2rem; }
+        .theme-line { font-family: 'DM Serif Display', Georgia, serif; font-size: 1.8rem; color: #f97316; text-align: center; margin: 1.5rem 0; line-height: 1.3; }
+        h2 { font-size: 1.4rem; color: #f97316; margin: 2rem 0 1rem 0; border-bottom: 1px solid rgba(255,255,255,.06); padding-bottom: 0.3rem; font-family: 'DM Serif Display', Georgia, serif; }
+        p { color: #c7d2e3; margin-bottom: 1rem; line-height: 1.8; }
+        .quote-block { border-left: 3px solid #f97316; padding-left: 1.2rem; margin: 1.2rem 0; color: #eaf6ff; font-style: italic; background: rgba(249,115,22,0.04); border-radius: 0 8px 8px 0; }
+        .quote-block p { color: #f5e6c8; }
+        .quote-block .source { color: #9fb0c8; font-size: 0.85rem; font-style: normal; }
+        .highlight-box { background: rgba(249,115,22,0.06); border: 1px solid rgba(249,115,22,0.2); border-radius: 8px; padding: 1.5rem 2rem; margin: 1.5rem 0; text-align: center; }
+        .highlight-box p { color: #eaf6ff; margin-bottom: 0.25rem; }
+        .highlight-box strong { color: #f97316; }
+        .gl-box { background: rgba(249,115,22,0.04); border-left: 3px solid #f97316; padding: 1.2rem 1.5rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0; }
+        .gl-box p { color: #eaf6ff; margin-bottom: 0.5rem; }
+        .gl-box strong { color: #f97316; }
+        .gl-box .gl-score { font-family: 'DM Mono', monospace; font-size: 2.5rem; font-weight: 700; color: #f97316; text-align: center; display: block; margin: 0.3rem 0; }
+        .red-box { background: rgba(248, 113, 113, 0.04); border-left: 3px solid #f87171; padding: 1.2rem 1.5rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0; }
+        .red-box p { color: #f0d0d0; margin-bottom: 0.5rem; }
+        .red-box strong { color: #f87171; }
+        .parameter-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
+        .parameter-item { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: 1rem 1.2rem; text-align: center; }
+        .parameter-item .number { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: #7DD3FC; }
+        .parameter-item .title { font-weight: 600; color: #fff; margin: 0.2rem 0; }
+        .parameter-item .desc { font-size: 0.85rem; color: #c7d2e3; }
+        .parameter-item .score { font-family: 'DM Mono', monospace; font-size: 1.1rem; font-weight: 700; color: #f97316; margin-top: 0.3rem; }
+        .footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,.06); text-align: center; font-size: 0.75rem; color: #9fb0c8; }
+        .back-link { display: inline-block; margin-top: 1.5rem; font-family: 'DM Mono', monospace; font-size: 0.7rem; color: #9fb0c8; text-decoration: none; border: 1px solid rgba(255,255,255,.06); padding: 0.4rem 1rem; border-radius: 2rem; transition: 0.2s; }
+        .back-link:hover { border-color: rgba(255,255,255,.2); color: #fff; }
+        .divider { border: 0; border-top: 1px solid rgba(255,255,255,.08); margin: 2.5rem 0; }
+        .score-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+        .score-table th, .score-table td { border: 1px solid rgba(255,255,255,.1); padding: 0.75rem; text-align: left; }
+        .score-table th { background: rgba(255,255,255,.05); font-weight: 600; }
+        .score-table .weight-col { text-align: center; }
+        .score-table .score-col { text-align: center; font-weight: 700; color: #f97316; }
+        .score-table .weighted-col { text-align: center; font-weight: 700; color: #f97316; }
+        .grade-d { color: #f97316; font-weight: 700; }
+        @media (max-width: 700px) {
+            .container { padding: 1rem; }
+            .book-container { padding: 1.5rem; }
+            h1 { font-size: 1.8rem; }
+            .theme-line { font-size: 1.3rem; }
+            .parameter-grid { grid-template-columns: 1fr; }
+            .opening-statement { padding: 1.2rem; }
+        }
+        @media print {
+            .header { display: none !important; }
+            .footer { display: none !important; }
+            .back-link { display: none !important; }
+            .book-container { background: transparent !important; border: none !important; padding: 0 !important; }
+            body { background: #fff !important; color: #000 !important; }
+            h1, h2, h3, p { color: #000 !important; }
+            .gl-box, .highlight-box, .red-box, .quote-block { background: #f5f5f5 !important; border-color: #ccc !important; }
+            .gl-box p, .highlight-box p, .red-box p, .quote-block p { color: #000 !important; }
+            .parameter-item { border-color: #ccc !important; }
+            .parameter-item .title { color: #000 !important; }
+            .parameter-item .score { color: #cc6600 !important; }
+            .theme-line { color: #cc6600 !important; }
+            .gl-box .gl-score { color: #cc6600 !important; }
+            .score-table th, .score-table td { border-color: #ccc !important; color: #000 !important; }
+            .score-table th { background: #eee !important; }
+            .score-table .score-col { color: #cc6600 !important; }
+            .score-table .weighted-col { color: #cc6600 !important; }
+            .grade-d { color: #cc6600 !important; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="logo"><a href="index.html"><span class="home-arrow">←</span> GFI Flow Intelligence</a></div>
+        <div class="lang-switch">
+            <button class="lang-btn active" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="tw">繁</button>
+            <button class="lang-btn" data-lang="cn">简</button>
+            <button class="lang-btn" data-lang="es">ES</button>
+        </div>
+    </div>
+
+    <!-- ====== ENGLISH ====== -->
+    <div id="lang-en" class="content-lang active">
+        <div class="book-container">
+            <div class="opening-statement">
+                <p><span class="highlight-orange">GL Index 2026 · Chile</span></p>
+                <p>A diagnostic report on governance friction, value capture, and cost shifting.</p>
+                <p class="signature">— GL Framework Diagnostic · Ping Xu · GFI Flow Intelligence</p>
+            </div>
+            <div style="text-align:center; margin:2rem 0;">
+                <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#f97316; line-height:1;">0.41</div>
+                <div style="font-size:1.2rem; color:#f97316; font-weight:600;">D · Failing</div>
+                <div style="font-size:0.85rem; color:#9fb0c8; margin-top:0.25rem;">out of 1.00</div>
+            </div>
+            <div class="theme-line">Latin America's laboratory — in the middle of a constitutional experiment.</div>
+            <p>Chile scores <span class="highlight-orange">0.41</span> on the GL Index — a D grade. It is the best-performing country in Latin America, but it is still failing. Chile is in the middle of a constitutional experiment — rewriting the Pinochet-era constitution. The outcome will determine whether Chile moves toward better governance or deeper polarization.</p>
+            <h2>Eight Parameters · Chile</h2>
+            <table class="score-table">
+                <thead><tr><th>Parameter</th><th>Weight</th><th>Score (0–100)</th><th>Weighted</th></tr></thead>
+                <tbody>
+                    <tr><td>1. Waiting Cost</td><td class="weight-col">15%</td><td class="score-col">45</td><td class="weighted-col">6.75</td></tr>
+                    <tr><td>2. Repetition Cost</td><td class="weight-col">15%</td><td class="score-col">40</td><td class="weighted-col">6.00</td></tr>
+                    <tr><td>3. Collapse Cost</td><td class="weight-col">15%</td><td class="score-col">35</td><td class="weighted-col">5.25</td></tr>
+                    <tr><td>4. Information Asymmetry Cost</td><td class="weight-col">10%</td><td class="score-col">45</td><td class="weighted-col">4.50</td></tr>
+                    <tr><td>5. Psychological Cost</td><td class="weight-col">10%</td><td class="score-col">35</td><td class="weighted-col">3.50</td></tr>
+                    <tr><td>6. Opportunity Cost</td><td class="weight-col">10%</td><td class="score-col">40</td><td class="weighted-col">4.00</td></tr>
+                    <tr><td>7. Shift Pathway</td><td class="weight-col">15%</td><td class="score-col">40</td><td class="weighted-col">6.00</td></tr>
+                    <tr><td>8. Loop Closure</td><td class="weight-col">10%</td><td class="score-col">45</td><td class="weighted-col">4.50</td></tr>
+                    <tr style="border-top:2px solid rgba(255,255,255,0.2); font-weight:700;">
+                        <td colspan="3" style="text-align:right;">TOTAL</td>
+                        <td class="weighted-col" style="font-size:1.2rem;">40.50 / 100</td>
+                    </tr>
+                    <tr style="border-top:2px solid #f97316; font-weight:700;">
+                        <td colspan="3" style="text-align:right;">GL Index</td>
+                        <td class="weighted-col" style="font-size:1.8rem; color:#f97316;">0.41</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2>Key Findings</h2>
+            <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem; line-height:1.8;">
+                <li><strong>Constitutional Reform</strong> — Chile is rewriting the Pinochet-era constitution. The outcome will determine the future of governance.</li>
+                <li><strong>Social Inequality</strong> — High inequality persists. The 2019 protests revealed deep structural grievances.</li>
+                <li><strong>Neoliberal Legacy</strong> — The Pinochet-era economic model created growth but also inequality. The model is being questioned.</li>
+                <li><strong>Administrative Friction</strong> — Bureaucracy is inefficient. Public services are uneven.</li>
+                <li><strong>Political Polarization</strong> — The constitutional process has become polarized. Reform is contested.</li>
+                <li><strong>Resource Dependency</strong> — Copper dominates the economy. This creates vulnerability to price fluctuations.</li>
+            </ul>
+            <div class="gl-box">
+                <p><strong>What 0.41 Means</strong></p>
+                <p>Chile is Latin America's governance laboratory. It has reformed its constitution, but the process is contested. The Pinochet-era economic model created growth but also inequality. The challenge is to move toward more inclusive governance without losing the economic gains. This is a difficult balance — and the outcome is uncertain.</p>
+            </div>
+            <div class="highlight-box">
+                <p><strong>Grade Key</strong></p>
+                <p>A (0.90–1.00) — Value returns. Costs are absorbed. Citizens trust governance.</p>
+                <p>B (0.70–0.89) — Most value returns. Some cost shifting.</p>
+                <p>C (0.50–0.69) — Half returns. Half shifts.</p>
+                <p>D (0.30–0.49) — Most value captured. Most costs shifted.</p>
+                <p>F (0.00–0.29) — Value captured. Costs shifted. Citizens exhausted.</p>
+                <p style="margin-top:0.5rem;"><span class="grade-d">Chile: 0.41 — D</span></p>
+            </div>
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · Creator of the GL Framework · June 2026</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · Free download · Free distribution</p>
+                <a href="index.html" class="back-link">← Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== 繁體中文 ====== -->
+    <div id="lang-tw" class="content-lang">
+        <div class="book-container">
+            <div class="opening-statement">
+                <p><span class="highlight-orange">GL Index 2026 · 智利</span></p>
+                <p>治理摩擦、價值捕獲與成本轉嫁的診斷報告。</p>
+                <p class="signature">— GL 框架診斷 · Ping Xu · GFI Flow Intelligence</p>
+            </div>
+            <div style="text-align:center; margin:2rem 0;">
+                <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#f97316; line-height:1;">0.41</div>
+                <div style="font-size:1.2rem; color:#f97316; font-weight:600;">D · 不及格</div>
+                <div style="font-size:0.85rem; color:#9fb0c8; margin-top:0.25rem;">滿分 1.00</div>
+            </div>
+            <div class="theme-line">拉丁美洲的實驗室——憲法實驗進行中。</div>
+            <p>智利在 GL Index 得分 <span class="highlight-orange">0.41</span> — D 級。它是拉丁美洲表現最好的國家，但仍然不及格。智利正在進行憲法實驗——改寫皮諾切特時代的憲法。結果將決定智利走向更好的治理還是更深的極化。</p>
+            <h2>八個參數 · 智利</h2>
+            <table class="score-table">
+                <thead><tr><th>參數</th><th>權重</th><th>分數 (0–100)</th><th>加權</th></tr></thead>
+                <tbody>
+                    <tr><td>1. 等待成本</td><td class="weight-col">15%</td><td class="score-col">45</td><td class="weighted-col">6.75</td></tr>
+                    <tr><td>2. 重複成本</td><td class="weight-col">15%</td><td class="score-col">40</td><td class="weighted-col">6.00</td></tr>
+                    <tr><td>3. 崩潰成本</td><td class="weight-col">15%</td><td class="score-col">35</td><td class="weighted-col">5.25</td></tr>
+                    <tr><td>4. 資訊不對稱成本</td><td class="weight-col">10%</td><td class="score-col">45</td><td class="weighted-col">4.50</td></tr>
+                    <tr><td>5. 心理成本</td><td class="weight-col">10%</td><td class="score-col">35</td><td class="weighted-col">3.50</td></tr>
+                    <tr><td>6. 機會成本</td><td class="weight-col">10%</td><td class="score-col">40</td><td class="weighted-col">4.00</td></tr>
+                    <tr><td>7. 轉嫁路徑</td><td class="weight-col">15%</td><td class="score-col">40</td><td class="weighted-col">6.00</td></tr>
+                    <tr><td>8. 迴路閉合</td><td class="weight-col">10%</td><td class="score-col">45</td><td class="weighted-col">4.50</td></tr>
+                    <tr style="border-top:2px solid rgba(255,255,255,0.2); font-weight:700;">
+                        <td colspan="3" style="text-align:right;">總計</td>
+                        <td class="weighted-col" style="font-size:1.2rem;">40.50 / 100</td>
+                    </tr>
+                    <tr style="border-top:2px solid #f97316; font-weight:700;">
+                        <td colspan="3" style="text-align:right;">GL Index</td>
+                        <td class="weighted-col" style="font-size:1.8rem; color:#f97316;">0.41</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2>關鍵發現</h2>
+            <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem; line-height:1.8;">
+                <li><strong>憲法改革</strong> — 智利正在改寫皮諾切特時代的憲法。結果將決定治理的未來。</li>
+                <li><strong>社會不平等</strong> — 嚴重不平等持續存在。2019年的抗議揭露了深層的結構性不滿。</li>
+                <li><strong>新自由主義遺產</strong> — 皮諾切特時代的經濟模式創造了成長，但也造成了不平等。這個模式正在被質疑。</li>
+                <li><strong>行政摩擦</strong> — 官僚系統效率低落。公共服務不均衡。</li>
+                <li><strong>政治極化</strong> — 憲法進程已變得極化。改革受到爭議。</li>
+                <li><strong>資源依賴</strong> — 銅主導經濟。這造成對價格波動的脆弱性。</li>
+            </ul>
+            <div class="gl-box">
+                <p><strong>0.41 代表的意義</strong></p>
+                <p>智利是拉丁美洲的治理實驗室。它已經改革了憲法，但過程受到爭議。皮諾切特時代的經濟模式創造了成長，但也造成了不平等。挑戰是在不失去經濟成果的情況下走向更包容的治理。這是一個困難的平衡——結果不確定。</p>
+            </div>
+            <div class="highlight-box">
+                <p><strong>等級說明</strong></p>
+                <p>A (0.90–1.00) — 價值回流。成本被吸收。小民信任治理。</p>
+                <p>B (0.70–0.89) — 大部分價值回流。少部分成本轉嫁。</p>
+                <p>C (0.50–0.69) — 一半回流。一半轉嫁。</p>
+                <p>D (0.30–0.49) — 大部分價值被拿走。大部分成本被轉嫁。</p>
+                <p>F (0.00–0.29) — 價值被拿走。成本被轉嫁。小民精疲力竭。</p>
+                <p style="margin-top:0.5rem;"><span class="grade-d">智利：0.41 — D</span></p>
+            </div>
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · GL框架創建者 · 2026年6月</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · 免費下載 · 免費傳播</p>
+                <a href="index.html" class="back-link">← 回首頁</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== 简体中文 ====== -->
+    <div id="lang-cn" class="content-lang">
+        <div class="book-container">
+            <div class="opening-statement">
+                <p><span class="highlight-orange">GL Index 2026 · 智利</span></p>
+                <p>治理摩擦、价值捕获与成本转嫁的诊断报告。</p>
+                <p class="signature">— GL 框架诊断 · Ping Xu · GFI Flow Intelligence</p>
+            </div>
+            <div style="text-align:center; margin:2rem 0;">
+                <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#f97316; line-height:1;">0.41</div>
+                <div style="font-size:1.2rem; color:#f97316; font-weight:600;">D · 不及格</div>
+                <div style="font-size:0.85rem; color:#9fb0c8; margin-top:0.25rem;">满分 1.00</div>
+            </div>
+            <div class="theme-line">拉丁美洲的实验室——宪法实验进行中。</div>
+            <p>智利在 GL Index 得分 <span class="highlight-orange">0.41</span> — D 级。它是拉丁美洲表现最好的国家，但仍然不及格。智利正在进行宪法实验——改写皮诺切特时代的宪法。结果将决定智利走向更好的治理还是更深的极化。</p>
+            <h2>八个参数 · 智利</h2>
+            <table class="score-table">
+                <thead><tr><th>参数</th><th>权重</th><th>分数 (0–100)</th><th>加权</th></tr></thead>
+                <tbody>
+                    <tr><td>1. 等待成本</td><td class="weight-col">15%</td><td class="score-col">45</td><td class="weighted-col">6.75</td></tr>
+                    <tr><td>2. 重复成本</td><td class="weight-col">15%</td><td class="score-col">40</td><td class="weighted-col">6.00</td></tr>
+                    <tr><td>3. 崩溃成本</td><td class="weight-col">15%</td><td class="score-col">35</td><td class="weighted-col">5.25</td></tr>
+                    <tr><td>4. 信息不对称成本</td><td class="weight-col">10%</td><td class="score-col">45</td><td class="weighted-col">4.50</td></tr>
+                    <tr><td>5. 心理成本</td><td class="weight-col">10%</td><td class="score-col">35</td><td class="weighted-col">3.50</td></tr>
+                    <tr><td>6. 机会成本</td><td class="weight-col">10%</td><td class="score-col">40</td><td class="weighted-col">4.00</td></tr>
+                    <tr><td>7. 转嫁路径</td><td class="weight-col">15%</td><td class="score-col">40</td><td class="weighted-col">6.00</td></tr>
+                    <tr><td>8. 回路闭合</td><td class="weight-col">10%</td><td class="score-col">45</td><td class="weighted-col">4.50</td></tr>
+                    <tr style="border-top:2px solid rgba(255,255,255,0.2); font-weight:700;">
+                        <td colspan="3" style="text-align:right;">总计</td>
+                        <td class="weighted-col" style="font-size:1.2rem;">40.50 / 100</td>
+                    </tr>
+                    <tr style="border-top:2px solid #f97316; font-weight:700;">
+                        <td colspan="3" style="text-align:right;">GL Index</td>
+                        <td class="weighted-col" style="font-size:1.8rem; color:#f97316;">0.41</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2>关键发现</h2>
+            <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem; line-height:1.8;">
+                <li><strong>宪法改革</strong> — 智利正在改写皮诺切特时代的宪法。结果将决定治理的未来。</li>
+                <li><strong>社会不平等</strong> — 严重不平等持续存在。2019年的抗议揭露了深层的结构性不满。</li>
+                <li><strong>新自由主义遗产</strong> — 皮诺切特时代的经济模式创造了成长，但也造成了不平等。这个模式正在被质疑。</li>
+                <li><strong>行政摩擦</strong> — 官僚系统效率低落。公共服务不均衡。</li>
+                <li><strong>政治极化</strong> — 宪法进程已变得极化。改革受到争议。</li>
+                <li><strong>资源依赖</strong> — 铜主导经济。这造成对价格波动的脆弱性。</li>
+            </ul>
+            <div class="gl-box">
+                <p><strong>0.41 代表的意义</strong></p>
+                <p>智利是拉丁美洲的治理实验室。它已经改革了宪法，但过程受到争议。皮诺切特时代的经济模式创造了成长，但也造成了不平等。挑战是在不失去经济成果的情况下走向更包容的治理。这是一个困难的平衡——结果不确定。</p>
+            </div>
+            <div class="highlight-box">
+                <p><strong>等级说明</strong></p>
+                <p>A (0.90–1.00) — 价值回流。成本被吸收。小民信任治理。</p>
+                <p>B (0.70–0.89) — 大部分价值回流。少部分成本转嫁。</p>
+                <p>C (0.50–0.69) — 一半回流。一半转嫁。</p>
+                <p>D (0.30–0.49) — 大部分价值被拿走。大部分成本被转嫁。</p>
+                <p>F (0.00–0.29) — 价值被拿走。成本被转嫁。小民精疲力竭。</p>
+                <p style="margin-top:0.5rem;"><span class="grade-d">智利：0.41 — D</span></p>
+            </div>
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · GL框架创建者 · 2026年6月</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · 免费下载 · 免费传播</p>
+                <a href="index.html" class="back-link">← 回首页</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== ESPAÑOL ====== -->
+    <div id="lang-es" class="content-lang">
+        <div class="book-container">
+            <div class="opening-statement">
+                <p><span class="highlight-orange">GL Index 2026 · Chile</span></p>
+                <p>Un informe de diagnóstico sobre fricción gubernamental, captura de valor y transferencia de costos.</p>
+                <p class="signature">— Diagnóstico del Marco GL · Ping Xu · GFI Flow Intelligence</p>
+            </div>
+            <div style="text-align:center; margin:2rem 0;">
+                <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#f97316; line-height:1;">0.41</div>
+                <div style="font-size:1.2rem; color:#f97316; font-weight:600;">D · Suspenso</div>
+                <div style="font-size:0.85rem; color:#9fb0c8; margin-top:0.25rem;">sobre 1.00</div>
+            </div>
+            <div class="theme-line">El laboratorio de América Latina — en medio de un experimento constitucional.</div>
+            <p>Chile obtiene <span class="highlight-orange">0.41</span> en el GL Index — una calificación D. Es el país con mejor desempeño en América Latina, pero todavía está reprobando. Chile está en medio de un experimento constitucional — reescribiendo la constitución de la era de Pinochet. El resultado determinará si Chile avanza hacia una mejor gobernanza o una polarización más profunda.</p>
+            <h2>Ocho Parámetros · Chile</h2>
+            <table class="score-table">
+                <thead><tr><th>Parámetro</th><th>Peso</th><th>Puntuación (0–100)</th><th>Ponderado</th></tr></thead>
+                <tbody>
+                    <tr><td>1. Costo de Espera</td><td class="weight-col">15%</td><td class="score-col">45</td><td class="weighted-col">6.75</td></tr>
+                    <tr><td>2. Costo de Repetición</td><td class="weight-col">15%</td><td class="score-col">40</td><td class="weighted-col">6.00</td></tr>
+                    <tr><td>3. Costo de Colapso</td><td class="weight-col">15%</td><td class="score-col">35</td><td class="weighted-col">5.25</td></tr>
+                    <tr><td>4. Costo de Asimetría</td><td class="weight-col">10%</td><td class="score-col">45</td><td class="weighted-col">4.50</td></tr>
+                    <tr><td>5. Costo Psicológico</td><td class="weight-col">10%</td><td class="score-col">35</td><td class="weighted-col">3.50</td></tr>
+                    <tr><td>6. Costo de Oportunidad</td><td class="weight-col">10%</td><td class="score-col">40</td><td class="weighted-col">4.00</td></tr>
+                    <tr><td>7. Vía de Transferencia</td><td class="weight-col">15%</td><td class="score-col">40</td><td class="weighted-col">6.00</td></tr>
+                    <tr><td>8. Cierre de Circuito</td><td class="weight-col">10%</td><td class="score-col">45</td><td class="weighted-col">4.50</td></tr>
+                    <tr style="border-top:2px solid rgba(255,255,255,0.2); font-weight:700;">
+                        <td colspan="3" style="text-align:right;">TOTAL</td>
+                        <td class="weighted-col" style="font-size:1.2rem;">40.50 / 100</td>
+                    </tr>
+                    <tr style="border-top:2px solid #f97316; font-weight:700;">
+                        <td colspan="3" style="text-align:right;">GL Index</td>
+                        <td class="weighted-col" style="font-size:1.8rem; color:#f97316;">0.41</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2>Hallazgos Clave</h2>
+            <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem; line-height:1.8;">
+                <li><strong>Reforma Constitucional</strong> — Chile está reescribiendo la constitución de la era de Pinochet. El resultado determinará el futuro de la gobernanza.</li>
+                <li><strong>Desigualdad Social</strong> — Persiste una alta desigualdad. Las protestas de 2019 revelaron profundos agravios estructurales.</li>
+                <li><strong>Legado Neoliberal</strong> — El modelo económico de la era de Pinochet creó crecimiento pero también desigualdad. El modelo está siendo cuestionado.</li>
+                <li><strong>Fricción Administrativa</strong> — La burocracia es ineficiente. Los servicios públicos son desiguales.</li>
+                <li><strong>Polarización Política</strong> — El proceso constitucional se ha polarizado. La reforma es disputada.</li>
+                <li><strong>Dependencia de Recursos</strong> — El cobre domina la economía. Esto crea vulnerabilidad a las fluctuaciones de precios.</li>
+            </ul>
+            <div class="gl-box">
+                <p><strong>Qué significa 0.41</strong></p>
+                <p>Chile es el laboratorio de gobernanza de América Latina. Ha reformado su constitución, pero el proceso es disputado. El modelo económico de la era de Pinochet creó crecimiento pero también desigualdad. El desafío es avanzar hacia una gobernanza más inclusiva sin perder las ganancias económicas. Este es un equilibrio difícil — y el resultado es incierto.</p>
+            </div>
+            <div class="highlight-box">
+                <p><strong>Clave de Grados</strong></p>
+                <p>A (0.90–1.00) — El valor regresa. Los costos son absorbidos. Los ciudadanos confían en la gobernanza.</p>
+                <p>B (0.70–0.89) — La mayoría del valor regresa. Algo de transferencia de costos.</p>
+                <p>C (0.50–0.69) — La mitad regresa. La mitad se transfiere.</p>
+                <p>D (0.30–0.49) — La mayoría del valor es capturado. La mayoría de los costos se transfieren.</p>
+                <p>F (0.00–0.29) — Valor capturado. Costos transferidos. Ciudadanos agotados.</p>
+                <p style="margin-top:0.5rem;"><span class="grade-d">Chile: 0.41 — D</span></p>
+            </div>
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · Creador del Marco GL · Junio 2026</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · Descarga gratuita · Distribución gratuita</p>
+                <a href="index.html" class="back-link">← Volver al Inicio</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                document.querySelectorAll('.content-lang').forEach(el => el.classList.remove('active'));
+                const lang = this.dataset.lang;
+                const target = document.getElementById('lang-' + lang);
+                if (target) target.classList.add('active');
+            });
+        });
+    </script>
+</div>
+</body>
+</html>
