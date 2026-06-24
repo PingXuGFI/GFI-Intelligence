@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GL Index 2026 · 挪威診斷報告</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #0b1220; color: #f8fbff; font-family: 'DM Sans', system-ui, sans-serif; line-height: 1.7; }
+        .container { max-width: 920px; margin: 0 auto; padding: 2rem; }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+        .logo a {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.12em;
+            color: #9FE870;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+        .logo a .home-arrow { color: #9fb0c8; margin-right: 6px; }
+        .logo a:hover .home-arrow { color: #9FE870; }
+        .lang-switch { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .lang-btn {
+            background: none;
+            border: 1px solid rgba(255,255,255,.1);
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            padding: 0.25rem 0.7rem;
+            border-radius: 2rem;
+            color: #9fb0c8;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,.3); color: #fff; }
+        .lang-btn.active { background: #9FE870; color: #0b1220; border-color: #9FE870; }
+        .content-lang { display: none; }
+        .content-lang.active { display: block; }
+        .book-container { background: #0d1526; padding: 3rem 2.5rem; border-radius: 4px; border: 1px solid rgba(255,255,255,.06); }
+        .opening-statement {
+            background: rgba(159,232,112,0.06);
+            border: 1px solid rgba(159,232,112,0.2);
+            border-radius: 12px;
+            padding: 1.8rem 2rem;
+            margin-bottom: 2rem;
+        }
+        .opening-statement p { color: #eaf6ff; margin-bottom: 0.5rem; font-size: 0.95rem; }
+        .opening-statement .highlight-green { color: #9FE870; font-weight: 600; }
+        .opening-statement .signature { color: #9fb0c8; font-style: italic; font-size: 0.85rem; margin-top: 0.5rem; }
+        h1 { font-size: 2.6rem; font-weight: 700; text-align: center; margin-bottom: 0.25rem; color: #9FE870; letter-spacing: 0.02em; font-family: 'DM Serif Display', Georgia, serif; }
+        .subtitle { text-align: center; font-size: 1rem; color: #9fb0c8; margin-bottom: 0.5rem; font-style: italic; }
+        .author-line { text-align: center; font-size: 0.9rem; color: #7DD3FC; margin-bottom: 2rem; }
+        .theme-line { font-family: 'DM Serif Display', Georgia, serif; font-size: 1.8rem; color: #9FE870; text-align: center; margin: 1.5rem 0; line-height: 1.3; }
+        h2 { font-size: 1.4rem; color: #9FE870; margin: 2rem 0 1rem 0; border-bottom: 1px solid rgba(255,255,255,.06); padding-bottom: 0.3rem; font-family: 'DM Serif Display', Georgia, serif; }
+        p { color: #c7d2e3; margin-bottom: 1rem; line-height: 1.8; }
+        .quote-block { border-left: 3px solid #9FE870; padding-left: 1.2rem; margin: 1.2rem 0; color: #eaf6ff; font-style: italic; background: rgba(159,232,112,0.04); border-radius: 0 8px 8px 0; }
+        .quote-block p { color: #eaf6ff; }
+        .quote-block .source { color: #9fb0c8; font-size: 0.85rem; font-style: normal; }
+        .highlight-box { background: rgba(159, 232, 112, 0.06); border: 1px solid rgba(159, 232, 112, 0.2); border-radius: 8px; padding: 1.5rem 2rem; margin: 1.5rem 0; text-align: center; }
+        .highlight-box p { color: #eaf6ff; margin-bottom: 0.25rem; }
+        .highlight-box strong { color: #9FE870; }
+        .gl-box { background: rgba(159, 232, 112, 0.04); border-left: 3px solid #9FE870; padding: 1.2rem 1.5rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0; }
+        .gl-box p { color: #eaf6ff; margin-bottom: 0.5rem; }
+        .gl-box strong { color: #9FE870; }
+        .gl-box .gl-score { font-family: 'DM Mono', monospace; font-size: 2.5rem; font-weight: 700; color: #9FE870; text-align: center; display: block; margin: 0.3rem 0; }
+        .red-box { background: rgba(248, 113, 113, 0.04); border-left: 3px solid #f87171; padding: 1.2rem 1.5rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0; }
+        .red-box p { color: #f0d0d0; margin-bottom: 0.5rem; }
+        .red-box strong { color: #f87171; }
+        .parameter-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
+        .parameter-item { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: 1rem 1.2rem; text-align: center; }
+        .parameter-item .number { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: #7DD3FC; }
+        .parameter-item .title { font-weight: 600; color: #fff; margin: 0.2rem 0; }
+        .parameter-item .desc { font-size: 0.85rem; color: #c7d2e3; }
+        .parameter-item .score { font-family: 'DM Mono', monospace; font-size: 1.1rem; font-weight: 700; color: #9FE870; margin-top: 0.3rem; }
+        .footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,.06); text-align: center; font-size: 0.75rem; color: #9fb0c8; }
+        .back-link { display: inline-block; margin-top: 1.5rem; font-family: 'DM Mono', monospace; font-size: 0.7rem; color: #9fb0c8; text-decoration: none; border: 1px solid rgba(255,255,255,.06); padding: 0.4rem 1rem; border-radius: 2rem; transition: 0.2s; }
+        .back-link:hover { border-color: rgba(255,255,255,.2); color: #fff; }
+        .divider { border: 0; border-top: 1px solid rgba(255,255,255,.08); margin: 2.5rem 0; }
+        .score-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+        .score-table th, .score-table td { border: 1px solid rgba(255,255,255,.1); padding: 0.75rem; text-align: left; }
+        .score-table th { background: rgba(255,255,255,.05); font-weight: 600; }
+        .score-table .weight-col { text-align: center; }
+        .score-table .score-col { text-align: center; font-weight: 700; color: #9FE870; }
+        .score-table .weighted-col { text-align: center; font-weight: 700; color: #9FE870; }
+        .grade-b { color: #9FE870; font-weight: 700; }
+        @media (max-width: 700px) {
+            .container { padding: 1rem; }
+            .book-container { padding: 1.5rem; }
+            h1 { font-size: 1.8rem; }
+            .theme-line { font-size: 1.3rem; }
+            .parameter-grid { grid-template-columns: 1fr; }
+            .opening-statement { padding: 1.2rem; }
+        }
+        @media print {
+            .header { display: none !important; }
+            .footer { display: none !important; }
+            .back-link { display: none !important; }
+            .book-container { background: transparent !important; border: none !important; padding: 0 !important; }
+            body { background: #fff !important; color: #000 !important; }
+            h1, h2, h3, p { color: #000 !important; }
+            .gl-box, .highlight-box, .red-box, .quote-block { background: #f5f5f5 !important; border-color: #ccc !important; }
+            .gl-box p, .highlight-box p, .red-box p, .quote-block p { color: #000 !important; }
+            .parameter-item { border-color: #ccc !important; }
+            .parameter-item .title { color: #000 !important; }
+            .parameter-item .score { color: #006600 !important; }
+            .theme-line { color: #006600 !important; }
+            .gl-box .gl-score { color: #006600 !important; }
+            .score-table th, .score-table td { border-color: #ccc !important; color: #000 !important; }
+            .score-table th { background: #eee !important; }
+            .score-table .score-col { color: #006600 !important; }
+            .score-table .weighted-col { color: #006600 !important; }
+            .grade-b { color: #006600 !important; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="logo"><a href="index.html"><span class="home-arrow">←</span> GFI Flow Intelligence</a></div>
+        <div class="lang-switch">
+            <button class="lang-btn active" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="tw">繁</button>
+            <button class="lang-btn" data-lang="cn">简</button>
+            <button class="lang-btn" data-lang="es">ES</button>
+        </div>
+    </div>
+
+    <!-- ====== ENGLISH ====== -->
+    <div id="lang-en" class="content-lang active">
+        <div class="book-container">
+            <div class="opening-statement">
+                <p><span class="highlight-green">GL Index 2026 · Norway</span></p>
+                <p>A diagnostic report on governance friction, value capture, and cost shifting.</p>
+                <p class="signature">— GL Framework Diagnostic · Ping Xu · GFI Flow Intelligence</p>
+            </div>
+            <div style="text-align:center; margin:2rem 0;">
+                <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#9FE870; line-height:1;">0.75</div>
+                <div style="font-size:1.2rem; color:#9FE870; font-weight:600;">B · Strong</div>
+                <div style="font-size:0.85rem; color:#9fb0c8; margin-top:0.25rem;">out of 1.00</div>
+            </div>
+            <div class="theme-line">The world's largest sovereign wealth fund is a value capture mechanism.</div>
+            <p>Norway scores <span class="highlight-green">0.75</span> on the GL Index — a B grade. It is one of the best-governed countries in the world. Its sovereign wealth fund ($1.7 trillion) is the most successful value capture mechanism in modern history — oil revenues are saved, not spent, and invested for future generations.</p>
+            <h2>Eight Parameters · Norway</h2>
+            <table class="score-table">
+                <thead><tr><th>Parameter</th><th>Weight</th><th>Score (0–100)</th><th>Weighted</th></tr></thead>
+                <tbody>
+                    <tr><td>1. Waiting Cost</td><td class="weight-col">15%</td><td class="score-col">80</td><td class="weighted-col">12.00</td></tr>
+                    <tr><td>2. Repetition Cost</td><td class="weight-col">15%</td><td class="score-col">78</td><td class="weighted-col">11.70</td></tr>
+                    <tr><td>3. Collapse Cost</td><td class="weight-col">15%</td><td class="score-col">82</td><td class="weighted-col">12.30</td></tr>
+                    <tr><td>4. Information Asymmetry Cost</td><td class="weight-col">10%</td><td class="score-col">80</td><td class="weighted-col">8.00</td></tr>
+                    <tr><td>5. Psychological Cost</td><td class="weight-col">10%</td><td class="score-col">72</td><td class="weighted-col">7.20</td></tr>
+                    <tr><td>6. Opportunity Cost</td><td class="weight-col">10%</td><td class="score-col">70</td><td class="weighted-col">7.00</td></tr>
+                    <tr><td>7. Shift Pathway</td><td class="weight-col">15%</td><td class="score-col">80</td><td class="weighted-col">12.00</td></tr>
+                    <tr><td>8. Loop Closure</td><td class="weight-col">10%</td><td class="score-col">85</td><td class="weighted-col">8.50</td></tr>
+                    <tr style="border-top:2px solid rgba(255,255,255,0.2); font-weight:700;">
+                        <td colspan="3" style="text-align:right;">TOTAL</td>
+                        <td class="weighted-col" style="font-size:1.2rem;">74.70 / 100</td>
+                    </tr>
+                    <tr style="border-top:2px solid #9FE870; font-weight:700;">
+                        <td colspan="3" style="text-align:right;">GL Index</td>
+                        <td class="weighted-col" style="font-size:1.8rem; color:#9FE870;">0.75</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2>Key Findings</h2>
+            <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem; line-height:1.8;">
+                <li><strong>Sovereign Wealth Fund</strong> — The most successful value capture mechanism in modern history. Oil revenues are saved, not spent. Value is captured for future generations.</li>
+                <li><strong>Social Trust</strong> — High trust in institutions. The system works because citizens believe it works.</li>
+                <li><strong>Transparency</strong> — Government records are open. Political funding is transparent.</li>
+                <li><strong>Resource Dependency</strong> — The economy depends heavily on oil and gas. This is both a strength and a vulnerability.</li>
+                <li><strong>Integration Challenges</strong> — High immigration creates pressures on the welfare system.</li>
+                <li><strong>Geographic Isolation</strong> — Not a weakness, but a constraint. Norway is on the periphery of Europe.</li>
+            </ul>
+            <div class="gl-box">
+                <p><strong>What 0.75 Means</strong></p>
+                <p>Norway has the most successful value capture mechanism in the world. Its sovereign wealth fund is proof that public value can be saved, not consumed. But the model depends on oil — a finite resource. The challenge is not current performance. It is the transition to the post-oil future.</p>
+            </div>
+            <div class="highlight-box">
+                <p><strong>Grade Key</strong></p>
+                <p>A (0.90–1.00) — Value returns. Costs are absorbed. Citizens trust governance.</p>
+                <p>B (0.70–0.89) — Most value returns. Some cost shifting.</p>
+                <p>C (0.50–0.69) — Half returns. Half shifts.</p>
+                <p>D (0.30–0.49) — Most value captured. Most costs shifted.</p>
+                <p>F (0.00–0.29) — Value captured. Costs shifted. Citizens exhausted.</p>
+                <p style="margin-top:0.5rem;"><span class="grade-b">Norway: 0.75 — B</span></p>
+            </div>
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · Creator of the GL Framework · June 2026</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · Free download · Free distribution</p>
+                <a href="index.html" class="back-link">← Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== 繁體中文 ====== -->
+    <div id="lang-tw" class="content-lang">
+        <div class="book-container">
+            <div class="opening-statement">
+                <p><span class="highlight-green">GL Index 2026 · 挪威</span></p>
+                <p>治理摩擦、價值捕獲與成本轉嫁的診斷報告。</p>
+                <p class="signature">— GL 框架診斷 · Ping Xu · GFI Flow Intelligence</p>
+            </div>
+            <div style="text-align:center; margin:2rem 0;">
+                <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#9FE870; line-height:1;">0.75</div>
+                <div style="font-size:1.2rem; color:#9FE870; font-weight:600;">B · 強勁</div>
+                <div style="font-size:0.85rem; color:#9fb0c8; margin-top:0.25rem;">滿分 1.00</div>
+            </div>
+            <div class="theme-line">全球最大主權財富基金——價值回收機制。</div>
+            <p>挪威在 GL Index 得分 <span class="highlight-green">0.75</span> — B 級。它是全世界治理最好的國家之一。它的主權財富基金（1.7兆美元）是現代史上最成功的價值捕獲機制——石油收入被儲存而非花費，並為未來世代投資。</p>
+            <h2>八個參數 · 挪威</h2>
+            <table class="score-table">
+                <thead><tr><th>參數</th><th>權重</th><th>分數 (0–100)</th><th>加權</th></tr></thead>
+                <tbody>
+                    <tr><td>1. 等待成本</td><td class="weight-col">15%</td><td class="score-col">80</td><td class="weighted-col">12.00</td></tr>
+                    <tr><td>2. 重複成本</td><td class="weight-col">15%</td><td class="score-col">78</td><td class="weighted-col">11.70</td></tr>
+                    <tr><td>3. 崩潰成本</td><td class="weight-col">15%</td><td class="score-col">82</td><td class="weighted-col">12.30</td></tr>
+                    <tr><td>4. 資訊不對稱成本</td><td class="weight-col">10%</td><td class="score-col">80</td><td class="weighted-col">8.00</td></tr>
+                    <tr><td>5. 心理成本</td><td class="weight-col">10%</td><td class="score-col">72</td><td class="weighted-col">7.20</td></tr>
+                    <tr><td>6. 機會成本</td><td class="weight-col">10%</td><td class="score-col">70</td><td class="weighted-col">7.00</td></tr>
+                    <tr><td>7. 轉嫁路徑</td><td class="weight-col">15%</td><td class="score-col">80</td><td class="weighted-col">12.00</td></tr>
+                    <tr><td>8. 迴路閉合</td><td class="weight-col">10%</td><td class="score-col">85</td><td class="weighted-col">8.50</td></tr>
+                    <tr style="border-top:2px solid rgba(255,255,255,0.2); font-weight:700;">
+                        <td colspan="3" style="text-align:right;">總計</td>
+                        <td class="weighted-col" style="font-size:1.2rem;">74.70 / 100</td>
+                    </tr>
+                    <tr style="border-top:2px solid #9FE870; font-weight:700;">
+                        <td colspan="3" style="text-align:right;">GL Index</td>
+                        <td class="weighted-col" style="font-size:1.8rem; color:#9FE870;">0.75</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2>關鍵發現</h2>
+            <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem; line-height:1.8;">
+                <li><strong>主權財富基金</strong> — 現代史上最成功的價值捕獲機制。石油收入被儲存而非花費，為未來世代捕獲價值。</li>
+                <li><strong>社會信任</strong> — 對制度高度信任。系統有效，因為小民相信它有效。</li>
+                <li><strong>透明度</strong> — 政府記錄公開，政治資金透明。</li>
+                <li><strong>資源依賴</strong> — 經濟嚴重依賴石油和天然氣。這既是優勢也是脆弱性。</li>
+                <li><strong>整合挑戰</strong> — 高移民率對福利系統造成壓力。</li>
+                <li><strong>地理孤立</strong> — 不是弱點，是限制。挪威位於歐洲邊緣。</li>
+            </ul>
+            <div class="gl-box">
+                <p><strong>0.75 代表的意義</strong></p>
+                <p>挪威擁有全世界最成功的價值捕獲機制。它的主權財富基金證明了公共價值可以被儲存，而不是被消耗。但這個模式依賴石油——一種有限的資源。挑戰不是當前的表現。是向後石油時代的過渡。</p>
+            </div>
+            <div class="highlight-box">
+                <p><strong>等級說明</strong></p>
+                <p>A (0.90–1.00) — 價值回流。成本被吸收。小民信任治理。</p>
+                <p>B (0.70–0.89) — 大部分價值回流。少部分成本轉嫁。</p>
+                <p>C (0.50–0.69) — 一半回流。一半轉嫁。</p>
+                <p>D (0.30–0.49) — 大部分價值被拿走。大部分成本被轉嫁。</p>
+                <p>F (0.00–0.29) — 價值被拿走。成本被轉嫁。小民精疲力竭。</p>
+                <p style="margin-top:0.5rem;"><span class="grade-b">挪威：0.75 — B</span></p>
+            </div>
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · GL框架創建者 · 2026年6月</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · 免費下載 · 免費傳播</p>
+                <a href="index.html" class="back-link">← 回首頁</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== 简体中文 ====== -->
+    <div id="lang-cn" class="content-lang">
+        <div class="book-container">
+            <div class="opening-statement">
+                <p><span class="highlight-green">GL Index 2026 · 挪威</span></p>
+                <p>治理摩擦、价值捕获与成本转嫁的诊断报告。</p>
+                <p class="signature">— GL 框架诊断 · Ping Xu · GFI Flow Intelligence</p>
+            </div>
+            <div style="text-align:center; margin:2rem 0;">
+                <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#9FE870; line-height:1;">0.75</div>
+                <div style="font-size:1.2rem; color:#9FE870; font-weight:600;">B · 强劲</div>
+                <div style="font-size:0.85rem; color:#9fb0c8; margin-top:0.25rem;">满分 1.00</div>
+            </div>
+            <div class="theme-line">全球最大主权财富基金——价值回收机制。</div>
+            <p>挪威在 GL Index 得分 <span class="highlight-green">0.75</span> — B 级。它是全世界治理最好的国家之一。它的主权财富基金（1.7万亿美元）是现代史上最成功的价值捕获机制——石油收入被储存而非花费，并为未来世代投资。</p>
+            <h2>八个参数 · 挪威</h2>
+            <table class="score-table">
+                <thead><tr><th>参数</th><th>权重</th><th>分数 (0–100)</th><th>加权</th></tr></thead>
+                <tbody>
+                    <tr><td>1. 等待成本</td><td class="weight-col">15%</td><td class="score-col">80</td><td class="weighted-col">12.00</td></tr>
+                    <tr><td>2. 重复成本</td><td class="weight-col">15%</td><td class="score-col">78</td><td class="weighted-col">11.70</td></tr>
+                    <tr><td>3. 崩溃成本</td><td class="weight-col">15%</td><td class="score-col">82</td><td class="weighted-col">12.30</td></tr>
+                    <tr><td>4. 信息不对称成本</td><td class="weight-col">10%</td><td class="score-col">80</td><td class="weighted-col">8.00</td></tr>
+                    <tr><td>5. 心理成本</td><td class="weight-col">10%</td><td class="score-col">72</td><td class="weighted-col">7.20</td></tr>
+                    <tr><td>6. 机会成本</td><td class="weight-col">10%</td><td class="score-col">70</td><td class="weighted-col">7.00</td></tr>
+                    <tr><td>7. 转嫁路径</td><td class="weight-col">15%</td><td class="score-col">80</td><td class="weighted-col">12.00</td></tr>
+                    <tr><td>8. 回路闭合</td><td class="weight-col">10%</td><td class="score-col">85</td><td class="weighted-col">8.50</td></tr>
+                    <tr style="border-top:2px solid rgba(255,255,255,0.2); font-weight:700;">
+                        <td colspan="3" style="text-align:right;">总计</td>
+                        <td class="weighted-col" style="font-size:1.2rem;">74.70 / 100</td>
+                    </tr>
+                    <tr style="border-top:2px solid #9FE870; font-weight:700;">
+                        <td colspan="3" style="text-align:right;">GL Index</td>
+                        <td class="weighted-col" style="font-size:1.8rem; color:#9FE870;">0.75</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2>关键发现</h2>
+            <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem; line-height:1.8;">
+                <li><strong>主权财富基金</strong> — 现代史上最成功的价值捕获机制。石油收入被储存而非花费，为未来世代捕获价值。</li>
+                <li><strong>社会信任</strong> — 对制度高度信任。系统有效，因为小民相信它有效。</li>
+                <li><strong>透明度</strong> — 政府记录公开，政治资金透明。</li>
+                <li><strong>资源依赖</strong> — 经济严重依赖石油和天然气。这既是优势也是脆弱性。</li>
+                <li><strong>整合挑战</strong> — 高移民率对福利系统造成压力。</li>
+                <li><strong>地理孤立</strong> — 不是弱点，是限制。挪威位于欧洲边缘。</li>
+            </ul>
+            <div class="gl-box">
+                <p><strong>0.75 代表的意义</strong></p>
+                <p>挪威拥有全世界最成功的价值捕获机制。它的主权财富基金证明了公共价值可以被储存，而不是被消耗。但这个模式依赖石油——一种有限的资源。挑战不是当前的表现。是向后石油时代的过渡。</p>
+            </div>
+            <div class="highlight-box">
+                <p><strong>等级说明</strong></p>
+                <p>A (0.90–1.00) — 价值回流。成本被吸收。小民信任治理。</p>
+                <p>B (0.70–0.89) — 大部分价值回流。少部分成本转嫁。</p>
+                <p>C (0.50–0.69) — 一半回流。一半转嫁。</p>
+                <p>D (0.30–0.49) — 大部分价值被拿走。大部分成本被转嫁。</p>
+                <p>F (0.00–0.29) — 价值被拿走。成本被转嫁。小民精疲力竭。</p>
+                <p style="margin-top:0.5rem;"><span class="grade-b">挪威：0.75 — B</span></p>
+            </div>
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · GL框架创建者 · 2026年6月</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · 免费下载 · 免费传播</p>
+                <a href="index.html" class="back-link">← 回首页</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== ESPAÑOL ====== -->
+    <div id="lang-es" class="content-lang">
+        <div class="book-container">
+            <div class="opening-statement">
+                <p><span class="highlight-green">GL Index 2026 · Noruega</span></p>
+                <p>Un informe de diagnóstico sobre fricción gubernamental, captura de valor y transferencia de costos.</p>
+                <p class="signature">— Diagnóstico del Marco GL · Ping Xu · GFI Flow Intelligence</p>
+            </div>
+            <div style="text-align:center; margin:2rem 0;">
+                <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#9FE870; line-height:1;">0.75</div>
+                <div style="font-size:1.2rem; color:#9FE870; font-weight:600;">B · Fuerte</div>
+                <div style="font-size:0.85rem; color:#9fb0c8; margin-top:0.25rem;">sobre 1.00</div>
+            </div>
+            <div class="theme-line">El mayor fondo soberano del mundo es un mecanismo de captura de valor.</div>
+            <p>Noruega obtiene <span class="highlight-green">0.75</span> en el GL Index — una calificación B. Es uno de los países mejor gobernados del mundo. Su fondo soberano ($1.7 billones) es el mecanismo de captura de valor más exitoso de la historia moderna — los ingresos del petróleo se ahorran, no se gastan, y se invierten para las generaciones futuras.</p>
+            <h2>Ocho Parámetros · Noruega</h2>
+            <table class="score-table">
+                <thead><tr><th>Parámetro</th><th>Peso</th><th>Puntuación (0–100)</th><th>Ponderado</th></tr></thead>
+                <tbody>
+                    <tr><td>1. Costo de Espera</td><td class="weight-col">15%</td><td class="score-col">80</td><td class="weighted-col">12.00</td></tr>
+                    <tr><td>2. Costo de Repetición</td><td class="weight-col">15%</td><td class="score-col">78</td><td class="weighted-col">11.70</td></tr>
+                    <tr><td>3. Costo de Colapso</td><td class="weight-col">15%</td><td class="score-col">82</td><td class="weighted-col">12.30</td></tr>
+                    <tr><td>4. Costo de Asimetría</td><td class="weight-col">10%</td><td class="score-col">80</td><td class="weighted-col">8.00</td></tr>
+                    <tr><td>5. Costo Psicológico</td><td class="weight-col">10%</td><td class="score-col">72</td><td class="weighted-col">7.20</td></tr>
+                    <tr><td>6. Costo de Oportunidad</td><td class="weight-col">10%</td><td class="score-col">70</td><td class="weighted-col">7.00</td></tr>
+                    <tr><td>7. Vía de Transferencia</td><td class="weight-col">15%</td><td class="score-col">80</td><td class="weighted-col">12.00</td></tr>
+                    <tr><td>8. Cierre de Circuito</td><td class="weight-col">10%</td><td class="score-col">85</td><td class="weighted-col">8.50</td></tr>
+                    <tr style="border-top:2px solid rgba(255,255,255,0.2); font-weight:700;">
+                        <td colspan="3" style="text-align:right;">TOTAL</td>
+                        <td class="weighted-col" style="font-size:1.2rem;">74.70 / 100</td>
+                    </tr>
+                    <tr style="border-top:2px solid #9FE870; font-weight:700;">
+                        <td colspan="3" style="text-align:right;">GL Index</td>
+                        <td class="weighted-col" style="font-size:1.8rem; color:#9FE870;">0.75</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2>Hallazgos Clave</h2>
+            <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem; line-height:1.8;">
+                <li><strong>Fondo Soberano</strong> — El mecanismo de captura de valor más exitoso de la historia moderna. Los ingresos del petróleo se ahorran, no se gastan. El valor se captura para las generaciones futuras.</li>
+                <li><strong>Confianza Social</strong> — Alta confianza en las instituciones. El sistema funciona porque los ciudadanos creen que funciona.</li>
+                <li><strong>Transparencia</strong> — Los registros gubernamentales son abiertos. La financiación política es transparente.</li>
+                <li><strong>Dependencia de Recursos</strong> — La economía depende en gran medida del petróleo y el gas. Esto es tanto una fortaleza como una vulnerabilidad.</li>
+                <li><strong>Desafíos de Integración</strong> — La alta inmigración crea presiones sobre el sistema de bienestar.</li>
+                <li><strong>Aislamiento Geográfico</strong> — No es una debilidad, sino una limitación. Noruega está en la periferia de Europa.</li>
+            </ul>
+            <div class="gl-box">
+                <p><strong>Qué significa 0.75</strong></p>
+                <p>Noruega tiene el mecanismo de captura de valor más exitoso del mundo. Su fondo soberano es la prueba de que el valor público puede ser ahorrado, no consumido. Pero el modelo depende del petróleo — un recurso finito. El desafío no es el rendimiento actual. Es la transición al futuro post-petróleo.</p>
+            </div>
+            <div class="highlight-box">
+                <p><strong>Clave de Grados</strong></p>
+                <p>A (0.90–1.00) — El valor regresa. Los costos son absorbidos. Los ciudadanos confían en la gobernanza.</p>
+                <p>B (0.70–0.89) — La mayoría del valor regresa. Algo de transferencia de costos.</p>
+                <p>C (0.50–0.69) — La mitad regresa. La mitad se transfiere.</p>
+                <p>D (0.30–0.49) — La mayoría del valor es capturado. La mayoría de los costos se transfieren.</p>
+                <p>F (0.00–0.29) — Valor capturado. Costos transferidos. Ciudadanos agotados.</p>
+                <p style="margin-top:0.5rem;"><span class="grade-b">Noruega: 0.75 — B</span></p>
+            </div>
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · Creador del Marco GL · Junio 2026</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · Descarga gratuita · Distribución gratuita</p>
+                <a href="index.html" class="back-link">← Volver al Inicio</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                document.querySelectorAll('.content-lang').forEach(el => el.classList.remove('active'));
+                const lang = this.dataset.lang;
+                const target = document.getElementById('lang-' + lang);
+                if (target) target.classList.add('active');
+            });
+        });
+    </script>
+</div>
+</body>
+</html>
