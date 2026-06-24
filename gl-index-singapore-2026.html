@@ -1,1 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GL Index 2026 · 新加坡診斷報告</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #0b1220; color: #f8fbff; font-family: 'DM Sans', system-ui, sans-serif; line-height: 1.7; }
+        .container { max-width: 920px; margin: 0 auto; padding: 2rem; }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+        .logo a {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.12em;
+            color: #9FE870;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+        .logo a .home-arrow { color: #9fb0c8; margin-right: 6px; }
+        .logo a:hover .home-arrow { color: #9FE870; }
+        .lang-switch { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .lang-btn {
+            background: none;
+            border: 1px solid rgba(255,255,255,.1);
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            padding: 0.25rem 0.7rem;
+            border-radius: 2rem;
+            color: #9fb0c8;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,.3); color: #fff; }
+        .lang-btn.active { background: #9FE870; color: #0b1220; border-color: #9FE870; }
+        .content-lang { display: none; }
+        .content-lang.active { display: block; }
+        .book-container { background: #0d1526; padding: 3rem 2.5rem; border-radius: 4px; border: 1px solid rgba(255,255,255,.06); }
+        .opening-statement {
+            background: rgba(159,232,112,0.06);
+            border: 1px solid rgba(159,232,112,0.2);
+            border-radius: 12px;
+            padding: 1.8rem 2rem;
+            margin-bottom: 2rem;
+        }
+        .opening-statement p { color: #eaf6ff; margin-bottom: 0.5rem; font-size: 0.95rem; }
+        .opening-statement .highlight-green { color: #9FE870; font-weight: 600; }
+        .opening-statement .signature { color: #9fb0c8; font-style: italic; font-size: 0.85rem; margin-top: 0.5rem; }
+        h1 { font-size: 2.6rem; font-weight: 700; text-align: center; margin-bottom: 0.25rem; color: #9FE870; letter-spacing: 0.02em; font-family: 'DM Serif Display', Georgia, serif; }
+        .subtitle { text-align: center; font-size: 1rem; color: #9fb0c8; margin-bottom: 0.5rem; font-style: italic; }
+        .author-line { text-align: center; font-size: 0.9rem; color: #7DD3FC; margin-bottom: 2rem; }
+        .theme-line { font-family: 'DM Serif Display', Georgia, serif; font-size: 1.8rem; color: #9FE870; text-align: center; margin: 1.5rem 0; line-height: 1.3; }
+        h2 { font-size: 1.4rem; color: #9FE870; margin: 2rem 0 1rem 0; border-bottom: 1px solid rgba(255,255,255,.06); padding-bottom: 0.3rem; font-family: 'DM Serif Display', Georgia, serif; }
+        p { color: #c7d2e3; margin-bottom: 1rem; line-height: 1.8; }
+        .quote-block { border-left: 3px solid #9FE870; padding-left: 1.2rem; margin: 1.2rem 0; color: #eaf6ff; font-style: italic; background: rgba(159,232,112,0.04); border-radius: 0 8px 8px 0; }
+        .quote-block p { color: #eaf6ff; }
+        .quote-block .source { color: #9fb0c8; font-size: 0.85rem; font-style: normal; }
+        .highlight-box { background: rgba(159, 232, 112, 0.06); border: 1px solid rgba(159, 232, 112, 0.2); border-radius: 8px; padding: 1.5rem 2rem; margin: 1.5rem 0; text-align: center; }
+        .highlight-box p { color: #eaf6ff; margin-bottom: 0.25rem; }
+        .highlight-box strong { color: #9FE870; }
+        .gl-box { background: rgba(159, 232, 112, 0.04); border-left: 3px solid #9FE870; padding: 1.2rem 1.5rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0; }
+        .gl-box p { color: #eaf6ff; margin-bottom: 0.5rem; }
+        .gl-box strong { color: #9FE870; }
+        .gl-box .gl-score { font-family: 'DM Mono', monospace; font-size: 2.5rem; font-weight: 700; color: #9FE870; text-align: center; display: block; margin: 0.3rem 0; }
+        .red-box { background: rgba(248, 113, 113, 0.04); border-left: 3px solid #f87171; padding: 1.2rem 1.5rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0; }
+        .red-box p { color: #f0d0d0; margin-bottom: 0.5rem; }
+        .red-box strong { color: #f87171; }
+        .parameter-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
+        .parameter-item { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: 1rem 1.2rem; text-align: center; }
+        .parameter-item .number { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: #7DD3FC; }
+        .parameter-item .title { font-weight: 600; color: #fff; margin: 0.2rem 0; }
+        .parameter-item .desc { font-size: 0.85rem; color: #c7d2e3; }
+        .parameter-item .score { font-family: 'DM Mono', monospace; font-size: 1.1rem; font-weight: 700; color: #9FE870; margin-top: 0.3rem; }
+        .footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,.06); text-align: center; font-size: 0.75rem; color: #9fb0c8; }
+        .back-link {
+            display: inline-block;
+            margin-top: 1.5rem;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: #9fb0c8;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,.06);
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            transition: 0.2s;
+        }
+        .back-link:hover { border-color: rgba(255,255,255,.2); color: #fff; }
+        .divider { border: 0; border-top: 1px solid rgba(255,255,255,.08); margin: 2.5rem 0; }
+        .score-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+        .score-table th, .score-table td { border: 1px solid rgba(255,255,255,.1); padding: 0.75rem; text-align: left; }
+        .score-table th { background: rgba(255,255,255,.05); font-weight: 600; }
+        .score-table .weight-col { text-align: center; }
+        .score-table .score-col { text-align: center; font-weight: 700; color: #9FE870; }
+        .score-table .weighted-col { text-align: center; font-weight: 700; color: #9FE870; }
+        .grade-b { color: #9FE870; font-weight: 700; }
+        @media (max-width: 700px) {
+            .container { padding: 1rem; }
+            .book-container { padding: 1.5rem; }
+            h1 { font-size: 1.8rem; }
+            .theme-line { font-size: 1.3rem; }
+            .parameter-grid { grid-template-columns: 1fr; }
+            .opening-statement { padding: 1.2rem; }
+        }
+        @media print {
+            .header { display: none !important; }
+            .footer { display: none !important; }
+            .back-link { display: none !important; }
+            .book-container { background: transparent !important; border: none !important; padding: 0 !important; }
+            body { background: #fff !important; color: #000 !important; }
+            h1, h2, h3, p { color: #000 !important; }
+            .gl-box, .highlight-box, .red-box, .quote-block { background: #f5f5f5 !important; border-color: #ccc !important; }
+            .gl-box p, .highlight-box p, .red-box p, .quote-block p { color: #000 !important; }
+            .parameter-item { border-color: #ccc !important; }
+            .parameter-item .title { color: #000 !important; }
+            .parameter-item .score { color: #006600 !important; }
+            .theme-line { color: #006600 !important; }
+            .gl-box .gl-score { color: #006600 !important; }
+            .score-table th, .score-table td { border-color: #ccc !important; color: #000 !important; }
+            .score-table th { background: #eee !important; }
+            .score-table .score-col { color: #006600 !important; }
+            .score-table .weighted-col { color: #006600 !important; }
+            .grade-b { color: #006600 !important; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="logo"><a href="index.html"><span class="home-arrow">←</span> GFI Flow Intelligence</a></div>
+        <div class="lang-switch">
+            <button class="lang-btn active" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="tw">繁</button>
+            <button class="lang-btn" data-lang="cn">简</button>
+            <button class="lang-btn" data-lang="es">ES</button>
+        </div>
+    </div>
 
+    <!-- ====== ENGLISH ====== -->
+    <div id="lang-en" class="content-lang active">
+        <div class="book-container">
+            <div class="opening-statement">
+                <p><span class="highlight-green">GL Index 2026 · Singapore</span></p>
+                <p>A diagnostic report on governance friction, value capture, and cost shifting.</p>
+                <p class="signature">— GL Framework Diagnostic · Ping Xu · GFI Flow Intelligence</p>
+            </div>
+            <div style="text-align:center; margin:2rem 0;">
+                <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#9FE870; line-height:1;">0.78</div>
+                <div style="font-size:1.2rem; color:#9FE870; font-weight:600;">B · Strong</div>
+                <div style="font-size:0.85rem; color:#9fb0c8; margin-top:0.25rem;">out of 1.00</div>
+            </div>
+            <div class="theme-line">Efficiency is the highest form of governance — but efficiency alone is not enough.</div>
+            <p>Singapore scores <span class="highlight-green">0.78</span> on the GL Index — the highest among all countries analyzed in this study. It is the most efficient governance system in the world. But it is not an A. Because efficiency is not the same as democratic participation, and the cost of that efficiency is carried by those who are excluded from its benefits.</p>
+            <h2>Eight Parameters · Singapore</h2>
+            <table class="score-table">
+                <thead><tr><th>Parameter</th><th>Weight</th><th>Score</th><th>Weighted</th></tr></thead>
+                <tbody>
+                    <tr><td>1. Waiting Cost</td><td class="weight-col">15%</td><td class="score-col">92</td><td class="weighted-col">13.80</td></tr>
+                    <tr><td>2. Repetition Cost</td><td class="weight-col">15%</td><td class="score-col">90</td><td class="weighted-col">13.50</td></tr>
+                    <tr><td>3. Collapse Cost</td><td class="weight-col">15%</td><td class="score-col">88</td><td class="weighted-col">13.20</td></tr>
+                    <tr><td>4. Information Asymmetry Cost</td><td class="weight-col">10%</td><td class="score-col">75</td><td class="weighted-col">7.50</td></tr>
+                    <tr><td>5. Psychological Cost</td><td class="weight-col">10%</td><td class="score-col">70</td><td class="weighted-col">7.00</td></tr>
+                    <tr><td>6. Opportunity Cost</td><td class="weight-col">10%</td><td class="score-col">72</td><td class="weighted-col">7.20</td></tr>
+                    <tr><td>7. Shift Pathway</td><td class="weight-col">15%</td><td class="score-col">68</td><td class="weighted-col">10.20</td></tr>
+                    <tr><td>8. Loop Closure</td><td class="weight-col">10%</td><td class="score-col">90</td><td class="weighted-col">9.00</td></tr>
+                    <tr style="border-top:2px solid rgba(255,255,255,0.2); font-weight:700;">
+                        <td colspan="3" style="text-align:right;">TOTAL</td>
+                        <td class="weighted-col" style="font-size:1.2rem;">81.40 / 100</td>
+                    </tr>
+                    <tr style="border-top:2px solid #9FE870; font-weight:700;">
+                        <td colspan="3" style="text-align:right;">GL Index</td>
+                        <td class="weighted-col" style="font-size:1.8rem; color:#9FE870;">0.81</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2>Key Findings</h2>
+            <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem; line-height:1.8;">
+                <li><strong>Administrative Efficiency</strong> — Singapore has the lowest waiting and repetition costs in the world. Digital government is fully integrated.</li>
+                <li><strong>Value Capture</strong> — Public housing (HDB) is one of the most successful value capture mechanisms. 80% of the population lives in public housing.</li>
+                <li><strong>Loop Closure</strong> — The government captures land value through land sales and reinvests it in infrastructure and public housing. The loop is nearly closed.</li>
+                <li><strong>Social Stratification</strong> — The system is efficient, but it is also hierarchical. Those who do not fit the meritocratic model are left behind.</li>
+                <li><strong>Cost of Efficiency</strong> — Speed and productivity come at the cost of participation. Citizens are consumers of governance, not co-creators.</li>
+                <li><strong>Psychological Cost</strong> — The pressure to perform is intense. Mental health is a growing concern.</li>
+            </ul>
+            <div class="gl-box">
+                <p><strong>What 0.81 Means</strong></p>
+                <p>Singapore is the most efficient governance system in the world. Its loop closure is nearly complete. But efficiency is not democracy. The cost of this system is carried by those who cannot keep up, and by the psychological pressure that comes with constant performance measurement. It is a B, not an A. Not because it fails, but because it only measures one thing: output.</p>
+            </div>
+            <div class="red-box">
+                <p><strong>Singapore is the most efficient governance system in the world.</strong></p>
+                <p><strong>But efficiency is not the same as participation.</strong></p>
+                <p><strong>It is a B. Not an A. Because citizens are not partners.</strong></p>
+            </div>
+            <div class="highlight-box">
+                <p><strong>Grade Key</strong></p>
+                <p>A (0.90–1.00) — Value returns. Costs are absorbed. Citizens trust governance.</p>
+                <p>B (0.70–0.89) — Most value returns. Some cost shifting.</p>
+                <p>C (0.50–0.69) — Half returns. Half shifts.</p>
+                <p>D (0.30–0.49) — Most value captured. Most costs shifted.</p>
+                <p>F (0.00–0.29) — Value captured. Costs shifted. Citizens exhausted.</p>
+                <p style="margin-top:0.5rem;"><span class="grade-b">Singapore: 0.81 — B</span></p>
+            </div>
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · Creator of the GL Framework · June 2026</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · Free download · Free distribution</p>
+                <a href="index.html" class="back-link">← Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== 繁體中文 ====== -->
+    <div id="lang-tw" class="content-lang">
+        <div class="book-container">
+            <div class="opening-statement">
+                <p><span class="highlight-green">GL Index 2026 · 新加坡</span></p>
+                <p>治理摩擦、價值捕獲與成本轉嫁的診斷報告。</p>
+                <p class="signature">— GL 框架診斷 · Ping Xu · GFI Flow Intelligence</p>
+            </div>
+            <div style="text-align:center; margin:2rem 0;">
+                <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#9FE870; line-height:1;">0.78</div>
+                <div style="font-size:1.2rem; color:#9FE870; font-weight:600;">B · 強勁</div>
+                <div style="font-size:0.85rem; color:#9fb0c8; margin-top:0.25rem;">滿分 1.00</div>
+            </div>
+            <div class="theme-line">效率是最高的治理形式——但效率本身不夠。</div>
+            <p>新加坡在 GL Index 得分 <span class="highlight-green">0.78</span> — 是所有分析國家中最高的。它是全世界最高效的治理系統。但它不是 A。因為效率不等於民主參與，而效率的成本由那些被排除在利益之外的人承擔。</p>
+            <h2>八個參數 · 新加坡</h2>
+            <table class="score-table">
+                <thead><tr><th>參數</th><th>權重</th><th>分數</th><th>加權</th></tr></thead>
+                <tbody>
+                    <tr><td>1. 等待成本</td><td class="weight-col">15%</td><td class="score-col">92</td><td class="weighted-col">13.80</td></tr>
+                    <tr><td>2. 重複成本</td><td class="weight-col">15%</td><td class="score-col">90</td><td class="weighted-col">13.50</td></tr>
+                    <tr><td>3. 崩潰成本</td><td class="weight-col">15%</td><td class="score-col">88</td><td class="weighted-col">13.20</td></tr>
+                    <tr><td>4. 資訊不對稱成本</td><td class="weight-col">10%</td><td class="score-col">75</td><td class="weighted-col">7.50</td></tr>
+                    <tr><td>5. 心理成本</td><td class="weight-col">10%</td><td class="score-col">70</td><td class="weighted-col">7.00</td></tr>
+                    <tr><td>6. 機會成本</td><td class="weight-col">10%</td><td class="score-col">72</td><td class="weighted-col">7.20</td></tr>
+                    <tr><td>7. 轉嫁路徑</td><td class="weight-col">15%</td><td class="score-col">68</td><td class="weighted-col">10.20</td></tr>
+                    <tr><td>8. 迴路閉合</td><td class="weight-col">10%</td><td class="score-col">90</td><td class="weighted-col">9.00</td></tr>
+                    <tr style="border-top:2px solid rgba(255,255,255,0.2); font-weight:700;">
+                        <td colspan="3" style="text-align:right;">總計</td>
+                        <td class="weighted-col" style="font-size:1.2rem;">81.40 / 100</td>
+                    </tr>
+                    <tr style="border-top:2px solid #9FE870; font-weight:700;">
+                        <td colspan="3" style="text-align:right;">GL Index</td>
+                        <td class="weighted-col" style="font-size:1.8rem; color:#9FE870;">0.78</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2>關鍵發現</h2>
+            <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem; line-height:1.8;">
+                <li><strong>行政效率</strong> — 新加坡擁有全世界最低的等待成本和重複成本。數位政府完全整合。</li>
+                <li><strong>價值捕獲</strong> — 公共住房（HDB）是全世界最成功的價值捕獲機制之一。80%的人口住在公共住房。</li>
+                <li><strong>迴路閉合</strong> — 政府透過土地銷售捕獲土地價值，並再投資於基礎設施和公共住房。迴路幾乎閉合。</li>
+                <li><strong>社會分層</strong> — 系統高效，但也分層。不符合精英模式的人被拋在後面。</li>
+                <li><strong>效率的成本</strong> — 速度和生產力以參與為代價。小民是治理的消費者，不是共同創造者。</li>
+                <li><strong>心理成本</strong> — 表現壓力巨大。心理健康是日益嚴重的問題。</li>
+            </ul>
+            <div class="gl-box">
+                <p><strong>0.78 代表的意義</strong></p>
+                <p>新加坡是全世界最高效的治理系統。它的迴路閉合幾乎完整。但效率不是民主。這個系統的成本由跟不上的人承擔，以及由持續表現衡量帶來的心理壓力。它是 B，不是 A。不是因為它失敗，而是因為它只衡量一件事：產出。</p>
+            </div>
+            <div class="red-box">
+                <p><strong>新加坡是全世界最高效的治理系統。</strong></p>
+                <p><strong>但效率不等於參與。</strong></p>
+                <p><strong>它是 B。不是 A。因為小民不是夥伴。</strong></p>
+            </div>
+            <div class="highlight-box">
+                <p><strong>等級說明</strong></p>
+                <p>A (0.90–1.00) — 價值回流。成本被吸收。小民信任治理。</p>
+                <p>B (0.70–0.89) — 大部分價值回流。少部分成本轉嫁。</p>
+                <p>C (0.50–0.69) — 一半回流。一半轉嫁。</p>
+                <p>D (0.30–0.49) — 大部分價值被拿走。大部分成本被轉嫁。</p>
+                <p>F (0.00–0.29) — 價值被拿走。成本被轉嫁。小民精疲力竭。</p>
+                <p style="margin-top:0.5rem;"><span class="grade-b">新加坡：0.78 — B</span></p>
+            </div>
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · GL框架創建者 · 2026年6月</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · 免費下載 · 免費傳播</p>
+                <a href="index.html" class="back-link">← 回首頁</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== 简体中文 ====== -->
+    <div id="lang-cn" class="content-lang">
+        <div class="book-container">
+            <div class="opening-statement">
+                <p><span class="highlight-green">GL Index 2026 · 新加坡</span></p>
+                <p>治理摩擦、价值捕获与成本转嫁的诊断报告。</p>
+                <p class="signature">— GL 框架诊断 · Ping Xu · GFI Flow Intelligence</p>
+            </div>
+            <div style="text-align:center; margin:2rem 0;">
+                <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#9FE870; line-height:1;">0.78</div>
+                <div style="font-size:1.2rem; color:#9FE870; font-weight:600;">B · 强劲</div>
+                <div style="font-size:0.85rem; color:#9fb0c8; margin-top:0.25rem;">满分 1.00</div>
+            </div>
+            <div class="theme-line">效率是最高的治理形式——但效率本身不够。</div>
+            <p>新加坡在 GL Index 得分 <span class="highlight-green">0.78</span> — 是所有分析国家中最高的。它是全世界最高效的治理系统。但它不是 A。因为效率不等于民主参与，而效率的成本由那些被排除在利益之外的人承担。</p>
+            <h2>八个参数 · 新加坡</h2>
+            <table class="score-table">
+                <thead><tr><th>参数</th><th>权重</th><th>分数</th><th>加权</th></tr></thead>
+                <tbody>
+                    <tr><td>1. 等待成本</td><td class="weight-col">15%</td><td class="score-col">92</td><td class="weighted-col">13.80</td></tr>
+                    <tr><td>2. 重复成本</td><td class="weight-col">15%</td><td class="score-col">90</td><td class="weighted-col">13.50</td></tr>
+                    <tr><td>3. 崩溃成本</td><td class="weight-col">15%</td><td class="score-col">88</td><td class="weighted-col">13.20</td></tr>
+                    <tr><td>4. 信息不对称成本</td><td class="weight-col">10%</td><td class="score-col">75</td><td class="weighted-col">7.50</td></tr>
+                    <tr><td>5. 心理成本</td><td class="weight-col">10%</td><td class="score-col">70</td><td class="weighted-col">7.00</td></tr>
+                    <tr><td>6. 机会成本</td><td class="weight-col">10%</td><td class="score-col">72</td><td class="weighted-col">7.20</td></tr>
+                    <tr><td>7. 转嫁路径</td><td class="weight-col">15%</td><td class="score-col">68</td><td class="weighted-col">10.20</td></tr>
+                    <tr><td>8. 回路闭合</td><td class="weight-col">10%</td><td class="score-col">90</td><td class="weighted-col">9.00</td></tr>
+                    <tr style="border-top:2px solid rgba(255,255,255,0.2); font-weight:700;">
+                        <td colspan="3" style="text-align:right;">总计</td>
+                        <td class="weighted-col" style="font-size:1.2rem;">81.40 / 100</td>
+                    </tr>
+                    <tr style="border-top:2px solid #9FE870; font-weight:700;">
+                        <td colspan="3" style="text-align:right;">GL Index</td>
+                        <td class="weighted-col" style="font-size:1.8rem; color:#9FE870;">0.78</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2>关键发现</h2>
+            <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem; line-height:1.8;">
+                <li><strong>行政效率</strong> — 新加坡拥有全世界最低的等待成本和重复成本。数字政府完全整合。</li>
+                <li><strong>价值捕获</strong> — 公共住房（HDB）是全世界最成功的价值捕获机制之一。80%的人口住在公共住房。</li>
+                <li><strong>回路闭合</strong> — 政府透过土地销售捕获土地价值，并再投资于基础设施和公共住房。回路几乎闭合。</li>
+                <li><strong>社会分层</strong> — 系统高效，但也分层。不符合精英模式的人被抛在后面。</li>
+                <li><strong>效率的成本</strong> — 速度和生产力以参与为代价。小民是治理的消费者，不是共同创造者。</li>
+                <li><strong>心理成本</strong> — 表现压力巨大。心理健康是日益严重的问题。</li>
+            </ul>
+            <div class="gl-box">
+                <p><strong>0.78 代表的意义</strong></p>
+                <p>新加坡是全世界最高效的治理系统。它的回路闭合几乎完整。但效率不是民主。这个系统的成本由跟不上的人承担，以及由持续表现衡量带来的心理压力。它是 B，不是 A。不是因为它失败，而是因为它只衡量一件事：产出。</p>
+            </div>
+            <div class="red-box">
+                <p><strong>新加坡是全世界最高效的治理系统。</strong></p>
+                <p><strong>但效率不等于参与。</strong></p>
+                <p><strong>它是 B。不是 A。因为小民不是伙伴。</strong></p>
+            </div>
+            <div class="highlight-box">
+                <p><strong>等级说明</strong></p>
+                <p>A (0.90–1.00) — 价值回流。成本被吸收。小民信任治理。</p>
+                <p>B (0.70–0.89) — 大部分价值回流。少部分成本转嫁。</p>
+                <p>C (0.50–0.69) — 一半回流。一半转嫁。</p>
+                <p>D (0.30–0.49) — 大部分价值被拿走。大部分成本被转嫁。</p>
+                <p>F (0.00–0.29) — 价值被拿走。成本被转嫁。小民精疲力竭。</p>
+                <p style="margin-top:0.5rem;"><span class="grade-b">新加坡：0.78 — B</span></p>
+            </div>
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · GL框架创建者 · 2026年6月</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · 免费下载 · 免费传播</p>
+                <a href="index.html" class="back-link">← 回首页</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== ESPAÑOL ====== -->
+    <div id="lang-es" class="content-lang">
+        <div class="book-container">
+            <div class="opening-statement">
+                <p><span class="highlight-green">GL Index 2026 · Singapur</span></p>
+                <p>Un informe de diagnóstico sobre fricción gubernamental, captura de valor y transferencia de costos.</p>
+                <p class="signature">— Diagnóstico del Marco GL · Ping Xu · GFI Flow Intelligence</p>
+            </div>
+            <div style="text-align:center; margin:2rem 0;">
+                <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#9FE870; line-height:1;">0.78</div>
+                <div style="font-size:1.2rem; color:#9FE870; font-weight:600;">B · Fuerte</div>
+                <div style="font-size:0.85rem; color:#9fb0c8; margin-top:0.25rem;">sobre 1.00</div>
+            </div>
+            <div class="theme-line">La eficiencia es la forma más alta de gobernanza — pero la eficiencia por sí sola no es suficiente.</div>
+            <p>Singapur obtiene <span class="highlight-green">0.78</span> en el GL Index — la más alta entre todos los países analizados. Es el sistema de gobernanza más eficiente del mundo. Pero no es una A. Porque la eficiencia no es lo mismo que la participación democrática, y el costo de esa eficiencia lo soportan aquellos que son excluidos de sus beneficios.</p>
+            <h2>Ocho Parámetros · Singapur</h2>
+            <table class="score-table">
+                <thead><tr><th>Parámetro</th><th>Peso</th><th>Puntuación</th><th>Ponderado</th></tr></thead>
+                <tbody>
+                    <tr><td>1. Costo de Espera</td><td class="weight-col">15%</td><td class="score-col">92</td><td class="weighted-col">13.80</td></tr>
+                    <tr><td>2. Costo de Repetición</td><td class="weight-col">15%</td><td class="score-col">90</td><td class="weighted-col">13.50</td></tr>
+                    <tr><td>3. Costo de Colapso</td><td class="weight-col">15%</td><td class="score-col">88</td><td class="weighted-col">13.20</td></tr>
+                    <tr><td>4. Costo de Asimetría</td><td class="weight-col">10%</td><td class="score-col">75</td><td class="weighted-col">7.50</td></tr>
+                    <tr><td>5. Costo Psicológico</td><td class="weight-col">10%</td><td class="score-col">70</td><td class="weighted-col">7.00</td></tr>
+                    <tr><td>6. Costo de Oportunidad</td><td class="weight-col">10%</td><td class="score-col">72</td><td class="weighted-col">7.20</td></tr>
+                    <tr><td>7. Vía de Transferencia</td><td class="weight-col">15%</td><td class="score-col">68</td><td class="weighted-col">10.20</td></tr>
+                    <tr><td>8. Cierre de Circuito</td><td class="weight-col">10%</td><td class="score-col">90</td><td class="weighted-col">9.00</td></tr>
+                    <tr style="border-top:2px solid rgba(255,255,255,0.2); font-weight:700;">
+                        <td colspan="3" style="text-align:right;">TOTAL</td>
+                        <td class="weighted-col" style="font-size:1.2rem;">81.40 / 100</td>
+                    </tr>
+                    <tr style="border-top:2px solid #9FE870; font-weight:700;">
+                        <td colspan="3" style="text-align:right;">GL Index</td>
+                        <td class="weighted-col" style="font-size:1.8rem; color:#9FE870;">0.78</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2>Hallazgos Clave</h2>
+            <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem; line-height:1.8;">
+                <li><strong>Eficiencia Administrativa</strong> — Singapur tiene los costos de espera y repetición más bajos del mundo. El gobierno digital está completamente integrado.</li>
+                <li><strong>Captura de Valor</strong> — La vivienda pública (HDB) es uno de los mecanismos de captura de valor más exitosos. El 80% de la población vive en vivienda pública.</li>
+                <li><strong>Cierre de Circuito</strong> — El gobierno captura el valor de la tierra a través de ventas de tierras y lo reinvierte en infraestructura y vivienda pública. El circuito está casi cerrado.</li>
+                <li><strong>Estratificación Social</strong> — El sistema es eficiente, pero también jerárquico. Aquellos que no encajan en el modelo meritocrático se quedan atrás.</li>
+                <li><strong>Costo de la Eficiencia</strong> — La velocidad y la productividad tienen un costo: la participación. Los ciudadanos son consumidores de gobernanza, no cocreadores.</li>
+                <li><strong>Costo Psicológico</strong> — La presión para rendir es intensa. La salud mental es una preocupación creciente.</li>
+            </ul>
+            <div class="gl-box">
+                <p><strong>Qué significa 0.78</strong></p>
+                <p>Singapur es el sistema de gobernanza más eficiente del mundo. Su cierre de circuito es casi completo. Pero la eficiencia no es democracia. El costo de este sistema lo soportan aquellos que no pueden mantener el ritmo, y la presión psicológica que conlleva la medición constante del rendimiento. Es una B, no una A. No porque falle, sino porque solo mide una cosa: el rendimiento.</p>
+            </div>
+            <div class="red-box">
+                <p><strong>Singapur es el sistema de gobernanza más eficiente del mundo.</strong></p>
+                <p><strong>Pero la eficiencia no es lo mismo que la participación.</strong></p>
+                <p><strong>Es una B. No una A. Porque los ciudadanos no son socios.</strong></p>
+            </div>
+            <div class="highlight-box">
+                <p><strong>Clave de Grados</strong></p>
+                <p>A (0.90–1.00) — El valor regresa. Los costos son absorbidos. Los ciudadanos confían en la gobernanza.</p>
+                <p>B (0.70–0.89) — La mayoría del valor regresa. Algo de transferencia de costos.</p>
+                <p>C (0.50–0.69) — La mitad regresa. La mitad se transfiere.</p>
+                <p>D (0.30–0.49) — La mayoría del valor es capturado. La mayoría de los costos se transfieren.</p>
+                <p>F (0.00–0.29) — Valor capturado. Costos transferidos. Ciudadanos agotados.</p>
+                <p style="margin-top:0.5rem;"><span class="grade-b">Singapur: 0.78 — B</span></p>
+            </div>
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · Creador del Marco GL · Junio 2026</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · Descarga gratuita · Distribución gratuita</p>
+                <a href="index.html" class="back-link">← Volver al Inicio</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                document.querySelectorAll('.content-lang').forEach(el => el.classList.remove('active'));
+                const lang = this.dataset.lang;
+                const target = document.getElementById('lang-' + lang);
+                if (target) target.classList.add('active');
+            });
+        });
+    </script>
+</div>
+</body>
+</html>
