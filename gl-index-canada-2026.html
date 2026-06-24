@@ -1,1 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GL Index 2026 · 加拿大診斷報告</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #0b1220; color: #f8fbff; font-family: 'DM Sans', system-ui, sans-serif; line-height: 1.7; }
+        .container { max-width: 920px; margin: 0 auto; padding: 2rem; }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+        .logo a {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.12em;
+            color: #9FE870;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+        .logo a .home-arrow { color: #9fb0c8; margin-right: 6px; }
+        .logo a:hover .home-arrow { color: #9FE870; }
+        .lang-switch { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .lang-btn {
+            background: none;
+            border: 1px solid rgba(255,255,255,.1);
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            padding: 0.25rem 0.7rem;
+            border-radius: 2rem;
+            color: #9fb0c8;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,.3); color: #fff; }
+        .lang-btn.active { background: #9FE870; color: #0b1220; border-color: #9FE870; }
+        .content-lang { display: none; }
+        .content-lang.active { display: block; }
+        .book-container { background: #0d1526; padding: 3rem 2.5rem; border-radius: 4px; border: 1px solid rgba(255,255,255,.06); }
+        .opening-statement {
+            background: rgba(159,232,112,0.06);
+            border: 1px solid rgba(159,232,112,0.2);
+            border-radius: 12px;
+            padding: 1.8rem 2rem;
+            margin-bottom: 2rem;
+        }
+        .opening-statement p { color: #eaf6ff; margin-bottom: 0.5rem; font-size: 0.95rem; }
+        .opening-statement .highlight-green { color: #9FE870; font-weight: 600; }
+        .opening-statement .signature { color: #9fb0c8; font-style: italic; font-size: 0.85rem; margin-top: 0.5rem; }
+        h1 { font-size: 2.6rem; font-weight: 700; text-align: center; margin-bottom: 0.25rem; color: #9FE870; letter-spacing: 0.02em; font-family: 'DM Serif Display', Georgia, serif; }
+        .subtitle { text-align: center; font-size: 1rem; color: #9fb0c8; margin-bottom: 0.5rem; font-style: italic; }
+        .author-line { text-align: center; font-size: 0.9rem; color: #7DD3FC; margin-bottom: 2rem; }
+        .theme-line { font-family: 'DM Serif Display', Georgia, serif; font-size: 1.8rem; color: #9FE870; text-align: center; margin: 1.5rem 0; line-height: 1.3; }
+        h2 { font-size: 1.4rem; color: #9FE870; margin: 2rem 0 1rem 0; border-bottom: 1px solid rgba(255,255,255,.06); padding-bottom: 0.3rem; font-family: 'DM Serif Display', Georgia, serif; }
+        p { color: #c7d2e3; margin-bottom: 1rem; line-height: 1.8; }
+        .quote-block {
+            border-left: 3px solid #9FE870;
+            padding-left: 1.2rem;
+            margin: 1.2rem 0;
+            color: #eaf6ff;
+            font-style: italic;
+            background: rgba(159,232,112,0.04);
+            border-radius: 0 8px 8px 0;
+        }
+        .quote-block p { color: #eaf6ff; }
+        .quote-block .source { color: #9fb0c8; font-size: 0.85rem; font-style: normal; }
+        .highlight-box {
+            background: rgba(159, 232, 112, 0.06);
+            border: 1px solid rgba(159, 232, 112, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        .highlight-box p { color: #eaf6ff; margin-bottom: 0.25rem; }
+        .highlight-box strong { color: #9FE870; }
+        .gl-box { background: rgba(159, 232, 112, 0.04); border-left: 3px solid #9FE870; padding: 1.2rem 1.5rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0; }
+        .gl-box p { color: #eaf6ff; margin-bottom: 0.5rem; }
+        .gl-box strong { color: #9FE870; }
+        .gl-box .gl-score { font-family: 'DM Mono', monospace; font-size: 2.5rem; font-weight: 700; color: #9FE870; text-align: center; display: block; margin: 0.3rem 0; }
+        .red-box { background: rgba(248, 113, 113, 0.04); border-left: 3px solid #f87171; padding: 1.2rem 1.5rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0; }
+        .red-box p { color: #f0d0d0; margin-bottom: 0.5rem; }
+        .red-box strong { color: #f87171; }
+        .parameter-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
+        .parameter-item { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: 1rem 1.2rem; text-align: center; }
+        .parameter-item .number { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: #7DD3FC; }
+        .parameter-item .title { font-weight: 600; color: #fff; margin: 0.2rem 0; }
+        .parameter-item .desc { font-size: 0.85rem; color: #c7d2e3; }
+        .parameter-item .score { font-family: 'DM Mono', monospace; font-size: 1.1rem; font-weight: 700; color: #9FE870; margin-top: 0.3rem; }
+        .footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,.06); text-align: center; font-size: 0.75rem; color: #9fb0c8; }
+        .back-link {
+            display: inline-block;
+            margin-top: 1.5rem;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: #9fb0c8;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,.06);
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            transition: 0.2s;
+        }
+        .back-link:hover { border-color: rgba(255,255,255,.2); color: #fff; }
+        .divider { border: 0; border-top: 1px solid rgba(255,255,255,.08); margin: 2.5rem 0; }
+        .score-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+        .score-table th, .score-table td { border: 1px solid rgba(255,255,255,.1); padding: 0.75rem; text-align: left; }
+        .score-table th { background: rgba(255,255,255,.05); font-weight: 600; }
+        .score-table .weight-col { text-align: center; }
+        .score-table .score-col { text-align: center; font-weight: 700; color: #9FE870; }
+        .score-table .weighted-col { text-align: center; font-weight: 700; color: #9FE870; }
+        .grade-b { color: #9FE870; font-weight: 700; }
+        @media (max-width: 700px) {
+            .container { padding: 1rem; }
+            .book-container { padding: 1.5rem; }
+            h1 { font-size: 1.8rem; }
+            .theme-line { font-size: 1.3rem; }
+            .parameter-grid { grid-template-columns: 1fr; }
+            .opening-statement { padding: 1.2rem; }
+        }
+        @media print {
+            .header { display: none !important; }
+            .footer { display: none !important; }
+            .back-link { display: none !important; }
+            .book-container { background: transparent !important; border: none !important; padding: 0 !important; }
+            body { background: #fff !important; color: #000 !important; }
+            h1, h2, h3, p { color: #000 !important; }
+            .gl-box, .highlight-box, .red-box, .quote-block { background: #f5f5f5 !important; border-color: #ccc !important; }
+            .gl-box p, .highlight-box p, .red-box p, .quote-block p { color: #000 !important; }
+            .parameter-item { border-color: #ccc !important; }
+            .parameter-item .title { color: #000 !important; }
+            .parameter-item .score { color: #006600 !important; }
+            .theme-line { color: #006600 !important; }
+            .gl-box .gl-score { color: #006600 !important; }
+            .score-table th, .score-table td { border-color: #ccc !important; color: #000 !important; }
+            .score-table th { background: #eee !important; }
+            .score-table .score-col { color: #006600 !important; }
+            .score-table .weighted-col { color: #006600 !important; }
+            .grade-b { color: #006600 !important; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="logo"><a href="index.html"><span class="home-arrow">←</span> GFI Flow Intelligence</a></div>
+        <div class="lang-switch">
+            <button class="lang-btn active" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="tw">繁</button>
+            <button class="lang-btn" data-lang="cn">简</button>
+            <button class="lang-btn" data-lang="es">ES</button>
+        </div>
+    </div>
 
+    <!-- ====== ENGLISH ====== -->
+    <div id="lang-en" class="content-lang active">
+        <div class="book-container">
+            <div class="opening-statement">
+                <p><span class="highlight-green">GL Index 2026 · Canada</span></p>
+                <p>A diagnostic report on governance friction, value capture, and cost shifting.</p>
+                <p class="signature">— GL Framework Diagnostic · Ping Xu · GFI Flow Intelligence</p>
+            </div>
+            <div style="text-align:center; margin:2rem 0;">
+                <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#9FE870; line-height:1;">0.68</div>
+                <div style="font-size:1.2rem; color:#9FE870; font-weight:600;">B · Good</div>
+                <div style="font-size:0.85rem; color:#9fb0c8; margin-top:0.25rem;">out of 1.00</div>
+            </div>
+            <div class="theme-line">One of the best in the world. Still not an A.</div>
+            <p>Canada scores <span class="highlight-green">0.68</span> on the GL Index — one of the highest among all countries analyzed. It shares many of Sweden's strengths: administrative transparency, digital government, and relatively high social trust. But it also has weaknesses: housing affordability, healthcare wait times, and Indigenous systemic issues.</p>
+            <h2>Eight Parameters · Canada</h2>
+            <table class="score-table">
+                <thead><tr><th>Parameter</th><th>Weight</th><th>Score</th><th>Weighted</th></tr></thead>
+                <tbody>
+                    <tr><td>1. Waiting Cost</td><td class="weight-col">15%</td><td class="score-col">70</td><td class="weighted-col">10.50</td></tr>
+                    <tr><td>2. Repetition Cost</td><td class="weight-col">15%</td><td class="score-col">72</td><td class="weighted-col">10.80</td></tr>
+                    <tr><td>3. Collapse Cost</td><td class="weight-col">15%</td><td class="score-col">65</td><td class="weighted-col">9.75</td></tr>
+                    <tr><td>4. Information Asymmetry Cost</td><td class="weight-col">10%</td><td class="score-col">75</td><td class="weighted-col">7.50</td></tr>
+                    <tr><td>5. Psychological Cost</td><td class="weight-col">10%</td><td class="score-col">60</td><td class="weighted-col">6.00</td></tr>
+                    <tr><td>6. Opportunity Cost</td><td class="weight-col">10%</td><td class="score-col">65</td><td class="weighted-col">6.50</td></tr>
+                    <tr><td>7. Shift Pathway</td><td class="weight-col">15%</td><td class="score-col">68</td><td class="weighted-col">10.20</td></tr>
+                    <tr><td>8. Loop Closure</td><td class="weight-col">10%</td><td class="score-col">70</td><td class="weighted-col">7.00</td></tr>
+                    <tr style="border-top:2px solid rgba(255,255,255,0.2); font-weight:700;">
+                        <td colspan="3" style="text-align:right;">TOTAL</td>
+                        <td class="weighted-col" style="font-size:1.2rem;">68.25 / 100</td>
+                    </tr>
+                    <tr style="border-top:2px solid #9FE870; font-weight:700;">
+                        <td colspan="3" style="text-align:right;">GL Index</td>
+                        <td class="weighted-col" style="font-size:1.8rem; color:#9FE870;">0.68</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2>Key Findings</h2>
+            <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem; line-height:1.8;">
+                <li><strong>Administrative Transparency</strong> — Strong access to information laws and independent oversight.</li>
+                <li><strong>Digital Government</strong> — Effective cross-provincial data sharing, though uneven across provinces.</li>
+                <li><strong>Social Trust</strong> — High trust in institutions, but declining in recent years.</li>
+                <li><strong>Housing Affordability</strong> — Major weakness. Vancouver and Toronto are among the least affordable cities in North America.</li>
+                <li><strong>Healthcare Wait Times</strong> — Significant waiting costs, especially for specialist care.</li>
+                <li><strong>Indigenous System</strong> — Deep structural failures in systems serving Indigenous populations.</li>
+            </ul>
+            <div class="gl-box">
+                <p><strong>What 0.68 Means</strong></p>
+                <p>Canada performs well on transparency, digital government, and trust. But housing affordability and healthcare wait times are significant frictions. The Indigenous system is a structural failure that drags down the national score.</p>
+            </div>
+            <div class="highlight-box">
+                <p><strong>Grade Key</strong></p>
+                <p>A (0.90–1.00) — Value returns. Costs are absorbed. Citizens trust governance.</p>
+                <p>B (0.70–0.89) — Most value returns. Some cost shifting.</p>
+                <p>C (0.50–0.69) — Half returns. Half shifts.</p>
+                <p>D (0.30–0.49) — Most value captured. Most costs shifted.</p>
+                <p>F (0.00–0.29) — Value captured. Costs shifted. Citizens exhausted.</p>
+                <p style="margin-top:0.5rem;"><span class="grade-b">Canada: 0.68 — B</span></p>
+            </div>
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · Creator of the GL Framework · June 2026</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · Free download · Free distribution</p>
+                <a href="index.html" class="back-link">← Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== 繁體中文 ====== -->
+    <div id="lang-tw" class="content-lang">
+        <div class="book-container">
+            <div class="opening-statement">
+                <p><span class="highlight-green">GL Index 2026 · 加拿大</span></p>
+                <p>治理摩擦、價值捕獲與成本轉嫁的診斷報告。</p>
+                <p class="signature">— GL 框架診斷 · Ping Xu · GFI Flow Intelligence</p>
+            </div>
+            <div style="text-align:center; margin:2rem 0;">
+                <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#9FE870; line-height:1;">0.68</div>
+                <div style="font-size:1.2rem; color:#9FE870; font-weight:600;">B · 良好</div>
+                <div style="font-size:0.85rem; color:#9fb0c8; margin-top:0.25rem;">滿分 1.00</div>
+            </div>
+            <div class="theme-line">全球最好的之一。仍然不是 A。</div>
+            <p>加拿大在 GL Index 得分 <span class="highlight-green">0.68</span> — 是所有分析國家中最高的之一。它擁有瑞典的許多優點：行政透明、數位政府、高社會信任。但也有弱點：住房可負擔性、醫療等待時間、原住民制度性問題。</p>
+            <h2>八個參數 · 加拿大</h2>
+            <table class="score-table">
+                <thead><tr><th>參數</th><th>權重</th><th>分數</th><th>加權</th></tr></thead>
+                <tbody>
+                    <tr><td>1. 等待成本</td><td class="weight-col">15%</td><td class="score-col">70</td><td class="weighted-col">10.50</td></tr>
+                    <tr><td>2. 重複成本</td><td class="weight-col">15%</td><td class="score-col">72</td><td class="weighted-col">10.80</td></tr>
+                    <tr><td>3. 崩潰成本</td><td class="weight-col">15%</td><td class="score-col">65</td><td class="weighted-col">9.75</td></tr>
+                    <tr><td>4. 資訊不對稱成本</td><td class="weight-col">10%</td><td class="score-col">75</td><td class="weighted-col">7.50</td></tr>
+                    <tr><td>5. 心理成本</td><td class="weight-col">10%</td><td class="score-col">60</td><td class="weighted-col">6.00</td></tr>
+                    <tr><td>6. 機會成本</td><td class="weight-col">10%</td><td class="score-col">65</td><td class="weighted-col">6.50</td></tr>
+                    <tr><td>7. 轉嫁路徑</td><td class="weight-col">15%</td><td class="score-col">68</td><td class="weighted-col">10.20</td></tr>
+                    <tr><td>8. 迴路閉合</td><td class="weight-col">10%</td><td class="score-col">70</td><td class="weighted-col">7.00</td></tr>
+                    <tr style="border-top:2px solid rgba(255,255,255,0.2); font-weight:700;">
+                        <td colspan="3" style="text-align:right;">總計</td>
+                        <td class="weighted-col" style="font-size:1.2rem;">68.25 / 100</td>
+                    </tr>
+                    <tr style="border-top:2px solid #9FE870; font-weight:700;">
+                        <td colspan="3" style="text-align:right;">GL Index</td>
+                        <td class="weighted-col" style="font-size:1.8rem; color:#9FE870;">0.68</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2>關鍵發現</h2>
+            <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem; line-height:1.8;">
+                <li><strong>行政透明</strong> — 強大的資訊取得法律和獨立監督機構。</li>
+                <li><strong>數位政府</strong> — 跨省數據共享有效，但各省不均。</li>
+                <li><strong>社會信任</strong> — 對制度信任度高，但近年下降。</li>
+                <li><strong>住房可負擔性</strong> — 主要弱點。溫哥華和多倫多是北美房價最不可負擔的城市之一。</li>
+                <li><strong>醫療等待</strong> — 顯著的等待成本，尤其專科醫療。</li>
+                <li><strong>原住民制度</strong> — 服務原住民族的系統存在深層結構性失敗。</li>
+            </ul>
+            <div class="gl-box">
+                <p><strong>0.68 代表的意義</strong></p>
+                <p>加拿大在透明、數位政府和信任方面表現良好。但住房可負擔性和醫療等待時間是顯著摩擦。原住民系統是結構性失敗，拉低了全國分數。</p>
+            </div>
+            <div class="highlight-box">
+                <p><strong>等級說明</strong></p>
+                <p>A (0.90–1.00) — 價值回流。成本被吸收。小民信任治理。</p>
+                <p>B (0.70–0.89) — 大部分價值回流。少部分成本轉嫁。</p>
+                <p>C (0.50–0.69) — 一半回流。一半轉嫁。</p>
+                <p>D (0.30–0.49) — 大部分價值被拿走。大部分成本被轉嫁。</p>
+                <p>F (0.00–0.29) — 價值被拿走。成本被轉嫁。小民精疲力竭。</p>
+                <p style="margin-top:0.5rem;"><span class="grade-b">加拿大：0.68 — B</span></p>
+            </div>
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · GL框架創建者 · 2026年6月</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · 免費下載 · 免費傳播</p>
+                <a href="index.html" class="back-link">← 回首頁</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== 简体中文 ====== -->
+    <div id="lang-cn" class="content-lang">
+        <div class="book-container">
+            <div class="opening-statement">
+                <p><span class="highlight-green">GL Index 2026 · 加拿大</span></p>
+                <p>治理摩擦、价值捕获与成本转嫁的诊断报告。</p>
+                <p class="signature">— GL 框架诊断 · Ping Xu · GFI Flow Intelligence</p>
+            </div>
+            <div style="text-align:center; margin:2rem 0;">
+                <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#9FE870; line-height:1;">0.68</div>
+                <div style="font-size:1.2rem; color:#9FE870; font-weight:600;">B · 良好</div>
+                <div style="font-size:0.85rem; color:#9fb0c8; margin-top:0.25rem;">满分 1.00</div>
+            </div>
+            <div class="theme-line">全球最好的之一。仍然不是 A。</div>
+            <p>加拿大在 GL Index 得分 <span class="highlight-green">0.68</span> — 是所有分析国家中最高的之一。它拥有瑞典的许多优点：行政透明、数字政府、高社会信任。但也有弱点：住房可负担性、医疗等待时间、原住民制度性问题。</p>
+            <h2>八个参数 · 加拿大</h2>
+            <table class="score-table">
+                <thead><tr><th>参数</th><th>权重</th><th>分数</th><th>加权</th></tr></thead>
+                <tbody>
+                    <tr><td>1. 等待成本</td><td class="weight-col">15%</td><td class="score-col">70</td><td class="weighted-col">10.50</td></tr>
+                    <tr><td>2. 重复成本</td><td class="weight-col">15%</td><td class="score-col">72</td><td class="weighted-col">10.80</td></tr>
+                    <tr><td>3. 崩溃成本</td><td class="weight-col">15%</td><td class="score-col">65</td><td class="weighted-col">9.75</td></tr>
+                    <tr><td>4. 信息不对称成本</td><td class="weight-col">10%</td><td class="score-col">75</td><td class="weighted-col">7.50</td></tr>
+                    <tr><td>5. 心理成本</td><td class="weight-col">10%</td><td class="score-col">60</td><td class="weighted-col">6.00</td></tr>
+                    <tr><td>6. 机会成本</td><td class="weight-col">10%</td><td class="score-col">65</td><td class="weighted-col">6.50</td></tr>
+                    <tr><td>7. 转嫁路径</td><td class="weight-col">15%</td><td class="score-col">68</td><td class="weighted-col">10.20</td></tr>
+                    <tr><td>8. 回路闭合</td><td class="weight-col">10%</td><td class="score-col">70</td><td class="weighted-col">7.00</td></tr>
+                    <tr style="border-top:2px solid rgba(255,255,255,0.2); font-weight:700;">
+                        <td colspan="3" style="text-align:right;">总计</td>
+                        <td class="weighted-col" style="font-size:1.2rem;">68.25 / 100</td>
+                    </tr>
+                    <tr style="border-top:2px solid #9FE870; font-weight:700;">
+                        <td colspan="3" style="text-align:right;">GL Index</td>
+                        <td class="weighted-col" style="font-size:1.8rem; color:#9FE870;">0.68</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2>关键发现</h2>
+            <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem; line-height:1.8;">
+                <li><strong>行政透明</strong> — 强大的信息获取法律和独立监督机构。</li>
+                <li><strong>数字政府</strong> — 跨省数据共享有效，但各省不均。</li>
+                <li><strong>社会信任</strong> — 对制度信任度高，但近年下降。</li>
+                <li><strong>住房可负担性</strong> — 主要弱点。温哥华和多伦多是北美房价最不可负担的城市之一。</li>
+                <li><strong>医疗等待</strong> — 显著的等待成本，尤其专科医疗。</li>
+                <li><strong>原住民制度</strong> — 服务原住民族的系统存在深层结构性失败。</li>
+            </ul>
+            <div class="gl-box">
+                <p><strong>0.68 代表的意义</strong></p>
+                <p>加拿大在透明、数字政府和信任方面表现良好。但住房可负担性和医疗等待时间是显著摩擦。原住民系统是结构性失败，拉低了全国分数。</p>
+            </div>
+            <div class="highlight-box">
+                <p><strong>等级说明</strong></p>
+                <p>A (0.90–1.00) — 价值回流。成本被吸收。小民信任治理。</p>
+                <p>B (0.70–0.89) — 大部分价值回流。少部分成本转嫁。</p>
+                <p>C (0.50–0.69) — 一半回流。一半转嫁。</p>
+                <p>D (0.30–0.49) — 大部分价值被拿走。大部分成本被转嫁。</p>
+                <p>F (0.00–0.29) — 价值被拿走。成本被转嫁。小民精疲力竭。</p>
+                <p style="margin-top:0.5rem;"><span class="grade-b">加拿大：0.68 — B</span></p>
+            </div>
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · GL框架创建者 · 2026年6月</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · 免费下载 · 免费传播</p>
+                <a href="index.html" class="back-link">← 回首页</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== ESPAÑOL ====== -->
+    <div id="lang-es" class="content-lang">
+        <div class="book-container">
+            <div class="opening-statement">
+                <p><span class="highlight-green">GL Index 2026 · Canadá</span></p>
+                <p>Un informe de diagnóstico sobre fricción gubernamental, captura de valor y transferencia de costos.</p>
+                <p class="signature">— Diagnóstico del Marco GL · Ping Xu · GFI Flow Intelligence</p>
+            </div>
+            <div style="text-align:center; margin:2rem 0;">
+                <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#9FE870; line-height:1;">0.68</div>
+                <div style="font-size:1.2rem; color:#9FE870; font-weight:600;">B · Bueno</div>
+                <div style="font-size:0.85rem; color:#9fb0c8; margin-top:0.25rem;">sobre 1.00</div>
+            </div>
+            <div class="theme-line">Uno de los mejores del mundo. Todavía no es una A.</div>
+            <p>Canadá obtiene <span class="highlight-green">0.68</span> en el GL Index — uno de los más altos entre todos los países analizados. Comparte muchas de las fortalezas de Suecia: transparencia administrativa, gobierno digital y alta confianza social. Pero también tiene debilidades: asequibilidad de la vivienda, tiempos de espera en salud y problemas sistémicos indígenas.</p>
+            <h2>Ocho Parámetros · Canadá</h2>
+            <table class="score-table">
+                <thead><tr><th>Parámetro</th><th>Peso</th><th>Puntuación</th><th>Ponderado</th></tr></thead>
+                <tbody>
+                    <tr><td>1. Costo de Espera</td><td class="weight-col">15%</td><td class="score-col">70</td><td class="weighted-col">10.50</td></tr>
+                    <tr><td>2. Costo de Repetición</td><td class="weight-col">15%</td><td class="score-col">72</td><td class="weighted-col">10.80</td></tr>
+                    <tr><td>3. Costo de Colapso</td><td class="weight-col">15%</td><td class="score-col">65</td><td class="weighted-col">9.75</td></tr>
+                    <tr><td>4. Costo de Asimetría</td><td class="weight-col">10%</td><td class="score-col">75</td><td class="weighted-col">7.50</td></tr>
+                    <tr><td>5. Costo Psicológico</td><td class="weight-col">10%</td><td class="score-col">60</td><td class="weighted-col">6.00</td></tr>
+                    <tr><td>6. Costo de Oportunidad</td><td class="weight-col">10%</td><td class="score-col">65</td><td class="weighted-col">6.50</td></tr>
+                    <tr><td>7. Vía de Transferencia</td><td class="weight-col">15%</td><td class="score-col">68</td><td class="weighted-col">10.20</td></tr>
+                    <tr><td>8. Cierre de Circuito</td><td class="weight-col">10%</td><td class="score-col">70</td><td class="weighted-col">7.00</td></tr>
+                    <tr style="border-top:2px solid rgba(255,255,255,0.2); font-weight:700;">
+                        <td colspan="3" style="text-align:right;">TOTAL</td>
+                        <td class="weighted-col" style="font-size:1.2rem;">68.25 / 100</td>
+                    </tr>
+                    <tr style="border-top:2px solid #9FE870; font-weight:700;">
+                        <td colspan="3" style="text-align:right;">GL Index</td>
+                        <td class="weighted-col" style="font-size:1.8rem; color:#9FE870;">0.68</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2>Hallazgos Clave</h2>
+            <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem; line-height:1.8;">
+                <li><strong>Transparencia Administrativa</strong> — Fuertes leyes de acceso a la información y supervisión independiente.</li>
+                <li><strong>Gobierno Digital</strong> — Intercambio de datos entre provincias efectivo, aunque desigual entre provincias.</li>
+                <li><strong>Confianza Social</strong> — Alta confianza en las instituciones, pero en declive en los últimos años.</li>
+                <li><strong>Asequibilidad de la Vivienda</strong> — Principal debilidad. Vancouver y Toronto están entre las ciudades menos asequibles de América del Norte.</li>
+                <li><strong>Tiempos de Espera en Salud</strong> — Costos de espera significativos, especialmente para atención especializada.</li>
+                <li><strong>Sistema Indígena</strong> — Fallas estructurales profundas en los sistemas que sirven a poblaciones indígenas.</li>
+            </ul>
+            <div class="gl-box">
+                <p><strong>Qué significa 0.68</strong></p>
+                <p>Canadá se desempeña bien en transparencia, gobierno digital y confianza. Pero la asequibilidad de la vivienda y los tiempos de espera en salud son fricciones significativas. El sistema indígena es un fracaso estructural que reduce la puntuación nacional.</p>
+            </div>
+            <div class="highlight-box">
+                <p><strong>Clave de Grados</strong></p>
+                <p>A (0.90–1.00) — El valor regresa. Los costos son absorbidos. Los ciudadanos confían en la gobernanza.</p>
+                <p>B (0.70–0.89) — La mayoría del valor regresa. Algo de transferencia de costos.</p>
+                <p>C (0.50–0.69) — La mitad regresa. La mitad se transfiere.</p>
+                <p>D (0.30–0.49) — La mayoría del valor es capturado. La mayoría de los costos se transfieren.</p>
+                <p>F (0.00–0.29) — Valor capturado. Costos transferidos. Ciudadanos agotados.</p>
+                <p style="margin-top:0.5rem;"><span class="grade-b">Canadá: 0.68 — B</span></p>
+            </div>
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · Creador del Marco GL · Junio 2026</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · Descarga gratuita · Distribución gratuita</p>
+                <a href="index.html" class="back-link">← Volver al Inicio</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                document.querySelectorAll('.content-lang').forEach(el => el.classList.remove('active'));
+                const lang = this.dataset.lang;
+                const target = document.getElementById('lang-' + lang);
+                if (target) target.classList.add('active');
+            });
+        });
+    </script>
+</div>
+</body>
+</html>
