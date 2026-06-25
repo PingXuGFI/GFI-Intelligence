@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* 此處樣式與你原本完全相同，省略以節省篇幅，實際使用請完整複製 */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #0b1220; color: #f8fbff; font-family: 'DM Sans', system-ui, sans-serif; line-height: 1.7; }
         .container { max-width: 920px; margin: 0 auto; padding: 2rem; }
@@ -22,7 +21,7 @@
         .lang-btn.active { background: #fbbf24; color: #0b1220; border-color: #fbbf24; }
         .content-lang { display: none; }
         .content-lang.active { display: block; }
-        .book-container { background: #0d1526; padding: 3rem 2.5rem; border-radius: 4px; border: 1px solid rgba(255,255,255,.06); }
+        .book-container { background: #0d1526; padding: 3rem 2.5rem; border-radius: 4px; border: 1px solid rgba(255,255,255,.06); position: relative; }
         .opening-statement { background: rgba(251,191,36,0.06); border: 1px solid rgba(251,191,36,0.2); border-radius: 12px; padding: 1.8rem 2rem; margin-bottom: 2rem; }
         .opening-statement p { color: #f5e6c8; margin-bottom: 0.5rem; font-size: 0.95rem; }
         .opening-statement .highlight-yellow { color: #fbbf24; font-weight: 600; }
@@ -33,9 +32,6 @@
         .theme-line { font-family: 'DM Serif Display', Georgia, serif; font-size: 1.8rem; color: #fbbf24; text-align: center; margin: 1.5rem 0; line-height: 1.3; }
         h2 { font-size: 1.4rem; color: #fbbf24; margin: 2rem 0 1rem 0; border-bottom: 1px solid rgba(255,255,255,.06); padding-bottom: 0.3rem; font-family: 'DM Serif Display', Georgia, serif; }
         p { color: #c7d2e3; margin-bottom: 1rem; line-height: 1.8; }
-        .quote-block { border-left: 3px solid #fbbf24; padding-left: 1.2rem; margin: 1.2rem 0; color: #eaf6ff; font-style: italic; background: rgba(251,191,36,0.04); border-radius: 0 8px 8px 0; }
-        .quote-block p { color: #f5e6c8; }
-        .quote-block .source { color: #9fb0c8; font-size: 0.85rem; font-style: normal; }
         .highlight-box { background: rgba(251,191,36,0.06); border: 1px solid rgba(251,191,36,0.2); border-radius: 8px; padding: 1.5rem 2rem; margin: 1.5rem 0; text-align: center; }
         .highlight-box p { color: #eaf6ff; margin-bottom: 0.25rem; }
         .highlight-box strong { color: #fbbf24; }
@@ -43,16 +39,8 @@
         .gl-box p { color: #eaf6ff; margin-bottom: 0.5rem; }
         .gl-box strong { color: #fbbf24; }
         .gl-box .gl-score { font-family: 'DM Mono', monospace; font-size: 2.5rem; font-weight: 700; color: #fbbf24; text-align: center; display: block; margin: 0.3rem 0; }
-        .red-box { background: rgba(248, 113, 113, 0.04); border-left: 3px solid #f87171; padding: 1.2rem 1.5rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0; }
-        .red-box p { color: #f0d0d0; margin-bottom: 0.5rem; }
-        .red-box strong { color: #f87171; }
-        .parameter-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
-        .parameter-item { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: 1rem 1.2rem; text-align: center; }
-        .parameter-item .number { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: #7DD3FC; }
-        .parameter-item .title { font-weight: 600; color: #fff; margin: 0.2rem 0; }
-        .parameter-item .desc { font-size: 0.85rem; color: #c7d2e3; }
-        .parameter-item .score { font-family: 'DM Mono', monospace; font-size: 1.1rem; font-weight: 700; color: #fbbf24; margin-top: 0.3rem; }
         .footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,.06); text-align: center; font-size: 0.75rem; color: #9fb0c8; }
+        .footer .page-number { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: #9fb0c8; margin-top: 0.5rem; }
         .back-link { display: inline-block; margin-top: 1.5rem; font-family: 'DM Mono', monospace; font-size: 0.7rem; color: #9fb0c8; text-decoration: none; border: 1px solid rgba(255,255,255,.06); padding: 0.4rem 1rem; border-radius: 2rem; transition: 0.2s; }
         .back-link:hover { border-color: rgba(255,255,255,.2); color: #fff; }
         .divider { border: 0; border-top: 1px solid rgba(255,255,255,.08); margin: 2.5rem 0; }
@@ -63,8 +51,27 @@
         .score-table .score-col { text-align: center; font-weight: 700; color: #fbbf24; }
         .score-table .weighted-col { text-align: center; font-weight: 700; color: #fbbf24; }
         .grade-d { color: #f97316; font-weight: 700; }
-        @media (max-width: 700px) { .container { padding: 1rem; } .book-container { padding: 1.5rem; } h1 { font-size: 1.8rem; } .theme-line { font-size: 1.3rem; } .parameter-grid { grid-template-columns: 1fr; } .opening-statement { padding: 1.2rem; } }
-        @media print { .header { display: none !important; } .footer { display: none !important; } .back-link { display: none !important; } .book-container { background: transparent !important; border: none !important; padding: 0 !important; } body { background: #fff !important; color: #000 !important; } h1, h2, h3, p { color: #000 !important; } .gl-box, .highlight-box, .red-box, .quote-block { background: #f5f5f5 !important; border-color: #ccc !important; } .gl-box p, .highlight-box p, .red-box p, .quote-block p { color: #000 !important; } .parameter-item { border-color: #ccc !important; } .parameter-item .title { color: #000 !important; } .parameter-item .score { color: #cc8800 !important; } .theme-line { color: #cc8800 !important; } .gl-box .gl-score { color: #cc8800 !important; } .score-table th, .score-table td { border-color: #ccc !important; color: #000 !important; } .score-table th { background: #eee !important; } .score-table .score-col { color: #cc8800 !important; } .score-table .weighted-col { color: #cc8800 !important; } .grade-d { color: #cc8800 !important; } }
+        @media (max-width: 700px) { .container { padding: 1rem; } .book-container { padding: 1.5rem; } h1 { font-size: 1.8rem; } .theme-line { font-size: 1.3rem; } .opening-statement { padding: 1.2rem; } }
+        @media print {
+            .header { display: none !important; }
+            .back-link { display: none !important; }
+            .book-container { background: transparent !important; border: none !important; padding: 0 !important; }
+            body { background: #fff !important; color: #000 !important; }
+            h1, h2, h3, p { color: #000 !important; }
+            .gl-box, .highlight-box { background: #f5f5f5 !important; border-color: #ccc !important; }
+            .gl-box p, .highlight-box p { color: #000 !important; }
+            .theme-line { color: #cc8800 !important; }
+            .gl-box .gl-score { color: #cc8800 !important; }
+            .score-table th, .score-table td { border-color: #ccc !important; color: #000 !important; }
+            .score-table th { background: #eee !important; }
+            .score-table .score-col { color: #cc8800 !important; }
+            .score-table .weighted-col { color: #cc8800 !important; }
+            .grade-d { color: #cc8800 !important; }
+            .footer .page-number { color: #666 !important; }
+            .page-break { page-break-after: always; }
+        }
+        .page-break { display: none; }
+        @media print { .page-break { display: block; } }
     </style>
 </head>
 <body>
@@ -72,7 +79,6 @@
     <div class="header">
         <div class="logo"><a href="index.html"><span class="home-arrow">←</span> GFI Flow Intelligence</a></div>
         <div class="lang-switch">
-            <!-- 按鈕順序已改為 EN、繁、简、ES，預設 active 仍在 繁 (tw) -->
             <button class="lang-btn" data-lang="en">EN</button>
             <button class="lang-btn active" data-lang="tw">繁</button>
             <button class="lang-btn" data-lang="cn">简</button>
@@ -80,7 +86,7 @@
         </div>
     </div>
 
-    <!-- 繁體中文（預設顯示） -->
+    <!-- ====== 繁體中文（預設） ====== -->
     <div id="lang-tw" class="content-lang active">
         <div class="book-container">
             <div class="opening-statement">
@@ -89,12 +95,12 @@
                 <p class="signature">— GL 框架診斷 · Ping Xu · GFI Flow Intelligence</p>
             </div>
             <div style="text-align:center; margin:2rem 0;">
-                <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#fbbf24; line-height:1;">0.48</div>
+                <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#fbbf24; line-height:1;">0.44</div>
                 <div style="font-size:1.2rem; color:#fbbf24; font-weight:600;">D · 方向模糊</div>
                 <div style="font-size:0.85rem; color:#9fb0c8; margin-top:0.25rem;">滿分 1.00</div>
             </div>
             <div class="theme-line">國家主導價值捕獲，但正義在市場邏輯中被妥協。</div>
-            <p>法國在 GL Index 得分 <span class="highlight-yellow">0.48</span> — D 級。它是西方國家中最接近「土地財政閉環」的案例，透過大巴黎快線等國家主導的基礎建設結合土地增值捕獲機制，試圖回收公共投資創造的價值。但近年的制度轉型讓私人開發商主導公地開發，削弱了社會住宅供給，正義在市場邏輯中被妥協。</p>
+            <p>法國在 GL Index 得分 <span class="highlight-yellow">0.44</span> — D 級。它是西方國家中最接近「土地財政閉環」的案例，透過大巴黎快線等國家主導的基礎建設結合土地增值捕獲機制，試圖回收公共投資創造的價值。但近年的制度轉型讓私人開發商主導公地開發，削弱了社會住宅供給，正義在市場邏輯中被妥協。</p>
             <h2>八個參數 · 法國</h2>
             <table class="score-table">
                 <thead><tr><th>參數</th><th>權重</th><th>分數 (0–100)</th><th>加權</th></tr></thead>
@@ -113,7 +119,7 @@
                     </tr>
                     <tr style="border-top:2px solid #fbbf24; font-weight:700;">
                         <td colspan="3" style="text-align:right;">GL Index</td>
-                        <td class="weighted-col" style="font-size:1.8rem; color:#fbbf24;">0.48</td>
+                        <td class="weighted-col" style="font-size:1.8rem; color:#fbbf24;">0.44</td>
                     </tr>
                 </tbody>
             </table>
@@ -126,7 +132,7 @@
                 <li><strong>法治與信任正在流失</strong> — 2025年法國公民空間被降級為「受阻礙」，心理成本和崩潰成本上升。</li>
             </ul>
             <div class="gl-box">
-                <p><strong>0.48 代表的意義</strong></p>
+                <p><strong>0.44 代表的意義</strong></p>
                 <p>法國有國家能力、有價值捕獲機制，但正義性正在流失。它不是英國（貴族壟斷）也不是美國（資本壟斷）——它是「國家干預 + 市場邏輯」的混和體，兩種邏輯互相抵銷，結果是方向模糊、執行破碎。</p>
             </div>
             <div class="highlight-box">
@@ -136,20 +142,20 @@
                 <p>C (0.50–0.69) — 一半回流。一半轉嫁。</p>
                 <p>D (0.30–0.49) — 大部分價值被拿走。大部分成本被轉嫁。</p>
                 <p>F (0.00–0.29) — 價值被拿走。成本被轉嫁。小民精疲力竭。</p>
-                <p style="margin-top:0.5rem;"><span class="grade-d">法國：0.48 — D</span></p>
+                <p style="margin-top:0.5rem;"><span class="grade-d">法國：0.44 — D</span></p>
             </div>
             <div class="divider"></div>
             <div class="footer">
                 <p><strong>Ping Xu</strong> · GL框架創建者 · 2026年6月</p>
                 <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · 免費下載 · 免費傳播</p>
+                <div class="page-number">第 1 頁，共 1 頁</div>
                 <a href="index.html" class="back-link">← 回首頁</a>
             </div>
         </div>
     </div>
 
-    <!-- 英文 -->
+    <!-- ====== ENGLISH ====== -->
     <div id="lang-en" class="content-lang">
-        <!-- 內容與之前相同，省略以節省篇幅，實際需完整保留 -->
         <div class="book-container">
             <div class="opening-statement">
                 <p><span class="highlight-yellow">GL Index 2026 · France</span></p>
@@ -157,12 +163,12 @@
                 <p class="signature">— GL Framework Diagnostic · Ping Xu · GFI Flow Intelligence</p>
             </div>
             <div style="text-align:center; margin:2rem 0;">
-                <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#fbbf24; line-height:1;">0.48</div>
+                <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#fbbf24; line-height:1;">0.44</div>
                 <div style="font-size:1.2rem; color:#fbbf24; font-weight:600;">D · Directionally Unclear</div>
                 <div style="font-size:0.85rem; color:#9fb0c8; margin-top:0.25rem;">out of 1.00</div>
             </div>
             <div class="theme-line">State-led value capture, but justice is compromised by market logic.</div>
-            <p>France scores <span class="highlight-yellow">0.48</span> on the GL Index — a D grade. It is the Western country closest to a "land fiscal loop," using state-led infrastructure projects like the Grand Paris Express to recover publicly created value. But recent institutional shifts have allowed private developers to dominate public land development, weakening social housing supply and compromising justice.</p>
+            <p>France scores <span class="highlight-yellow">0.44</span> on the GL Index — a D grade. It is the Western country closest to a "land fiscal loop," using state-led infrastructure projects like the Grand Paris Express to recover publicly created value. But recent institutional shifts have allowed private developers to dominate public land development, weakening social housing supply and compromising justice.</p>
             <h2>Eight Parameters · France</h2>
             <table class="score-table">
                 <thead><tr><th>Parameter</th><th>Weight</th><th>Score (0–100)</th><th>Weighted</th></tr></thead>
@@ -181,7 +187,7 @@
                     </tr>
                     <tr style="border-top:2px solid #fbbf24; font-weight:700;">
                         <td colspan="3" style="text-align:right;">GL Index</td>
-                        <td class="weighted-col" style="font-size:1.8rem; color:#fbbf24;">0.48</td>
+                        <td class="weighted-col" style="font-size:1.8rem; color:#fbbf24;">0.44</td>
                     </tr>
                 </tbody>
             </table>
@@ -194,7 +200,7 @@
                 <li><strong>Trust and rule of law eroding</strong> — France's civic space was downgraded to "obstructed" in 2025; psychological and collapse costs are rising.</li>
             </ul>
             <div class="gl-box">
-                <p><strong>What 0.48 Means</strong></p>
+                <p><strong>What 0.44 Means</strong></p>
                 <p>France has state capacity and value capture mechanisms, but justice is eroding. It is neither the UK (aristocratic capture) nor the US (capital capture) — it is a hybrid of state intervention and market logic, with the two forces canceling each other out, resulting in unclear direction and fragmented execution.</p>
             </div>
             <div class="highlight-box">
@@ -204,20 +210,20 @@
                 <p>C (0.50–0.69) — Half returns. Half shifts.</p>
                 <p>D (0.30–0.49) — Most value captured. Most costs shifted.</p>
                 <p>F (0.00–0.29) — Value captured. Costs shifted. Citizens exhausted.</p>
-                <p style="margin-top:0.5rem;"><span class="grade-d">France: 0.48 — D</span></p>
+                <p style="margin-top:0.5rem;"><span class="grade-d">France: 0.44 — D</span></p>
             </div>
             <div class="divider"></div>
             <div class="footer">
                 <p><strong>Ping Xu</strong> · Creator of the GL Framework · June 2026</p>
                 <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · Free download · Free distribution</p>
+                <div class="page-number">Page 1 of 1</div>
                 <a href="index.html" class="back-link">← Back to Home</a>
             </div>
         </div>
     </div>
 
-    <!-- 简体中文 -->
+    <!-- ====== 简体中文 ====== -->
     <div id="lang-cn" class="content-lang">
-        <!-- 內容與之前相同，省略 -->
         <div class="book-container">
             <div class="opening-statement">
                 <p><span class="highlight-yellow">GL Index 2026 · 法国</span></p>
@@ -225,12 +231,12 @@
                 <p class="signature">— GL 框架诊断 · Ping Xu · GFI Flow Intelligence</p>
             </div>
             <div style="text-align:center; margin:2rem 0;">
-                <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#fbbf24; line-height:1;">0.48</div>
+                <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#fbbf24; line-height:1;">0.44</div>
                 <div style="font-size:1.2rem; color:#fbbf24; font-weight:600;">D · 方向模糊</div>
                 <div style="font-size:0.85rem; color:#9fb0c8; margin-top:0.25rem;">满分 1.00</div>
             </div>
             <div class="theme-line">国家主导价值捕获，但正义在市场逻辑中被妥协。</div>
-            <p>法国在 GL Index 得分 <span class="highlight-yellow">0.48</span> — D 级。它是西方国家中最接近「土地财政闭环」的案例，透过大巴黎快线等国家主导的基础建设结合土地增值捕获机制，试图回收公共投资创造的价值。但近年让私人开发商主导公地开发，削弱了社会住宅供给，正义在市场逻辑中被妥协。</p>
+            <p>法国在 GL Index 得分 <span class="highlight-yellow">0.44</span> — D 级。它是西方国家中最接近「土地财政闭环」的案例，透过大巴黎快线等国家主导的基础建设结合土地增值捕获机制，试图回收公共投资创造的价值。但近年让私人开发商主导公地开发，削弱了社会住宅供给，正义在市场逻辑中被妥协。</p>
             <h2>八个参数 · 法国</h2>
             <table class="score-table">
                 <thead><tr><th>参数</th><th>权重</th><th>分数 (0–100)</th><th>加权</th></tr></thead>
@@ -249,7 +255,7 @@
                     </tr>
                     <tr style="border-top:2px solid #fbbf24; font-weight:700;">
                         <td colspan="3" style="text-align:right;">GL Index</td>
-                        <td class="weighted-col" style="font-size:1.8rem; color:#fbbf24;">0.48</td>
+                        <td class="weighted-col" style="font-size:1.8rem; color:#fbbf24;">0.44</td>
                     </tr>
                 </tbody>
             </table>
@@ -262,7 +268,7 @@
                 <li><strong>法治与信任正在流失</strong> — 2025年法国公民空间被降级为「受阻礙」，心理成本和崩溃成本上升。</li>
             </ul>
             <div class="gl-box">
-                <p><strong>0.48 代表的意义</strong></p>
+                <p><strong>0.44 代表的意义</strong></p>
                 <p>法国有国家能力、有价值捕获机制，但正义性正在流失。它是「国家干预 + 市场逻辑」的混合体，两种逻辑互相抵消，结果是方向模糊、执行破碎。</p>
             </div>
             <div class="highlight-box">
@@ -272,20 +278,20 @@
                 <p>C (0.50–0.69) — 一半回流。一半转嫁。</p>
                 <p>D (0.30–0.49) — 大部分价值被拿走。大部分成本被转嫁。</p>
                 <p>F (0.00–0.29) — 价值被拿走。成本被转嫁。人民精疲力竭。</p>
-                <p style="margin-top:0.5rem;"><span class="grade-d">法国：0.48 — D</span></p>
+                <p style="margin-top:0.5rem;"><span class="grade-d">法国：0.44 — D</span></p>
             </div>
             <div class="divider"></div>
             <div class="footer">
                 <p><strong>Ping Xu</strong> · GL框架创建者 · 2026年6月</p>
                 <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · 免费下载 · 免费传播</p>
+                <div class="page-number">第 1 页，共 1 页</div>
                 <a href="index.html" class="back-link">← 回首页</a>
             </div>
         </div>
     </div>
 
-    <!-- 西班牙文 -->
+    <!-- ====== ESPAÑOL ====== -->
     <div id="lang-es" class="content-lang">
-        <!-- 內容與之前相同，省略 -->
         <div class="book-container">
             <div class="opening-statement">
                 <p><span class="highlight-yellow">GL Index 2026 · Francia</span></p>
@@ -293,12 +299,12 @@
                 <p class="signature">— GL Framework Diagnostic · Ping Xu · GFI Flow Intelligence</p>
             </div>
             <div style="text-align:center; margin:2rem 0;">
-                <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#fbbf24; line-height:1;">0.48</div>
+                <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#fbbf24; line-height:1;">0.44</div>
                 <div style="font-size:1.2rem; color:#fbbf24; font-weight:600;">D · Dirección Ambigua</div>
                 <div style="font-size:0.85rem; color:#9fb0c8; margin-top:0.25rem;">de 1.00</div>
             </div>
             <div class="theme-line">Captura de valor liderada por el Estado, pero la justicia es comprometida por la lógica del mercado.</div>
-            <p>Francia obtiene <span class="highlight-yellow">0.48</span> en el GL Index — grado D. Es el país occidental más cercano a un "circuito fiscal del suelo," utilizando proyectos de infraestructura estatales como el Grand Paris Express para recuperar valor creado públicamente. Pero los cambios institucionales recientes han permitido que los desarrolladores privados dominen el desarrollo del suelo público, debilitando la oferta de vivienda social y comprometiendo la justicia.</p>
+            <p>Francia obtiene <span class="highlight-yellow">0.44</span> en el GL Index — grado D. Es el país occidental más cercano a un "circuito fiscal del suelo," utilizando proyectos de infraestructura estatales como el Grand Paris Express para recuperar valor creado públicamente. Pero los cambios institucionales recientes han permitido que los desarrolladores privados dominen el desarrollo del suelo público, debilitando la oferta de vivienda social y comprometiendo la justicia.</p>
             <h2>Ocho Parámetros · Francia</h2>
             <table class="score-table">
                 <thead><tr><th>Parámetro</th><th>Peso</th><th>Puntaje (0–100)</th><th>Ponderado</th></tr></thead>
@@ -317,7 +323,7 @@
                     </tr>
                     <tr style="border-top:2px solid #fbbf24; font-weight:700;">
                         <td colspan="3" style="text-align:right;">GL Index</td>
-                        <td class="weighted-col" style="font-size:1.8rem; color:#fbbf24;">0.48</td>
+                        <td class="weighted-col" style="font-size:1.8rem; color:#fbbf24;">0.44</td>
                     </tr>
                 </tbody>
             </table>
@@ -330,7 +336,7 @@
                 <li><strong>Confianza y estado de derecho erosionados</strong> — El espacio cívico de Francia fue degradado a "obstruido" en 2025.</li>
             </ul>
             <div class="gl-box">
-                <p><strong>Qué significa 0.48</strong></p>
+                <p><strong>Qué significa 0.44</strong></p>
                 <p>Francia tiene capacidad estatal y mecanismos de captura de valor, pero la justicia se está erosionando. Es un híbrido de intervención estatal y lógica de mercado, con ambas fuerzas anulándose mutuamente, resultando en una dirección poco clara y ejecución fragmentada.</p>
             </div>
             <div class="highlight-box">
@@ -340,12 +346,13 @@
                 <p>C (0.50–0.69) — La mitad regresa. La mitad se traslada.</p>
                 <p>D (0.30–0.49) — La mayor parte del valor es capturado. La mayoría de los costos son trasladados.</p>
                 <p>F (0.00–0.29) — El valor es capturado. Los costos son trasladados. Ciudadanos agotados.</p>
-                <p style="margin-top:0.5rem;"><span class="grade-d">Francia: 0.48 — D</span></p>
+                <p style="margin-top:0.5rem;"><span class="grade-d">Francia: 0.44 — D</span></p>
             </div>
             <div class="divider"></div>
             <div class="footer">
                 <p><strong>Ping Xu</strong> · Creador del GL Framework · Junio 2026</p>
                 <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · Descarga gratuita · Distribución gratuita</p>
+                <div class="page-number">Página 1 de 1</div>
                 <a href="index.html" class="back-link">← Volver al Inicio</a>
             </div>
         </div>
