@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GL Index 等級分數 · 解讀指南</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #0b1220; color: #f8fbff; font-family: 'DM Sans', system-ui, sans-serif; line-height: 1.7; }
+        .container { max-width: 920px; margin: 0 auto; padding: 2rem; }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+        .logo a {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.12em;
+            color: #9FE870;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+        .logo a .home-arrow { color: #9fb0c8; margin-right: 6px; }
+        .logo a:hover .home-arrow { color: #9FE870; }
+        .lang-switch { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .lang-btn {
+            background: none;
+            border: 1px solid rgba(255,255,255,.1);
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            padding: 0.25rem 0.7rem;
+            border-radius: 2rem;
+            color: #9fb0c8;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,.3); color: #fff; }
+        .lang-btn.active { background: #9FE870; color: #0b1220; border-color: #9FE870; }
+        .content-lang { display: none; }
+        .content-lang.active { display: block; }
+        .essay-container { background: #0d1526; padding: 3rem 2.5rem; border-radius: 4px; border: 1px solid rgba(255,255,255,.06); }
+        h1 { font-size: 2.2rem; font-weight: 700; text-align: center; margin-bottom: 0.25rem; color: #9FE870; letter-spacing: 0.02em; font-family: 'DM Serif Display', Georgia, serif; }
+        .subtitle { text-align: center; font-size: 1rem; color: #9fb0c8; margin-bottom: 0.5rem; font-style: italic; }
+        .author-line { text-align: center; font-size: 0.9rem; color: #7DD3FC; margin-bottom: 2rem; }
+        h2 { font-size: 1.4rem; color: #9FE870; margin: 2rem 0 1rem 0; border-bottom: 1px solid rgba(255,255,255,.06); padding-bottom: 0.3rem; font-family: 'DM Serif Display', Georgia, serif; }
+        h3 { font-size: 1.1rem; color: #fbbf24; margin: 1.2rem 0 0.5rem 0; font-family: 'DM Serif Display', Georgia, serif; }
+        p { color: #c7d2e3; margin-bottom: 1rem; line-height: 1.8; }
+        .highlight-green { color: #9FE870; font-weight: 600; }
+        .highlight-yellow { color: #fbbf24; font-weight: 600; }
+        .highlight-red { color: #f87171; font-weight: 600; }
+        .grade-block { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; }
+        .grade-block .grade-title { font-family: 'DM Mono', monospace; font-size: 1.2rem; font-weight: 700; }
+        .grade-block .grade-desc { font-size: 0.95rem; color: #eaf6ff; margin: 0.2rem 0 0.5rem 0; font-style: italic; }
+        .grade-block ul { color: #c7d2e3; margin-left: 1.2rem; line-height: 1.8; }
+        .grade-block .countries { font-size: 0.85rem; color: #9fb0c8; margin-top: 0.5rem; }
+        .key-insight { background: rgba(159,232,112,0.04); border-left: 3px solid #9FE870; padding: 1.2rem 1.5rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0; }
+        .key-insight p { color: #eaf6ff; margin-bottom: 0.3rem; }
+        .key-insight .highlight-line { font-size: 1.1rem; font-weight: 600; color: #9FE870; }
+        .footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,.06); text-align: center; font-size: 0.75rem; color: #9fb0c8; }
+        .back-link { display: inline-block; margin-top: 1.5rem; font-family: 'DM Mono', monospace; font-size: 0.7rem; color: #9fb0c8; text-decoration: none; border: 1px solid rgba(255,255,255,.06); padding: 0.4rem 1rem; border-radius: 2rem; transition: 0.2s; }
+        .back-link:hover { border-color: rgba(255,255,255,.2); color: #fff; }
+        .divider { border: 0; border-top: 1px solid rgba(255,255,255,.08); margin: 2.5rem 0; }
+        .note { font-size: 0.85rem; color: #9fb0c8; background: rgba(255,255,255,.02); padding: 0.8rem 1.2rem; border-radius: 8px; margin: 1rem 0; border: 1px solid rgba(255,255,255,.04); }
+        @media (max-width: 700px) { .container { padding: 1rem; } .essay-container { padding: 1.5rem; } h1 { font-size: 1.8rem; } }
+        @media print {
+            .header { display: none !important; }
+            .back-link { display: none !important; }
+            .essay-container { background: transparent !important; border: none !important; padding: 0 !important; }
+            body { background: #fff !important; color: #000 !important; }
+            h1, h2, h3, p { color: #000 !important; }
+            .grade-block { border-color: #ccc !important; background: #f9f9f9 !important; }
+            .grade-block .grade-title { color: #000 !important; }
+            .grade-block .grade-desc { color: #333 !important; }
+            .grade-block .countries { color: #555 !important; }
+            .key-insight { background: #f5f5f5 !important; border-color: #006633 !important; }
+            .key-insight .highlight-line { color: #006633 !important; }
+            .highlight-green { color: #006633 !important; }
+            .highlight-yellow { color: #cc8800 !important; }
+            .highlight-red { color: #cc0000 !important; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="logo"><a href="index.html"><span class="home-arrow">←</span> GFI Flow Intelligence</a></div>
+        <div class="lang-switch">
+            <button class="lang-btn" data-lang="en">EN</button>
+            <button class="lang-btn active" data-lang="tw">繁</button>
+            <button class="lang-btn" data-lang="cn">简</button>
+            <button class="lang-btn" data-lang="es">ES</button>
+        </div>
+    </div>
+
+    <!-- ====== 繁體中文 ====== -->
+    <div id="lang-tw" class="content-lang active">
+        <div class="essay-container">
+            <h1>GL Index 等級分數</h1>
+            <div class="subtitle">它們到底在說什麼？</div>
+            <div class="author-line">— GL 框架診斷 · GFI Flow Intelligence</div>
+
+            <p>如果你第一次看到 GL Index，你可能會想：「0.79 是什麼意思？B 級代表什麼？為什麼 A 級從缺？」</p>
+            <p>這篇文章不是「說明書」。這是「診斷指南」。它告訴你：當你看到一個國家的 GL Index 分數時，你應該讀出什麼。</p>
+
+            <div class="key-insight">
+                <p><span class="highlight-line">先記住一句話</span></p>
+                <p>「GL Index 測量的不是經濟產出，是治理正當性。」</p>
+                <p>GDP 告訴你「這個國家多有錢」。GL Index 告訴你「這個國家是否值得信任」。</p>
+                <p>0.00–1.00 的分數，不是「表現評分」——是「正當性診斷」。</p>
+            </div>
+
+            <h2>A 級（0.90–1.00）</h2>
+            <div class="grade-block">
+                <div class="grade-title" style="color:#9FE870;">A · 尚未有人到達</div>
+                <div class="grade-desc">「治理的北極星，尚無人觸及。」</div>
+                <p>A 級代表的是：價值完全回流，成本被制度吸收，弱勢不會被轉嫁，人民信任治理。這不是一個「評分等級」——這是一個「方向」。</p>
+                <p>目前沒有任何經濟體達到 A 級。不是因為它們「還不夠好」——是因為「真正值得完全信任的治理，還沒有出現」。</p>
+            </div>
+
+            <h2>B 級（0.70–0.89）</h2>
+            <div class="grade-block">
+                <div class="grade-title" style="color:#7DD3FC;">B · 價值回流，信任存在</div>
+                <div class="grade-desc">「治理正在運作，成本沒有被轉嫁給弱勢。」</div>
+                <ul>
+                    <li><strong>芬蘭</strong> 0.87 — 教育、醫療、社會信任</li>
+                    <li><strong>新加坡</strong> 0.79 — 組屋、公共土地、效率</li>
+                    <li><strong>瑞士</strong> 0.78 — 直接民主、稅制透明</li>
+                    <li><strong>奧地利</strong> 0.77 — 公共住宅、社會夥伴</li>
+                    <li><strong>丹麥</strong> 0.76 — 高稅收、高福利、高信任</li>
+                    <li><strong>愛爾蘭</strong> 0.76 — 歐盟結構基金、部分回流</li>
+                    <li><strong>冰島</strong> 0.75 — 小國、透明、公共化</li>
+                    <li><strong>捷克</strong> 0.73 — 轉型、公共空間保留</li>
+                    <li><strong>紐西蘭</strong> 0.73 — 土地稅、毛利權益</li>
+                    <li><strong>加拿大</strong> 0.72 — 聯邦制、稅制回收</li>
+                    <li><strong>瑞典</strong> 0.72 — 高稅收、高福利、回流完整</li>
+                    <li><strong>挪威</strong> 0.71 — 石油收入公共化</li>
+                    <li><strong>比利時</strong> 0.71 — 歐盟中心、政策規範</li>
+                    <li><strong>澳洲</strong> 0.70 — 礦業稅、部分回流</li>
+                </ul>
+                <div class="countries">B 級的共同特徵：土地增值沒有被少數人壟斷。價值透過稅收、公共服務、社會住宅回到人民身上。B 級不是「完美」——是「正當性存在」。</div>
+            </div>
+
+            <h2>C 級（0.50–0.69）</h2>
+            <div class="grade-block">
+                <div class="grade-title" style="color:#fbbf24;">C · 一半回流，一半轉嫁</div>
+                <div class="grade-desc">「治理有效率，但正義正在流失。」</div>
+                <ul>
+                    <li><strong>南韓</strong> 0.68 — 行政效率高，但土地與教育成本集中</li>
+                    <li><strong>葡萄牙</strong> 0.67 — 歐盟結構基金，但行政摩擦仍高</li>
+                    <li><strong>荷蘭</strong> 0.63 — 全球治理標竿，但數位主權脆弱、民主下滑</li>
+                    <li><strong>波蘭</strong> 0.58 — 轉型經濟體，部分回流但結構性缺口</li>
+                    <li><strong>德國</strong> 0.56 — 經濟強勁，但土地與能源轉型成本轉嫁</li>
+                    <li><strong>阿聯酋</strong> 0.56 — 行政效率極高，但外籍勞工被排除</li>
+                    <li><strong>中國</strong> 0.51 — 土地財政閉環存在，但農民被遺忘</li>
+                </ul>
+                <div class="countries">C 級的共同特徵：行政效率很高，但價值分配機制不完整。一半價值回流，一半被轉嫁。</div>
+            </div>
+
+            <h2>D 級（0.30–0.49）</h2>
+            <div class="grade-block">
+                <div class="grade-title" style="color:#fb923c;">D · 大部分價值被拿走</div>
+                <div class="grade-desc">「系統正在耗盡人民。」</div>
+                <ul>
+                    <li><strong>西班牙</strong> 0.44 — 區域張力、土地與資源分配不均</li>
+                    <li><strong>英國</strong> 0.44 — 貴族土地壟斷、社會流動性低</li>
+                    <li><strong>法國</strong> 0.44 — 中央集權、價值捕獲轉向市場邏輯</li>
+                    <li><strong>義大利</strong> 0.43 — 官僚沉重、南北差距、家族壟斷</li>
+                    <li><strong>馬來西亞</strong> 0.41 — 族群政策固化土地分配</li>
+                    <li><strong>希臘</strong> 0.39 — 債務危機、行政崩潰</li>
+                    <li><strong>越南</strong> 0.38 — 土地改革引發地價暴漲</li>
+                    <li><strong>以色列</strong> 0.38 — 軍事優先、土地資源集中</li>
+                    <li><strong>美國</strong> 0.35 — GDP #1，但治理正當性極低</li>
+                    <li><strong>科威特</strong> 0.34 — 石油財富集中、轉嫁路徑不透明</li>
+                    <li><strong>不丹</strong> 0.33 — GDP極低，但治理分數與之相符</li>
+                    <li><strong>智利</strong> 0.32 — 新自由主義遺產、土地與水資源集中</li>
+                    <li><strong>日本</strong> 0.31 — GDP #4，但高心理成本、機會成本</li>
+                    <li><strong>泰國</strong> 0.31 — 長期政治不穩定、軍事干預</li>
+                    <li><strong>卡達</strong> 0.44 — 石油財富集中、外籍勞工排除</li>
+                </ul>
+                <div class="countries">D 級的共同特徵：GDP 很高，但人民被制度耗盡。等待、重複、崩潰、焦慮、機會被剝奪。</div>
+            </div>
+
+            <h2>F 級（0.00–0.29）</h2>
+            <div class="grade-block">
+                <div class="grade-title" style="color:#f87171;">F · 價值被拿走，人民精疲力竭</div>
+                <div class="grade-desc">「系統性崩潰。正當性已經喪失。」</div>
+                <ul>
+                    <li><strong>土耳其</strong> 0.30 — 行政摩擦極高、信任流失</li>
+                    <li><strong>印度</strong> 0.30 — 種姓、貧富差距、行政崩潰</li>
+                    <li><strong>巴西</strong> 0.28 — 巴西成本、稅務叢林</li>
+                    <li><strong>印尼</strong> 0.28 — 土地治理破碎、官僚複雜</li>
+                    <li><strong>阿根廷</strong> 0.28 — 債務與通膨陷阱</li>
+                    <li><strong>俄羅斯</strong> 0.27 — 資源詛咒與制裁擠壓</li>
+                    <li><strong>墨西哥</strong> 0.26 — 暴力與貪腐陷阱</li>
+                    <li><strong>香港</strong> 0.25 — 政府與寡頭壟斷土地</li>
+                    <li><strong>台灣</strong> 0.24 — 房價、低薪、政治消耗</li>
+                    <li><strong>南非</strong> 0.24 — 殖民遺產、土地改革停滯</li>
+                    <li><strong>埃及</strong> 0.23 — 人口壓力、軍隊控制土地</li>
+                    <li><strong>伊朗</strong> 0.21 — 制裁、神權、資源稀缺</li>
+                    <li><strong>奈及利亞</strong> 0.20 — 石油詛咒、制度失靈</li>
+                </ul>
+                <div class="countries">F 級的共同特徵：價值被拿走。成本被轉嫁。人民精疲力竭。</div>
+            </div>
+
+            <div class="key-insight">
+                <p><span class="highlight-line">一個關鍵觀察</span></p>
+                <p><strong>0.5 是分界線。</strong> 低於 0.5 的國家——治理正在耗盡人民。高於 0.5 的國家——治理正在回收價值。</p>
+                <p style="margin-top:0.5rem; color:#9fe870;">A 級（0.90–1.00）— 尚未存在<br>B 級（0.70–0.89）— 價值回流，信任存在<br>C 級（0.50–0.69）— 一半回流，一半轉嫁<br>D 級（0.30–0.49）— 大部分價值被拿走<br>F 級（0.00–0.29）— 價值被拿走，人民精疲力竭</p>
+            </div>
+
+            <div class="note">
+                <p><strong>結語</strong></p>
+                <p>GL Index 不是一個「競爭排名」。它是一個「正當性診斷」。</p>
+                <p>它告訴你：「這個治理系統——是讓人民活得更好，還是讓人民被制度榨乾？」</p>
+                <p>當你看到一個國家的分數時，你讀到的不是「他們輸了」或「我們贏了」——你讀到的是：「那些被 GDP 隱藏的成本——等待、重複、崩潰、焦慮、機會被剝奪——正在被看見。」</p>
+            </div>
+
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · GL框架創建者 · 2026年6月</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · 免費下載 · 免費傳播</p>
+                <a href="index.html" class="back-link">← 回首頁</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== ENGLISH ====== -->
+    <div id="lang-en" class="content-lang">
+        <div class="essay-container">
+            <h1>GL Index Grades</h1>
+            <div class="subtitle">What Do They Actually Mean?</div>
+            <div class="author-line">— GL Framework Diagnostic · GFI Flow Intelligence</div>
+
+            <p>If you're seeing the GL Index for the first time, you might wonder: "What does 0.79 mean? What does a B grade represent? Why is there no A?"</p>
+            <p>This is not a "manual." This is a "diagnostic guide." It tells you what to read when you see a country's GL Index score.</p>
+
+            <div class="key-insight">
+                <p><span class="highlight-line">One sentence to remember</span></p>
+                <p>"The GL Index does not measure economic output. It measures governance legitimacy."</p>
+                <p>GDP tells you "how rich this country is." The GL Index tells you "whether this country is trustworthy."</p>
+                <p>The 0.00–1.00 score is not a "performance rating" — it is a "legitimacy diagnosis."</p>
+            </div>
+
+            <h2>Grade A (0.90–1.00)</h2>
+            <div class="grade-block">
+                <div class="grade-title" style="color:#9FE870;">A · Not Yet Reached</div>
+                <div class="grade-desc">"The North Star of governance, yet untouched."</div>
+                <p>Grade A represents: value fully returns, costs are absorbed by institutions, the vulnerable are not burdened, citizens trust governance. This is not a "score" — it is a "direction."</p>
+                <p>No economy has reached Grade A. Not because they are "not good enough" — but because "governance truly worthy of complete trust has not yet emerged."</p>
+            </div>
+
+            <h2>Grade B (0.70–0.89)</h2>
+            <div class="grade-block">
+                <div class="grade-title" style="color:#7DD3FC;">B · Value Returns, Trust Exists</div>
+                <div class="grade-desc">"Governance is functioning. Costs are not shifted to the vulnerable."</div>
+                <ul>
+                    <li><strong>Finland</strong> 0.87 — Education, healthcare, social trust</li>
+                    <li><strong>Singapore</strong> 0.79 — Public housing, public land, efficiency</li>
+                    <li><strong>Switzerland</strong> 0.78 — Direct democracy, transparent taxation</li>
+                    <li><strong>Austria</strong> 0.77 — Public housing, social partnership</li>
+                    <li><strong>Denmark</strong> 0.76 — High tax, high welfare, high trust</li>
+                    <li><strong>Ireland</strong> 0.76 — EU structural funds, partial return</li>
+                    <li><strong>Iceland</strong> 0.75 — Small, transparent, public resources</li>
+                    <li><strong>Czech Republic</strong> 0.73 — Transition, public space retained</li>
+                    <li><strong>New Zealand</strong> 0.73 — Land tax, Māori rights</li>
+                    <li><strong>Canada</strong> 0.72 — Federalism, tax recovery</li>
+                    <li><strong>Sweden</strong> 0.72 — High tax, high welfare, full return</li>
+                    <li><strong>Norway</strong> 0.71 — Oil revenues publicized</li>
+                    <li><strong>Belgium</strong> 0.71 — EU hub, regulatory standards</li>
+                    <li><strong>Australia</strong> 0.70 — Mining tax, partial return</li>
+                </ul>
+                <div class="countries">B grade common feature: land value is not monopolized by a few. Value returns to citizens through taxation, public services, and social housing. B is not "perfect" — it is "legitimacy exists."</div>
+            </div>
+
+            <h2>Grade C (0.50–0.69)</h2>
+            <div class="grade-block">
+                <div class="grade-title" style="color:#fbbf24;">C · Half Returns, Half Shifts</div>
+                <div class="grade-desc">"Governance is efficient, but justice is eroding."</div>
+                <ul>
+                    <li><strong>South Korea</strong> 0.68 — High administrative efficiency, but land and education costs concentrated</li>
+                    <li><strong>Portugal</strong> 0.67 — EU structural funds, but still high administrative friction</li>
+                    <li><strong>Netherlands</strong> 0.63 — Global governance benchmark, but digital sovereignty fragile, democracy declining</li>
+                    <li><strong>Poland</strong> 0.58 — Transition economy, partial return but structural gaps</li>
+                    <li><strong>Germany</strong> 0.56 — Strong economy, but land and energy transition costs shifted</li>
+                    <li><strong>UAE</strong> 0.56 — Extremely high administrative efficiency, but foreign workers excluded</li>
+                    <li><strong>China</strong> 0.51 — Land fiscal loop exists, but farmers left behind</li>
+                </ul>
+                <div class="countries">C grade common feature: high administrative efficiency, but incomplete value distribution mechanisms. Half the value returns, half is shifted.</div>
+            </div>
+
+            <h2>Grade D (0.30–0.49)</h2>
+            <div class="grade-block">
+                <div class="grade-title" style="color:#fb923c;">D · Most Value Is Taken</div>
+                <div class="grade-desc">"The system is exhausting its people."</div>
+                <ul>
+                    <li><strong>Spain</strong> 0.44 — Regional tensions, land and resource distribution unequal</li>
+                    <li><strong>United Kingdom</strong> 0.44 — Aristocratic land monopoly, low social mobility</li>
+                    <li><strong>France</strong> 0.44 — Centralization, value capture shifting to market logic</li>
+                    <li><strong>Italy</strong> 0.43 — Heavy bureaucracy, North-South divide, family monopolies</li>
+                    <li><strong>Malaysia</strong> 0.41 — Ethnic policy locks land distribution</li>
+                    <li><strong>Greece</strong> 0.39 — Debt crisis, administrative collapse</li>
+                    <li><strong>Vietnam</strong> 0.38 — Land reform triggers price surges</li>
+                    <li><strong>Israel</strong> 0.38 — Military priority, land resource concentration</li>
+                    <li><strong>United States</strong> 0.35 — GDP #1, but governance legitimacy extremely low</li>
+                    <li><strong>Kuwait</strong> 0.34 — Oil wealth concentrated, shift pathway opaque</li>
+                    <li><strong>Bhutan</strong> 0.33 — GDP extremely low, but score matches</li>
+                    <li><strong>Chile</strong> 0.32 — Neoliberal legacy, land and water concentration</li>
+                    <li><strong>Japan</strong> 0.31 — GDP #4, but high psychological and opportunity costs</li>
+                    <li><strong>Thailand</strong> 0.31 — Long-term political instability, military intervention</li>
+                    <li><strong>Qatar</strong> 0.44 — Oil wealth concentrated, foreign workers excluded</li>
+                </ul>
+                <div class="countries">D grade common feature: GDP is high, but people are exhausted by the system. Waiting, repetition, collapse, anxiety, opportunities taken away.</div>
+            </div>
+
+            <h2>Grade F (0.00–0.29)</h2>
+            <div class="grade-block">
+                <div class="grade-title" style="color:#f87171;">F · Value Taken, Citizens Exhausted</div>
+                <div class="grade-desc">"Systemic collapse. Legitimacy is lost."</div>
+                <ul>
+                    <li><strong>Turkey</strong> 0.30 — Extremely high administrative friction, trust eroding</li>
+                    <li><strong>India</strong> 0.30 — Caste, wealth gap, administrative collapse</li>
+                    <li><strong>Brazil</strong> 0.28 — Brazil cost, tax jungle</li>
+                    <li><strong>Indonesia</strong> 0.28 — Fragmented land governance, complex bureaucracy</li>
+                    <li><strong>Argentina</strong> 0.28 — Debt and inflation trap</li>
+                    <li><strong>Russia</strong> 0.27 — Resource curse and sanctions squeeze</li>
+                    <li><strong>Mexico</strong> 0.26 — Violence and corruption trap</li>
+                    <li><strong>Hong Kong</strong> 0.25 — Government and oligarchs monopolize land</li>
+                    <li><strong>Taiwan</strong> 0.24 — Housing prices, low wages, political exhaustion</li>
+                    <li><strong>South Africa</strong> 0.24 — Colonial legacy, land reform stalled</li>
+                    <li><strong>Egypt</strong> 0.23 — Population pressure, military controls land</li>
+                    <li><strong>Iran</strong> 0.21 — Sanctions, theocracy, resource scarcity</li>
+                    <li><strong>Nigeria</strong> 0.20 — Oil curse, institutional failure</li>
+                </ul>
+                <div class="countries">F grade common feature: value is taken. Costs are shifted. Citizens are exhausted.</div>
+            </div>
+
+            <div class="key-insight">
+                <p><span class="highlight-line">One Key Observation</span></p>
+                <p><strong>0.5 is the dividing line.</strong> Below 0.5 — governance is exhausting its people. Above 0.5 — governance is recovering value.</p>
+                <p style="margin-top:0.5rem; color:#9fe870;">A (0.90–1.00) — Not yet reached<br>B (0.70–0.89) — Value returns, trust exists<br>C (0.50–0.69) — Half returns, half shifts<br>D (0.30–0.49) — Most value is taken<br>F (0.00–0.29) — Value taken, citizens exhausted</p>
+            </div>
+
+            <div class="note">
+                <p><strong>Conclusion</strong></p>
+                <p>The GL Index is not a "competition ranking." It is a "legitimacy diagnosis."</p>
+                <p>It tells you: "Does this governance system make people's lives better — or does it drain them?"</p>
+                <p>When you see a country's score, you are not reading "they lost" or "we won" — you are reading: "The costs hidden by GDP — waiting, repetition, collapse, anxiety, stolen opportunities — are finally being seen."</p>
+            </div>
+
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · Creator of the GL Framework · June 2026</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · Free download · Free distribution</p>
+                <a href="index.html" class="back-link">← Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== 简体中文 ====== -->
+    <div id="lang-cn" class="content-lang">
+        <div class="essay-container">
+            <h1>GL Index 等级分数</h1>
+            <div class="subtitle">它们到底在说什么？</div>
+            <div class="author-line">— GL 框架诊断 · GFI Flow Intelligence</div>
+
+            <p>如果你第一次看到 GL Index，你可能会想：「0.79 是什么意思？B 级代表什么？为什么 A 级从缺？」</p>
+            <p>这篇文章不是「说明书」。这是「诊断指南」。它告诉你：当你看到一个国家的 GL Index 分数时，你应该读出什么。</p>
+
+            <div class="key-insight">
+                <p><span class="highlight-line">先记住一句话</span></p>
+                <p>「GL Index 测量的不是经济产出，是治理正当性。」</p>
+                <p>GDP 告诉你「这个国家多有钱」。GL Index 告诉你「这个国家是否值得信任」。</p>
+                <p>0.00–1.00 的分数，不是「表现评分」——是「正当性诊断」。</p>
+            </div>
+
+            <h2>A 级（0.90–1.00）</h2>
+            <div class="grade-block">
+                <div class="grade-title" style="color:#9FE870;">A · 尚未有人到达</div>
+                <div class="grade-desc">「治理的北极星，尚无人触及。」</div>
+                <p>A 级代表的是：价值完全回流，成本被制度吸收，弱势不会被转嫁，人民信任治理。这不是一个「评分等级」——这是一个「方向」。</p>
+                <p>目前没有任何经济体达到 A 级。不是因为它们「还不够好」——是因为「真正值得完全信任的治理，还没有出现」。</p>
+            </div>
+
+            <h2>B 级（0.70–0.89）</h2>
+            <div class="grade-block">
+                <div class="grade-title" style="color:#7DD3FC;">B · 价值回流，信任存在</div>
+                <div class="grade-desc">「治理正在运作，成本没有被转嫁给弱势。」</div>
+                <ul>
+                    <li><strong>芬兰</strong> 0.87 — 教育、医疗、社会信任</li>
+                    <li><strong>新加坡</strong> 0.79 — 组屋、公共土地、效率</li>
+                    <li><strong>瑞士</strong> 0.78 — 直接民主、税制透明</li>
+                    <li><strong>奥地利</strong> 0.77 — 公共住宅、社会伙伴</li>
+                    <li><strong>丹麦</strong> 0.76 — 高税收、高福利、高信任</li>
+                    <li><strong>爱尔兰</strong> 0.76 — 欧盟结构基金、部分回流</li>
+                    <li><strong>冰岛</strong> 0.75 — 小国、透明、公共化</li>
+                    <li><strong>捷克</strong> 0.73 — 转型、公共空间保留</li>
+                    <li><strong>新西兰</strong> 0.73 — 土地税、毛利权益</li>
+                    <li><strong>加拿大</strong> 0.72 — 联邦制、税制回收</li>
+                    <li><strong>瑞典</strong> 0.72 — 高税收、高福利、回流完整</li>
+                    <li><strong>挪威</strong> 0.71 — 石油收入公共化</li>
+                    <li><strong>比利时</strong> 0.71 — 欧盟中心、政策规范</li>
+                    <li><strong>澳大利亚</strong> 0.70 — 矿业税、部分回流</li>
+                </ul>
+                <div class="countries">B 级的共同特征：土地增值没有被少数人垄断。价值透过税收、公共服务、社会住宅回到人民身上。B 级不是「完美」——是「正当性存在」。</div>
+            </div>
+
+            <h2>C 级（0.50–0.69）</h2>
+            <div class="grade-block">
+                <div class="grade-title" style="color:#fbbf24;">C · 一半回流，一半转嫁</div>
+                <div class="grade-desc">「治理有效率，但正义正在流失。」</div>
+                <ul>
+                    <li><strong>韩国</strong> 0.68 — 行政效率高，但土地与教育成本集中</li>
+                    <li><strong>葡萄牙</strong> 0.67 — 欧盟结构基金，但行政摩擦仍高</li>
+                    <li><strong>荷兰</strong> 0.63 — 全球治理标杆，但数码主权脆弱、民主下滑</li>
+                    <li><strong>波兰</strong> 0.58 — 转型经济体，部分回流但结构性缺口</li>
+                    <li><strong>德国</strong> 0.56 — 经济强劲，但土地与能源转型成本转嫁</li>
+                    <li><strong>阿联酋</strong> 0.56 — 行政效率极高，但外籍劳工被排除</li>
+                    <li><strong>中国</strong> 0.51 — 土地财政闭环存在，但农民被遗忘</li>
+                </ul>
+                <div class="countries">C 级的共同特征：行政效率很高，但价值分配机制不完整。一半价值回流，一半被转嫁。</div>
+            </div>
+
+            <h2>D 级（0.30–0.49）</h2>
+            <div class="grade-block">
+                <div class="grade-title" style="color:#fb923c;">D · 大部分价值被拿走</div>
+                <div class="grade-desc">「系统正在耗尽人民。」</div>
+                <ul>
+                    <li><strong>西班牙</strong> 0.44 — 区域张力、土地与资源分配不均</li>
+                    <li><strong>英国</strong> 0.44 — 贵族土地垄断、社会流动性低</li>
+                    <li><strong>法国</strong> 0.44 — 中央集权、价值捕获转向市场逻辑</li>
+                    <li><strong>意大利</strong> 0.43 — 官僚沉重、南北差距、家族垄断</li>
+                    <li><strong>马来西亚</strong> 0.41 — 族群政策固化土地分配</li>
+                    <li><strong>希腊</strong> 0.39 — 债务危机、行政崩溃</li>
+                    <li><strong>越南</strong> 0.38 — 土地改革引发地价暴涨</li>
+                    <li><strong>以色列</strong> 0.38 — 军事优先、土地资源集中</li>
+                    <li><strong>美国</strong> 0.35 — GDP #1，但治理正当性极低</li>
+                    <li><strong>科威特</strong> 0.34 — 石油财富集中、转嫁路径不透明</li>
+                    <li><strong>不丹</strong> 0.33 — GDP极低，但治理分数与之相符</li>
+                    <li><strong>智利</strong> 0.32 — 新自由主义遗产、土地与水资源集中</li>
+                    <li><strong>日本</strong> 0.31 — GDP #4，但高心理成本、机会成本</li>
+                    <li><strong>泰国</strong> 0.31 — 长期政治不稳定、军事干预</li>
+                    <li><strong>卡塔尔</strong> 0.44 — 石油财富集中、外籍劳工排除</li>
+                </ul>
+                <div class="countries">D 级的共同特征：GDP 很高，但人民被制度耗尽。等待、重复、崩溃、焦虑、机会被剥夺。</div>
+            </div>
+
+            <h2>F 级（0.00–0.29）</h2>
+            <div class="grade-block">
+                <div class="grade-title" style="color:#f87171;">F · 价值被拿走，人民精疲力竭</div>
+                <div class="grade-desc">「系统性崩溃。正当性已经丧失。」</div>
+                <ul>
+                    <li><strong>土耳其</strong> 0.30 — 行政摩擦极高、信任流失</li>
+                    <li><strong>印度</strong> 0.30 — 种姓、贫富差距、行政崩溃</li>
+                    <li><strong>巴西</strong> 0.28 — 巴西成本、税务丛林</li>
+                    <li><strong>印尼</strong> 0.28 — 土地治理破碎、官僚复杂</li>
+                    <li><strong>阿根廷</strong> 0.28 — 债务与通胀陷阱</li>
+                    <li><strong>俄罗斯</strong> 0.27 — 资源诅咒与制裁挤压</li>
+                    <li><strong>墨西哥</strong> 0.26 — 暴力与贪腐陷阱</li>
+                    <li><strong>香港</strong> 0.25 — 政府与寡头垄断土地</li>
+                    <li><strong>台湾</strong> 0.24 — 房价、低薪、政治消耗</li>
+                    <li><strong>南非</strong> 0.24 — 殖民遗产、土地改革停滞</li>
+                    <li><strong>埃及</strong> 0.23 — 人口压力、军队控制土地</li>
+                    <li><strong>伊朗</strong> 0.21 — 制裁、神权、资源稀缺</li>
+                    <li><strong>尼日利亚</strong> 0.20 — 石油诅咒、制度失灵</li>
+                </ul>
+                <div class="countries">F 级的共同特征：价值被拿走。成本被转嫁。人民精疲力竭。</div>
+            </div>
+
+            <div class="key-insight">
+                <p><span class="highlight-line">一个关键观察</span></p>
+                <p><strong>0.5 是分界线。</strong> 低于 0.5 的国家——治理正在耗尽人民。高于 0.5 的国家——治理正在回收价值。</p>
+                <p style="margin-top:0.5rem; color:#9fe870;">A 级（0.90–1.00）— 尚未存在<br>B 级（0.70–0.89）— 价值回流，信任存在<br>C 级（0.50–0.69）— 一半回流，一半转嫁<br>D 级（0.30–0.49）— 大部分价值被拿走<br>F 级（0.00–0.29）— 价值被拿走，人民精疲力竭</p>
+            </div>
+
+            <div class="note">
+                <p><strong>结语</strong></p>
+                <p>GL Index 不是一个「竞争排名」。它是一个「正当性诊断」。</p>
+                <p>它告诉你：「这个治理系统——是让人民活得更好，还是让人民被制度榨干？」</p>
+                <p>当你看到一个国家的分数时，你读到的不是「他们输了」或「我们赢了」——你读到的是：「那些被 GDP 隐藏的成本——等待、重复、崩溃、焦虑、机会被剥夺——正在被看见。」</p>
+            </div>
+
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · GL框架创建者 · 2026年6月</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · 免费下载 · 免费传播</p>
+                <a href="index.html" class="back-link">← 回首页</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== ESPAÑOL ====== -->
+    <div id="lang-es" class="content-lang">
+        <div class="essay-container">
+            <h1>Calificaciones del GL Index</h1>
+            <div class="subtitle">¿Qué Significan Realmente?</div>
+            <div class="author-line">— GL Framework Diagnostic · GFI Flow Intelligence</div>
+
+            <p>Si ves el GL Index por primera vez, podrías preguntarte: "¿Qué significa 0.79? ¿Qué representa una calificación B? ¿Por qué no hay A?"</p>
+            <p>Esto no es un "manual." Es una "guía de diagnóstico." Te dice qué leer cuando ves la puntuación GL Index de un país.</p>
+
+            <div class="key-insight">
+                <p><span class="highlight-line">Una frase para recordar</span></p>
+                <p>"El GL Index no mide la producción económica. Mide la legitimidad de la gobernanza."</p>
+                <p>El PIB te dice "qué tan rico es este país." El GL Index te dice "si este país es digno de confianza."</p>
+                <p>La puntuación de 0.00–1.00 no es una "calificación de rendimiento" — es un "diagnóstico de legitimidad."</p>
+            </div>
+
+            <h2>Grado A (0.90–1.00)</h2>
+            <div class="grade-block">
+                <div class="grade-title" style="color:#9FE870;">A · No Alcanzado</div>
+                <div class="grade-desc">"La Estrella Polar de la gobernanza, aún sin tocar."</div>
+                <p>El grado A representa: valor que regresa completamente, costos absorbidos por las instituciones, los vulnerables no son gravados, los ciudadanos confían en el gobierno. Esto no es una "calificación" — es una "dirección."</p>
+                <p>Ninguna economía ha alcanzado el grado A. No porque "no sean lo suficientemente buenas" — sino porque "la gobernanza verdaderamente digna de confianza aún no ha aparecido."</p>
+            </div>
+
+            <h2>Grado B (0.70–0.89)</h2>
+            <div class="grade-block">
+                <div class="grade-title" style="color:#7DD3FC;">B · El Valor Regresa, la Confianza Existe</div>
+                <div class="grade-desc">"La gobernanza funciona. Los costos no se trasladan a los vulnerables."</div>
+                <ul>
+                    <li><strong>Finlandia</strong> 0.87 — Educación, salud, confianza social</li>
+                    <li><strong>Singapur</strong> 0.79 — Vivienda pública, suelo público, eficiencia</li>
+                    <li><strong>Suiza</strong> 0.78 — Democracia directa, impuestos transparentes</li>
+                    <li><strong>Austria</strong> 0.77 — Vivienda pública, asociación social</li>
+                    <li><strong>Dinamarca</strong> 0.76 — Altos impuestos, alto bienestar, alta confianza</li>
+                    <li><strong>Irlanda</strong> 0.76 — Fondos estructurales de la UE, retorno parcial</li>
+                    <li><strong>Islandia</strong> 0.75 — Pequeña, transparente, recursos públicos</li>
+                    <li><strong>República Checa</strong> 0.73 — Transición, espacio público preservado</li>
+                    <li><strong>Nueva Zelanda</strong> 0.73 — Impuesto a la tierra, derechos maoríes</li>
+                    <li><strong>Canadá</strong> 0.72 — Federalismo, recuperación fiscal</li>
+                    <li><strong>Suecia</strong> 0.72 — Altos impuestos, alto bienestar, retorno completo</li>
+                    <li><strong>Noruega</strong> 0.71 — Ingresos petroleros publicitados</li>
+                    <li><strong>Bélgica</strong> 0.71 — Centro de la UE, estándares regulatorios</li>
+                    <li><strong>Australia</strong> 0.70 — Impuesto minero, retorno parcial</li>
+                </ul>
+                <div class="countries">Característica común del grado B: el valor del suelo no está monopolizado por unos pocos. El valor regresa a los ciudadanos a través de impuestos, servicios públicos y vivienda social. B no es "perfecto" — es "la legitimidad existe."</div>
+            </div>
+
+            <h2>Grado C (0.50–0.69)</h2>
+            <div class="grade-block">
+                <div class="grade-title" style="color:#fbbf24;">C · La Mitad Regresa, la Mitad se Traslada</div>
+                <div class="grade-desc">"La gobernanza es eficiente, pero la justicia se está erosionando."</div>
+                <ul>
+                    <li><strong>Corea del Sur</strong> 0.68 — Alta eficiencia administrativa, pero costos de tierra y educación concentrados</li>
+                    <li><strong>Portugal</strong> 0.67 — Fondos estructurales de la UE, pero aún alta fricción administrativa</li>
+                    <li><strong>Países Bajos</strong> 0.63 — Referente global de gobernanza, pero soberanía digital frágil, democracia en declive</li>
+                    <li><strong>Polonia</strong> 0.58 — Economía en transición, retorno parcial pero brechas estructurales</li>
+                    <li><strong>Alemania</strong> 0.56 — Economía fuerte, pero costos de tierra y transición energética trasladados</li>
+                    <li><strong>EAU</strong> 0.56 — Eficiencia administrativa extremadamente alta, pero trabajadores extranjeros excluidos</li>
+                    <li><strong>China</strong> 0.51 — El circuito fiscal del suelo existe, pero los agricultores quedan atrás</li>
+                </ul>
+                <div class="countries">Característica común del grado C: alta eficiencia administrativa, pero mecanismos de distribución de valor incompletos. La mitad del valor regresa, la mitad se traslada.</div>
+            </div>
+
+            <h2>Grado D (0.30–0.49)</h2>
+            <div class="grade-block">
+                <div class="grade-title" style="color:#fb923c;">D · La Mayor Parte del Valor es Tomada</div>
+                <div class="grade-desc">"El sistema está agotando a su gente."</div>
+                <ul>
+                    <li><strong>España</strong> 0.44 — Tensiones regionales, distribución desigual de tierra y recursos</li>
+                    <li><strong>Reino Unido</strong> 0.44 — Monopolio aristocrático de la tierra, baja movilidad social</li>
+                    <li><strong>Francia</strong> 0.44 — Centralización, captura de valor hacia la lógica del mercado</li>
+                    <li><strong>Italia</strong> 0.43 — Burocracia pesada, brecha Norte-Sur, monopolios familiares</li>
+                    <li><strong>Malasia</strong> 0.41 — La política étnica bloquea la distribución de la tierra</li>
+                    <li><strong>Grecia</strong> 0.39 — Crisis de deuda, colapso administrativo</li>
+                    <li><strong>Vietnam</strong> 0.38 — La reforma agraria desencadena aumentos de precios</li>
+                    <li><strong>Israel</strong> 0.38 — Prioridad militar, concentración de recursos territoriales</li>
+                    <li><strong>Estados Unidos</strong> 0.35 — PIB #1, pero legitimidad gubernamental extremadamente baja</li>
+                    <li><strong>Kuwait</strong> 0.34 — Riqueza petrolera concentrada, vía de traslado opaca</li>
+                    <li><strong>Bután</strong> 0.33 — PIB extremadamente bajo, pero la puntuación coincide</li>
+                    <li><strong>Chile</strong> 0.32 — Legado neoliberal, concentración de tierra y agua</li>
+                    <li><strong>Japón</strong> 0.31 — PIB #4, pero altos costos psicológicos y de oportunidad</li>
+                    <li><strong>Tailandia</strong> 0.31 — Inestabilidad política a largo plazo, intervención militar</li>
+                    <li><strong>Catar</strong> 0.44 — Riqueza petrolera concentrada, trabajadores extranjeros excluidos</li>
+                </ul>
+                <div class="countries">Característica común del grado D: el PIB es alto, pero la gente está agotada por el sistema. Espera, repetición, colapso, ansiedad, oportunidades robadas.</div>
+            </div>
+
+            <h2>Grado F (0.00–0.29)</h2>
+            <div class="grade-block">
+                <div class="grade-title" style="color:#f87171;">F · Valor Tomado, Ciudadanos Agotados</div>
+                <div class="grade-desc">"Colapso sistémico. La legitimidad se ha perdido."</div>
+                <ul>
+                    <li><strong>Turquía</strong> 0.30 — Fricción administrativa extremadamente alta, confianza erosionada</li>
+                    <li><strong>India</strong> 0.30 — Castas, brecha de riqueza, colapso administrativo</li>
+                    <li><strong>Brasil</strong> 0.28 — Costo Brasil, selva fiscal</li>
+                    <li><strong>Indonesia</strong> 0.28 — Gobernanza del suelo fragmentada, burocracia compleja</li>
+                    <li><strong>Argentina</strong> 0.28 — Trampa de deuda e inflación</li>
+                    <li><strong>Rusia</strong> 0.27 — Maldición de recursos y presión de sanciones</li>
+                    <li><strong>México</strong> 0.26 — Trampa de violencia y corrupción</li>
+                    <li><strong>Hong Kong</strong> 0.25 — Gobierno y oligarcas monopolizan la tierra</li>
+                    <li><strong>Taiwán</strong> 0.24 — Precios de vivienda, bajos salarios, agotamiento político</li>
+                    <li><strong>Sudáfrica</strong> 0.24 — Legado colonial, reforma agraria estancada</li>
+                    <li><strong>Egipto</strong> 0.23 — Presión demográfica, ejército controla la tierra</li>
+                    <li><strong>Irán</strong> 0.21 — Sanciones, teocracia, escasez de recursos</li>
+                    <li><strong>Nigeria</strong> 0.20 — Maldición del petróleo, fracaso institucional</li>
+                </ul>
+                <div class="countries">Característica común del grado F: el valor es tomado. Los costos son trasladados. Los ciudadanos están agotados.</div>
+            </div>
+
+            <div class="key-insight">
+                <p><span class="highlight-line">Una Observación Clave</span></p>
+                <p><strong>0.5 es la línea divisoria.</strong> Por debajo de 0.5 — la gobernanza está agotando a su gente. Por encima de 0.5 — la gobernanza está recuperando valor.</p>
+                <p style="margin-top:0.5rem; color:#9fe870;">A (0.90–1.00) — No alcanzado<br>B (0.70–0.89) — El valor regresa, la confianza existe<br>C (0.50–0.69) — La mitad regresa, la mitad se traslada<br>D (0.30–0.49) — La mayor parte del valor es tomada<br>F (0.00–0.29) — Valor tomado, ciudadanos agotados</p>
+            </div>
+
+            <div class="note">
+                <p><strong>Conclusión</strong></p>
+                <p>El GL Index no es un "ranking competitivo." Es un "diagnóstico de legitimidad."</p>
+                <p>Te dice: "¿Este sistema de gobernanza hace que la vida de las personas sea mejor — o las agota?"</p>
+                <p>Cuando ves la puntuación de un país, no estás leyendo "perdieron" o "ganamos" — estás leyendo: "Los costos ocultos por el PIB — espera, repetición, colapso, ansiedad, oportunidades robadas — finalmente están siendo vistos."</p>
+            </div>
+
+            <div class="divider"></div>
+            <div class="footer">
+                <p><strong>Ping Xu</strong> · Creador del GL Framework · Junio 2026</p>
+                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · Descarga gratuita · Distribución gratuita</p>
+                <a href="index.html" class="back-link">← Volver al Inicio</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    (function(){
+        const langBtns = document.querySelectorAll('.lang-btn');
+        const contents = document.querySelectorAll('.content-lang');
+        langBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const lang = this.getAttribute('data-lang');
+                contents.forEach(c => c.classList.remove('active'));
+                document.getElementById('lang-' + lang).classList.add('active');
+                langBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    })();
+</script>
+</body>
+</html>
