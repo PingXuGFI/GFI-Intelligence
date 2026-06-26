@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GL 框架 · 八參數數據來源</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #0b1220; color: #f8fbff; font-family: 'DM Sans', system-ui, sans-serif; line-height: 1.7; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 2rem; }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+        .logo a {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.12em;
+            color: #9FE870;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+        .logo a .home-arrow { color: #9fb0c8; margin-right: 6px; }
+        .logo a:hover .home-arrow { color: #9FE870; }
+        .lang-switch { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .lang-btn {
+            background: none;
+            border: 1px solid rgba(255,255,255,.1);
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            padding: 0.25rem 0.7rem;
+            border-radius: 2rem;
+            color: #9fb0c8;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,.3); color: #fff; }
+        .lang-btn.active { background: #9FE870; color: #0b1220; border-color: #9FE870; }
+        .content-lang { display: none; }
+        .content-lang.active { display: block; }
+        .page-title { font-family: 'DM Serif Display', Georgia, serif; font-size: 2rem; color: #9FE870; margin-bottom: 0.25rem; }
+        .page-subtitle { font-size: 1rem; color: #9fb0c8; margin-bottom: 1.5rem; }
+        .data-table { width: 100%; border-collapse: collapse; border: 1px solid rgba(255,255,255,.06); border-radius: 12px; overflow: hidden; font-size: 0.85rem; }
+        .data-table th { background: rgba(255,255,255,.04); color: #7DD3FC; font-weight: 600; padding: 0.75rem 1rem; text-align: left; border-bottom: 2px solid rgba(255,255,255,.08); font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.05em; text-transform: uppercase; }
+        .data-table td { padding: 0.6rem 1rem; border-bottom: 1px solid rgba(255,255,255,.04); color: #c7d2e3; vertical-align: top; }
+        .data-table tr:last-child td { border-bottom: none; }
+        .data-table .param { font-weight: 600; color: #eaf6ff; width: 18%; }
+        .data-table .source { width: 35%; }
+        .data-table .source a { color: #7DD3FC; text-decoration: none; border-bottom: 1px solid rgba(125,211,252,0.2); }
+        .data-table .source a:hover { border-bottom-color: #7DD3FC; }
+        .data-table .desc { width: 47%; color: #9fb0c8; }
+        .footnote { margin-top: 1.5rem; font-size: 0.8rem; color: #9fb0c8; border-top: 1px solid rgba(255,255,255,.06); padding-top: 1rem; }
+        .footnote a { color: #7DD3FC; text-decoration: none; }
+        .footnote a:hover { text-decoration: underline; }
+        .back-link { display: inline-block; margin-top: 2rem; font-family: 'DM Mono', monospace; font-size: 0.7rem; color: #9fb0c8; text-decoration: none; border: 1px solid rgba(255,255,255,.06); padding: 0.4rem 1rem; border-radius: 2rem; transition: 0.2s; }
+        .back-link:hover { border-color: rgba(255,255,255,.2); color: #fff; }
+        @media (max-width: 700px) { .container { padding: 1rem; } .page-title { font-size: 1.6rem; } .data-table th, .data-table td { padding: 0.5rem 0.6rem; font-size: 0.75rem; } }
+        @media print { .header { display: none !important; } .back-link { display: none !important; } body { background: #fff !important; color: #000 !important; } .page-title { color: #006633 !important; } .data-table th { background: #eee !important; color: #000 !important; } .data-table td { color: #000 !important; border-color: #ccc !important; } .data-table .source a { color: #0066cc !important; } .footnote { color: #333 !important; } }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="logo"><a href="index.html"><span class="home-arrow">←</span> GFI Flow Intelligence</a></div>
+        <div class="lang-switch">
+            <button class="lang-btn" data-lang="en">EN</button>
+            <button class="lang-btn active" data-lang="tw">繁</button>
+            <button class="lang-btn" data-lang="cn">简</button>
+            <button class="lang-btn" data-lang="es">ES</button>
+        </div>
+    </div>
+
+    <!-- ====== 繁體中文 ====== -->
+    <div id="lang-tw" class="content-lang active">
+        <h1 class="page-title">八參數 · 數據來源</h1>
+        <p class="page-subtitle">GL 框架 · 所有參數皆基於公開、可追溯、可複製驗證的國際數據</p>
+        <table class="data-table">
+            <thead>
+                <tr><th>參數</th><th>數據來源</th><th>說明</th></tr>
+            </thead>
+            <tbody>
+                <tr><td class="param">1. 等待成本</td><td class="source"><a href="https://www.worldbank.org/en/business" target="_blank">世界銀行</a> · 經商環境調查<br><a href="https://data.oecd.org/" target="_blank">OECD</a> · 行政審批時長</td><td class="desc">測量公民與企業在行政程序中耗費的平均等待時間。</td></tr>
+                <tr><td class="param">2. 重複成本</td><td class="source"><a href="https://www.worldbank.org/en/business" target="_blank">世界銀行</a> · 文書負擔指數<br><a href="https://www.oecd.org/gov/regulatory-policy/" target="_blank">OECD</a> · 監管負擔調查</td><td class="desc">測量需重複提交相同文件的次數與行政程序繁瑣程度。</td></tr>
+                <tr><td class="param">3. 崩潰成本</td><td class="source"><a href="https://www.worldbank.org/" target="_blank">世界銀行</a> · 企業進入退出率<br><a href="https://www.un.org/" target="_blank">聯合國</a> · 公共服務中斷率</td><td class="desc">測量因程序過於繁瑣而放棄申請或中斷服務的比例。</td></tr>
+                <tr><td class="param">4. 資訊不對稱成本</td><td class="source"><a href="https://www.transparency.org/" target="_blank">透明國際</a> · 清廉指數<br><a href="https://www.worldbank.org/" target="_blank">世界銀行</a> · 政府透明度指標</td><td class="desc">測量政府決策與資訊公開程度，評估民眾是否被充分告知。</td></tr>
+                <tr><td class="param">5. 心理成本</td><td class="source"><a href="https://www.who.int/" target="_blank">世界衛生組織</a> · 心理健康統計<br><a href="https://www.gallup.com/" target="_blank">蓋洛普</a> · 全球情緒指數</td><td class="desc">測量制度對民眾造成的焦慮、壓力與無助感的系統性影響。</td></tr>
+                <tr><td class="param">6. 機會成本</td><td class="source"><a href="https://www.imf.org/" target="_blank">IMF</a> · 經濟流動性數據<br><a href="https://www.worldbank.org/" target="_blank">世界銀行</a> · 世代收入彈性</td><td class="desc">測量制度阻礙造成的個人與社會發展機會流失。</td></tr>
+                <tr><td class="param">7. 轉嫁路徑</td><td class="source"><a href="https://www.imf.org/" target="_blank">IMF</a> · 政府財政數據<br><a href="https://www.oecd.org/" target="_blank">OECD</a> · 公共支出分配</td><td class="desc">測量成本是否從權力核心轉嫁給一般民眾或弱勢群體。</td></tr>
+                <tr><td class="param">8. 迴路閉合</td><td class="source"><a href="https://www.oecd.org/" target="_blank">OECD</a> · 政府回應性指標<br><a href="https://www.un.org/" target="_blank">聯合國</a> · 公民參與度數據</td><td class="desc">測量公共價值是否回流到人民身上，或中途被截留。</td></tr>
+            </tbody>
+        </table>
+        <div class="footnote">
+            <p>所有數據來源均為公開資料庫。任何 GL 框架的診斷報告均可由第三方獨立驗證。</p>
+            <p><a href="index.html">← 回首頁</a></p>
+        </div>
+        <a href="index.html" class="back-link">← 回首頁</a>
+    </div>
+
+    <!-- ====== ENGLISH ====== -->
+    <div id="lang-en" class="content-lang">
+        <h1 class="page-title">Eight Parameters · Data Sources</h1>
+        <p class="page-subtitle">GL Framework · All parameters based on public, traceable, and independently verifiable international data</p>
+        <table class="data-table">
+            <thead>
+                <tr><th>Parameter</th><th>Data Source</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+                <tr><td class="param">1. Waiting Cost</td><td class="source"><a href="https://www.worldbank.org/en/business" target="_blank">World Bank</a> · Business Environment Survey<br><a href="https://data.oecd.org/" target="_blank">OECD</a> · Administrative Processing Time</td><td class="desc">Measures the average waiting time citizens and businesses spend in administrative procedures.</td></tr>
+                <tr><td class="param">2. Repetition Cost</td><td class="source"><a href="https://www.worldbank.org/en/business" target="_blank">World Bank</a> · Document Burden Index<br><a href="https://www.oecd.org/gov/regulatory-policy/" target="_blank">OECD</a> · Regulatory Burden Survey</td><td class="desc">Measures the number of times the same documents must be submitted and administrative complexity.</td></tr>
+                <tr><td class="param">3. Collapse Cost</td><td class="source"><a href="https://www.worldbank.org/" target="_blank">World Bank</a> · Business Entry/Exit Rate<br><a href="https://www.un.org/" target="_blank">United Nations</a> · Public Service Interruption Rate</td><td class="desc">Measures the rate of abandonment or service disruption due to overly burdensome procedures.</td></tr>
+                <tr><td class="param">4. Information Asymmetry Cost</td><td class="source"><a href="https://www.transparency.org/" target="_blank">Transparency International</a> · CPI<br><a href="https://www.worldbank.org/" target="_blank">World Bank</a> · Government Transparency Indicators</td><td class="desc">Measures government transparency and whether citizens are adequately informed.</td></tr>
+                <tr><td class="param">5. Psychological Cost</td><td class="source"><a href="https://www.who.int/" target="_blank">WHO</a> · Mental Health Statistics<br><a href="https://www.gallup.com/" target="_blank">Gallup</a> · Global Emotions Index</td><td class="desc">Measures the systemic impact of institutions on anxiety, stress, and helplessness.</td></tr>
+                <tr><td class="param">6. Opportunity Cost</td><td class="source"><a href="https://www.imf.org/" target="_blank">IMF</a> · Economic Mobility Data<br><a href="https://www.worldbank.org/" target="_blank">World Bank</a> · Intergenerational Income Elasticity</td><td class="desc">Measures lost opportunities for personal and societal development due to institutional barriers.</td></tr>
+                <tr><td class="param">7. Shift Pathway</td><td class="source"><a href="https://www.imf.org/" target="_blank">IMF</a> · Government Fiscal Data<br><a href="https://www.oecd.org/" target="_blank">OECD</a> · Public Expenditure Distribution</td><td class="desc">Measures whether costs are shifted from power centers to ordinary citizens or vulnerable groups.</td></tr>
+                <tr><td class="param">8. Loop Closure</td><td class="source"><a href="https://www.oecd.org/" target="_blank">OECD</a> · Government Responsiveness Indicators<br><a href="https://www.un.org/" target="_blank">United Nations</a> · Citizen Participation Data</td><td class="desc">Measures whether public value flows back to citizens or is intercepted along the way.</td></tr>
+            </tbody>
+        </table>
+        <div class="footnote">
+            <p>All data sources are public databases. Any GL Framework diagnostic report can be independently verified by third parties.</p>
+            <p><a href="index.html">← Back to Home</a></p>
+        </div>
+        <a href="index.html" class="back-link">← Back to Home</a>
+    </div>
+
+    <!-- ====== 简体中文 ====== -->
+    <div id="lang-cn" class="content-lang">
+        <h1 class="page-title">八个参数 · 数据来源</h1>
+        <p class="page-subtitle">GL 框架 · 所有参数均基于公开、可追溯、可复制验证的国际数据</p>
+        <table class="data-table">
+            <thead>
+                <tr><th>参数</th><th>数据来源</th><th>说明</th></tr>
+            </thead>
+            <tbody>
+                <tr><td class="param">1. 等待成本</td><td class="source"><a href="https://www.worldbank.org/en/business" target="_blank">世界银行</a> · 营商环境调查<br><a href="https://data.oecd.org/" target="_blank">OECD</a> · 行政审批时长</td><td class="desc">测量公民与企业在行政程序中耗费的平均等待时间。</td></tr>
+                <tr><td class="param">2. 重复成本</td><td class="source"><a href="https://www.worldbank.org/en/business" target="_blank">世界银行</a> · 文书负担指数<br><a href="https://www.oecd.org/gov/regulatory-policy/" target="_blank">OECD</a> · 监管负担调查</td><td class="desc">测量需重复提交相同文件的次数与行政程序繁琐程度。</td></tr>
+                <tr><td class="param">3. 崩溃成本</td><td class="source"><a href="https://www.worldbank.org/" target="_blank">世界银行</a> · 企业进入退出率<br><a href="https://www.un.org/" target="_blank">联合国</a> · 公共服务中断率</td><td class="desc">测量因程序过于繁琐而放弃申请或中断服务的比例。</td></tr>
+                <tr><td class="param">4. 信息不对称成本</td><td class="source"><a href="https://www.transparency.org/" target="_blank">透明国际</a> · 清廉指数<br><a href="https://www.worldbank.org/" target="_blank">世界银行</a> · 政府透明度指标</td><td class="desc">测量政府决策与信息公开程度，评估民众是否被充分告知。</td></tr>
+                <tr><td class="param">5. 心理成本</td><td class="source"><a href="https://www.who.int/" target="_blank">世界卫生组织</a> · 心理健康统计<br><a href="https://www.gallup.com/" target="_blank">盖洛普</a> · 全球情绪指数</td><td class="desc">测量制度对民众造成的焦虑、压力与无助感的系统性影响。</td></tr>
+                <tr><td class="param">6. 机会成本</td><td class="source"><a href="https://www.imf.org/" target="_blank">IMF</a> · 经济流动性数据<br><a href="https://www.worldbank.org/" target="_blank">世界银行</a> · 世代收入弹性</td><td class="desc">测量制度阻碍造成的个人与社会发展机会流失。</td></tr>
+                <tr><td class="param">7. 转嫁路径</td><td class="source"><a href="https://www.imf.org/" target="_blank">IMF</a> · 政府财政数据<br><a href="https://www.oecd.org/" target="_blank">OECD</a> · 公共支出分配</td><td class="desc">测量成本是否从权力核心转嫁给一般民众或弱势群体。</td></tr>
+                <tr><td class="param">8. 回路闭合</td><td class="source"><a href="https://www.oecd.org/" target="_blank">OECD</a> · 政府回应性指标<br><a href="https://www.un.org/" target="_blank">联合国</a> · 公民参与度数据</td><td class="desc">测量公共价值是否回流到人民身上，或中途被截留。</td></tr>
+            </tbody>
+        </table>
+        <div class="footnote">
+            <p>所有数据来源均为公开数据库。任何 GL 框架的诊断报告均可由第三方独立验证。</p>
+            <p><a href="index.html">← 回首页</a></p>
+        </div>
+        <a href="index.html" class="back-link">← 回首页</a>
+    </div>
+
+    <!-- ====== ESPAÑOL ====== -->
+    <div id="lang-es" class="content-lang">
+        <h1 class="page-title">Ocho Parámetros · Fuentes de Datos</h1>
+        <p class="page-subtitle">GL Framework · Todos los parámetros basados en datos públicos, rastreables y verificables de forma independiente</p>
+        <table class="data-table">
+            <thead>
+                <tr><th>Parámetro</th><th>Fuente de Datos</th><th>Descripción</th></tr>
+            </thead>
+            <tbody>
+                <tr><td class="param">1. Costo de Espera</td><td class="source"><a href="https://www.worldbank.org/en/business" target="_blank">Banco Mundial</a> · Encuesta de Entorno Empresarial<br><a href="https://data.oecd.org/" target="_blank">OECD</a> · Tiempo de Procesamiento Administrativo</td><td class="desc">Mide el tiempo promedio que los ciudadanos y empresas pasan en procedimientos administrativos.</td></tr>
+                <tr><td class="param">2. Costo de Repetición</td><td class="source"><a href="https://www.worldbank.org/en/business" target="_blank">Banco Mundial</a> · Índice de Carga Documental<br><a href="https://www.oecd.org/gov/regulatory-policy/" target="_blank">OECD</a> · Encuesta de Carga Regulatoria</td><td class="desc">Mide el número de veces que se deben presentar los mismos documentos y la complejidad administrativa.</td></tr>
+                <tr><td class="param">3. Costo de Colapso</td><td class="source"><a href="https://www.worldbank.org/" target="_blank">Banco Mundial</a> · Tasa de Entrada/Salida Empresarial<br><a href="https://www.un.org/" target="_blank">Naciones Unidas</a> · Tasa de Interrupción de Servicios Públicos</td><td class="desc">Mide la tasa de abandono o interrupción debido a procedimientos excesivamente engorrosos.</td></tr>
+                <tr><td class="param">4. Costo de Asimetría de Información</td><td class="source"><a href="https://www.transparency.org/" target="_blank">Transparencia Internacional</a> · IPC<br><a href="https://www.worldbank.org/" target="_blank">Banco Mundial</a> · Indicadores de Transparencia Gubernamental</td><td class="desc">Mide la transparencia gubernamental y si los ciudadanos están adecuadamente informados.</td></tr>
+                <tr><td class="param">5. Costo Psicológico</td><td class="source"><a href="https://www.who.int/" target="_blank">OMS</a> · Estadísticas de Salud Mental<br><a href="https://www.gallup.com/" target="_blank">Gallup</a> · Índice Global de Emociones</td><td class="desc">Mide el impacto sistémico de las instituciones en la ansiedad, el estrés y la impotencia.</td></tr>
+                <tr><td class="param">6. Costo de Oportunidad</td><td class="source"><a href="https://www.imf.org/" target="_blank">FMI</a> · Datos de Movilidad Económica<br><a href="https://www.worldbank.org/" target="_blank">Banco Mundial</a> · Elasticidad de Ingresos Intergeneracional</td><td class="desc">Mide las oportunidades perdidas para el desarrollo personal y social debido a barreras institucionales.</td></tr>
+                <tr><td class="param">7. Vía de Traslado</td><td class="source"><a href="https://www.imf.org/" target="_blank">FMI</a> · Datos Fiscales Gubernamentales<br><a href="https://www.oecd.org/" target="_blank">OECD</a> · Distribución del Gasto Público</td><td class="desc">Mide si los costos se trasladan desde los centros de poder a los ciudadanos comunes o grupos vulnerables.</td></tr>
+                <tr><td class="param">8. Cierre de Circuito</td><td class="source"><a href="https://www.oecd.org/" target="_blank">OECD</a> · Indicadores de Respuesta Gubernamental<br><a href="https://www.un.org/" target="_blank">Naciones Unidas</a> · Datos de Participación Ciudadana</td><td class="desc">Mide si el valor público regresa a los ciudadanos o es interceptado en el camino.</td></tr>
+            </tbody>
+        </table>
+        <div class="footnote">
+            <p>Todas las fuentes de datos son bases de datos públicas. Cualquier informe de diagnóstico del GL Framework puede ser verificado de forma independiente por terceros.</p>
+            <p><a href="index.html">← Volver al Inicio</a></p>
+        </div>
+        <a href="index.html" class="back-link">← Volver al Inicio</a>
+    </div>
+
+</div>
+<script>
+    (function(){
+        const langBtns = document.querySelectorAll('.lang-btn');
+        const contents = document.querySelectorAll('.content-lang');
+        langBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const lang = this.getAttribute('data-lang');
+                contents.forEach(c => c.classList.remove('active'));
+                document.getElementById('lang-' + lang).classList.add('active');
+                langBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    })();
+</script>
+</body>
+</html>
