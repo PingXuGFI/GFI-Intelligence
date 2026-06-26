@@ -10,7 +10,7 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #0b1220; color: #f8fbff; font-family: 'DM Sans', system-ui, sans-serif; line-height: 1.7; }
-        .container { max-width: 920px; margin: 0 auto; padding: 2rem; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 2rem; }
         .header {
             display: flex;
             justify-content: space-between;
@@ -69,7 +69,12 @@
         .back-link:hover { border-color: rgba(255,255,255,.2); color: #fff; }
         .divider { border: 0; border-top: 1px solid rgba(255,255,255,.08); margin: 2.5rem 0; }
         .note { font-size: 0.85rem; color: #9fb0c8; background: rgba(255,255,255,.02); padding: 0.8rem 1.2rem; border-radius: 8px; margin: 1rem 0; border: 1px solid rgba(255,255,255,.04); }
-        @media (max-width: 700px) { .container { padding: 1rem; } .essay-container { padding: 1.5rem; } h1 { font-size: 1.8rem; } }
+        .diagnostic-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1rem 0; }
+        .diagnostic-item { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); border-radius: 8px; padding: 0.8rem 1rem; }
+        .diagnostic-item .country { font-weight: 600; color: #eaf6ff; }
+        .diagnostic-item .score { font-family: 'DM Mono', monospace; font-size: 0.9rem; font-weight: 700; color: #f87171; }
+        .diagnostic-item .diagnosis { font-size: 0.85rem; color: #9fb0c8; margin-top: 0.2rem; }
+        @media (max-width: 700px) { .container { padding: 1rem; } .essay-container { padding: 1.5rem; } h1 { font-size: 1.8rem; } .diagnostic-grid { grid-template-columns: 1fr; } }
         @media print {
             .header { display: none !important; }
             .back-link { display: none !important; }
@@ -85,6 +90,10 @@
             .highlight-green { color: #006633 !important; }
             .highlight-yellow { color: #cc8800 !important; }
             .highlight-red { color: #cc0000 !important; }
+            .diagnostic-item { border-color: #ccc !important; }
+            .diagnostic-item .country { color: #000 !important; }
+            .diagnostic-item .score { color: #cc0000 !important; }
+            .diagnostic-item .diagnosis { color: #555 !important; }
         }
     </style>
 </head>
@@ -190,30 +199,43 @@
 
             <h2>F 級（0.00–0.29）</h2>
             <div class="grade-block">
-                <div class="grade-title" style="color:#f87171;">F · 價值被拿走，人民精疲力竭</div>
-                <div class="grade-desc">「系統性崩潰。正當性已經喪失。」</div>
+                <div class="grade-title" style="color:#f87171;">F · 制度碎片化 · 閉環斷裂</div>
+                <div class="grade-desc">「制度不是運作不良——是根本沒有形成閉環。價值被截留，成本被系統性轉嫁給最弱勢的人。」</div>
+                <p><strong>F 級的參數特徵：</strong></p>
                 <ul>
-                    <li><strong>土耳其</strong> 0.30 — 行政摩擦極高、信任流失</li>
-                    <li><strong>印度</strong> 0.30 — 種姓、貧富差距、行政崩潰</li>
-                    <li><strong>巴西</strong> 0.28 — 巴西成本、稅務叢林</li>
-                    <li><strong>印尼</strong> 0.28 — 土地治理破碎、官僚複雜</li>
-                    <li><strong>阿根廷</strong> 0.28 — 債務與通膨陷阱</li>
-                    <li><strong>俄羅斯</strong> 0.27 — 資源詛咒與制裁擠壓</li>
-                    <li><strong>墨西哥</strong> 0.26 — 暴力與貪腐陷阱</li>
-                    <li><strong>香港</strong> 0.25 — 政府與寡頭壟斷土地</li>
-                    <li><strong>台灣</strong> 0.24 — 房價、低薪、政治消耗</li>
-                    <li><strong>南非</strong> 0.24 — 殖民遺產、土地改革停滯</li>
-                    <li><strong>埃及</strong> 0.23 — 人口壓力、軍隊控制土地</li>
-                    <li><strong>伊朗</strong> 0.21 — 制裁、神權、資源稀缺</li>
-                    <li><strong>奈及利亞</strong> 0.20 — 石油詛咒、制度失靈</li>
+                    <li>等待成本：20–35 — 行政程序極度冗長，等待時間是標準值的3–5倍</li>
+                    <li>重複成本：20–30 — 行政程序極度碎片化，同一文件重複提交，規則不連貫</li>
+                    <li>崩潰成本：15–25 — 制度篩選掉最需要幫助的人，放棄比例超過40%</li>
+                    <li>資訊不對稱：15–25 — 政府決策完全不透明，民眾無法獲取關鍵資訊</li>
+                    <li>心理成本：15–25 — 制度不可預測，對制度的信任低於30%</li>
+                    <li>機會成本：20–30 — 制度阻礙導致個人與社會發展機會大量流失</li>
+                    <li>轉嫁路徑：15–25 — 成本持續從權力核心轉嫁給弱勢群體</li>
+                    <li>迴路閉合：15–25 — 公共價值幾乎不回流，閉環斷裂</li>
                 </ul>
-                <div class="countries">F 級的共同特徵：價值被拿走。成本被轉嫁。人民精疲力竭。</div>
+                <div class="countries" style="margin-top: 0.8rem;"><strong>F 級的共同特徵：</strong>八個參數中有六個以上處於「極度失靈」區間（分數低於30）。制度碎片化使閉環無法形成，價值被截留，成本被系統性轉嫁給最弱勢的人。</div>
+            </div>
+
+            <h3>F 級各經濟體診斷</h3>
+            <div class="diagnostic-grid">
+                <div class="diagnostic-item"><span class="country">土耳其</span> <span class="score">0.30</span><div class="diagnosis">行政程序極度碎片化，政策反覆，信任流失，成本轉嫁給一般民眾。</div></div>
+                <div class="diagnostic-item"><span class="country">印度</span> <span class="score">0.30</span><div class="diagnosis">種姓與貧富差距固化制度斷層，行政體系崩潰，弱勢被排除在閉環之外。</div></div>
+                <div class="diagnostic-item"><span class="country">巴西</span> <span class="score">0.28</span><div class="diagnosis">稅務制度碎片化——聯邦、州、市三級稅制重疊，閉環斷裂，成本轉嫁給終端消費者。</div></div>
+                <div class="diagnostic-item"><span class="country">印尼</span> <span class="score">0.28</span><div class="diagnosis">土地治理破碎——習慣法、殖民遺產、現代法規並存，產權不清，官僚複雜。</div></div>
+                <div class="diagnostic-item"><span class="country">阿根廷</span> <span class="score">0.28</span><div class="diagnosis">債務與通膨反覆侵蝕制度，政策無連續性，閉環長期斷裂，財富持續外流。</div></div>
+                <div class="diagnostic-item"><span class="country">俄羅斯</span> <span class="score">0.27</span><div class="diagnosis">資源詛咒——石油與天然氣收入被國家與寡頭捕獲，制裁擠壓使閉環無法形成。</div></div>
+                <div class="diagnostic-item"><span class="country">墨西哥</span> <span class="score">0.26</span><div class="diagnosis">暴力與貪腐構成制度性屏障，弱勢被排除在價值分配之外，閉環完全斷裂。</div></div>
+                <div class="diagnostic-item"><span class="country">香港</span> <span class="score">0.25</span><div class="diagnosis">政府與寡頭壟斷土地，土地增值被截留，公共價值無法回流公民。</div></div>
+                <div class="diagnostic-item"><span class="country">台灣</span> <span class="score">0.24</span><div class="diagnosis">土地增值被私人資本捕獲，房地產成本轉嫁年輕世代，政治消耗制度能量。</div></div>
+                <div class="diagnostic-item"><span class="country">南非</span> <span class="score">0.24</span><div class="diagnosis">殖民遺產與種族隔離造成土地分配極端不均，改革停滯，閉環無法建立。</div></div>
+                <div class="diagnostic-item"><span class="country">埃及</span> <span class="score">0.23</span><div class="diagnosis">人口壓力擠壓制度空間，軍隊控制土地與經濟，弱勢被排除在分配之外。</div></div>
+                <div class="diagnostic-item"><span class="country">伊朗</span> <span class="score">0.21</span><div class="diagnosis">國際制裁與神權體制疊加，資源稀缺，價值被國家與宗教基金會捕獲。</div></div>
+                <div class="diagnostic-item"><span class="country">奈及利亞</span> <span class="score">0.20</span><div class="diagnosis">石油財富被菁英與外資捕獲，制度失靈，弱勢完全被排除在閉環之外。</div></div>
             </div>
 
             <div class="key-insight">
                 <p><span class="highlight-line">一個關鍵觀察</span></p>
                 <p><strong>0.5 是分界線。</strong> 低於 0.5 的國家——治理正在耗盡人民。高於 0.5 的國家——治理正在回收價值。</p>
-                <p style="margin-top:0.5rem; color:#9fe870;">A 級（0.90–1.00）— 尚未存在<br>B 級（0.70–0.89）— 價值回流，信任存在<br>C 級（0.50–0.69）— 一半回流，一半轉嫁<br>D 級（0.30–0.49）— 大部分價值被拿走<br>F 級（0.00–0.29）— 價值被拿走，人民精疲力竭</p>
+                <p style="margin-top:0.5rem; color:#9fe870;">A 級（0.90–1.00）— 尚未存在<br>B 級（0.70–0.89）— 價值回流，信任存在<br>C 級（0.50–0.69）— 一半回流，一半轉嫁<br>D 級（0.30–0.49）— 大部分價值被拿走<br>F 級（0.00–0.29）— 制度碎片化，閉環斷裂，成本被系統性轉嫁</p>
             </div>
 
             <div class="note">
@@ -322,30 +344,43 @@
 
             <h2>Grade F (0.00–0.29)</h2>
             <div class="grade-block">
-                <div class="grade-title" style="color:#f87171;">F · Value Taken, Citizens Exhausted</div>
-                <div class="grade-desc">"Systemic collapse. Legitimacy is lost."</div>
+                <div class="grade-title" style="color:#f87171;">F · Fragmented Systems · Broken Loops</div>
+                <div class="grade-desc">"The system is not malfunctioning — it never formed a loop. Value is intercepted, costs are systematically shifted to the most vulnerable."</div>
+                <p><strong>Grade F Parameter Profile:</strong></p>
                 <ul>
-                    <li><strong>Turkey</strong> 0.30 — Extremely high administrative friction, trust eroding</li>
-                    <li><strong>India</strong> 0.30 — Caste, wealth gap, administrative collapse</li>
-                    <li><strong>Brazil</strong> 0.28 — Brazil cost, tax jungle</li>
-                    <li><strong>Indonesia</strong> 0.28 — Fragmented land governance, complex bureaucracy</li>
-                    <li><strong>Argentina</strong> 0.28 — Debt and inflation trap</li>
-                    <li><strong>Russia</strong> 0.27 — Resource curse and sanctions squeeze</li>
-                    <li><strong>Mexico</strong> 0.26 — Violence and corruption trap</li>
-                    <li><strong>Hong Kong</strong> 0.25 — Government and oligarchs monopolize land</li>
-                    <li><strong>Taiwan</strong> 0.24 — Housing prices, low wages, political exhaustion</li>
-                    <li><strong>South Africa</strong> 0.24 — Colonial legacy, land reform stalled</li>
-                    <li><strong>Egypt</strong> 0.23 — Population pressure, military controls land</li>
-                    <li><strong>Iran</strong> 0.21 — Sanctions, theocracy, resource scarcity</li>
-                    <li><strong>Nigeria</strong> 0.20 — Oil curse, institutional failure</li>
+                    <li>Waiting Cost: 20–35 — Extremely long administrative procedures, 3–5x standard wait times</li>
+                    <li>Repetition Cost: 20–30 — Highly fragmented procedures, repeated document submission, inconsistent rules</li>
+                    <li>Collapse Cost: 15–25 — System filters out those most in need, abandonment rate exceeds 40%</li>
+                    <li>Information Asymmetry: 15–25 — Government decisions completely opaque, citizens cannot access critical information</li>
+                    <li>Psychological Cost: 15–25 — System is unpredictable, trust in institutions below 30%</li>
+                    <li>Opportunity Cost: 20–30 — Institutional barriers cause massive loss of personal and societal development opportunities</li>
+                    <li>Shift Pathway: 15–25 — Costs systematically shift from power centers to vulnerable groups</li>
+                    <li>Loop Closure: 15–25 — Public value almost never returns, loop is broken</li>
                 </ul>
-                <div class="countries">F grade common feature: value is taken. Costs are shifted. Citizens are exhausted.</div>
+                <div class="countries" style="margin-top: 0.8rem;"><strong>Grade F Common Feature:</strong> Six or more parameters are in the "extreme failure" range (below 30). Fragmentation prevents loops from forming. Value is intercepted. Costs are systematically shifted to the most vulnerable.</div>
+            </div>
+
+            <h3>Grade F Economy Diagnoses</h3>
+            <div class="diagnostic-grid">
+                <div class="diagnostic-item"><span class="country">Turkey</span> <span class="score">0.30</span><div class="diagnosis">Extremely fragmented administrative procedures, policy reversals, eroding trust, costs shifted to ordinary citizens.</div></div>
+                <div class="diagnostic-item"><span class="country">India</span> <span class="score">0.30</span><div class="diagnosis">Caste and wealth gaps solidify institutional fractures, administrative collapse, vulnerable excluded from the loop.</div></div>
+                <div class="diagnostic-item"><span class="country">Brazil</span> <span class="score">0.28</span><div class="diagnosis">Fragmented tax system — federal, state, municipal layers overlap, loop broken, costs shifted to end consumers.</div></div>
+                <div class="diagnostic-item"><span class="country">Indonesia</span> <span class="score">0.28</span><div class="diagnosis">Fragmented land governance — customary law, colonial legacy, modern regulations coexist, unclear property rights, complex bureaucracy.</div></div>
+                <div class="diagnostic-item"><span class="country">Argentina</span> <span class="score">0.28</span><div class="diagnosis">Debt and inflation repeatedly erode institutions, no policy continuity, loop long broken, wealth flows out.</div></div>
+                <div class="diagnostic-item"><span class="country">Russia</span> <span class="score">0.27</span><div class="diagnosis">Resource curse — oil and gas revenues captured by state and oligarchs, sanctions prevent loop formation.</div></div>
+                <div class="diagnostic-item"><span class="country">Mexico</span> <span class="score">0.26</span><div class="diagnosis">Violence and corruption form institutional barriers, vulnerable excluded from value distribution, loop completely broken.</div></div>
+                <div class="diagnostic-item"><span class="country">Hong Kong</span> <span class="score">0.25</span><div class="diagnosis">Government and oligarchs monopolize land, land value intercepted, public value cannot return to citizens.</div></div>
+                <div class="diagnostic-item"><span class="country">Taiwan</span> <span class="score">0.24</span><div class="diagnosis">Land value captured by private capital, housing costs shifted to younger generations, political friction consumes institutional energy.</div></div>
+                <div class="diagnostic-item"><span class="country">South Africa</span> <span class="score">0.24</span><div class="diagnosis">Colonial and apartheid legacy creates extreme land inequality, reform stalled, loop cannot be established.</div></div>
+                <div class="diagnostic-item"><span class="country">Egypt</span> <span class="score">0.23</span><div class="diagnosis">Population pressure squeezes institutional space, military controls land and economy, vulnerable excluded from distribution.</div></div>
+                <div class="diagnostic-item"><span class="country">Iran</span> <span class="score">0.21</span><div class="diagnosis">International sanctions and theocratic regime combine, resource scarcity, value captured by state and religious foundations.</div></div>
+                <div class="diagnostic-item"><span class="country">Nigeria</span> <span class="score">0.20</span><div class="diagnosis">Oil wealth captured by elites and foreign capital, institutional failure, vulnerable completely excluded from the loop.</div></div>
             </div>
 
             <div class="key-insight">
                 <p><span class="highlight-line">One Key Observation</span></p>
                 <p><strong>0.5 is the dividing line.</strong> Below 0.5 — governance is exhausting its people. Above 0.5 — governance is recovering value.</p>
-                <p style="margin-top:0.5rem; color:#9fe870;">A (0.90–1.00) — Not yet reached<br>B (0.70–0.89) — Value returns, trust exists<br>C (0.50–0.69) — Half returns, half shifts<br>D (0.30–0.49) — Most value is taken<br>F (0.00–0.29) — Value taken, citizens exhausted</p>
+                <p style="margin-top:0.5rem; color:#9fe870;">A (0.90–1.00) — Not yet reached<br>B (0.70–0.89) — Value returns, trust exists<br>C (0.50–0.69) — Half returns, half shifts<br>D (0.30–0.49) — Most value is taken<br>F (0.00–0.29) — Fragmented systems, broken loops, costs systematically shifted</p>
             </div>
 
             <div class="note">
@@ -454,30 +489,43 @@
 
             <h2>F 级（0.00–0.29）</h2>
             <div class="grade-block">
-                <div class="grade-title" style="color:#f87171;">F · 价值被拿走，人民精疲力竭</div>
-                <div class="grade-desc">「系统性崩溃。正当性已经丧失。」</div>
+                <div class="grade-title" style="color:#f87171;">F · 制度碎片化 · 闭环断裂</div>
+                <div class="grade-desc">「制度不是运作不良——是根本没有形成闭环。价值被截留，成本被系统性转嫁给最弱势的人。」</div>
+                <p><strong>F 级的参数特征：</strong></p>
                 <ul>
-                    <li><strong>土耳其</strong> 0.30 — 行政摩擦极高、信任流失</li>
-                    <li><strong>印度</strong> 0.30 — 种姓、贫富差距、行政崩溃</li>
-                    <li><strong>巴西</strong> 0.28 — 巴西成本、税务丛林</li>
-                    <li><strong>印尼</strong> 0.28 — 土地治理破碎、官僚复杂</li>
-                    <li><strong>阿根廷</strong> 0.28 — 债务与通胀陷阱</li>
-                    <li><strong>俄罗斯</strong> 0.27 — 资源诅咒与制裁挤压</li>
-                    <li><strong>墨西哥</strong> 0.26 — 暴力与贪腐陷阱</li>
-                    <li><strong>香港</strong> 0.25 — 政府与寡头垄断土地</li>
-                    <li><strong>台湾</strong> 0.24 — 房价、低薪、政治消耗</li>
-                    <li><strong>南非</strong> 0.24 — 殖民遗产、土地改革停滞</li>
-                    <li><strong>埃及</strong> 0.23 — 人口压力、军队控制土地</li>
-                    <li><strong>伊朗</strong> 0.21 — 制裁、神权、资源稀缺</li>
-                    <li><strong>尼日利亚</strong> 0.20 — 石油诅咒、制度失灵</li>
+                    <li>等待成本：20–35 — 行政程序极度冗长，等待时间是标准值的3–5倍</li>
+                    <li>重复成本：20–30 — 行政程序极度碎片化，同一文件重复提交，规则不连贯</li>
+                    <li>崩溃成本：15–25 — 制度筛选掉最需要帮助的人，放弃比例超过40%</li>
+                    <li>信息不对称：15–25 — 政府决策完全不透明，民众无法获取关键信息</li>
+                    <li>心理成本：15–25 — 制度不可预测，对制度的信任低于30%</li>
+                    <li>机会成本：20–30 — 制度阻碍导致个人与社会发展机会大量流失</li>
+                    <li>转嫁路径：15–25 — 成本持续从权力核心转嫁给弱势群体</li>
+                    <li>回路闭合：15–25 — 公共价值几乎不回流，闭环断裂</li>
                 </ul>
-                <div class="countries">F 级的共同特征：价值被拿走。成本被转嫁。人民精疲力竭。</div>
+                <div class="countries" style="margin-top: 0.8rem;"><strong>F 级的共同特征：</strong>八个参数中有六个以上处于「极度失灵」区间（分数低于30）。制度碎片化使闭环无法形成，价值被截留，成本被系统性转嫁给最弱势的人。</div>
+            </div>
+
+            <h3>F 级各经济体诊断</h3>
+            <div class="diagnostic-grid">
+                <div class="diagnostic-item"><span class="country">土耳其</span> <span class="score">0.30</span><div class="diagnosis">行政程序极度碎片化，政策反复，信任流失，成本转嫁给一般民众。</div></div>
+                <div class="diagnostic-item"><span class="country">印度</span> <span class="score">0.30</span><div class="diagnosis">种姓与贫富差距固化制度断层，行政体系崩溃，弱势被排除在闭环之外。</div></div>
+                <div class="diagnostic-item"><span class="country">巴西</span> <span class="score">0.28</span><div class="diagnosis">税务制度碎片化——联邦、州、市三级税制重叠，闭环断裂，成本转嫁给终端消费者。</div></div>
+                <div class="diagnostic-item"><span class="country">印尼</span> <span class="score">0.28</span><div class="diagnosis">土地治理破碎——习惯法、殖民遗产、现代法规并存，产权不清，官僚复杂。</div></div>
+                <div class="diagnostic-item"><span class="country">阿根廷</span> <span class="score">0.28</span><div class="diagnosis">债务与通胀反复侵蚀制度，政策无连续性，闭环长期断裂，财富持续外流。</div></div>
+                <div class="diagnostic-item"><span class="country">俄罗斯</span> <span class="score">0.27</span><div class="diagnosis">资源诅咒——石油与天然气收入被国家与寡头捕获，制裁挤压使闭环无法形成。</div></div>
+                <div class="diagnostic-item"><span class="country">墨西哥</span> <span class="score">0.26</span><div class="diagnosis">暴力与贪腐构成制度性屏障，弱势被排除在价值分配之外，闭环完全断裂。</div></div>
+                <div class="diagnostic-item"><span class="country">香港</span> <span class="score">0.25</span><div class="diagnosis">政府与寡头垄断土地，土地增值被截留，公共价值无法回流公民。</div></div>
+                <div class="diagnostic-item"><span class="country">台湾</span> <span class="score">0.24</span><div class="diagnosis">土地增值被私人资本捕获，房地产成本转嫁年轻世代，政治消耗制度能量。</div></div>
+                <div class="diagnostic-item"><span class="country">南非</span> <span class="score">0.24</span><div class="diagnosis">殖民遗产与种族隔离造成土地分配极端不均，改革停滞，闭环无法建立。</div></div>
+                <div class="diagnostic-item"><span class="country">埃及</span> <span class="score">0.23</span><div class="diagnosis">人口压力挤压制度空间，军队控制土地与经济，弱势被排除在分配之外。</div></div>
+                <div class="diagnostic-item"><span class="country">伊朗</span> <span class="score">0.21</span><div class="diagnosis">国际制裁与神权体制叠加，资源稀缺，价值被国家与宗教基金会捕获。</div></div>
+                <div class="diagnostic-item"><span class="country">尼日利亚</span> <span class="score">0.20</span><div class="diagnosis">石油财富被菁英与外资捕获，制度失灵，弱势完全被排除在闭环之外。</div></div>
             </div>
 
             <div class="key-insight">
                 <p><span class="highlight-line">一个关键观察</span></p>
                 <p><strong>0.5 是分界线。</strong> 低于 0.5 的国家——治理正在耗尽人民。高于 0.5 的国家——治理正在回收价值。</p>
-                <p style="margin-top:0.5rem; color:#9fe870;">A 级（0.90–1.00）— 尚未存在<br>B 级（0.70–0.89）— 价值回流，信任存在<br>C 级（0.50–0.69）— 一半回流，一半转嫁<br>D 级（0.30–0.49）— 大部分价值被拿走<br>F 级（0.00–0.29）— 价值被拿走，人民精疲力竭</p>
+                <p style="margin-top:0.5rem; color:#9fe870;">A 级（0.90–1.00）— 尚未存在<br>B 级（0.70–0.89）— 价值回流，信任存在<br>C 级（0.50–0.69）— 一半回流，一半转嫁<br>D 级（0.30–0.49）— 大部分价值被拿走<br>F 级（0.00–0.29）— 制度碎片化，闭环断裂，成本被系统性转嫁</p>
             </div>
 
             <div class="note">
@@ -586,30 +634,43 @@
 
             <h2>Grado F (0.00–0.29)</h2>
             <div class="grade-block">
-                <div class="grade-title" style="color:#f87171;">F · Valor Tomado, Ciudadanos Agotados</div>
-                <div class="grade-desc">"Colapso sistémico. La legitimidad se ha perdido."</div>
+                <div class="grade-title" style="color:#f87171;">F · Sistemas Fragmentados · Bucles Rotos</div>
+                <div class="grade-desc">"El sistema no está funcionando mal — nunca formó un bucle. El valor es interceptado, los costos se trasladan sistemáticamente a los más vulnerables."</div>
+                <p><strong>Perfil de parámetros del Grado F:</strong></p>
                 <ul>
-                    <li><strong>Turquía</strong> 0.30 — Fricción administrativa extremadamente alta, confianza erosionada</li>
-                    <li><strong>India</strong> 0.30 — Castas, brecha de riqueza, colapso administrativo</li>
-                    <li><strong>Brasil</strong> 0.28 — Costo Brasil, selva fiscal</li>
-                    <li><strong>Indonesia</strong> 0.28 — Gobernanza del suelo fragmentada, burocracia compleja</li>
-                    <li><strong>Argentina</strong> 0.28 — Trampa de deuda e inflación</li>
-                    <li><strong>Rusia</strong> 0.27 — Maldición de recursos y presión de sanciones</li>
-                    <li><strong>México</strong> 0.26 — Trampa de violencia y corrupción</li>
-                    <li><strong>Hong Kong</strong> 0.25 — Gobierno y oligarcas monopolizan la tierra</li>
-                    <li><strong>Taiwán</strong> 0.24 — Precios de vivienda, bajos salarios, agotamiento político</li>
-                    <li><strong>Sudáfrica</strong> 0.24 — Legado colonial, reforma agraria estancada</li>
-                    <li><strong>Egipto</strong> 0.23 — Presión demográfica, ejército controla la tierra</li>
-                    <li><strong>Irán</strong> 0.21 — Sanciones, teocracia, escasez de recursos</li>
-                    <li><strong>Nigeria</strong> 0.20 — Maldición del petróleo, fracaso institucional</li>
+                    <li>Costo de Espera: 20–35 — Procedimientos administrativos extremadamente largos, 3–5x tiempos de espera estándar</li>
+                    <li>Costo de Repetición: 20–30 — Procedimientos altamente fragmentados, presentación repetida de documentos, reglas inconsistentes</li>
+                    <li>Costo de Colapso: 15–25 — El sistema filtra a los más necesitados, tasa de abandono superior al 40%</li>
+                    <li>Asimetría de Información: 15–25 — Decisiones gubernamentales completamente opacas, los ciudadanos no pueden acceder a información crítica</li>
+                    <li>Costo Psicológico: 15–25 — El sistema es impredecible, confianza en las instituciones por debajo del 30%</li>
+                    <li>Costo de Oportunidad: 20–30 — Barreras institucionales causan pérdida masiva de oportunidades de desarrollo personal y social</li>
+                    <li>Vía de Traslado: 15–25 — Los costos se trasladan sistemáticamente de los centros de poder a los grupos vulnerables</li>
+                    <li>Cierre de Circuito: 15–25 — El valor público casi nunca regresa, el bucle está roto</li>
                 </ul>
-                <div class="countries">Característica común del grado F: el valor es tomado. Los costos son trasladados. Los ciudadanos están agotados.</div>
+                <div class="countries" style="margin-top: 0.8rem;"><strong>Característica común del Grado F:</strong> Seis o más parámetros están en el rango de "fracaso extremo" (por debajo de 30). La fragmentación impide la formación de bucles. El valor es interceptado. Los costos se trasladan sistemáticamente a los más vulnerables.</div>
+            </div>
+
+            <h3>Diagnósticos de Economías Grado F</h3>
+            <div class="diagnostic-grid">
+                <div class="diagnostic-item"><span class="country">Turquía</span> <span class="score">0.30</span><div class="diagnosis">Procedimientos administrativos extremadamente fragmentados, políticas reversibles, confianza erosionada, costos trasladados a los ciudadanos comunes.</div></div>
+                <div class="diagnostic-item"><span class="country">India</span> <span class="score">0.30</span><div class="diagnosis">Castas y brechas de riqueza solidifican fracturas institucionales, colapso administrativo, vulnerables excluidos del bucle.</div></div>
+                <div class="diagnostic-item"><span class="country">Brasil</span> <span class="score">0.28</span><div class="diagnosis">Sistema tributario fragmentado — capas federal, estatal y municipal se superponen, bucle roto, costos trasladados a los consumidores finales.</div></div>
+                <div class="diagnostic-item"><span class="country">Indonesia</span> <span class="score">0.28</span><div class="diagnosis">Gobernanza del suelo fragmentada — derecho consuetudinario, herencia colonial, regulaciones modernas coexisten, derechos de propiedad poco claros, burocracia compleja.</div></div>
+                <div class="diagnostic-item"><span class="country">Argentina</span> <span class="score">0.28</span><div class="diagnosis">Deuda e inflación erosionan repetidamente las instituciones, sin continuidad de políticas, bucle roto durante mucho tiempo, riqueza que se fuga.</div></div>
+                <div class="diagnostic-item"><span class="country">Rusia</span> <span class="score">0.27</span><div class="diagnosis">Maldición de recursos — ingresos de petróleo y gas capturados por el estado y oligarcas, sanciones impiden la formación del bucle.</div></div>
+                <div class="diagnostic-item"><span class="country">México</span> <span class="score">0.26</span><div class="diagnosis">Violencia y corrupción forman barreras institucionales, vulnerables excluidos de la distribución de valor, bucle completamente roto.</div></div>
+                <div class="diagnostic-item"><span class="country">Hong Kong</span> <span class="score">0.25</span><div class="diagnosis">Gobierno y oligarcas monopolizan la tierra, el valor del suelo es interceptado, el valor público no puede regresar a los ciudadanos.</div></div>
+                <div class="diagnostic-item"><span class="country">Taiwán</span> <span class="score">0.24</span><div class="diagnosis">El valor del suelo es capturado por capital privado, los costos de vivienda se trasladan a las generaciones más jóvenes, la fricción política consume energía institucional.</div></div>
+                <div class="diagnostic-item"><span class="country">Sudáfrica</span> <span class="score">0.24</span><div class="diagnosis">El legado colonial y del apartheid crea una desigualdad extrema de la tierra, la reforma se estanca, el bucle no puede establecerse.</div></div>
+                <div class="diagnostic-item"><span class="country">Egipto</span> <span class="score">0.23</span><div class="diagnosis">La presión demográfica comprime el espacio institucional, el ejército controla la tierra y la economía, los vulnerables son excluidos de la distribución.</div></div>
+                <div class="diagnostic-item"><span class="country">Irán</span> <span class="score">0.21</span><div class="diagnosis">Sanciones internacionales y régimen teocrático se combinan, escasez de recursos, valor capturado por el estado y fundaciones religiosas.</div></div>
+                <div class="diagnostic-item"><span class="country">Nigeria</span> <span class="score">0.20</span><div class="diagnosis">Riqueza petrolera capturada por élites y capital extranjero, fracaso institucional, vulnerables completamente excluidos del bucle.</div></div>
             </div>
 
             <div class="key-insight">
                 <p><span class="highlight-line">Una Observación Clave</span></p>
                 <p><strong>0.5 es la línea divisoria.</strong> Por debajo de 0.5 — la gobernanza está agotando a su gente. Por encima de 0.5 — la gobernanza está recuperando valor.</p>
-                <p style="margin-top:0.5rem; color:#9fe870;">A (0.90–1.00) — No alcanzado<br>B (0.70–0.89) — El valor regresa, la confianza existe<br>C (0.50–0.69) — La mitad regresa, la mitad se traslada<br>D (0.30–0.49) — La mayor parte del valor es tomada<br>F (0.00–0.29) — Valor tomado, ciudadanos agotados</p>
+                <p style="margin-top:0.5rem; color:#9fe870;">A (0.90–1.00) — No alcanzado<br>B (0.70–0.89) — El valor regresa, la confianza existe<br>C (0.50–0.69) — La mitad regresa, la mitad se traslada<br>D (0.30–0.49) — La mayor parte del valor es tomada<br>F (0.00–0.29) — Sistemas fragmentados, bucles rotos, costos sistemáticamente trasladados</p>
             </div>
 
             <div class="note">
