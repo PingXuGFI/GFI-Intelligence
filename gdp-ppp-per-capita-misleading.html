@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GDP、PPP、人均所得：一場精心設計的數字遊戲</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0b1220;
+            color: #f8fbff;
+            font-family: 'DM Sans', system-ui, sans-serif;
+            line-height: 1.9;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 860px;
+            margin: 0 auto;
+            background: #0d1526;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 2rem;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 20px 40px -12px rgba(0,0,0,0.6);
+        }
+        .lang-tabs {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .lang-tabs button {
+            background: none;
+            border: 1px solid rgba(255,255,255,0.08);
+            color: #9fb0c8;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.75rem;
+            padding: 0.3rem 1rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .lang-tabs button:hover {
+            border-color: rgba(255,255,255,0.2);
+            color: #fff;
+        }
+        .lang-tabs button.active {
+            background: #fbbf24;
+            color: #0b1220;
+            border-color: #fbbf24;
+        }
+        .lang-content {
+            display: none;
+            animation: fade 0.3s ease;
+        }
+        .lang-content.active {
+            display: block;
+        }
+        @keyframes fade {
+            0% { opacity: 0.3; transform: translateY(6px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        h1 {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 2.6rem;
+            font-weight: 400;
+            color: #fbbf24;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+        .subhead {
+            font-size: 1.1rem;
+            color: #9fb0c8;
+            margin-bottom: 0.5rem;
+            border-left: 3px solid #f87171;
+            padding-left: 1.2rem;
+        }
+        .byline {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            color: #7DD3FC;
+            margin-bottom: 2rem;
+        }
+        h2 {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.5rem;
+            color: #fbbf24;
+            margin: 2.2rem 0 0.8rem 0;
+        }
+        p {
+            color: #c7d2e3;
+            margin-bottom: 1.2rem;
+        }
+        .pull-quote {
+            background: rgba(248,113,113,0.06);
+            border-left: 4px solid #f87171;
+            padding: 1.2rem 1.8rem;
+            margin: 1.8rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .pull-quote p {
+            color: #f5e6c8;
+            font-style: italic;
+            margin-bottom: 0;
+            font-size: 1.05rem;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0;
+            font-size: 0.9rem;
+        }
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 0.6rem 0.8rem;
+            text-align: left;
+            color: #c7d2e3;
+        }
+        .comparison-table th {
+            background: rgba(255,255,255,0.04);
+            color: #fbbf24;
+            font-weight: 600;
+        }
+        .footer-note {
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            font-size: 0.8rem;
+            color: #9fb0c8;
+            text-align: center;
+        }
+        .footer-note a {
+            color: #7DD3FC;
+            text-decoration: none;
+        }
+        .footer-note a:hover {
+            text-decoration: underline;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: #9fb0c8;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.06);
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            transition: 0.2s;
+        }
+        .back-link:hover {
+            border-color: rgba(255,255,255,0.2);
+            color: #fff;
+        }
+        .conclusion-box {
+            background: rgba(251,191,36,0.06);
+            border: 1px solid rgba(251,191,36,0.2);
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            margin-top: 2rem;
+        }
+        .conclusion-box p {
+            margin-bottom: 0.5rem;
+        }
+        .conclusion-box p:last-child {
+            margin-bottom: 0;
+        }
+        @media (max-width: 700px) {
+            .container { padding: 1.5rem; }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="lang-tabs">
+        <button class="active" data-lang="en">EN</button>
+        <button data-lang="zh-Hant">繁</button>
+        <button data-lang="zh-Hans">简</button>
+        <button data-lang="es">ES</button>
+    </div>
+
+    <!-- ====== ENGLISH ====== -->
+    <div id="lang-en" class="lang-content active">
+        <h1>GDP, PPP, and Per Capita Income</h1>
+        <div class="subhead">A carefully designed numbers game — and what it hides from you</div>
+        <div class="byline">Ping Xu · GFI Flow Intelligence · June 2026</div>
+
+        <p>Every day, we are told which country is "richer," which is "catching up," and which is "falling behind." The numbers are presented as facts — objective, scientific, indisputable.</p>
+        <p>They are none of those things.</p>
+
+        <div class="pull-quote"><p>"The most dangerous numbers are the ones that look like facts but are actually designed to hide what you are not supposed to see."</p></div>
+
+        <h2>The Holy Trinity of Misleading Metrics</h2>
+        <table class="comparison-table">
+            <thead><tr><th>Metric</th><th>What It Claims to Measure</th><th>What It Actually Hides</th></tr></thead>
+            <tbody>
+                <tr><td><strong>GDP</strong></td><td>Economic output</td><td>Cost shifting, waiting, repetition, psychological costs, environmental destruction</td></tr>
+                <tr><td><strong>PPP</strong></td><td>Purchasing power</td><td>Public service quality, infrastructure, administrative friction, institutional efficiency</td></tr>
+                <tr><td><strong>Per Capita Income</strong></td><td>Average wealth</td><td>Distribution, inequality, access, who actually gets the value</td></tr>
+            </tbody>
+        </table>
+
+        <p>Each of these metrics is flawed. Together, they form a system of measurement that systematically <strong>excludes what matters most</strong>.</p>
+
+        <h2>GDP: The World's Most Trusted Lie</h2>
+        <p>GDP measures <strong>transactions</strong> — not well-being, not delivery, not value returned to people.</p>
+        <p>A bridge is built. GDP increases.<br>But if it takes three years for citizens to get a permit to cross it — that GDP is an illusion.</p>
+        <p>A digital system goes live. GDP increases.<br>But if citizens have to fill out the same form ten times, wait six months, and get rejected — that GDP is a lie.</p>
+        <p>A budget is spent. GDP increases.<br>But if the money does not become outcomes, only consultant reports and vendor revenue — <strong>that GDP is not prosperity. It is transfer.</strong></p>
+
+        <div class="pull-quote"><p>"GDP measures what we spend. It does not measure what we receive."</p></div>
+
+        <h2>PPP: The Illusion of Precision</h2>
+        <p>Purchasing Power Parity was designed to fix GDP's currency problem. It adjusts for price differences across countries. It looks scientific. It looks objective.</p>
+        <p>But PPP has three fatal flaws:</p>
+        <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem;">
+            <li><strong>The basket is a fiction.</strong> The "basket of goods" used to calculate PPP is standardized across countries — but the quality, availability, and relevance of those goods vary wildly. An iPhone in the U.S. and an iPhone in China are not the same "basket item" for a typical family.</li>
+            <li><strong>It ignores public services.</strong> PPP only adjusts for private consumption. It completely ignores the quality and accessibility of healthcare, education, transportation, and public safety — which are often the largest determinants of quality of life.</li>
+            <li><strong>It ignores administrative friction.</strong> PPP adjusts for how much you pay. It does not adjust for how much time, energy, and dignity you lose in the process. That is what the GL Framework measures.</li>
+        </ul>
+
+        <p>PPP does not measure value. It measures <strong>cost</strong> — and only the cost of a very narrow, standardized, and often irrelevant set of goods.</p>
+
+        <h2>Per Capita Income: The Averages Trap</h2>
+        <p>Per capita income is simply total national income divided by population. It tells you the <strong>average</strong> — which tells you almost nothing about what most people actually experience.</p>
+        <p>If one person has $1,000,000 and nine people have $0, the per capita income is $100,000. That is technically correct. It is also completely meaningless for understanding how people live.</p>
+        <p>Per capita income hides:</p>
+        <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem;">
+            <li><strong>Inequality</strong> — who actually gets the money</li>
+            <li><strong>Access</strong> — who can actually use the services</li>
+            <li><strong>Cost shifting</strong> — who bears the burden that the system does not measure</li>
+        </ul>
+
+        <h2>The Structural Problem: What Gets Measured, Gets Managed</h2>
+        <p>These metrics are not neutral. They are <strong>designed</strong> — by economists, by statisticians, by institutions that have a vested interest in certain outcomes.</p>
+        <p>When you measure transactions, you get more transactions.<br>When you measure efficiency, you get more efficiency.<br>When you do not measure waiting, repetition, psychological costs, or transfer pathways — those things do not disappear. They are simply <strong>not recorded</strong>.</p>
+        <p>And what is not recorded does not exist. That is the real deception.</p>
+
+        <div class="pull-quote"><p>"What is not measured does not exist. That is the real deception."</p></div>
+
+        <h2>The GL Alternative: Measuring What Actually Matters</h2>
+        <p>The GL Framework does not replace GDP, PPP, or per capita income. It <strong>completes</strong> them.</p>
+        <p>It asks a question that none of these metrics ask: <strong>What actually reaches people?</strong></p>
+        <p>It measures eight parameters:</p>
+        <table class="comparison-table">
+            <thead><tr><th>GL Parameter</th><th>What It Measures</th></tr></thead>
+            <tbody>
+                <tr><td>Waiting Cost</td><td>How much time people lose</td></tr>
+                <tr><td>Repetition Cost</td><td>How many times people do the same thing</td></tr>
+                <tr><td>Collapse Cost</td><td>What happens when the system fails</td></tr>
+                <tr><td>Info Asymmetry</td><td>What the government knows but citizens don't</td></tr>
+                <tr><td>Psychological Cost</td><td>Anxiety, humiliation, helplessness</td></tr>
+                <tr><td>Opportunity Cost</td><td>What people lose because of the system</td></tr>
+                <tr><td>Transfer Pathway</td><td>How costs are shifted from government to people</td></tr>
+                <tr><td>Loop Closure</td><td>Whether the system actually learns and improves</td></tr>
+            </tbody>
+        </table>
+
+        <div class="conclusion-box">
+            <p><strong>GDP, PPP, and per capita income are not the enemy.</strong></p>
+            <p>They are <strong>partial</strong> — designed for a different era, designed to answer different questions.</p>
+            <p>The problem is not that they exist. The problem is that we treat them as complete.</p>
+            <p>They are not complete. They are the <strong>beginning</strong> of measurement — not the end.</p>
+            <p>The GL Framework asks the question they refuse to ask: <strong>Who actually receives the value?</strong></p>
+        </div>
+
+        <div class="footer-note">
+            <strong>Ping Xu</strong> · Creator of the GL Governance Legitimacy Framework · GFI Flow Intelligence · Boston<br>
+            <span style="font-size:0.75rem; color:#9fb0c8;">gfiintel.com · Free to read · Free to share</span>
+            <br>
+            <a href="index.html" class="back-link">← Back to Home</a>
+        </div>
+    </div>
+
+    <!-- ====== 繁體中文 ====== -->
+    <div id="lang-zh-Hant" class="lang-content">
+        <h1>GDP、PPP、人均所得</h1>
+        <div class="subhead">一場精心設計的數字遊戲——以及它對你隱藏了什麼</div>
+        <div class="byline">徐萍 · GFI Flow Intelligence · 2026年6月</div>
+
+        <p>每天，我們都被灌輸哪個國家「比較有錢」、哪個正在「追趕」、哪個正在「落後」。這些數字被包裝成事實——客觀、科學、不容質疑。</p>
+        <p>它們完全不是這麼一回事。</p>
+
+        <div class="pull-quote"><p>「最危險的數字，是那些看起來像事實，實際上卻被設計來隱藏你本不該看見的東西。」</p></div>
+
+        <h2>誤導指標的三位一體</h2>
+        <table class="comparison-table">
+            <thead><tr><th>指標</th><th>宣稱測量的</th><th>實際隱藏的</th></tr></thead>
+            <tbody>
+                <tr><td><strong>GDP</strong></td><td>經濟產出</td><td>成本轉嫁、等待、重複、心理成本、環境破壞</td></tr>
+                <tr><td><strong>PPP</strong></td><td>購買力</td><td>公共服務品質、基礎設施、行政摩擦、制度效率</td></tr>
+                <tr><td><strong>人均所得</strong></td><td>平均財富</td><td>分配、不平等、可及性、誰真正拿到價值</td></tr>
+            </tbody>
+        </table>
+
+        <p>這些指標每一個都有缺陷。把它們放在一起，就形成了一套系統性地<strong>排除最重要事物</strong>的測量體系。</p>
+
+        <h2>GDP：世界上最受信任的謊言</h2>
+        <p>GDP測量的是<strong>交易</strong>——不是福祉、不是交付、不是回流到人民手中的價值。</p>
+        <p>一座橋蓋好了。GDP增加。<br>但如果人民要等三年才能拿到通行證——那筆GDP是虛的。</p>
+        <p>一個數位系統上線了。GDP增加。<br>但如果人民要重複填表十次、等六個月、最後被拒絕——那筆GDP是假的。</p>
+        <p>一筆預算花出去了。GDP增加。<br>但如果錢沒有變成人民的成果，只變成顧問報告和系統商營收——<strong>那筆GDP不是繁榮，是轉嫁。</strong></p>
+
+        <div class="pull-quote"><p>「GDP測量的是我們花了多少錢。它不測量我們得到了什麼。」</p></div>
+
+        <h2>PPP：精確的幻覺</h2>
+        <p>購買力平價被設計來修正GDP的匯率問題。它調整各國的物價差異。看起來很科學、很客觀。</p>
+        <p>但PPP有三個致命缺陷：</p>
+        <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem;">
+            <li><strong>籃子是虛構的。</strong>用來計算PPP的「一籃子商品」在各國被標準化——但這些商品的品質、可取得性和相關性差異極大。在美國和中國，一支iPhone對一般家庭來說根本不是同一種「籃子商品」。</li>
+            <li><strong>它忽略公共服務。</strong>PPP只調整私人消費，完全忽略醫療、教育、交通、公共安全的品質和可及性——而這些往往是生活品質的最大決定因素。</li>
+            <li><strong>它忽略行政摩擦。</strong>PPP調整的是你花了多少錢，但沒有調整你在過程中損失了多少時間、精力和尊嚴。那是GL框架在測量的。</li>
+        </ul>
+
+        <p>PPP不測量價值。它測量<strong>成本</strong>——而且只測量一組非常狹窄、標準化、而且經常不相關的商品成本。</p>
+
+        <h2>人均所得：平均值的陷阱</h2>
+        <p>人均所得就是把全國總所得除以人口。它告訴你<strong>平均數</strong>——這幾乎無法告訴你大多數人實際經歷了什麼。</p>
+        <p>如果一個人有一百萬美元，另外九個人有零元，人均所得是十萬美元。技術上正確。但對理解人們如何生活來說，完全沒有意義。</p>
+        <p>人均所得隱藏了：</p>
+        <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem;">
+            <li><strong>不平等</strong>——誰真正拿到了錢</li>
+            <li><strong>可及性</strong>——誰真正能使用服務</li>
+            <li><strong>成本轉嫁</strong>——誰承擔了系統沒有測量的負擔</li>
+        </ul>
+
+        <h2>結構性問題：測量什麼，就管理什麼</h2>
+        <p>這些指標不是中立的。它們是<strong>被設計的</strong>——由經濟學家、統計學家、以及在特定結果中有既得利益的機構所設計。</p>
+        <p>當你測量交易，你會得到更多交易。<br>當你測量效率，你會得到更多效率。<br>當你不測量等待、重複、心理成本、轉嫁路徑——這些東西並不會消失。它們只是<strong>不被記錄</strong>。</p>
+        <p>而不被記錄的東西，就不存在。這才是真正的欺騙。</p>
+
+        <div class="pull-quote"><p>「不被測量的東西就不存在。這才是真正的欺騙。」</p></div>
+
+        <h2>GL的替代方案：測量真正重要的事</h2>
+        <p>GL框架不是要取代GDP、PPP或人均所得。它要<strong>補完</strong>它們。</p>
+        <p>它問了一個這些指標都不會問的問題：<strong>什麼東西真正到達了人民手中？</strong></p>
+        <p>它測量八個參數：</p>
+        <table class="comparison-table">
+            <thead><tr><th>GL參數</th><th>測量什麼</th></tr></thead>
+            <tbody>
+                <tr><td>等待成本</td><td>人民損失了多少時間</td></tr>
+                <tr><td>重複成本</td><td>人民重複做了多少次同樣的事</td></tr>
+                <tr><td>崩潰成本</td><td>系統失靈時發生了什麼</td></tr>
+                <tr><td>資訊不對稱</td><td>政府知道但人民不知道的事</td></tr>
+                <tr><td>心理成本</td><td>焦慮、羞辱、無力感</td></tr>
+                <tr><td>機會成本</td><td>因為系統而失去的可能性</td></tr>
+                <tr><td>轉嫁路徑</td><td>成本如何從政府轉移到人民身上</td></tr>
+                <tr><td>迴路閉合</td><td>系統是否真的在學習和改進</td></tr>
+            </tbody>
+        </table>
+
+        <div class="conclusion-box">
+            <p><strong>GDP、PPP、人均所得，都不是敵人。</strong></p>
+            <p>它們是<strong>片面的</strong>——為不同的時代設計，為回答不同的問題而設計。</p>
+            <p>問題不在於它們存在。問題在於我們把它們當作完整的。</p>
+            <p>它們並不完整。它們是測量的<strong>起點</strong>——不是終點。</p>
+            <p>GL框架問的是它們拒絕問的問題：<strong>誰真正拿到了價值？</strong></p>
+        </div>
+
+        <div class="footer-note">
+            <strong>徐萍</strong> · GL 治理正當性框架 創建者 · GFI Flow Intelligence · 波士頓<br>
+            <span style="font-size:0.75rem; color:#9fb0c8;">gfiintel.com · 免費閱讀 · 免費分享</span>
+            <br>
+            <a href="index.html" class="back-link">← 回首頁</a>
+        </div>
+    </div>
+
+    <!-- ====== 簡體中文 ====== -->
+    <div id="lang-zh-Hans" class="lang-content">
+        <h1>GDP、PPP、人均所得</h1>
+        <div class="subhead">一场精心设计的数字游戏——以及它对你隐藏了什么</div>
+        <div class="byline">徐萍 · GFI Flow Intelligence · 2026年6月</div>
+
+        <p>每天，我们都被灌输哪个国家「比较有钱」、哪个正在「追赶」、哪个正在「落后」。这些数字被包装成事实——客观、科学、不容质疑。</p>
+        <p>它们完全不是这么一回事。</p>
+
+        <div class="pull-quote"><p>「最危险的数字，是那些看起来像事实，实际上却被设计来隐藏你本不该看见的东西。」</p></div>
+
+        <h2>误导指标的三位一体</h2>
+        <table class="comparison-table">
+            <thead><tr><th>指标</th><th>宣称测量的</th><th>实际隐藏的</th></tr></thead>
+            <tbody>
+                <tr><td><strong>GDP</strong></td><td>经济产出</td><td>成本转嫁、等待、重复、心理成本、环境破坏</td></tr>
+                <tr><td><strong>PPP</strong></td><td>购买力</td><td>公共服务品质、基础设施、行政摩擦、制度效率</td></tr>
+                <tr><td><strong>人均所得</strong></td><td>平均财富</td><td>分配、不平等、可及性、谁真正拿到价值</td></tr>
+            </tbody>
+        </table>
+
+        <p>这些指标每一个都有缺陷。把它们放在一起，就形成了一套系统地<strong>排除最重要事物</strong>的测量体系。</p>
+
+        <h2>GDP：世界上最受信任的谎言</h2>
+        <p>GDP测量的是<strong>交易</strong>——不是福祉、不是交付、不是回流到人民手中的价值。</p>
+        <p>一座桥盖好了。GDP增加。<br>但如果人民要等三年才能拿到通行证——那笔GDP是虚的。</p>
+        <p>一个数字系统上线了。GDP增加。<br>但如果人民要重复填表十次、等六个月、最后被拒绝——那笔GDP是假的。</p>
+        <p>一笔预算花出去了。GDP增加。<br>但如果钱没有变成人民的成果，只变成顾问报告和系统商营收——<strong>那笔GDP不是繁荣，是转嫁。</strong></p>
+
+        <div class="pull-quote"><p>「GDP测量的是我们花了多少钱。它不测量我们得到了什么。」</p></div>
+
+        <h2>PPP：精确的幻觉</h2>
+        <p>购买力平价被设计来修正GDP的汇率问题。它调整各国的物价差异。看起来很科学、很客观。</p>
+        <p>但PPP有三个致命缺陷：</p>
+        <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem;">
+            <li><strong>篮子是虚构的。</strong>用来计算PPP的「一篮子商品」在各国被标准化——但这些商品的品质、可取得性和相关性差异极大。在美国和中国，一支iPhone对一般家庭来说根本不是同一种「篮子商品」。</li>
+            <li><strong>它忽略公共服务。</strong>PPP只调整私人消费，完全忽略医疗、教育、交通、公共安全的品质和可及性——而这些往往是生活品质的最大决定因素。</li>
+            <li><strong>它忽略行政摩擦。</strong>PPP调整的是你花了多少钱，但没有调整你在过程中损失了多少时间、精力和尊严。那是GL框架在测量的。</li>
+        </ul>
+
+        <p>PPP不测量价值。它测量<strong>成本</strong>——而且只测量一组非常狭窄、标准化、而且经常不相关的商品成本。</p>
+
+        <h2>人均所得：平均值的陷阱</h2>
+        <p>人均所得就是把全国总所得除以人口。它告诉你<strong>平均数</strong>——这几乎无法告诉你大多数人实际经历了什么。</p>
+        <p>如果一个人有一百万美元，另外九个人有零元，人均所得是十万美元。技术上正确。但对理解人们如何生活来说，完全没有意义。</p>
+        <p>人均所得隐藏了：</p>
+        <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem;">
+            <li><strong>不平等</strong>——谁真正拿到了钱</li>
+            <li><strong>可及性</strong>——谁真正能使用服务</li>
+            <li><strong>成本转嫁</strong>——谁承担了系统没有测量的负担</li>
+        </ul>
+
+        <h2>结构性问题：测量什么，就管理什么</h2>
+        <p>这些指标不是中立的。它们是<strong>被设计的</strong>——由经济学家、统计学家、以及在特定结果中有既得利益的机构所设计。</p>
+        <p>当你测量交易，你会得到更多交易。<br>当你测量效率，你会得到更多效率。<br>当你不测量等待、重复、心理成本、转嫁路径——这些东西并不会消失。它们只是<strong>不被记录</strong>。</p>
+        <p>而不被记录的东西，就不存在。这才是真正的欺骗。</p>
+
+        <div class="pull-quote"><p>「不被测量的东西就不存在。这才是真正的欺骗。」</p></div>
+
+        <h2>GL的替代方案：测量真正重要的事</h2>
+        <p>GL框架不是要取代GDP、PPP或人均所得。它要<strong>补完</strong>它们。</p>
+        <p>它问了一个这些指标都不会问的问题：<strong>什么东西真正到达了人民手中？</strong></p>
+        <p>它测量八个参数：</p>
+        <table class="comparison-table">
+            <thead><tr><th>GL参数</th><th>测量什么</th></tr></thead>
+            <tbody>
+                <tr><td>等待成本</td><td>人民损失了多少时间</td></tr>
+                <tr><td>重复成本</td><td>人民重复做了多少次同样的事</td></tr>
+                <tr><td>崩溃成本</td><td>系统失灵时发生了什么</td></tr>
+                <tr><td>信息不对称</td><td>政府知道但人民不知道的事</td></tr>
+                <tr><td>心理成本</td><td>焦虑、羞辱、无力感</td></tr>
+                <tr><td>机会成本</td><td>因为系统而失去的可能性</td></tr>
+                <tr><td>转嫁路径</td><td>成本如何从政府转移到人民身上</td></tr>
+                <tr><td>回路闭合</td><td>系统是否真的在学习和改进</td></tr>
+            </tbody>
+        </table>
+
+        <div class="conclusion-box">
+            <p><strong>GDP、PPP、人均所得，都不是敌人。</strong></p>
+            <p>它们是<strong>片面的</strong>——为不同的时代设计，为回答不同的问题而设计。</p>
+            <p>问题不在于它们存在。问题在于我们把它们当作完整的。</p>
+            <p>它们并不完整。它们是测量的<strong>起点</strong>——不是终点。</p>
+            <p>GL框架问的是它们拒绝问的问题：<strong>谁真正拿到了价值？</strong></p>
+        </div>
+
+        <div class="footer-note">
+            <strong>徐萍</strong> · GL 治理正当性框架 创建者 · GFI Flow Intelligence · 波士顿<br>
+            <span style="font-size:0.75rem; color:#9fb0c8;">gfiintel.com · 免费阅读 · 免费分享</span>
+            <br>
+            <a href="index.html" class="back-link">← 回首页</a>
+        </div>
+    </div>
+
+    <!-- ====== SPANISH ====== -->
+    <div id="lang-es" class="lang-content">
+        <h1>PIB, PPA e Ingreso Per Cápita</h1>
+        <div class="subhead">Un juego de números cuidadosamente diseñado — y lo que te oculta</div>
+        <div class="byline">Ping Xu · GFI Flow Intelligence · Junio 2026</div>
+
+        <p>Todos los días, nos dicen qué país es "más rico", cuál está "alcanzando" y cuál se está "quedando atrás". Los números se presentan como hechos — objetivos, científicos, indiscutibles.</p>
+        <p>No son nada de eso.</p>
+
+        <div class="pull-quote"><p>"Los números más peligrosos son los que parecen hechos, pero en realidad están diseñados para ocultar lo que no se supone que veas."</p></div>
+
+        <h2>La Santísima Trinidad de los Indicadores Engañosos</h2>
+        <table class="comparison-table">
+            <thead><tr><th>Indicador</th><th>Lo que dice medir</th><th>Lo que realmente oculta</th></tr></thead>
+            <tbody>
+                <tr><td><strong>PIB</strong></td><td>Producción económica</td><td>Traslado de costos, espera, repetición, costos psicológicos, destrucción ambiental</td></tr>
+                <tr><td><strong>PPA</strong></td><td>Poder adquisitivo</td><td>Calidad de los servicios públicos, infraestructura, fricción administrativa, eficiencia institucional</td></tr>
+                <tr><td><strong>Ingreso per cápita</strong></td><td>Riqueza promedio</td><td>Distribución, desigualdad, acceso, quién realmente obtiene el valor</td></tr>
+            </tbody>
+        </table>
+
+        <p>Cada uno de estos indicadores tiene fallas. Juntos, forman un sistema de medición que <strong>excluye sistemáticamente lo que más importa</strong>.</p>
+
+        <h2>PIB: La Mentira Más Confiable del Mundo</h2>
+        <p>El PIB mide <strong>transacciones</strong> — no bienestar, no entrega, no valor que regresa a las personas.</p>
+        <p>Se construye un puente. El PIB aumenta.<br>Pero si los ciudadanos tardan tres años en obtener un permiso para cruzarlo — ese PIB es una ilusión.</p>
+        <p>Un sistema digital se pone en marcha. El PIB aumenta.<br>Pero si los ciudadanos tienen que llenar el mismo formulario diez veces, esperar seis meses y ser rechazados — ese PIB es una mentira.</p>
+        <p>Se gasta un presupuesto. El PIB aumenta.<br>Pero si el dinero no se convierte en resultados, solo en informes de consultores e ingresos de proveedores — <strong>ese PIB no es prosperidad. Es transferencia.</strong></p>
+
+        <div class="pull-quote"><p>"El PIB mide lo que gastamos. No mide lo que recibimos."</p></div>
+
+        <h2>PPA: La Ilusión de la Precisión</h2>
+        <p>La Paridad de Poder Adquisitivo fue diseñada para corregir el problema del tipo de cambio del PIB. Ajusta las diferencias de precios entre países. Parece científica. Parece objetiva.</p>
+        <p>Pero la PPA tiene tres defectos fatales:</p>
+        <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem;">
+            <li><strong>La canasta es una ficción.</strong> La "canasta de bienes" utilizada para calcular la PPA está estandarizada entre países — pero la calidad, disponibilidad y relevancia de esos bienes varían enormemente. Un iPhone en EE.UU. y un iPhone en China no son el mismo "bien de la canasta" para una familia típica.</li>
+            <li><strong>Ignora los servicios públicos.</strong> La PPA solo ajusta el consumo privado. Ignora por completo la calidad y accesibilidad de la atención médica, la educación, el transporte y la seguridad pública — que suelen ser los mayores determinantes de la calidad de vida.</li>
+            <li><strong>Ignora la fricción administrativa.</strong> La PPA ajusta cuánto pagas. No ajusta cuánto tiempo, energía y dignidad pierdes en el proceso. Eso es lo que mide el GL Framework.</li>
+        </ul>
+
+        <p>La PPA no mide valor. Mide <strong>costo</strong> — y solo el costo de un conjunto muy limitado, estandarizado y a menudo irrelevante de bienes.</p>
+
+        <h2>Ingreso Per Cápita: La Trampa de los Promedios</h2>
+        <p>El ingreso per cápita es simplemente el ingreso nacional total dividido por la población. Te dice el <strong>promedio</strong> — lo que no te dice casi nada sobre lo que la mayoría de las personas experimentan realmente.</p>
+        <p>Si una persona tiene $1,000,000 y nueve personas tienen $0, el ingreso per cápita es $100,000. Técnicamente es correcto. También es completamente irrelevante para entender cómo vive la gente.</p>
+        <p>El ingreso per cápita oculta:</p>
+        <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem;">
+            <li><strong>Desigualdad</strong> — quién realmente obtiene el dinero</li>
+            <li><strong>Acceso</strong> — quién puede realmente usar los servicios</li>
+            <li><strong>Traslado de costos</strong> — quién soporta la carga que el sistema no mide</li>
+        </ul>
+
+        <h2>El Problema Estructural: Lo que se Mide, se Gestiona</h2>
+        <p>Estos indicadores no son neutrales. Son <strong>diseñados</strong> — por economistas, por estadísticos, por instituciones que tienen un interés creado en ciertos resultados.</p>
+        <p>Cuando mides transacciones, obtienes más transacciones.<br>Cuando mides eficiencia, obtienes más eficiencia.<br>Cuando no mides espera, repetición, costos psicológicos o vías de traslado — esas cosas no desaparecen. Simplemente <strong>no se registran</strong>.</p>
+        <p>Y lo que no se registra, no existe. Ese es el verdadero engaño.</p>
+
+        <div class="pull-quote"><p>"Lo que no se mide no existe. Ese es el verdadero engaño."</p></div>
+
+        <h2>La Alternativa GL: Medir lo que Realmente Importa</h2>
+        <p>El GL Framework no reemplaza al PIB, la PPA o el ingreso per cápita. Los <strong>complementa</strong>.</p>
+        <p>Hace una pregunta que ninguno de estos indicadores hace: <strong>¿Qué llega realmente a las personas?</strong></p>
+        <p>Mide ocho parámetros:</p>
+        <table class="comparison-table">
+            <thead><tr><th>Parámetro GL</th><th>Lo que mide</th></tr></thead>
+            <tbody>
+                <tr><td>Costo de espera</td><td>Cuánto tiempo pierden las personas</td></tr>
+                <tr><td>Costo de repetición</td><td>Cuántas veces las personas hacen lo mismo</td></tr>
+                <tr><td>Costo de colapso</td><td>Qué sucede cuando el sistema falla</td></tr>
+                <tr><td>Asimetría de información</td><td>Lo que el gobierno sabe pero los ciudadanos no</td></tr>
+                <tr><td>Costo psicológico</td><td>Ansiedad, humillación, impotencia</td></tr>
+                <tr><td>Costo de oportunidad</td><td>Lo que las personas pierden debido al sistema</td></tr>
+                <tr><td>Vía de traslado</td><td>Cómo los costos se trasladan del gobierno a las personas</td></tr>
+                <tr><td>Cierre de circuito</td><td>Si el sistema realmente aprende y mejora</td></tr>
+            </tbody>
+        </table>
+
+        <div class="conclusion-box">
+            <p><strong>El PIB, la PPA y el ingreso per cápita no son el enemigo.</strong></p>
+            <p>Son <strong>parciales</strong> — diseñados para una era diferente, diseñados para responder preguntas diferentes.</p>
+            <p>El problema no es que existan. El problema es que los tratamos como completos.</p>
+            <p>No son completos. Son el <strong>comienzo</strong> de la medición — no el final.</p>
+            <p>El GL Framework hace la pregunta que ellos se niegan a hacer: <strong>¿Quién recibe realmente el valor?</strong></p>
+        </div>
+
+        <div class="footer-note">
+            <strong>Ping Xu</strong> · Creadora del GL Governance Legitimacy Framework · GFI Flow Intelligence · Boston<br>
+            <span style="font-size:0.75rem; color:#9fb0c8;">gfiintel.com · Lectura gratuita · Compartir gratuito</span>
+            <br>
+            <a href="index.html" class="back-link">← Volver al Inicio</a>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    (function() {
+        const tabs = document.querySelectorAll('.lang-tabs button');
+        const contents = document.querySelectorAll('.lang-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                const lang = this.dataset.lang;
+                tabs.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                contents.forEach(c => c.classList.remove('active'));
+                const target = document.getElementById('lang-' + lang);
+                if (target) target.classList.add('active');
+            });
+        });
+    })();
+</script>
+
+</body>
+</html>
