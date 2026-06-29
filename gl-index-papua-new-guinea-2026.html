@@ -1,1 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GL Index 2026 · 巴布亞紐幾內亞診斷報告</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #0b1220; color: #f8fbff; font-family: 'DM Sans', system-ui, sans-serif; line-height: 1.7; }
+        .container { max-width: 920px; margin: 0 auto; padding: 2rem; }
+        .header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,.06); }
+        .logo a { font-family: 'DM Mono', monospace; font-size: 0.8rem; letter-spacing: 0.12em; color: #f87171; text-decoration: none; text-transform: uppercase; }
+        .logo a .home-arrow { color: #9fb0c8; margin-right: 6px; }
+        .logo a:hover .home-arrow { color: #f87171; }
+        .lang-switch { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .lang-btn { background: none; border: 1px solid rgba(255,255,255,.1); font-family: 'DM Mono', monospace; font-size: 0.7rem; padding: 0.25rem 0.7rem; border-radius: 2rem; color: #9fb0c8; cursor: pointer; transition: 0.2s; }
+        .lang-btn:hover { border-color: rgba(255,255,255,.3); color: #fff; }
+        .lang-btn.active { background: #f87171; color: #0b1220; border-color: #f87171; }
+        .content-lang { display: none; }
+        .content-lang.active { display: block; }
+        .book-container { background: #0d1526; padding: 3rem 2.5rem; border-radius: 4px; border: 1px solid rgba(255,255,255,.06); }
+        .opening-statement { background: rgba(248,113,113,0.06); border: 1px solid rgba(248,113,113,0.2); border-radius: 12px; padding: 1.8rem 2rem; margin-bottom: 2rem; }
+        .opening-statement p { color: #f0d0d0; margin-bottom: 0.5rem; font-size: 0.95rem; }
+        .opening-statement .highlight-red { color: #f87171; font-weight: 600; }
+        .opening-statement .signature { color: #9fb0c8; font-style: italic; font-size: 0.85rem; margin-top: 0.5rem; }
+        h1 { font-size: 2.6rem; font-weight: 700; text-align: center; margin-bottom: 0.25rem; color: #f87171; letter-spacing: 0.02em; font-family: 'DM Serif Display', Georgia, serif; }
+        .subtitle { text-align: center; font-size: 1rem; color: #9fb0c8; margin-bottom: 0.5rem; font-style: italic; }
+        .author-line { text-align: center; font-size: 0.9rem; color: #7DD3FC; margin-bottom: 2rem; }
+        .theme-line { font-family: 'DM Serif Display', Georgia, serif; font-size: 1.8rem; color: #f87171; text-align: center; margin: 1.5rem 0; line-height: 1.3; }
+        h2 { font-size: 1.4rem; color: #f87171; margin: 2rem 0 1rem 0; border-bottom: 1px solid rgba(255,255,255,.06); padding-bottom: 0.3rem; font-family: 'DM Serif Display', Georgia, serif; }
+        p { color: #c7d2e3; margin-bottom: 1rem; line-height: 1.8; }
+        .highlight-box { background: rgba(248,113,113,0.06); border: 1px solid rgba(248,113,113,0.2); border-radius: 8px; padding: 1.5rem 2rem; margin: 1.5rem 0; text-align: center; }
+        .highlight-box p { color: #eaf6ff; margin-bottom: 0.25rem; }
+        .highlight-box strong { color: #f87171; }
+        .gl-box { background: rgba(248,113,113,0.04); border-left: 3px solid #f87171; padding: 1.2rem 1.5rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0; }
+        .gl-box p { color: #eaf6ff; margin-bottom: 0.5rem; }
+        .gl-box strong { color: #f87171; }
+        .gl-box .gl-score { font-family: 'DM Mono', monospace; font-size: 2.5rem; font-weight: 700; color: #f87171; text-align: center; display: block; margin: 0.3rem 0; }
+        .footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,.06); text-align: center; font-size: 0.75rem; color: #9fb0c8; }
+        .back-link { display: inline-block; margin-top: 1.5rem; font-family: 'DM Mono', monospace; font-size: 0.7rem; color: #9fb0c8; text-decoration: none; border: 1px solid rgba(255,255,255,.06); padding: 0.4rem 1rem; border-radius: 2rem; transition: 0.2s; }
+        .back-link:hover { border-color: rgba(255,255,255,.2); color: #fff; }
+        .divider { border: 0; border-top: 1px solid rgba(255,255,255,.08); margin: 2.5rem 0; }
+        .score-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+        .score-table th, .score-table td { border: 1px solid rgba(255,255,255,.1); padding: 0.75rem; text-align: left; }
+        .score-table th { background: rgba(255,255,255,.05); font-weight: 600; }
+        .score-table .weight-col { text-align: center; }
+        .score-table .score-col { text-align: center; font-weight: 700; color: #f87171; }
+        .score-table .weighted-col { text-align: center; font-weight: 700; color: #fbbf24; }
+        .grade-f { color: #f87171; font-weight: 700; }
+        @media (max-width: 700px) { .container { padding: 1rem; } .book-container { padding: 1.5rem; } h1 { font-size: 1.8rem; } .theme-line { font-size: 1.3rem; } .opening-statement { padding: 1.2rem; } }
+        @media print {
+            .header { display: none !important; }
+            .back-link { display: none !important; }
+            .book-container { background: transparent !important; border: none !important; padding: 0 !important; }
+            body { background: #fff !important; color: #000 !important; }
+            h1, h2, h3, p { color: #000 !important; }
+            .gl-box, .highlight-box { background: #f5f5f5 !important; border-color: #ccc !important; }
+            .gl-box p, .highlight-box p { color: #000 !important; }
+            .theme-line { color: #cc0000 !important; }
+            .gl-box .gl-score { color: #cc0000 !important; }
+            .score-table th, .score-table td { border-color: #ccc !important; color: #000 !important; }
+            .score-table th { background: #eee !important; }
+            .score-table .score-col { color: #cc0000 !important; }
+            .score-table .weighted-col { color: #cc8800 !important; }
+            .grade-f { color: #cc0000 !important; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo"><a href="index.html"><span class="home-arrow">←</span> GFI Flow Intelligence</a></div>
+            <div class="lang-switch">
+                <button class="lang-btn" data-lang="en">EN</button>
+                <button class="lang-btn active" data-lang="tw">繁</button>
+                <button class="lang-btn" data-lang="cn">简</button>
+                <button class="lang-btn" data-lang="es">ES</button>
+            </div>
+        </div>
 
+        <!-- ====== 繁體中文（預設） ====== -->
+        <div id="lang-tw" class="content-lang active">
+            <div class="book-container">
+                <div class="opening-statement">
+                    <p><span class="highlight-red">GL Index 2026 · 巴布亞紐幾內亞</span></p>
+                    <p>治理摩擦、價值捕獲與成本轉嫁的診斷報告。</p>
+                    <p class="signature">— GL 框架診斷 · Ping Xu · GFI Flow Intelligence</p>
+                </div>
+                <div style="text-align:center; margin:2rem 0;">
+                    <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#f87171; line-height:1;">0.26</div>
+                    <div style="font-size:1.2rem; color:#f87171; font-weight:600;">F · 資源詛咒與制度崩壞陷阱</div>
+                    <div style="font-size:0.85rem; color:#9fb0c8; margin-top:0.25rem;">滿分 1.00</div>
+                </div>
+                <div class="theme-line">資源詛咒與制度崩壞疊加，礦業與林業收益被少數集團與外資捕獲，人民精疲力竭。</div>
+                <p>巴布亞紐幾內亞在 GL Index 得分 <span class="highlight-red">0.26</span> — F 級。作為太平洋島國中資源最豐富的國家之一，巴布亞紐幾內亞擁有龐大的礦業、林業與漁業資源，但資源詛咒、制度崩壞、以及礦業與林業收益被少數集團與外資捕獲，構成了治理正當性的嚴重缺口。等待與重複成本極高，一般民眾在資源掠奪與制度失靈中持續流失生計與尊嚴。</p>
+                <h2>八個參數 · 巴布亞紐幾內亞</h2>
+                <table class="score-table">
+                    <thead>
+                        <tr><th>參數</th><th>權重</th><th>分數 (0–100)</th><th>加權</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1. 等待成本</td><td class="weight-col">15%</td><td class="score-col">26</td><td class="weighted-col">3.90</td></tr>
+                        <tr><td>2. 重複成本</td><td class="weight-col">15%</td><td class="score-col">24</td><td class="weighted-col">3.60</td></tr>
+                        <tr><td>3. 崩潰成本</td><td class="weight-col">15%</td><td class="score-col">23</td><td class="weighted-col">3.45</td></tr>
+                        <tr><td>4. 資訊不對稱成本</td><td class="weight-col">10%</td><td class="score-col">28</td><td class="weighted-col">2.80</td></tr>
+                        <tr><td>5. 心理成本</td><td class="weight-col">10%</td><td class="score-col">25</td><td class="weighted-col">2.50</td></tr>
+                        <tr><td>6. 機會成本</td><td class="weight-col">10%</td><td class="score-col">26</td><td class="weighted-col">2.60</td></tr>
+                        <tr><td>7. 轉嫁路徑</td><td class="weight-col">15%</td><td class="score-col">33</td><td class="weighted-col">4.95</td></tr>
+                        <tr><td>8. 迴路閉合</td><td class="weight-col">10%</td><td class="score-col">26</td><td class="weighted-col">2.60</td></tr>
+                        <tr style="border-top:2px solid rgba(255,255,255,0.2); font-weight:700;">
+                            <td colspan="3" style="text-align:right;">總計</td>
+                            <td class="weighted-col" style="font-size:1.2rem;">26.40 / 100</td>
+                        </tr>
+                        <tr style="border-top:2px solid #f87171; font-weight:700;">
+                            <td colspan="3" style="text-align:right;">GL Index</td>
+                            <td class="weighted-col" style="font-size:1.8rem; color:#f87171;">0.26</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h2>關鍵發現</h2>
+                <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem; line-height:1.8;">
+                    <li><strong>資源詛咒</strong> — 礦業、林業與漁業資源豐富，但收益集中於少數集團與外資，轉嫁路徑不透明。</li>
+                    <li><strong>制度崩壞</strong> — 官僚體系腐敗且低效，司法體系薄弱，崩潰成本持續擴散。</li>
+                    <li><strong>基礎設施極度匱乏</strong> — 交通、電力與通訊基礎設施嚴重不足，崩潰成本持續擴散。</li>
+                    <li><strong>心理成本極高</strong> — 資源掠奪與制度失靈造成絕望與長期壓力。</li>
+                    <li><strong>迴路閉合幾乎斷絕</strong> — 資源收益幾乎沒有回流機制，價值回流趨近於零。</li>
+                </ul>
+                <div class="gl-box">
+                    <p><strong>0.26 代表的意義</strong></p>
+                    <p>巴布亞紐幾內亞處於 F 級。資源詛咒與制度崩壞是主要瓶頸。若無法推動制度重建與資源透明化，治理正當性將持續惡化，人民將持續精疲力竭。</p>
+                </div>
+                <div class="highlight-box">
+                    <p><strong>等級說明</strong></p>
+                    <p>A (0.90–1.00) — 價值回流。成本被吸收。人民信任治理。</p>
+                    <p>B (0.70–0.89) — 大部分價值回流。少部分成本轉嫁。</p>
+                    <p>C (0.50–0.69) — 一半回流。一半轉嫁。</p>
+                    <p>D (0.30–0.49) — 大部分價值被拿走。大部分成本被轉嫁。</p>
+                    <p>F (0.00–0.29) — 價值被拿走。成本被轉嫁。人民精疲力竭。</p>
+                    <p style="margin-top:0.5rem;"><span class="grade-f">巴布亞紐幾內亞：0.26 — F</span></p>
+                </div>
+                <div class="divider"></div>
+                <div class="footer">
+                    <p><strong>Ping Xu</strong> · GL框架創建者 · 2026年6月</p>
+                    <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · 免費下載 · 免費傳播</p>
+                    <a href="index.html" class="back-link">← 回首頁</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== ENGLISH ====== -->
+        <div id="lang-en" class="content-lang">
+            <div class="book-container">
+                <div class="opening-statement">
+                    <p><span class="highlight-red">GL Index 2026 · Papua New Guinea</span></p>
+                    <p>A diagnostic report on governance friction, value capture, and cost shifting.</p>
+                    <p class="signature">— GL Framework Diagnostic · Ping Xu · GFI Flow Intelligence</p>
+                </div>
+                <div style="text-align:center; margin:2rem 0;">
+                    <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#f87171; line-height:1;">0.26</div>
+                    <div style="font-size:1.2rem; color:#f87171; font-weight:600;">F · Resource Curse and Institutional Collapse Trap</div>
+                    <div style="font-size:0.85rem; color:#9fb0c8; margin-top:0.25rem;">out of 1.00</div>
+                </div>
+                <div class="theme-line">Resource curse and institutional collapse combine, with mining and forestry revenues captured by few groups and foreign capital, citizens exhausted.</div>
+                <p>Papua New Guinea scores <span class="highlight-red">0.26</span> on the GL Index — an F grade. As one of the most resource-rich countries in the Pacific islands, Papua New Guinea has vast mining, forestry, and fisheries resources. However, resource curse, institutional collapse, and mining and forestry revenues captured by a few groups and foreign capital constitute severe gaps in governance legitimacy. Waiting and repetition costs are extremely high, and ordinary people continuously lose livelihoods and dignity through resource exploitation and institutional failure.</p>
+                <h2>Eight Parameters · Papua New Guinea</h2>
+                <table class="score-table">
+                    <thead>
+                        <tr><th>Parameter</th><th>Weight</th><th>Score (0–100)</th><th>Weighted</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1. Waiting Cost</td><td class="weight-col">15%</td><td class="score-col">26</td><td class="weighted-col">3.90</td></tr>
+                        <tr><td>2. Repetition Cost</td><td class="weight-col">15%</td><td class="score-col">24</td><td class="weighted-col">3.60</td></tr>
+                        <tr><td>3. Collapse Cost</td><td class="weight-col">15%</td><td class="score-col">23</td><td class="weighted-col">3.45</td></tr>
+                        <tr><td>4. Information Asymmetry Cost</td><td class="weight-col">10%</td><td class="score-col">28</td><td class="weighted-col">2.80</td></tr>
+                        <tr><td>5. Psychological Cost</td><td class="weight-col">10%</td><td class="score-col">25</td><td class="weighted-col">2.50</td></tr>
+                        <tr><td>6. Opportunity Cost</td><td class="weight-col">10%</td><td class="score-col">26</td><td class="weighted-col">2.60</td></tr>
+                        <tr><td>7. Shift Pathway</td><td class="weight-col">15%</td><td class="score-col">33</td><td class="weighted-col">4.95</td></tr>
+                        <tr><td>8. Loop Closure</td><td class="weight-col">10%</td><td class="score-col">26</td><td class="weighted-col">2.60</td></tr>
+                        <tr style="border-top:2px solid rgba(255,255,255,0.2); font-weight:700;">
+                            <td colspan="3" style="text-align:right;">TOTAL</td>
+                            <td class="weighted-col" style="font-size:1.2rem;">26.40 / 100</td>
+                        </tr>
+                        <tr style="border-top:2px solid #f87171; font-weight:700;">
+                            <td colspan="3" style="text-align:right;">GL Index</td>
+                            <td class="weighted-col" style="font-size:1.8rem; color:#f87171;">0.26</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h2>Key Findings</h2>
+                <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem; line-height:1.8;">
+                    <li><strong>Resource curse</strong> — Mining, forestry, and fisheries resources are abundant, but revenues are concentrated among a few groups and foreign capital. The shift pathway is opaque.</li>
+                    <li><strong>Institutional collapse</strong> — Corrupt and inefficient bureaucracy, weak judicial systems drive collapse costs.</li>
+                    <li><strong>Extreme infrastructure deficit</strong> — Transportation, electricity, and communication infrastructure are severely insufficient, driving collapse costs.</li>
+                    <li><strong>Psychological costs are extremely high</strong> — Resource exploitation and institutional failure create despair and chronic stress.</li>
+                    <li><strong>Loop closure is almost severed</strong> — Resource revenues have almost no return mechanism; value return is near zero.</li>
+                </ul>
+                <div class="gl-box">
+                    <p><strong>What 0.26 Means</strong></p>
+                    <p>Papua New Guinea is in F grade. Resource curse and institutional collapse are the main bottlenecks. Without institutional rebuilding and resource transparency, governance legitimacy will continue to deteriorate, and citizens will remain exhausted.</p>
+                </div>
+                <div class="highlight-box">
+                    <p><strong>Grade Key</strong></p>
+                    <p>A (0.90–1.00) — Value returns. Costs are absorbed. Citizens trust governance.</p>
+                    <p>B (0.70–0.89) — Most value returns. Some cost shifting.</p>
+                    <p>C (0.50–0.69) — Half returns. Half shifts.</p>
+                    <p>D (0.30–0.49) — Most value captured. Most costs shifted.</p>
+                    <p>F (0.00–0.29) — Value captured. Costs shifted. Citizens exhausted.</p>
+                    <p style="margin-top:0.5rem;"><span class="grade-f">Papua New Guinea: 0.26 — F</span></p>
+                </div>
+                <div class="divider"></div>
+                <div class="footer">
+                    <p><strong>Ping Xu</strong> · Creator of the GL Framework · June 2026</p>
+                    <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · Free download · Free distribution</p>
+                    <a href="index.html" class="back-link">← Back to Home</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== 简体中文 ====== -->
+        <div id="lang-cn" class="content-lang">
+            <div class="book-container">
+                <div class="opening-statement">
+                    <p><span class="highlight-red">GL Index 2026 · 巴布亚新几内亚</span></p>
+                    <p>治理摩擦、价值捕获与成本转嫁的诊断报告。</p>
+                    <p class="signature">— GL 框架诊断 · Ping Xu · GFI Flow Intelligence</p>
+                </div>
+                <div style="text-align:center; margin:2rem 0;">
+                    <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#f87171; line-height:1;">0.26</div>
+                    <div style="font-size:1.2rem; color:#f87171; font-weight:600;">F · 资源诅咒与制度崩坏陷阱</div>
+                    <div style="font-size:0.85rem; color:#9fb0c8; margin-top:0.25rem;">满分 1.00</div>
+                </div>
+                <div class="theme-line">资源诅咒与制度崩坏叠加，矿业与林业收益被少数集团与外资捕获，人民精疲力竭。</div>
+                <p>巴布亚新几内亚在 GL Index 得分 <span class="highlight-red">0.26</span> — F 级。作为太平洋岛国中资源最丰富的国家之一，巴布亚新几内亚拥有庞大的矿业、林业与渔业资源，但资源诅咒、制度崩坏、以及矿业与林业收益被少数集团与外资捕获，构成了治理正当性的严重缺口。等待与重复成本极高，一般民众在资源掠夺与制度失灵中持续流失生计与尊严。</p>
+                <h2>八个参数 · 巴布亚新几内亚</h2>
+                <table class="score-table">
+                    <thead>
+                        <tr><th>参数</th><th>权重</th><th>分数 (0–100)</th><th>加权</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1. 等待成本</td><td class="weight-col">15%</td><td class="score-col">26</td><td class="weighted-col">3.90</td></tr>
+                        <tr><td>2. 重复成本</td><td class="weight-col">15%</td><td class="score-col">24</td><td class="weighted-col">3.60</td></tr>
+                        <tr><td>3. 崩溃成本</td><td class="weight-col">15%</td><td class="score-col">23</td><td class="weighted-col">3.45</td></tr>
+                        <tr><td>4. 信息不对称成本</td><td class="weight-col">10%</td><td class="score-col">28</td><td class="weighted-col">2.80</td></tr>
+                        <tr><td>5. 心理成本</td><td class="weight-col">10%</td><td class="score-col">25</td><td class="weighted-col">2.50</td></tr>
+                        <tr><td>6. 机会成本</td><td class="weight-col">10%</td><td class="score-col">26</td><td class="weighted-col">2.60</td></tr>
+                        <tr><td>7. 转嫁路径</td><td class="weight-col">15%</td><td class="score-col">33</td><td class="weighted-col">4.95</td></tr>
+                        <tr><td>8. 回路闭合</td><td class="weight-col">10%</td><td class="score-col">26</td><td class="weighted-col">2.60</td></tr>
+                        <tr style="border-top:2px solid rgba(255,255,255,0.2); font-weight:700;">
+                            <td colspan="3" style="text-align:right;">总计</td>
+                            <td class="weighted-col" style="font-size:1.2rem;">26.40 / 100</td>
+                        </tr>
+                        <tr style="border-top:2px solid #f87171; font-weight:700;">
+                            <td colspan="3" style="text-align:right;">GL Index</td>
+                            <td class="weighted-col" style="font-size:1.8rem; color:#f87171;">0.26</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h2>关键发现</h2>
+                <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem; line-height:1.8;">
+                    <li><strong>资源诅咒</strong> — 矿业、林业与渔业资源丰富，但收益集中于少数集团与外资，转嫁路径不透明。</li>
+                    <li><strong>制度崩坏</strong> — 官僚体系腐败且低效，司法体系薄弱，崩溃成本持续扩散。</li>
+                    <li><strong>基础设施极度匮乏</strong> — 交通、电力与通讯基础设施严重不足，崩溃成本持续扩散。</li>
+                    <li><strong>心理成本极高</strong> — 资源掠夺与制度失灵造成绝望与长期压力。</li>
+                    <li><strong>回路闭合几乎断绝</strong> — 资源收益几乎没有回流机制，价值回流趋近于零。</li>
+                </ul>
+                <div class="gl-box">
+                    <p><strong>0.26 代表的意义</strong></p>
+                    <p>巴布亚新几内亚处于 F 级。资源诅咒与制度崩坏是主要瓶颈。若无法推动制度重建与资源透明化，治理正当性将持续恶化，人民将持续精疲力竭。</p>
+                </div>
+                <div class="highlight-box">
+                    <p><strong>等级说明</strong></p>
+                    <p>A (0.90–1.00) — 价值回流。成本被吸收。人民信任治理。</p>
+                    <p>B (0.70–0.89) — 大部分价值回流。少部分成本转嫁。</p>
+                    <p>C (0.50–0.69) — 一半回流。一半转嫁。</p>
+                    <p>D (0.30–0.49) — 大部分价值被拿走。大部分成本被转嫁。</p>
+                    <p>F (0.00–0.29) — 价值被拿走。成本被转嫁。人民精疲力竭。</p>
+                    <p style="margin-top:0.5rem;"><span class="grade-f">巴布亚新几内亚：0.26 — F</span></p>
+                </div>
+                <div class="divider"></div>
+                <div class="footer">
+                    <p><strong>Ping Xu</strong> · GL框架创建者 · 2026年6月</p>
+                    <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · 免费下载 · 免费传播</p>
+                    <a href="index.html" class="back-link">← 回首页</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== ESPAÑOL ====== -->
+        <div id="lang-es" class="content-lang">
+            <div class="book-container">
+                <div class="opening-statement">
+                    <p><span class="highlight-red">GL Index 2026 · Papúa Nueva Guinea</span></p>
+                    <p>Un informe de diagnóstico sobre fricción gubernamental, captura de valor y traslado de costos.</p>
+                    <p class="signature">— GL Framework Diagnostic · Ping Xu · GFI Flow Intelligence</p>
+                </div>
+                <div style="text-align:center; margin:2rem 0;">
+                    <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#f87171; line-height:1;">0.26</div>
+                    <div style="font-size:1.2rem; color:#f87171; font-weight:600;">F · Trampa de Maldición de Recursos y Colapso Institucional</div>
+                    <div style="font-size:0.85rem; color:#9fb0c8; margin-top:0.25rem;">de 1.00</div>
+                </div>
+                <div class="theme-line">La maldición de recursos y el colapso institucional se combinan, con ingresos de minería y silvicultura capturados por unos pocos grupos y capital extranjero, ciudadanos agotados.</div>
+                <p>Papúa Nueva Guinea obtiene <span class="highlight-red">0.26</span> en el GL Index — grado F. Como uno de los países más ricos en recursos en las islas del Pacífico, Papúa Nueva Guinea tiene vastos recursos mineros, forestales y pesqueros. Sin embargo, la maldición de recursos, el colapso institucional, y los ingresos de minería y silvicultura capturados por unos pocos grupos y capital extranjero constituyen graves brechas en la legitimidad de la gobernanza. Los costos de espera y repetición son extremadamente altos, y la gente común pierde medios de vida y dignidad continuamente a través de la explotación de recursos y el fracaso institucional.</p>
+                <h2>Ocho Parámetros · Papúa Nueva Guinea</h2>
+                <table class="score-table">
+                    <thead>
+                        <tr><th>Parámetro</th><th>Peso</th><th>Puntaje (0–100)</th><th>Ponderado</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1. Costo de Espera</td><td class="weight-col">15%</td><td class="score-col">26</td><td class="weighted-col">3.90</td></tr>
+                        <tr><td>2. Costo de Repetición</td><td class="weight-col">15%</td><td class="score-col">24</td><td class="weighted-col">3.60</td></tr>
+                        <tr><td>3. Costo de Colapso</td><td class="weight-col">15%</td><td class="score-col">23</td><td class="weighted-col">3.45</td></tr>
+                        <tr><td>4. Costo de Asimetría de Información</td><td class="weight-col">10%</td><td class="score-col">28</td><td class="weighted-col">2.80</td></tr>
+                        <tr><td>5. Costo Psicológico</td><td class="weight-col">10%</td><td class="score-col">25</td><td class="weighted-col">2.50</td></tr>
+                        <tr><td>6. Costo de Oportunidad</td><td class="weight-col">10%</td><td class="score-col">26</td><td class="weighted-col">2.60</td></tr>
+                        <tr><td>7. Vía de Traslado</td><td class="weight-col">15%</td><td class="score-col">33</td><td class="weighted-col">4.95</td></tr>
+                        <tr><td>8. Cierre de Circuito</td><td class="weight-col">10%</td><td class="score-col">26</td><td class="weighted-col">2.60</td></tr>
+                        <tr style="border-top:2px solid rgba(255,255,255,0.2); font-weight:700;">
+                            <td colspan="3" style="text-align:right;">TOTAL</td>
+                            <td class="weighted-col" style="font-size:1.2rem;">26.40 / 100</td>
+                        </tr>
+                        <tr style="border-top:2px solid #f87171; font-weight:700;">
+                            <td colspan="3" style="text-align:right;">GL Index</td>
+                            <td class="weighted-col" style="font-size:1.8rem; color:#f87171;">0.26</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h2>Hallazgos Clave</h2>
+                <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem; line-height:1.8;">
+                    <li><strong>Maldición de recursos</strong> — Los recursos mineros, forestales y pesqueros son abundantes, pero los ingresos se concentran en unos pocos grupos y capital extranjero. La vía de traslado es opaca.</li>
+                    <li><strong>Colapso institucional</strong> — Burocracia corrupta e ineficiente, sistemas judiciales débiles impulsan los costos de colapso.</li>
+                    <li><strong>Déficit extremo de infraestructura</strong> — La infraestructura de transporte, electricidad y comunicaciones es gravemente insuficiente, impulsando los costos de colapso.</li>
+                    <li><strong>Costos psicológicos extremadamente altos</strong> — La explotación de recursos y el fracaso institucional crean desesperación y estrés crónico.</li>
+                    <li><strong>El cierre de circuito está casi cortado</strong> — Los ingresos de los recursos casi no tienen mecanismo de retorno; el retorno de valor es cercano a cero.</li>
+                </ul>
+                <div class="gl-box">
+                    <p><strong>Qué significa 0.26</strong></p>
+                    <p>Papúa Nueva Guinea está en grado F. La maldición de recursos y el colapso institucional son los principales cuellos de botella. Sin reconstrucción institucional y transparencia de recursos, la legitimidad de la gobernanza continuará deteriorándose y los ciudadanos seguirán agotados.</p>
+                </div>
+                <div class="highlight-box">
+                    <p><strong>Clave de Calificaciones</strong></p>
+                    <p>A (0.90–1.00) — El valor regresa. Los costos son absorbidos. Los ciudadanos confían en el gobierno.</p>
+                    <p>B (0.70–0.89) — La mayor parte del valor regresa. Algo de traslado de costos.</p>
+                    <p>C (0.50–0.69) — La mitad regresa. La mitad se traslada.</p>
+                    <p>D (0.30–0.49) — La mayor parte del valor es capturado. La mayoría de los costos son trasladados.</p>
+                    <p>F (0.00–0.29) — El valor es capturado. Los costos son trasladados. Ciudadanos agotados.</p>
+                    <p style="margin-top:0.5rem;"><span class="grade-f">Papúa Nueva Guinea: 0.26 — F</span></p>
+                </div>
+                <div class="divider"></div>
+                <div class="footer">
+                    <p><strong>Ping Xu</strong> · Creador del GL Framework · Junio 2026</p>
+                    <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · Descarga gratuita · Distribución gratuita</p>
+                    <a href="index.html" class="back-link">← Volver al Inicio</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        (function() {
+            const langBtns = document.querySelectorAll('.lang-btn');
+            const contents = document.querySelectorAll('.content-lang');
+            langBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    contents.forEach(c => c.classList.remove('active'));
+                    document.getElementById('lang-' + lang).classList.add('active');
+                    langBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        })();
+    </script>
+</body>
+</html>
