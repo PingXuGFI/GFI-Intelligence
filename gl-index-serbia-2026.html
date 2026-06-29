@@ -1,1 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GL Index 2026 · 塞爾維亞診斷報告</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #0b1220; color: #f8fbff; font-family: 'DM Sans', system-ui, sans-serif; line-height: 1.7; }
+        .container { max-width: 920px; margin: 0 auto; padding: 2rem; }
+        .header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,.06); }
+        .logo a { font-family: 'DM Mono', monospace; font-size: 0.8rem; letter-spacing: 0.12em; color: #f87171; text-decoration: none; text-transform: uppercase; }
+        .logo a .home-arrow { color: #9fb0c8; margin-right: 6px; }
+        .logo a:hover .home-arrow { color: #f87171; }
+        .lang-switch { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .lang-btn { background: none; border: 1px solid rgba(255,255,255,.1); font-family: 'DM Mono', monospace; font-size: 0.7rem; padding: 0.25rem 0.7rem; border-radius: 2rem; color: #9fb0c8; cursor: pointer; transition: 0.2s; }
+        .lang-btn:hover { border-color: rgba(255,255,255,.3); color: #fff; }
+        .lang-btn.active { background: #f87171; color: #0b1220; border-color: #f87171; }
+        .content-lang { display: none; }
+        .content-lang.active { display: block; }
+        .book-container { background: #0d1526; padding: 3rem 2.5rem; border-radius: 4px; border: 1px solid rgba(255,255,255,.06); }
+        .opening-statement { background: rgba(248,113,113,0.06); border: 1px solid rgba(248,113,113,0.2); border-radius: 12px; padding: 1.8rem 2rem; margin-bottom: 2rem; }
+        .opening-statement p { color: #f0d0d0; margin-bottom: 0.5rem; font-size: 0.95rem; }
+        .opening-statement .highlight-red { color: #f87171; font-weight: 600; }
+        .opening-statement .signature { color: #9fb0c8; font-style: italic; font-size: 0.85rem; margin-top: 0.5rem; }
+        h1 { font-size: 2.6rem; font-weight: 700; text-align: center; margin-bottom: 0.25rem; color: #f87171; letter-spacing: 0.02em; font-family: 'DM Serif Display', Georgia, serif; }
+        .subtitle { text-align: center; font-size: 1rem; color: #9fb0c8; margin-bottom: 0.5rem; font-style: italic; }
+        .author-line { text-align: center; font-size: 0.9rem; color: #7DD3FC; margin-bottom: 2rem; }
+        .theme-line { font-family: 'DM Serif Display', Georgia, serif; font-size: 1.8rem; color: #f87171; text-align: center; margin: 1.5rem 0; line-height: 1.3; }
+        h2 { font-size: 1.4rem; color: #f87171; margin: 2rem 0 1rem 0; border-bottom: 1px solid rgba(255,255,255,.06); padding-bottom: 0.3rem; font-family: 'DM Serif Display', Georgia, serif; }
+        p { color: #c7d2e3; margin-bottom: 1rem; line-height: 1.8; }
+        .highlight-box { background: rgba(248,113,113,0.06); border: 1px solid rgba(248,113,113,0.2); border-radius: 8px; padding: 1.5rem 2rem; margin: 1.5rem 0; text-align: center; }
+        .highlight-box p { color: #eaf6ff; margin-bottom: 0.25rem; }
+        .highlight-box strong { color: #f87171; }
+        .gl-box { background: rgba(248,113,113,0.04); border-left: 3px solid #f87171; padding: 1.2rem 1.5rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0; }
+        .gl-box p { color: #eaf6ff; margin-bottom: 0.5rem; }
+        .gl-box strong { color: #f87171; }
+        .gl-box .gl-score { font-family: 'DM Mono', monospace; font-size: 2.5rem; font-weight: 700; color: #f87171; text-align: center; display: block; margin: 0.3rem 0; }
+        .footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,.06); text-align: center; font-size: 0.75rem; color: #9fb0c8; }
+        .back-link { display: inline-block; margin-top: 1.5rem; font-family: 'DM Mono', monospace; font-size: 0.7rem; color: #9fb0c8; text-decoration: none; border: 1px solid rgba(255,255,255,.06); padding: 0.4rem 1rem; border-radius: 2rem; transition: 0.2s; }
+        .back-link:hover { border-color: rgba(255,255,255,.2); color: #fff; }
+        .divider { border: 0; border-top: 1px solid rgba(255,255,255,.08); margin: 2.5rem 0; }
+        .score-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+        .score-table th, .score-table td { border: 1px solid rgba(255,255,255,.1); padding: 0.75rem; text-align: left; }
+        .score-table th { background: rgba(255,255,255,.05); font-weight: 600; }
+        .score-table .weight-col { text-align: center; }
+        .score-table .score-col { text-align: center; font-weight: 700; color: #f87171; }
+        .score-table .weighted-col { text-align: center; font-weight: 700; color: #fbbf24; }
+        .grade-d { color: #fbbf24; font-weight: 700; }
+        @media (max-width: 700px) { .container { padding: 1rem; } .book-container { padding: 1.5rem; } h1 { font-size: 1.8rem; } .theme-line { font-size: 1.3rem; } .opening-statement { padding: 1.2rem; } }
+        @media print {
+            .header { display: none !important; }
+            .back-link { display: none !important; }
+            .book-container { background: transparent !important; border: none !important; padding: 0 !important; }
+            body { background: #fff !important; color: #000 !important; }
+            h1, h2, h3, p { color: #000 !important; }
+            .gl-box, .highlight-box { background: #f5f5f5 !important; border-color: #ccc !important; }
+            .gl-box p, .highlight-box p { color: #000 !important; }
+            .theme-line { color: #cc0000 !important; }
+            .gl-box .gl-score { color: #cc0000 !important; }
+            .score-table th, .score-table td { border-color: #ccc !important; color: #000 !important; }
+            .score-table th { background: #eee !important; }
+            .score-table .score-col { color: #cc0000 !important; }
+            .score-table .weighted-col { color: #cc8800 !important; }
+            .grade-d { color: #cc8800 !important; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo"><a href="index.html"><span class="home-arrow">←</span> GFI Flow Intelligence</a></div>
+            <div class="lang-switch">
+                <button class="lang-btn" data-lang="en">EN</button>
+                <button class="lang-btn active" data-lang="tw">繁</button>
+                <button class="lang-btn" data-lang="cn">简</button>
+                <button class="lang-btn" data-lang="es">ES</button>
+            </div>
+        </div>
 
+        <!-- ====== 繁體中文 ====== -->
+        <div id="lang-tw" class="content-lang active">
+            <div class="book-container">
+                <div class="opening-statement">
+                    <p><span class="highlight-red">GL Index 2026 · 塞爾維亞</span></p>
+                    <p>治理摩擦、價值捕獲與成本轉嫁的診斷報告。</p>
+                    <p class="signature">— GL 框架診斷 · Ping Xu · GFI Flow Intelligence</p>
+                </div>
+                <div style="text-align:center; margin:2rem 0;">
+                    <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#f87171; line-height:1;">0.44</div>
+                    <div style="font-size:1.2rem; color:#fbbf24; font-weight:600;">D · 轉型與制度僵化陷阱</div>
+                    <div style="font-size:0.85rem; color:#9fb0c8; margin-top:0.25rem;">滿分 1.00</div>
+                </div>
+                <div class="theme-line">轉型經濟的結構性摩擦，官僚體系與制度僵化疊加，價值回流有限。</div>
+                <p>塞爾維亞在 GL Index 得分 <span class="highlight-red">0.44</span> — D 級。作為巴爾幹半島的轉型經濟體，塞爾維亞面臨官僚體系效率低落、制度僵化、以及轉型過程中的結構性摩擦。等待與重複成本偏高，一般民眾在制度轉型與經濟調整中持續流失機會與生活品質。</p>
+                <h2>八個參數 · 塞爾維亞</h2>
+                <table class="score-table">
+                    <thead>
+                        <tr><th>參數</th><th>權重</th><th>分數 (0–100)</th><th>加權</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1. 等待成本</td><td class="weight-col">15%</td><td class="score-col">41</td><td class="weighted-col">6.15</td></tr>
+                        <tr><td>2. 重複成本</td><td class="weight-col">15%</td><td class="score-col">39</td><td class="weighted-col">5.85</td></tr>
+                        <tr><td>3. 崩潰成本</td><td class="weight-col">15%</td><td class="score-col">38</td><td class="weighted-col">5.70</td></tr>
+                        <tr><td>4. 資訊不對稱成本</td><td class="weight-col">10%</td><td class="score-col">47</td><td class="weighted-col">4.70</td></tr>
+                        <tr><td>5. 心理成本</td><td class="weight-col">10%</td><td class="score-col">45</td><td class="weighted-col">4.50</td></tr>
+                        <tr><td>6. 機會成本</td><td class="weight-col">10%</td><td class="score-col">44</td><td class="weighted-col">4.40</td></tr>
+                        <tr><td>7. 轉嫁路徑</td><td class="weight-col">15%</td><td class="score-col">52</td><td class="weighted-col">7.80</td></tr>
+                        <tr><td>8. 迴路閉合</td><td class="weight-col">10%</td><td class="score-col">48</td><td class="weighted-col">4.80</td></tr>
+                        <tr style="border-top:2px solid rgba(255,255,255,0.2); font-weight:700;">
+                            <td colspan="3" style="text-align:right;">總計</td>
+                            <td class="weighted-col" style="font-size:1.2rem;">43.90 / 100</td>
+                        </tr>
+                        <tr style="border-top:2px solid #f87171; font-weight:700;">
+                            <td colspan="3" style="text-align:right;">GL Index</td>
+                            <td class="weighted-col" style="font-size:1.8rem; color:#f87171;">0.44</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h2>關鍵發現</h2>
+                <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem; line-height:1.8;">
+                    <li><strong>官僚體系效率低落</strong> — 行政程序冗長且重複，造成極高的等待與重複成本。</li>
+                    <li><strong>轉型經濟的結構性摩擦</strong> — 制度轉型與經濟調整過程中，崩潰成本持續擴散。</li>
+                    <li><strong>轉嫁路徑中等</strong> — 部分成本透過外資與歐盟整合轉嫁，但迴路閉合偏弱。</li>
+                    <li><strong>心理成本偏高</strong> — 民眾對制度信任薄弱，長期處於轉型不確定性中。</li>
+                    <li><strong>迴路閉合不足</strong> — 外資與援助收益缺乏有效的回流機制，價值回流有限。</li>
+                </ul>
+                <div class="gl-box">
+                    <p><strong>0.44 代表的意義</strong></p>
+                    <p>塞爾維亞處於 D 級中段。官僚體系與轉型摩擦是主要瓶頸。若能推動行政改革與歐盟整合進程，有機會提升治理正當性。</p>
+                </div>
+                <div class="highlight-box">
+                    <p><strong>等級說明</strong></p>
+                    <p>A (0.90–1.00) — 價值回流。成本被吸收。人民信任治理。</p>
+                    <p>B (0.70–0.89) — 大部分價值回流。少部分成本轉嫁。</p>
+                    <p>C (0.50–0.69) — 一半回流。一半轉嫁。</p>
+                    <p>D (0.30–0.49) — 大部分價值被拿走。大部分成本被轉嫁。</p>
+                    <p>F (0.00–0.29) — 價值被拿走。成本被轉嫁。人民精疲力竭。</p>
+                    <p style="margin-top:0.5rem;"><span class="grade-d">塞爾維亞：0.44 — D</span></p>
+                </div>
+                <div class="divider"></div>
+                <div class="footer">
+                    <p><strong>Ping Xu</strong> · GL框架創建者 · 2026年6月</p>
+                    <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · 免費下載 · 免費傳播</p>
+                    <a href="index.html" class="back-link">← 回首頁</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== ENGLISH ====== -->
+        <div id="lang-en" class="content-lang">
+            <div class="book-container">
+                <div class="opening-statement">
+                    <p><span class="highlight-red">GL Index 2026 · Serbia</span></p>
+                    <p>A diagnostic report on governance friction, value capture, and cost shifting.</p>
+                    <p class="signature">— GL Framework Diagnostic · Ping Xu · GFI Flow Intelligence</p>
+                </div>
+                <div style="text-align:center; margin:2rem 0;">
+                    <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#f87171; line-height:1;">0.44</div>
+                    <div style="font-size:1.2rem; color:#fbbf24; font-weight:600;">D · Transition and Institutional Rigidity Trap</div>
+                    <div style="font-size:0.85rem; color:#9fb0c8; margin-top:0.25rem;">out of 1.00</div>
+                </div>
+                <div class="theme-line">Structural frictions of a transition economy, combined with bureaucracy and institutional rigidity, limit value return.</div>
+                <p>Serbia scores <span class="highlight-red">0.44</span> on the GL Index — a D grade. As a transition economy in the Balkans, Serbia faces bureaucratic inefficiency, institutional rigidity, and structural frictions during the transition process. Waiting and repetition costs are high, and ordinary people continuously lose opportunities and quality of life through institutional transition and economic adjustment.</p>
+                <h2>Eight Parameters · Serbia</h2>
+                <table class="score-table">
+                    <thead>
+                        <tr><th>Parameter</th><th>Weight</th><th>Score (0–100)</th><th>Weighted</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1. Waiting Cost</td><td class="weight-col">15%</td><td class="score-col">41</td><td class="weighted-col">6.15</td></tr>
+                        <tr><td>2. Repetition Cost</td><td class="weight-col">15%</td><td class="score-col">39</td><td class="weighted-col">5.85</td></tr>
+                        <tr><td>3. Collapse Cost</td><td class="weight-col">15%</td><td class="score-col">38</td><td class="weighted-col">5.70</td></tr>
+                        <tr><td>4. Information Asymmetry Cost</td><td class="weight-col">10%</td><td class="score-col">47</td><td class="weighted-col">4.70</td></tr>
+                        <tr><td>5. Psychological Cost</td><td class="weight-col">10%</td><td class="score-col">45</td><td class="weighted-col">4.50</td></tr>
+                        <tr><td>6. Opportunity Cost</td><td class="weight-col">10%</td><td class="score-col">44</td><td class="weighted-col">4.40</td></tr>
+                        <tr><td>7. Shift Pathway</td><td class="weight-col">15%</td><td class="score-col">52</td><td class="weighted-col">7.80</td></tr>
+                        <tr><td>8. Loop Closure</td><td class="weight-col">10%</td><td class="score-col">48</td><td class="weighted-col">4.80</td></tr>
+                        <tr style="border-top:2px solid rgba(255,255,255,0.2); font-weight:700;">
+                            <td colspan="3" style="text-align:right;">TOTAL</td>
+                            <td class="weighted-col" style="font-size:1.2rem;">43.90 / 100</td>
+                        </tr>
+                        <tr style="border-top:2px solid #f87171; font-weight:700;">
+                            <td colspan="3" style="text-align:right;">GL Index</td>
+                            <td class="weighted-col" style="font-size:1.8rem; color:#f87171;">0.44</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h2>Key Findings</h2>
+                <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem; line-height:1.8;">
+                    <li><strong>Bureaucratic inefficiency</strong> — Lengthy and repetitive administrative procedures create very high waiting and repetition costs.</li>
+                    <li><strong>Structural frictions of transition</strong> — Institutional transition and economic adjustment drive collapse costs.</li>
+                    <li><strong>Moderate shift pathway</strong> — Some costs are shifted through foreign investment and EU integration, but loop closure remains weak.</li>
+                    <li><strong>Psychological costs are relatively high</strong> — Public trust in institutions is fragile under transition uncertainty.</li>
+                    <li><strong>Loop closure remains weak</strong> — Foreign investment and aid revenues lack effective return mechanisms, limiting value return.</li>
+                </ul>
+                <div class="gl-box">
+                    <p><strong>What 0.44 Means</strong></p>
+                    <p>Serbia is in the middle of D grade. Bureaucracy and transition frictions are the main bottlenecks. Administrative reform and EU integration progress could improve governance legitimacy.</p>
+                </div>
+                <div class="highlight-box">
+                    <p><strong>Grade Key</strong></p>
+                    <p>A (0.90–1.00) — Value returns. Costs are absorbed. Citizens trust governance.</p>
+                    <p>B (0.70–0.89) — Most value returns. Some cost shifting.</p>
+                    <p>C (0.50–0.69) — Half returns. Half shifts.</p>
+                    <p>D (0.30–0.49) — Most value captured. Most costs shifted.</p>
+                    <p>F (0.00–0.29) — Value captured. Costs shifted. Citizens exhausted.</p>
+                    <p style="margin-top:0.5rem;"><span class="grade-d">Serbia: 0.44 — D</span></p>
+                </div>
+                <div class="divider"></div>
+                <div class="footer">
+                    <p><strong>Ping Xu</strong> · Creator of the GL Framework · June 2026</p>
+                    <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · Free download · Free distribution</p>
+                    <a href="index.html" class="back-link">← Back to Home</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== 简体中文 ====== -->
+        <div id="lang-cn" class="content-lang">
+            <div class="book-container">
+                <div class="opening-statement">
+                    <p><span class="highlight-red">GL Index 2026 · 塞尔维亚</span></p>
+                    <p>治理摩擦、价值捕获与成本转嫁的诊断报告。</p>
+                    <p class="signature">— GL 框架诊断 · Ping Xu · GFI Flow Intelligence</p>
+                </div>
+                <div style="text-align:center; margin:2rem 0;">
+                    <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#f87171; line-height:1;">0.44</div>
+                    <div style="font-size:1.2rem; color:#fbbf24; font-weight:600;">D · 转型与制度僵化陷阱</div>
+                    <div style="font-size:0.85rem; color:#9fb0c8; margin-top:0.25rem;">满分 1.00</div>
+                </div>
+                <div class="theme-line">转型经济的结构性摩擦，官僚体系与制度僵化叠加，价值回流有限。</div>
+                <p>塞尔维亚在 GL Index 得分 <span class="highlight-red">0.44</span> — D 级。作为巴尔干半岛的转型经济体，塞尔维亚面临官僚体系效率低落、制度僵化、以及转型过程中的结构性摩擦。等待与重复成本偏高，一般民众在制度转型与经济调整中持续流失机会与生活品质。</p>
+                <h2>八个参数 · 塞尔维亚</h2>
+                <table class="score-table">
+                    <thead>
+                        <tr><th>参数</th><th>权重</th><th>分数 (0–100)</th><th>加权</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1. 等待成本</td><td class="weight-col">15%</td><td class="score-col">41</td><td class="weighted-col">6.15</td></tr>
+                        <tr><td>2. 重复成本</td><td class="weight-col">15%</td><td class="score-col">39</td><td class="weighted-col">5.85</td></tr>
+                        <tr><td>3. 崩溃成本</td><td class="weight-col">15%</td><td class="score-col">38</td><td class="weighted-col">5.70</td></tr>
+                        <tr><td>4. 信息不对称成本</td><td class="weight-col">10%</td><td class="score-col">47</td><td class="weighted-col">4.70</td></tr>
+                        <tr><td>5. 心理成本</td><td class="weight-col">10%</td><td class="score-col">45</td><td class="weighted-col">4.50</td></tr>
+                        <tr><td>6. 机会成本</td><td class="weight-col">10%</td><td class="score-col">44</td><td class="weighted-col">4.40</td></tr>
+                        <tr><td>7. 转嫁路径</td><td class="weight-col">15%</td><td class="score-col">52</td><td class="weighted-col">7.80</td></tr>
+                        <tr><td>8. 回路闭合</td><td class="weight-col">10%</td><td class="score-col">48</td><td class="weighted-col">4.80</td></tr>
+                        <tr style="border-top:2px solid rgba(255,255,255,0.2); font-weight:700;">
+                            <td colspan="3" style="text-align:right;">总计</td>
+                            <td class="weighted-col" style="font-size:1.2rem;">43.90 / 100</td>
+                        </tr>
+                        <tr style="border-top:2px solid #f87171; font-weight:700;">
+                            <td colspan="3" style="text-align:right;">GL Index</td>
+                            <td class="weighted-col" style="font-size:1.8rem; color:#f87171;">0.44</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h2>关键发现</h2>
+                <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem; line-height:1.8;">
+                    <li><strong>官僚体系效率低落</strong> — 行政程序冗长且重复，造成极高的等待与重复成本。</li>
+                    <li><strong>转型经济的结构性摩擦</strong> — 制度转型与经济调整过程中，崩溃成本持续扩散。</li>
+                    <li><strong>转嫁路径中等</strong> — 部分成本透过外资与欧盟整合转嫁，但回路闭合偏弱。</li>
+                    <li><strong>心理成本偏高</strong> — 民众对制度信任薄弱，长期处于转型不确定性中。</li>
+                    <li><strong>回路闭合不足</strong> — 外资与援助收益缺乏有效的回流机制，价值回流有限。</li>
+                </ul>
+                <div class="gl-box">
+                    <p><strong>0.44 代表的意义</strong></p>
+                    <p>塞尔维亚处于 D 级中段。官僚体系与转型摩擦是主要瓶颈。若能推动行政改革与欧盟整合进程，有机会提升治理正当性。</p>
+                </div>
+                <div class="highlight-box">
+                    <p><strong>等级说明</strong></p>
+                    <p>A (0.90–1.00) — 价值回流。成本被吸收。人民信任治理。</p>
+                    <p>B (0.70–0.89) — 大部分价值回流。少部分成本转嫁。</p>
+                    <p>C (0.50–0.69) — 一半回流。一半转嫁。</p>
+                    <p>D (0.30–0.49) — 大部分价值被拿走。大部分成本被转嫁。</p>
+                    <p>F (0.00–0.29) — 价值被拿走。成本被转嫁。人民精疲力竭。</p>
+                    <p style="margin-top:0.5rem;"><span class="grade-d">塞尔维亚：0.44 — D</span></p>
+                </div>
+                <div class="divider"></div>
+                <div class="footer">
+                    <p><strong>Ping Xu</strong> · GL框架创建者 · 2026年6月</p>
+                    <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · 免费下载 · 免费传播</p>
+                    <a href="index.html" class="back-link">← 回首页</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== ESPAÑOL ====== -->
+        <div id="lang-es" class="content-lang">
+            <div class="book-container">
+                <div class="opening-statement">
+                    <p><span class="highlight-red">GL Index 2026 · Serbia</span></p>
+                    <p>Un informe de diagnóstico sobre fricción gubernamental, captura de valor y traslado de costos.</p>
+                    <p class="signature">— GL Framework Diagnostic · Ping Xu · GFI Flow Intelligence</p>
+                </div>
+                <div style="text-align:center; margin:2rem 0;">
+                    <div style="font-family:'DM Mono',monospace; font-size:5rem; font-weight:700; color:#f87171; line-height:1;">0.44</div>
+                    <div style="font-size:1.2rem; color:#fbbf24; font-weight:600;">D · Trampa de Transición y Rigidez Institucional</div>
+                    <div style="font-size:0.85rem; color:#9fb0c8; margin-top:0.25rem;">de 1.00</div>
+                </div>
+                <div class="theme-line">Las fricciones estructurales de una economía en transición, combinadas con la burocracia y la rigidez institucional, limitan el retorno de valor.</div>
+                <p>Serbia obtiene <span class="highlight-red">0.44</span> en el GL Index — grado D. Como una economía en transición en los Balcanes, Serbia enfrenta ineficiencia burocrática, rigidez institucional y fricciones estructurales durante el proceso de transición. Los costos de espera y repetición son altos, y la gente común pierde oportunidades y calidad de vida continuamente a través de la transición institucional y el ajuste económico.</p>
+                <h2>Ocho Parámetros · Serbia</h2>
+                <table class="score-table">
+                    <thead>
+                        <tr><th>Parámetro</th><th>Peso</th><th>Puntaje (0–100)</th><th>Ponderado</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1. Costo de Espera</td><td class="weight-col">15%</td><td class="score-col">41</td><td class="weighted-col">6.15</td></tr>
+                        <tr><td>2. Costo de Repetición</td><td class="weight-col">15%</td><td class="score-col">39</td><td class="weighted-col">5.85</td></tr>
+                        <tr><td>3. Costo de Colapso</td><td class="weight-col">15%</td><td class="score-col">38</td><td class="weighted-col">5.70</td></tr>
+                        <tr><td>4. Costo de Asimetría de Información</td><td class="weight-col">10%</td><td class="score-col">47</td><td class="weighted-col">4.70</td></tr>
+                        <tr><td>5. Costo Psicológico</td><td class="weight-col">10%</td><td class="score-col">45</td><td class="weighted-col">4.50</td></tr>
+                        <tr><td>6. Costo de Oportunidad</td><td class="weight-col">10%</td><td class="score-col">44</td><td class="weighted-col">4.40</td></tr>
+                        <tr><td>7. Vía de Traslado</td><td class="weight-col">15%</td><td class="score-col">52</td><td class="weighted-col">7.80</td></tr>
+                        <tr><td>8. Cierre de Circuito</td><td class="weight-col">10%</td><td class="score-col">48</td><td class="weighted-col">4.80</td></tr>
+                        <tr style="border-top:2px solid rgba(255,255,255,0.2); font-weight:700;">
+                            <td colspan="3" style="text-align:right;">TOTAL</td>
+                            <td class="weighted-col" style="font-size:1.2rem;">43.90 / 100</td>
+                        </tr>
+                        <tr style="border-top:2px solid #f87171; font-weight:700;">
+                            <td colspan="3" style="text-align:right;">GL Index</td>
+                            <td class="weighted-col" style="font-size:1.8rem; color:#f87171;">0.44</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h2>Hallazgos Clave</h2>
+                <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem; line-height:1.8;">
+                    <li><strong>Ineficiencia burocrática</strong> — Procedimientos administrativos largos y repetitivos generan costos de espera y repetición muy altos.</li>
+                    <li><strong>Fricciones estructurales de la transición</strong> — La transición institucional y el ajuste económico impulsan los costos de colapso.</li>
+                    <li><strong>Vía de traslado moderada</strong> — Algunos costos se trasladan a través de la inversión extranjera y la integración con la UE, pero el cierre de circuito sigue siendo débil.</li>
+                    <li><strong>Costos psicológicos relativamente altos</strong> — La confianza pública en las instituciones es frágil bajo la incertidumbre de la transición.</li>
+                    <li><strong>El cierre de circuito sigue siendo débil</strong> — Los ingresos de la inversión extranjera y la ayuda carecen de mecanismos de retorno efectivos, limitando el retorno de valor.</li>
+                </ul>
+                <div class="gl-box">
+                    <p><strong>Qué significa 0.44</strong></p>
+                    <p>Serbia está en la mitad del grado D. La burocracia y las fricciones de la transición son los principales cuellos de botella. La reforma administrativa y el progreso en la integración con la UE podrían mejorar la legitimidad de la gobernanza.</p>
+                </div>
+                <div class="highlight-box">
+                    <p><strong>Clave de Calificaciones</strong></p>
+                    <p>A (0.90–1.00) — El valor regresa. Los costos son absorbidos. Los ciudadanos confían en el gobierno.</p>
+                    <p>B (0.70–0.89) — La mayor parte del valor regresa. Algo de traslado de costos.</p>
+                    <p>C (0.50–0.69) — La mitad regresa. La mitad se traslada.</p>
+                    <p>D (0.30–0.49) — La mayor parte del valor es capturado. La mayoría de los costos son trasladados.</p>
+                    <p>F (0.00–0.29) — El valor es capturado. Los costos son trasladados. Ciudadanos agotados.</p>
+                    <p style="margin-top:0.5rem;"><span class="grade-d">Serbia: 0.44 — D</span></p>
+                </div>
+                <div class="divider"></div>
+                <div class="footer">
+                    <p><strong>Ping Xu</strong> · Creador del GL Framework · Junio 2026</p>
+                    <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · Descarga gratuita · Distribución gratuita</p>
+                    <a href="index.html" class="back-link">← Volver al Inicio</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        (function() {
+            const langBtns = document.querySelectorAll('.lang-btn');
+            const contents = document.querySelectorAll('.content-lang');
+            langBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    contents.forEach(c => c.classList.remove('active'));
+                    document.getElementById('lang-' + lang).classList.add('active');
+                    langBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        })();
+    </script>
+</body>
+</html>
