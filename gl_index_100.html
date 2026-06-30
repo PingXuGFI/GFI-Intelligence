@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GL Index · 100經濟體治理正當性排名</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #0b1220; color: #f8fbff; font-family: 'DM Sans', system-ui, sans-serif; line-height: 1.6; }
+        .container { max-width: 1300px; margin: 0 auto; padding: 2rem; }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+        .logo a {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.12em;
+            color: #9FE870;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+        .logo a .home-arrow { color: #9fb0c8; margin-right: 6px; }
+        .logo a:hover .home-arrow { color: #9FE870; }
+        .lang-switch { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .lang-btn {
+            background: none;
+            border: 1px solid rgba(255,255,255,.1);
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            padding: 0.25rem 0.7rem;
+            border-radius: 2rem;
+            color: #9fb0c8;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,.3); color: #fff; }
+        .lang-btn.active { background: #9FE870; color: #0b1220; border-color: #9FE870; }
+        .content-lang { display: none; }
+        .content-lang.active { display: block; }
+        .page-title { font-family: 'DM Serif Display', Georgia, serif; font-size: 2.2rem; color: #9FE870; margin-bottom: 0.15rem; }
+        .page-subtitle { font-size: 1rem; color: #9fb0c8; margin-bottom: 1.5rem; }
+        .version-badge { display: inline-block; background: rgba(159,232,112,0.12); color: #9FE870; font-family: 'DM Mono', monospace; font-size: 0.65rem; padding: 0.15rem 0.8rem; border-radius: 2rem; margin-left: 0.5rem; letter-spacing: 0.04em; }
+
+        .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 1.5rem 0; }
+        .comparison-card { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); border-radius: 12px; padding: 1.2rem 1.5rem; }
+        .comparison-card .label { font-size: 0.7rem; font-family: 'DM Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; color: #9fb0c8; }
+        .comparison-card .value { font-size: 1.8rem; font-weight: 700; font-family: 'DM Mono', monospace; margin: 0.2rem 0; }
+        .comparison-card .desc { font-size: 0.85rem; color: #c7d2e3; }
+        .comparison-card.highlight-top { border-color: rgba(159,232,112,0.3); background: rgba(159,232,112,0.05); }
+        .comparison-card.highlight-top .value { color: #9FE870; }
+        .comparison-card.highlight-bottom { border-color: rgba(248,113,113,0.3); background: rgba(248,113,113,0.05); }
+        .comparison-card.highlight-bottom .value { color: #f87171; }
+
+        .table-container { overflow-x: auto; border: 1px solid rgba(255,255,255,.06); border-radius: 12px; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+        th { background: rgba(255,255,255,.04); color: #7DD3FC; font-weight: 600; padding: 0.6rem 0.7rem; text-align: left; border-bottom: 2px solid rgba(255,255,255,.08); font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.05em; text-transform: uppercase; white-space: nowrap; }
+        td { padding: 0.45rem 0.7rem; border-bottom: 1px solid rgba(255,255,255,.04); color: #c7d2e3; }
+        tr:hover td { background: rgba(255,255,255,.02); }
+        .rank { font-weight: 600; color: #7DD3FC; width: 3%; text-align: center; }
+        .country-name { font-weight: 500; text-align: left; white-space: nowrap; }
+        .gl-value { font-weight: 700; font-family: 'DM Mono', monospace; }
+        .grade-b { color: #7DD3FC; font-weight: 600; }
+        .grade-c { color: #fbbf24; font-weight: 600; }
+        .grade-d { color: #fb923c; font-weight: 600; }
+        .grade-f { color: #f87171; font-weight: 600; }
+        .gdp { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: #9fb0c8; }
+        .region-tag { display: inline-block; background: rgba(255,255,255,.04); padding: 0.1rem 0.6rem; border-radius: 2rem; font-size: 0.6rem; color: #9fb0c8; letter-spacing: 0.03em; }
+        .status-green { color: #9FE870; }
+        .status-yellow { color: #fbbf24; }
+        .status-red { color: #f87171; }
+
+        .insight-box { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+        .insight-item { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); border-radius: 8px; padding: 1rem; text-align: center; }
+        .insight-item .label { font-family: 'DM Mono', monospace; font-size: 0.6rem; color: #9fb0c8; text-transform: uppercase; letter-spacing: 0.08em; }
+        .insight-item .number { font-size: 1.8rem; font-weight: 700; margin: 0.2rem 0; }
+        .insight-item .desc { font-size: 0.7rem; color: #9fb0c8; }
+
+        .observation-box { background: rgba(251,191,36,0.04); border: 1px solid rgba(251,191,36,0.12); border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; }
+        .observation-box h3 { color: #fbbf24; font-size: 1rem; margin-bottom: 0.5rem; font-family: 'DM Serif Display', Georgia, serif; }
+        .observation-box ul { color: #c7d2e3; margin-left: 1.5rem; line-height: 1.8; }
+        .observation-box ul li { margin-bottom: 0.2rem; }
+
+        .footnote { margin-top: 1.5rem; font-size: 0.8rem; color: #9fb0c8; border-top: 1px solid rgba(255,255,255,.06); padding-top: 1rem; }
+        .footnote strong { color: #e8edf5; }
+        .grade-legend { display: flex; gap: 1.2rem; flex-wrap: wrap; margin-top: 0.5rem; }
+        .grade-legend span { font-size: 0.75rem; }
+        .back-link { display: inline-block; margin-top: 2rem; font-family: 'DM Mono', monospace; font-size: 0.7rem; color: #9fb0c8; text-decoration: none; border: 1px solid rgba(255,255,255,.06); padding: 0.4rem 1rem; border-radius: 2rem; transition: 0.2s; }
+        .back-link:hover { border-color: rgba(255,255,255,.2); color: #fff; }
+
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .page-title { font-size: 1.5rem; }
+            .comparison-grid { grid-template-columns: 1fr; }
+            td, th { padding: 0.3rem 0.4rem; font-size: 0.65rem; }
+            .country-name { white-space: normal; }
+            .insight-box { grid-template-columns: 1fr 1fr; }
+            .region-tag { font-size: 0.5rem; }
+        }
+        @media print {
+            .header { display: none !important; }
+            .back-link { display: none !important; }
+            .lang-switch { display: none !important; }
+            body { background: #fff !important; color: #000 !important; }
+            .page-title { color: #006633 !important; }
+            .grade-b { color: #0066cc !important; }
+            .grade-c { color: #cc8800 !important; }
+            .grade-d { color: #cc6600 !important; }
+            .grade-f { color: #cc0000 !important; }
+            td, th { color: #000 !important; border-color: #ccc !important; }
+            th { background: #eee !important; }
+            .observation-box { border-color: #ccc !important; }
+            .observation-box h3 { color: #000 !important; }
+            .comparison-card { border-color: #ccc !important; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="logo"><a href="index.html"><span class="home-arrow">←</span> GFI Flow Intelligence</a></div>
+        <div class="lang-switch">
+            <button class="lang-btn active" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="tw">繁</button>
+            <button class="lang-btn" data-lang="cn">简</button>
+            <button class="lang-btn" data-lang="es">ES</button>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ENGLISH (最左側，預設) -->
+    <!-- ============================================================ -->
+    <div id="lang-en" class="content-lang active">
+        <h1 class="page-title">GL Index · Governance Legitimacy Ranking <span class="version-badge">v5.3</span></h1>
+        <p class="page-subtitle">100 Economies · 12 Parameters · Housing Burden · Land Value Capture · Cost Shifting · Infrastructure · Cost of Living</p>
+
+        <div class="comparison-grid">
+            <div class="comparison-card highlight-top">
+                <div class="label">🥇 #1 · Denmark</div>
+                <div class="value">0.83</div>
+                <div class="desc">GL Index Grade B · Highest governance legitimacy globally, approaching Grade A</div>
+            </div>
+            <div class="comparison-card highlight-bottom">
+                <div class="label">📉 #100 · Yemen</div>
+                <div class="value">0.28</div>
+                <div class="desc">GL Index Grade F · Governance collapsed, citizens exhausted</div>
+            </div>
+        </div>
+
+        <div class="table-container" id="table-en"></div>
+
+        <div class="insight-box">
+            <div class="insight-item"><div class="label">Grade B (0.70–0.89)</div><div class="number" style="color:#7DD3FC;">26</div><div class="desc">Most value returns</div></div>
+            <div class="insight-item"><div class="label">Grade C (0.50–0.69)</div><div class="number" style="color:#fbbf24;">43</div><div class="desc">Half returns, half shifts</div></div>
+            <div class="insight-item"><div class="label">Grade D (0.30–0.49)</div><div class="number" style="color:#fb923c;">30</div><div class="desc">Most value captured</div></div>
+            <div class="insight-item"><div class="label">Grade F (0.00–0.29)</div><div class="number" style="color:#f87171;">1</div><div class="desc">Value captured, citizens exhausted</div></div>
+        </div>
+
+        <div class="observation-box">
+            <h3>📌 Why GDP Is Not Enough — Introducing GL Index</h3>
+            <ul>
+                <li><strong>GDP measures "how much is produced," not "where the value goes."</strong> — The U.S. has the highest GDP ($30.3T) but a GL Index of only 0.74 (Grade B). GDP cannot measure governance quality.</li>
+                <li><strong>Governance legitimacy is not proportional to economic size.</strong> — Grade B+ economies are mostly small open economies (Denmark, Norway, Sweden, Finland, Singapore, Switzerland). Large economies (China, U.S., Japan) mostly fall into Grade B or C.</li>
+                <li><strong>GL Index measures "value return," not "total output."</strong> — A system can produce enormous GDP, but citizens may receive only a fraction of that value.</li>
+                <li><strong>If GDP is "output," GL Index is the "return rate."</strong> — A country can have high GDP and low GL Index — meaning its governance system is poorly designed.</li>
+                <li><strong>The goal of GL Index is to make "value return" a measurable, comparable, and trackable governance metric.</strong> — Not to replace GDP, but to fill the missing half: governance legitimacy.</li>
+            </ul>
+        </div>
+
+        <div class="footnote">
+            <p><strong>Grade Key:</strong></p>
+            <div class="grade-legend">
+                <span><span class="grade-b">B</span> 0.70–0.89 — Most value returns, some cost shifting</span>
+                <span><span class="grade-c">C</span> 0.50–0.69 — Half returns, half shifts</span>
+                <span><span class="grade-d">D</span> 0.30–0.49 — Most value captured, most costs shifted</span>
+                <span><span class="grade-f">F</span> 0.00–0.29 — Value captured, costs shifted, citizens exhausted</span>
+            </div>
+            <p style="margin-top:0.6rem; color:#9fe870; font-weight:600;">Grade A vacant (0.90–1.00) — no economy reaches 0.90 or above. The North Star of governance, untouched.</p>
+            <p style="margin-top:0.4rem; font-size:0.7rem;">GL Index v5.3 · 12 Parameters: Housing Burden(18%) · Land Value Capture(14%) · Cost Shifting(14%) · Collapse Cost(10%) · Infrastructure(8%) · Cost of Living(8%) · Wait Cost(6%) · Repetition Cost(6%) · Opportunity Cost(6%) · Psychological Cost(6%) · Info Asymmetry(4%) · Loop Closure(3%)</p>
+        </div>
+        <a href="index.html" class="back-link">← Back to Home</a>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 繁體中文 -->
+    <!-- ============================================================ -->
+    <div id="lang-tw" class="content-lang">
+        <h1 class="page-title">GL Index · 治理正當性排名 <span class="version-badge">v5.3</span></h1>
+        <p class="page-subtitle">100 個經濟體 · 12 項參數 · 住房壓力 · 土地增值閉環 · 轉嫁路徑 · 基礎建設 · 物價生活品質</p>
+
+        <div class="comparison-grid">
+            <div class="comparison-card highlight-top">
+                <div class="label">🥇 第 1 名 · 丹麥</div>
+                <div class="value">0.83</div>
+                <div class="desc">GL Index B 級 · 全球治理正當性最高，接近 A 級門檻</div>
+            </div>
+            <div class="comparison-card highlight-bottom">
+                <div class="label">📉 第 100 名 · 葉門</div>
+                <div class="value">0.28</div>
+                <div class="desc">GL Index F 級 · 治理崩潰，人民精疲力竭</div>
+            </div>
+        </div>
+
+        <div class="table-container" id="table-tw"></div>
+
+        <div class="insight-box">
+            <div class="insight-item"><div class="label">B 級 (0.70–0.89)</div><div class="number" style="color:#7DD3FC;">26</div><div class="desc">大部分價值回流</div></div>
+            <div class="insight-item"><div class="label">C 級 (0.50–0.69)</div><div class="number" style="color:#fbbf24;">43</div><div class="desc">一半回流，一半轉嫁</div></div>
+            <div class="insight-item"><div class="label">D 級 (0.30–0.49)</div><div class="number" style="color:#fb923c;">30</div><div class="desc">大部分價值被拿走</div></div>
+            <div class="insight-item"><div class="label">F 級 (0.00–0.29)</div><div class="number" style="color:#f87171;">1</div><div class="desc">價值被拿走，人民精疲力竭</div></div>
+        </div>
+
+        <div class="observation-box">
+            <h3>📌 GL Index：為什麼 GDP 不夠，需要新指標</h3>
+            <ul>
+                <li><strong>GDP 告訴你「產出多少」，不告訴你「價值去了哪裡」。</strong> — 美國 GDP 全球第一（30.3 兆），GL Index 僅 0.74（B 級）。GDP 無法衡量治理品質。</li>
+                <li><strong>治理正當性與經濟規模不成正比。</strong> — B+ 級國家多為小型開放經濟體（丹麥、挪威、瑞典、芬蘭、新加坡、瑞士）。大型經濟體（中國、美國、日本）多落在 B 或 C 級。</li>
+                <li><strong>GL Index 測量的是「價值回流」，不是「產出總量」。</strong> — 一個系統可以產出巨大 GDP，但人民可能只收到極少部分的價值。GL Index 追蹤的是：成本由誰承擔？價值由誰接收？</li>
+                <li><strong>如果 GDP 是「產出」，GL Index 就是「回流率」。</strong> — 一個國家可能 GDP 很高，但 GL Index 偏低——代表它的治理系統設計不良，成本轉嫁路徑過長，價值被攔截，無法回流到人民手中。</li>
+                <li><strong>GL Index 的目標是讓「價值回流」成為可測量、可比較、可追蹤的治理指標。</strong> — 不是取代 GDP，而是補上 GDP 缺少的那一半：治理正當性。</li>
+            </ul>
+        </div>
+
+        <div class="footnote">
+            <p><strong>等級說明：</strong></p>
+            <div class="grade-legend">
+                <span><span class="grade-b">B</span> 0.70–0.89 — 大部分價值回流，少部分成本轉嫁</span>
+                <span><span class="grade-c">C</span> 0.50–0.69 — 一半回流，一半轉嫁</span>
+                <span><span class="grade-d">D</span> 0.30–0.49 — 大部分價值被拿走，大部分成本被轉嫁</span>
+                <span><span class="grade-f">F</span> 0.00–0.29 — 價值被拿走，成本被轉嫁，人民精疲力竭</span>
+            </div>
+            <p style="margin-top:0.6rem; color:#9fe870; font-weight:600;">A 級從缺 (0.90–1.00) — 沒有經濟體達到 0.90 以上。治理的北極星，尚無人觸及。</p>
+            <p style="margin-top:0.4rem; font-size:0.7rem;">GL Index v5.3 · 12 項參數：住房壓力(18%) · 土地增值閉環(14%) · 轉嫁路徑(14%) · 崩潰成本(10%) · 基礎建設(8%) · 物價生活品質(8%) · 等待成本(6%) · 重複成本(6%) · 機會成本(6%) · 心理成本(6%) · 資訊不對稱(4%) · 迴路閉合(3%)</p>
+        </div>
+        <a href="index.html" class="back-link">← 回首頁</a>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 简体中文 -->
+    <!-- ============================================================ -->
+    <div id="lang-cn" class="content-lang">
+        <h1 class="page-title">GL Index · 治理正当性排名 <span class="version-badge">v5.3</span></h1>
+        <p class="page-subtitle">100 个经济体 · 12 项参数 · 住房压力 · 土地增值闭环 · 转嫁路径 · 基础设施建设 · 物价生活品质</p>
+
+        <div class="comparison-grid">
+            <div class="comparison-card highlight-top">
+                <div class="label">🥇 第 1 名 · 丹麦</div>
+                <div class="value">0.83</div>
+                <div class="desc">GL Index B 级 · 全球治理正当性最高，接近 A 级门槛</div>
+            </div>
+            <div class="comparison-card highlight-bottom">
+                <div class="label">📉 第 100 名 · 也门</div>
+                <div class="value">0.28</div>
+                <div class="desc">GL Index F 级 · 治理崩溃，人民精疲力竭</div>
+            </div>
+        </div>
+
+        <div class="table-container" id="table-cn"></div>
+
+        <div class="insight-box">
+            <div class="insight-item"><div class="label">B 级 (0.70–0.89)</div><div class="number" style="color:#7DD3FC;">26</div><div class="desc">大部分价值回流</div></div>
+            <div class="insight-item"><div class="label">C 级 (0.50–0.69)</div><div class="number" style="color:#fbbf24;">43</div><div class="desc">一半回流，一半转嫁</div></div>
+            <div class="insight-item"><div class="label">D 级 (0.30–0.49)</div><div class="number" style="color:#fb923c;">30</div><div class="desc">大部分价值被拿走</div></div>
+            <div class="insight-item"><div class="label">F 级 (0.00–0.29)</div><div class="number" style="color:#f87171;">1</div><div class="desc">价值被拿走，人民精疲力竭</div></div>
+        </div>
+
+        <div class="observation-box">
+            <h3>📌 为什么 GDP 不够 —— 引入 GL Index</h3>
+            <ul>
+                <li><strong>GDP 告诉你「产出了多少」，不告诉你「价值去了哪里」。</strong> — 美国 GDP 全球第一（30.3 兆），GL Index 仅 0.74（B 级）。GDP 无法衡量治理品质。</li>
+                <li><strong>治理正当性与经济规模不成正比。</strong> — B+ 级国家多为小型开放经济体（丹麦、挪威、瑞典、芬兰、新加坡、瑞士）。大型经济体（中国、美国、日本）多落在 B 或 C 级。</li>
+                <li><strong>GL Index 测量的是「价值回流」，不是「产出总量」。</strong> — 一个系统可以产出巨大 GDP，但人民可能只收到极少部分的价值。</li>
+                <li><strong>如果 GDP 是「产出」，GL Index 就是「回流率」。</strong> — 一个国家可能 GDP 很高，但 GL Index 偏低——代表它的治理系统设计不良。</li>
+                <li><strong>GL Index 的目标是让「价值回流」成为可测量、可比较、可追踪的治理指标。</strong> — 不是取代 GDP，而是补上 GDP 缺少的那一半：治理正当性。</li>
+            </ul>
+        </div>
+
+        <div class="footnote">
+            <p><strong>等级说明：</strong></p>
+            <div class="grade-legend">
+                <span><span class="grade-b">B</span> 0.70–0.89 — 大部分价值回流，少部分成本转嫁</span>
+                <span><span class="grade-c">C</span> 0.50–0.69 — 一半回流，一半转嫁</span>
+                <span><span class="grade-d">D</span> 0.30–0.49 — 大部分价值被拿走，大部分成本被转嫁</span>
+                <span><span class="grade-f">F</span> 0.00–0.29 — 价值被拿走，成本被转嫁，人民精疲力竭</span>
+            </div>
+            <p style="margin-top:0.6rem; color:#9fe870; font-weight:600;">A 级从缺 (0.90–1.00) — 没有经济体达到 0.90 以上。治理的北极星，尚无人触及。</p>
+            <p style="margin-top:0.4rem; font-size:0.7rem;">GL Index v5.3 · 12 项参数：住房压力(18%) · 土地增值闭环(14%) · 转嫁路径(14%) · 崩溃成本(10%) · 基础设施建设(8%) · 物价生活品质(8%) · 等待成本(6%) · 重复成本(6%) · 机会成本(6%) · 心理成本(6%) · 信息不对称(4%) · 回路闭合(3%)</p>
+        </div>
+        <a href="index.html" class="back-link">← 回首页</a>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ESPAÑOL -->
+    <!-- ============================================================ -->
+    <div id="lang-es" class="content-lang">
+        <h1 class="page-title">GL Index · Ranking de Legitimidad Gubernamental <span class="version-badge">v5.3</span></h1>
+        <p class="page-subtitle">100 Economías · 12 Parámetros · Presión de Vivienda · Captura de Plusvalía · Transferencia de Costos · Infraestructura · Calidad de Vida</p>
+
+        <div class="comparison-grid">
+            <div class="comparison-card highlight-top">
+                <div class="label">🥇 #1 · Dinamarca</div>
+                <div class="value">0.83</div>
+                <div class="desc">GL Index Grado B · La más alta legitimidad gubernamental global, cerca del Grado A</div>
+            </div>
+            <div class="comparison-card highlight-bottom">
+                <div class="label">📉 #100 · Yemen</div>
+                <div class="value">0.28</div>
+                <div class="desc">GL Index Grado F · Gobierno colapsado, ciudadanos agotados</div>
+            </div>
+        </div>
+
+        <div class="table-container" id="table-es"></div>
+
+        <div class="insight-box">
+            <div class="insight-item"><div class="label">Grado B (0.70–0.89)</div><div class="number" style="color:#7DD3FC;">26</div><div class="desc">Mayor valor regresa</div></div>
+            <div class="insight-item"><div class="label">Grado C (0.50–0.69)</div><div class="number" style="color:#fbbf24;">43</div><div class="desc">Mitad regresa, mitad se traslada</div></div>
+            <div class="insight-item"><div class="label">Grado D (0.30–0.49)</div><div class="number" style="color:#fb923c;">30</div><div class="desc">Mayor valor capturado</div></div>
+            <div class="insight-item"><div class="label">Grado F (0.00–0.29)</div><div class="number" style="color:#f87171;">1</div><div class="desc">Valor capturado, ciudadanos agotados</div></div>
+        </div>
+
+        <div class="observation-box">
+            <h3>📌 Por qué el PIB no es suficiente — Presentando el GL Index</h3>
+            <ul>
+                <li><strong>El PIB mide "cuánto se produce", no "a dónde va el valor".</strong> — EE.UU. tiene el PIB más alto ($30.3B) pero un GL Index de solo 0.74 (Grado B). El PIB no puede medir la calidad de la gobernanza.</li>
+                <li><strong>La legitimidad de la gobernanza no es proporcional al tamaño económico.</strong> — Los países de Grado B+ son principalmente economías pequeñas y abiertas (Dinamarca, Noruega, Suecia, Finlandia, Singapur, Suiza).</li>
+                <li><strong>El GL Index mide el "retorno de valor", no la "producción total".</strong> — Un sistema puede producir un PIB enorme, pero los ciudadanos pueden recibir solo una fracción de ese valor.</li>
+                <li><strong>Si el PIB es "producción", el GL Index es la "tasa de retorno".</strong> — Un país puede tener un PIB alto y un GL Index bajo — lo que significa que su sistema de gobernanza está mal diseñado.</li>
+                <li><strong>El objetivo del GL Index es hacer que el "retorno de valor" sea una métrica de gobernanza medible, comparable y rastreable.</strong> — No para reemplazar al PIB, sino para llenar la mitad que falta: la legitimidad de la gobernanza.</li>
+            </ul>
+        </div>
+
+        <div class="footnote">
+            <p><strong>Clave de Calificaciones:</strong></p>
+            <div class="grade-legend">
+                <span><span class="grade-b">B</span> 0.70–0.89 — Mayor valor regresa, algo de traslado</span>
+                <span><span class="grade-c">C</span> 0.50–0.69 — Mitad regresa, mitad se traslada</span>
+                <span><span class="grade-d">D</span> 0.30–0.49 — Mayor valor capturado, mayor costo trasladado</span>
+                <span><span class="grade-f">F</span> 0.00–0.29 — Valor capturado, costos trasladados, ciudadanos agotados</span>
+            </div>
+            <p style="margin-top:0.6rem; color:#9fe870; font-weight:600;">Grado A vacante (0.90–1.00) — ninguna economía alcanza 0.90 o más. La Estrella Polar de la gobernanza, aún sin tocar.</p>
+            <p style="margin-top:0.4rem; font-size:0.7rem;">GL Index v5.3 · 12 Parámetros: Presión de Vivienda(18%) · Captura de Plusvalía(14%) · Transferencia de Costos(14%) · Costo de Colapso(10%) · Infraestructura(8%) · Calidad de Vida(8%) · Costo de Espera(6%) · Costo de Repetición(6%) · Costo de Oportunidad(6%) · Costo Psicológico(6%) · Asimetría de Info(4%) · Cierre de Bucle(3%)</p>
+        </div>
+        <a href="index.html" class="back-link">← Volver al Inicio</a>
+    </div>
+
+</div>
+
+<script>
+    // ================================================================
+    // DATA — 100 COUNTRIES (v5.3)
+    // ================================================================
+    const countries = [
+        { rank:1, name:"丹麥", nameEn:"Denmark", nameCn:"丹麦", nameEs:"Dinamarca", gl:0.83, grade:"B", gdp:"420", region:"歐洲" },
+        { rank:2, name:"德國", nameEn:"Germany", nameCn:"德国", nameEs:"Alemania", gl:0.83, grade:"B", gdp:"4,710", region:"歐洲" },
+        { rank:3, name:"挪威", nameEn:"Norway", nameCn:"挪威", nameEs:"Noruega", gl:0.82, grade:"B", gdp:"507", region:"歐洲" },
+        { rank:4, name:"瑞典", nameEn:"Sweden", nameCn:"瑞典", nameEs:"Suecia", gl:0.82, grade:"B", gdp:"623", region:"歐洲" },
+        { rank:5, name:"芬蘭", nameEn:"Finland", nameCn:"芬兰", nameEs:"Finlandia", gl:0.82, grade:"B", gdp:"308", region:"歐洲" },
+        { rank:6, name:"盧森堡", nameEn:"Luxembourg", nameCn:"卢森堡", nameEs:"Luxemburgo", gl:0.80, grade:"B", gdp:"92", region:"歐洲" },
+        { rank:7, name:"瑞士", nameEn:"Switzerland", nameCn:"瑞士", nameEs:"Suiza", gl:0.79, grade:"B", gdp:"960", region:"歐洲" },
+        { rank:8, name:"新加坡", nameEn:"Singapore", nameCn:"新加坡", nameEs:"Singapur", gl:0.79, grade:"B", gdp:"561", region:"亞洲" },
+        { rank:9, name:"奧地利", nameEn:"Austria", nameCn:"奥地利", nameEs:"Austria", gl:0.79, grade:"B", gdp:"526", region:"歐洲" },
+        { rank:10, name:"荷蘭", nameEn:"Netherlands", nameCn:"荷兰", nameEs:"Países Bajos", gl:0.79, grade:"B", gdp:"1,190", region:"歐洲" },
+        { rank:11, name:"加拿大", nameEn:"Canada", nameCn:"加拿大", nameEs:"Canadá", gl:0.79, grade:"B", gdp:"2,242", region:"北美洲" },
+        { rank:12, name:"日本", nameEn:"Japan", nameCn:"日本", nameEs:"Japón", gl:0.77, grade:"B", gdp:"4,230", region:"亞洲" },
+        { rank:13, name:"比利時", nameEn:"Belgium", nameCn:"比利时", nameEs:"Bélgica", gl:0.77, grade:"B", gdp:"641", region:"歐洲" },
+        { rank:14, name:"美國", nameEn:"United States", nameCn:"美国", nameEs:"Estados Unidos", gl:0.74, grade:"B", gdp:"30,340", region:"北美洲" },
+        { rank:15, name:"愛爾蘭", nameEn:"Ireland", nameCn:"爱尔兰", nameEs:"Irlanda", gl:0.74, grade:"B", gdp:"650", region:"歐洲" },
+        { rank:16, name:"紐西蘭", nameEn:"New Zealand", nameCn:"新西兰", nameEs:"Nueva Zelanda", gl:0.74, grade:"B", gdp:"256", region:"大洋洲" },
+        { rank:17, name:"英國", nameEn:"United Kingdom", nameCn:"英国", nameEs:"Reino Unido", gl:0.73, grade:"B", gdp:"3,590", region:"歐洲" },
+        { rank:18, name:"斯洛維尼亞", nameEn:"Slovenia", nameCn:"斯洛文尼亚", nameEs:"Eslovenia", gl:0.73, grade:"B", gdp:"73", region:"歐洲" },
+        { rank:19, name:"法國", nameEn:"France", nameCn:"法国", nameEs:"Francia", gl:0.72, grade:"B", gdp:"3,130", region:"歐洲" },
+        { rank:20, name:"捷克", nameEn:"Czech Republic", nameCn:"捷克", nameEs:"República Checa", gl:0.72, grade:"B", gdp:"345", region:"歐洲" },
+        { rank:21, name:"波蘭", nameEn:"Poland", nameCn:"波兰", nameEs:"Polonia", gl:0.72, grade:"B", gdp:"901", region:"歐洲" },
+        { rank:22, name:"義大利", nameEn:"Italy", nameCn:"意大利", nameEs:"Italia", gl:0.71, grade:"B", gdp:"2,330", region:"歐洲" },
+        { rank:23, name:"葡萄牙", nameEn:"Portugal", nameCn:"葡萄牙", nameEs:"Portugal", gl:0.70, grade:"B", gdp:"303", region:"歐洲" },
+        { rank:24, name:"西班牙", nameEn:"Spain", nameCn:"西班牙", nameEs:"España", gl:0.70, grade:"B", gdp:"1,650", region:"歐洲" },
+        { rank:25, name:"愛沙尼亞", nameEn:"Estonia", nameCn:"爱沙尼亚", nameEs:"Estonia", gl:0.70, grade:"B", gdp:"43", region:"歐洲" },
+        { rank:26, name:"以色列", nameEn:"Israel", nameCn:"以色列", nameEs:"Israel", gl:0.70, grade:"B", gdp:"550", region:"中東" },
+        { rank:27, name:"韓國", nameEn:"South Korea", nameCn:"韩国", nameEs:"Corea del Sur", gl:0.69, grade:"C", gdp:"1,880", region:"亞洲" },
+        { rank:28, name:"香港", nameEn:"Hong Kong", nameCn:"香港", nameEs:"Hong Kong", gl:0.65, grade:"C", gdp:"413", region:"亞洲" },
+        { rank:29, name:"立陶宛", nameEn:"Lithuania", nameCn:"立陶宛", nameEs:"Lituania", gl:0.64, grade:"C", gdp:"79", region:"歐洲" },
+        { rank:30, name:"馬爾他", nameEn:"Malta", nameCn:"马耳他", nameEs:"Malta", gl:0.64, grade:"C", gdp:"22", region:"歐洲" },
+        { rank:31, name:"智利", nameEn:"Chile", nameCn:"智利", nameEs:"Chile", gl:0.64, grade:"C", gdp:"344", region:"南美洲" },
+        { rank:32, name:"烏拉圭", nameEn:"Uruguay", nameCn:"乌拉圭", nameEs:"Uruguay", gl:0.64, grade:"C", gdp:"77", region:"南美洲" },
+        { rank:33, name:"台灣", nameEn:"Taiwan", nameCn:"台湾", nameEs:"Taiwán", gl:0.64, grade:"C", gdp:"1,750", region:"亞洲" },
+        { rank:34, name:"馬來西亞", nameEn:"Malaysia", nameCn:"马来西亚", nameEs:"Malasia", gl:0.63, grade:"C", gdp:"447", region:"亞洲" },
+        { rank:35, name:"阿聯", nameEn:"UAE", nameCn:"阿联酋", nameEs:"EAU", gl:0.63, grade:"C", gdp:"570", region:"中東" },
+        { rank:36, name:"沙烏地阿拉伯", nameEn:"Saudi Arabia", nameCn:"沙特阿拉伯", nameEs:"Arabia Saudita", gl:0.62, grade:"C", gdp:"1,120", region:"中東" },
+        { rank:37, name:"卡達", nameEn:"Qatar", nameCn:"卡塔尔", nameEs:"Catar", gl:0.62, grade:"C", gdp:"253", region:"中東" },
+        { rank:38, name:"模里西斯", nameEn:"Mauritius", nameCn:"毛里求斯", nameEs:"Mauricio", gl:0.62, grade:"C", gdp:"15", region:"非洲" },
+        { rank:39, name:"希臘", nameEn:"Greece", nameCn:"希腊", nameEs:"Grecia", gl:0.61, grade:"C", gdp:"252", region:"歐洲" },
+        { rank:40, name:"匈牙利", nameEn:"Hungary", nameCn:"匈牙利", nameEs:"Hungría", gl:0.61, grade:"C", gdp:"213", region:"歐洲" },
+        { rank:41, name:"巴貝多", nameEn:"Barbados", nameCn:"巴巴多斯", nameEs:"Barbados", gl:0.61, grade:"C", gdp:"6", region:"加勒比海" },
+        { rank:42, name:"科威特", nameEn:"Kuwait", nameCn:"科威特", nameEs:"Kuwait", gl:0.60, grade:"C", gdp:"165", region:"中東" },
+        { rank:43, name:"巴拿馬", nameEn:"Panama", nameCn:"巴拿马", nameEs:"Panamá", gl:0.60, grade:"C", gdp:"88", region:"中美洲" },
+        { rank:44, name:"中國", nameEn:"China", nameCn:"中国", nameEs:"China", gl:0.59, grade:"C", gdp:"19,530", region:"亞洲" },
+        { rank:45, name:"土耳其", nameEn:"Türkiye", nameCn:"土耳其", nameEs:"Turquía", gl:0.57, grade:"C", gdp:"1,120", region:"歐洲/亞洲" },
+        { rank:46, name:"賽普勒斯", nameEn:"Cyprus", nameCn:"塞浦路斯", nameEs:"Chipre", gl:0.57, grade:"C", gdp:"32", region:"歐洲" },
+        { rank:47, name:"巴林", nameEn:"Bahrain", nameCn:"巴林", nameEs:"Baréin", gl:0.57, grade:"C", gdp:"48", region:"中東" },
+        { rank:48, name:"阿曼", nameEn:"Oman", nameCn:"阿曼", nameEs:"Omán", gl:0.57, grade:"C", gdp:"122", region:"中東" },
+        { rank:49, name:"俄羅斯", nameEn:"Russia", nameCn:"俄罗斯", nameEs:"Rusia", gl:0.56, grade:"C", gdp:"2,180", region:"歐洲/亞洲" },
+        { rank:50, name:"墨西哥", nameEn:"Mexico", nameCn:"墨西哥", nameEs:"México", gl:0.56, grade:"C", gdp:"1,810", region:"北美洲" },
+        { rank:51, name:"喬治亞", nameEn:"Georgia", nameCn:"格鲁吉亚", nameEs:"Georgia", gl:0.56, grade:"C", gdp:"33", region:"亞洲" },
+        { rank:52, name:"阿根廷", nameEn:"Argentina", nameCn:"阿根廷", nameEs:"Argentina", gl:0.56, grade:"C", gdp:"604", region:"南美洲" },
+        { rank:53, name:"哈薩克", nameEn:"Kazakhstan", nameCn:"哈萨克斯坦", nameEs:"Kazajistán", gl:0.56, grade:"C", gdp:"300", region:"亞洲" },
+        { rank:54, name:"拉脫維亞", nameEn:"Latvia", nameCn:"拉脱维亚", nameEs:"Letonia", gl:0.56, grade:"C", gdp:"48", region:"歐洲" },
+        { rank:55, name:"克羅埃西亞", nameEn:"Croatia", nameCn:"克罗地亚", nameEs:"Croacia", gl:0.55, grade:"C", gdp:"84", region:"歐洲" },
+        { rank:56, name:"越南", nameEn:"Vietnam", nameCn:"越南", nameEs:"Vietnam", gl:0.55, grade:"C", gdp:"506", region:"亞洲" },
+        { rank:57, name:"塞爾維亞", nameEn:"Serbia", nameCn:"塞尔维亚", nameEs:"Serbia", gl:0.55, grade:"C", gdp:"82", region:"歐洲" },
+        { rank:58, name:"斯洛伐克", nameEn:"Slovakia", nameCn:"斯洛伐克", nameEs:"Eslovaquia", gl:0.55, grade:"C", gdp:"128", region:"歐洲" },
+        { rank:59, name:"哥斯大黎加", nameEn:"Costa Rica", nameCn:"哥斯达黎加", nameEs:"Costa Rica", gl:0.55, grade:"C", gdp:"95", region:"中美洲" },
+        { rank:60, name:"印尼", nameEn:"Indonesia", nameCn:"印度尼西亚", nameEs:"Indonesia", gl:0.54, grade:"C", gdp:"1,490", region:"亞洲" },
+        { rank:61, name:"波札那", nameEn:"Botswana", nameCn:"博茨瓦纳", nameEs:"Botsuana", gl:0.54, grade:"C", gdp:"21", region:"非洲" },
+        { rank:62, name:"約旦", nameEn:"Jordan", nameCn:"约旦", nameEs:"Jordania", gl:0.54, grade:"C", gdp:"53", region:"中東" },
+        { rank:63, name:"南非", nameEn:"South Africa", nameCn:"南非", nameEs:"Sudáfrica", gl:0.53, grade:"C", gdp:"378", region:"非洲" },
+        { rank:64, name:"秘魯", nameEn:"Peru", nameCn:"秘鲁", nameEs:"Perú", gl:0.53, grade:"C", gdp:"283", region:"南美洲" },
+        { rank:65, name:"巴西", nameEn:"Brazil", nameCn:"巴西", nameEs:"Brasil", gl:0.53, grade:"C", gdp:"2,135", region:"南美洲" },
+        { rank:66, name:"摩洛哥", nameEn:"Morocco", nameCn:"摩洛哥", nameEs:"Marruecos", gl:0.52, grade:"C", gdp:"157", region:"非洲" },
+        { rank:67, name:"菲律賓", nameEn:"Philippines", nameCn:"菲律宾", nameEs:"Filipinas", gl:0.52, grade:"C", gdp:"505", region:"亞洲" },
+        { rank:68, name:"哥倫比亞", nameEn:"Colombia", nameCn:"哥伦比亚", nameEs:"Colombia", gl:0.52, grade:"C", gdp:"386", region:"南美洲" },
+        { rank:69, name:"多明尼加", nameEn:"Dominican Republic", nameCn:"多米尼加", nameEs:"República Dominicana", gl:0.52, grade:"C", gdp:"122", region:"加勒比海" },
+        { rank:70, name:"保加利亞", nameEn:"Bulgaria", nameCn:"保加利亚", nameEs:"Bulgaria", gl:0.49, grade:"D", gdp:"103", region:"歐洲" },
+        { rank:71, name:"羅馬尼亞", nameEn:"Romania", nameCn:"罗马尼亚", nameEs:"Rumania", gl:0.49, grade:"D", gdp:"350", region:"歐洲" },
+        { rank:72, name:"斯里蘭卡", nameEn:"Sri Lanka", nameCn:"斯里兰卡", nameEs:"Sri Lanka", gl:0.47, grade:"D", gdp:"84", region:"南亞" },
+        { rank:73, name:"千里達", nameEn:"Trinidad and Tobago", nameCn:"特立尼达和多巴哥", nameEs:"Trinidad y Tobago", gl:0.47, grade:"D", gdp:"28", region:"加勒比海" },
+        { rank:74, name:"不丹", nameEn:"Bhutan", nameCn:"不丹", nameEs:"Bután", gl:0.47, grade:"D", gdp:"3", region:"南亞" },
+        { rank:75, name:"盧安達", nameEn:"Rwanda", nameCn:"卢旺达", nameEs:"Ruanda", gl:0.46, grade:"D", gdp:"15", region:"非洲" },
+        { rank:76, name:"印度", nameEn:"India", nameCn:"印度", nameEs:"India", gl:0.43, grade:"D", gdp:"4,270", region:"南亞" },
+        { rank:77, name:"埃及", nameEn:"Egypt", nameCn:"埃及", nameEs:"Egipto", gl:0.43, grade:"D", gdp:"348", region:"非洲" },
+        { rank:78, name:"烏克蘭", nameEn:"Ukraine", nameCn:"乌克兰", nameEs:"Ucrania", gl:0.42, grade:"D", gdp:"165", region:"歐洲" },
+        { rank:79, name:"亞塞拜然", nameEn:"Azerbaijan", nameCn:"阿塞拜疆", nameEs:"Azerbaiyán", gl:0.42, grade:"D", gdp:"78", region:"亞洲" },
+        { rank:80, name:"瓜地馬拉", nameEn:"Guatemala", nameCn:"危地马拉", nameEs:"Guatemala", gl:0.42, grade:"D", gdp:"104", region:"中美洲" },
+        { rank:81, name:"迦納", nameEn:"Ghana", nameCn:"加纳", nameEs:"Ghana", gl:0.41, grade:"D", gdp:"76", region:"非洲" },
+        { rank:82, name:"厄瓜多", nameEn:"Ecuador", nameCn:"厄瓜多尔", nameEs:"Ecuador", gl:0.41, grade:"D", gdp:"118", region:"南美洲" },
+        { rank:83, name:"伊朗", nameEn:"Iran", nameCn:"伊朗", nameEs:"Irán", gl:0.40, grade:"D", gdp:"435", region:"中東" },
+        { rank:84, name:"巴拉圭", nameEn:"Paraguay", nameCn:"巴拉圭", nameEs:"Paraguay", gl:0.40, grade:"D", gdp:"44", region:"南美洲" },
+        { rank:85, name:"牙買加", nameEn:"Jamaica", nameCn:"牙买加", nameEs:"Jamaica", gl:0.39, grade:"D", gdp:"19", region:"加勒比海" },
+        { rank:86, name:"烏茲別克", nameEn:"Uzbekistan", nameCn:"乌兹别克斯坦", nameEs:"Uzbekistán", gl:0.39, grade:"D", gdp:"90", region:"亞洲" },
+        { rank:87, name:"玻利維亞", nameEn:"Bolivia", nameCn:"玻利维亚", nameEs:"Bolivia", gl:0.38, grade:"D", gdp:"46", region:"南美洲" },
+        { rank:88, name:"薩爾瓦多", nameEn:"El Salvador", nameCn:"萨尔瓦多", nameEs:"El Salvador", gl:0.38, grade:"D", gdp:"35", region:"中美洲" },
+        { rank:89, name:"巴布亞紐幾內亞", nameEn:"Papua New Guinea", nameCn:"巴布亚新几内亚", nameEs:"Papúa Nueva Guinea", gl:0.38, grade:"D", gdp:"32", region:"大洋洲" },
+        { rank:90, name:"孟加拉", nameEn:"Bangladesh", nameCn:"孟加拉国", nameEs:"Bangladés", gl:0.37, grade:"D", gdp:"485", region:"南亞" },
+        { rank:91, name:"坦尚尼亞", nameEn:"Tanzania", nameCn:"坦桑尼亚", nameEs:"Tanzania", gl:0.36, grade:"D", gdp:"85", region:"非洲" },
+        { rank:92, name:"烏干達", nameEn:"Uganda", nameCn:"乌干达", nameEs:"Uganda", gl:0.36, grade:"D", gdp:"55", region:"非洲" },
+        { rank:93, name:"柬埔寨", nameEn:"Cambodia", nameCn:"柬埔寨", nameEs:"Camboya", gl:0.35, grade:"D", gdp:"33", region:"亞洲" },
+        { rank:94, name:"宏都拉斯", nameEn:"Honduras", nameCn:"洪都拉斯", nameEs:"Honduras", gl:0.34, grade:"D", gdp:"32", region:"中美洲" },
+        { rank:95, name:"衣索比亞", nameEn:"Ethiopia", nameCn:"埃塞俄比亚", nameEs:"Etiopía", gl:0.33, grade:"D", gdp:"170", region:"非洲" },
+        { rank:96, name:"奈及利亞", nameEn:"Nigeria", nameCn:"尼日利亚", nameEs:"Nigeria", gl:0.32, grade:"D", gdp:"253", region:"非洲" },
+        { rank:97, name:"伊拉克", nameEn:"Iraq", nameCn:"伊拉克", nameEs:"Irak", gl:0.32, grade:"D", gdp:"267", region:"中東" },
+        { rank:98, name:"緬甸", nameEn:"Myanmar", nameCn:"缅甸", nameEs:"Myanmar", gl:0.31, grade:"D", gdp:"60", region:"亞洲" },
+        { rank:99, name:"阿富汗", nameEn:"Afghanistan", nameCn:"阿富汗", nameEs:"Afganistán", gl:0.30, grade:"D", gdp:"14", region:"亞洲" },
+        { rank:100, name:"葉門", nameEn:"Yemen", nameCn:"也门", nameEs:"Yemen", gl:0.28, grade:"F", gdp:"21", region:"中東" }
+    ];
+
+    const regionMap = {
+        '歐洲':'歐洲','亞洲':'亞洲','北美洲':'北美洲','南美洲':'南美洲','中東':'中東','非洲':'非洲','大洋洲':'大洋洲','中美洲':'中美洲','加勒比海':'加勒比海','歐洲/亞洲':'歐洲/亞洲','南亞':'南亞'
+    };
+    const regionMapEn = {
+        '歐洲':'Europe','亞洲':'Asia','北美洲':'N.America','南美洲':'S.America','中東':'Middle East','非洲':'Africa','大洋洲':'Oceania','中美洲':'C.America','加勒比海':'Caribbean','歐洲/亞洲':'Europe/Asia','南亞':'S.Asia'
+    };
+    const regionMapCn = {
+        '歐洲':'欧洲','亞洲':'亚洲','北美洲':'北美洲','南美洲':'南美洲','中東':'中东','非洲':'非洲','大洋洲':'大洋洲','中美洲':'中美洲','加勒比海':'加勒比海','歐洲/亞洲':'欧洲/亚洲','南亞':'南亚'
+    };
+    const regionMapEs = {
+        '歐洲':'Europa','亞洲':'Asia','北美洲':'Am. del Norte','南美洲':'Am. del Sur','中東':'Oriente Medio','非洲':'África','大洋洲':'Oceanía','中美洲':'Centroamérica','加勒比海':'Caribe','歐洲/亞洲':'Europa/Asia','南亞':'Asia del Sur'
+    };
+
+    function renderTable(lang) {
+        const id = 'table-' + lang;
+        const container = document.getElementById(id);
+        if (!container) return;
+
+        let headers, nameKey, regionKey;
+        if (lang === 'en') {
+            headers = ['Rank','Economy','GL Index','Grade','GDP (B USD)','Region'];
+            nameKey = 'nameEn';
+            regionKey = regionMapEn;
+        } else if (lang === 'tw') {
+            headers = ['排名','經濟體','GL Index','等級','GDP (十億USD)','區域'];
+            nameKey = 'name';
+            regionKey = regionMap;
+        } else if (lang === 'cn') {
+            headers = ['排名','经济体','GL Index','等级','GDP (十亿USD)','区域'];
+            nameKey = 'nameCn';
+            regionKey = regionMapCn;
+        } else if (lang === 'es') {
+            headers = ['Rank','Economía','GL Index','Grado','PIB (mil M USD)','Región'];
+            nameKey = 'nameEs';
+            regionKey = regionMapEs;
+        } else {
+            return;
+        }
+
+        let html = `<table>
+            <thead><tr>
+                <th>${headers[0]}</th>
+                <th style="text-align:left;">${headers[1]}</th>
+                <th>${headers[2]}</th>
+                <th>${headers[3]}</th>
+                <th>${headers[4]}</th>
+                <th>${headers[5]}</th>
+            </tr></thead><tbody>`;
+
+        countries.forEach(c => {
+            const name = c[nameKey] || c.name;
+            const gradeClass = 'grade-' + c.grade.toLowerCase();
+            const regionName = regionKey[c.region] || c.region;
+
+            html += `<tr>
+                <td class="rank">${c.rank}</td>
+                <td class="country-name">${name}</td>
+                <td class="gl-value">${c.gl.toFixed(2)}</td>
+                <td><span class="${gradeClass}">${c.grade}</span></td>
+                <td class="gdp">${c.gdp}</td>
+                <td><span class="region-tag">${regionName}</span></td>
+            </tr>`;
+        });
+
+        html += `</tbody></table>`;
+        container.innerHTML = html;
+    }
+
+    // 語言切換
+    const langBtns = document.querySelectorAll('.lang-btn');
+    const contents = document.querySelectorAll('.content-lang');
+
+    langBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const lang = this.getAttribute('data-lang');
+            contents.forEach(c => c.classList.remove('active'));
+            document.getElementById('lang-' + lang).classList.add('active');
+            langBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            renderTable(lang);
+        });
+    });
+
+    // 初始化所有表格
+    renderTable('en');
+    renderTable('tw');
+    renderTable('cn');
+    renderTable('es');
+</script>
+</body>
+</html>
