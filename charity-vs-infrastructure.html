@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>慈善 vs 基礎設施 · 兩種邏輯</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #0b1220;
+            color: #f8fbff;
+            font-family: 'DM Sans', system-ui, sans-serif;
+            line-height: 1.8;
+        }
+        .container {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, .06);
+        }
+        .logo a {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.12em;
+            color: #9FE870;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+        .logo a .home-arrow {
+            color: #9fb0c8;
+            margin-right: 6px;
+        }
+        .logo a:hover .home-arrow {
+            color: #9FE870;
+        }
+        .lang-switch {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .lang-btn {
+            background: none;
+            border: 1px solid rgba(255, 255, 255, .1);
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            padding: 0.25rem 0.7rem;
+            border-radius: 2rem;
+            color: #9fb0c8;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .lang-btn:hover {
+            border-color: rgba(255, 255, 255, .3);
+            color: #fff;
+        }
+        .lang-btn.active {
+            background: #9FE870;
+            color: #0b1220;
+            border-color: #9FE870;
+        }
+        .content-lang {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+        .content-lang.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            0% {
+                opacity: 0.3;
+                transform: translateY(6px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .article {
+            background: #0d1526;
+            padding: 3rem 2.5rem;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, .06);
+        }
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #9FE870;
+            letter-spacing: -0.02em;
+            font-family: 'DM Serif Display', Georgia, serif;
+            line-height: 1.2;
+        }
+        .subhead {
+            font-size: 1.1rem;
+            color: #9fb0c8;
+            margin-bottom: 0.5rem;
+            font-weight: 300;
+            border-left: 3px solid #9FE870;
+            padding-left: 1.2rem;
+        }
+        .byline {
+            font-size: 0.85rem;
+            color: #7DD3FC;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+        h2 {
+            font-size: 1.5rem;
+            color: #9FE870;
+            margin: 2.2rem 0 0.8rem 0;
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-weight: 600;
+        }
+        h3 {
+            font-size: 1.15rem;
+            color: #fbbf24;
+            margin: 1.5rem 0 0.5rem 0;
+            font-weight: 600;
+        }
+        p {
+            color: #c7d2e3;
+            margin-bottom: 1.2rem;
+            line-height: 1.9;
+        }
+        ul,
+        ol {
+            color: #c7d2e3;
+            margin-left: 1.5rem;
+            margin-bottom: 1.2rem;
+            line-height: 1.9;
+        }
+        li {
+            margin-bottom: 0.3rem;
+        }
+        .pull-quote {
+            background: rgba(159, 232, 112, 0.06);
+            border-left: 4px solid #9FE870;
+            padding: 1.2rem 1.8rem;
+            margin: 1.8rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .pull-quote p {
+            color: #eaf6ff;
+            font-style: italic;
+            margin-bottom: 0;
+            font-size: 1.05rem;
+        }
+        .pull-quote strong {
+            color: #9FE870;
+            font-style: normal;
+        }
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .comparison-grid .item {
+            background: rgba(255, 255, 255, .02);
+            border: 1px solid rgba(255, 255, 255, .06);
+            border-radius: 8px;
+            padding: 0.8rem 1rem;
+        }
+        .comparison-grid .item .label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.6rem;
+            color: #9fb0c8;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+        .comparison-grid .item .value {
+            font-size: 0.9rem;
+            color: #eaf6ff;
+            margin-top: 0.2rem;
+        }
+        .tag {
+            display: inline-block;
+            background: rgba(159, 232, 112, 0.12);
+            color: #9FE870;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.15rem 0.8rem;
+            border-radius: 30px;
+            letter-spacing: 0.3px;
+            margin-right: 0.3rem;
+            text-transform: uppercase;
+        }
+        .footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, .06);
+            text-align: center;
+            font-size: 0.75rem;
+            color: #9fb0c8;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 1.5rem;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: #9fb0c8;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, .06);
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            transition: 0.2s;
+        }
+        .back-link:hover {
+            border-color: rgba(255, 255, 255, .2);
+            color: #fff;
+        }
+        .divider {
+            border: 0;
+            border-top: 1px solid rgba(255, 255, 255, .08);
+            margin: 2.5rem 0;
+        }
+        @media (max-width: 700px) {
+            .container {
+                padding: 1rem;
+            }
+            .article {
+                padding: 1.5rem;
+            }
+            h1 {
+                font-size: 1.7rem;
+            }
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media print {
+            .header {
+                display: none !important;
+            }
+            .back-link {
+                display: none !important;
+            }
+            .article {
+                background: transparent !important;
+                border: none !important;
+                padding: 0 !important;
+            }
+            body {
+                background: #fff !important;
+                color: #000 !important;
+            }
+            h1,
+            h2,
+            h3,
+            p {
+                color: #000 !important;
+            }
+            .subhead {
+                color: #555 !important;
+                border-left-color: #006633 !important;
+            }
+            .pull-quote {
+                background: #f5f5f5 !important;
+                border-left-color: #006633 !important;
+            }
+            .pull-quote p {
+                color: #000 !important;
+            }
+            .tag {
+                background: #eee !important;
+                color: #006633 !important;
+            }
+            .comparison-grid .item {
+                border-color: #ccc !important;
+            }
+            .comparison-grid .item .label {
+                color: #555 !important;
+            }
+            .comparison-grid .item .value {
+                color: #000 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo"><a href="index.html"><span class="home-arrow">←</span> GFI Flow Intelligence</a></div>
+            <div class="lang-switch">
+                <button class="lang-btn active" data-lang="en">EN</button>
+                <button class="lang-btn" data-lang="tw">繁</button>
+                <button class="lang-btn" data-lang="cn">简</button>
+                <button class="lang-btn" data-lang="es">ES</button>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- ENGLISH -->
+        <!-- ============================================================ -->
+        <div id="lang-en" class="content-lang active">
+            <div class="article">
+                <span class="tag">Structural Diagnosis</span>
+                <h1>Charity vs. Infrastructure</h1>
+                <div class="subhead">A society that depends on charity to sustain the poor is not generous — it is broken</div>
+                <div class="byline">Ping Xu · GL Framework · June 2026</div>
+
+                <div class="pull-quote">
+                    <p>"A society that depends on charity to sustain the poor is not generous — it is broken."</p>
+                </div>
+
+                <h2>1. Charity Is Not a Virtue — It Is a Symptom</h2>
+                <p>When a society must rely on charity to meet basic survival needs, it is not a generous society. It is a dysfunctional one.</p>
+                <p>Charity exists precisely where institutions have failed. If the tax system were fair enough, public services widespread enough, and social protections robust enough, people would not need to rely on the generosity of the wealthy to determine who survives.</p>
+                <p><strong>Charity is not a solution. Charity is an anesthetic that delays the solution.</strong></p>
+
+                <h2>2. Charity Cannot Solve Structural Problems</h2>
+
+                <div class="comparison-grid">
+                    <div class="item"><div class="label">Charity is selective</div><div class="value">Some people get help, others do not</div></div>
+                    <div class="item"><div class="label">Charity is unsustainable</div><div class="value">Donations fluctuate, needs do not</div></div>
+                    <div class="item"><div class="label">Charity is conditional</div><div class="value">Recipients must qualify, be grateful, and perform</div></div>
+                    <div class="item"><div class="label">Charity depoliticizes</div><div class="value">It does not challenge the system — because donors benefit from it</div></div>
+                </div>
+
+                <h2>3. The United States: The World's Largest Charity Industry</h2>
+
+                <div class="comparison-grid">
+                    <div class="item"><div class="label">$500 billion in donations annually</div><div class="value">More than the GDP of most nations</div></div>
+                    <div class="item"><div class="label">Over 1.5 million nonprofits</div><div class="value">A separate parallel industry</div></div>
+                    <div class="item"><div class="label">The richest 1% give the most</div><div class="value">They donate wealth extracted from the system</div></div>
+                    <div class="item"><div class="label">Healthcare, education, housing are top recipients</div><div class="value">These should be publicly funded by default</div></div>
+                </div>
+
+                <p><strong>America is not great because it is generous. It needs generosity because its institutions are unjust.</strong></p>
+
+                <h2>4. The United Kingdom: Charity and Class Symbiosis</h2>
+
+                <div class="comparison-grid">
+                    <div class="item"><div class="label">Food banks</div><div class="value">Some of the worst food scarcity in the developed world</div></div>
+                    <div class="item"><div class="label">Charity shops</div><div class="value">People depend on secondhand goods for basic life</div></div>
+                    <div class="item"><div class="label">Church relief</div><div class="value">Religious institutions fill the void left by the state</div></div>
+                    <div class="item"><div class="label">Royal charities</div><div class="value">The aristocracy uses charity to maintain legitimacy</div></div>
+                </div>
+
+                <p><strong>Britain's charity industry and its aristocratic land system are two sides of the same coin: the rich use charity to prove they deserve their wealth.</strong></p>
+
+                <h2>5. China: Embedding Welfare into Infrastructure</h2>
+                <p>China chose a different path. It did not use charity to patch institutional failure. It embedded welfare directly into infrastructure.</p>
+
+                <div class="comparison-grid">
+                    <div class="item"><div class="label">Housing</div><div class="value">Mass social rental housing, shantytown redevelopment</div></div>
+                    <div class="item"><div class="label">Healthcare</div><div class="value">Universal basic health insurance covers 95%+ of the population</div></div>
+                    <div class="item"><div class="label">Education</div><div class="value">Compulsory education nationwide, higher education expansion</div></div>
+                    <div class="item"><div class="label">Transport</div><div class="value">High-speed rail, metros, rural roads connecting remote areas</div></div>
+                    <div class="item"><div class="label">Digital</div><div class="value">Internet and mobile payment access even in rural regions</div></div>
+                    <div class="item"><div class="label">Energy</div><div class="value">Electricity reaches the most remote villages</div></div>
+                </div>
+
+                <p>These are not <strong>charity</strong>. These are <strong>infrastructure</strong> — designed as public goods for everyone, not as gifts waiting for the wealthy to give.</p>
+
+                <h2>6. Charity vs. Infrastructure: Two Different Logics</h2>
+
+                <div class="comparison-grid">
+                    <div class="item"><div class="label">Charity</div><div class="value">The rich decide who gets help</div></div>
+                    <div class="item"><div class="label">Infrastructure</div><div class="value">Policy ensures everyone is served</div></div>
+                    <div class="item"><div class="label">Charity</div><div class="value">Depends on fluctuating donations</div></div>
+                    <div class="item"><div class="label">Infrastructure</div><div class="value">Depends on taxation and fiscal planning</div></div>
+                    <div class="item"><div class="label">Charity</div><div class="value">Recipients must be grateful</div></div>
+                    <div class="item"><div class="label">Infrastructure</div><div class="value">People have rights, not debts</div></div>
+                    <div class="item"><div class="label">Charity</div><div class="value">Does not change structure</div></div>
+                    <div class="item"><div class="label">Infrastructure</div><div class="value">Structure itself solves problems</div></div>
+                    <div class="item"><div class="label">Charity</div><div class="value">Rescue on a case-by-case basis</div></div>
+                    <div class="item"><div class="label">Infrastructure</div><div class="value">Universal protection</div></div>
+                </div>
+
+                <p><strong>Charity is individualized rescue. Infrastructure is institutionalized protection.</strong></p>
+
+                <h2>Conclusion</h2>
+
+                <div class="pull-quote">
+                    <p><strong>A society that depends on charity to sustain the poor is not generous — it is broken.</strong></p>
+                </div>
+
+                <p>The United States relies on charity. The United Kingdom relies on charity. China relies on infrastructure.</p>
+                <p>This is not about moral superiority. It is about <strong>system design</strong>.</p>
+                <p>A system that requires continuous charitable rescue is a poorly designed system. A system that does not need charity is a well-designed system.</p>
+                <p>China's choice was to embed welfare into infrastructure — so that everyone, regardless of location or income, can share in the nation's public resources.</p>
+                <p>This is not <strong>charity</strong>. This is <strong>engineering</strong>. And engineering is always more reliable than charity.</p>
+
+                <div class="divider"></div>
+                <div class="footer">
+                    <p><strong>Ping Xu</strong> · GL Framework · June 2026</p>
+                    <p style="font-size:0.7rem; color:#9fb0c8;">gfiintel.com · Free to read · Share with attribution</p>
+                    <a href="index.html" class="back-link">← Back to Home</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 繁體中文 -->
+        <!-- ============================================================ -->
+        <div id="lang-tw" class="content-lang">
+            <div class="article">
+                <span class="tag">結構診斷</span>
+                <h1>慈善 vs 基礎設施</h1>
+                <div class="subhead">一個社會必須靠慈善撐起貧窮，不是慷慨——是失能</div>
+                <div class="byline">Ping Xu · GL 框架 · 2026年6月</div>
+
+                <div class="pull-quote">
+                    <p>「一個社會如果必須靠慈善才能讓窮人活下去，那不是慷慨的社會，是失能的社會。」</p>
+                </div>
+
+                <h2>一、慈善不是美德，是失能的症狀</h2>
+                <p>當一個社會必須依賴慈善來維持基本生存需求時，它不是一個慷慨的社會——它是一個失能的社會。</p>
+                <p>慈善的存在，本質上是制度失靈的產物。因為如果稅收制度足夠公平、公共服務足夠普及、社會保障足夠完善，人民就不需要依靠富人的善心來決定誰能活下去。</p>
+                <p><strong>慈善不是解方。慈善是延緩解方的麻醉劑。</strong></p>
+
+                <h2>二、慈善無法解決結構性問題</h2>
+
+                <div class="comparison-grid">
+                    <div class="item"><div class="label">慈善是選擇性的</div><div class="value">有些人被幫助，有些人沒有</div></div>
+                    <div class="item"><div class="label">慈善是不可持續的</div><div class="value">捐款會減少，需求不會</div></div>
+                    <div class="item"><div class="label">慈善是條件式的</div><div class="value">受助者必須符合條件、必須感恩、必須表演</div></div>
+                    <div class="item"><div class="label">慈善是去政治化的</div><div class="value">它不會挑戰制度，因為捐助者就是制度的受益者</div></div>
+                </div>
+
+                <h2>三、美國模式：世界上最大的慈善產業</h2>
+
+                <div class="comparison-grid">
+                    <div class="item"><div class="label">每年 5,000 億美元捐款</div><div class="value">規模超過許多國家的 GDP</div></div>
+                    <div class="item"><div class="label">超過 150 萬個非營利組織</div><div class="value">一個獨立的平行產業</div></div>
+                    <div class="item"><div class="label">最富有的 1% 捐最多</div><div class="value">他們的捐款來自他們從制度中獲得的利益</div></div>
+                    <div class="item"><div class="label">醫療、教育、住房是最受捐贈的領域</div><div class="value">這些領域本來就應該由公共資源支撐</div></div>
+                </div>
+
+                <p><strong>美國不是因為慷慨而偉大。它是因為制度不公，所以需要慷慨來掩蓋不公。</strong></p>
+
+                <h2>四、英國模式：慈善與階級的共生</h2>
+
+                <div class="comparison-grid">
+                    <div class="item"><div class="label">食物銀行</div><div class="value">已開發國家中最嚴重的食物匱乏</div></div>
+                    <div class="item"><div class="label">慈善商店</div><div class="value">民眾依賴二手商品維持基本生活</div></div>
+                    <div class="item"><div class="label">教會救濟</div><div class="value">宗教機構填補國家失靈</div></div>
+                    <div class="item"><div class="label">皇室慈善</div><div class="value">貴族用慈善維持正當性</div></div>
+                </div>
+
+                <p><strong>英國的慈善產業與它的貴族土地制度是同一件事的兩面：富人用慈善來證明他們有權擁有財富。</strong></p>
+
+                <h2>五、中國模式：將人民福祉建築進基礎設施裡</h2>
+                <p>中國走了另一條路。它不是靠慈善來填補制度失靈——它是把人民福祉直接建築進基礎設施裡。</p>
+
+                <div class="comparison-grid">
+                    <div class="item"><div class="label">住房</div><div class="value">大規模保障性租賃住房、棚戶區改造</div></div>
+                    <div class="item"><div class="label">醫療</div><div class="value">全民基本醫保覆蓋超過 95% 人口</div></div>
+                    <div class="item"><div class="label">教育</div><div class="value">義務教育全面普及、高等教育擴張</div></div>
+                    <div class="item"><div class="label">交通</div><div class="value">高鐵、地鐵、農村公路將偏遠地區接入國家網絡</div></div>
+                    <div class="item"><div class="label">數位</div><div class="value">偏遠地區網路覆蓋、行動支付普及</div></div>
+                    <div class="item"><div class="label">能源</div><div class="value">電力覆蓋到最偏遠的村莊</div></div>
+                </div>
+
+                <p>這些不是<strong>慈善</strong>。這些是<strong>基礎設施</strong>——被設計為所有人共享的公共財，而不是等待富人的善意。</p>
+
+                <h2>六、慈善 vs 基礎設施：兩種不同的邏輯</h2>
+
+                <div class="comparison-grid">
+                    <div class="item"><div class="label">慈善</div><div class="value">有錢人決定誰被幫助</div></div>
+                    <div class="item"><div class="label">基礎設施</div><div class="value">政策決定所有人被服務</div></div>
+                    <div class="item"><div class="label">慈善</div><div class="value">依賴捐款波動</div></div>
+                    <div class="item"><div class="label">基礎設施</div><div class="value">依賴稅收與財政規劃</div></div>
+                    <div class="item"><div class="label">慈善</div><div class="value">受助者必須感恩</div></div>
+                    <div class="item"><div class="label">基礎設施</div><div class="value">人民本來就有權利</div></div>
+                    <div class="item"><div class="label">慈善</div><div class="value">不改變結構</div></div>
+                    <div class="item"><div class="label">基礎設施</div><div class="value">結構本身就是在解決問題</div></div>
+                    <div class="item"><div class="label">慈善</div><div class="value">是個案式的救援</div></div>
+                    <div class="item"><div class="label">基礎設施</div><div class="value">是普遍性的保障</div></div>
+                </div>
+
+                <p><strong>慈善是個人化的救援。基礎設施是制度化的保障。</strong></p>
+
+                <h2>結論</h2>
+
+                <div class="pull-quote">
+                    <p><strong>一個社會如果必須靠慈善才能讓窮人活下去，那不是慷慨的社會，是失能的社會。</strong></p>
+                </div>
+
+                <p>美國靠慈善，英國靠慈善，中國靠基礎設施。</p>
+                <p>這不是道德優劣的問題。這是<strong>系統設計</strong>的問題。</p>
+                <p>一個系統如果設計成需要持續的慈善救援，它就是設計不良的系統。一個系統如果設計成不需要慈善救援，它就是設計良好的系統。</p>
+                <p>中國的選擇是把人民福祉建築進基礎設施裡——讓每個人，無論在哪裡、無論收入多少，都能共享國家的公共資源。</p>
+                <p>這不是<strong>慈善</strong>。這是<strong>工程學</strong>。而工程學，永遠比慈善更可靠。</p>
+
+                <div class="divider"></div>
+                <div class="footer">
+                    <p><strong>Ping Xu</strong> · GL 框架 · 2026年6月</p>
+                    <p style="font-size:0.7rem; color:#9fb0c8;">gfiintel.com · 自由閱讀 · 轉載請註明出處</p>
+                    <a href="index.html" class="back-link">← 回首頁</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 简体中文 -->
+        <!-- ============================================================ -->
+        <div id="lang-cn" class="content-lang">
+            <div class="article">
+                <span class="tag">结构诊断</span>
+                <h1>慈善 vs 基础设施</h1>
+                <div class="subhead">一个社会必须靠慈善撑起贫穷，不是慷慨——是失能</div>
+                <div class="byline">Ping Xu · GL 框架 · 2026年6月</div>
+
+                <div class="pull-quote">
+                    <p>「一个社会如果必须靠慈善才能让穷人活下去，那不是慷慨的社会，是失能的社会。」</p>
+                </div>
+
+                <h2>一、慈善不是美德，是失能的症状</h2>
+                <p>当一个社会必须依赖慈善来维持基本生存需求时，它不是一個慷慨的社会——它是一个失能的社会。</p>
+                <p>慈善的存在，本质上是制度失灵的产物。因为如果税收制度足够公平、公共服务足够普及、社会保障足够完善，人民就不需要依靠富人的善心来决定谁能活下去。</p>
+                <p><strong>慈善不是解方。慈善是延缓解方的麻醉剂。</strong></p>
+
+                <h2>二、慈善无法解决结构性问题</h2>
+
+                <div class="comparison-grid">
+                    <div class="item"><div class="label">慈善是选择性的</div><div class="value">有些人被帮助，有些人没有</div></div>
+                    <div class="item"><div class="label">慈善是不可持续的</div><div class="value">捐款会减少，需求不会</div></div>
+                    <div class="item"><div class="label">慈善是条件式的</div><div class="value">受助者必须符合条件、必须感恩、必须表演</div></div>
+                    <div class="item"><div class="label">慈善是去政治化的</div><div class="value">它不会挑战制度，因为捐助者就是制度的受益者</div></div>
+                </div>
+
+                <h2>三、美国模式：世界上最大的慈善产业</h2>
+
+                <div class="comparison-grid">
+                    <div class="item"><div class="label">每年 5,000 亿美元捐款</div><div class="value">规模超过许多国家的 GDP</div></div>
+                    <div class="item"><div class="label">超过 150 万个非营利组织</div><div class="value">一个独立的平行产业</div></div>
+                    <div class="item"><div class="label">最富有的 1% 捐最多</div><div class="value">他们的捐款来自他们从制度中获得的利益</div></div>
+                    <div class="item"><div class="label">医疗、教育、住房是最受捐赠的领域</div><div class="value">这些领域本来就应该由公共资源支撑</div></div>
+                </div>
+
+                <p><strong>美国不是因为慷慨而伟大。它是因制度不公，所以需要慷慨来掩盖不公。</strong></p>
+
+                <h2>四、英国模式：慈善与阶级的共生</h2>
+
+                <div class="comparison-grid">
+                    <div class="item"><div class="label">食物银行</div><div class="value">已开发国家中最严重的食物匮乏</div></div>
+                    <div class="item"><div class="label">慈善商店</div><div class="value">民众依赖二手商品维持基本生活</div></div>
+                    <div class="item"><div class="label">教会救济</div><div class="value">宗教机构填补国家失灵</div></div>
+                    <div class="item"><div class="label">皇室慈善</div><div class="value">贵族用慈善维持正当性</div></div>
+                </div>
+
+                <p><strong>英国的慈善产业与它的贵族土地制度是同一件事的两面：富人用慈善来证明他们有权拥有财富。</strong></p>
+
+                <h2>五、中国模式：将人民福祉建筑进基础设施里</h2>
+                <p>中国走了另一条路。它不是靠慈善来填补制度失灵——它是把人民福祉直接建筑进基础设施里。</p>
+
+                <div class="comparison-grid">
+                    <div class="item"><div class="label">住房</div><div class="value">大规模保障性租赁住房、棚户区改造</div></div>
+                    <div class="item"><div class="label">医疗</div><div class="value">全民基本医保覆盖超过 95% 人口</div></div>
+                    <div class="item"><div class="label">教育</div><div class="value">义务教育全面普及、高等教育扩张</div></div>
+                    <div class="item"><div class="label">交通</div><div class="value">高铁、地铁、农村公路将偏远地区接入国家网络</div></div>
+                    <div class="item"><div class="label">数位</div><div class="value">偏远地区网络覆盖、移动支付普及</div></div>
+                    <div class="item"><div class="label">能源</div><div class="value">电力覆盖到最偏远的村庄</div></div>
+                </div>
+
+                <p>这些不是<strong>慈善</strong>。这些是<strong>基础设施</strong>——被设计为所有人共享的公共财，而不是等待富人的善意。</p>
+
+                <h2>六、慈善 vs 基础设施：两种不同的逻辑</h2>
+
+                <div class="comparison-grid">
+                    <div class="item"><div class="label">慈善</div><div class="value">有钱人决定谁被帮助</div></div>
+                    <div class="item"><div class="label">基础设施</div><div class="value">政策决定所有人被服务</div></div>
+                    <div class="item"><div class="label">慈善</div><div class="value">依赖捐款波动</div></div>
+                    <div class="item"><div class="label">基础设施</div><div class="value">依赖税收与财政规划</div></div>
+                    <div class="item"><div class="label">慈善</div><div class="value">受助者必须感恩</div></div>
+                    <div class="item"><div class="label">基础设施</div><div class="value">人民本来就有权利</div></div>
+                    <div class="item"><div class="label">慈善</div><div class="value">不改变结构</div></div>
+                    <div class="item"><div class="label">基础设施</div><div class="value">结构本身就是在解决问题</div></div>
+                    <div class="item"><div class="label">慈善</div><div class="value">是个案式的救援</div></div>
+                    <div class="item"><div class="label">基础设施</div><div class="value">是普遍性的保障</div></div>
+                </div>
+
+                <p><strong>慈善是个人的救援。基础设施是制度化的保障。</strong></p>
+
+                <h2>结论</h2>
+
+                <div class="pull-quote">
+                    <p><strong>一个社会如果必须靠慈善才能让穷人活下去，那不是慷慨的社会，是失能的社会。</strong></p>
+                </div>
+
+                <p>美国靠慈善，英国靠慈善，中国靠基础设施。</p>
+                <p>这不是道德优劣的问题。这是<strong>系统设计</strong>的问题。</p>
+                <p>一个系统如果设计成需要持续的慈善救援，它就是设计不良的系统。一个系统如果设计成不需要慈善救援，它就是设计良好的系统。</p>
+                <p>中国的选择是把人民福祉建筑进基础设施里——让每个人，无论在哪里、无论收入多少，都能共享国家的公共资源。</p>
+                <p>这不是<strong>慈善</strong>。这是<strong>工程学</strong>。而工程学，永远比慈善更可靠。</p>
+
+                <div class="divider"></div>
+                <div class="footer">
+                    <p><strong>Ping Xu</strong> · GL 框架 · 2026年6月</p>
+                    <p style="font-size:0.7rem; color:#9fb0c8;">gfiintel.com · 自由阅读 · 转载时请注明出处</p>
+                    <a href="index.html" class="back-link">← 回首页</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- ESPAÑOL -->
+        <!-- ============================================================ -->
+        <div id="lang-es" class="content-lang">
+            <div class="article">
+                <span class="tag">Diagnóstico Estructural</span>
+                <h1>Caridad vs. Infraestructura</h1>
+                <div class="subhead">Una sociedad que depende de la caridad para sostener a los pobres no es generosa — es disfuncional</div>
+                <div class="byline">Ping Xu · GL Framework · Junio 2026</div>
+
+                <div class="pull-quote">
+                    <p>«Una sociedad que depende de la caridad para sostener a los pobres no es generosa — es disfuncional.»</p>
+                </div>
+
+                <div class="comparison-grid">
+                    <div class="item"><div class="label">Caridad</div><div class="value">Los ricos deciden quién recibe ayuda</div></div>
+                    <div class="item"><div class="label">Infraestructura</div><div class="value">La política asegura que todos sean atendidos</div></div>
+                    <div class="item"><div class="label">Caridad</div><div class="value">Depende de donaciones fluctuantes</div></div>
+                    <div class="item"><div class="label">Infraestructura</div><div class="value">Depende de impuestos y planificación fiscal</div></div>
+                    <div class="item"><div class="label">Caridad</div><div class="value">Los beneficiarios deben estar agradecidos</div></div>
+                    <div class="item"><div class="label">Infraestructura</div><div class="value">Las personas tienen derechos, no deudas</div></div>
+                    <div class="item"><div class="label">Caridad</div><div class="value">No cambia la estructura</div></div>
+                    <div class="item"><div class="label">Infraestructura</div><div class="value">La estructura misma resuelve los problemas</div></div>
+                    <div class="item"><div class="label">Caridad</div><div class="value">Rescate individual</div></div>
+                    <div class="item"><div class="label">Infraestructura</div><div class="value">Protección universal</div></div>
+                </div>
+
+                <div class="pull-quote">
+                    <p><strong>Una sociedad que depende de la caridad para sostener a los pobres no es generosa — es disfuncional.</strong></p>
+                </div>
+
+                <p>Estados Unidos depende de la caridad. El Reino Unido depende de la caridad. China depende de la infraestructura.</p>
+                <p>Esto no es una cuestión de superioridad moral. Es una cuestión de <strong>diseño de sistemas</strong>.</p>
+                <p>Un sistema que requiere rescate caritativo continuo es un sistema mal diseñado. Un sistema que no necesita caridad es un sistema bien diseñado.</p>
+                <p>La elección de China fue integrar el bienestar en la infraestructura — para que todos, sin importar su ubicación o ingresos, puedan compartir los recursos públicos de la nación.</p>
+                <p>Esto no es <strong>caridad</strong>. Es <strong>ingeniería</strong>. Y la ingeniería siempre es más confiable que la caridad.</p>
+
+                <div class="divider"></div>
+                <div class="footer">
+                    <p><strong>Ping Xu</strong> · GL Framework · Junio 2026</p>
+                    <p style="font-size:0.7rem; color:#9fb0c8;">gfiintel.com · Lectura libre · Compartir con atribución</p>
+                    <a href="index.html" class="back-link">← Volver al Inicio</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        (function() {
+            const langBtns = document.querySelectorAll('.lang-btn');
+            const contents = document.querySelectorAll('.content-lang');
+            langBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    contents.forEach(c => c.classList.remove('active'));
+                    document.getElementById('lang-' + lang).classList.add('active');
+                    langBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        })();
+    </script>
+</body>
+</html>
