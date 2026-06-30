@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GL Index 等級分數 · 解讀指南</title>
+    <title>GL Index 等級分數 · 100國解讀指南</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #0b1220; color: #f8fbff; font-family: 'DM Sans', system-ui, sans-serif; line-height: 1.7; }
-        .container { max-width: 1000px; margin: 0 auto; padding: 2rem; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
         .header {
             display: flex;
             justify-content: space-between;
@@ -61,6 +61,9 @@
         .grade-block .grade-desc { font-size: 0.95rem; color: #eaf6ff; margin: 0.2rem 0 0.5rem 0; font-style: italic; }
         .grade-block ul { color: #c7d2e3; margin-left: 1.2rem; line-height: 1.8; }
         .grade-block .countries { font-size: 0.85rem; color: #9fb0c8; margin-top: 0.5rem; }
+        .country-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.3rem 1.2rem; margin: 0.5rem 0 0.5rem 1.2rem; }
+        .country-grid .entry { font-size: 0.85rem; color: #c7d2e3; }
+        .country-grid .entry .score { font-family: 'DM Mono', monospace; color: #9fb0c8; }
         .key-insight { background: rgba(159,232,112,0.04); border-left: 3px solid #9FE870; padding: 1.2rem 1.5rem; margin: 1.5rem 0; border-radius: 0 8px 8px 0; }
         .key-insight p { color: #eaf6ff; margin-bottom: 0.3rem; }
         .key-insight .highlight-line { font-size: 1.1rem; font-weight: 600; color: #9FE870; }
@@ -69,12 +72,11 @@
         .back-link:hover { border-color: rgba(255,255,255,.2); color: #fff; }
         .divider { border: 0; border-top: 1px solid rgba(255,255,255,.08); margin: 2.5rem 0; }
         .note { font-size: 0.85rem; color: #9fb0c8; background: rgba(255,255,255,.02); padding: 0.8rem 1.2rem; border-radius: 8px; margin: 1rem 0; border: 1px solid rgba(255,255,255,.04); }
-        .diagnostic-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1rem 0; }
-        .diagnostic-item { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); border-radius: 8px; padding: 0.8rem 1rem; }
-        .diagnostic-item .country { font-weight: 600; color: #eaf6ff; }
-        .diagnostic-item .score { font-family: 'DM Mono', monospace; font-size: 0.9rem; font-weight: 700; color: #f87171; }
-        .diagnostic-item .diagnosis { font-size: 0.85rem; color: #9fb0c8; margin-top: 0.2rem; }
-        @media (max-width: 700px) { .container { padding: 1rem; } .essay-container { padding: 1.5rem; } h1 { font-size: 1.8rem; } .diagnostic-grid { grid-template-columns: 1fr; } }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+        .stats-grid .stat { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.06); border-radius: 8px; padding: 0.8rem 1rem; text-align: center; }
+        .stats-grid .stat .num { font-size: 1.8rem; font-weight: 700; }
+        .stats-grid .stat .label { font-size: 0.7rem; color: #9fb0c8; text-transform: uppercase; letter-spacing: 0.05em; }
+        @media (max-width: 700px) { .container { padding: 1rem; } .essay-container { padding: 1.5rem; } h1 { font-size: 1.8rem; } .country-grid { grid-template-columns: 1fr 1fr; } }
         @media print {
             .header { display: none !important; }
             .back-link { display: none !important; }
@@ -90,10 +92,8 @@
             .highlight-green { color: #006633 !important; }
             .highlight-yellow { color: #cc8800 !important; }
             .highlight-red { color: #cc0000 !important; }
-            .diagnostic-item { border-color: #ccc !important; }
-            .diagnostic-item .country { color: #000 !important; }
-            .diagnostic-item .score { color: #cc0000 !important; }
-            .diagnostic-item .diagnosis { color: #555 !important; }
+            .stats-grid .stat { border-color: #ccc !important; }
+            .stats-grid .stat .num { color: #000 !important; }
         }
     </style>
 </head>
@@ -114,7 +114,7 @@
         <div class="essay-container">
             <h1>GL Index 等級分數</h1>
             <div class="subtitle">它們到底在說什麼？</div>
-            <div class="author-line">— GL 框架診斷 · GFI Flow Intelligence</div>
+            <div class="author-line">— GL 框架診斷 · GFI Flow Intelligence · 100 國完整數據 v5.3</div>
 
             <p>如果你第一次看到 GL Index，你可能會想：「0.79 是什麼意思？B 級代表什麼？為什麼 A 級從缺？」</p>
             <p>這篇文章不是「說明書」。這是「診斷指南」。它告訴你：當你看到一個國家的 GL Index 分數時，你應該讀出什麼。</p>
@@ -124,6 +124,14 @@
                 <p>「GL Index 測量的不是經濟產出，是治理正當性。」</p>
                 <p>GDP 告訴你「這個國家多有錢」。GL Index 告訴你「這個國家是否值得信任」。</p>
                 <p>0.00–1.00 的分數，不是「表現評分」——是「正當性診斷」。</p>
+            </div>
+
+            <!-- 統計摘要 -->
+            <div class="stats-grid">
+                <div class="stat"><span class="num" style="color:#7DD3FC;">26</span><div class="label">B 級 (0.70–0.89)</div></div>
+                <div class="stat"><span class="num" style="color:#fbbf24;">42</span><div class="label">C 級 (0.50–0.69)</div></div>
+                <div class="stat"><span class="num" style="color:#fb923c;">31</span><div class="label">D 級 (0.30–0.49)</div></div>
+                <div class="stat"><span class="num" style="color:#f87171;">1</span><div class="label">F 級 (0.00–0.29)</div></div>
             </div>
 
             <h2>A 級（0.90–1.00）</h2>
@@ -138,22 +146,34 @@
             <div class="grade-block">
                 <div class="grade-title" style="color:#7DD3FC;">B · 價值回流，信任存在</div>
                 <div class="grade-desc">「治理正在運作，成本沒有被轉嫁給弱勢。」</div>
-                <ul>
-                    <li><strong>芬蘭</strong> 0.87 — 教育、醫療、社會信任</li>
-                    <li><strong>新加坡</strong> 0.79 — 組屋、公共土地、效率</li>
-                    <li><strong>瑞士</strong> 0.78 — 直接民主、稅制透明</li>
-                    <li><strong>奧地利</strong> 0.77 — 公共住宅、社會夥伴</li>
-                    <li><strong>丹麥</strong> 0.76 — 高稅收、高福利、高信任</li>
-                    <li><strong>愛爾蘭</strong> 0.76 — 歐盟結構基金、部分回流</li>
-                    <li><strong>冰島</strong> 0.75 — 小國、透明、公共化</li>
-                    <li><strong>捷克</strong> 0.73 — 轉型、公共空間保留</li>
-                    <li><strong>紐西蘭</strong> 0.73 — 土地稅、毛利權益</li>
-                    <li><strong>加拿大</strong> 0.72 — 聯邦制、稅制回收</li>
-                    <li><strong>瑞典</strong> 0.72 — 高稅收、高福利、回流完整</li>
-                    <li><strong>挪威</strong> 0.71 — 石油收入公共化</li>
-                    <li><strong>比利時</strong> 0.71 — 歐盟中心、政策規範</li>
-                    <li><strong>澳洲</strong> 0.70 — 礦業稅、部分回流</li>
-                </ul>
+                <div class="country-grid">
+                    <div class="entry">🇩🇰 丹麥 <span class="score">0.83</span></div>
+                    <div class="entry">🇩🇪 德國 <span class="score">0.83</span></div>
+                    <div class="entry">🇳🇴 挪威 <span class="score">0.82</span></div>
+                    <div class="entry">🇸🇪 瑞典 <span class="score">0.82</span></div>
+                    <div class="entry">🇫🇮 芬蘭 <span class="score">0.82</span></div>
+                    <div class="entry">🇱🇺 盧森堡 <span class="score">0.80</span></div>
+                    <div class="entry">🇨🇭 瑞士 <span class="score">0.79</span></div>
+                    <div class="entry">🇸🇬 新加坡 <span class="score">0.79</span></div>
+                    <div class="entry">🇦🇹 奧地利 <span class="score">0.79</span></div>
+                    <div class="entry">🇳🇱 荷蘭 <span class="score">0.79</span></div>
+                    <div class="entry">🇨🇦 加拿大 <span class="score">0.79</span></div>
+                    <div class="entry">🇯🇵 日本 <span class="score">0.77</span></div>
+                    <div class="entry">🇧🇪 比利時 <span class="score">0.77</span></div>
+                    <div class="entry">🇺🇸 美國 <span class="score">0.74</span></div>
+                    <div class="entry">🇮🇪 愛爾蘭 <span class="score">0.74</span></div>
+                    <div class="entry">🇳🇿 紐西蘭 <span class="score">0.74</span></div>
+                    <div class="entry">🇬🇧 英國 <span class="score">0.73</span></div>
+                    <div class="entry">🇸🇮 斯洛維尼亞 <span class="score">0.73</span></div>
+                    <div class="entry">🇫🇷 法國 <span class="score">0.72</span></div>
+                    <div class="entry">🇨🇿 捷克 <span class="score">0.72</span></div>
+                    <div class="entry">🇵🇱 波蘭 <span class="score">0.72</span></div>
+                    <div class="entry">🇮🇹 義大利 <span class="score">0.71</span></div>
+                    <div class="entry">🇵🇹 葡萄牙 <span class="score">0.70</span></div>
+                    <div class="entry">🇪🇸 西班牙 <span class="score">0.70</span></div>
+                    <div class="entry">🇪🇪 愛沙尼亞 <span class="score">0.70</span></div>
+                    <div class="entry">🇮🇱 以色列 <span class="score">0.70</span></div>
+                </div>
                 <div class="countries">B 級的共同特徵：土地增值沒有被少數人壟斷。價值透過稅收、公共服務、社會住宅回到人民身上。B 級不是「完美」——是「正當性存在」。</div>
             </div>
 
@@ -161,15 +181,51 @@
             <div class="grade-block">
                 <div class="grade-title" style="color:#fbbf24;">C · 一半回流，一半轉嫁</div>
                 <div class="grade-desc">「治理有效率，但正義正在流失。」</div>
-                <ul>
-                    <li><strong>南韓</strong> 0.68 — 行政效率高，但土地與教育成本集中</li>
-                    <li><strong>葡萄牙</strong> 0.67 — 歐盟結構基金，但行政摩擦仍高</li>
-                    <li><strong>荷蘭</strong> 0.63 — 全球治理標竿，但數位主權脆弱、民主下滑</li>
-                    <li><strong>波蘭</strong> 0.58 — 轉型經濟體，部分回流但結構性缺口</li>
-                    <li><strong>德國</strong> 0.56 — 經濟強勁，但土地與能源轉型成本轉嫁</li>
-                    <li><strong>阿聯酋</strong> 0.56 — 行政效率極高，但外籍勞工被排除</li>
-                    <li><strong>中國</strong> 0.51 — 土地財政閉環存在，但農民被遺忘</li>
-                </ul>
+                <div class="country-grid">
+                    <div class="entry">🇰🇷 韓國 <span class="score">0.69</span></div>
+                    <div class="entry">🇭🇰 香港 <span class="score">0.65</span></div>
+                    <div class="entry">🇱🇹 立陶宛 <span class="score">0.64</span></div>
+                    <div class="entry">🇲🇹 馬爾他 <span class="score">0.64</span></div>
+                    <div class="entry">🇨🇱 智利 <span class="score">0.64</span></div>
+                    <div class="entry">🇺🇾 烏拉圭 <span class="score">0.64</span></div>
+                    <div class="entry">🇹🇼 台灣 <span class="score">0.64</span></div>
+                    <div class="entry">🇲🇾 馬來西亞 <span class="score">0.63</span></div>
+                    <div class="entry">🇦🇪 阿聯 <span class="score">0.63</span></div>
+                    <div class="entry">🇸🇦 沙烏地阿拉伯 <span class="score">0.62</span></div>
+                    <div class="entry">🇶🇦 卡達 <span class="score">0.62</span></div>
+                    <div class="entry">🇲🇺 模里西斯 <span class="score">0.62</span></div>
+                    <div class="entry">🇬🇷 希臘 <span class="score">0.61</span></div>
+                    <div class="entry">🇭🇺 匈牙利 <span class="score">0.61</span></div>
+                    <div class="entry">🇧🇧 巴貝多 <span class="score">0.61</span></div>
+                    <div class="entry">🇰🇼 科威特 <span class="score">0.60</span></div>
+                    <div class="entry">🇵🇦 巴拿馬 <span class="score">0.60</span></div>
+                    <div class="entry">🇨🇳 中國 <span class="score">0.59</span></div>
+                    <div class="entry">🇹🇷 土耳其 <span class="score">0.57</span></div>
+                    <div class="entry">🇨🇾 賽普勒斯 <span class="score">0.57</span></div>
+                    <div class="entry">🇧🇭 巴林 <span class="score">0.57</span></div>
+                    <div class="entry">🇴🇲 阿曼 <span class="score">0.57</span></div>
+                    <div class="entry">🇷🇺 俄羅斯 <span class="score">0.56</span></div>
+                    <div class="entry">🇲🇽 墨西哥 <span class="score">0.56</span></div>
+                    <div class="entry">🇬🇪 喬治亞 <span class="score">0.56</span></div>
+                    <div class="entry">🇦🇷 阿根廷 <span class="score">0.56</span></div>
+                    <div class="entry">🇰🇿 哈薩克 <span class="score">0.56</span></div>
+                    <div class="entry">🇱🇻 拉脫維亞 <span class="score">0.56</span></div>
+                    <div class="entry">🇭🇷 克羅埃西亞 <span class="score">0.55</span></div>
+                    <div class="entry">🇻🇳 越南 <span class="score">0.55</span></div>
+                    <div class="entry">🇷🇸 塞爾維亞 <span class="score">0.55</span></div>
+                    <div class="entry">🇸🇰 斯洛伐克 <span class="score">0.55</span></div>
+                    <div class="entry">🇨🇷 哥斯大黎加 <span class="score">0.55</span></div>
+                    <div class="entry">🇮🇩 印尼 <span class="score">0.54</span></div>
+                    <div class="entry">🇧🇼 波札那 <span class="score">0.54</span></div>
+                    <div class="entry">🇯🇴 約旦 <span class="score">0.54</span></div>
+                    <div class="entry">🇿🇦 南非 <span class="score">0.53</span></div>
+                    <div class="entry">🇵🇪 秘魯 <span class="score">0.53</span></div>
+                    <div class="entry">🇧🇷 巴西 <span class="score">0.53</span></div>
+                    <div class="entry">🇲🇦 摩洛哥 <span class="score">0.52</span></div>
+                    <div class="entry">🇵🇭 菲律賓 <span class="score">0.52</span></div>
+                    <div class="entry">🇨🇴 哥倫比亞 <span class="score">0.52</span></div>
+                    <div class="entry">🇩🇴 多明尼加 <span class="score">0.52</span></div>
+                </div>
                 <div class="countries">C 級的共同特徵：行政效率很高，但價值分配機制不完整。一半價值回流，一半被轉嫁。</div>
             </div>
 
@@ -177,59 +233,49 @@
             <div class="grade-block">
                 <div class="grade-title" style="color:#fb923c;">D · 大部分價值被拿走</div>
                 <div class="grade-desc">「系統正在耗盡人民。」</div>
-                <ul>
-                    <li><strong>西班牙</strong> 0.44 — 區域張力、土地與資源分配不均</li>
-                    <li><strong>英國</strong> 0.44 — 貴族土地壟斷、社會流動性低</li>
-                    <li><strong>法國</strong> 0.44 — 中央集權、價值捕獲轉向市場邏輯</li>
-                    <li><strong>義大利</strong> 0.43 — 官僚沉重、南北差距、家族壟斷</li>
-                    <li><strong>馬來西亞</strong> 0.41 — 族群政策固化土地分配</li>
-                    <li><strong>希臘</strong> 0.39 — 債務危機、行政崩潰</li>
-                    <li><strong>越南</strong> 0.38 — 土地改革引發地價暴漲</li>
-                    <li><strong>以色列</strong> 0.38 — 軍事優先、土地資源集中</li>
-                    <li><strong>美國</strong> 0.35 — GDP #1，但治理正當性極低</li>
-                    <li><strong>科威特</strong> 0.34 — 石油財富集中、轉嫁路徑不透明</li>
-                    <li><strong>不丹</strong> 0.33 — GDP極低，但治理分數與之相符</li>
-                    <li><strong>智利</strong> 0.32 — 新自由主義遺產、土地與水資源集中</li>
-                    <li><strong>日本</strong> 0.31 — GDP #4，但高心理成本、機會成本</li>
-                    <li><strong>泰國</strong> 0.31 — 長期政治不穩定、軍事干預</li>
-                    <li><strong>卡達</strong> 0.44 — 石油財富集中、外籍勞工排除</li>
-                </ul>
-                <div class="countries">D 級的共同特徵：GDP 很高，但人民被制度耗盡。等待、重複、崩潰、焦慮、機會被剝奪。</div>
+                <div class="country-grid">
+                    <div class="entry">🇧🇬 保加利亞 <span class="score">0.49</span></div>
+                    <div class="entry">🇷🇴 羅馬尼亞 <span class="score">0.49</span></div>
+                    <div class="entry">🇱🇰 斯里蘭卡 <span class="score">0.47</span></div>
+                    <div class="entry">🇹🇹 千里達 <span class="score">0.47</span></div>
+                    <div class="entry">🇧🇹 不丹 <span class="score">0.47</span></div>
+                    <div class="entry">🇷🇼 盧安達 <span class="score">0.46</span></div>
+                    <div class="entry">🇮🇳 印度 <span class="score">0.44</span></div>
+                    <div class="entry">🇪🇬 埃及 <span class="score">0.43</span></div>
+                    <div class="entry">🇺🇦 烏克蘭 <span class="score">0.42</span></div>
+                    <div class="entry">🇦🇿 亞塞拜然 <span class="score">0.42</span></div>
+                    <div class="entry">🇬🇹 瓜地馬拉 <span class="score">0.42</span></div>
+                    <div class="entry">🇬🇭 迦納 <span class="score">0.41</span></div>
+                    <div class="entry">🇪🇨 厄瓜多 <span class="score">0.41</span></div>
+                    <div class="entry">🇮🇷 伊朗 <span class="score">0.40</span></div>
+                    <div class="entry">🇵🇾 巴拉圭 <span class="score">0.40</span></div>
+                    <div class="entry">🇯🇲 牙買加 <span class="score">0.39</span></div>
+                    <div class="entry">🇺🇿 烏茲別克 <span class="score">0.39</span></div>
+                    <div class="entry">🇧🇴 玻利維亞 <span class="score">0.38</span></div>
+                    <div class="entry">🇸🇻 薩爾瓦多 <span class="score">0.38</span></div>
+                    <div class="entry">🇵🇬 巴布亞紐幾內亞 <span class="score">0.38</span></div>
+                    <div class="entry">🇧🇩 孟加拉 <span class="score">0.37</span></div>
+                    <div class="entry">🇹🇿 坦尚尼亞 <span class="score">0.36</span></div>
+                    <div class="entry">🇺🇬 烏干達 <span class="score">0.36</span></div>
+                    <div class="entry">🇰🇭 柬埔寨 <span class="score">0.35</span></div>
+                    <div class="entry">🇭🇳 宏都拉斯 <span class="score">0.34</span></div>
+                    <div class="entry">🇪🇹 衣索比亞 <span class="score">0.33</span></div>
+                    <div class="entry">🇳🇬 奈及利亞 <span class="score">0.32</span></div>
+                    <div class="entry">🇮🇶 伊拉克 <span class="score">0.32</span></div>
+                    <div class="entry">🇲🇲 緬甸 <span class="score">0.31</span></div>
+                    <div class="entry">🇦🇫 阿富汗 <span class="score">0.30</span></div>
+                </div>
+                <div class="countries">D 級的共同特徵：GDP 可能很高，但人民被制度耗盡。等待、重複、崩潰、焦慮、機會被剝奪。</div>
             </div>
 
             <h2>F 級（0.00–0.29）</h2>
             <div class="grade-block">
                 <div class="grade-title" style="color:#f87171;">F · 制度碎片化 · 閉環斷裂</div>
                 <div class="grade-desc">「制度不是運作不良——是根本沒有形成閉環。價值被截留，成本被系統性轉嫁給最弱勢的人。」</div>
-                <p><strong>F 級的參數特徵：</strong></p>
-                <ul>
-                    <li>等待成本：20–35 — 行政程序極度冗長，等待時間是標準值的3–5倍</li>
-                    <li>重複成本：20–30 — 行政程序極度碎片化，同一文件重複提交，規則不連貫</li>
-                    <li>崩潰成本：15–25 — 制度篩選掉最需要幫助的人，放棄比例超過40%</li>
-                    <li>資訊不對稱：15–25 — 政府決策完全不透明，民眾無法獲取關鍵資訊</li>
-                    <li>心理成本：15–25 — 制度不可預測，對制度的信任低於30%</li>
-                    <li>機會成本：20–30 — 制度阻礙導致個人與社會發展機會大量流失</li>
-                    <li>轉嫁路徑：15–25 — 成本持續從權力核心轉嫁給弱勢群體</li>
-                    <li>迴路閉合：15–25 — 公共價值幾乎不回流，閉環斷裂</li>
-                </ul>
-                <div class="countries" style="margin-top: 0.8rem;"><strong>F 級的共同特徵：</strong>八個參數中有六個以上處於「極度失靈」區間（分數低於30）。制度碎片化使閉環無法形成，價值被截留，成本被系統性轉嫁給最弱勢的人。</div>
-            </div>
-
-            <h3>F 級各經濟體診斷</h3>
-            <div class="diagnostic-grid">
-                <div class="diagnostic-item"><span class="country">土耳其</span> <span class="score">0.30</span><div class="diagnosis">行政程序極度碎片化，政策反覆，信任流失，成本轉嫁給一般民眾。</div></div>
-                <div class="diagnostic-item"><span class="country">印度</span> <span class="score">0.30</span><div class="diagnosis">種姓與貧富差距固化制度斷層，行政體系崩潰，弱勢被排除在閉環之外。</div></div>
-                <div class="diagnostic-item"><span class="country">巴西</span> <span class="score">0.28</span><div class="diagnosis">稅務制度碎片化——聯邦、州、市三級稅制重疊，閉環斷裂，成本轉嫁給終端消費者。</div></div>
-                <div class="diagnostic-item"><span class="country">印尼</span> <span class="score">0.28</span><div class="diagnosis">土地治理破碎——習慣法、殖民遺產、現代法規並存，產權不清，官僚複雜。</div></div>
-                <div class="diagnostic-item"><span class="country">阿根廷</span> <span class="score">0.28</span><div class="diagnosis">債務與通膨反覆侵蝕制度，政策無連續性，閉環長期斷裂，財富持續外流。</div></div>
-                <div class="diagnostic-item"><span class="country">俄羅斯</span> <span class="score">0.27</span><div class="diagnosis">資源詛咒——石油與天然氣收入被國家與寡頭捕獲，制裁擠壓使閉環無法形成。</div></div>
-                <div class="diagnostic-item"><span class="country">墨西哥</span> <span class="score">0.26</span><div class="diagnosis">暴力與貪腐構成制度性屏障，弱勢被排除在價值分配之外，閉環完全斷裂。</div></div>
-                <div class="diagnostic-item"><span class="country">香港</span> <span class="score">0.25</span><div class="diagnosis">政府與寡頭壟斷土地，土地增值被截留，公共價值無法回流公民。</div></div>
-                <div class="diagnostic-item"><span class="country">台灣</span> <span class="score">0.24</span><div class="diagnosis">土地增值被私人資本捕獲，房地產成本轉嫁年輕世代，政治消耗制度能量。</div></div>
-                <div class="diagnostic-item"><span class="country">南非</span> <span class="score">0.24</span><div class="diagnosis">殖民遺產與種族隔離造成土地分配極端不均，改革停滯，閉環無法建立。</div></div>
-                <div class="diagnostic-item"><span class="country">埃及</span> <span class="score">0.23</span><div class="diagnosis">人口壓力擠壓制度空間，軍隊控制土地與經濟，弱勢被排除在分配之外。</div></div>
-                <div class="diagnostic-item"><span class="country">伊朗</span> <span class="score">0.21</span><div class="diagnosis">國際制裁與神權體制疊加，資源稀缺，價值被國家與宗教基金會捕獲。</div></div>
-                <div class="diagnostic-item"><span class="country">奈及利亞</span> <span class="score">0.20</span><div class="diagnosis">石油財富被菁英與外資捕獲，制度失靈，弱勢完全被排除在閉環之外。</div></div>
+                <div class="country-grid">
+                    <div class="entry">🇾🇪 葉門 <span class="score">0.28</span></div>
+                </div>
+                <div class="countries" style="margin-top: 0.8rem;"><strong>F 級的共同特徵：</strong>多數參數處於「極度失靈」區間。制度碎片化使閉環無法形成，價值被截留，成本被系統性轉嫁給最弱勢的人。</div>
             </div>
 
             <div class="key-insight">
@@ -243,6 +289,7 @@
                 <p>GL Index 不是一個「競爭排名」。它是一個「正當性診斷」。</p>
                 <p>它告訴你：「這個治理系統——是讓人民活得更好，還是讓人民被制度榨乾？」</p>
                 <p>當你看到一個國家的分數時，你讀到的不是「他們輸了」或「我們贏了」——你讀到的是：「那些被 GDP 隱藏的成本——等待、重複、崩潰、焦慮、機會被剝奪——正在被看見。」</p>
+                <p style="margin-top:0.8rem; color:#7DD3FC;">數據範圍：100 個經濟體 · v5.3 模型 · 12 項參數</p>
             </div>
 
             <div class="divider"></div>
@@ -259,10 +306,7 @@
         <div class="essay-container">
             <h1>GL Index Grades</h1>
             <div class="subtitle">What Do They Actually Mean?</div>
-            <div class="author-line">— GL Framework Diagnostic · GFI Flow Intelligence</div>
-
-            <p>If you're seeing the GL Index for the first time, you might wonder: "What does 0.79 mean? What does a B grade represent? Why is there no A?"</p>
-            <p>This is not a "manual." This is a "diagnostic guide." It tells you what to read when you see a country's GL Index score.</p>
+            <div class="author-line">— GL Framework Diagnostic · GFI Flow Intelligence · 100 Economies v5.3</div>
 
             <div class="key-insight">
                 <p><span class="highlight-line">One sentence to remember</span></p>
@@ -271,11 +315,17 @@
                 <p>The 0.00–1.00 score is not a "performance rating" — it is a "legitimacy diagnosis."</p>
             </div>
 
+            <div class="stats-grid">
+                <div class="stat"><span class="num" style="color:#7DD3FC;">26</span><div class="label">Grade B (0.70–0.89)</div></div>
+                <div class="stat"><span class="num" style="color:#fbbf24;">42</span><div class="label">Grade C (0.50–0.69)</div></div>
+                <div class="stat"><span class="num" style="color:#fb923c;">31</span><div class="label">Grade D (0.30–0.49)</div></div>
+                <div class="stat"><span class="num" style="color:#f87171;">1</span><div class="label">Grade F (0.00–0.29)</div></div>
+            </div>
+
             <h2>Grade A (0.90–1.00)</h2>
             <div class="grade-block">
                 <div class="grade-title" style="color:#9FE870;">A · Not Yet Reached</div>
                 <div class="grade-desc">"The North Star of governance, yet untouched."</div>
-                <p>Grade A represents: value fully returns, costs are absorbed by institutions, the vulnerable are not burdened, citizens trust governance. This is not a "score" — it is a "direction."</p>
                 <p>No economy has reached Grade A. Not because they are "not good enough" — but because "governance truly worthy of complete trust has not yet emerged."</p>
             </div>
 
@@ -283,111 +333,145 @@
             <div class="grade-block">
                 <div class="grade-title" style="color:#7DD3FC;">B · Value Returns, Trust Exists</div>
                 <div class="grade-desc">"Governance is functioning. Costs are not shifted to the vulnerable."</div>
-                <ul>
-                    <li><strong>Finland</strong> 0.87 — Education, healthcare, social trust</li>
-                    <li><strong>Singapore</strong> 0.79 — Public housing, public land, efficiency</li>
-                    <li><strong>Switzerland</strong> 0.78 — Direct democracy, transparent taxation</li>
-                    <li><strong>Austria</strong> 0.77 — Public housing, social partnership</li>
-                    <li><strong>Denmark</strong> 0.76 — High tax, high welfare, high trust</li>
-                    <li><strong>Ireland</strong> 0.76 — EU structural funds, partial return</li>
-                    <li><strong>Iceland</strong> 0.75 — Small, transparent, public resources</li>
-                    <li><strong>Czech Republic</strong> 0.73 — Transition, public space retained</li>
-                    <li><strong>New Zealand</strong> 0.73 — Land tax, Māori rights</li>
-                    <li><strong>Canada</strong> 0.72 — Federalism, tax recovery</li>
-                    <li><strong>Sweden</strong> 0.72 — High tax, high welfare, full return</li>
-                    <li><strong>Norway</strong> 0.71 — Oil revenues publicized</li>
-                    <li><strong>Belgium</strong> 0.71 — EU hub, regulatory standards</li>
-                    <li><strong>Australia</strong> 0.70 — Mining tax, partial return</li>
-                </ul>
-                <div class="countries">B grade common feature: land value is not monopolized by a few. Value returns to citizens through taxation, public services, and social housing. B is not "perfect" — it is "legitimacy exists."</div>
+                <div class="country-grid">
+                    <div class="entry">🇩🇰 Denmark <span class="score">0.83</span></div>
+                    <div class="entry">🇩🇪 Germany <span class="score">0.83</span></div>
+                    <div class="entry">🇳🇴 Norway <span class="score">0.82</span></div>
+                    <div class="entry">🇸🇪 Sweden <span class="score">0.82</span></div>
+                    <div class="entry">🇫🇮 Finland <span class="score">0.82</span></div>
+                    <div class="entry">🇱🇺 Luxembourg <span class="score">0.80</span></div>
+                    <div class="entry">🇨🇭 Switzerland <span class="score">0.79</span></div>
+                    <div class="entry">🇸🇬 Singapore <span class="score">0.79</span></div>
+                    <div class="entry">🇦🇹 Austria <span class="score">0.79</span></div>
+                    <div class="entry">🇳🇱 Netherlands <span class="score">0.79</span></div>
+                    <div class="entry">🇨🇦 Canada <span class="score">0.79</span></div>
+                    <div class="entry">🇯🇵 Japan <span class="score">0.77</span></div>
+                    <div class="entry">🇧🇪 Belgium <span class="score">0.77</span></div>
+                    <div class="entry">🇺🇸 United States <span class="score">0.74</span></div>
+                    <div class="entry">🇮🇪 Ireland <span class="score">0.74</span></div>
+                    <div class="entry">🇳🇿 New Zealand <span class="score">0.74</span></div>
+                    <div class="entry">🇬🇧 United Kingdom <span class="score">0.73</span></div>
+                    <div class="entry">🇸🇮 Slovenia <span class="score">0.73</span></div>
+                    <div class="entry">🇫🇷 France <span class="score">0.72</span></div>
+                    <div class="entry">🇨🇿 Czech Republic <span class="score">0.72</span></div>
+                    <div class="entry">🇵🇱 Poland <span class="score">0.72</span></div>
+                    <div class="entry">🇮🇹 Italy <span class="score">0.71</span></div>
+                    <div class="entry">🇵🇹 Portugal <span class="score">0.70</span></div>
+                    <div class="entry">🇪🇸 Spain <span class="score">0.70</span></div>
+                    <div class="entry">🇪🇪 Estonia <span class="score">0.70</span></div>
+                    <div class="entry">🇮🇱 Israel <span class="score">0.70</span></div>
+                </div>
             </div>
 
             <h2>Grade C (0.50–0.69)</h2>
             <div class="grade-block">
                 <div class="grade-title" style="color:#fbbf24;">C · Half Returns, Half Shifts</div>
                 <div class="grade-desc">"Governance is efficient, but justice is eroding."</div>
-                <ul>
-                    <li><strong>South Korea</strong> 0.68 — High administrative efficiency, but land and education costs concentrated</li>
-                    <li><strong>Portugal</strong> 0.67 — EU structural funds, but still high administrative friction</li>
-                    <li><strong>Netherlands</strong> 0.63 — Global governance benchmark, but digital sovereignty fragile, democracy declining</li>
-                    <li><strong>Poland</strong> 0.58 — Transition economy, partial return but structural gaps</li>
-                    <li><strong>Germany</strong> 0.56 — Strong economy, but land and energy transition costs shifted</li>
-                    <li><strong>UAE</strong> 0.56 — Extremely high administrative efficiency, but foreign workers excluded</li>
-                    <li><strong>China</strong> 0.51 — Land fiscal loop exists, but farmers left behind</li>
-                </ul>
-                <div class="countries">C grade common feature: high administrative efficiency, but incomplete value distribution mechanisms. Half the value returns, half is shifted.</div>
+                <div class="country-grid">
+                    <div class="entry">🇰🇷 South Korea <span class="score">0.69</span></div>
+                    <div class="entry">🇭🇰 Hong Kong <span class="score">0.65</span></div>
+                    <div class="entry">🇱🇹 Lithuania <span class="score">0.64</span></div>
+                    <div class="entry">🇲🇹 Malta <span class="score">0.64</span></div>
+                    <div class="entry">🇨🇱 Chile <span class="score">0.64</span></div>
+                    <div class="entry">🇺🇾 Uruguay <span class="score">0.64</span></div>
+                    <div class="entry">🇹🇼 Taiwan <span class="score">0.64</span></div>
+                    <div class="entry">🇲🇾 Malaysia <span class="score">0.63</span></div>
+                    <div class="entry">🇦🇪 UAE <span class="score">0.63</span></div>
+                    <div class="entry">🇸🇦 Saudi Arabia <span class="score">0.62</span></div>
+                    <div class="entry">🇶🇦 Qatar <span class="score">0.62</span></div>
+                    <div class="entry">🇲🇺 Mauritius <span class="score">0.62</span></div>
+                    <div class="entry">🇬🇷 Greece <span class="score">0.61</span></div>
+                    <div class="entry">🇭🇺 Hungary <span class="score">0.61</span></div>
+                    <div class="entry">🇧🇧 Barbados <span class="score">0.61</span></div>
+                    <div class="entry">🇰🇼 Kuwait <span class="score">0.60</span></div>
+                    <div class="entry">🇵🇦 Panama <span class="score">0.60</span></div>
+                    <div class="entry">🇨🇳 China <span class="score">0.59</span></div>
+                    <div class="entry">🇹🇷 Türkiye <span class="score">0.57</span></div>
+                    <div class="entry">🇨🇾 Cyprus <span class="score">0.57</span></div>
+                    <div class="entry">🇧🇭 Bahrain <span class="score">0.57</span></div>
+                    <div class="entry">🇴🇲 Oman <span class="score">0.57</span></div>
+                    <div class="entry">🇷🇺 Russia <span class="score">0.56</span></div>
+                    <div class="entry">🇲🇽 Mexico <span class="score">0.56</span></div>
+                    <div class="entry">🇬🇪 Georgia <span class="score">0.56</span></div>
+                    <div class="entry">🇦🇷 Argentina <span class="score">0.56</span></div>
+                    <div class="entry">🇰🇿 Kazakhstan <span class="score">0.56</span></div>
+                    <div class="entry">🇱🇻 Latvia <span class="score">0.56</span></div>
+                    <div class="entry">🇭🇷 Croatia <span class="score">0.55</span></div>
+                    <div class="entry">🇻🇳 Vietnam <span class="score">0.55</span></div>
+                    <div class="entry">🇷🇸 Serbia <span class="score">0.55</span></div>
+                    <div class="entry">🇸🇰 Slovakia <span class="score">0.55</span></div>
+                    <div class="entry">🇨🇷 Costa Rica <span class="score">0.55</span></div>
+                    <div class="entry">🇮🇩 Indonesia <span class="score">0.54</span></div>
+                    <div class="entry">🇧🇼 Botswana <span class="score">0.54</span></div>
+                    <div class="entry">🇯🇴 Jordan <span class="score">0.54</span></div>
+                    <div class="entry">🇿🇦 South Africa <span class="score">0.53</span></div>
+                    <div class="entry">🇵🇪 Peru <span class="score">0.53</span></div>
+                    <div class="entry">🇧🇷 Brazil <span class="score">0.53</span></div>
+                    <div class="entry">🇲🇦 Morocco <span class="score">0.52</span></div>
+                    <div class="entry">🇵🇭 Philippines <span class="score">0.52</span></div>
+                    <div class="entry">🇨🇴 Colombia <span class="score">0.52</span></div>
+                    <div class="entry">🇩🇴 Dominican Republic <span class="score">0.52</span></div>
+                </div>
             </div>
 
             <h2>Grade D (0.30–0.49)</h2>
             <div class="grade-block">
                 <div class="grade-title" style="color:#fb923c;">D · Most Value Is Taken</div>
                 <div class="grade-desc">"The system is exhausting its people."</div>
-                <ul>
-                    <li><strong>Spain</strong> 0.44 — Regional tensions, land and resource distribution unequal</li>
-                    <li><strong>United Kingdom</strong> 0.44 — Aristocratic land monopoly, low social mobility</li>
-                    <li><strong>France</strong> 0.44 — Centralization, value capture shifting to market logic</li>
-                    <li><strong>Italy</strong> 0.43 — Heavy bureaucracy, North-South divide, family monopolies</li>
-                    <li><strong>Malaysia</strong> 0.41 — Ethnic policy locks land distribution</li>
-                    <li><strong>Greece</strong> 0.39 — Debt crisis, administrative collapse</li>
-                    <li><strong>Vietnam</strong> 0.38 — Land reform triggers price surges</li>
-                    <li><strong>Israel</strong> 0.38 — Military priority, land resource concentration</li>
-                    <li><strong>United States</strong> 0.35 — GDP #1, but governance legitimacy extremely low</li>
-                    <li><strong>Kuwait</strong> 0.34 — Oil wealth concentrated, shift pathway opaque</li>
-                    <li><strong>Bhutan</strong> 0.33 — GDP extremely low, but score matches</li>
-                    <li><strong>Chile</strong> 0.32 — Neoliberal legacy, land and water concentration</li>
-                    <li><strong>Japan</strong> 0.31 — GDP #4, but high psychological and opportunity costs</li>
-                    <li><strong>Thailand</strong> 0.31 — Long-term political instability, military intervention</li>
-                    <li><strong>Qatar</strong> 0.44 — Oil wealth concentrated, foreign workers excluded</li>
-                </ul>
-                <div class="countries">D grade common feature: GDP is high, but people are exhausted by the system. Waiting, repetition, collapse, anxiety, opportunities taken away.</div>
+                <div class="country-grid">
+                    <div class="entry">🇧🇬 Bulgaria <span class="score">0.49</span></div>
+                    <div class="entry">🇷🇴 Romania <span class="score">0.49</span></div>
+                    <div class="entry">🇱🇰 Sri Lanka <span class="score">0.47</span></div>
+                    <div class="entry">🇹🇹 Trinidad <span class="score">0.47</span></div>
+                    <div class="entry">🇧🇹 Bhutan <span class="score">0.47</span></div>
+                    <div class="entry">🇷🇼 Rwanda <span class="score">0.46</span></div>
+                    <div class="entry">🇮🇳 India <span class="score">0.44</span></div>
+                    <div class="entry">🇪🇬 Egypt <span class="score">0.43</span></div>
+                    <div class="entry">🇺🇦 Ukraine <span class="score">0.42</span></div>
+                    <div class="entry">🇦🇿 Azerbaijan <span class="score">0.42</span></div>
+                    <div class="entry">🇬🇹 Guatemala <span class="score">0.42</span></div>
+                    <div class="entry">🇬🇭 Ghana <span class="score">0.41</span></div>
+                    <div class="entry">🇪🇨 Ecuador <span class="score">0.41</span></div>
+                    <div class="entry">🇮🇷 Iran <span class="score">0.40</span></div>
+                    <div class="entry">🇵🇾 Paraguay <span class="score">0.40</span></div>
+                    <div class="entry">🇯🇲 Jamaica <span class="score">0.39</span></div>
+                    <div class="entry">🇺🇿 Uzbekistan <span class="score">0.39</span></div>
+                    <div class="entry">🇧🇴 Bolivia <span class="score">0.38</span></div>
+                    <div class="entry">🇸🇻 El Salvador <span class="score">0.38</span></div>
+                    <div class="entry">🇵🇬 Papua New Guinea <span class="score">0.38</span></div>
+                    <div class="entry">🇧🇩 Bangladesh <span class="score">0.37</span></div>
+                    <div class="entry">🇹🇿 Tanzania <span class="score">0.36</span></div>
+                    <div class="entry">🇺🇬 Uganda <span class="score">0.36</span></div>
+                    <div class="entry">🇰🇭 Cambodia <span class="score">0.35</span></div>
+                    <div class="entry">🇭🇳 Honduras <span class="score">0.34</span></div>
+                    <div class="entry">🇪🇹 Ethiopia <span class="score">0.33</span></div>
+                    <div class="entry">🇳🇬 Nigeria <span class="score">0.32</span></div>
+                    <div class="entry">🇮🇶 Iraq <span class="score">0.32</span></div>
+                    <div class="entry">🇲🇲 Myanmar <span class="score">0.31</span></div>
+                    <div class="entry">🇦🇫 Afghanistan <span class="score">0.30</span></div>
+                </div>
             </div>
 
             <h2>Grade F (0.00–0.29)</h2>
             <div class="grade-block">
                 <div class="grade-title" style="color:#f87171;">F · Fragmented Systems · Broken Loops</div>
-                <div class="grade-desc">"The system is not malfunctioning — it never formed a loop. Value is intercepted, costs are systematically shifted to the most vulnerable."</div>
-                <p><strong>Grade F Parameter Profile:</strong></p>
-                <ul>
-                    <li>Waiting Cost: 20–35 — Extremely long administrative procedures, 3–5x standard wait times</li>
-                    <li>Repetition Cost: 20–30 — Highly fragmented procedures, repeated document submission, inconsistent rules</li>
-                    <li>Collapse Cost: 15–25 — System filters out those most in need, abandonment rate exceeds 40%</li>
-                    <li>Information Asymmetry: 15–25 — Government decisions completely opaque, citizens cannot access critical information</li>
-                    <li>Psychological Cost: 15–25 — System is unpredictable, trust in institutions below 30%</li>
-                    <li>Opportunity Cost: 20–30 — Institutional barriers cause massive loss of personal and societal development opportunities</li>
-                    <li>Shift Pathway: 15–25 — Costs systematically shift from power centers to vulnerable groups</li>
-                    <li>Loop Closure: 15–25 — Public value almost never returns, loop is broken</li>
-                </ul>
-                <div class="countries" style="margin-top: 0.8rem;"><strong>Grade F Common Feature:</strong> Six or more parameters are in the "extreme failure" range (below 30). Fragmentation prevents loops from forming. Value is intercepted. Costs are systematically shifted to the most vulnerable.</div>
-            </div>
-
-            <h3>Grade F Economy Diagnoses</h3>
-            <div class="diagnostic-grid">
-                <div class="diagnostic-item"><span class="country">Turkey</span> <span class="score">0.30</span><div class="diagnosis">Extremely fragmented administrative procedures, policy reversals, eroding trust, costs shifted to ordinary citizens.</div></div>
-                <div class="diagnostic-item"><span class="country">India</span> <span class="score">0.30</span><div class="diagnosis">Caste and wealth gaps solidify institutional fractures, administrative collapse, vulnerable excluded from the loop.</div></div>
-                <div class="diagnostic-item"><span class="country">Brazil</span> <span class="score">0.28</span><div class="diagnosis">Fragmented tax system — federal, state, municipal layers overlap, loop broken, costs shifted to end consumers.</div></div>
-                <div class="diagnostic-item"><span class="country">Indonesia</span> <span class="score">0.28</span><div class="diagnosis">Fragmented land governance — customary law, colonial legacy, modern regulations coexist, unclear property rights, complex bureaucracy.</div></div>
-                <div class="diagnostic-item"><span class="country">Argentina</span> <span class="score">0.28</span><div class="diagnosis">Debt and inflation repeatedly erode institutions, no policy continuity, loop long broken, wealth flows out.</div></div>
-                <div class="diagnostic-item"><span class="country">Russia</span> <span class="score">0.27</span><div class="diagnosis">Resource curse — oil and gas revenues captured by state and oligarchs, sanctions prevent loop formation.</div></div>
-                <div class="diagnostic-item"><span class="country">Mexico</span> <span class="score">0.26</span><div class="diagnosis">Violence and corruption form institutional barriers, vulnerable excluded from value distribution, loop completely broken.</div></div>
-                <div class="diagnostic-item"><span class="country">Hong Kong</span> <span class="score">0.25</span><div class="diagnosis">Government and oligarchs monopolize land, land value intercepted, public value cannot return to citizens.</div></div>
-                <div class="diagnostic-item"><span class="country">Taiwan</span> <span class="score">0.24</span><div class="diagnosis">Land value captured by private capital, housing costs shifted to younger generations, political friction consumes institutional energy.</div></div>
-                <div class="diagnostic-item"><span class="country">South Africa</span> <span class="score">0.24</span><div class="diagnosis">Colonial and apartheid legacy creates extreme land inequality, reform stalled, loop cannot be established.</div></div>
-                <div class="diagnostic-item"><span class="country">Egypt</span> <span class="score">0.23</span><div class="diagnosis">Population pressure squeezes institutional space, military controls land and economy, vulnerable excluded from distribution.</div></div>
-                <div class="diagnostic-item"><span class="country">Iran</span> <span class="score">0.21</span><div class="diagnosis">International sanctions and theocratic regime combine, resource scarcity, value captured by state and religious foundations.</div></div>
-                <div class="diagnostic-item"><span class="country">Nigeria</span> <span class="score">0.20</span><div class="diagnosis">Oil wealth captured by elites and foreign capital, institutional failure, vulnerable completely excluded from the loop.</div></div>
+                <div class="grade-desc">"The system is not malfunctioning — it never formed a loop."</div>
+                <div class="country-grid">
+                    <div class="entry">🇾🇪 Yemen <span class="score">0.28</span></div>
+                </div>
             </div>
 
             <div class="key-insight">
                 <p><span class="highlight-line">One Key Observation</span></p>
                 <p><strong>0.5 is the dividing line.</strong> Below 0.5 — governance is exhausting its people. Above 0.5 — governance is recovering value.</p>
-                <p style="margin-top:0.5rem; color:#9fe870;">A (0.90–1.00) — Not yet reached<br>B (0.70–0.89) — Value returns, trust exists<br>C (0.50–0.69) — Half returns, half shifts<br>D (0.30–0.49) — Most value is taken<br>F (0.00–0.29) — Fragmented systems, broken loops, costs systematically shifted</p>
+                <p style="margin-top:0.5rem; color:#9fe870;">A (0.90–1.00) — Not yet reached<br>B (0.70–0.89) — Value returns, trust exists<br>C (0.50–0.69) — Half returns, half shifts<br>D (0.30–0.49) — Most value is taken<br>F (0.00–0.29) — Fragmented systems, broken loops</p>
             </div>
 
             <div class="note">
                 <p><strong>Conclusion</strong></p>
                 <p>The GL Index is not a "competition ranking." It is a "legitimacy diagnosis."</p>
                 <p>It tells you: "Does this governance system make people's lives better — or does it drain them?"</p>
-                <p>When you see a country's score, you are not reading "they lost" or "we won" — you are reading: "The costs hidden by GDP — waiting, repetition, collapse, anxiety, stolen opportunities — are finally being seen."</p>
+                <p style="margin-top:0.8rem; color:#7DD3FC;">Data: 100 economies · v5.3 model · 12 parameters</p>
             </div>
 
             <div class="divider"></div>
@@ -404,10 +488,7 @@
         <div class="essay-container">
             <h1>GL Index 等级分数</h1>
             <div class="subtitle">它们到底在说什么？</div>
-            <div class="author-line">— GL 框架诊断 · GFI Flow Intelligence</div>
-
-            <p>如果你第一次看到 GL Index，你可能会想：「0.79 是什么意思？B 级代表什么？为什么 A 级从缺？」</p>
-            <p>这篇文章不是「说明书」。这是「诊断指南」。它告诉你：当你看到一个国家的 GL Index 分数时，你应该读出什么。</p>
+            <div class="author-line">— GL 框架诊断 · GFI Flow Intelligence · 100 国完整数据 v5.3</div>
 
             <div class="key-insight">
                 <p><span class="highlight-line">先记住一句话</span></p>
@@ -416,123 +497,163 @@
                 <p>0.00–1.00 的分数，不是「表现评分」——是「正当性诊断」。</p>
             </div>
 
+            <div class="stats-grid">
+                <div class="stat"><span class="num" style="color:#7DD3FC;">26</span><div class="label">B 级 (0.70–0.89)</div></div>
+                <div class="stat"><span class="num" style="color:#fbbf24;">42</span><div class="label">C 级 (0.50–0.69)</div></div>
+                <div class="stat"><span class="num" style="color:#fb923c;">31</span><div class="label">D 级 (0.30–0.49)</div></div>
+                <div class="stat"><span class="num" style="color:#f87171;">1</span><div class="label">F 级 (0.00–0.29)</div></div>
+            </div>
+
             <h2>A 级（0.90–1.00）</h2>
             <div class="grade-block">
                 <div class="grade-title" style="color:#9FE870;">A · 尚未有人到达</div>
                 <div class="grade-desc">「治理的北极星，尚无人触及。」</div>
-                <p>A 级代表的是：价值完全回流，成本被制度吸收，弱势不会被转嫁，人民信任治理。这不是一个「评分等级」——这是一个「方向」。</p>
-                <p>目前没有任何经济体达到 A 级。不是因为它们「还不够好」——是因为「真正值得完全信任的治理，还没有出现」。</p>
+                <p>没有任何经济体达到 A 级。不是因为它们「还不够好」——是因为「真正值得完全信任的治理，还没有出现」。</p>
             </div>
 
             <h2>B 级（0.70–0.89）</h2>
             <div class="grade-block">
                 <div class="grade-title" style="color:#7DD3FC;">B · 价值回流，信任存在</div>
                 <div class="grade-desc">「治理正在运作，成本没有被转嫁给弱势。」</div>
-                <ul>
-                    <li><strong>芬兰</strong> 0.87 — 教育、医疗、社会信任</li>
-                    <li><strong>新加坡</strong> 0.79 — 组屋、公共土地、效率</li>
-                    <li><strong>瑞士</strong> 0.78 — 直接民主、税制透明</li>
-                    <li><strong>奥地利</strong> 0.77 — 公共住宅、社会伙伴</li>
-                    <li><strong>丹麦</strong> 0.76 — 高税收、高福利、高信任</li>
-                    <li><strong>爱尔兰</strong> 0.76 — 欧盟结构基金、部分回流</li>
-                    <li><strong>冰岛</strong> 0.75 — 小国、透明、公共化</li>
-                    <li><strong>捷克</strong> 0.73 — 转型、公共空间保留</li>
-                    <li><strong>新西兰</strong> 0.73 — 土地税、毛利权益</li>
-                    <li><strong>加拿大</strong> 0.72 — 联邦制、税制回收</li>
-                    <li><strong>瑞典</strong> 0.72 — 高税收、高福利、回流完整</li>
-                    <li><strong>挪威</strong> 0.71 — 石油收入公共化</li>
-                    <li><strong>比利时</strong> 0.71 — 欧盟中心、政策规范</li>
-                    <li><strong>澳大利亚</strong> 0.70 — 矿业税、部分回流</li>
-                </ul>
-                <div class="countries">B 级的共同特征：土地增值没有被少数人垄断。价值透过税收、公共服务、社会住宅回到人民身上。B 级不是「完美」——是「正当性存在」。</div>
+                <div class="country-grid">
+                    <div class="entry">🇩🇰 丹麦 <span class="score">0.83</span></div>
+                    <div class="entry">🇩🇪 德国 <span class="score">0.83</span></div>
+                    <div class="entry">🇳🇴 挪威 <span class="score">0.82</span></div>
+                    <div class="entry">🇸🇪 瑞典 <span class="score">0.82</span></div>
+                    <div class="entry">🇫🇮 芬兰 <span class="score">0.82</span></div>
+                    <div class="entry">🇱🇺 卢森堡 <span class="score">0.80</span></div>
+                    <div class="entry">🇨🇭 瑞士 <span class="score">0.79</span></div>
+                    <div class="entry">🇸🇬 新加坡 <span class="score">0.79</span></div>
+                    <div class="entry">🇦🇹 奥地利 <span class="score">0.79</span></div>
+                    <div class="entry">🇳🇱 荷兰 <span class="score">0.79</span></div>
+                    <div class="entry">🇨🇦 加拿大 <span class="score">0.79</span></div>
+                    <div class="entry">🇯🇵 日本 <span class="score">0.77</span></div>
+                    <div class="entry">🇧🇪 比利时 <span class="score">0.77</span></div>
+                    <div class="entry">🇺🇸 美国 <span class="score">0.74</span></div>
+                    <div class="entry">🇮🇪 爱尔兰 <span class="score">0.74</span></div>
+                    <div class="entry">🇳🇿 新西兰 <span class="score">0.74</span></div>
+                    <div class="entry">🇬🇧 英国 <span class="score">0.73</span></div>
+                    <div class="entry">🇸🇮 斯洛文尼亚 <span class="score">0.73</span></div>
+                    <div class="entry">🇫🇷 法国 <span class="score">0.72</span></div>
+                    <div class="entry">🇨🇿 捷克 <span class="score">0.72</span></div>
+                    <div class="entry">🇵🇱 波兰 <span class="score">0.72</span></div>
+                    <div class="entry">🇮🇹 意大利 <span class="score">0.71</span></div>
+                    <div class="entry">🇵🇹 葡萄牙 <span class="score">0.70</span></div>
+                    <div class="entry">🇪🇸 西班牙 <span class="score">0.70</span></div>
+                    <div class="entry">🇪🇪 爱沙尼亚 <span class="score">0.70</span></div>
+                    <div class="entry">🇮🇱 以色列 <span class="score">0.70</span></div>
+                </div>
             </div>
 
             <h2>C 级（0.50–0.69）</h2>
             <div class="grade-block">
                 <div class="grade-title" style="color:#fbbf24;">C · 一半回流，一半转嫁</div>
                 <div class="grade-desc">「治理有效率，但正义正在流失。」</div>
-                <ul>
-                    <li><strong>韩国</strong> 0.68 — 行政效率高，但土地与教育成本集中</li>
-                    <li><strong>葡萄牙</strong> 0.67 — 欧盟结构基金，但行政摩擦仍高</li>
-                    <li><strong>荷兰</strong> 0.63 — 全球治理标杆，但数码主权脆弱、民主下滑</li>
-                    <li><strong>波兰</strong> 0.58 — 转型经济体，部分回流但结构性缺口</li>
-                    <li><strong>德国</strong> 0.56 — 经济强劲，但土地与能源转型成本转嫁</li>
-                    <li><strong>阿联酋</strong> 0.56 — 行政效率极高，但外籍劳工被排除</li>
-                    <li><strong>中国</strong> 0.51 — 土地财政闭环存在，但农民被遗忘</li>
-                </ul>
-                <div class="countries">C 级的共同特征：行政效率很高，但价值分配机制不完整。一半价值回流，一半被转嫁。</div>
+                <div class="country-grid">
+                    <div class="entry">🇰🇷 韩国 <span class="score">0.69</span></div>
+                    <div class="entry">🇭🇰 香港 <span class="score">0.65</span></div>
+                    <div class="entry">🇱🇹 立陶宛 <span class="score">0.64</span></div>
+                    <div class="entry">🇲🇹 马耳他 <span class="score">0.64</span></div>
+                    <div class="entry">🇨🇱 智利 <span class="score">0.64</span></div>
+                    <div class="entry">🇺🇾 乌拉圭 <span class="score">0.64</span></div>
+                    <div class="entry">🇹🇼 台湾 <span class="score">0.64</span></div>
+                    <div class="entry">🇲🇾 马来西亚 <span class="score">0.63</span></div>
+                    <div class="entry">🇦🇪 阿联酋 <span class="score">0.63</span></div>
+                    <div class="entry">🇸🇦 沙特阿拉伯 <span class="score">0.62</span></div>
+                    <div class="entry">🇶🇦 卡塔尔 <span class="score">0.62</span></div>
+                    <div class="entry">🇲🇺 毛里求斯 <span class="score">0.62</span></div>
+                    <div class="entry">🇬🇷 希腊 <span class="score">0.61</span></div>
+                    <div class="entry">🇭🇺 匈牙利 <span class="score">0.61</span></div>
+                    <div class="entry">🇧🇧 巴巴多斯 <span class="score">0.61</span></div>
+                    <div class="entry">🇰🇼 科威特 <span class="score">0.60</span></div>
+                    <div class="entry">🇵🇦 巴拿马 <span class="score">0.60</span></div>
+                    <div class="entry">🇨🇳 中国 <span class="score">0.59</span></div>
+                    <div class="entry">🇹🇷 土耳其 <span class="score">0.57</span></div>
+                    <div class="entry">🇨🇾 塞浦路斯 <span class="score">0.57</span></div>
+                    <div class="entry">🇧🇭 巴林 <span class="score">0.57</span></div>
+                    <div class="entry">🇴🇲 阿曼 <span class="score">0.57</span></div>
+                    <div class="entry">🇷🇺 俄罗斯 <span class="score">0.56</span></div>
+                    <div class="entry">🇲🇽 墨西哥 <span class="score">0.56</span></div>
+                    <div class="entry">🇬🇪 格鲁吉亚 <span class="score">0.56</span></div>
+                    <div class="entry">🇦🇷 阿根廷 <span class="score">0.56</span></div>
+                    <div class="entry">🇰🇿 哈萨克斯坦 <span class="score">0.56</span></div>
+                    <div class="entry">🇱🇻 拉脱维亚 <span class="score">0.56</span></div>
+                    <div class="entry">🇭🇷 克罗地亚 <span class="score">0.55</span></div>
+                    <div class="entry">🇻🇳 越南 <span class="score">0.55</span></div>
+                    <div class="entry">🇷🇸 塞尔维亚 <span class="score">0.55</span></div>
+                    <div class="entry">🇸🇰 斯洛伐克 <span class="score">0.55</span></div>
+                    <div class="entry">🇨🇷 哥斯达黎加 <span class="score">0.55</span></div>
+                    <div class="entry">🇮🇩 印度尼西亚 <span class="score">0.54</span></div>
+                    <div class="entry">🇧🇼 博茨瓦纳 <span class="score">0.54</span></div>
+                    <div class="entry">🇯🇴 约旦 <span class="score">0.54</span></div>
+                    <div class="entry">🇿🇦 南非 <span class="score">0.53</span></div>
+                    <div class="entry">🇵🇪 秘鲁 <span class="score">0.53</span></div>
+                    <div class="entry">🇧🇷 巴西 <span class="score">0.53</span></div>
+                    <div class="entry">🇲🇦 摩洛哥 <span class="score">0.52</span></div>
+                    <div class="entry">🇵🇭 菲律宾 <span class="score">0.52</span></div>
+                    <div class="entry">🇨🇴 哥伦比亚 <span class="score">0.52</span></div>
+                    <div class="entry">🇩🇴 多米尼加 <span class="score">0.52</span></div>
+                </div>
             </div>
 
             <h2>D 级（0.30–0.49）</h2>
             <div class="grade-block">
                 <div class="grade-title" style="color:#fb923c;">D · 大部分价值被拿走</div>
                 <div class="grade-desc">「系统正在耗尽人民。」</div>
-                <ul>
-                    <li><strong>西班牙</strong> 0.44 — 区域张力、土地与资源分配不均</li>
-                    <li><strong>英国</strong> 0.44 — 贵族土地垄断、社会流动性低</li>
-                    <li><strong>法国</strong> 0.44 — 中央集权、价值捕获转向市场逻辑</li>
-                    <li><strong>意大利</strong> 0.43 — 官僚沉重、南北差距、家族垄断</li>
-                    <li><strong>马来西亚</strong> 0.41 — 族群政策固化土地分配</li>
-                    <li><strong>希腊</strong> 0.39 — 债务危机、行政崩溃</li>
-                    <li><strong>越南</strong> 0.38 — 土地改革引发地价暴涨</li>
-                    <li><strong>以色列</strong> 0.38 — 军事优先、土地资源集中</li>
-                    <li><strong>美国</strong> 0.35 — GDP #1，但治理正当性极低</li>
-                    <li><strong>科威特</strong> 0.34 — 石油财富集中、转嫁路径不透明</li>
-                    <li><strong>不丹</strong> 0.33 — GDP极低，但治理分数与之相符</li>
-                    <li><strong>智利</strong> 0.32 — 新自由主义遗产、土地与水资源集中</li>
-                    <li><strong>日本</strong> 0.31 — GDP #4，但高心理成本、机会成本</li>
-                    <li><strong>泰国</strong> 0.31 — 长期政治不稳定、军事干预</li>
-                    <li><strong>卡塔尔</strong> 0.44 — 石油财富集中、外籍劳工排除</li>
-                </ul>
-                <div class="countries">D 级的共同特征：GDP 很高，但人民被制度耗尽。等待、重复、崩溃、焦虑、机会被剥夺。</div>
+                <div class="country-grid">
+                    <div class="entry">🇧🇬 保加利亚 <span class="score">0.49</span></div>
+                    <div class="entry">🇷🇴 罗马尼亚 <span class="score">0.49</span></div>
+                    <div class="entry">🇱🇰 斯里兰卡 <span class="score">0.47</span></div>
+                    <div class="entry">🇹🇹 特立尼达 <span class="score">0.47</span></div>
+                    <div class="entry">🇧🇹 不丹 <span class="score">0.47</span></div>
+                    <div class="entry">🇷🇼 卢旺达 <span class="score">0.46</span></div>
+                    <div class="entry">🇮🇳 印度 <span class="score">0.44</span></div>
+                    <div class="entry">🇪🇬 埃及 <span class="score">0.43</span></div>
+                    <div class="entry">🇺🇦 乌克兰 <span class="score">0.42</span></div>
+                    <div class="entry">🇦🇿 阿塞拜疆 <span class="score">0.42</span></div>
+                    <div class="entry">🇬🇹 危地马拉 <span class="score">0.42</span></div>
+                    <div class="entry">🇬🇭 加纳 <span class="score">0.41</span></div>
+                    <div class="entry">🇪🇨 厄瓜多尔 <span class="score">0.41</span></div>
+                    <div class="entry">🇮🇷 伊朗 <span class="score">0.40</span></div>
+                    <div class="entry">🇵🇾 巴拉圭 <span class="score">0.40</span></div>
+                    <div class="entry">🇯🇲 牙买加 <span class="score">0.39</span></div>
+                    <div class="entry">🇺🇿 乌兹别克斯坦 <span class="score">0.39</span></div>
+                    <div class="entry">🇧🇴 玻利维亚 <span class="score">0.38</span></div>
+                    <div class="entry">🇸🇻 萨尔瓦多 <span class="score">0.38</span></div>
+                    <div class="entry">🇵🇬 巴布亚新几内亚 <span class="score">0.38</span></div>
+                    <div class="entry">🇧🇩 孟加拉国 <span class="score">0.37</span></div>
+                    <div class="entry">🇹🇿 坦桑尼亚 <span class="score">0.36</span></div>
+                    <div class="entry">🇺🇬 乌干达 <span class="score">0.36</span></div>
+                    <div class="entry">🇰🇭 柬埔寨 <span class="score">0.35</span></div>
+                    <div class="entry">🇭🇳 洪都拉斯 <span class="score">0.34</span></div>
+                    <div class="entry">🇪🇹 埃塞俄比亚 <span class="score">0.33</span></div>
+                    <div class="entry">🇳🇬 尼日利亚 <span class="score">0.32</span></div>
+                    <div class="entry">🇮🇶 伊拉克 <span class="score">0.32</span></div>
+                    <div class="entry">🇲🇲 缅甸 <span class="score">0.31</span></div>
+                    <div class="entry">🇦🇫 阿富汗 <span class="score">0.30</span></div>
+                </div>
             </div>
 
             <h2>F 级（0.00–0.29）</h2>
             <div class="grade-block">
                 <div class="grade-title" style="color:#f87171;">F · 制度碎片化 · 闭环断裂</div>
-                <div class="grade-desc">「制度不是运作不良——是根本没有形成闭环。价值被截留，成本被系统性转嫁给最弱势的人。」</div>
-                <p><strong>F 级的参数特征：</strong></p>
-                <ul>
-                    <li>等待成本：20–35 — 行政程序极度冗长，等待时间是标准值的3–5倍</li>
-                    <li>重复成本：20–30 — 行政程序极度碎片化，同一文件重复提交，规则不连贯</li>
-                    <li>崩溃成本：15–25 — 制度筛选掉最需要帮助的人，放弃比例超过40%</li>
-                    <li>信息不对称：15–25 — 政府决策完全不透明，民众无法获取关键信息</li>
-                    <li>心理成本：15–25 — 制度不可预测，对制度的信任低于30%</li>
-                    <li>机会成本：20–30 — 制度阻碍导致个人与社会发展机会大量流失</li>
-                    <li>转嫁路径：15–25 — 成本持续从权力核心转嫁给弱势群体</li>
-                    <li>回路闭合：15–25 — 公共价值几乎不回流，闭环断裂</li>
-                </ul>
-                <div class="countries" style="margin-top: 0.8rem;"><strong>F 级的共同特征：</strong>八个参数中有六个以上处于「极度失灵」区间（分数低于30）。制度碎片化使闭环无法形成，价值被截留，成本被系统性转嫁给最弱势的人。</div>
-            </div>
-
-            <h3>F 级各经济体诊断</h3>
-            <div class="diagnostic-grid">
-                <div class="diagnostic-item"><span class="country">土耳其</span> <span class="score">0.30</span><div class="diagnosis">行政程序极度碎片化，政策反复，信任流失，成本转嫁给一般民众。</div></div>
-                <div class="diagnostic-item"><span class="country">印度</span> <span class="score">0.30</span><div class="diagnosis">种姓与贫富差距固化制度断层，行政体系崩溃，弱势被排除在闭环之外。</div></div>
-                <div class="diagnostic-item"><span class="country">巴西</span> <span class="score">0.28</span><div class="diagnosis">税务制度碎片化——联邦、州、市三级税制重叠，闭环断裂，成本转嫁给终端消费者。</div></div>
-                <div class="diagnostic-item"><span class="country">印尼</span> <span class="score">0.28</span><div class="diagnosis">土地治理破碎——习惯法、殖民遗产、现代法规并存，产权不清，官僚复杂。</div></div>
-                <div class="diagnostic-item"><span class="country">阿根廷</span> <span class="score">0.28</span><div class="diagnosis">债务与通胀反复侵蚀制度，政策无连续性，闭环长期断裂，财富持续外流。</div></div>
-                <div class="diagnostic-item"><span class="country">俄罗斯</span> <span class="score">0.27</span><div class="diagnosis">资源诅咒——石油与天然气收入被国家与寡头捕获，制裁挤压使闭环无法形成。</div></div>
-                <div class="diagnostic-item"><span class="country">墨西哥</span> <span class="score">0.26</span><div class="diagnosis">暴力与贪腐构成制度性屏障，弱势被排除在价值分配之外，闭环完全断裂。</div></div>
-                <div class="diagnostic-item"><span class="country">香港</span> <span class="score">0.25</span><div class="diagnosis">政府与寡头垄断土地，土地增值被截留，公共价值无法回流公民。</div></div>
-                <div class="diagnostic-item"><span class="country">台湾</span> <span class="score">0.24</span><div class="diagnosis">土地增值被私人资本捕获，房地产成本转嫁年轻世代，政治消耗制度能量。</div></div>
-                <div class="diagnostic-item"><span class="country">南非</span> <span class="score">0.24</span><div class="diagnosis">殖民遗产与种族隔离造成土地分配极端不均，改革停滞，闭环无法建立。</div></div>
-                <div class="diagnostic-item"><span class="country">埃及</span> <span class="score">0.23</span><div class="diagnosis">人口压力挤压制度空间，军队控制土地与经济，弱势被排除在分配之外。</div></div>
-                <div class="diagnostic-item"><span class="country">伊朗</span> <span class="score">0.21</span><div class="diagnosis">国际制裁与神权体制叠加，资源稀缺，价值被国家与宗教基金会捕获。</div></div>
-                <div class="diagnostic-item"><span class="country">尼日利亚</span> <span class="score">0.20</span><div class="diagnosis">石油财富被菁英与外资捕获，制度失灵，弱势完全被排除在闭环之外。</div></div>
+                <div class="grade-desc">「制度不是运作不良——是根本没有形成闭环。」</div>
+                <div class="country-grid">
+                    <div class="entry">🇾🇪 也门 <span class="score">0.28</span></div>
+                </div>
             </div>
 
             <div class="key-insight">
                 <p><span class="highlight-line">一个关键观察</span></p>
                 <p><strong>0.5 是分界线。</strong> 低于 0.5 的国家——治理正在耗尽人民。高于 0.5 的国家——治理正在回收价值。</p>
-                <p style="margin-top:0.5rem; color:#9fe870;">A 级（0.90–1.00）— 尚未存在<br>B 级（0.70–0.89）— 价值回流，信任存在<br>C 级（0.50–0.69）— 一半回流，一半转嫁<br>D 级（0.30–0.49）— 大部分价值被拿走<br>F 级（0.00–0.29）— 制度碎片化，闭环断裂，成本被系统性转嫁</p>
+                <p style="margin-top:0.5rem; color:#9fe870;">A 级（0.90–1.00）— 尚未存在<br>B 级（0.70–0.89）— 价值回流，信任存在<br>C 级（0.50–0.69）— 一半回流，一半转嫁<br>D 级（0.30–0.49）— 大部分价值被拿走<br>F 级（0.00–0.29）— 制度碎片化，闭环断裂</p>
             </div>
 
             <div class="note">
                 <p><strong>结语</strong></p>
                 <p>GL Index 不是一个「竞争排名」。它是一个「正当性诊断」。</p>
                 <p>它告诉你：「这个治理系统——是让人民活得更好，还是让人民被制度榨干？」</p>
-                <p>当你看到一个国家的分数时，你读到的不是「他们输了」或「我们赢了」——你读到的是：「那些被 GDP 隐藏的成本——等待、重复、崩溃、焦虑、机会被剥夺——正在被看见。」</p>
+                <p style="margin-top:0.8rem; color:#7DD3FC;">数据：100 个经济体 · v5.3 模型 · 12 项参数</p>
             </div>
 
             <div class="divider"></div>
@@ -549,135 +670,171 @@
         <div class="essay-container">
             <h1>Calificaciones del GL Index</h1>
             <div class="subtitle">¿Qué Significan Realmente?</div>
-            <div class="author-line">— GL Framework Diagnostic · GFI Flow Intelligence</div>
-
-            <p>Si ves el GL Index por primera vez, podrías preguntarte: "¿Qué significa 0.79? ¿Qué representa una calificación B? ¿Por qué no hay A?"</p>
-            <p>Esto no es un "manual." Es una "guía de diagnóstico." Te dice qué leer cuando ves la puntuación GL Index de un país.</p>
+            <div class="author-line">— GL Framework Diagnostic · GFI Flow Intelligence · 100 Economías v5.3</div>
 
             <div class="key-insight">
                 <p><span class="highlight-line">Una frase para recordar</span></p>
                 <p>"El GL Index no mide la producción económica. Mide la legitimidad de la gobernanza."</p>
                 <p>El PIB te dice "qué tan rico es este país." El GL Index te dice "si este país es digno de confianza."</p>
-                <p>La puntuación de 0.00–1.00 no es una "calificación de rendimiento" — es un "diagnóstico de legitimidad."</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat"><span class="num" style="color:#7DD3FC;">26</span><div class="label">Grado B (0.70–0.89)</div></div>
+                <div class="stat"><span class="num" style="color:#fbbf24;">42</span><div class="label">Grado C (0.50–0.69)</div></div>
+                <div class="stat"><span class="num" style="color:#fb923c;">31</span><div class="label">Grado D (0.30–0.49)</div></div>
+                <div class="stat"><span class="num" style="color:#f87171;">1</span><div class="label">Grado F (0.00–0.29)</div></div>
             </div>
 
             <h2>Grado A (0.90–1.00)</h2>
             <div class="grade-block">
                 <div class="grade-title" style="color:#9FE870;">A · No Alcanzado</div>
                 <div class="grade-desc">"La Estrella Polar de la gobernanza, aún sin tocar."</div>
-                <p>El grado A representa: valor que regresa completamente, costos absorbidos por las instituciones, los vulnerables no son gravados, los ciudadanos confían en el gobierno. Esto no es una "calificación" — es una "dirección."</p>
-                <p>Ninguna economía ha alcanzado el grado A. No porque "no sean lo suficientemente buenas" — sino porque "la gobernanza verdaderamente digna de confianza aún no ha aparecido."</p>
+                <p>Ninguna economía ha alcanzado el grado A.</p>
             </div>
 
             <h2>Grado B (0.70–0.89)</h2>
             <div class="grade-block">
                 <div class="grade-title" style="color:#7DD3FC;">B · El Valor Regresa, la Confianza Existe</div>
                 <div class="grade-desc">"La gobernanza funciona. Los costos no se trasladan a los vulnerables."</div>
-                <ul>
-                    <li><strong>Finlandia</strong> 0.87 — Educación, salud, confianza social</li>
-                    <li><strong>Singapur</strong> 0.79 — Vivienda pública, suelo público, eficiencia</li>
-                    <li><strong>Suiza</strong> 0.78 — Democracia directa, impuestos transparentes</li>
-                    <li><strong>Austria</strong> 0.77 — Vivienda pública, asociación social</li>
-                    <li><strong>Dinamarca</strong> 0.76 — Altos impuestos, alto bienestar, alta confianza</li>
-                    <li><strong>Irlanda</strong> 0.76 — Fondos estructurales de la UE, retorno parcial</li>
-                    <li><strong>Islandia</strong> 0.75 — Pequeña, transparente, recursos públicos</li>
-                    <li><strong>República Checa</strong> 0.73 — Transición, espacio público preservado</li>
-                    <li><strong>Nueva Zelanda</strong> 0.73 — Impuesto a la tierra, derechos maoríes</li>
-                    <li><strong>Canadá</strong> 0.72 — Federalismo, recuperación fiscal</li>
-                    <li><strong>Suecia</strong> 0.72 — Altos impuestos, alto bienestar, retorno completo</li>
-                    <li><strong>Noruega</strong> 0.71 — Ingresos petroleros publicitados</li>
-                    <li><strong>Bélgica</strong> 0.71 — Centro de la UE, estándares regulatorios</li>
-                    <li><strong>Australia</strong> 0.70 — Impuesto minero, retorno parcial</li>
-                </ul>
-                <div class="countries">Característica común del grado B: el valor del suelo no está monopolizado por unos pocos. El valor regresa a los ciudadanos a través de impuestos, servicios públicos y vivienda social. B no es "perfecto" — es "la legitimidad existe."</div>
+                <div class="country-grid">
+                    <div class="entry">🇩🇰 Dinamarca <span class="score">0.83</span></div>
+                    <div class="entry">🇩🇪 Alemania <span class="score">0.83</span></div>
+                    <div class="entry">🇳🇴 Noruega <span class="score">0.82</span></div>
+                    <div class="entry">🇸🇪 Suecia <span class="score">0.82</span></div>
+                    <div class="entry">🇫🇮 Finlandia <span class="score">0.82</span></div>
+                    <div class="entry">🇱🇺 Luxemburgo <span class="score">0.80</span></div>
+                    <div class="entry">🇨🇭 Suiza <span class="score">0.79</span></div>
+                    <div class="entry">🇸🇬 Singapur <span class="score">0.79</span></div>
+                    <div class="entry">🇦🇹 Austria <span class="score">0.79</span></div>
+                    <div class="entry">🇳🇱 Países Bajos <span class="score">0.79</span></div>
+                    <div class="entry">🇨🇦 Canadá <span class="score">0.79</span></div>
+                    <div class="entry">🇯🇵 Japón <span class="score">0.77</span></div>
+                    <div class="entry">🇧🇪 Bélgica <span class="score">0.77</span></div>
+                    <div class="entry">🇺🇸 Estados Unidos <span class="score">0.74</span></div>
+                    <div class="entry">🇮🇪 Irlanda <span class="score">0.74</span></div>
+                    <div class="entry">🇳🇿 Nueva Zelanda <span class="score">0.74</span></div>
+                    <div class="entry">🇬🇧 Reino Unido <span class="score">0.73</span></div>
+                    <div class="entry">🇸🇮 Eslovenia <span class="score">0.73</span></div>
+                    <div class="entry">🇫🇷 Francia <span class="score">0.72</span></div>
+                    <div class="entry">🇨🇿 República Checa <span class="score">0.72</span></div>
+                    <div class="entry">🇵🇱 Polonia <span class="score">0.72</span></div>
+                    <div class="entry">🇮🇹 Italia <span class="score">0.71</span></div>
+                    <div class="entry">🇵🇹 Portugal <span class="score">0.70</span></div>
+                    <div class="entry">🇪🇸 España <span class="score">0.70</span></div>
+                    <div class="entry">🇪🇪 Estonia <span class="score">0.70</span></div>
+                    <div class="entry">🇮🇱 Israel <span class="score">0.70</span></div>
+                </div>
             </div>
 
             <h2>Grado C (0.50–0.69)</h2>
             <div class="grade-block">
                 <div class="grade-title" style="color:#fbbf24;">C · La Mitad Regresa, la Mitad se Traslada</div>
                 <div class="grade-desc">"La gobernanza es eficiente, pero la justicia se está erosionando."</div>
-                <ul>
-                    <li><strong>Corea del Sur</strong> 0.68 — Alta eficiencia administrativa, pero costos de tierra y educación concentrados</li>
-                    <li><strong>Portugal</strong> 0.67 — Fondos estructurales de la UE, pero aún alta fricción administrativa</li>
-                    <li><strong>Países Bajos</strong> 0.63 — Referente global de gobernanza, pero soberanía digital frágil, democracia en declive</li>
-                    <li><strong>Polonia</strong> 0.58 — Economía en transición, retorno parcial pero brechas estructurales</li>
-                    <li><strong>Alemania</strong> 0.56 — Economía fuerte, pero costos de tierra y transición energética trasladados</li>
-                    <li><strong>EAU</strong> 0.56 — Eficiencia administrativa extremadamente alta, pero trabajadores extranjeros excluidos</li>
-                    <li><strong>China</strong> 0.51 — El circuito fiscal del suelo existe, pero los agricultores quedan atrás</li>
-                </ul>
-                <div class="countries">Característica común del grado C: alta eficiencia administrativa, pero mecanismos de distribución de valor incompletos. La mitad del valor regresa, la mitad se traslada.</div>
+                <div class="country-grid">
+                    <div class="entry">🇰🇷 Corea del Sur <span class="score">0.69</span></div>
+                    <div class="entry">🇭🇰 Hong Kong <span class="score">0.65</span></div>
+                    <div class="entry">🇱🇹 Lituania <span class="score">0.64</span></div>
+                    <div class="entry">🇲🇹 Malta <span class="score">0.64</span></div>
+                    <div class="entry">🇨🇱 Chile <span class="score">0.64</span></div>
+                    <div class="entry">🇺🇾 Uruguay <span class="score">0.64</span></div>
+                    <div class="entry">🇹🇼 Taiwán <span class="score">0.64</span></div>
+                    <div class="entry">🇲🇾 Malasia <span class="score">0.63</span></div>
+                    <div class="entry">🇦🇪 EAU <span class="score">0.63</span></div>
+                    <div class="entry">🇸🇦 Arabia Saudita <span class="score">0.62</span></div>
+                    <div class="entry">🇶🇦 Catar <span class="score">0.62</span></div>
+                    <div class="entry">🇲🇺 Mauricio <span class="score">0.62</span></div>
+                    <div class="entry">🇬🇷 Grecia <span class="score">0.61</span></div>
+                    <div class="entry">🇭🇺 Hungría <span class="score">0.61</span></div>
+                    <div class="entry">🇧🇧 Barbados <span class="score">0.61</span></div>
+                    <div class="entry">🇰🇼 Kuwait <span class="score">0.60</span></div>
+                    <div class="entry">🇵🇦 Panamá <span class="score">0.60</span></div>
+                    <div class="entry">🇨🇳 China <span class="score">0.59</span></div>
+                    <div class="entry">🇹🇷 Turquía <span class="score">0.57</span></div>
+                    <div class="entry">🇨🇾 Chipre <span class="score">0.57</span></div>
+                    <div class="entry">🇧🇭 Baréin <span class="score">0.57</span></div>
+                    <div class="entry">🇴🇲 Omán <span class="score">0.57</span></div>
+                    <div class="entry">🇷🇺 Rusia <span class="score">0.56</span></div>
+                    <div class="entry">🇲🇽 México <span class="score">0.56</span></div>
+                    <div class="entry">🇬🇪 Georgia <span class="score">0.56</span></div>
+                    <div class="entry">🇦🇷 Argentina <span class="score">0.56</span></div>
+                    <div class="entry">🇰🇿 Kazajistán <span class="score">0.56</span></div>
+                    <div class="entry">🇱🇻 Letonia <span class="score">0.56</span></div>
+                    <div class="entry">🇭🇷 Croacia <span class="score">0.55</span></div>
+                    <div class="entry">🇻🇳 Vietnam <span class="score">0.55</span></div>
+                    <div class="entry">🇷🇸 Serbia <span class="score">0.55</span></div>
+                    <div class="entry">🇸🇰 Eslovaquia <span class="score">0.55</span></div>
+                    <div class="entry">🇨🇷 Costa Rica <span class="score">0.55</span></div>
+                    <div class="entry">🇮🇩 Indonesia <span class="score">0.54</span></div>
+                    <div class="entry">🇧🇼 Botsuana <span class="score">0.54</span></div>
+                    <div class="entry">🇯🇴 Jordania <span class="score">0.54</span></div>
+                    <div class="entry">🇿🇦 Sudáfrica <span class="score">0.53</span></div>
+                    <div class="entry">🇵🇪 Perú <span class="score">0.53</span></div>
+                    <div class="entry">🇧🇷 Brasil <span class="score">0.53</span></div>
+                    <div class="entry">🇲🇦 Marruecos <span class="score">0.52</span></div>
+                    <div class="entry">🇵🇭 Filipinas <span class="score">0.52</span></div>
+                    <div class="entry">🇨🇴 Colombia <span class="score">0.52</span></div>
+                    <div class="entry">🇩🇴 República Dominicana <span class="score">0.52</span></div>
+                </div>
             </div>
 
             <h2>Grado D (0.30–0.49)</h2>
             <div class="grade-block">
                 <div class="grade-title" style="color:#fb923c;">D · La Mayor Parte del Valor es Tomada</div>
                 <div class="grade-desc">"El sistema está agotando a su gente."</div>
-                <ul>
-                    <li><strong>España</strong> 0.44 — Tensiones regionales, distribución desigual de tierra y recursos</li>
-                    <li><strong>Reino Unido</strong> 0.44 — Monopolio aristocrático de la tierra, baja movilidad social</li>
-                    <li><strong>Francia</strong> 0.44 — Centralización, captura de valor hacia la lógica del mercado</li>
-                    <li><strong>Italia</strong> 0.43 — Burocracia pesada, brecha Norte-Sur, monopolios familiares</li>
-                    <li><strong>Malasia</strong> 0.41 — La política étnica bloquea la distribución de la tierra</li>
-                    <li><strong>Grecia</strong> 0.39 — Crisis de deuda, colapso administrativo</li>
-                    <li><strong>Vietnam</strong> 0.38 — La reforma agraria desencadena aumentos de precios</li>
-                    <li><strong>Israel</strong> 0.38 — Prioridad militar, concentración de recursos territoriales</li>
-                    <li><strong>Estados Unidos</strong> 0.35 — PIB #1, pero legitimidad gubernamental extremadamente baja</li>
-                    <li><strong>Kuwait</strong> 0.34 — Riqueza petrolera concentrada, vía de traslado opaca</li>
-                    <li><strong>Bután</strong> 0.33 — PIB extremadamente bajo, pero la puntuación coincide</li>
-                    <li><strong>Chile</strong> 0.32 — Legado neoliberal, concentración de tierra y agua</li>
-                    <li><strong>Japón</strong> 0.31 — PIB #4, pero altos costos psicológicos y de oportunidad</li>
-                    <li><strong>Tailandia</strong> 0.31 — Inestabilidad política a largo plazo, intervención militar</li>
-                    <li><strong>Catar</strong> 0.44 — Riqueza petrolera concentrada, trabajadores extranjeros excluidos</li>
-                </ul>
-                <div class="countries">Característica común del grado D: el PIB es alto, pero la gente está agotada por el sistema. Espera, repetición, colapso, ansiedad, oportunidades robadas.</div>
+                <div class="country-grid">
+                    <div class="entry">🇧🇬 Bulgaria <span class="score">0.49</span></div>
+                    <div class="entry">🇷🇴 Rumania <span class="score">0.49</span></div>
+                    <div class="entry">🇱🇰 Sri Lanka <span class="score">0.47</span></div>
+                    <div class="entry">🇹🇹 Trinidad <span class="score">0.47</span></div>
+                    <div class="entry">🇧🇹 Bután <span class="score">0.47</span></div>
+                    <div class="entry">🇷🇼 Ruanda <span class="score">0.46</span></div>
+                    <div class="entry">🇮🇳 India <span class="score">0.44</span></div>
+                    <div class="entry">🇪🇬 Egipto <span class="score">0.43</span></div>
+                    <div class="entry">🇺🇦 Ucrania <span class="score">0.42</span></div>
+                    <div class="entry">🇦🇿 Azerbaiyán <span class="score">0.42</span></div>
+                    <div class="entry">🇬🇹 Guatemala <span class="score">0.42</span></div>
+                    <div class="entry">🇬🇭 Ghana <span class="score">0.41</span></div>
+                    <div class="entry">🇪🇨 Ecuador <span class="score">0.41</span></div>
+                    <div class="entry">🇮🇷 Irán <span class="score">0.40</span></div>
+                    <div class="entry">🇵🇾 Paraguay <span class="score">0.40</span></div>
+                    <div class="entry">🇯🇲 Jamaica <span class="score">0.39</span></div>
+                    <div class="entry">🇺🇿 Uzbekistán <span class="score">0.39</span></div>
+                    <div class="entry">🇧🇴 Bolivia <span class="score">0.38</span></div>
+                    <div class="entry">🇸🇻 El Salvador <span class="score">0.38</span></div>
+                    <div class="entry">🇵🇬 Papúa Nueva Guinea <span class="score">0.38</span></div>
+                    <div class="entry">🇧🇩 Bangladés <span class="score">0.37</span></div>
+                    <div class="entry">🇹🇿 Tanzania <span class="score">0.36</span></div>
+                    <div class="entry">🇺🇬 Uganda <span class="score">0.36</span></div>
+                    <div class="entry">🇰🇭 Camboya <span class="score">0.35</span></div>
+                    <div class="entry">🇭🇳 Honduras <span class="score">0.34</span></div>
+                    <div class="entry">🇪🇹 Etiopía <span class="score">0.33</span></div>
+                    <div class="entry">🇳🇬 Nigeria <span class="score">0.32</span></div>
+                    <div class="entry">🇮🇶 Irak <span class="score">0.32</span></div>
+                    <div class="entry">🇲🇲 Myanmar <span class="score">0.31</span></div>
+                    <div class="entry">🇦🇫 Afganistán <span class="score">0.30</span></div>
+                </div>
             </div>
 
             <h2>Grado F (0.00–0.29)</h2>
             <div class="grade-block">
                 <div class="grade-title" style="color:#f87171;">F · Sistemas Fragmentados · Bucles Rotos</div>
-                <div class="grade-desc">"El sistema no está funcionando mal — nunca formó un bucle. El valor es interceptado, los costos se trasladan sistemáticamente a los más vulnerables."</div>
-                <p><strong>Perfil de parámetros del Grado F:</strong></p>
-                <ul>
-                    <li>Costo de Espera: 20–35 — Procedimientos administrativos extremadamente largos, 3–5x tiempos de espera estándar</li>
-                    <li>Costo de Repetición: 20–30 — Procedimientos altamente fragmentados, presentación repetida de documentos, reglas inconsistentes</li>
-                    <li>Costo de Colapso: 15–25 — El sistema filtra a los más necesitados, tasa de abandono superior al 40%</li>
-                    <li>Asimetría de Información: 15–25 — Decisiones gubernamentales completamente opacas, los ciudadanos no pueden acceder a información crítica</li>
-                    <li>Costo Psicológico: 15–25 — El sistema es impredecible, confianza en las instituciones por debajo del 30%</li>
-                    <li>Costo de Oportunidad: 20–30 — Barreras institucionales causan pérdida masiva de oportunidades de desarrollo personal y social</li>
-                    <li>Vía de Traslado: 15–25 — Los costos se trasladan sistemáticamente de los centros de poder a los grupos vulnerables</li>
-                    <li>Cierre de Circuito: 15–25 — El valor público casi nunca regresa, el bucle está roto</li>
-                </ul>
-                <div class="countries" style="margin-top: 0.8rem;"><strong>Característica común del Grado F:</strong> Seis o más parámetros están en el rango de "fracaso extremo" (por debajo de 30). La fragmentación impide la formación de bucles. El valor es interceptado. Los costos se trasladan sistemáticamente a los más vulnerables.</div>
-            </div>
-
-            <h3>Diagnósticos de Economías Grado F</h3>
-            <div class="diagnostic-grid">
-                <div class="diagnostic-item"><span class="country">Turquía</span> <span class="score">0.30</span><div class="diagnosis">Procedimientos administrativos extremadamente fragmentados, políticas reversibles, confianza erosionada, costos trasladados a los ciudadanos comunes.</div></div>
-                <div class="diagnostic-item"><span class="country">India</span> <span class="score">0.30</span><div class="diagnosis">Castas y brechas de riqueza solidifican fracturas institucionales, colapso administrativo, vulnerables excluidos del bucle.</div></div>
-                <div class="diagnostic-item"><span class="country">Brasil</span> <span class="score">0.28</span><div class="diagnosis">Sistema tributario fragmentado — capas federal, estatal y municipal se superponen, bucle roto, costos trasladados a los consumidores finales.</div></div>
-                <div class="diagnostic-item"><span class="country">Indonesia</span> <span class="score">0.28</span><div class="diagnosis">Gobernanza del suelo fragmentada — derecho consuetudinario, herencia colonial, regulaciones modernas coexisten, derechos de propiedad poco claros, burocracia compleja.</div></div>
-                <div class="diagnostic-item"><span class="country">Argentina</span> <span class="score">0.28</span><div class="diagnosis">Deuda e inflación erosionan repetidamente las instituciones, sin continuidad de políticas, bucle roto durante mucho tiempo, riqueza que se fuga.</div></div>
-                <div class="diagnostic-item"><span class="country">Rusia</span> <span class="score">0.27</span><div class="diagnosis">Maldición de recursos — ingresos de petróleo y gas capturados por el estado y oligarcas, sanciones impiden la formación del bucle.</div></div>
-                <div class="diagnostic-item"><span class="country">México</span> <span class="score">0.26</span><div class="diagnosis">Violencia y corrupción forman barreras institucionales, vulnerables excluidos de la distribución de valor, bucle completamente roto.</div></div>
-                <div class="diagnostic-item"><span class="country">Hong Kong</span> <span class="score">0.25</span><div class="diagnosis">Gobierno y oligarcas monopolizan la tierra, el valor del suelo es interceptado, el valor público no puede regresar a los ciudadanos.</div></div>
-                <div class="diagnostic-item"><span class="country">Taiwán</span> <span class="score">0.24</span><div class="diagnosis">El valor del suelo es capturado por capital privado, los costos de vivienda se trasladan a las generaciones más jóvenes, la fricción política consume energía institucional.</div></div>
-                <div class="diagnostic-item"><span class="country">Sudáfrica</span> <span class="score">0.24</span><div class="diagnosis">El legado colonial y del apartheid crea una desigualdad extrema de la tierra, la reforma se estanca, el bucle no puede establecerse.</div></div>
-                <div class="diagnostic-item"><span class="country">Egipto</span> <span class="score">0.23</span><div class="diagnosis">La presión demográfica comprime el espacio institucional, el ejército controla la tierra y la economía, los vulnerables son excluidos de la distribución.</div></div>
-                <div class="diagnostic-item"><span class="country">Irán</span> <span class="score">0.21</span><div class="diagnosis">Sanciones internacionales y régimen teocrático se combinan, escasez de recursos, valor capturado por el estado y fundaciones religiosas.</div></div>
-                <div class="diagnostic-item"><span class="country">Nigeria</span> <span class="score">0.20</span><div class="diagnosis">Riqueza petrolera capturada por élites y capital extranjero, fracaso institucional, vulnerables completamente excluidos del bucle.</div></div>
+                <div class="grade-desc">"El sistema no está funcionando mal — nunca formó un bucle."</div>
+                <div class="country-grid">
+                    <div class="entry">🇾🇪 Yemen <span class="score">0.28</span></div>
+                </div>
             </div>
 
             <div class="key-insight">
                 <p><span class="highlight-line">Una Observación Clave</span></p>
                 <p><strong>0.5 es la línea divisoria.</strong> Por debajo de 0.5 — la gobernanza está agotando a su gente. Por encima de 0.5 — la gobernanza está recuperando valor.</p>
-                <p style="margin-top:0.5rem; color:#9fe870;">A (0.90–1.00) — No alcanzado<br>B (0.70–0.89) — El valor regresa, la confianza existe<br>C (0.50–0.69) — La mitad regresa, la mitad se traslada<br>D (0.30–0.49) — La mayor parte del valor es tomada<br>F (0.00–0.29) — Sistemas fragmentados, bucles rotos, costos sistemáticamente trasladados</p>
+                <p style="margin-top:0.5rem; color:#9fe870;">A (0.90–1.00) — No alcanzado<br>B (0.70–0.89) — El valor regresa, la confianza existe<br>C (0.50–0.69) — La mitad regresa, la mitad se traslada<br>D (0.30–0.49) — La mayor parte del valor es tomada<br>F (0.00–0.29) — Sistemas fragmentados, bucles rotos</p>
             </div>
 
             <div class="note">
                 <p><strong>Conclusión</strong></p>
                 <p>El GL Index no es un "ranking competitivo." Es un "diagnóstico de legitimidad."</p>
                 <p>Te dice: "¿Este sistema de gobernanza hace que la vida de las personas sea mejor — o las agota?"</p>
-                <p>Cuando ves la puntuación de un país, no estás leyendo "perdieron" o "ganamos" — estás leyendo: "Los costos ocultos por el PIB — espera, repetición, colapso, ansiedad, oportunidades robadas — finalmente están siendo vistos."</p>
+                <p style="margin-top:0.8rem; color:#7DD3FC;">Datos: 100 economías · modelo v5.3 · 12 parámetros</p>
             </div>
 
             <div class="divider"></div>
