@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GL-Verifier · 數位轉型診斷工具</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      background: #0b1220;
+      color: #f8fbff;
+      font-family: 'DM Sans', system-ui, sans-serif;
+      line-height: 1.6;
+      padding: 0 1rem 2rem;
+    }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    .preorder-banner {
+      background: linear-gradient(135deg, rgba(159,232,112,0.12), rgba(251,191,36,0.08));
+      border: 1px solid rgba(159,232,112,0.2);
+      border-radius: 8px;
+      padding: 0.75rem 1.5rem;
+      text-align: center;
+      margin: 1rem 0 1.5rem;
+      font-size: 0.9rem;
+      color: #9FE870;
+      letter-spacing: 0.04em;
+    }
+    .preorder-banner strong { color: #fbbf24; }
+    .preorder-banner .highlight { color: #9FE870; font-weight: 600; }
+
+    .lang-bar { display: flex; justify-content: flex-end; gap: 0.5rem; margin-bottom: 1rem; }
+    .lang-btn {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      padding: 0.25rem 0.8rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 2rem;
+      background: none;
+      color: #9fb0c8;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .lang-btn:hover { border-color: rgba(255,255,255,0.3); color: #fff; }
+    .lang-btn.active { background: #9FE870; color: #0b1220; border-color: #9FE870; }
+
+    .lang-content { display: none; }
+    .lang-content.active { display: block; }
+
+    .product-header { border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 1.5rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .product-header .logo { font-family: 'DM Mono', monospace; font-size: 0.8rem; letter-spacing: 0.12em; color: #9FE870; text-decoration: none; text-transform: uppercase; }
+    .product-header .logo a { color: #9FE870; text-decoration: none; }
+
+    .hero { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; margin-bottom: 3rem; }
+    .hero-image { background: linear-gradient(145deg, #0d1526, #0b1220); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 2.5rem; text-align: center; min-height: 320px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+    .hero-image .device-icon { font-size: 4.5rem; margin-bottom: 1rem; }
+    .hero-image .screen-sim { background: #0b1220; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 0.5rem 1.5rem; font-family: 'DM Mono', monospace; font-size: 1.4rem; color: #9FE870; display: inline-block; margin: 0.5rem 0; }
+    .hero-image .device-label { font-size: 0.7rem; color: #6b7a8f; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.5rem; }
+    .hero-image .tagline { font-size: 0.7rem; color: #6b7a8f; margin-top: 1rem; letter-spacing: 0.04em; }
+
+    .hero-text h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: 2.8rem; line-height: 1.1; font-weight: 400; margin-bottom: 0.5rem; }
+    .hero-text h1 em { color: #9FE870; font-style: italic; }
+    .hero-text .sub { font-size: 1.2rem; color: #9fb0c8; margin-bottom: 0.5rem; }
+    .hero-text .desc { color: #9fb0c8; font-size: 1rem; line-height: 1.8; margin-bottom: 1.5rem; max-width: 480px; }
+    .price-tag { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
+    .price { font-family: 'DM Serif Display', Georgia, serif; font-size: 3rem; color: #fbbf24; }
+    .price-sub { color: #6b7a8f; font-size: 0.9rem; }
+    .preorder-badge {
+      display: inline-block;
+      background: rgba(159,232,112,0.12);
+      border: 1px solid rgba(159,232,112,0.25);
+      color: #9FE870;
+      font-size: 0.7rem;
+      padding: 0.15rem 0.8rem;
+      border-radius: 2rem;
+      font-family: 'DM Mono', monospace;
+      letter-spacing: 0.06em;
+    }
+    .btn-buy { display: inline-block; background: #9FE870; color: #0b1220; padding: 0.9rem 2.5rem; border-radius: 8px; font-weight: 700; font-size: 1rem; text-decoration: none; transition: background 0.2s; border: none; cursor: pointer; }
+    .btn-buy:hover { background: #8fd460; }
+    .btn-outline { display: inline-block; background: transparent; color: #f8fbff; padding: 0.9rem 2.5rem; border-radius: 8px; font-weight: 600; font-size: 1rem; text-decoration: none; border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s; margin-left: 0.5rem; }
+    .btn-outline:hover { border-color: #9FE870; color: #9FE870; }
+    .ship-info { font-size: 0.8rem; color: #6b7a8f; margin-top: 0.75rem; }
+
+    .section { padding: 2.5rem 0; border-top: 1px solid rgba(255,255,255,0.06); }
+    .section-eyebrow { font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: #9FE870; margin-bottom: 0.5rem; }
+    .section-title { font-family: 'DM Serif Display', Georgia, serif; font-size: 2rem; font-weight: 400; margin-bottom: 0.5rem; }
+    .section-sub { color: #9fb0c8; font-size: 1rem; max-width: 560px; line-height: 1.8; }
+
+    .spec-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+    .spec-card { background: #0d1526; border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 1.5rem; }
+    .spec-card .icon { font-size: 1.8rem; margin-bottom: 0.5rem; }
+    .spec-card h4 { font-size: 1rem; margin-bottom: 0.25rem; }
+    .spec-card p { font-size: 0.85rem; color: #9fb0c8; line-height: 1.6; }
+
+    .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; }
+    .feature-item { display: flex; gap: 1rem; align-items: flex-start; padding: 0.8rem 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .feature-item .icon { font-size: 1.5rem; flex-shrink: 0; width: 36px; }
+    .feature-item h4 { font-size: 1rem; margin-bottom: 0.1rem; }
+    .feature-item p { font-size: 0.85rem; color: #9fb0c8; }
+
+    .use-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+    .use-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 1.2rem 1.5rem; text-align: center; }
+    .use-card .icon { font-size: 2rem; margin-bottom: 0.3rem; }
+    .use-card h4 { font-size: 0.95rem; }
+    .use-card p { font-size: 0.8rem; color: #9fb0c8; margin-top: 0.1rem; }
+
+    .cta-section { background: linear-gradient(145deg, rgba(159,232,112,0.04), transparent); border: 1px solid rgba(159,232,112,0.12); border-radius: 16px; padding: 2.5rem; text-align: center; margin-top: 2rem; }
+    .cta-section h2 { font-family: 'DM Serif Display', Georgia, serif; font-size: 1.8rem; font-weight: 400; margin-bottom: 0.5rem; }
+    .cta-section p { color: #9fb0c8; margin-bottom: 1.5rem; }
+
+    .footer { padding: 2rem 0; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 0.8rem; color: #6b7a8f; }
+    .footer a { color: #6b7a8f; text-decoration: none; transition: color 0.2s; }
+    .footer a:hover { color: #f8fbff; }
+    .wechat { display: flex; align-items: center; gap: 0.5rem; }
+    .wechat img { width: 36px; height: 36px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.06); padding: 2px; background: #fff; }
+    .wechat span { font-size: 0.75rem; color: #6b7a8f; }
+
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; gap: 2rem; }
+      .hero-text h1 { font-size: 2.2rem; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .preorder-banner { font-size: 0.8rem; padding: 0.5rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ====== 預售公告列（四語版本會動態顯示） ====== -->
+  <div class="preorder-banner" id="banner-en">
+    🚀 <strong>Pre-order: July</strong> · Shipping: August 2026 · First batch: <span class="highlight">1,000 units</span> — Order now
+  </div>
+  <div class="preorder-banner" id="banner-tw" style="display:none;">
+    🚀 <strong>七月預售 · 八月正式出貨</strong> — 首批 <span class="highlight">1,000 台</span> · 立即預購
+  </div>
+  <div class="preorder-banner" id="banner-cn" style="display:none;">
+    🚀 <strong>七月预售 · 八月正式出货</strong> — 首批 <span class="highlight">1,000 台</span> · 立即预购
+  </div>
+  <div class="preorder-banner" id="banner-es" style="display:none;">
+    🚀 <strong>Pre-venta: Julio</strong> · Envío: Agosto 2026 · Primer lote: <span class="highlight">1,000 unidades</span> — Ordene ahora
+  </div>
+
+  <!-- ====== 語言切換 ====== -->
+  <div class="lang-bar">
+    <button class="lang-btn active" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="tw">繁</button>
+    <button class="lang-btn" data-lang="cn">简</button>
+    <button class="lang-btn" data-lang="es">ES</button>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ==================== ENGLISH ================================ -->
+  <!-- ============================================================ -->
+  <div class="lang-content active" data-lang="en">
+    <div class="product-header">
+      <div class="logo"><a href="index.html">← GFI Flow Intelligence</a></div>
+      <div><a href="https://buy.stripe.com/6oU00bcuhdJk6q44MgejK00" class="btn-buy" style="padding:0.5rem 1.5rem; font-size:0.85rem;">Pre-order →</a></div>
+    </div>
+
+    <div class="hero">
+      <div class="hero-image">
+        <div class="device-icon">📟</div>
+        <div class="screen-sim">GL 0.00</div>
+        <div class="device-label">Service Flow Diagnostic Tool</div>
+        <div class="tagline">Plug · Mount · Diagnose</div>
+      </div>
+      <div class="hero-text">
+        <h1>Digital Transformation <em>Diagnostic Tool</em></h1>
+        <div class="sub">Measure what systems actually deliver.</div>
+        <p class="desc">An independent diagnostic device that automatically measures administrative friction — no system access, no surveys, no human judgment.</p>
+        <div class="price-tag">
+          <span class="price">$999</span>
+          <span class="price-sub">One-time purchase · Global shipping</span>
+          <span class="preorder-badge">Pre-order</span>
+        </div>
+        <div>
+          <a href="https://buy.stripe.com/6oU00bcuhdJk6q44MgejK00" class="btn-buy">Pre-order – $999 →</a>
+          <a href="#specs-en" class="btn-outline">Learn More</a>
+        </div>
+        <div class="ship-info">📦 Pre-order: July · Shipping: August 2026 · First batch: 1,000 units</div>
+      </div>
+    </div>
+
+    <div class="section" id="specs-en">
+      <div class="section-eyebrow">Specifications</div>
+      <h2 class="section-title">What's Inside</h2>
+      <p class="section-sub">Everything you need to start diagnosing digital transformation friction in 5 minutes.</p>
+      <div class="spec-grid">
+        <div class="spec-card"><div class="icon">⚡</div><h4>8 Parameters</h4><p>Waiting Cost · Repetition Cost · Collapse Cost · Information Asymmetry · Psychological Cost · Opportunity Cost · Shift Pathway · Loop Closure</p></div>
+        <div class="spec-card"><div class="icon">📊</div><h4>GL Index 0.00–1.00</h4><p>Single, standardized score — comparable across systems, institutions, and countries.</p></div>
+        <div class="spec-card"><div class="icon">🔓</div><h4>No System Access</h4><p>Works entirely from external observation. No integration. No permissions. No vendor control.</p></div>
+        <div class="spec-card"><div class="icon">🌍</div><h4>Global Standard</h4><p>Aligned with OECD/IDI Report 2026 and EO 14402.</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-eyebrow">How It Works</div>
+      <h2 class="section-title">Independent · Automated · Verifiable</h2>
+      <div class="feature-grid">
+        <div class="feature-item"><span class="icon">📦</span><div><h4>Deploy in Minutes</h4><p>Mount on a wall or desk, plug in power — it starts working immediately.</p></div></div>
+        <div class="feature-item"><span class="icon">🔄</span><div><h4>24/7 Data Collection</h4><p>Continuously measures waiting times, abandonment rates, and completion rates.</p></div></div>
+        <div class="feature-item"><span class="icon">🧮</span><div><h4>Real-Time GL Score</h4><p>OLED display shows the current GL Index and grade — A through F.</p></div></div>
+        <div class="feature-item"><span class="icon">📈</span><div><h4>Dashboard Access</h4><p>View aggregated data, trends, and comparative benchmarks online.</p></div></div>
+        <div class="feature-item"><span class="icon">🔒</span><div><h4>Tamper-Proof</h4><p>Verification seal ensures the device has not been altered after deployment.</p></div></div>
+        <div class="feature-item"><span class="icon">♻️</span><div><h4>Off-Grid Ready</h4><p>Solar + battery power option for remote or independent deployment.</p></div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-eyebrow">Who Uses It</div>
+      <h2 class="section-title">Same Tool. Different Users.</h2>
+      <p class="section-sub">One independent diagnostic device — serving governments, vendors, and citizens alike.</p>
+      <div class="use-grid">
+        <div class="use-card"><div class="icon">🏛️</div><h4>Government</h4><p>Verify procurement outcomes. Independent post-deployment validation.</p></div>
+        <div class="use-card"><div class="icon">📋</div><h4>Big 4 / Vendors</h4><p>Prove your delivery. Self-verify with independent, tamper-proof data.</p></div>
+        <div class="use-card"><div class="icon">👥</div><h4>Citizens / NGOs</h4><p>Monitor public services. Generate verifiable data for advocacy.</p></div>
+        <div class="use-card"><div class="icon">🏢</div><h4>CSR / Philanthropy</h4><p>Validate social impact. Prove your projects actually deliver.</p></div>
+      </div>
+    </div>
+
+    <div class="cta-section">
+      <h2>Start Measuring What Matters</h2>
+      <p>Pre-order now. First batch of 1,000 units ships August 2026.</p>
+      <a href="https://buy.stripe.com/6oU00bcuhdJk6q44MgejK00" class="btn-buy" style="font-size:1.1rem; padding:1rem 3rem;">Pre-order – $999 →</a>
+      <div style="margin-top:0.5rem; font-size:0.8rem; color:#6b7a8f;">📦 Pre-order: July · Shipping: August 2026 · 1,000 units</div>
+    </div>
+  </div><!-- /en -->
+
+  <!-- ============================================================ -->
+  <!-- ==================== 繁體中文 =============================== -->
+  <!-- ============================================================ -->
+  <div class="lang-content" data-lang="tw">
+    <div class="product-header">
+      <div class="logo"><a href="index.html">← GFI Flow Intelligence</a></div>
+      <div><a href="https://buy.stripe.com/6oU00bcuhdJk6q44MgejK00" class="btn-buy" style="padding:0.5rem 1.5rem; font-size:0.85rem;">預購 →</a></div>
+    </div>
+
+    <div class="hero">
+      <div class="hero-image">
+        <div class="device-icon">📟</div>
+        <div class="screen-sim">GL 0.00</div>
+        <div class="device-label">服務流程診斷工具</div>
+        <div class="tagline">插電 · 安裝 · 診斷</div>
+      </div>
+      <div class="hero-text">
+        <h1>數位轉型 <em>診斷工具</em></h1>
+        <div class="sub">測量系統真正的交付成果。</div>
+        <p class="desc">一台獨立的診斷儀器，自動測量行政摩擦——無需系統權限、無需問卷、無需人力判斷。</p>
+        <div class="price-tag">
+          <span class="price">$999</span>
+          <span class="price-sub">一次性購買 · 全球運送</span>
+          <span class="preorder-badge">預售中</span>
+        </div>
+        <div>
+          <a href="https://buy.stripe.com/6oU00bcuhdJk6q44MgejK00" class="btn-buy">預購 – $999 →</a>
+          <a href="#specs-tw" class="btn-outline">了解更多</a>
+        </div>
+        <div class="ship-info">📦 七月預售 · 八月正式出貨 · 首批 1,000 台</div>
+      </div>
+    </div>
+
+    <div class="section" id="specs-tw">
+      <div class="section-eyebrow">規格</div>
+      <h2 class="section-title">儀器內容</h2>
+      <p class="section-sub">5 分鐘內開始診斷數位轉型摩擦所需的一切。</p>
+      <div class="spec-grid">
+        <div class="spec-card"><div class="icon">⚡</div><h4>8 項參數</h4><p>等待成本 · 重複成本 · 崩潰成本 · 資訊不對稱 · 心理成本 · 機會成本 · 轉嫁路徑 · 迴路閉合</p></div>
+        <div class="spec-card"><div class="icon">📊</div><h4>GL Index 0.00–1.00</h4><p>單一標準化分數——可跨系統、跨機構、跨國家比較。</p></div>
+        <div class="spec-card"><div class="icon">🔓</div><h4>無需系統權限</h4><p>完全透過外部觀察運作。不需整合、不需權限、不受廠商控制。</p></div>
+        <div class="spec-card"><div class="icon">🌍</div><h4>全球標準</h4><p>對齊 OECD/IDI 2026 報告與 EO 14402。</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-eyebrow">運作方式</div>
+      <h2 class="section-title">獨立 · 自動 · 可驗證</h2>
+      <div class="feature-grid">
+        <div class="feature-item"><span class="icon">📦</span><div><h4>5 分鐘部署</h4><p>安裝在牆面或桌面，插上電源——立即開始運作。</p></div></div>
+        <div class="feature-item"><span class="icon">🔄</span><div><h4>24/7 數據收集</h4><p>持續測量等待時間、放棄率、完成率。</p></div></div>
+        <div class="feature-item"><span class="icon">🧮</span><div><h4>即時 GL 分數</h4><p>OLED 螢幕顯示當前 GL Index 與等級——A 到 F。</p></div></div>
+        <div class="feature-item"><span class="icon">📈</span><div><h4>儀表板存取</h4><p>線上查看彙總數據、趨勢與比較基準。</p></div></div>
+        <div class="feature-item"><span class="icon">🔒</span><div><h4>防篡改</h4><p>驗證密封貼紙確保裝置部署後未被更改。</p></div></div>
+        <div class="feature-item"><span class="icon">♻️</span><div><h4>離網就緒</h4><p>太陽能 + 電池供電選項，適用於偏遠或獨立部署。</p></div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-eyebrow">誰在使用</div>
+      <h2 class="section-title">同一台工具。不同使用者。</h2>
+      <p class="section-sub">一台獨立的診斷儀器——服務政府、廠商與公民。</p>
+      <div class="use-grid">
+        <div class="use-card"><div class="icon">🏛️</div><h4>政府</h4><p>驗證採購成果。獨立的上線後驗證。</p></div>
+        <div class="use-card"><div class="icon">📋</div><h4>Big 4／供應商</h4><p>證明你的交付。用獨立、防篡改的數據自我驗證。</p></div>
+        <div class="use-card"><div class="icon">👥</div><h4>公民／NGO</h4><p>監測公共服務。產生可驗證的倡議數據。</p></div>
+        <div class="use-card"><div class="icon">🏢</div><h4>CSR／公益組織</h4><p>驗證社會影響力。證明你的專案真正有交付。</p></div>
+      </div>
+    </div>
+
+    <div class="cta-section">
+      <h2>開始測量真正重要的事</h2>
+      <p>七月預售中。首批 1,000 台八月正式出貨。</p>
+      <a href="https://buy.stripe.com/6oU00bcuhdJk6q44MgejK00" class="btn-buy" style="font-size:1.1rem; padding:1rem 3rem;">預購 – $999 →</a>
+      <div style="margin-top:0.5rem; font-size:0.8rem; color:#6b7a8f;">📦 七月預售 · 八月出貨 · 首批 1,000 台</div>
+    </div>
+  </div><!-- /tw -->
+
+  <!-- ============================================================ -->
+  <!-- ==================== 简体中文 =============================== -->
+  <!-- ============================================================ -->
+  <div class="lang-content" data-lang="cn">
+    <div class="product-header">
+      <div class="logo"><a href="index.html">← GFI Flow Intelligence</a></div>
+      <div><a href="https://buy.stripe.com/6oU00bcuhdJk6q44MgejK00" class="btn-buy" style="padding:0.5rem 1.5rem; font-size:0.85rem;">预购 →</a></div>
+    </div>
+
+    <div class="hero">
+      <div class="hero-image">
+        <div class="device-icon">📟</div>
+        <div class="screen-sim">GL 0.00</div>
+        <div class="device-label">服务流程诊断工具</div>
+        <div class="tagline">插电 · 安装 · 诊断</div>
+      </div>
+      <div class="hero-text">
+        <h1>数字化转型 <em>诊断工具</em></h1>
+        <div class="sub">测量系统真正的交付成果。</div>
+        <p class="desc">一台独立的诊断仪器，自动测量行政摩擦——无需系统权限、无需问卷、无需人力判断。</p>
+        <div class="price-tag">
+          <span class="price">$999</span>
+          <span class="price-sub">一次性购买 · 全球运送</span>
+          <span class="preorder-badge">预售中</span>
+        </div>
+        <div>
+          <a href="https://buy.stripe.com/6oU00bcuhdJk6q44MgejK00" class="btn-buy">预购 – $999 →</a>
+          <a href="#specs-cn" class="btn-outline">了解更多</a>
+        </div>
+        <div class="ship-info">📦 七月预售 · 八月正式出货 · 首批 1,000 台</div>
+      </div>
+    </div>
+
+    <div class="section" id="specs-cn">
+      <div class="section-eyebrow">规格</div>
+      <h2 class="section-title">仪器内容</h2>
+      <p class="section-sub">5 分钟内开始诊断数字化转型摩擦所需的一切。</p>
+      <div class="spec-grid">
+        <div class="spec-card"><div class="icon">⚡</div><h4>8 项参数</h4><p>等待成本 · 重复成本 · 崩溃成本 · 信息不对称 · 心理成本 · 机会成本 · 转嫁路径 · 回路闭合</p></div>
+        <div class="spec-card"><div class="icon">📊</div><h4>GL Index 0.00–1.00</h4><p>单一标准化分数——可跨系统、跨机构、跨国家比较。</p></div>
+        <div class="spec-card"><div class="icon">🔓</div><h4>无需系统权限</h4><p>完全通过外部观察运作。不需整合、不需权限、不受厂商控制。</p></div>
+        <div class="spec-card"><div class="icon">🌍</div><h4>全球标准</h4><p>对齐 OECD/IDI 2026 报告与 EO 14402。</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-eyebrow">运作方式</div>
+      <h2 class="section-title">独立 · 自动 · 可验证</h2>
+      <div class="feature-grid">
+        <div class="feature-item"><span class="icon">📦</span><div><h4>5 分钟部署</h4><p>安装在墙面或桌面，插上电源——立即开始运作。</p></div></div>
+        <div class="feature-item"><span class="icon">🔄</span><div><h4>24/7 数据收集</h4><p>持续测量等待时间、放弃率、完成率。</p></div></div>
+        <div class="feature-item"><span class="icon">🧮</span><div><h4>实时 GL 分数</h4><p>OLED 屏幕显示当前 GL Index 与等级——A 到 F。</p></div></div>
+        <div class="feature-item"><span class="icon">📈</span><div><h4>仪表板存取</h4><p>在线查看汇总数据、趋势与比较基准。</p></div></div>
+        <div class="feature-item"><span class="icon">🔒</span><div><h4>防篡改</h4><p>验证密封贴纸确保装置部署后未被更改。</p></div></div>
+        <div class="feature-item"><span class="icon">♻️</span><div><h4>离网就绪</h4><p>太阳能 + 电池供电选项，适用于偏远或独立部署。</p></div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-eyebrow">谁在使用</div>
+      <h2 class="section-title">同一台工具。不同使用者。</h2>
+      <p class="section-sub">一台独立的诊断仪器——服务政府、厂商与公民。</p>
+      <div class="use-grid">
+        <div class="use-card"><div class="icon">🏛️</div><h4>政府</h4><p>验证采购成果。独立的上线后验证。</p></div>
+        <div class="use-card"><div class="icon">📋</div><h4>Big 4／供应商</h4><p>证明你的交付。用独立、防篡改的数据自我验证。</p></div>
+        <div class="use-card"><div class="icon">👥</div><h4>公民／NGO</h4><p>监测公共服务。产生可验证的倡议数据。</p></div>
+        <div class="use-card"><div class="icon">🏢</div><h4>CSR／公益组织</h4><p>验证社会影响力。证明你的项目真正有交付。</p></div>
+      </div>
+    </div>
+
+    <div class="cta-section">
+      <h2>开始测量真正重要的事</h2>
+      <p>七月预售中。首批 1,000 台八月正式出货。</p>
+      <a href="https://buy.stripe.com/6oU00bcuhdJk6q44MgejK00" class="btn-buy" style="font-size:1.1rem; padding:1rem 3rem;">预购 – $999 →</a>
+      <div style="margin-top:0.5rem; font-size:0.8rem; color:#6b7a8f;">📦 七月预售 · 八月出货 · 首批 1,000 台</div>
+    </div>
+  </div><!-- /cn -->
+
+  <!-- ============================================================ -->
+  <!-- ==================== SPANISH =============================== -->
+  <!-- ============================================================ -->
+  <div class="lang-content" data-lang="es">
+    <div class="product-header">
+      <div class="logo"><a href="index.html">← GFI Flow Intelligence</a></div>
+      <div><a href="https://buy.stripe.com/6oU00bcuhdJk6q44MgejK00" class="btn-buy" style="padding:0.5rem 1.5rem; font-size:0.85rem;">Pre-ordenar →</a></div>
+    </div>
+
+    <div class="hero">
+      <div class="hero-image">
+        <div class="device-icon">📟</div>
+        <div class="screen-sim">GL 0.00</div>
+        <div class="device-label">Herramienta de Diagnóstico de Flujo de Servicio</div>
+        <div class="tagline">Enchufar · Montar · Diagnosticar</div>
+      </div>
+      <div class="hero-text">
+        <h1>Transformación Digital <em>Herramienta de Diagnóstico</em></h1>
+        <div class="sub">Mide lo que los sistemas realmente entregan.</div>
+        <p class="desc">Un dispositivo de diagnóstico independiente que mide automáticamente la fricción administrativa — sin acceso al sistema, sin encuestas, sin juicio humano.</p>
+        <div class="price-tag">
+          <span class="price">$999</span>
+          <span class="price-sub">Compra única · Envío global</span>
+          <span class="preorder-badge">Pre-venta</span>
+        </div>
+        <div>
+          <a href="https://buy.stripe.com/6oU00bcuhdJk6q44MgejK00" class="btn-buy">Pre-ordenar – $999 →</a>
+          <a href="#specs-es" class="btn-outline">Más Información</a>
+        </div>
+        <div class="ship-info">📦 Pre-venta: Julio · Envío: Agosto 2026 · Primer lote: 1,000 unidades</div>
+      </div>
+    </div>
+
+    <div class="section" id="specs-es">
+      <div class="section-eyebrow">Especificaciones</div>
+      <h2 class="section-title">Qué Contiene</h2>
+      <p class="section-sub">Todo lo que necesitas para empezar a diagnosticar la fricción de la transformación digital en 5 minutos.</p>
+      <div class="spec-grid">
+        <div class="spec-card"><div class="icon">⚡</div><h4>8 Parámetros</h4><p>Costo de Espera · Costo de Repetición · Costo de Colapso · Asimetría de Información · Costo Psicológico · Costo de Oportunidad · Vía de Traslado · Cierre de Circuito</p></div>
+        <div class="spec-card"><div class="icon">📊</div><h4>Índice GL 0.00–1.00</h4><p>Puntuación única y estandarizada — comparable entre sistemas, instituciones y países.</p></div>
+        <div class="spec-card"><div class="icon">🔓</div><h4>Sin Acceso al Sistema</h4><p>Funciona completamente desde la observación externa. Sin integración. Sin permisos. Sin control del proveedor.</p></div>
+        <div class="spec-card"><div class="icon">🌍</div><h4>Estándar Global</h4><p>Alineado con el Informe OECD/IDI 2026 y EO 14402.</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-eyebrow">Cómo Funciona</div>
+      <h2 class="section-title">Independiente · Automatizado · Verificable</h2>
+      <div class="feature-grid">
+        <div class="feature-item"><span class="icon">📦</span><div><h4>Despliegue en Minutos</h4><p>Monta en una pared o escritorio, conecta la corriente — comienza a funcionar de inmediato.</p></div></div>
+        <div class="feature-item"><span class="icon">🔄</span><div><h4>Recopilación 24/7</h4><p>Mide continuamente tiempos de espera, tasas de abandono y tasas de finalización.</p></div></div>
+        <div class="feature-item"><span class="icon">🧮</span><div><h4>Puntuación GL en Tiempo Real</h4><p>La pantalla OLED muestra el Índice GL actual y el grado — de A a F.</p></div></div>
+        <div class="feature-item"><span class="icon">📈</span><div><h4>Acceso al Panel</h4><p>Visualiza datos agregados, tendencias y puntos de referencia comparativos en línea.</p></div></div>
+        <div class="feature-item"><span class="icon">🔒</span><div><h4>A Prueba de Manipulación</h4><p>El sello de verificación asegura que el dispositivo no ha sido alterado después del despliegue.</p></div></div>
+        <div class="feature-item"><span class="icon">♻️</span><div><h4>Listo para Fuera de la Red</h4><p>Opción de energía solar + batería para despliegue remoto o independiente.</p></div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-eyebrow">Quién Lo Usa</div>
+      <h2 class="section-title">Misma Herramienta. Diferentes Usuarios.</h2>
+      <p class="section-sub">Un dispositivo de diagnóstico independiente — sirviendo a gobiernos, proveedores y ciudadanos por igual.</p>
+      <div class="use-grid">
+        <div class="use-card"><div class="icon">🏛️</div><h4>Gobierno</h4><p>Verificar resultados de adquisiciones. Validación independiente post-despliegue.</p></div>
+        <div class="use-card"><div class="icon">📋</div><h4>Big 4 / Proveedores</h4><p>Demuestra tu entrega. Autoverificación con datos independientes y a prueba de manipulaciones.</p></div>
+        <div class="use-card"><div class="icon">👥</div><h4>Ciudadanos / ONGs</h4><p>Monitorear servicios públicos. Generar datos verificables para la incidencia.</p></div>
+        <div class="use-card"><div class="icon">🏢</div><h4>RSC / Filantropía</h4><p>Validar el impacto social. Demostrar que tus proyectos realmente entregan.</p></div>
+      </div>
+    </div>
+
+    <div class="cta-section">
+      <h2>Empieza a Medir lo que Importa</h2>
+      <p>Pre-venta ahora. Primer lote de 1,000 unidades enviado en Agosto 2026.</p>
+      <a href="https://buy.stripe.com/6oU00bcuhdJk6q44MgejK00" class="btn-buy" style="font-size:1.1rem; padding:1rem 3rem;">Pre-ordenar – $999 →</a>
+      <div style="margin-top:0.5rem; font-size:0.8rem; color:#6b7a8f;">📦 Pre-venta: Julio · Envío: Agosto 2026 · 1,000 unidades</div>
+    </div>
+  </div><!-- /es -->
+
+  <!-- ============================================================ -->
+  <!-- ==================== FOOTER ================================= -->
+  <!-- ============================================================ -->
+  <div class="footer">
+    <div>© 2026 GFI Flow Intelligence · Boston</div>
+    <div>
+      <a href="about.html">About</a> ·
+      <a href="methodology.html">Methodology</a> ·
+      <a href="about.html">WeChat</a>
+    </div>
+    <div class="wechat">
+      <img src="wechat-qr-pingxu.jpg" alt="WeChat">
+      <span>WeChat: wxid_e1ugnreimr6m22</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  (function() {
+    const buttons = document.querySelectorAll('.lang-btn');
+    const contents = document.querySelectorAll('.lang-content');
+    const banners = {
+      en: document.getElementById('banner-en'),
+      tw: document.getElementById('banner-tw'),
+      cn: document.getElementById('banner-cn'),
+      es: document.getElementById('banner-es')
+    };
+
+    function showBanner(lang) {
+      Object.keys(banners).forEach(key => {
+        banners[key].style.display = (key === lang) ? 'block' : 'none';
+      });
+    }
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const lang = this.dataset.lang;
+        buttons.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        contents.forEach(c => {
+          c.classList.toggle('active', c.dataset.lang === lang);
+        });
+        showBanner(lang);
+      });
+    });
+
+    // 預設顯示英文
+    showBanner('en');
+  })();
+</script>
+</body>
+</html>
