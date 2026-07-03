@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="All articles from GFI Flow Intelligence — Governance Legitimacy Framework. Essays on GDP, governance, infrastructure, and systemic failure.">
+  <title>All Articles · GFI Flow Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#0b1220;
+      --bg2:#0d1526;
+      --text:#f8fbff;
+      --muted:#c7d2e3;
+      --sub:#9fb0c8;
+      --dim:rgba(255,255,255,.06);
+      --green:#9FE870;
+      --blue:#7DD3FC;
+      --serif:'DM Serif Display',Georgia,serif;
+      --mono:'DM Mono',monospace;
+      --sans:'DM Sans',system-ui,sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 15px; line-height: 1.6; overflow-x: hidden; }
+    .nav { position: fixed; inset: 0 0 auto 0; z-index: 100; height: 62px; padding: 0 clamp(18px, 5vw, 52px); display: flex; align-items: center; justify-content: space-between; background: rgba(11,18,32,0.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--dim); }
+    .logo { color: #fff; text-decoration: none; font-family: var(--mono); font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; }
+    .lang-grp { display: flex; gap: 6px; }
+    .lb-btn { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; padding: 5px 10px; border: 1px solid rgba(255,255,255,0.1); border-radius: 5px; background: none; color: var(--sub); cursor: pointer; transition: all 0.2s; }
+    .lb-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+    .lb-btn.on { color: var(--green); border-color: rgba(159,232,112,0.35); background: rgba(159,232,112,0.07); }
+    .lb { display: none; }
+    .lb.active { display: block; }
+    .page { padding-top: 62px; }
+    .inner { max-width: 1100px; margin: 0 auto; padding: clamp(40px, 6vw, 80px) clamp(20px, 5vw, 60px); }
+
+    .page-header { margin-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 1.5rem; }
+    .page-title { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3.2rem); color: #fff; margin-bottom: 0.5rem; }
+    .page-subtitle { font-size: 1rem; color: var(--sub); }
+
+    .articles-grid { display: flex; flex-direction: column; gap: 20px; }
+    .article-card {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px 24px;
+      padding: 1.5rem 1.8rem;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      text-decoration: none;
+      transition: all 0.25s;
+      background: rgba(255,255,255,0.01);
+    }
+    .article-card:hover {
+      border-color: rgba(159,232,112,0.3);
+      background: rgba(255,255,255,0.03);
+      transform: translateX(4px);
+    }
+    .article-card .icon { font-size: 1.6rem; flex-shrink: 0; }
+    .article-card .info { flex: 1; min-width: 180px; }
+    .article-card .info .label {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 2px;
+    }
+    .article-card .info .label.red { color: #f87171; }
+    .article-card .info .label.amber { color: #fbbf24; }
+    .article-card .info .label.blue { color: #7DD3FC; }
+    .article-card .info .title {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      color: #fff;
+      font-weight: 500;
+    }
+    .article-card .info .desc {
+      font-size: 0.8rem;
+      color: var(--sub);
+      margin-top: 2px;
+    }
+    .article-card .arrow {
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.2);
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+    .article-card:hover .arrow { transform: translateX(4px); color: var(--green); }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 2.5rem;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--sub);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding-bottom: 2px;
+      transition: all 0.2s;
+    }
+    .back-link:hover { color: var(--green); border-bottom-color: var(--green); }
+
+    .footer { text-align: center; padding: 24px 20px 32px; font-family: var(--mono); font-size: 11px; color: rgba(255,255,255,0.2); border-top: 1px solid rgba(255,255,255,0.05); }
+    .footer a { color: rgba(255,255,255,0.32); text-decoration: none; transition: color 0.2s; }
+    .footer a:hover { color: #fff; }
+    .footer .footer-links { display: flex; justify-content: center; gap: 16px; margin-top: 6px; flex-wrap: wrap; }
+
+    @media (max-width: 600px) {
+      .article-card { padding: 1rem 1.2rem; flex-direction: column; align-items: flex-start; }
+      .article-card .arrow { align-self: flex-end; }
+      .page-title { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="nav">
+  <a href="index.html" class="logo">GFI Flow Intelligence</a>
+  <div class="lang-grp">
+    <button class="lb-btn on" data-lang="en">EN</button>
+    <button class="lb-btn" data-lang="tw">繁</button>
+    <button class="lb-btn" data-lang="cn">简</button>
+    <button class="lb-btn" data-lang="es">ES</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- ==================== ENGLISH ================================ -->
+<!-- ============================================================ -->
+<div class="lb active page" data-lang="en">
+  <div class="inner">
+    <div class="page-header">
+      <h1 class="page-title">All Articles</h1>
+      <p class="page-subtitle">Essays, analyses, and diagnostic reports from the Governance Legitimacy Framework</p>
+    </div>
+
+    <div class="articles-grid">
+
+      <!-- 1 -->
+      <a href="charity-vs-infrastructure.html" class="article-card">
+        <span class="icon">📖</span>
+        <div class="info">
+          <div class="label">NEW ESSAY · 4 LANGUAGES</div>
+          <div class="title">Charity vs. Infrastructure</div>
+          <div class="desc">A society that depends on charity to sustain the poor is not generous — it is broken.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <!-- 2 -->
+      <a href="government-failure-inc.html" class="article-card">
+        <span class="icon">📘</span>
+        <div class="info">
+          <div class="label red">NEW ESSAY</div>
+          <div class="title">Government Failure, Inc.</div>
+          <div class="desc">How consultants broke the state — and why GL Framework diagnoses the rot.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <!-- 3 -->
+      <a href="system-failure-lost-generation.html" class="article-card">
+        <span class="icon">⚠️</span>
+        <div class="info">
+          <div class="label red">SYSTEM FAILURE</div>
+          <div class="title">The Lost Generation</div>
+          <div class="desc">When a nation fails its youth, it fails its future. Young people are leaving — not because they don't try, but because the system is designed to fail them.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <!-- 4 -->
+      <a href="un-beyond-gdp-clown-show.html" class="article-card">
+        <span class="icon">🌐</span>
+        <div class="info">
+          <div class="label amber">UN HLEG · BEYOND GDP</div>
+          <div class="title">Beyond GDP, Beyond Reason</div>
+          <div class="desc">One year. 14 experts. 31 indicators. Zero impact. GL Score: 0.01 — the lowest ever recorded.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <!-- 5 -->
+      <a href="gdp-fig-leaf.html" class="article-card">
+        <span class="icon">📊</span>
+        <div class="info">
+          <div class="label amber">NEW ESSAY</div>
+          <div class="title">GDP: Report Card or Fig Leaf?</div>
+          <div class="desc">How high-GDP nations use numbers to hide the costs they don't want you to see. A GL Framework diagnosis of the world's most trusted lie.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <!-- 6 -->
+      <a href="gdp-ppp-per-capita-usd-misleading.html" class="article-card">
+        <span class="icon">📊</span>
+        <div class="info">
+          <div class="label amber">NEW ANALYSIS</div>
+          <div class="title">GDP, PPP, Per Capita Income, and the U.S. Dollar</div>
+          <div class="desc">They are all numerators — and they never ask: who gets the value? who bears the cost? The GL Framework looks at the denominator.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <!-- 7 -->
+      <a href="why-governments-are-always-broke.html" class="article-card">
+        <span class="icon">📊</span>
+        <div class="info">
+          <div class="label amber">NEW ANALYSIS</div>
+          <div class="title">Why Are Governments Always Broke?</div>
+          <div class="desc">A GL Framework diagnosis — with Boston as the case study. Capital transfer machine wrapped in progressive language.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <!-- 8 -->
+      <a href="tainter-gl-framework.html" class="article-card">
+        <span class="icon">📚</span>
+        <div class="info">
+          <div class="label">TAINTER · GL FRAMEWORK</div>
+          <div class="title">38 Years Later, the Same Ruler</div>
+          <div class="desc">In 1988, Joseph Tainter asked: why do complex societies collapse? In 2026, the GL Framework measures what he could only describe.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <!-- 9 -->
+      <a href="vocabulary-trap.html" class="article-card">
+        <span class="icon">📝</span>
+        <div class="info">
+          <div class="label blue">LANGUAGE · POWER</div>
+          <div class="title">The Vocabulary Trap</div>
+          <div class="desc">How Western institutions weaponize jargon to manufacture authority — and exclude everyone else. "The moat is not depth. It is vocabulary."</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <!-- 10 -->
+      <a href="government-bullying.html" class="article-card">
+        <span class="icon">⏳</span>
+        <div class="info">
+          <div class="label red">GL PARAMETER 8</div>
+          <div class="title">Government Bullying</div>
+          <div class="desc">How the state expropriates citizens' waiting time — and why Big 4 bills by the hour while citizens wait for free.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <!-- 11 -->
+      <a href="gdp-half-ledger.html" class="article-card">
+        <span class="icon">📊</span>
+        <div class="info">
+          <div class="label">NEW ESSAY</div>
+          <div class="title">GDP Is a Half-Ledger</div>
+          <div class="desc">Why the world's most important economic metric is missing half the story.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <!-- 12 -->
+      <a href="who-walked-away-with-the-value.html" class="article-card">
+        <span class="icon">📘</span>
+        <div class="info">
+          <div class="label">NEW BOOK · 4 LANGUAGES</div>
+          <div class="title">Who Walked Away with the Value?</div>
+          <div class="desc">Land, Infrastructure · GL Framework · 2026</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <!-- 13 -->
+      <a href="pseudo-digitalisation.html" class="article-card">
+        <span class="icon">🔍</span>
+        <div class="info">
+          <div class="label">NEW TOOL</div>
+          <div class="title">Pseudo-Digitalisation Module</div>
+          <div class="desc">GL Diagnostic · 5 indicators · Free</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <!-- 14 -->
+      <a href="diagnosing-un-hleg.html" class="article-card">
+        <span class="icon">🌐</span>
+        <div class="info">
+          <div class="label red">DIAGNOSTIC CASE</div>
+          <div class="title">Diagnosing the UN HLEG</div>
+          <div class="desc">GL Score: 0.01 — the lowest ever recorded. The UN spent a year defining "how to measure system failure" and never measured itself.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <!-- 15 -->
+      <a href="student-loan-ai-gl-diagnostic.html" class="article-card">
+        <span class="icon">🇺🇸</span>
+        <div class="info">
+          <div class="label red">DIAGNOSTIC CASE</div>
+          <div class="title">U.S. Student Loans</div>
+          <div class="desc">GL Score: 0.006. Policy violence. A system designed to fail from the start — borrowers trapped, no delivery mechanism.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <!-- 16 -->
+      <a href="UK_ETA_GL_Diagnostic_Report_June2026.html" class="article-card">
+        <span class="icon">🇬🇧</span>
+        <div class="info">
+          <div class="label red">DIAGNOSTIC CASE</div>
+          <div class="title">UK ETA Border</div>
+          <div class="desc">GL Score: 0.04–0.09. Pseudo-digitalisation. The system went live — but never actually worked.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <!-- 17 -->
+      <a href="turkiye-sgk-diagnostic.html" class="article-card">
+        <span class="icon">🇹🇷</span>
+        <div class="info">
+          <div class="label red">DIAGNOSTIC CASE</div>
+          <div class="title">Türkiye SGK & Social Assistance</div>
+          <div class="desc">GL Score: 0.067. Structural failure. A system that filters — not delivers.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+    </div>
+
+    <a href="index.html" class="back-link">← Back to home</a>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- ==================== 繁體中文 =============================== -->
+<!-- ============================================================ -->
+<div class="lb page" data-lang="tw">
+  <div class="inner">
+    <div class="page-header">
+      <h1 class="page-title">所有文章</h1>
+      <p class="page-subtitle">治理正當性框架的論文、分析與診斷報告</p>
+    </div>
+
+    <div class="articles-grid">
+      <a href="charity-vs-infrastructure.html" class="article-card">
+        <span class="icon">📖</span>
+        <div class="info">
+          <div class="label">新文章 · 四種語言</div>
+          <div class="title">慈善 vs 基礎設施</div>
+          <div class="desc">一個社會必須靠慈善撐起貧窮，不是慷慨——是失能。</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="government-failure-inc.html" class="article-card">
+        <span class="icon">📘</span>
+        <div class="info">
+          <div class="label red">新文章</div>
+          <div class="title">政府失靈股份有限公司</div>
+          <div class="desc">顧問如何搞垮了國家 — 以及為什麼 GL 框架能診斷腐敗。</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="system-failure-lost-generation.html" class="article-card">
+        <span class="icon">⚠️</span>
+        <div class="info">
+          <div class="label red">系統失靈</div>
+          <div class="title">失落的一代</div>
+          <div class="desc">當一個國家辜負了年輕人，就辜負了未來。年輕人正在離開 — 不是因為他們不努力，而是因為系統被設計來讓他們失敗。</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="un-beyond-gdp-clown-show.html" class="article-card">
+        <span class="icon">🌐</span>
+        <div class="info">
+          <div class="label amber">聯合國 HLEG · 超越 GDP</div>
+          <div class="title">超越 GDP，超越理性</div>
+          <div class="desc">一年。14 位專家。31 項指標。零影響。GL 分數：0.01 — 有史以來最低。</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="gdp-fig-leaf.html" class="article-card">
+        <span class="icon">📊</span>
+        <div class="info">
+          <div class="label amber">新文章</div>
+          <div class="title">GDP：成績單還是遮羞布？</div>
+          <div class="desc">高 GDP 國家如何用數字隱藏不想讓你看見的成本。GL 框架對世界上最受信任的謊言的診斷。</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="gdp-ppp-per-capita-usd-misleading.html" class="article-card">
+        <span class="icon">📊</span>
+        <div class="info">
+          <div class="label amber">新分析</div>
+          <div class="title">GDP、PPP、人均所得與美元</div>
+          <div class="desc">它們都是分子 — 而且從不問：誰獲得了價值？誰承擔了成本？GL 框架看分母。</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="why-governments-are-always-broke.html" class="article-card">
+        <span class="icon">📊</span>
+        <div class="info">
+          <div class="label amber">新分析</div>
+          <div class="title">為什麼政府永遠缺錢？</div>
+          <div class="desc">GL 框架診斷 — 以波士頓為案例。披著進步語言外衣的資本轉移機器。</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="tainter-gl-framework.html" class="article-card">
+        <span class="icon">📚</span>
+        <div class="info">
+          <div class="label">TAINTER · GL 框架</div>
+          <div class="title">38 年後，同一把尺</div>
+          <div class="desc">1988 年，Joseph Tainter 問：為什麼複雜社會會崩潰？2026 年，GL 框架衡量了他只能描述的現象。</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="vocabulary-trap.html" class="article-card">
+        <span class="icon">📝</span>
+        <div class="info">
+          <div class="label blue">語言 · 權力</div>
+          <div class="title">詞彙陷阱</div>
+          <div class="desc">西方機構如何將術語武器化以製造權威 — 並排除其他人。「護城河不是深度。是詞彙。」</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="government-bullying.html" class="article-card">
+        <span class="icon">⏳</span>
+        <div class="info">
+          <div class="label red">GL 參數 8</div>
+          <div class="title">政府霸凌</div>
+          <div class="desc">國家如何徵用公民的等待時間 — 以及為什麼四大會計師事務所以小時計費，而公民免費等待。</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="gdp-half-ledger.html" class="article-card">
+        <span class="icon">📊</span>
+        <div class="info">
+          <div class="label">新文章</div>
+          <div class="title">GDP 是半套帳本</div>
+          <div class="desc">為什麼世界最重要的經濟指標遺漏了一半的故事。</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="who-walked-away-with-the-value.html" class="article-card">
+        <span class="icon">📘</span>
+        <div class="info">
+          <div class="label">新書 · 四種語言</div>
+          <div class="title">誰拿走了價值？</div>
+          <div class="desc">土地、基礎設施 · GL 框架 · 2026</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="pseudo-digitalisation.html" class="article-card">
+        <span class="icon">🔍</span>
+        <div class="info">
+          <div class="label">新工具</div>
+          <div class="title">偽數位化模組</div>
+          <div class="desc">GL 診斷 · 5項指標 · 免費</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="diagnosing-un-hleg.html" class="article-card">
+        <span class="icon">🌐</span>
+        <div class="info">
+          <div class="label red">診斷案例</div>
+          <div class="title">診斷聯合國 HLEG</div>
+          <div class="desc">GL 分數：0.01 — 有史以來最低。聯合國花了一年定義「如何衡量系統失靈」卻從未衡量自己。</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="student-loan-ai-gl-diagnostic.html" class="article-card">
+        <span class="icon">🇺🇸</span>
+        <div class="info">
+          <div class="label red">診斷案例</div>
+          <div class="title">美國學生貸款</div>
+          <div class="desc">GL 分數：0.006。政策暴力。一個從一開始就被設計為失敗的系統。</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="UK_ETA_GL_Diagnostic_Report_June2026.html" class="article-card">
+        <span class="icon">🇬🇧</span>
+        <div class="info">
+          <div class="label red">診斷案例</div>
+          <div class="title">英國 ETA 邊境</div>
+          <div class="desc">GL 分數：0.04–0.09。偽數位化。系統上線了 — 但從未真正運作。</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="turkiye-sgk-diagnostic.html" class="article-card">
+        <span class="icon">🇹🇷</span>
+        <div class="info">
+          <div class="label red">診斷案例</div>
+          <div class="title">土耳其 SGK 與社會救助</div>
+          <div class="desc">GL 分數：0.067。結構性失靈。一個過濾而非交付的系統。</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+
+    <a href="index.html" class="back-link">← 回首頁</a>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- ==================== 简体中文 =============================== -->
+<!-- ============================================================ -->
+<div class="lb page" data-lang="cn">
+  <div class="inner">
+    <div class="page-header">
+      <h1 class="page-title">所有文章</h1>
+      <p class="page-subtitle">治理正当性框架的论文、分析与诊断报告</p>
+    </div>
+
+    <div class="articles-grid">
+      <a href="charity-vs-infrastructure.html" class="article-card">
+        <span class="icon">📖</span>
+        <div class="info">
+          <div class="label">新文章 · 四种语言</div>
+          <div class="title">慈善 vs 基础设施</div>
+          <div class="desc">一个社会必须靠慈善撑起贫穷，不是慷慨——是失能。</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="government-failure-inc.html" class="article-card">
+        <span class="icon">📘</span>
+        <div class="info">
+          <div class="label red">新文章</div>
+          <div class="title">政府失灵股份有限公司</div>
+          <div class="desc">顾问如何搞垮了国家 — 以及为什么 GL 框架能诊断腐败。</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="system-failure-lost-generation.html" class="article-card">
+        <span class="icon">⚠️</span>
+        <div class="info">
+          <div class="label red">系统失灵</div>
+          <div class="title">失落的一代</div>
+          <div class="desc">当一个国家辜负了年轻人，就辜负了未来。年轻人正在离开 — 不是因为他们不努力，而是因为系统被设计来让他们失败。</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="un-beyond-gdp-clown-show.html" class="article-card">
+        <span class="icon">🌐</span>
+        <div class="info">
+          <div class="label amber">联合国 HLEG · 超越 GDP</div>
+          <div class="title">超越 GDP，超越理性</div>
+          <div class="desc">一年。14 位专家。31 项指标。零影响。GL 分数：0.01 — 有史以来最低。</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="gdp-fig-leaf.html" class="article-card">
+        <span class="icon">📊</span>
+        <div class="info">
+          <div class="label amber">新文章</div>
+          <div class="title">GDP：成绩单还是遮羞布？</div>
+          <div class="desc">高 GDP 国家如何用数字隐藏不想让你看到的成本。GL 框架对世界上最受信任的谎言的诊断。</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="gdp-ppp-per-capita-usd-misleading.html" class="article-card">
+        <span class="icon">📊</span>
+        <div class="info">
+          <div class="label amber">新分析</div>
+          <div class="title">GDP、PPP、人均收入与美元</div>
+          <div class="desc">它们都是分子 — 而且从不问：谁获得了价值？谁承担了成本？GL 框架看分母。</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="why-governments-are-always-broke.html" class="article-card">
+        <span class="icon">📊</span>
+        <div class="info">
+          <div class="label amber">新分析</div>
+          <div class="title">为什么政府永远缺钱？</div>
+          <div class="desc">GL 框架诊断 — 以波士顿为案例。披着进步语言外衣的资本转移机器。</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="tainter-gl-framework.html" class="article-card">
+        <span class="icon">📚</span>
+        <div class="info">
+          <div class="label">TAINTER · GL 框架</div>
+          <div class="title">38 年后，同一把尺</div>
+          <div class="desc">1988 年，Joseph Tainter 问：为什么复杂社会会崩溃？2026 年，GL 框架衡量了他只能描述的现象。</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="vocabulary-trap.html" class="article-card">
+        <span class="icon">📝</span>
+        <div class="info">
+          <div class="label blue">语言 · 权力</div>
+          <div class="title">词汇陷阱</div>
+          <div class="desc">西方机构如何将术语武器化以制造权威 — 并排除其他人。「护城河不是深度。是词汇。」</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="government-bullying.html" class="article-card">
+        <span class="icon">⏳</span>
+        <div class="info">
+          <div class="label red">GL 参数 8</div>
+          <div class="title">政府霸凌</div>
+          <div class="desc">国家如何征用公民的等待时间 — 以及为什么四大会计师事务所以小时计费，而公民免费等待。</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="gdp-half-ledger.html" class="article-card">
+        <span class="icon">📊</span>
+        <div class="info">
+          <div class="label">新文章</div>
+          <div class="title">GDP 是半套账本</div>
+          <div class="desc">为什么世界最重要的经济指标遗漏了一半的故事。</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="who-walked-away-with-the-value.html" class="article-card">
+        <span class="icon">📘</span>
+        <div class="info">
+          <div class="label">新书 · 四种语言</div>
+          <div class="title">谁拿走了价值？</div>
+          <div class="desc">土地、基础设施 · GL 框架 · 2026</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="pseudo-digitalisation.html" class="article-card">
+        <span class="icon">🔍</span>
+        <div class="info">
+          <div class="label">新工具</div>
+          <div class="title">伪数字化模块</div>
+          <div class="desc">GL 诊断 · 5项指标 · 免费</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="diagnosing-un-hleg.html" class="article-card">
+        <span class="icon">🌐</span>
+        <div class="info">
+          <div class="label red">诊断案例</div>
+          <div class="title">诊断联合国 HLEG</div>
+          <div class="desc">GL 分数：0.01 — 有史以来最低。联合国花了一年定义「如何衡量系统失灵」却从未衡量自己。</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="student-loan-ai-gl-diagnostic.html" class="article-card">
+        <span class="icon">🇺🇸</span>
+        <div class="info">
+          <div class="label red">诊断案例</div>
+          <div class="title">美国学生贷款</div>
+          <div class="desc">GL 分数：0.006。政策暴力。一个从一开始就被设计为失败的系统。</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="UK_ETA_GL_Diagnostic_Report_June2026.html" class="article-card">
+        <span class="icon">🇬🇧</span>
+        <div class="info">
+          <div class="label red">诊断案例</div>
+          <div class="title">英国 ETA 边境</div>
+          <div class="desc">GL 分数：0.04–0.09。伪数字化。系统上线了 — 但从未真正运作。</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="turkiye-sgk-diagnostic.html" class="article-card">
+        <span class="icon">🇹🇷</span>
+        <div class="info">
+          <div class="label red">诊断案例</div>
+          <div class="title">土耳其 SGK 与社会救助</div>
+          <div class="desc">GL 分数：0.067。结构性失灵。一个过滤而非交付的系统。</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+
+    <a href="index.html" class="back-link">← 回首页</a>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- ==================== SPANISH ================================ -->
+<!-- ============================================================ -->
+<div class="lb page" data-lang="es">
+  <div class="inner">
+    <div class="page-header">
+      <h1 class="page-title">Todos los Artículos</h1>
+      <p class="page-subtitle">Ensayos, análisis e informes de diagnóstico del Marco de Legitimidad Gubernamental</p>
+    </div>
+
+    <div class="articles-grid">
+      <a href="charity-vs-infrastructure.html" class="article-card">
+        <span class="icon">📖</span>
+        <div class="info">
+          <div class="label">NUEVO ENSAYO · 4 IDIOMAS</div>
+          <div class="title">Caridad vs. Infraestructura</div>
+          <div class="desc">Una sociedad que depende de la caridad para sostener a los pobres no es generosa — es disfuncional.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="government-failure-inc.html" class="article-card">
+        <span class="icon">📘</span>
+        <div class="info">
+          <div class="label red">NUEVO ENSAYO</div>
+          <div class="title">Fracaso Gubernamental, S.A.</div>
+          <div class="desc">Cómo los consultores rompieron el estado — y por qué el Marco GL diagnostica la podredumbre.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="system-failure-lost-generation.html" class="article-card">
+        <span class="icon">⚠️</span>
+        <div class="info">
+          <div class="label red">FRACASO DEL SISTEMA</div>
+          <div class="title">La Generación Perdida</div>
+          <div class="desc">Cuando una nación falla a su juventud, falla a su futuro. Los jóvenes se van — no porque no lo intenten, sino porque el sistema está diseñado para hacerlos fracasar.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="un-beyond-gdp-clown-show.html" class="article-card">
+        <span class="icon">🌐</span>
+        <div class="info">
+          <div class="label amber">UN HLEG · MÁS ALLÁ DEL PIB</div>
+          <div class="title">Más Allá del PIB, Más Allá de la Razón</div>
+          <div class="desc">Un año. 14 expertos. 31 indicadores. Cero impacto. Puntuación GL: 0.01 — la más baja jamás registrada.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="gdp-fig-leaf.html" class="article-card">
+        <span class="icon">📊</span>
+        <div class="info">
+          <div class="label amber">NUEVO ENSAYO</div>
+          <div class="title">PIB: ¿Boletín de Calificaciones o Hoja de Higuera?</div>
+          <div class="desc">Cómo las naciones con alto PIB usan números para ocultar los costos que no quieren que veas. Un diagnóstico del Marco GL de la mentira más confiable del mundo.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="gdp-ppp-per-capita-usd-misleading.html" class="article-card">
+        <span class="icon">📊</span>
+        <div class="info">
+          <div class="label amber">NUEVO ANÁLISIS</div>
+          <div class="title">PIB, PPA, Ingreso Per Cápita y el Dólar</div>
+          <div class="desc">Todos son numeradores — y nunca preguntan: ¿quién obtiene el valor? ¿quién asume el costo? El Marco GL mira el denominador.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="why-governments-are-always-broke.html" class="article-card">
+        <span class="icon">📊</span>
+        <div class="info">
+          <div class="label amber">NUEVO ANÁLISIS</div>
+          <div class="title">¿Por Qué los Gobiernos Siempre Están en Quiebra?</div>
+          <div class="desc">Un diagnóstico del Marco GL — con Boston como caso de estudio. Máquina de transferencia de capital envuelta en lenguaje progresista.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="tainter-gl-framework.html" class="article-card">
+        <span class="icon">📚</span>
+        <div class="info">
+          <div class="label">TAINTER · MARCO GL</div>
+          <div class="title">38 Años Después, la Misma Regla</div>
+          <div class="desc">En 1988, Joseph Tainter preguntó: ¿por qué colapsan las sociedades complejas? En 2026, el Marco GL mide lo que él solo pudo describir.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="vocabulary-trap.html" class="article-card">
+        <span class="icon">📝</span>
+        <div class="info">
+          <div class="label blue">LENGUAJE · PODER</div>
+          <div class="title">La Trampa del Vocabulario</div>
+          <div class="desc">Cómo las instituciones occidentales convierten la jerga en un arma para fabricar autoridad — y excluir a todos los demás. "El foso no es profundidad. Es vocabulario."</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="government-bullying.html" class="article-card">
+        <span class="icon">⏳</span>
+        <div class="info">
+          <div class="label red">PARÁMETRO 8 DE GL</div>
+          <div class="title">Acoso Gubernamental</div>
+          <div class="desc">Cómo el estado expropia el tiempo de espera de los ciudadanos — y por qué Big 4 factura por hora mientras los ciudadanos esperan gratis.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="gdp-half-ledger.html" class="article-card">
+        <span class="icon">📊</span>
+        <div class="info">
+          <div class="label">NUEVO ENSAYO</div>
+          <div class="title">El PIB es un Libro Mayor a Medias</div>
+          <div class="desc">Por qué la métrica económica más importante del mundo omite la mitad de la historia.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="who-walked-away-with-the-value.html" class="article-card">
+        <span class="icon">📘</span>
+        <div class="info">
+          <div class="label">NUEVO LIBRO · 4 IDIOMAS</div>
+          <div class="title">¿Quién se llevó el valor?</div>
+          <div class="desc">Tierra, Infraestructura · Marco GL · 2026</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="pseudo-digitalisation.html" class="article-card">
+        <span class="icon">🔍</span>
+        <div class="info">
+          <div class="label">NUEVA HERRAMIENTA</div>
+          <div class="title">Módulo de Pseudo-Digitalización</div>
+          <div class="desc">Diagnóstico GL · 5 indicadores · Gratuito</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="diagnosing-un-hleg.html" class="article-card">
+        <span class="icon">🌐</span>
+        <div class="info">
+          <div class="label red">CASO DE DIAGNÓSTICO</div>
+          <div class="title">Diagnosticando el UN HLEG</div>
+          <div class="desc">Puntuación GL: 0.01 — la más baja jamás registrada. La ONU pasó un año definiendo "cómo medir el fracaso del sistema" y nunca se midió a sí misma.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="student-loan-ai-gl-diagnostic.html" class="article-card">
+        <span class="icon">🇺🇸</span>
+        <div class="info">
+          <div class="label red">CASO DE DIAGNÓSTICO</div>
+          <div class="title">Préstamos Estudiantiles de EE.UU.</div>
+          <div class="desc">Puntuación GL: 0.006. Violencia política. Un sistema diseñado para fracasar desde el principio.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="UK_ETA_GL_Diagnostic_Report_June2026.html" class="article-card">
+        <span class="icon">🇬🇧</span>
+        <div class="info">
+          <div class="label red">CASO DE DIAGNÓSTICO</div>
+          <div class="title">Frontera ETA del Reino Unido</div>
+          <div class="desc">Puntuación GL: 0.04–0.09. Pseudo-digitalización. El sistema se puso en marcha — pero nunca funcionó realmente.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="turkiye-sgk-diagnostic.html" class="article-card">
+        <span class="icon">🇹🇷</span>
+        <div class="info">
+          <div class="label red">CASO DE DIAGNÓSTICO</div>
+          <div class="title">SGK de Turquía y Asistencia Social</div>
+          <div class="desc">Puntuación GL: 0.067. Fracaso estructural. Un sistema que filtra — no entrega.</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+
+    <a href="index.html" class="back-link">← Volver al inicio</a>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- ==================== FOOTER ================================= -->
+<!-- ============================================================ -->
+<div class="footer">
+  <span>© 2026 GFI Flow Intelligence · <a href="about.html">About</a> · <a href="methodology.html">GL Framework</a></span>
+  <div class="footer-links">
+    <span class="wechat-id">WeChat: <span>wxid_e1ugnreimr6m22</span></span>
+  </div>
+</div>
+
+<script>
+  // ====== 語言切換 ======
+  document.addEventListener('DOMContentLoaded', function() {
+    const btns = document.querySelectorAll('.lb-btn');
+    const pages = document.querySelectorAll('.lb');
+    function setLang(lang) {
+      btns.forEach(b => b.classList.toggle('on', b.dataset.lang === lang));
+      pages.forEach(p => p.classList.toggle('active', p.dataset.lang === lang));
+    }
+    btns.forEach(b => b.addEventListener('click', function(e) {
+      const lang = this.dataset.lang;
+      setLang(lang);
+      history.pushState(null, '', '#' + lang);
+    }));
+    const hash = window.location.hash.replace('#', '');
+    if (hash && ['en','tw','cn','es'].includes(hash)) {
+      setLang(hash);
+    }
+    window.addEventListener('hashchange', function() {
+      const h = window.location.hash.replace('#', '');
+      if (h && ['en','tw','cn','es'].includes(h)) {
+        setLang(h);
+      }
+    });
+  });
+</script>
+</body>
+</html>
