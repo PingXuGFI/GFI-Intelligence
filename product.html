@@ -1,668 +1,788 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GL-Verifier · 數位轉型診斷工具</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body {
-      background: #0b1220;
-      color: #f8fbff;
-      font-family: 'DM Sans', system-ui, sans-serif;
-      line-height: 1.6;
-      padding: 0 1rem 2rem;
-    }
-    .container { max-width: 1100px; margin: 0 auto; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>治理流程診斷器｜GL Verifier · GFI Flow Intelligence</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg:#0b1220;
+            --bg2:#0d1526;
+            --text:#f8fbff;
+            --muted:#c7d2e3;
+            --sub:#9fb0c8;
+            --dim:rgba(255,255,255,.06);
+            --green:#9FE870;
+            --blue:#7DD3FC;
+            --serif:'DM Serif Display',Georgia,serif;
+            --mono:'DM Mono',monospace;
+            --sans:'DM Sans',system-ui,sans-serif;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 15px;
+            line-height: 1.6;
+            padding: 2rem 1.5rem;
+        }
+        .container { max-width: 880px; margin: 0 auto; }
+        .lang-bar {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            justify-content: flex-end;
+            border-bottom: 1px solid var(--dim);
+            padding-bottom: 0.6rem;
+        }
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: var(--sub);
+            font-size: 11px;
+            font-family: var(--mono);
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            transition: 0.2s;
+        }
+        .lang-btn.active { color: var(--green);
+            background: rgba(255,255,255,0.05); }
+        .lang-btn:hover { color: var(--text); }
+        .lang-panel { display: none; animation: fade 0.2s ease; }
+        .lang-panel.active { display: block; }
+        @keyframes fade { 0% { opacity: 0.4; } 100% { opacity: 1; } }
 
-    .preorder-banner {
-      background: linear-gradient(135deg, rgba(159,232,112,0.12), rgba(251,191,36,0.08));
-      border: 1px solid rgba(159,232,112,0.2);
-      border-radius: 8px;
-      padding: 0.75rem 1.5rem;
-      text-align: center;
-      margin: 1rem 0 1.5rem;
-      font-size: 0.9rem;
-      color: #9FE870;
-      letter-spacing: 0.04em;
-    }
-    .preorder-banner strong { color: #fbbf24; }
-    .preorder-banner .highlight { color: #9FE870; font-weight: 600; }
+        .tag {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--green);
+            display: inline-block;
+            background: rgba(159,232,112,0.08);
+            padding: 0.1rem 0.7rem;
+            border-radius: 20px;
+            border: 1px solid rgba(159,232,112,0.15);
+            margin-bottom: 0.5rem;
+        }
+        h1 {
+            font-family: var(--serif);
+            font-size: 2rem;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            line-height: 1.15;
+            margin: 0.4rem 0 0.2rem;
+            color: var(--text);
+        }
+        .subhead {
+            font-size: 1rem;
+            color: var(--muted);
+            margin-bottom: 0.3rem;
+        }
+        .highlight { color: var(--green); }
+        .muted { color: var(--muted); }
+        p {
+            font-size: 15px;
+            color: var(--muted);
+            margin-bottom: 0.6rem;
+        }
+        strong { color: var(--text); }
 
-    .lang-bar { display: flex; justify-content: flex-end; gap: 0.5rem; margin-bottom: 1rem; }
-    .lang-btn {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.08em;
-      padding: 0.25rem 0.8rem;
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 2rem;
-      background: none;
-      color: #9fb0c8;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .lang-btn:hover { border-color: rgba(255,255,255,0.3); color: #fff; }
-    .lang-btn.active { background: #9FE870; color: #0b1220; border-color: #9FE870; }
+        .box {
+            background: var(--bg2);
+            border-left: 3px solid var(--green);
+            padding: 1rem 1.2rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.2rem 0;
+        }
+        .box p { font-size: 15px;
+            margin-bottom: 0.2rem; }
+        .box-gray {
+            background: var(--bg2);
+            border: 1px solid var(--dim);
+            padding: 1rem 1.2rem;
+            border-radius: 8px;
+            margin: 1.2rem 0;
+        }
+        .box-gray p { font-size: 15px;
+            margin-bottom: 0.2rem; }
 
-    .lang-content { display: none; }
-    .lang-content.active { display: block; }
+        .positioning-box {
+            background: var(--bg);
+            border: 1px solid rgba(159,232,112,0.12);
+            border-radius: 8px;
+            padding: 0.8rem 1.2rem;
+            margin: 0.8rem 0 1rem;
+            text-align: center;
+        }
+        .positioning-box p {
+            font-size: 15px;
+            color: var(--muted);
+            line-height: 1.7;
+            margin-bottom: 0.1rem;
+        }
+        .positioning-box .emph { color: var(--green);
+            font-weight: 500; }
 
-    .product-header { border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 1.5rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
-    .product-header .logo { font-family: 'DM Mono', monospace; font-size: 0.8rem; letter-spacing: 0.12em; color: #9FE870; text-decoration: none; text-transform: uppercase; }
-    .product-header .logo a { color: #9FE870; text-decoration: none; }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+            margin: 0.5rem 0 1.2rem;
+        }
+        .stat-card {
+            background: var(--bg2);
+            border: 1px solid var(--dim);
+            border-radius: 8px;
+            padding: 0.8rem 1rem;
+        }
+        .stat-card .label {
+            font-family: var(--mono);
+            font-size: 9px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.25);
+        }
+        .stat-card .value {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--green);
+            font-family: var(--serif);
+            line-height: 1.2;
+        }
+        .stat-card .desc {
+            font-size: 13px;
+            color: var(--sub);
+            margin-top: 0.1rem;
+            line-height: 1.5;
+        }
 
-    .hero { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; margin-bottom: 3rem; }
-    .hero-image { background: linear-gradient(145deg, #0d1526, #0b1220); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 2.5rem; text-align: center; min-height: 320px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-    .hero-image .device-icon { font-size: 4.5rem; margin-bottom: 1rem; }
-    .hero-image .screen-sim { background: #0b1220; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 0.5rem 1.5rem; font-family: 'DM Mono', monospace; font-size: 1.4rem; color: #9FE870; display: inline-block; margin: 0.5rem 0; }
-    .hero-image .device-label { font-size: 0.7rem; color: #6b7a8f; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.5rem; }
-    .hero-image .tagline { font-size: 0.7rem; color: #6b7a8f; margin-top: 1rem; letter-spacing: 0.04em; }
+        h2 {
+            font-family: var(--serif);
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: var(--text);
+            margin: 1.8rem 0 0.3rem;
+            letter-spacing: -0.01em;
+        }
+        h3 {
+            font-family: var(--serif);
+            font-size: 1.05rem;
+            font-weight: 400;
+            color: var(--muted);
+            margin: 0.5rem 0 0.2rem;
+        }
+        ul {
+            padding-left: 1.2rem;
+            color: var(--muted);
+            margin-bottom: 0.5rem;
+        }
+        ul li { font-size: 15px;
+            margin-bottom: 0.1rem; }
 
-    .hero-text h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: 2.8rem; line-height: 1.1; font-weight: 400; margin-bottom: 0.5rem; }
-    .hero-text h1 em { color: #9FE870; font-style: italic; }
-    .hero-text .sub { font-size: 1.2rem; color: #9fb0c8; margin-bottom: 0.5rem; }
-    .hero-text .desc { color: #9fb0c8; font-size: 1rem; line-height: 1.8; margin-bottom: 1.5rem; max-width: 480px; }
-    .price-tag { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
-    .price { font-family: 'DM Serif Display', Georgia, serif; font-size: 3rem; color: #fbbf24; }
-    .price-sub { color: #6b7a8f; font-size: 0.9rem; }
-    .preorder-badge {
-      display: inline-block;
-      background: rgba(159,232,112,0.12);
-      border: 1px solid rgba(159,232,112,0.25);
-      color: #9FE870;
-      font-size: 0.7rem;
-      padding: 0.15rem 0.8rem;
-      border-radius: 2rem;
-      font-family: 'DM Mono', monospace;
-      letter-spacing: 0.06em;
-    }
-    .btn-buy { display: inline-block; background: #9FE870; color: #0b1220; padding: 0.9rem 2.5rem; border-radius: 8px; font-weight: 700; font-size: 1rem; text-decoration: none; transition: background 0.2s; border: none; cursor: pointer; }
-    .btn-buy:hover { background: #8fd460; }
-    .btn-outline { display: inline-block; background: transparent; color: #f8fbff; padding: 0.9rem 2.5rem; border-radius: 8px; font-weight: 600; font-size: 1rem; text-decoration: none; border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s; margin-left: 0.5rem; }
-    .btn-outline:hover { border-color: #9FE870; color: #9FE870; }
-    .ship-info { font-size: 0.8rem; color: #6b7a8f; margin-top: 0.75rem; }
+        .spec-box {
+            background: var(--bg2);
+            border: 1px solid var(--dim);
+            border-radius: 8px;
+            padding: 0.8rem 1rem;
+            margin: 0.6rem 0 0.2rem;
+        }
+        .spec-box p { font-size: 14px;
+            color: var(--muted);
+            margin-bottom: 0.1rem; }
+        .spec-box .highlight { font-size: 14px; }
 
-    .section { padding: 2.5rem 0; border-top: 1px solid rgba(255,255,255,0.06); }
-    .section-eyebrow { font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: #9FE870; margin-bottom: 0.5rem; }
-    .section-title { font-family: 'DM Serif Display', Georgia, serif; font-size: 2rem; font-weight: 400; margin-bottom: 0.5rem; }
-    .section-sub { color: #9fb0c8; font-size: 1rem; max-width: 560px; line-height: 1.8; }
+        hr {
+            border: 0;
+            border-top: 1px solid var(--dim);
+            margin: 1.5rem 0 1rem;
+        }
 
-    .spec-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
-    .spec-card { background: #0d1526; border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 1.5rem; }
-    .spec-card .icon { font-size: 1.8rem; margin-bottom: 0.5rem; }
-    .spec-card h4 { font-size: 1rem; margin-bottom: 0.25rem; }
-    .spec-card p { font-size: 0.85rem; color: #9fb0c8; line-height: 1.6; }
+        .btn-wrapper {
+            text-align: center;
+            margin: 1.5rem 0 0.5rem;
+        }
+        .btn-main {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 32px;
+            border-radius: 40px;
+            background: #9FE870;
+            color: #0b1220 !important;
+            text-decoration: none;
+            font-family: 'DM Mono', monospace;
+            font-size: 13px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-weight: 600;
+            transition: all 0.22s;
+            border: none;
+            box-shadow: 0 4px 20px rgba(159, 232, 112, 0.2);
+        }
+        .btn-main:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 32px rgba(159, 232, 112, 0.35);
+            background: #8fd460;
+            color: #0b1220 !important;
+        }
+        .btn-main .arrow { font-size: 16px;
+            transition: transform 0.2s; }
+        .btn-main:hover .arrow { transform: translateX(4px); }
 
-    .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; }
-    .feature-item { display: flex; gap: 1rem; align-items: flex-start; padding: 0.8rem 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
-    .feature-item .icon { font-size: 1.5rem; flex-shrink: 0; width: 36px; }
-    .feature-item h4 { font-size: 1rem; margin-bottom: 0.1rem; }
-    .feature-item p { font-size: 0.85rem; color: #9fb0c8; }
+        .footer-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem 2rem;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: var(--sub);
+        }
+        .footer-meta a { color: var(--green);
+            text-decoration: none; }
+        .footer-meta a:hover { text-decoration: underline; }
 
-    .use-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
-    .use-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 1.2rem 1.5rem; text-align: center; }
-    .use-card .icon { font-size: 2rem; margin-bottom: 0.3rem; }
-    .use-card h4 { font-size: 0.95rem; }
-    .use-card p { font-size: 0.8rem; color: #9fb0c8; margin-top: 0.1rem; }
+        .footnote {
+            font-size: 11px;
+            color: rgba(255,255,255,0.15);
+            text-align: center;
+            margin-top: 2rem;
+            border-top: 1px solid var(--dim);
+            padding-top: 1.2rem;
+            font-family: var(--mono);
+            letter-spacing: 0.04em;
+        }
+        .footnote a { color: rgba(255,255,255,0.2);
+            text-decoration: none; }
+        .footnote a:hover { color: var(--green); }
 
-    .cta-section { background: linear-gradient(145deg, rgba(159,232,112,0.04), transparent); border: 1px solid rgba(159,232,112,0.12); border-radius: 16px; padding: 2.5rem; text-align: center; margin-top: 2rem; }
-    .cta-section h2 { font-family: 'DM Serif Display', Georgia, serif; font-size: 1.8rem; font-weight: 400; margin-bottom: 0.5rem; }
-    .cta-section p { color: #9fb0c8; margin-bottom: 1.5rem; }
-
-    .footer { padding: 2rem 0; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 0.8rem; color: #6b7a8f; }
-    .footer a { color: #6b7a8f; text-decoration: none; transition: color 0.2s; }
-    .footer a:hover { color: #f8fbff; }
-    .wechat { display: flex; align-items: center; gap: 0.5rem; }
-    .wechat img { width: 36px; height: 36px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.06); padding: 2px; background: #fff; }
-    .wechat span { font-size: 0.75rem; color: #6b7a8f; }
-
-    @media (max-width: 768px) {
-      .hero { grid-template-columns: 1fr; gap: 2rem; }
-      .hero-text h1 { font-size: 2.2rem; }
-      .feature-grid { grid-template-columns: 1fr; }
-      .preorder-banner { font-size: 0.8rem; padding: 0.5rem 1rem; }
-    }
-  </style>
+        @media (max-width: 640px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            body { padding: 1.2rem; }
+            h1 { font-size: 1.6rem; }
+            .btn-main { padding: 10px 20px;
+                font-size: 11px; }
+        }
+    </style>
 </head>
 <body>
+<div class="container" id="app">
 
-<div class="container">
-
-  <!-- ====== 預售公告列 ====== -->
-  <div class="preorder-banner" id="banner-en">
-    🚀 <strong>Pre-order: July</strong> · Shipping: August 2026 · First batch: <span class="highlight">1,000 units</span> — Order now
-  </div>
-  <div class="preorder-banner" id="banner-tw" style="display:none;">
-    🚀 <strong>七月預售 · 八月正式出貨</strong> — 首批 <span class="highlight">1,000 台</span> · 立即預購
-  </div>
-  <div class="preorder-banner" id="banner-cn" style="display:none;">
-    🚀 <strong>七月预售 · 八月正式出货</strong> — 首批 <span class="highlight">1,000 台</span> · 立即预购
-  </div>
-  <div class="preorder-banner" id="banner-es" style="display:none;">
-    🚀 <strong>Pre-venta: Julio</strong> · Envío: Agosto 2026 · Primer lote: <span class="highlight">1,000 unidades</span> — Ordene ahora
-  </div>
-
-  <!-- ====== 語言切換 ====== -->
-  <div class="lang-bar">
-    <button class="lang-btn active" data-lang="en">EN</button>
-    <button class="lang-btn" data-lang="tw">繁</button>
-    <button class="lang-btn" data-lang="cn">简</button>
-    <button class="lang-btn" data-lang="es">ES</button>
-  </div>
-
-  <!-- ============================================================ -->
-  <!-- ==================== ENGLISH ================================ -->
-  <!-- ============================================================ -->
-  <div class="lang-content active" data-lang="en">
-    <div class="product-header">
-      <div class="logo"><a href="index.html">← GFI Flow Intelligence</a></div>
-      <div><a href="https://buy.stripe.com/6oU00bcuhdJk6q44MgejK00" class="btn-buy" style="padding:0.5rem 1.5rem; font-size:0.85rem;">Pre-order →</a></div>
+    <div class="lang-bar">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="zh-Hant">繁</button>
+        <button class="lang-btn" data-lang="zh-Hans">简</button>
+        <button class="lang-btn" data-lang="es">ES</button>
     </div>
 
-    <div class="hero">
-      <div class="hero-image">
-        <div class="device-icon">📟</div>
-        <div class="screen-sim">GL 0.00</div>
-        <div class="device-label">Service Flow Diagnostic Tool</div>
-        <div class="tagline">Plug · Mount · Diagnose</div>
-      </div>
-      <div class="hero-text">
-        <h1>Digital Transformation <em>Diagnostic Tool</em></h1>
-        <div class="sub">Measure what systems actually deliver.</div>
-        <p class="desc">An independent diagnostic device that automatically measures administrative friction — no system access, no surveys, no human judgment.</p>
-        <div class="price-tag">
-          <span class="price">$999</span>
-          <span class="price-sub">One-time purchase · Global shipping</span>
-          <span class="preorder-badge">Pre-order</span>
+    <!-- ========== ENGLISH ========== -->
+    <div class="lang-panel active" data-lang="en">
+        <div class="tag">GL Verifier</div>
+        <h1>Every system carries weight.</h1>
+        <p class="subhead">You can't see it. But you can feel it — in the delays, in the rework, in the endless approvals, in the customer complaints, in the employee burnout.</p>
+        <p><span class="highlight">GL Verifier makes invisible process weight visible.</span></p>
+        <p>It gives you a single number — the <span class="highlight">GL Score</span> — that tells you how much of your investment is actually reaching the intended recipient, and how much is being consumed by hidden friction.</p>
+
+        <div class="positioning-box">
+            <p><span class="emph">GL Verifier</span> is not a consultant. It does not take sides.</p>
+            <p>It is a <span class="emph">ruler</span>. It is a <span class="emph">tuning fork</span>.</p>
+            <p>It does one thing: <span class="emph">measure the weight of a system, and tell you the number.</span></p>
+            <p style="font-size:13px; color:var(--sub);">What that number means — and what to do about it — is your decision.</p>
         </div>
-        <div>
-          <a href="https://buy.stripe.com/6oU00bcuhdJk6q44MgejK00" class="btn-buy">Pre-order – $999 →</a>
-          <a href="#specs-en" class="btn-outline">Learn More</a>
+
+        <p><span class="emph">GL Verifier</span> is a diagnostic tool that measures systems through <span class="emph">denominator logic</span> — distinct from GDP or audit frameworks, which have only ever looked at the numerator.</p>
+
+        <div class="box">
+            <p><strong>This is not about efficiency.</strong> It is about seeing what has always been invisible.</p>
+            <p><strong>This is not a product entering a market.</strong> It is a product creating a new category.</p>
         </div>
-        <div class="ship-info">📦 Pre-order: July · Shipping: August 2026 · First batch: 1,000 units</div>
-      </div>
-    </div>
 
-    <div class="section" id="specs-en">
-      <div class="section-eyebrow">Specifications</div>
-      <h2 class="section-title">What's Inside</h2>
-      <p class="section-sub">Everything you need to start diagnosing digital transformation friction in 5 minutes.</p>
-      <div class="spec-grid">
-        <div class="spec-card"><div class="icon">⚡</div><h4>8 Parameters</h4><p>Waiting Cost · Repetition Cost · Collapse Cost · Information Asymmetry · Psychological Cost · Opportunity Cost · Shift Pathway · Loop Closure</p></div>
-        <div class="spec-card"><div class="icon">📊</div><h4>GL Index 0.00–1.00</h4><p>Single, standardized score — comparable across systems, institutions, and countries.</p></div>
-        <div class="spec-card"><div class="icon">🔓</div><h4>No System Access</h4><p>Works entirely from external observation. No integration. No permissions. No vendor control.</p></div>
-        <div class="spec-card"><div class="icon">🌍</div><h4>Global Standard</h4><p>Aligned with OECD/IDI Report 2026 and EO 14402.</p></div>
-      </div>
-    </div>
+        <p>Most organizations invest in AI, automation, and digital systems — but still feel slower, heavier, and harder to operate. The problem is not technology. It is the <span class="highlight">denominator</span> — hidden process friction that silently drains value.</p>
+        <p><strong>No one is diagnosing this.</strong> Auditors check compliance. Consultants give recommendations. IT teams keep systems running. But no one measures whether the system actually delivers. No one makes the invisible weight visible.</p>
 
-    <div class="section">
-      <div class="section-eyebrow">How It Works</div>
-      <h2 class="section-title">Independent · Automated · Verifiable</h2>
-      <div class="feature-grid">
-        <div class="feature-item"><span class="icon">📦</span><div><h4>Deploy in Minutes</h4><p>Mount on a wall or desk, plug in power — it starts working immediately.</p></div></div>
-        <div class="feature-item"><span class="icon">🔄</span><div><h4>24/7 Data Collection</h4><p>Continuously measures waiting times, abandonment rates, and completion rates.</p></div></div>
-        <div class="feature-item"><span class="icon">🧮</span><div><h4>Real-Time GL Score</h4><p>OLED display shows the current GL Index and grade — A through F.</p></div></div>
-        <div class="feature-item"><span class="icon">📈</span><div><h4>Dashboard Access</h4><p>View aggregated data, trends, and comparative benchmarks online.</p></div></div>
-        <div class="feature-item"><span class="icon">🔒</span><div><h4>Tamper-Proof</h4><p>Verification seal ensures the device has not been altered after deployment.</p></div></div>
-        <div class="feature-item"><span class="icon">♻️</span><div><h4>Off-Grid Ready</h4><p>Solar + battery power option for remote or independent deployment.</p></div></div>
-      </div>
-    </div>
-
-    <!-- ====== WHY GOVERNMENTS BUY IT ====== -->
-    <div class="section">
-      <div class="section-eyebrow">Why Governments Buy It</div>
-      <h2 class="section-title">Own the Data. Own the Improvement.</h2>
-      <p class="section-sub">When governments own the diagnostic tool, they gain the power to measure — and the power to change.</p>
-      <div class="feature-grid">
-        <div class="feature-item">
-          <span class="icon">📡</span>
-          <div>
-            <h4>Real-Time Monitoring</h4>
-            <p>Continuous, objective data on service delivery — no more waiting for surveys or complaints.</p>
-          </div>
+        <div class="box-gray">
+            <p><strong>A structural gap with growing demand.</strong></p>
+            <p>In government, agencies spend billions on systems without knowing whether they actually deliver. Procurement officers need a way to verify performance — but no standard tool exists.</p>
+            <p>In enterprise, executives invest in AI and automation without measurable improvement. They need to know: <em>did the investment actually work?</em></p>
+            <p><strong>Two markets. One gap. One tool.</strong></p>
         </div>
-        <div class="feature-item">
-          <span class="icon">📊</span>
-          <div>
-            <h4>Internal Validation</h4>
-            <p>Test policy changes against real data. Know what works — and what doesn't.</p>
-          </div>
+
+        <!-- 層次一：資本結構鼓勵浪費 -->
+        <div class="box" style="border-left-color: var(--green); background: rgba(159,232,112,0.04);">
+            <p style="font-size:14px; color:var(--sub); margin-bottom:0.2rem;"><span style="color:var(--green); font-weight:500;">Waste is not a bug. It is a feature.</span></p>
+            <p style="font-size:14px; color:var(--muted);">Under the current structural framework, inefficiency is not punished — it is rewarded. System integrators profit from complexity. Agencies are rewarded for spending budgets, not for delivering outcomes. No one has an incentive to ask: <em>does this system actually work?</em></p>
+            <p style="font-size:14px; color:var(--muted);">This is not corruption. This is structure.</p>
         </div>
-        <div class="feature-item">
-          <span class="icon">🔄</span>
-          <div>
-            <h4>Iterative Improvement</h4>
-            <p>Deploy. Measure. Adjust. Repeat. GL-Verifier enables rapid, evidence-based reform cycles.</p>
-          </div>
+
+        <!-- 層次二：顧問公司製造複雜度 -->
+        <div class="box" style="border-left-color: var(--blue); background: rgba(125,211,252,0.04);">
+            <p style="font-size:14px; color:var(--sub); margin-bottom:0.2rem;"><span style="color:var(--blue); font-weight:500;">Consultants profit from complexity — not from solving problems.</span></p>
+            <p style="font-size:14px; color:var(--muted);">Government inefficiency is not punished. It is outsourced. The more complex the problem, the more billable hours. Consultants have no incentive to simplify. They have every incentive to keep the system broken — and keep the contract renewing.</p>
+            <p style="font-size:14px; color:var(--muted);">This is not inefficiency. This is a business model.</p>
         </div>
-        <div class="feature-item">
-          <span class="icon">🔒</span>
-          <div>
-            <h4>Own Your Data</h4>
-            <p>Data stays with the government. No third-party control. No vendor lock-in.</p>
-          </div>
+
+        <!-- 層次三：百年來為什麼沒有人發覺 -->
+        <div class="box" style="border-left-color: var(--green); background: rgba(159,232,112,0.03);">
+            <p style="font-size:14px; color:var(--sub); margin-bottom:0.2rem;"><span style="color:var(--green); font-weight:500;">Why has no one noticed this for a century?</span></p>
+            <p style="font-size:14px; color:var(--muted);">Not because it is difficult. Because the power structure never needed this question to be asked. Auditors check compliance. Consultants profit from ambiguity. Vendors deliver what the contract specifies, not what citizens need. No one is accountable for whether the system actually works — because no one ever measured it.</p>
         </div>
-      </div>
-    </div>
 
-    <div class="section">
-      <div class="section-eyebrow">Who Uses It</div>
-      <h2 class="section-title">Same Tool. Different Users.</h2>
-      <p class="section-sub">One independent diagnostic device — serving governments, vendors, and citizens alike.</p>
-      <div class="use-grid">
-        <div class="use-card"><div class="icon">🏛️</div><h4>Government</h4><p>Verify procurement outcomes. Independent post-deployment validation.</p></div>
-        <div class="use-card"><div class="icon">📋</div><h4>Big 4 / Vendors</h4><p>Prove your delivery. Self-verify with independent, tamper-proof data.</p></div>
-        <div class="use-card"><div class="icon">👥</div><h4>Citizens / NGOs</h4><p>Monitor public services. Generate verifiable data for advocacy.</p></div>
-        <div class="use-card"><div class="icon">🏢</div><h4>CSR / Philanthropy</h4><p>Validate social impact. Prove your projects actually deliver.</p></div>
-      </div>
-    </div>
-
-    <div class="cta-section">
-      <h2>Start Measuring What Matters</h2>
-      <p>Pre-order now. First batch of 1,000 units ships August 2026.</p>
-      <a href="https://buy.stripe.com/6oU00bcuhdJk6q44MgejK00" class="btn-buy" style="font-size:1.1rem; padding:1rem 3rem;">Pre-order – $999 →</a>
-      <div style="margin-top:0.5rem; font-size:0.8rem; color:#6b7a8f;">📦 Pre-order: July · Shipping: August 2026 · 1,000 units</div>
-    </div>
-  </div><!-- /en -->
-
-  <!-- ============================================================ -->
-  <!-- ==================== 繁體中文 =============================== -->
-  <!-- ============================================================ -->
-  <div class="lang-content" data-lang="tw">
-    <div class="product-header">
-      <div class="logo"><a href="index.html">← GFI Flow Intelligence</a></div>
-      <div><a href="https://buy.stripe.com/6oU00bcuhdJk6q44MgejK00" class="btn-buy" style="padding:0.5rem 1.5rem; font-size:0.85rem;">預購 →</a></div>
-    </div>
-
-    <div class="hero">
-      <div class="hero-image">
-        <div class="device-icon">📟</div>
-        <div class="screen-sim">GL 0.00</div>
-        <div class="device-label">服務流程診斷工具</div>
-        <div class="tagline">插電 · 安裝 · 診斷</div>
-      </div>
-      <div class="hero-text">
-        <h1>數位轉型 <em>診斷工具</em></h1>
-        <div class="sub">測量系統真正的交付成果。</div>
-        <p class="desc">一台獨立的診斷儀器，自動測量行政摩擦——無需系統權限、無需問卷、無需人力判斷。</p>
-        <div class="price-tag">
-          <span class="price">$999</span>
-          <span class="price-sub">一次性購買 · 全球運送</span>
-          <span class="preorder-badge">預售中</span>
+        <!-- ★★★ 新段落：作為仲裁協商工具 ★★★ -->
+        <div class="box" style="border-left-color: var(--blue); background: rgba(125,211,252,0.04);">
+            <p style="font-size:14px; color:var(--sub); margin-bottom:0.2rem;"><span style="color:var(--blue); font-weight:500;">A shared instrument for both parties — a neutral arbitration tool.</span></p>
+            <p style="font-size:14px; color:var(--muted);">GL Verifier is not a tool for the government alone. Nor is it a tool for the vendor alone. It is a tool that both parties can hold — a shared, verifiable source of truth.</p>
+            <p style="font-size:14px; color:var(--muted);">Government holds one. The contractor holds one. Both run the same diagnostic on the same system. The reports are comparable, tamper-proof, and time-stamped.</p>
+            <p style="font-size:14px; color:var(--muted);">When disputes arise, there is no need to hire consultants to interpret. Just compare the two GL reports. If the scores match, the system works. If they don't, the data tells the story.</p>
+            <p style="font-size:14px; color:var(--green); margin-top:0.2rem;">Trust is rebuilt — not through contracts, but through verifiable fact.</p>
         </div>
-        <div>
-          <a href="https://buy.stripe.com/6oU00bcuhdJk6q44MgejK00" class="btn-buy">預購 – $999 →</a>
-          <a href="#specs-tw" class="btn-outline">了解更多</a>
+
+        <h2>The post-deployment blind spot.</h2>
+        <p>After deployment, organizations rarely measure what actually happened.</p>
+        <ul>
+            <li>Did processing time actually shrink — or did the AI just generate faster rejections?</li>
+            <li>Did customer friction decrease — or did the system simply shift the burden elsewhere?</li>
+        </ul>
+        <p>Without a post-deployment diagnostic, there is no way to know. Investment is assumed to have worked, because the money was spent.</p>
+        <p><strong>GL Verifier is the first tool designed specifically for this blind spot.</strong></p>
+
+        <h2>Accountability cannot be outsourced to consultants.</h2>
+        <p>When a system fails, the consultant's contract ends. The report is filed. The recommendations are delivered. But the system still does not work. Citizens still wait. Benefits still do not arrive.</p>
+        <p>Who is accountable?<br>
+            Not the consultant — they already left.<br>
+            Not the vendor — they delivered what the contract specified.<br>
+            Not the agency — they followed the procurement process.</p>
+        <div class="box">
+            <p><strong>This is not accountability. This is a revolving door of plausible deniability.</strong></p>
         </div>
-        <div class="ship-info">📦 七月預售 · 八月正式出貨 · 首批 1,000 台</div>
-      </div>
-    </div>
+        <p>GL Verifier provides an independent, third-party diagnostic — not an opinion, not a self-assessment, not an internal audit. Just a measured, verifiable fact about whether the system actually delivers.</p>
+        <p><strong>You cannot outsource accountability. But you can measure it.</strong></p>
 
-    <div class="section" id="specs-tw">
-      <div class="section-eyebrow">規格</div>
-      <h2 class="section-title">儀器內容</h2>
-      <p class="section-sub">5 分鐘內開始診斷數位轉型摩擦所需的一切。</p>
-      <div class="spec-grid">
-        <div class="spec-card"><div class="icon">⚡</div><h4>8 項參數</h4><p>等待成本 · 重複成本 · 崩潰成本 · 資訊不對稱 · 心理成本 · 機會成本 · 轉嫁路徑 · 迴路閉合</p></div>
-        <div class="spec-card"><div class="icon">📊</div><h4>GL Index 0.00–1.00</h4><p>單一標準化分數——可跨系統、跨機構、跨國家比較。</p></div>
-        <div class="spec-card"><div class="icon">🔓</div><h4>無需系統權限</h4><p>完全透過外部觀察運作。不需整合、不需權限、不受廠商控制。</p></div>
-        <div class="spec-card"><div class="icon">🌍</div><h4>全球標準</h4><p>對齊 OECD/IDI 2026 報告與 EO 14402。</p></div>
-      </div>
-    </div>
+        <p style="font-size:14px; color:var(--green); margin-top:0.2rem;">GL Verifier breaks this cycle — not by changing incentives, but by making performance measurable.</p>
 
-    <div class="section">
-      <div class="section-eyebrow">運作方式</div>
-      <h2 class="section-title">獨立 · 自動 · 可驗證</h2>
-      <div class="feature-grid">
-        <div class="feature-item"><span class="icon">📦</span><div><h4>5 分鐘部署</h4><p>安裝在牆面或桌面，插上電源——立即開始運作。</p></div></div>
-        <div class="feature-item"><span class="icon">🔄</span><div><h4>24/7 數據收集</h4><p>持續測量等待時間、放棄率、完成率。</p></div></div>
-        <div class="feature-item"><span class="icon">🧮</span><div><h4>即時 GL 分數</h4><p>OLED 螢幕顯示當前 GL Index 與等級——A 到 F。</p></div></div>
-        <div class="feature-item"><span class="icon">📈</span><div><h4>儀表板存取</h4><p>線上查看彙總數據、趨勢與比較基準。</p></div></div>
-        <div class="feature-item"><span class="icon">🔒</span><div><h4>防篡改</h4><p>驗證密封貼紙確保裝置部署後未被更改。</p></div></div>
-        <div class="feature-item"><span class="icon">♻️</span><div><h4>離網就緒</h4><p>太陽能 + 電池供電選項，適用於偏遠或獨立部署。</p></div></div>
-      </div>
-    </div>
-
-    <!-- ====== WHY GOVERNMENTS BUY IT（繁體） ====== -->
-    <div class="section">
-      <div class="section-eyebrow">政府為何採購</div>
-      <h2 class="section-title">掌握數據 · 掌握改善</h2>
-      <p class="section-sub">當政府擁有診斷工具，就擁有測量的權力——也擁有改變的權力。</p>
-      <div class="feature-grid">
-        <div class="feature-item">
-          <span class="icon">📡</span>
-          <div>
-            <h4>即時監測</h4>
-            <p>服務交付的連續客觀數據——不再需要等待民調或客訴。</p>
-          </div>
+        <h2>The GL Framework: a diagnostic methodology.</h2>
+        <p style="font-size:18px; font-family:var(--mono); color:var(--green);">GL = (Fs × Vn) / (Pd × Cf)</p>
+        <div class="grid-2">
+            <div class="stat-card"><div class="label">Fs — Flow Success Rate</div><div class="desc">What share of intended recipients complete the process?</div></div>
+            <div class="stat-card"><div class="label">Vn — Strategic Value</div><div class="desc">How critical is this service to your organization or society?</div></div>
+            <div class="stat-card"><div class="label">Pd — Pain Duration</div><div class="desc">How many hours of suffering does the system impose?</div></div>
+            <div class="stat-card"><div class="label">Cf — Cognitive Friction</div><div class="desc">How complex are the rules, documents, and decision layers?</div></div>
         </div>
-        <div class="feature-item">
-          <span class="icon">📊</span>
-          <div>
-            <h4>內部驗證</h4>
-            <p>用真實數據測試政策效果。知道什麼有效、什麼無效。</p>
-          </div>
+
+        <h3>Real-world diagnostics — after automation, after deployment:</h3>
+        <div class="grid-2">
+            <div class="stat-card"><div class="label">UN HLEG (Beyond GDP)</div><div class="value">0.01</div><div class="desc">The UN spent a year defining failure — and never measured itself.</div></div>
+            <div class="stat-card"><div class="label">U.S. Student Loans</div><div class="value">0.006</div><div class="desc">A system designed to fail from the start.</div></div>
+            <div class="stat-card"><div class="label">UK ETA Border</div><div class="value">0.04–0.09</div><div class="desc">Pseudo-digitalisation — launched, but never worked.</div></div>
+            <div class="stat-card"><div class="label">Massachusetts DUA</div><div class="value">0.059</div><div class="desc">For every $1 invested, 5.9¢ reaches the citizen. 70k+ pending.</div></div>
         </div>
-        <div class="feature-item">
-          <span class="icon">🔄</span>
-          <div>
-            <h4>迭代改善</h4>
-            <p>部署 → 測量 → 調整 → 重複。GL-Verifier 實現快速、基於證據的改革循環。</p>
-          </div>
+
+        <h2>GL Verifier — independent, offline, hardware-based.</h2>
+        <p>Designed for post-automation, post-AI-deployment diagnostics. No network. No data storage. No vendor lock-in.</p>
+        <div class="spec-box">
+            <p><strong>Inputs:</strong> Fs · Vn · Pd · Cf (public data or CSV, no system access required)</p>
+            <p><strong>Outputs:</strong> GL Score · Sensitivity · Tornado Chart · Surgical Recommendations · Full PDF report with SHA-256 hash</p>
+            <p style="color:var(--green);"><span class="highlight">15 minutes · No network · No data retained</span></p>
         </div>
-        <div class="feature-item">
-          <span class="icon">🔒</span>
-          <div>
-            <h4>數據自主</h4>
-            <p>數據由政府掌握。無第三方控制。無供應商鎖定。</p>
-          </div>
+
+        <hr>
+
+        <div class="btn-wrapper">
+            <a href="index.html" class="btn-main">
+                Make GL Verifier a physical tool. <span class="arrow">→</span>
+            </a>
         </div>
-      </div>
-    </div>
 
-    <div class="section">
-      <div class="section-eyebrow">誰在使用</div>
-      <h2 class="section-title">同一台工具。不同使用者。</h2>
-      <p class="section-sub">一台獨立的診斷儀器——服務政府、廠商與公民。</p>
-      <div class="use-grid">
-        <div class="use-card"><div class="icon">🏛️</div><h4>政府</h4><p>驗證採購成果。獨立的上線後驗證。</p></div>
-        <div class="use-card"><div class="icon">📋</div><h4>Big 4／供應商</h4><p>證明你的交付。用獨立、防篡改的數據自我驗證。</p></div>
-        <div class="use-card"><div class="icon">👥</div><h4>公民／NGO</h4><p>監測公共服務。產生可驗證的倡議數據。</p></div>
-        <div class="use-card"><div class="icon">🏢</div><h4>CSR／公益組織</h4><p>驗證社會影響力。證明你的專案真正有交付。</p></div>
-      </div>
-    </div>
-
-    <div class="cta-section">
-      <h2>開始測量真正重要的事</h2>
-      <p>七月預售中。首批 1,000 台八月正式出貨。</p>
-      <a href="https://buy.stripe.com/6oU00bcuhdJk6q44MgejK00" class="btn-buy" style="font-size:1.1rem; padding:1rem 3rem;">預購 – $999 →</a>
-      <div style="margin-top:0.5rem; font-size:0.8rem; color:#6b7a8f;">📦 七月預售 · 八月出貨 · 首批 1,000 台</div>
-    </div>
-  </div><!-- /tw -->
-
-  <!-- ============================================================ -->
-  <!-- ==================== 简体中文 =============================== -->
-  <!-- ============================================================ -->
-  <div class="lang-content" data-lang="cn">
-    <div class="product-header">
-      <div class="logo"><a href="index.html">← GFI Flow Intelligence</a></div>
-      <div><a href="https://buy.stripe.com/6oU00bcuhdJk6q44MgejK00" class="btn-buy" style="padding:0.5rem 1.5rem; font-size:0.85rem;">预购 →</a></div>
-    </div>
-
-    <div class="hero">
-      <div class="hero-image">
-        <div class="device-icon">📟</div>
-        <div class="screen-sim">GL 0.00</div>
-        <div class="device-label">服务流程诊断工具</div>
-        <div class="tagline">插电 · 安装 · 诊断</div>
-      </div>
-      <div class="hero-text">
-        <h1>数字化转型 <em>诊断工具</em></h1>
-        <div class="sub">测量系统真正的交付成果。</div>
-        <p class="desc">一台独立的诊断仪器，自动测量行政摩擦——无需系统权限、无需问卷、无需人力判断。</p>
-        <div class="price-tag">
-          <span class="price">$999</span>
-          <span class="price-sub">一次性购买 · 全球运送</span>
-          <span class="preorder-badge">预售中</span>
+        <div class="footer-meta">
+            <span><strong>Creator</strong> Ping Xu · GFI Flow Intelligence · Boston</span>
+            <span><a href="#">gfiintel.com</a></span>
         </div>
-        <div>
-          <a href="https://buy.stripe.com/6oU00bcuhdJk6q44MgejK00" class="btn-buy">预购 – $999 →</a>
-          <a href="#specs-cn" class="btn-outline">了解更多</a>
+        <div style="font-size:11px; color:rgba(255,255,255,0.12); margin-top:0.4rem; font-family:var(--mono); letter-spacing:0.04em;">Kickstarter launching 2026 · Learn more at gfiintel.com</div>
+    </div>
+
+    <!-- ========== 繁體中文 ========== -->
+    <div class="lang-panel" data-lang="zh-Hant">
+        <div class="tag">GL Verifier</div>
+        <h1>每個系統都承載著重量。</h1>
+        <p class="subhead">你看不見它。但你感覺得到——在延誤、在重工、在無盡的簽核、在客戶抱怨、在員工的過勞裡。</p>
+        <p><span class="highlight">治理流程診斷器 讓看不見的流程重量變得可見。</span></p>
+        <p>它給你一個數字——<span class="highlight">GL 分數</span>——告訴你投資有多少真正到達了預期對象，又有多少被隱藏的摩擦吞噬。</p>
+
+        <div class="positioning-box">
+            <p><span class="emph">治理流程診斷器</span> 不是顧問。不為任何人辯護。</p>
+            <p>它是一把 <span class="emph">尺</span>。它是一個 <span class="emph">調音器</span>。</p>
+            <p>它只做一件事：<span class="emph">測量系統的流程重量，然後告訴你數字。</span></p>
+            <p style="font-size:13px; color:var(--sub);">這個數字代表什麼、該怎麼處理——那是你的事，不是它的事。</p>
         </div>
-        <div class="ship-info">📦 七月预售 · 八月正式出货 · 首批 1,000 台</div>
-      </div>
-    </div>
 
-    <div class="section" id="specs-cn">
-      <div class="section-eyebrow">规格</div>
-      <h2 class="section-title">仪器内容</h2>
-      <p class="section-sub">5 分钟内开始诊断数字化转型摩擦所需的一切。</p>
-      <div class="spec-grid">
-        <div class="spec-card"><div class="icon">⚡</div><h4>8 项参数</h4><p>等待成本 · 重复成本 · 崩溃成本 · 信息不对称 · 心理成本 · 机会成本 · 转嫁路径 · 回路闭合</p></div>
-        <div class="spec-card"><div class="icon">📊</div><h4>GL Index 0.00–1.00</h4><p>单一标准化分数——可跨系统、跨机构、跨国家比较。</p></div>
-        <div class="spec-card"><div class="icon">🔓</div><h4>无需系统权限</h4><p>完全通过外部观察运作。不需整合、不需权限、不受厂商控制。</p></div>
-        <div class="spec-card"><div class="icon">🌍</div><h4>全球标准</h4><p>对齐 OECD/IDI 2026 报告与 EO 14402。</p></div>
-      </div>
-    </div>
+        <p><span class="emph">治理流程診斷器</span> 是透過 <span class="emph">分母邏輯</span> 診斷系統的工具——不同於 GDP 或審計框架，它們只看分子。</p>
 
-    <div class="section">
-      <div class="section-eyebrow">运作方式</div>
-      <h2 class="section-title">独立 · 自动 · 可验证</h2>
-      <div class="feature-grid">
-        <div class="feature-item"><span class="icon">📦</span><div><h4>5 分钟部署</h4><p>安装在墙面或桌面，插上电源——立即开始运作。</p></div></div>
-        <div class="feature-item"><span class="icon">🔄</span><div><h4>24/7 数据收集</h4><p>持续测量等待时间、放弃率、完成率。</p></div></div>
-        <div class="feature-item"><span class="icon">🧮</span><div><h4>实时 GL 分数</h4><p>OLED 屏幕显示当前 GL Index 与等级——A 到 F。</p></div></div>
-        <div class="feature-item"><span class="icon">📈</span><div><h4>仪表板存取</h4><p>在线查看汇总数据、趋势与比较基准。</p></div></div>
-        <div class="feature-item"><span class="icon">🔒</span><div><h4>防篡改</h4><p>验证密封贴纸确保装置部署后未被更改。</p></div></div>
-        <div class="feature-item"><span class="icon">♻️</span><div><h4>离网就绪</h4><p>太阳能 + 电池供电选项，适用于偏远或独立部署。</p></div></div>
-      </div>
-    </div>
-
-    <!-- ====== WHY GOVERNMENTS BUY IT（簡體） ====== -->
-    <div class="section">
-      <div class="section-eyebrow">政府为何采购</div>
-      <h2 class="section-title">掌握数据 · 掌握改善</h2>
-      <p class="section-sub">当政府拥有诊断工具，就拥有测量的权力——也拥有改变的权力。</p>
-      <div class="feature-grid">
-        <div class="feature-item">
-          <span class="icon">📡</span>
-          <div>
-            <h4>实时监测</h4>
-            <p>服务交付的连续客观数据——不再需要等待民调或客诉。</p>
-          </div>
+        <div class="box">
+            <p><strong>這不是效率問題。</strong>這是看見那些始終被忽略的事物。</p>
+            <p><strong>這不是一個產品進入市場。</strong>這是一個產品創造一個新類別。</p>
         </div>
-        <div class="feature-item">
-          <span class="icon">📊</span>
-          <div>
-            <h4>内部验证</h4>
-            <p>用真实数据测试政策效果。知道什么有效、什么无效。</p>
-          </div>
+
+        <p>多數組織投資 AI、自動化與數位系統——卻感覺更慢、更重、更難運作。問題不在技術，在於<span class="highlight">分母</span>——隱藏的流程摩擦，默默侵蝕價值。</p>
+        <p><strong>沒有人診斷這個。</strong>審計師檢查合規。顧問給予建議。IT 團隊維持系統運作。但沒有人測量系統是否真的在交付。沒有人讓隱形的重量變得可見。</p>
+
+        <div class="box-gray">
+            <p><strong>一個結構性的需求缺口。</strong></p>
+            <p>在政府端，機關投入大量預算卻不知道系統是否真正有效。採購官員需要驗證績效的方式——但沒有標準工具。</p>
+            <p>在企業端，高階主管對投資 AI 與自動化卻看不到可衡量的改善感到厭倦。他們需要知道：<em>這筆投資真的有效嗎？</em></p>
+            <p><strong>兩個市場。一個缺口。一個工具。</strong></p>
         </div>
-        <div class="feature-item">
-          <span class="icon">🔄</span>
-          <div>
-            <h4>迭代改善</h4>
-            <p>部署 → 测量 → 调整 → 重复。GL-Verifier 实现快速、基于证据的改革循环。</p>
-          </div>
+
+        <!-- 層次一：資本結構鼓勵浪費 -->
+        <div class="box" style="border-left-color: var(--green); background: rgba(159,232,112,0.04);">
+            <p style="font-size:14px; color:var(--sub); margin-bottom:0.2rem;"><span style="color:var(--green); font-weight:500;">浪費不是意外。它是結構的一部分。</span></p>
+            <p style="font-size:14px; color:var(--muted);">在當前的結構框架下，低效率不會被懲罰——它會被獎勵。系統整合商從複雜中獲利。機關的獎勵來自於花完預算，而不是來自於達成成果。沒有人有動機去問：<em>這個系統真的有用嗎？</em></p>
+            <p style="font-size:14px; color:var(--muted);">這不是腐敗。這是結構。</p>
         </div>
-        <div class="feature-item">
-          <span class="icon">🔒</span>
-          <div>
-            <h4>数据自主</h4>
-            <p>数据由政府掌握。无第三方控制。无供应商锁定。</p>
-          </div>
+
+        <!-- 層次二：顧問公司製造複雜度 -->
+        <div class="box" style="border-left-color: var(--blue); background: rgba(125,211,252,0.04);">
+            <p style="font-size:14px; color:var(--sub); margin-bottom:0.2rem;"><span style="color:var(--blue); font-weight:500;">顧問公司從複雜中獲利——而不是從解決問題中獲利。</span></p>
+            <p style="font-size:14px; color:var(--muted);">政府的低效率不會被懲罰——它被外包了。問題越複雜，可計費的時數就越多。顧問公司沒有動機簡化問題——他們有充分的動機讓系統繼續失能、讓合約繼續續約。</p>
+            <p style="font-size:14px; color:var(--muted);">這不是失能。這是商業模式。</p>
         </div>
-      </div>
-    </div>
 
-    <div class="section">
-      <div class="section-eyebrow">谁在使用</div>
-      <h2 class="section-title">同一台工具。不同使用者。</h2>
-      <p class="section-sub">一台独立的诊断仪器——服务政府、厂商与公民。</p>
-      <div class="use-grid">
-        <div class="use-card"><div class="icon">🏛️</div><h4>政府</h4><p>验证采购成果。独立的上线后验证。</p></div>
-        <div class="use-card"><div class="icon">📋</div><h4>Big 4／供应商</h4><p>证明你的交付。用独立、防篡改的数据自我验证。</p></div>
-        <div class="use-card"><div class="icon">👥</div><h4>公民／NGO</h4><p>监测公共服务。产生可验证的倡议数据。</p></div>
-        <div class="use-card"><div class="icon">🏢</div><h4>CSR／公益组织</h4><p>验证社会影响力。证明你的项目真正有交付。</p></div>
-      </div>
-    </div>
-
-    <div class="cta-section">
-      <h2>开始测量真正重要的事</h2>
-      <p>七月预售中。首批 1,000 台八月正式出货。</p>
-      <a href="https://buy.stripe.com/6oU00bcuhdJk6q44MgejK00" class="btn-buy" style="font-size:1.1rem; padding:1rem 3rem;">预购 – $999 →</a>
-      <div style="margin-top:0.5rem; font-size:0.8rem; color:#6b7a8f;">📦 七月预售 · 八月出货 · 首批 1,000 台</div>
-    </div>
-  </div><!-- /cn -->
-
-  <!-- ============================================================ -->
-  <!-- ==================== SPANISH =============================== -->
-  <!-- ============================================================ -->
-  <div class="lang-content" data-lang="es">
-    <div class="product-header">
-      <div class="logo"><a href="index.html">← GFI Flow Intelligence</a></div>
-      <div><a href="https://buy.stripe.com/6oU00bcuhdJk6q44MgejK00" class="btn-buy" style="padding:0.5rem 1.5rem; font-size:0.85rem;">Pre-ordenar →</a></div>
-    </div>
-
-    <div class="hero">
-      <div class="hero-image">
-        <div class="device-icon">📟</div>
-        <div class="screen-sim">GL 0.00</div>
-        <div class="device-label">Herramienta de Diagnóstico de Flujo de Servicio</div>
-        <div class="tagline">Enchufar · Montar · Diagnosticar</div>
-      </div>
-      <div class="hero-text">
-        <h1>Transformación Digital <em>Herramienta de Diagnóstico</em></h1>
-        <div class="sub">Mide lo que los sistemas realmente entregan.</div>
-        <p class="desc">Un dispositivo de diagnóstico independiente que mide automáticamente la fricción administrativa — sin acceso al sistema, sin encuestas, sin juicio humano.</p>
-        <div class="price-tag">
-          <span class="price">$999</span>
-          <span class="price-sub">Compra única · Envío global</span>
-          <span class="preorder-badge">Pre-venta</span>
+        <!-- 層次三：百年來為什麼沒有人發覺 -->
+        <div class="box" style="border-left-color: var(--green); background: rgba(159,232,112,0.03);">
+            <p style="font-size:14px; color:var(--sub); margin-bottom:0.2rem;"><span style="color:var(--green); font-weight:500;">為什麼百年來都沒有人發覺？</span></p>
+            <p style="font-size:14px; color:var(--muted);">不是因為太難。是因為權力結構從來不需要這個問題被回答。審計只查合規。顧問從模糊中獲利。系統開發商交付合約指定的內容，而不是公民需要的東西。沒有人為系統是否真正運作負責——因為從來沒有人測量過。</p>
         </div>
-        <div>
-          <a href="https://buy.stripe.com/6oU00bcuhdJk6q44MgejK00" class="btn-buy">Pre-ordenar – $999 →</a>
-          <a href="#specs-es" class="btn-outline">Más Información</a>
+
+        <!-- ★★★ 新段落：作為仲裁協商工具 ★★★ -->
+        <div class="box" style="border-left-color: var(--blue); background: rgba(125,211,252,0.04);">
+            <p style="font-size:14px; color:var(--sub); margin-bottom:0.2rem;"><span style="color:var(--blue); font-weight:500;">雙方各持一台——中立的仲裁協商工具。</span></p>
+            <p style="font-size:14px; color:var(--muted);">治理流程診斷器 不是一台「給政府用的工具」。也不是一台「給廠商用的工具」。它是一台讓雙方都可以持有的工具——一個共享的、可驗證的事實來源。</p>
+            <p style="font-size:14px; color:var(--muted);">政府持有一台。承包商持有一台。雙方對同一個系統跑同一次診斷。報告是可比較的、防竄改的、有時間戳記的。</p>
+            <p style="font-size:14px; color:var(--muted);">當爭議發生時，不需要聘請顧問來解釋。只需要比對兩份 GL 報告。如果分數吻合，系統就是有效的。如果不吻合，數據會說話。</p>
+            <p style="font-size:14px; color:var(--green); margin-top:0.2rem;">信任被重建——不是透過合約，而是透過可驗證的事實。</p>
         </div>
-        <div class="ship-info">📦 Pre-venta: Julio · Envío: Agosto 2026 · Primer lote: 1,000 unidades</div>
-      </div>
-    </div>
 
-    <div class="section" id="specs-es">
-      <div class="section-eyebrow">Especificaciones</div>
-      <h2 class="section-title">Qué Contiene</h2>
-      <p class="section-sub">Todo lo que necesitas para empezar a diagnosticar la fricción de la transformación digital en 5 minutos.</p>
-      <div class="spec-grid">
-        <div class="spec-card"><div class="icon">⚡</div><h4>8 Parámetros</h4><p>Costo de Espera · Costo de Repetición · Costo de Colapso · Asimetría de Información · Costo Psicológico · Costo de Oportunidad · Vía de Traslado · Cierre de Circuito</p></div>
-        <div class="spec-card"><div class="icon">📊</div><h4>Índice GL 0.00–1.00</h4><p>Puntuación única y estandarizada — comparable entre sistemas, instituciones y países.</p></div>
-        <div class="spec-card"><div class="icon">🔓</div><h4>Sin Acceso al Sistema</h4><p>Funciona completamente desde la observación externa. Sin integración. Sin permisos. Sin control del proveedor.</p></div>
-        <div class="spec-card"><div class="icon">🌍</div><h4>Estándar Global</h4><p>Alineado con el Informe OECD/IDI 2026 y EO 14402.</p></div>
-      </div>
-    </div>
+        <h2>部署後的盲點。</h2>
+        <p>部署後，組織很少衡量實際發生的事。</p>
+        <ul>
+            <li>處理時間真的縮短了——還是 AI 只是產生了更快的拒絕？</li>
+            <li>客戶摩擦真的減少了——還是系統只是把負擔轉嫁到別處？</li>
+        </ul>
+        <p>沒有部署後的診斷，無從得知。投資被假設為有效，因為錢已經花了。</p>
+        <p><strong>治理流程診斷器 是第一個專門為這個盲點設計的工具。</strong></p>
 
-    <div class="section">
-      <div class="section-eyebrow">Cómo Funciona</div>
-      <h2 class="section-title">Independiente · Automatizado · Verificable</h2>
-      <div class="feature-grid">
-        <div class="feature-item"><span class="icon">📦</span><div><h4>Despliegue en Minutos</h4><p>Monta en una pared o escritorio, conecta la corriente — comienza a funcionar de inmediato.</p></div></div>
-        <div class="feature-item"><span class="icon">🔄</span><div><h4>Recopilación 24/7</h4><p>Mide continuamente tiempos de espera, tasas de abandono y tasas de finalización.</p></div></div>
-        <div class="feature-item"><span class="icon">🧮</span><div><h4>Puntuación GL en Tiempo Real</h4><p>La pantalla OLED muestra el Índice GL actual y el grado — de A a F.</p></div></div>
-        <div class="feature-item"><span class="icon">📈</span><div><h4>Acceso al Panel</h4><p>Visualiza datos agregados, tendencias y puntos de referencia comparativos en línea.</p></div></div>
-        <div class="feature-item"><span class="icon">🔒</span><div><h4>A Prueba de Manipulación</h4><p>El sello de verificación asegura que el dispositivo no ha sido alterado después del despliegue.</p></div></div>
-        <div class="feature-item"><span class="icon">♻️</span><div><h4>Listo para Fuera de la Red</h4><p>Opción de energía solar + batería para despliegue remoto o independiente.</p></div></div>
-      </div>
-    </div>
-
-    <!-- ====== WHY GOVERNMENTS BUY IT（西班牙文） ====== -->
-    <div class="section">
-      <div class="section-eyebrow">Por Qué lo Compran los Gobiernos</div>
-      <h2 class="section-title">Sus Datos. Su Mejora.</h2>
-      <p class="section-sub">Cuando los gobiernos poseen la herramienta de diagnóstico, adquieren el poder de medir — y el poder de cambiar.</p>
-      <div class="feature-grid">
-        <div class="feature-item">
-          <span class="icon">📡</span>
-          <div>
-            <h4>Monitoreo en Tiempo Real</h4>
-            <p>Datos objetivos y continuos sobre la entrega de servicios — sin esperar encuestas ni quejas.</p>
-          </div>
+        <h2>政府的問責不能外包給顧問。</h2>
+        <p>當系統失效，顧問的合約結束了。報告歸檔了。建議交付了。但系統仍然無法運作。公民仍然在等待。福利仍然沒有到達。</p>
+        <p>誰負責？<br>不是顧問——他們已經離開了。<br>不是供應商——他們交付了合約指定的內容。<br>不是機關——他們遵循了採購流程。</p>
+        <div class="box">
+            <p><strong>這不是問責。這是「貌似有理」的旋轉門。</strong></p>
         </div>
-        <div class="feature-item">
-          <span class="icon">📊</span>
-          <div>
-            <h4>Validación Interna</h4>
-            <p>Prueba los cambios de política con datos reales. Saber qué funciona — y qué no.</p>
-          </div>
+        <p>治理流程診斷器 提供獨立、第三方的診斷——不是意見，不是自我評估，不是內部稽核。只是一個關於系統是否真正在交付的、可測量、可驗證的事實。</p>
+        <p><strong>你不能外包問責。但你可以測量它。</strong></p>
+
+        <p style="font-size:14px; color:var(--green); margin-top:0.2rem;">治理流程診斷器 打破這個循環——不是改變動機，而是讓績效可以被測量。</p>
+
+        <h2>GL 框架：一套診斷方法論。</h2>
+        <p style="font-size:18px; font-family:var(--mono); color:var(--green);">GL = (Fs × Vn) / (Pd × Cf)</p>
+        <div class="grid-2">
+            <div class="stat-card"><div class="label">Fs — 流程成功率</div><div class="desc">有多少預期對象完成了流程？</div></div>
+            <div class="stat-card"><div class="label">Vn — 策略價值</div><div class="desc">這項服務對你的組織或社會有多關鍵？</div></div>
+            <div class="stat-card"><div class="label">Pd — 痛苦時數</div><div class="desc">系統對使用者施加了多少小時的痛苦？</div></div>
+            <div class="stat-card"><div class="label">Cf — 認知摩擦</div><div class="desc">規則、文件、決策層級有多複雜？</div></div>
         </div>
-        <div class="feature-item">
-          <span class="icon">🔄</span>
-          <div>
-            <h4>Mejora Iterativa</h4>
-            <p>Desplegar. Medir. Ajustar. Repetir. GL-Verifier permite ciclos de reforma rápidos y basados en evidencia.</p>
-          </div>
+
+        <h3>真實世界診斷——自動化與部署之後：</h3>
+        <div class="grid-2">
+            <div class="stat-card"><div class="label">聯合國 HLEG（超越 GDP）</div><div class="value">0.01</div><div class="desc">聯合國花了一年定義失敗——卻從未衡量自己。</div></div>
+            <div class="stat-card"><div class="label">美國學貸</div><div class="value">0.006</div><div class="desc">一個從一開始就被設計為失敗的系統。</div></div>
+            <div class="stat-card"><div class="label">英國 ETA 邊境</div><div class="value">0.04–0.09</div><div class="desc">偽數位化——上線了，但從未真正運作。</div></div>
+            <div class="stat-card"><div class="label">麻州 DUA</div><div class="value">0.059</div><div class="desc">每投資 1 美元，只有 5.9 美分到達公民。7 萬件以上積案。</div></div>
         </div>
-        <div class="feature-item">
-          <span class="icon">🔒</span>
-          <div>
-            <h4>Sus Datos</h4>
-            <p>Los datos permanecen con el gobierno. Sin control de terceros. Sin dependencia de proveedores.</p>
-          </div>
+
+        <h2>治理流程診斷器——獨立、離線、基於硬體。</h2>
+        <p>專為自動化與 AI 部署後診斷而設計。沒有網路。沒有數據儲存。沒有供應商鎖定。</p>
+        <div class="spec-box">
+            <p><strong>輸入：</strong>Fs · Vn · Pd · Cf（公開數據或 CSV，無需系統權限）</p>
+            <p><strong>輸出：</strong>GL 分數 · 敏感度 · 龍捲風圖 · 手術式建議 · 完整 PDF 報告（含 SHA-256 雜湊）</p>
+            <p style="color:var(--green);"><span class="highlight">15 分鐘 · 沒有網路 · 不留存數據</span></p>
         </div>
-      </div>
+
+        <hr>
+
+        <div class="btn-wrapper">
+            <a href="index.html" class="btn-main">
+                讓 治理流程診斷器 成為實體工具。 <span class="arrow">→</span>
+            </a>
+        </div>
+
+        <div class="footer-meta">
+            <span><strong>創作者</strong> 徐萍 · GFI Flow Intelligence · 波士頓</span>
+            <span><a href="#">gfiintel.com</a></span>
+        </div>
+        <div style="font-size:11px; color:rgba(255,255,255,0.12); margin-top:0.4rem; font-family:var(--mono); letter-spacing:0.04em;">Kickstarter 2026 年推出 · 更多資訊請見 gfiintel.com</div>
     </div>
 
-    <div class="section">
-      <div class="section-eyebrow">Quién Lo Usa</div>
-      <h2 class="section-title">Misma Herramienta. Diferentes Usuarios.</h2>
-      <p class="section-sub">Un dispositivo de diagnóstico independiente — sirviendo a gobiernos, proveedores y ciudadanos por igual.</p>
-      <div class="use-grid">
-        <div class="use-card"><div class="icon">🏛️</div><h4>Gobierno</h4><p>Verificar resultados de adquisiciones. Validación independiente post-despliegue.</p></div>
-        <div class="use-card"><div class="icon">📋</div><h4>Big 4 / Proveedores</h4><p>Demuestra tu entrega. Autoverificación con datos independientes y a prueba de manipulaciones.</p></div>
-        <div class="use-card"><div class="icon">👥</div><h4>Ciudadanos / ONGs</h4><p>Monitorear servicios públicos. Generar datos verificables para la incidencia.</p></div>
-        <div class="use-card"><div class="icon">🏢</div><h4>RSC / Filantropía</h4><p>Validar el impacto social. Demostrar que tus proyectos realmente entregan.</p></div>
-      </div>
+    <!-- ========== 简体中文 ========== -->
+    <div class="lang-panel" data-lang="zh-Hans">
+        <div class="tag">GL Verifier</div>
+        <h1>每个系统都承载着重量。</h1>
+        <p class="subhead">你看不见它。但你感觉得到——在延误、在返工、在无尽的审批、在客户抱怨、在员工的过劳里。</p>
+        <p><span class="highlight">治理流程诊断仪 让看不见的流程重量变得可见。</span></p>
+        <p>它给你一个数字——<span class="highlight">GL 分数</span>——告诉你投资有多少真正到达了预期对象，又有多少被隐藏的摩擦吞噬。</p>
+
+        <div class="positioning-box">
+            <p><span class="emph">治理流程诊断仪</span> 不是顾问。不为任何人辩护。</p>
+            <p>它是一把 <span class="emph">尺</span>。它是一个 <span class="emph">调音器</span>。</p>
+            <p>它只做一件事：<span class="emph">测量系统的流程重量，然后告诉你数字。</span></p>
+            <p style="font-size:13px; color:var(--sub);">这个数字代表什么、该怎么处理——那是你的事，不是它的事。</p>
+        </div>
+
+        <p><span class="emph">治理流程诊断仪</span> 是透过 <span class="emph">分母逻辑</span> 诊断系统的工具——不同于 GDP 或审计框架，它们只看分子。</p>
+
+        <div class="box">
+            <p><strong>这不是效率问题。</strong>这是看见那些始终被忽略的事物。</p>
+            <p><strong>这不是一个产品进入市场。</strong>这是一个产品创造一个新类别。</p>
+        </div>
+
+        <p>多数组织投资 AI、自动化与数字系统——却感觉更慢、更重、更难运作。问题不在技术，在于<span class="highlight">分母</span>——隐藏的流程摩擦，默默侵蚀价值。</p>
+        <p><strong>没有人诊断这个。</strong>审计师检查合规。顾问给予建议。IT 团队维持系统运作。但没有人测量系统是否真的在交付。没有人让隐形的重量变得可见。</p>
+
+        <div class="box-gray">
+            <p><strong>一个结构性的需求缺口。</strong></p>
+            <p>在政府端，机关投入大量预算却不知道系统是否真正有效。采购官员需要验证绩效的方式——但没有标准工具。</p>
+            <p>在企业端，高管对投资 AI 与自动化却看不到可衡量的改善感到厌倦。他们需要知道：<em>这笔投资真的有效吗？</em></p>
+            <p><strong>两个市场。一个缺口。一个工具。</strong></p>
+        </div>
+
+        <!-- 層次一：資本結構鼓勵浪費 -->
+        <div class="box" style="border-left-color: var(--green); background: rgba(159,232,112,0.04);">
+            <p style="font-size:14px; color:var(--sub); margin-bottom:0.2rem;"><span style="color:var(--green); font-weight:500;">浪费不是意外。它是结构的一部分。</span></p>
+            <p style="font-size:14px; color:var(--muted);">在当前的结构框架下，低效率不会被惩罚——它会被奖励。系统整合商从复杂中获利。机关的奖励来自于花完预算，而不是来自于达成成果。没有人有动机去问：<em>这个系统真的有用吗？</em></p>
+            <p style="font-size:14px; color:var(--muted);">这不是腐败。这是结构。</p>
+        </div>
+
+        <!-- 層次二：顧問公司製造複雜度 -->
+        <div class="box" style="border-left-color: var(--blue); background: rgba(125,211,252,0.04);">
+            <p style="font-size:14px; color:var(--sub); margin-bottom:0.2rem;"><span style="color:var(--blue); font-weight:500;">顾问公司从复杂中获利——而不是从解决问题中获利。</span></p>
+            <p style="font-size:14px; color:var(--muted);">政府的低效率不会被惩罚——它被外包了。问题越复杂，可计费的时数就越多。顾问公司没有动机简化问题——他们有充分的动机让系统继续失能、让合约继续续约。</p>
+            <p style="font-size:14px; color:var(--muted);">这不是失能。这是商业模式。</p>
+        </div>
+
+        <!-- 層次三：百年來為什麼沒有人發覺 -->
+        <div class="box" style="border-left-color: var(--green); background: rgba(159,232,112,0.03);">
+            <p style="font-size:14px; color:var(--sub); margin-bottom:0.2rem;"><span style="color:var(--green); font-weight:500;">为什么百年来都没有人发觉？</span></p>
+            <p style="font-size:14px; color:var(--muted);">不是因为太难。是因为权力结构从来不需要这个问题被回答。审计只查合规。顾问从模糊中获利。系统开发商交付合约指定的内容，而不是公民需要的东西。没有人要为系统是否真正运作负责——因为从来没有人测量过。</p>
+        </div>
+
+        <!-- ★★★ 新段落：作為仲裁協商工具 ★★★ -->
+        <div class="box" style="border-left-color: var(--blue); background: rgba(125,211,252,0.04);">
+            <p style="font-size:14px; color:var(--sub); margin-bottom:0.2rem;"><span style="color:var(--blue); font-weight:500;">双方各持一台——中立的仲裁协商工具。</span></p>
+            <p style="font-size:14px; color:var(--muted);">治理流程诊断仪 不是一台「给政府用的工具」。也不是一台「给厂商用的工具」。它是一台让双方都可以持有的工具——一个共享的、可验证的事实来源。</p>
+            <p style="font-size:14px; color:var(--muted);">政府持有一台。承包商持有一台。双方对同一个系统跑同一次诊断。报告是可比较的、防窜改的、有时间戳记的。</p>
+            <p style="font-size:14px; color:var(--muted);">当争议发生时，不需要聘请顾问来解释。只需要比对两份 GL 报告。如果分数吻合，系统就是有效的。如果不吻合，数据会说话。</p>
+            <p style="font-size:14px; color:var(--green); margin-top:0.2rem;">信任被重建——不是透过合约，而是透过可验证的事实。</p>
+        </div>
+
+        <h2>部署后的盲点。</h2>
+        <p>部署后，组织很少衡量实际发生的事。</p>
+        <ul>
+            <li>处理时间真的缩短了——还是 AI 只是产生了更快的拒绝？</li>
+            <li>客户摩擦真的减少了——还是系统只是把负担转嫁到别处？</li>
+        </ul>
+        <p>没有部署后的诊断，无从得知。投资被假设为有效，因为钱已经花了。</p>
+        <p><strong>治理流程诊断仪 是第一个专门为这个盲点设计的工具。</strong></p>
+
+        <h2>政府的问责不能外包给顾问。</h2>
+        <p>当系统失效，顾问的合约结束了。报告归档了。建议交付了。但系统仍然无法运作。公民仍然在等待。福利仍然没有到达。</p>
+        <p>谁负责？<br>不是顾问——他们已经离开了。<br>不是供应商——他们交付了合约指定的内容。<br>不是机关——他们遵循了采购流程。</p>
+        <div class="box">
+            <p><strong>这不是问责。这是「貌似有理」的旋转门。</strong></p>
+        </div>
+        <p>治理流程诊断仪 提供独立、第三方的诊断——不是意见，不是自我评估，不是内部稽核。只是一个关于系统是否真正在交付的、可测量、可验证的事实。</p>
+        <p><strong>你不能外包问责。但你可以测量它。</strong></p>
+
+        <p style="font-size:14px; color:var(--green); margin-top:0.2rem;">治理流程诊断仪 打破这个循环——不是改变动机，而是让绩效可以被测量。</p>
+
+        <h2>GL 框架：一套诊断方法论。</h2>
+        <p style="font-size:18px; font-family:var(--mono); color:var(--green);">GL = (Fs × Vn) / (Pd × Cf)</p>
+        <div class="grid-2">
+            <div class="stat-card"><div class="label">Fs — 流程成功率</div><div class="desc">有多少预期对象完成了流程？</div></div>
+            <div class="stat-card"><div class="label">Vn — 战略价值</div><div class="desc">这项服务对你的组织或社会有多关键？</div></div>
+            <div class="stat-card"><div class="label">Pd — 痛苦时数</div><div class="desc">系统对使用者施加了多少小时的痛苦？</div></div>
+            <div class="stat-card"><div class="label">Cf — 认知摩擦</div><div class="desc">规则、文件、决策层级有多复杂？</div></div>
+        </div>
+
+        <h3>真实世界诊断——自动化与部署之后：</h3>
+        <div class="grid-2">
+            <div class="stat-card"><div class="label">联合国 HLEG（超越 GDP）</div><div class="value">0.01</div><div class="desc">联合国花了一年定义失败——却从未衡量自己。</div></div>
+            <div class="stat-card"><div class="label">美国学贷</div><div class="value">0.006</div><div class="desc">一个从一开始就被设计为失败的系统。</div></div>
+            <div class="stat-card"><div class="label">英国 ETA 边境</div><div class="value">0.04–0.09</div><div class="desc">伪数字化——上线了，但从未真正运作。</div></div>
+            <div class="stat-card"><div class="label">麻州 DUA</div><div class="value">0.059</div><div class="desc">每投资 1 美元，只有 5.9 美分到达公民。7 万件以上积案。</div></div>
+        </div>
+
+        <h2>治理流程诊断仪——独立、离线、基于硬件。</h2>
+        <p>专为自动化与 AI 部署后诊断而设计。没有网络。没有数据存储。没有供应商锁定。</p>
+        <div class="spec-box">
+            <p><strong>输入：</strong>Fs · Vn · Pd · Cf（公开数据或 CSV，无需系统权限）</p>
+            <p><strong>输出：</strong>GL 分数 · 敏感度 · 龙卷风图 · 手术式建议 · 完整 PDF 报告（含 SHA-256 哈希）</p>
+            <p style="color:var(--green);"><span class="highlight">15 分钟 · 没有网络 · 不留存数据</span></p>
+        </div>
+
+        <hr>
+
+        <div class="btn-wrapper">
+            <a href="index.html" class="btn-main">
+                让 治理流程诊断仪 成为实体工具。 <span class="arrow">→</span>
+            </a>
+        </div>
+
+        <div class="footer-meta">
+            <span><strong>创作者</strong> 徐萍 · GFI Flow Intelligence · 波士顿</span>
+            <span><a href="#">gfiintel.com</a></span>
+        </div>
+        <div style="font-size:11px; color:rgba(255,255,255,0.12); margin-top:0.4rem; font-family:var(--mono); letter-spacing:0.04em;">Kickstarter 2026 年推出 · 更多资讯请见 gfiintel.com</div>
     </div>
 
-    <div class="cta-section">
-      <h2>Empieza a Medir lo que Importa</h2>
-      <p>Pre-venta ahora. Primer lote de 1,000 unidades enviado en Agosto 2026.</p>
-      <a href="https://buy.stripe.com/6oU00bcuhdJk6q44MgejK00" class="btn-buy" style="font-size:1.1rem; padding:1rem 3rem;">Pre-ordenar – $999 →</a>
-      <div style="margin-top:0.5rem; font-size:0.8rem; color:#6b7a8f;">📦 Pre-venta: Julio · Envío: Agosto 2026 · 1,000 unidades</div>
-    </div>
-  </div><!-- /es -->
+    <!-- ========== SPANISH ========== -->
+    <div class="lang-panel" data-lang="es">
+        <div class="tag">GL Verifier</div>
+        <h1>Cada sistema carga peso.</h1>
+        <p class="subhead">No puedes verlo. Pero lo sientes — en las demoras, en el retrabajo, en las aprobaciones interminables, en las quejas de los clientes, en el agotamiento de los empleados.</p>
+        <p><span class="highlight">GL Verifier hace visible el peso invisible del proceso.</span></p>
+        <p>Te da un único número — el <span class="highlight">GL Score</span> — que te dice cuánto de tu inversión llega realmente al destinatario previsto, y cuánto está siendo consumido por la fricción oculta.</p>
 
-  <!-- ============================================================ -->
-  <!-- ==================== FOOTER ================================= -->
-  <!-- ============================================================ -->
-  <div class="footer">
-    <div>© 2026 GFI Flow Intelligence · Boston</div>
-    <div>
-      <a href="about.html">About</a> ·
-      <a href="methodology.html">Methodology</a> ·
-      <a href="about.html">WeChat</a>
-    </div>
-    <div class="wechat">
-      <img src="wechat-qr-pingxu.jpg" alt="WeChat">
-      <span>WeChat: wxid_e1ugnreimr6m22</span>
-    </div>
-  </div>
+        <div class="positioning-box">
+            <p><span class="emph">GL Verifier</span> no es un consultor. No toma partido.</p>
+            <p>Es una <span class="emph">regla</span>. Es un <span class="emph">diapasón</span>.</p>
+            <p>Hace una sola cosa: <span class="emph">mide el peso de un sistema y te da el número.</span></p>
+            <p style="font-size:13px; color:var(--sub);">Lo que ese número significa — y qué hacer con él — es decisión tuya.</p>
+        </div>
 
+        <p><span class="emph">GL Verifier</span> es una herramienta que diagnostica sistemas mediante <span class="emph">lógica de denominador</span> — a diferencia del PIB o los marcos de auditoría, que solo miran el numerador.</p>
+
+        <div class="box">
+            <p><strong>Esto no es sobre eficiencia.</strong> Es sobre ver lo que siempre ha sido invisible.</p>
+            <p><strong>Esto no es un producto que entra en un mercado.</strong> Es un producto que crea una nueva categoría.</p>
+        </div>
+
+        <p>La mayoría de las organizaciones invierten en IA, automatización y sistemas digitales — pero todavía se sienten más lentas, más pesadas y más difíciles de operar. El problema no es la tecnología. Es el <span class="highlight">denominador</span> — la fricción oculta del proceso que drena valor silenciosamente.</p>
+        <p><strong>Nadie está diagnosticando esto.</strong> Los auditores verifican el cumplimiento. Los consultores dan recomendaciones. Los equipos de TI mantienen los sistemas en funcionamiento. Pero nadie mide si el sistema realmente entrega. Nadie hace visible el peso invisible.</p>
+
+        <div class="box-gray">
+            <p><strong>Una brecha estructural con demanda creciente.</strong></p>
+            <p>En el gobierno, las agencias gastan miles de millones sin saber si los sistemas realmente funcionan. Los oficiales de adquisiciones necesitan una forma de verificar el rendimiento — pero no existe una herramienta estándar.</p>
+            <p>En la empresa, los ejecutivos invierten en IA y automatización sin una mejora medible. Necesitan saber: <em>¿realmente funcionó la inversión?</em></p>
+            <p><strong>Dos mercados. Una brecha. Una herramienta.</strong></p>
+        </div>
+
+        <!-- 層次一：資本結構鼓勵浪費 -->
+        <div class="box" style="border-left-color: var(--green); background: rgba(159,232,112,0.04);">
+            <p style="font-size:14px; color:var(--sub); margin-bottom:0.2rem;"><span style="color:var(--green); font-weight:500;">El desperdicio no es un error. Es parte de la estructura.</span></p>
+            <p style="font-size:14px; color:var(--muted);">Bajo el marco estructural actual, la ineficiencia no es castigada — es recompensada. Los integradores de sistemas se benefician de la complejidad. Las agencias son recompensadas por gastar presupuestos, no por lograr resultados. Nadie tiene un incentivo para preguntar: <em>¿este sistema realmente funciona?</em></p>
+            <p style="font-size:14px; color:var(--muted);">Esto no es corrupción. Es estructura.</p>
+        </div>
+
+        <!-- 層次二：顧問公司製造複雜度 -->
+        <div class="box" style="border-left-color: var(--blue); background: rgba(125,211,252,0.04);">
+            <p style="font-size:14px; color:var(--sub); margin-bottom:0.2rem;"><span style="color:var(--blue); font-weight:500;">Los consultores se benefician de la complejidad — no de resolver problemas.</span></p>
+            <p style="font-size:14px; color:var(--muted);">La ineficiencia gubernamental no es castigada. Es subcontratada. Cuanto más complejo el problema, más horas facturables. Los consultores no tienen incentivo para simplificar — tienen todo el incentivo para mantener el sistema roto y el contrato renovándose.</p>
+            <p style="font-size:14px; color:var(--muted);">Esto no es ineficiencia. Es un modelo de negocio.</p>
+        </div>
+
+        <!-- 層次三：百年來為什麼沒有人發覺 -->
+        <div class="box" style="border-left-color: var(--green); background: rgba(159,232,112,0.03);">
+            <p style="font-size:14px; color:var(--sub); margin-bottom:0.2rem;"><span style="color:var(--green); font-weight:500;">¿Por qué nadie lo ha notado durante un siglo?</span></p>
+            <p style="font-size:14px; color:var(--muted);">No porque sea difícil. Porque la estructura de poder nunca necesitó que esta pregunta se hiciera. Los auditores verifican el cumplimiento. Los consultores se benefician de la ambigüedad. Los proveedores entregan lo que especifica el contrato, no lo que los ciudadanos necesitan. Nadie es responsable de si el sistema realmente funciona — porque nadie lo ha medido.</p>
+        </div>
+
+        <!-- ★★★ 新段落：作為仲裁協商工具 ★★★ -->
+        <div class="box" style="border-left-color: var(--blue); background: rgba(125,211,252,0.04);">
+            <p style="font-size:14px; color:var(--sub); margin-bottom:0.2rem;"><span style="color:var(--blue); font-weight:500;">Un instrumento compartido para ambas partes — una herramienta neutral de arbitraje.</span></p>
+            <p style="font-size:14px; color:var(--muted);">GL Verifier no es una herramienta solo para el gobierno. Tampoco es solo para el proveedor. Es una herramienta que ambas partes pueden poseer — una fuente compartida y verificable de la verdad.</p>
+            <p style="font-size:14px; color:var(--muted);">El gobierno tiene una. El contratista tiene una. Ambos ejecutan el mismo diagnóstico en el mismo sistema. Los informes son comparables, a prueba de manipulaciones y con marca de tiempo.</p>
+            <p style="font-size:14px; color:var(--muted);">Cuando surgen disputas, no es necesario contratar consultores para interpretar. Solo compara los dos informes GL. Si las puntuaciones coinciden, el sistema funciona. Si no coinciden, los datos hablan.</p>
+            <p style="font-size:14px; color:var(--green); margin-top:0.2rem;">La confianza se reconstruye — no a través de contratos, sino a través de hechos verificables.</p>
+        </div>
+
+        <h2>El punto ciego posterior al despliegue.</h2>
+        <p>Después del despliegue, las organizaciones rara vez miden lo que realmente sucedió.</p>
+        <ul>
+            <li>¿El tiempo de procesamiento realmente se redujo — o la IA solo generó rechazos más rápidos?</li>
+            <li>¿La fricción con el cliente disminuyó — o el sistema simplemente transfirió la carga a otra parte?</li>
+        </ul>
+        <p>Sin un diagnóstico posterior al despliegue, no hay forma de saberlo. Se asume que la inversión funcionó, porque se gastó el dinero.</p>
+        <p><strong>GL Verifier es la primera herramienta diseñada específicamente para este punto ciego.</strong></p>
+
+        <h2>La responsabilidad gubernamental no puede subcontratarse a consultores.</h2>
+        <p>Cuando un sistema falla, el contrato del consultor termina. El informe se archiva. Las recomendaciones se entregan. Pero el sistema sigue sin funcionar. Los ciudadanos siguen esperando. Los beneficios siguen sin llegar.</p>
+        <p>¿Quién es responsable?<br>No el consultor — ya se fue.<br>No el proveedor — entregó lo que especificaba el contrato.<br>No la agencia — siguió el proceso de adquisición.</p>
+        <div class="box">
+            <p><strong>Esto no es responsabilidad. Es una puerta giratoria de negación plausible.</strong></p>
+        </div>
+        <p>GL Verifier proporciona un diagnóstico independiente de terceros — no una opinión, no una autoevaluación, no una auditoría interna. Solo un hecho medible y verificable sobre si el sistema realmente entrega.</p>
+        <p><strong>No puedes subcontratar la responsabilidad. Pero puedes medirla.</strong></p>
+
+        <p style="font-size:14px; color:var(--green); margin-top:0.2rem;">GL Verifier rompe este ciclo — no cambiando los incentivos, sino haciendo que el rendimiento sea medible.</p>
+
+        <h2>El GL Framework: una metodología de diagnóstico.</h2>
+        <p style="font-size:18px; font-family:var(--mono); color:var(--green);">GL = (Fs × Vn) / (Pd × Cf)</p>
+        <div class="grid-2">
+            <div class="stat-card"><div class="label">Fs — Tasa de éxito del flujo</div><div class="desc">¿Qué proporción de destinatarios completa el proceso?</div></div>
+            <div class="stat-card"><div class="label">Vn — Valor estratégico</div><div class="desc">¿Qué tan crítico es este servicio para tu organización o sociedad?</div></div>
+            <div class="stat-card"><div class="label">Pd — Duración del dolor</div><div class="desc">¿Cuántas horas de sufrimiento impone el sistema?</div></div>
+            <div class="stat-card"><div class="label">Cf — Fricción cognitiva</div><div class="desc">¿Qué tan complejas son las reglas, documentos y capas de decisión?</div></div>
+        </div>
+
+        <h3>Diagnósticos del mundo real — después de la automatización y el despliegue:</h3>
+        <div class="grid-2">
+            <div class="stat-card"><div class="label">ONU HLEG (Más allá del PIB)</div><div class="value">0.01</div><div class="desc">La ONU pasó un año definiendo el fracaso — y nunca se midió a sí misma.</div></div>
+            <div class="stat-card"><div class="label">Préstamos estudiantiles EE.UU.</div><div class="value">0.006</div><div class="desc">Un sistema diseñado para fallar desde el principio.</div></div>
+            <div class="stat-card"><div class="label">Frontera ETA del Reino Unido</div><div class="value">0.04–0.09</div><div class="desc">Pseudo-digitalización — se lanzó, pero nunca funcionó.</div></div>
+            <div class="stat-card"><div class="label">DUA de Massachusetts</div><div class="value">0.059</div><div class="desc">Por cada $1 invertido, 5.9¢ llegan al ciudadano. Más de 70k pendientes.</div></div>
+        </div>
+
+        <h2>GL Verifier — independiente, offline, basado en hardware.</h2>
+        <p>Diseñado para diagnósticos posteriores a la automatización y al despliegue de IA. Sin red. Sin almacenamiento de datos. Sin bloqueo de proveedor.</p>
+        <div class="spec-box">
+            <p><strong>Entradas:</strong> Fs · Vn · Pd · Cf (datos públicos o CSV, sin acceso al sistema)</p>
+            <p><strong>Salidas:</strong> GL Score · Sensibilidad · Gráfico Tornado · Recomendaciones Quirúrgicas · Informe PDF completo con hash SHA-256</p>
+            <p style="color:var(--green);"><span class="highlight">15 minutos · Sin red · Sin retención de datos</span></p>
+        </div>
+
+        <hr>
+
+        <div class="btn-wrapper">
+            <a href="index.html" class="btn-main">
+                Haz de GL Verifier una herramienta física. <span class="arrow">→</span>
+            </a>
+        </div>
+
+        <div class="footer-meta">
+            <span><strong>Creador</strong> Ping Xu · GFI Flow Intelligence · Boston</span>
+            <span><a href="#">gfiintel.com</a></span>
+        </div>
+        <div style="font-size:11px; color:rgba(255,255,255,0.12); margin-top:0.4rem; font-family:var(--mono); letter-spacing:0.04em;">Kickstarter lanzamiento 2026 · Más información en gfiintel.com</div>
+    </div>
+
+    <div class="footnote">
+        GFI Flow Intelligence · Boston · <a href="#">gfiintel.com</a>
+    </div>
 </div>
 
 <script>
-  (function() {
-    const buttons = document.querySelectorAll('.lang-btn');
-    const contents = document.querySelectorAll('.lang-content');
-    const banners = {
-      en: document.getElementById('banner-en'),
-      tw: document.getElementById('banner-tw'),
-      cn: document.getElementById('banner-cn'),
-      es: document.getElementById('banner-es')
-    };
-
-    function showBanner(lang) {
-      Object.keys(banners).forEach(key => {
-        banners[key].style.display = (key === lang) ? 'block' : 'none';
-      });
-    }
-
-    buttons.forEach(btn => {
-      btn.addEventListener('click', function() {
-        const lang = this.dataset.lang;
-        buttons.forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
-        contents.forEach(c => {
-          c.classList.toggle('active', c.dataset.lang === lang);
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            const lang = this.dataset.lang;
+            document.querySelectorAll('.lang-panel').forEach(p => p.classList.remove('active'));
+            document.querySelector(`.lang-panel[data-lang="${lang}"]`).classList.add('active');
         });
-        showBanner(lang);
-      });
     });
-
-    showBanner('en');
-  })();
 </script>
 </body>
 </html>
