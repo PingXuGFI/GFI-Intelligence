@@ -28,7 +28,6 @@
             border: 1px solid #29323b;
         }
 
-        /* --- 上排：語言切換 + 回首頁 --- */
         .top-bar {
             display: flex;
             justify-content: space-between;
@@ -209,7 +208,6 @@
 
 <div class="container">
 
-    <!-- 上排：語言切換（左） + 回首頁（右） -->
     <div class="top-bar">
         <div class="lang-switcher">
             <button class="lang-btn active" data-lang="en">EN</button>
@@ -217,7 +215,7 @@
             <button class="lang-btn" data-lang="zh-Hans">简</button>
             <button class="lang-btn" data-lang="es">ES</button>
         </div>
-        <a href="/" class="home-link">← 回首頁</a>
+        <a href="index.html" class="home-link" id="homeLink">← 回首頁</a>
     </div>
 
     <!-- ===== English ===== -->
@@ -443,6 +441,13 @@
             'zh-Hans': document.getElementById('zh-Hans'),
             'es': document.getElementById('es')
         };
+        const homeLink = document.getElementById('homeLink');
+        const homeTexts = {
+            'en': '← Home',
+            'zh-Hant': '← 回首頁',
+            'zh-Hans': '← 回首页',
+            'es': '← Inicio'
+        };
         let currentLang = 'en';
 
         function switchLang(lang) {
@@ -452,6 +457,7 @@
                 btn.classList.remove('active');
                 if (btn.dataset.lang === lang) btn.classList.add('active');
             });
+            homeLink.textContent = homeTexts[lang] || homeTexts['en'];
             currentLang = lang;
         }
 
@@ -462,6 +468,7 @@
             });
         });
 
+        // 初始化：根據目前 active 語言按鈕設定回首頁文字
         const activeBtn = document.querySelector('.lang-btn.active');
         if (activeBtn) {
             const defaultLang = activeBtn.dataset.lang;
@@ -469,6 +476,7 @@
                 if (key === defaultLang) contents[key].classList.add('active');
                 else contents[key].classList.remove('active');
             });
+            homeLink.textContent = homeTexts[defaultLang] || homeTexts['en'];
         }
     });
 </script>
