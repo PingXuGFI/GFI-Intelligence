@@ -1,42 +1,83 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>治理流程診斷器｜GL Verifier · GFI Flow Intelligence</title>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GL Verifier · Governance Flow Diagnostic · GFI Flow Intelligence</title>
+    <meta name="description" content="GL Verifier is a governance flow diagnostic tool based on the GL Framework, mapped to the July 1, 2026 FAR Parts 16 & 52 amendments." />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
     <style>
         :root {
-            --bg:#0b1220;
-            --bg2:#0d1526;
-            --text:#f8fbff;
-            --muted:#c7d2e3;
-            --sub:#9fb0c8;
-            --dim:rgba(255,255,255,.06);
-            --green:#9FE870;
-            --blue:#7DD3FC;
-            --serif:'DM Serif Display',Georgia,serif;
-            --mono:'DM Mono',monospace;
-            --sans:'DM Sans',system-ui,sans-serif;
+            --bg: #0b1220;
+            --bg2: #0d1526;
+            --text: #f8fbff;
+            --muted: #c7d2e3;
+            --sub: #9fb0c8;
+            --dim: rgba(255,255,255,.06);
+            --green: #9FE870;
+            --blue: #7DD3FC;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --mono: 'DM Mono', monospace;
+            --sans: 'DM Sans', system-ui, sans-serif;
         }
-        * { margin:0; padding:0; box-sizing:border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: var(--bg);
             color: var(--text);
             font-family: var(--sans);
             font-size: 15px;
             line-height: 1.6;
-            padding: 2rem 1.5rem;
+            padding: 0;
         }
-        .container { max-width: 880px; margin: 0 auto; }
+        .site-wrapper { max-width: 1100px; margin: 0 auto; padding: 1.2rem 1.5rem 2rem; }
+
+        /* ===== NAV ===== */
+        .nav {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.8rem 1.5rem;
+            border-bottom: 1px solid var(--dim);
+            padding-bottom: 0.8rem;
+            margin-bottom: 1.8rem;
+        }
+        .nav a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: color 0.2s;
+            font-family: var(--sans);
+        }
+        .nav a:hover { color: var(--text); }
+        .nav a.active {
+            color: var(--green);
+            border-bottom: 2px solid var(--green);
+            padding-bottom: 0.2rem;
+        }
+        .nav-brand {
+            font-family: var(--mono);
+            font-size: 14px;
+            letter-spacing: 0.08em;
+            color: var(--green);
+            font-weight: 500;
+        }
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+        }
+
+        /* ===== LANGUAGE BAR ===== */
         .lang-bar {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.4rem;
             flex-wrap: wrap;
-            margin-bottom: 1.5rem;
             justify-content: flex-end;
+            margin-bottom: 1.2rem;
             border-bottom: 1px solid var(--dim);
-            padding-bottom: 0.6rem;
+            padding-bottom: 0.5rem;
         }
         .lang-btn {
             background: transparent;
@@ -46,17 +87,18 @@
             font-family: var(--mono);
             letter-spacing: 0.08em;
             cursor: pointer;
-            padding: 0.2rem 0.6rem;
+            padding: 0.2rem 0.7rem;
             border-radius: 4px;
             transition: 0.2s;
         }
-        .lang-btn.active { color: var(--green);
-            background: rgba(255,255,255,0.05); }
+        .lang-btn.active { color: var(--green); background: rgba(159,232,112,0.08); }
         .lang-btn:hover { color: var(--text); }
+
         .lang-panel { display: none; animation: fade 0.2s ease; }
         .lang-panel.active { display: block; }
         @keyframes fade { 0% { opacity: 0.4; } 100% { opacity: 1; } }
 
+        /* ===== TYPOGRAPHY ===== */
         .tag {
             font-family: var(--mono);
             font-size: 10px;
@@ -100,8 +142,7 @@
             border-radius: 0 8px 8px 0;
             margin: 1.2rem 0;
         }
-        .box p { font-size: 15px;
-            margin-bottom: 0.2rem; }
+        .box p { font-size: 15px; margin-bottom: 0.2rem; }
         .box-gray {
             background: var(--bg2);
             border: 1px solid var(--dim);
@@ -109,8 +150,7 @@
             border-radius: 8px;
             margin: 1.2rem 0;
         }
-        .box-gray p { font-size: 15px;
-            margin-bottom: 0.2rem; }
+        .box-gray p { font-size: 15px; margin-bottom: 0.2rem; }
 
         .positioning-box {
             background: var(--bg);
@@ -126,8 +166,7 @@
             line-height: 1.7;
             margin-bottom: 0.1rem;
         }
-        .positioning-box .emph { color: var(--green);
-            font-weight: 500; }
+        .positioning-box .emph { color: var(--green); font-weight: 500; }
 
         .grid-2 {
             display: grid;
@@ -182,8 +221,7 @@
             color: var(--muted);
             margin-bottom: 0.5rem;
         }
-        ul li { font-size: 15px;
-            margin-bottom: 0.1rem; }
+        ul li { font-size: 15px; margin-bottom: 0.1rem; }
 
         .spec-box {
             background: var(--bg2);
@@ -192,9 +230,7 @@
             padding: 0.8rem 1rem;
             margin: 0.6rem 0 0.2rem;
         }
-        .spec-box p { font-size: 14px;
-            color: var(--muted);
-            margin-bottom: 0.1rem; }
+        .spec-box p { font-size: 14px; color: var(--muted); margin-bottom: 0.1rem; }
         .spec-box .highlight { font-size: 14px; }
 
         hr {
@@ -231,8 +267,7 @@
             background: #8fd460;
             color: #0b1220 !important;
         }
-        .btn-main .arrow { font-size: 16px;
-            transition: transform 0.2s; }
+        .btn-main .arrow { font-size: 16px; transition: transform 0.2s; }
         .btn-main:hover .arrow { transform: translateX(4px); }
 
         .footer-meta {
@@ -244,8 +279,7 @@
             font-size: 13px;
             color: var(--sub);
         }
-        .footer-meta a { color: var(--green);
-            text-decoration: none; }
+        .footer-meta a { color: var(--green); text-decoration: none; }
         .footer-meta a:hover { text-decoration: underline; }
 
         .footnote {
@@ -258,22 +292,95 @@
             font-family: var(--mono);
             letter-spacing: 0.04em;
         }
-        .footnote a { color: rgba(255,255,255,0.2);
-            text-decoration: none; }
+        .footnote a { color: rgba(255,255,255,0.2); text-decoration: none; }
         .footnote a:hover { color: var(--green); }
+
+        /* FAR 合規專用區塊 */
+        .compliance-badge {
+            display: inline-block;
+            background: #1a2a3a;
+            color: var(--blue);
+            font-family: var(--mono);
+            font-size: 9px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            padding: 0.15rem 0.7rem;
+            border-radius: 20px;
+            border: 1px solid rgba(125,211,252,0.15);
+            margin-bottom: 0.3rem;
+        }
+        .compliance-box {
+            background: rgba(125,211,252,0.04);
+            border: 1px solid rgba(125,211,252,0.12);
+            border-radius: 12px;
+            padding: 1.2rem 1.4rem;
+            margin: 1.2rem 0;
+        }
+        .compliance-box p { font-size: 14px; color: var(--muted); margin-bottom: 0.2rem; }
+        .compliance-box strong { color: var(--blue); }
+
+        .deadline-highlight {
+            background: rgba(248,113,113,0.06);
+            border: 1px solid rgba(248,113,113,0.15);
+            border-radius: 8px;
+            padding: 0.6rem 1rem;
+            margin: 0.6rem 0;
+            text-align: center;
+        }
+        .deadline-highlight p {
+            font-size: 14px;
+            color: #fca5a5;
+            margin-bottom: 0;
+        }
+        .deadline-highlight strong { color: #f87171; }
+
+        .far-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.8rem;
+            margin: 0.6rem 0 0.8rem;
+        }
+        .far-card {
+            background: var(--bg2);
+            border: 1px solid var(--dim);
+            border-radius: 8px;
+            padding: 0.6rem 0.8rem;
+            text-align: center;
+        }
+        .far-card .num {
+            font-family: var(--mono);
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--blue);
+        }
+        .far-card .label {
+            font-size: 11px;
+            color: var(--sub);
+        }
+        .far-card .desc {
+            font-size: 11px;
+            color: rgba(255,255,255,0.25);
+            margin-top: 0.1rem;
+        }
 
         @media (max-width: 640px) {
             .grid-2 { grid-template-columns: 1fr; }
-            body { padding: 1.2rem; }
+            .far-grid { grid-template-columns: 1fr 1fr; }
+            .site-wrapper { padding: 0.8rem 1rem; }
             h1 { font-size: 1.6rem; }
-            .btn-main { padding: 10px 20px;
-                font-size: 11px; }
+            .btn-main { padding: 10px 20px; font-size: 11px; }
+            .nav { flex-direction: column; align-items: stretch; gap: 0.4rem; }
+            .nav-links { justify-content: center; }
+        }
+        @media (max-width: 420px) {
+            .far-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-<div class="container" id="app">
+<div class="site-wrapper" id="app">
 
+    <!-- ===== LANGUAGE BAR ===== -->
     <div class="lang-bar">
         <button class="lang-btn active" data-lang="en">EN</button>
         <button class="lang-btn" data-lang="zh-Hant">繁</button>
@@ -281,8 +388,22 @@
         <button class="lang-btn" data-lang="es">ES</button>
     </div>
 
-    <!-- ========== ENGLISH ========== -->
+    <!-- ========================================================== -->
+    <!-- ===================== ENGLISH ============================= -->
+    <!-- ========================================================== -->
     <div class="lang-panel active" data-lang="en">
+
+        <!-- ===== NAV (ENGLISH) ===== -->
+        <div class="nav">
+            <span class="nav-brand">GFI Flow Intelligence</span>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="product.html" class="active">Product</a>
+                <a href="about.html">About</a>
+            </div>
+        </div>
+
+        <!-- ===== 產品區塊 ===== -->
         <div class="tag">GL Verifier</div>
         <h1>Every system carries weight.</h1>
         <p class="subhead">You can't see it. But you can feel it — in the delays, in the rework, in the endless approvals, in the customer complaints, in the employee burnout.</p>
@@ -303,6 +424,49 @@
             <p><strong>This is not a product entering a market.</strong> It is a product creating a new category.</p>
         </div>
 
+        <!-- ===== FAR 合規區塊（英文） ===== -->
+        <hr style="margin: 2rem 0 1.2rem;" />
+
+        <div class="compliance-badge">📜 Official Policy Reference</div>
+        <h2 style="margin-top:0.2rem;">FAR Compliance · <span style="color:var(--blue);">July 1, 2026</span></h2>
+        <p style="font-size:14px; color:var(--sub);">On July 1, 2026, the Federal Acquisition Regulatory Council updated <a href="https://www.acquisition.gov/far/part-16" target="_blank" style="color:var(--blue);">FAR Part 16</a> and <a href="https://www.acquisition.gov/far/part-52" target="_blank" style="color:var(--blue);">Part 52</a> to implement <a href="https://www.govinfo.gov/content/pkg/FR-2026-05-05/html/2026-08900.htm" target="_blank" style="color:var(--blue);">Executive Order 14402</a> — establishing <strong style="color:var(--text);">fixed-price contracts as the default and preferred method of procurement</strong>.</p>
+
+        <div class="far-grid">
+            <div class="far-card">
+                <div class="num">90</div>
+                <div class="label">Day review deadline</div>
+                <div class="desc">Agencies must review top 10 non-fixed-price contracts by <strong style="color:var(--text);">July 29, 2026</strong>.</div>
+            </div>
+            <div class="far-card">
+                <div class="num">$10M</div>
+                <div class="label">Agency-head approval threshold</div>
+                <div class="desc">Non-fixed-price contracts above this amount require <strong style="color:var(--text);">written agency-head approval</strong>.</div>
+            </div>
+            <div class="far-card">
+                <div class="num">Semi‑annual</div>
+                <div class="label">Reporting to OMB</div>
+                <div class="desc">Agency heads must submit detailed reports on non-fixed-price contracts.</div>
+            </div>
+        </div>
+
+        <div class="deadline-highlight">
+            <p>⏳ <strong>90-day review deadline: July 29, 2026</strong> — agencies need compliance tools now.</p>
+        </div>
+
+        <div class="compliance-box">
+            <p><strong style="color:var(--blue);">The compliance gap:</strong> The FAR amendment requires contracts to "tie profit to performance-based metrics." Yet the federal procurement system <strong style="color:var(--text);">lacks a standardized instrument to measure "performance."</strong></p>
+            <p style="margin-top:0.4rem;"><span class="highlight">GL Verifier fills this gap.</span> Built on the peer-reviewed GL Framework, it transforms abstract "performance" into a <strong style="color:var(--text);">standardized, repeatable, auditable quantitative score</strong> that serves as:</p>
+            <ul style="margin-top:0.2rem;">
+                <li>Quantitative evidence for contracting officers' written justifications</li>
+                <li>Decision-support for agency heads approving non-fixed-price contracts</li>
+                <li>A unified performance metric for agencies' semi-annual reports to OMB</li>
+            </ul>
+        </div>
+
+        <hr style="margin: 1.8rem 0 1.2rem;" />
+
+        <!-- ===== 回到產品內容 ===== -->
+
         <p>Most organizations invest in AI, automation, and digital systems — but still feel slower, heavier, and harder to operate. The problem is not technology. It is the <span class="highlight">denominator</span> — hidden process friction that silently drains value.</p>
         <p><strong>No one is diagnosing this.</strong> Auditors check compliance. Consultants give recommendations. IT teams keep systems running. But no one measures whether the system actually delivers. No one makes the invisible weight visible.</p>
 
@@ -313,27 +477,27 @@
             <p><strong>Two markets. One gap. One tool.</strong></p>
         </div>
 
-        <!-- 層次一：資本結構鼓勵浪費 -->
+        <!-- 層次一 -->
         <div class="box" style="border-left-color: var(--green); background: rgba(159,232,112,0.04);">
             <p style="font-size:14px; color:var(--sub); margin-bottom:0.2rem;"><span style="color:var(--green); font-weight:500;">Waste is not a bug. It is a feature.</span></p>
             <p style="font-size:14px; color:var(--muted);">Under the current structural framework, inefficiency is not punished — it is rewarded. System integrators profit from complexity. Agencies are rewarded for spending budgets, not for delivering outcomes. No one has an incentive to ask: <em>does this system actually work?</em></p>
             <p style="font-size:14px; color:var(--muted);">This is not corruption. This is structure.</p>
         </div>
 
-        <!-- 層次二：顧問公司製造複雜度 -->
+        <!-- 層次二 -->
         <div class="box" style="border-left-color: var(--blue); background: rgba(125,211,252,0.04);">
             <p style="font-size:14px; color:var(--sub); margin-bottom:0.2rem;"><span style="color:var(--blue); font-weight:500;">Consultants profit from complexity — not from solving problems.</span></p>
             <p style="font-size:14px; color:var(--muted);">Government inefficiency is not punished. It is outsourced. The more complex the problem, the more billable hours. Consultants have no incentive to simplify. They have every incentive to keep the system broken — and keep the contract renewing.</p>
             <p style="font-size:14px; color:var(--muted);">This is not inefficiency. This is a business model.</p>
         </div>
 
-        <!-- 層次三：百年來為什麼沒有人發覺 -->
+        <!-- 層次三 -->
         <div class="box" style="border-left-color: var(--green); background: rgba(159,232,112,0.03);">
             <p style="font-size:14px; color:var(--sub); margin-bottom:0.2rem;"><span style="color:var(--green); font-weight:500;">Why has no one noticed this for a century?</span></p>
             <p style="font-size:14px; color:var(--muted);">Not because it is difficult. Because the power structure never needed this question to be asked. Auditors check compliance. Consultants profit from ambiguity. Vendors deliver what the contract specifies, not what citizens need. No one is accountable for whether the system actually works — because no one ever measured it.</p>
         </div>
 
-        <!-- ★★★ 新段落：作為仲裁協商工具 ★★★ -->
+        <!-- 仲裁工具 -->
         <div class="box" style="border-left-color: var(--blue); background: rgba(125,211,252,0.04);">
             <p style="font-size:14px; color:var(--sub); margin-bottom:0.2rem;"><span style="color:var(--blue); font-weight:500;">A shared instrument for both parties — a neutral arbitration tool.</span></p>
             <p style="font-size:14px; color:var(--muted);">GL Verifier is not a tool for the government alone. Nor is it a tool for the vendor alone. It is a tool that both parties can hold — a shared, verifiable source of truth.</p>
@@ -353,17 +517,15 @@
 
         <h2>Accountability cannot be outsourced to consultants.</h2>
         <p>When a system fails, the consultant's contract ends. The report is filed. The recommendations are delivered. But the system still does not work. Citizens still wait. Benefits still do not arrive.</p>
-        <p>Who is accountable?<br>
-            Not the consultant — they already left.<br>
-            Not the vendor — they delivered what the contract specified.<br>
+        <p>Who is accountable?<br />
+            Not the consultant — they already left.<br />
+            Not the vendor — they delivered what the contract specified.<br />
             Not the agency — they followed the procurement process.</p>
         <div class="box">
             <p><strong>This is not accountability. This is a revolving door of plausible deniability.</strong></p>
         </div>
         <p>GL Verifier provides an independent, third-party diagnostic — not an opinion, not a self-assessment, not an internal audit. Just a measured, verifiable fact about whether the system actually delivers.</p>
         <p><strong>You cannot outsource accountability. But you can measure it.</strong></p>
-
-        <p style="font-size:14px; color:var(--green); margin-top:0.2rem;">GL Verifier breaks this cycle — not by changing incentives, but by making performance measurable.</p>
 
         <h2>The GL Framework: a diagnostic methodology.</h2>
         <p style="font-size:18px; font-family:var(--mono); color:var(--green);">GL = (Fs × Vn) / (Pd × Cf)</p>
@@ -390,7 +552,7 @@
             <p style="color:var(--green);"><span class="highlight">15 minutes · No network · No data retained</span></p>
         </div>
 
-        <hr>
+        <hr />
 
         <div class="btn-wrapper">
             <a href="index.html" class="btn-main">
@@ -403,10 +565,26 @@
             <span><a href="#">gfiintel.com</a></span>
         </div>
         <div style="font-size:11px; color:rgba(255,255,255,0.12); margin-top:0.4rem; font-family:var(--mono); letter-spacing:0.04em;">Kickstarter launching 2026 · Learn more at gfiintel.com</div>
+        <div style="font-size:10px; color:rgba(255,255,255,0.08); margin-top:0.2rem; font-family:var(--mono); letter-spacing:0.04em;">
+            Source: FAR Council Official Guidance (July 1, 2026) · EO 14402 (April 30, 2026) · GL Framework Technical White Paper v1.1 (2026)
+        </div>
     </div>
 
-    <!-- ========== 繁體中文 ========== -->
+    <!-- ========================================================== -->
+    <!-- ==================== 繁體中文 ============================= -->
+    <!-- ========================================================== -->
     <div class="lang-panel" data-lang="zh-Hant">
+
+        <!-- ===== NAV (繁體中文) ===== -->
+        <div class="nav">
+            <span class="nav-brand">GFI Flow Intelligence</span>
+            <div class="nav-links">
+                <a href="index.html">首頁</a>
+                <a href="product.html" class="active">產品</a>
+                <a href="about.html">關於</a>
+            </div>
+        </div>
+
         <div class="tag">GL Verifier</div>
         <h1>每個系統都承載著重量。</h1>
         <p class="subhead">你看不見它。但你感覺得到——在延誤、在重工、在無盡的簽核、在客戶抱怨、在員工的過勞裡。</p>
@@ -427,6 +605,47 @@
             <p><strong>這不是一個產品進入市場。</strong>這是一個產品創造一個新類別。</p>
         </div>
 
+        <!-- ===== FAR 合規區塊（繁體） ===== -->
+        <hr style="margin: 2rem 0 1.2rem;" />
+
+        <div class="compliance-badge">📜 官方政策引用</div>
+        <h2 style="margin-top:0.2rem;">FAR 合規 · <span style="color:var(--blue);">2026年7月1日</span></h2>
+        <p style="font-size:14px; color:var(--sub);">2026年7月1日，美國聯邦採購監管委員會（FAR Council）更新 <a href="https://www.acquisition.gov/far/part-16" target="_blank" style="color:var(--blue);">FAR Part 16</a> 與 <a href="https://www.acquisition.gov/far/part-52" target="_blank" style="color:var(--blue);">Part 52</a>，實施 <a href="https://www.govinfo.gov/content/pkg/FR-2026-05-05/html/2026-08900.htm" target="_blank" style="color:var(--blue);">第14402號行政命令</a> — 確立<strong style="color:var(--text);">固定價格合約為聯邦採購的「預設與首選模式」</strong>。</p>
+
+        <div class="far-grid">
+            <div class="far-card">
+                <div class="num">90</div>
+                <div class="label">天審查期限</div>
+                <div class="desc">各機關須於 <strong style="color:var(--text);">2026年7月29日</strong> 前完成審查</div>
+            </div>
+            <div class="far-card">
+                <div class="num">$10M</div>
+                <div class="label">機關首長核准門檻</div>
+                <div class="desc">超過此金額須 <strong style="color:var(--text);">機關首長書面批准</strong></div>
+            </div>
+            <div class="far-card">
+                <div class="num">每半年</div>
+                <div class="label">向 OMB 提交報告</div>
+                <div class="desc">機關首長須定期提交詳細報告</div>
+            </div>
+        </div>
+
+        <div class="deadline-highlight">
+            <p>⏳ <strong>90天審查期限：2026年7月29日</strong> — 各機關現在就需要合規工具。</p>
+        </div>
+
+        <div class="compliance-box">
+            <p><strong style="color:var(--blue);">合規缺口：</strong> FAR 修正案要求合約須「將利潤與績效指標掛鉤」。但聯邦採購體系 <strong style="color:var(--text);">缺乏標準化工具來測量「績效」</strong>。</p>
+            <p style="margin-top:0.4rem;"><span class="highlight">治理流程診斷器 填補的正是這個空白。</span> 基於同儕審查之 GL Framework，它將抽象的「績效」轉化為 <strong style="color:var(--text);">標準化、可重複、可審計的量化分數</strong>，可作為：</p>
+            <ul style="margin-top:0.2rem;">
+                <li>採購官書面說明的量化證據</li>
+                <li>機關首長簽核非固定價格合約的決策依據</li>
+                <li>各機關向 OMB 提交半年報告的統一績效指標</li>
+            </ul>
+        </div>
+
+        <hr style="margin: 1.8rem 0 1.2rem;" />
+
         <p>多數組織投資 AI、自動化與數位系統——卻感覺更慢、更重、更難運作。問題不在技術，在於<span class="highlight">分母</span>——隱藏的流程摩擦，默默侵蝕價值。</p>
         <p><strong>沒有人診斷這個。</strong>審計師檢查合規。顧問給予建議。IT 團隊維持系統運作。但沒有人測量系統是否真的在交付。沒有人讓隱形的重量變得可見。</p>
 
@@ -437,27 +656,23 @@
             <p><strong>兩個市場。一個缺口。一個工具。</strong></p>
         </div>
 
-        <!-- 層次一：資本結構鼓勵浪費 -->
         <div class="box" style="border-left-color: var(--green); background: rgba(159,232,112,0.04);">
             <p style="font-size:14px; color:var(--sub); margin-bottom:0.2rem;"><span style="color:var(--green); font-weight:500;">浪費不是意外。它是結構的一部分。</span></p>
             <p style="font-size:14px; color:var(--muted);">在當前的結構框架下，低效率不會被懲罰——它會被獎勵。系統整合商從複雜中獲利。機關的獎勵來自於花完預算，而不是來自於達成成果。沒有人有動機去問：<em>這個系統真的有用嗎？</em></p>
             <p style="font-size:14px; color:var(--muted);">這不是腐敗。這是結構。</p>
         </div>
 
-        <!-- 層次二：顧問公司製造複雜度 -->
         <div class="box" style="border-left-color: var(--blue); background: rgba(125,211,252,0.04);">
             <p style="font-size:14px; color:var(--sub); margin-bottom:0.2rem;"><span style="color:var(--blue); font-weight:500;">顧問公司從複雜中獲利——而不是從解決問題中獲利。</span></p>
             <p style="font-size:14px; color:var(--muted);">政府的低效率不會被懲罰——它被外包了。問題越複雜，可計費的時數就越多。顧問公司沒有動機簡化問題——他們有充分的動機讓系統繼續失能、讓合約繼續續約。</p>
             <p style="font-size:14px; color:var(--muted);">這不是失能。這是商業模式。</p>
         </div>
 
-        <!-- 層次三：百年來為什麼沒有人發覺 -->
         <div class="box" style="border-left-color: var(--green); background: rgba(159,232,112,0.03);">
             <p style="font-size:14px; color:var(--sub); margin-bottom:0.2rem;"><span style="color:var(--green); font-weight:500;">為什麼百年來都沒有人發覺？</span></p>
             <p style="font-size:14px; color:var(--muted);">不是因為太難。是因為權力結構從來不需要這個問題被回答。審計只查合規。顧問從模糊中獲利。系統開發商交付合約指定的內容，而不是公民需要的東西。沒有人為系統是否真正運作負責——因為從來沒有人測量過。</p>
         </div>
 
-        <!-- ★★★ 新段落：作為仲裁協商工具 ★★★ -->
         <div class="box" style="border-left-color: var(--blue); background: rgba(125,211,252,0.04);">
             <p style="font-size:14px; color:var(--sub); margin-bottom:0.2rem;"><span style="color:var(--blue); font-weight:500;">雙方各持一台——中立的仲裁協商工具。</span></p>
             <p style="font-size:14px; color:var(--muted);">治理流程診斷器 不是一台「給政府用的工具」。也不是一台「給廠商用的工具」。它是一台讓雙方都可以持有的工具——一個共享的、可驗證的事實來源。</p>
@@ -477,14 +692,12 @@
 
         <h2>政府的問責不能外包給顧問。</h2>
         <p>當系統失效，顧問的合約結束了。報告歸檔了。建議交付了。但系統仍然無法運作。公民仍然在等待。福利仍然沒有到達。</p>
-        <p>誰負責？<br>不是顧問——他們已經離開了。<br>不是供應商——他們交付了合約指定的內容。<br>不是機關——他們遵循了採購流程。</p>
+        <p>誰負責？<br />不是顧問——他們已經離開了。<br />不是供應商——他們交付了合約指定的內容。<br />不是機關——他們遵循了採購流程。</p>
         <div class="box">
             <p><strong>這不是問責。這是「貌似有理」的旋轉門。</strong></p>
         </div>
         <p>治理流程診斷器 提供獨立、第三方的診斷——不是意見，不是自我評估，不是內部稽核。只是一個關於系統是否真正在交付的、可測量、可驗證的事實。</p>
         <p><strong>你不能外包問責。但你可以測量它。</strong></p>
-
-        <p style="font-size:14px; color:var(--green); margin-top:0.2rem;">治理流程診斷器 打破這個循環——不是改變動機，而是讓績效可以被測量。</p>
 
         <h2>GL 框架：一套診斷方法論。</h2>
         <p style="font-size:18px; font-family:var(--mono); color:var(--green);">GL = (Fs × Vn) / (Pd × Cf)</p>
@@ -511,7 +724,7 @@
             <p style="color:var(--green);"><span class="highlight">15 分鐘 · 沒有網路 · 不留存數據</span></p>
         </div>
 
-        <hr>
+        <hr />
 
         <div class="btn-wrapper">
             <a href="index.html" class="btn-main">
@@ -524,10 +737,26 @@
             <span><a href="#">gfiintel.com</a></span>
         </div>
         <div style="font-size:11px; color:rgba(255,255,255,0.12); margin-top:0.4rem; font-family:var(--mono); letter-spacing:0.04em;">Kickstarter 2026 年推出 · 更多資訊請見 gfiintel.com</div>
+        <div style="font-size:10px; color:rgba(255,255,255,0.08); margin-top:0.2rem; font-family:var(--mono); letter-spacing:0.04em;">
+            資料來源：FAR Council 官方指引（2026年7月1日）· EO 14402（2026年4月30日）· GL Framework 技術白皮書 v1.1（2026）
+        </div>
     </div>
 
-    <!-- ========== 简体中文 ========== -->
+    <!-- ========================================================== -->
+    <!-- ==================== 简体中文 ============================= -->
+    <!-- ========================================================== -->
     <div class="lang-panel" data-lang="zh-Hans">
+
+        <!-- ===== NAV (简体中文) ===== -->
+        <div class="nav">
+            <span class="nav-brand">GFI Flow Intelligence</span>
+            <div class="nav-links">
+                <a href="index.html">首页</a>
+                <a href="product.html" class="active">产品</a>
+                <a href="about.html">关于</a>
+            </div>
+        </div>
+
         <div class="tag">GL Verifier</div>
         <h1>每个系统都承载着重量。</h1>
         <p class="subhead">你看不见它。但你感觉得到——在延误、在返工、在无尽的审批、在客户抱怨、在员工的过劳里。</p>
@@ -548,6 +777,47 @@
             <p><strong>这不是一个产品进入市场。</strong>这是一个产品创造一个新类别。</p>
         </div>
 
+        <!-- ===== FAR 合規區塊（簡體） ===== -->
+        <hr style="margin: 2rem 0 1.2rem;" />
+
+        <div class="compliance-badge">📜 官方政策引用</div>
+        <h2 style="margin-top:0.2rem;">FAR 合规 · <span style="color:var(--blue);">2026年7月1日</span></h2>
+        <p style="font-size:14px; color:var(--sub);">2026年7月1日，美国联邦采购监管委员会（FAR Council）更新 <a href="https://www.acquisition.gov/far/part-16" target="_blank" style="color:var(--blue);">FAR Part 16</a> 与 <a href="https://www.acquisition.gov/far/part-52" target="_blank" style="color:var(--blue);">Part 52</a>，实施 <a href="https://www.govinfo.gov/content/pkg/FR-2026-05-05/html/2026-08900.htm" target="_blank" style="color:var(--blue);">第14402号行政命令</a> — 确立<strong style="color:var(--text);">固定价格合约为联邦采购的「预设与首选模式」</strong>。</p>
+
+        <div class="far-grid">
+            <div class="far-card">
+                <div class="num">90</div>
+                <div class="label">天审查期限</div>
+                <div class="desc">各机关须于 <strong style="color:var(--text);">2026年7月29日</strong> 前完成审查</div>
+            </div>
+            <div class="far-card">
+                <div class="num">$10M</div>
+                <div class="label">机关首长核准门槛</div>
+                <div class="desc">超过此金额须 <strong style="color:var(--text);">机关首长书面批准</strong></div>
+            </div>
+            <div class="far-card">
+                <div class="num">每半年</div>
+                <div class="label">向 OMB 提交报告</div>
+                <div class="desc">机关首长须定期提交详细报告</div>
+            </div>
+        </div>
+
+        <div class="deadline-highlight">
+            <p>⏳ <strong>90天审查期限：2026年7月29日</strong> — 各机关现在就需要合规工具。</p>
+        </div>
+
+        <div class="compliance-box">
+            <p><strong style="color:var(--blue);">合规缺口：</strong> FAR 修正案要求合约须「将利润与绩效指标挂钩」。但联邦采购体系 <strong style="color:var(--text);">缺乏标准化工具来衡量「绩效」</strong>。</p>
+            <p style="margin-top:0.4rem;"><span class="highlight">治理流程诊断仪 填补的正是这个空白。</span> 基于同行评审之 GL Framework，它将抽象的「绩效」转化为 <strong style="color:var(--text);">标准化、可重复、可审计的量化分数</strong>，可作为：</p>
+            <ul style="margin-top:0.2rem;">
+                <li>采购官书面说明的量化证据</li>
+                <li>机关首长签核非固定价格合约的决策依据</li>
+                <li>各机关向 OMB 提交半年报告的统一绩效指标</li>
+            </ul>
+        </div>
+
+        <hr style="margin: 1.8rem 0 1.2rem;" />
+
         <p>多数组织投资 AI、自动化与数字系统——却感觉更慢、更重、更难运作。问题不在技术，在于<span class="highlight">分母</span>——隐藏的流程摩擦，默默侵蚀价值。</p>
         <p><strong>没有人诊断这个。</strong>审计师检查合规。顾问给予建议。IT 团队维持系统运作。但没有人测量系统是否真的在交付。没有人让隐形的重量变得可见。</p>
 
@@ -558,27 +828,23 @@
             <p><strong>两个市场。一个缺口。一个工具。</strong></p>
         </div>
 
-        <!-- 層次一：資本結構鼓勵浪費 -->
         <div class="box" style="border-left-color: var(--green); background: rgba(159,232,112,0.04);">
             <p style="font-size:14px; color:var(--sub); margin-bottom:0.2rem;"><span style="color:var(--green); font-weight:500;">浪费不是意外。它是结构的一部分。</span></p>
             <p style="font-size:14px; color:var(--muted);">在当前的结构框架下，低效率不会被惩罚——它会被奖励。系统整合商从复杂中获利。机关的奖励来自于花完预算，而不是来自于达成成果。没有人有动机去问：<em>这个系统真的有用吗？</em></p>
             <p style="font-size:14px; color:var(--muted);">这不是腐败。这是结构。</p>
         </div>
 
-        <!-- 層次二：顧問公司製造複雜度 -->
         <div class="box" style="border-left-color: var(--blue); background: rgba(125,211,252,0.04);">
             <p style="font-size:14px; color:var(--sub); margin-bottom:0.2rem;"><span style="color:var(--blue); font-weight:500;">顾问公司从复杂中获利——而不是从解决问题中获利。</span></p>
             <p style="font-size:14px; color:var(--muted);">政府的低效率不会被惩罚——它被外包了。问题越复杂，可计费的时数就越多。顾问公司没有动机简化问题——他们有充分的动机让系统继续失能、让合约继续续约。</p>
             <p style="font-size:14px; color:var(--muted);">这不是失能。这是商业模式。</p>
         </div>
 
-        <!-- 層次三：百年來為什麼沒有人發覺 -->
         <div class="box" style="border-left-color: var(--green); background: rgba(159,232,112,0.03);">
             <p style="font-size:14px; color:var(--sub); margin-bottom:0.2rem;"><span style="color:var(--green); font-weight:500;">为什么百年来都没有人发觉？</span></p>
             <p style="font-size:14px; color:var(--muted);">不是因为太难。是因为权力结构从来不需要这个问题被回答。审计只查合规。顾问从模糊中获利。系统开发商交付合约指定的内容，而不是公民需要的东西。没有人要为系统是否真正运作负责——因为从来没有人测量过。</p>
         </div>
 
-        <!-- ★★★ 新段落：作為仲裁協商工具 ★★★ -->
         <div class="box" style="border-left-color: var(--blue); background: rgba(125,211,252,0.04);">
             <p style="font-size:14px; color:var(--sub); margin-bottom:0.2rem;"><span style="color:var(--blue); font-weight:500;">双方各持一台——中立的仲裁协商工具。</span></p>
             <p style="font-size:14px; color:var(--muted);">治理流程诊断仪 不是一台「给政府用的工具」。也不是一台「给厂商用的工具」。它是一台让双方都可以持有的工具——一个共享的、可验证的事实来源。</p>
@@ -598,14 +864,12 @@
 
         <h2>政府的问责不能外包给顾问。</h2>
         <p>当系统失效，顾问的合约结束了。报告归档了。建议交付了。但系统仍然无法运作。公民仍然在等待。福利仍然没有到达。</p>
-        <p>谁负责？<br>不是顾问——他们已经离开了。<br>不是供应商——他们交付了合约指定的内容。<br>不是机关——他们遵循了采购流程。</p>
+        <p>谁负责？<br />不是顾问——他们已经离开了。<br />不是供应商——他们交付了合约指定的内容。<br />不是机关——他们遵循了采购流程。</p>
         <div class="box">
             <p><strong>这不是问责。这是「貌似有理」的旋转门。</strong></p>
         </div>
         <p>治理流程诊断仪 提供独立、第三方的诊断——不是意见，不是自我评估，不是内部稽核。只是一个关于系统是否真正在交付的、可测量、可验证的事实。</p>
         <p><strong>你不能外包问责。但你可以测量它。</strong></p>
-
-        <p style="font-size:14px; color:var(--green); margin-top:0.2rem;">治理流程诊断仪 打破这个循环——不是改变动机，而是让绩效可以被测量。</p>
 
         <h2>GL 框架：一套诊断方法论。</h2>
         <p style="font-size:18px; font-family:var(--mono); color:var(--green);">GL = (Fs × Vn) / (Pd × Cf)</p>
@@ -632,7 +896,7 @@
             <p style="color:var(--green);"><span class="highlight">15 分钟 · 没有网络 · 不留存数据</span></p>
         </div>
 
-        <hr>
+        <hr />
 
         <div class="btn-wrapper">
             <a href="index.html" class="btn-main">
@@ -645,10 +909,26 @@
             <span><a href="#">gfiintel.com</a></span>
         </div>
         <div style="font-size:11px; color:rgba(255,255,255,0.12); margin-top:0.4rem; font-family:var(--mono); letter-spacing:0.04em;">Kickstarter 2026 年推出 · 更多资讯请见 gfiintel.com</div>
+        <div style="font-size:10px; color:rgba(255,255,255,0.08); margin-top:0.2rem; font-family:var(--mono); letter-spacing:0.04em;">
+            资料来源：FAR Council 官方指引（2026年7月1日）· EO 14402（2026年4月30日）· GL Framework 技术白皮书 v1.1（2026）
+        </div>
     </div>
 
-    <!-- ========== SPANISH ========== -->
+    <!-- ========================================================== -->
+    <!-- ==================== SPANISH ============================= -->
+    <!-- ========================================================== -->
     <div class="lang-panel" data-lang="es">
+
+        <!-- ===== NAV (ESPAÑOL) ===== -->
+        <div class="nav">
+            <span class="nav-brand">GFI Flow Intelligence</span>
+            <div class="nav-links">
+                <a href="index.html">Inicio</a>
+                <a href="product.html" class="active">Producto</a>
+                <a href="about.html">Acerca</a>
+            </div>
+        </div>
+
         <div class="tag">GL Verifier</div>
         <h1>Cada sistema carga peso.</h1>
         <p class="subhead">No puedes verlo. Pero lo sientes — en las demoras, en el retrabajo, en las aprobaciones interminables, en las quejas de los clientes, en el agotamiento de los empleados.</p>
@@ -669,6 +949,47 @@
             <p><strong>Esto no es un producto que entra en un mercado.</strong> Es un producto que crea una nueva categoría.</p>
         </div>
 
+        <!-- ===== FAR 合規區塊（西班牙文） ===== -->
+        <hr style="margin: 2rem 0 1.2rem;" />
+
+        <div class="compliance-badge">📜 Referencia Política Oficial</div>
+        <h2 style="margin-top:0.2rem;">Cumplimiento FAR · <span style="color:var(--blue);">1 de julio de 2026</span></h2>
+        <p style="font-size:14px; color:var(--sub);">El 1 de julio de 2026, el Consejo Federal de Regulación de Adquisiciones actualizó las <a href="https://www.acquisition.gov/far/part-16" target="_blank" style="color:var(--blue);">Partes 16</a> y <a href="https://www.acquisition.gov/far/part-52" target="_blank" style="color:var(--blue);">52 del FAR</a> para implementar la <a href="https://www.govinfo.gov/content/pkg/FR-2026-05-05/html/2026-08900.htm" target="_blank" style="color:var(--blue);">Orden Ejecutiva 14402</a> — estableciendo los <strong style="color:var(--text);">contratos de precio fijo como el método predeterminado y preferido de contratación</strong>.</p>
+
+        <div class="far-grid">
+            <div class="far-card">
+                <div class="num">90</div>
+                <div class="label">Plazo de revisión</div>
+                <div class="desc">Las agencias deben revisar antes del <strong style="color:var(--text);">29 de julio de 2026</strong></div>
+            </div>
+            <div class="far-card">
+                <div class="num">$10M</div>
+                <div class="label">Umbral de aprobación</div>
+                <div class="desc">Requiere <strong style="color:var(--text);">aprobación escrita del jefe de agencia</strong></div>
+            </div>
+            <div class="far-card">
+                <div class="num">Semestral</div>
+                <div class="label">Informe a OMB</div>
+                <div class="desc">Los jefes de agencia deben presentar informes detallados</div>
+            </div>
+        </div>
+
+        <div class="deadline-highlight">
+            <p>⏳ <strong>Plazo de revisión de 90 días: 29 de julio de 2026</strong> — las agencias necesitan herramientas de cumplimiento ahora.</p>
+        </div>
+
+        <div class="compliance-box">
+            <p><strong style="color:var(--blue);">La brecha de cumplimiento:</strong> La enmienda FAR exige que los contratos "vinculen las ganancias con métricas basadas en el desempeño." Pero el sistema federal de contratación <strong style="color:var(--text);">carece de un instrumento estandarizado para medir el "desempeño."</strong></p>
+            <p style="margin-top:0.4rem;"><span class="highlight">GL Verifier llena este vacío.</span> Basado en el GL Framework revisado por pares, transforma el "desempeño" abstracto en una <strong style="color:var(--text);">puntuación cuantitativa estandarizada, repetible y auditable</strong> que sirve como:</p>
+            <ul style="margin-top:0.2rem;">
+                <li>Evidencia cuantitativa para las justificaciones escritas de los oficiales de contratación</li>
+                <li>Apoyo a la decisión para los jefes de agencia que aprueban contratos no fijos</li>
+                <li>Una métrica de desempeño unificada para los informes semestrales de las agencias a la OMB</li>
+            </ul>
+        </div>
+
+        <hr style="margin: 1.8rem 0 1.2rem;" />
+
         <p>La mayoría de las organizaciones invierten en IA, automatización y sistemas digitales — pero todavía se sienten más lentas, más pesadas y más difíciles de operar. El problema no es la tecnología. Es el <span class="highlight">denominador</span> — la fricción oculta del proceso que drena valor silenciosamente.</p>
         <p><strong>Nadie está diagnosticando esto.</strong> Los auditores verifican el cumplimiento. Los consultores dan recomendaciones. Los equipos de TI mantienen los sistemas en funcionamiento. Pero nadie mide si el sistema realmente entrega. Nadie hace visible el peso invisible.</p>
 
@@ -679,27 +1000,23 @@
             <p><strong>Dos mercados. Una brecha. Una herramienta.</strong></p>
         </div>
 
-        <!-- 層次一：資本結構鼓勵浪費 -->
         <div class="box" style="border-left-color: var(--green); background: rgba(159,232,112,0.04);">
             <p style="font-size:14px; color:var(--sub); margin-bottom:0.2rem;"><span style="color:var(--green); font-weight:500;">El desperdicio no es un error. Es parte de la estructura.</span></p>
             <p style="font-size:14px; color:var(--muted);">Bajo el marco estructural actual, la ineficiencia no es castigada — es recompensada. Los integradores de sistemas se benefician de la complejidad. Las agencias son recompensadas por gastar presupuestos, no por lograr resultados. Nadie tiene un incentivo para preguntar: <em>¿este sistema realmente funciona?</em></p>
             <p style="font-size:14px; color:var(--muted);">Esto no es corrupción. Es estructura.</p>
         </div>
 
-        <!-- 層次二：顧問公司製造複雜度 -->
         <div class="box" style="border-left-color: var(--blue); background: rgba(125,211,252,0.04);">
             <p style="font-size:14px; color:var(--sub); margin-bottom:0.2rem;"><span style="color:var(--blue); font-weight:500;">Los consultores se benefician de la complejidad — no de resolver problemas.</span></p>
             <p style="font-size:14px; color:var(--muted);">La ineficiencia gubernamental no es castigada. Es subcontratada. Cuanto más complejo el problema, más horas facturables. Los consultores no tienen incentivo para simplificar — tienen todo el incentivo para mantener el sistema roto y el contrato renovándose.</p>
             <p style="font-size:14px; color:var(--muted);">Esto no es ineficiencia. Es un modelo de negocio.</p>
         </div>
 
-        <!-- 層次三：百年來為什麼沒有人發覺 -->
         <div class="box" style="border-left-color: var(--green); background: rgba(159,232,112,0.03);">
             <p style="font-size:14px; color:var(--sub); margin-bottom:0.2rem;"><span style="color:var(--green); font-weight:500;">¿Por qué nadie lo ha notado durante un siglo?</span></p>
             <p style="font-size:14px; color:var(--muted);">No porque sea difícil. Porque la estructura de poder nunca necesitó que esta pregunta se hiciera. Los auditores verifican el cumplimiento. Los consultores se benefician de la ambigüedad. Los proveedores entregan lo que especifica el contrato, no lo que los ciudadanos necesitan. Nadie es responsable de si el sistema realmente funciona — porque nadie lo ha medido.</p>
         </div>
 
-        <!-- ★★★ 新段落：作為仲裁協商工具 ★★★ -->
         <div class="box" style="border-left-color: var(--blue); background: rgba(125,211,252,0.04);">
             <p style="font-size:14px; color:var(--sub); margin-bottom:0.2rem;"><span style="color:var(--blue); font-weight:500;">Un instrumento compartido para ambas partes — una herramienta neutral de arbitraje.</span></p>
             <p style="font-size:14px; color:var(--muted);">GL Verifier no es una herramienta solo para el gobierno. Tampoco es solo para el proveedor. Es una herramienta que ambas partes pueden poseer — una fuente compartida y verificable de la verdad.</p>
@@ -719,14 +1036,12 @@
 
         <h2>La responsabilidad gubernamental no puede subcontratarse a consultores.</h2>
         <p>Cuando un sistema falla, el contrato del consultor termina. El informe se archiva. Las recomendaciones se entregan. Pero el sistema sigue sin funcionar. Los ciudadanos siguen esperando. Los beneficios siguen sin llegar.</p>
-        <p>¿Quién es responsable?<br>No el consultor — ya se fue.<br>No el proveedor — entregó lo que especificaba el contrato.<br>No la agencia — siguió el proceso de adquisición.</p>
+        <p>¿Quién es responsable?<br />No el consultor — ya se fue.<br />No el proveedor — entregó lo que especificaba el contrato.<br />No la agencia — siguió el proceso de adquisición.</p>
         <div class="box">
             <p><strong>Esto no es responsabilidad. Es una puerta giratoria de negación plausible.</strong></p>
         </div>
         <p>GL Verifier proporciona un diagnóstico independiente de terceros — no una opinión, no una autoevaluación, no una auditoría interna. Solo un hecho medible y verificable sobre si el sistema realmente entrega.</p>
         <p><strong>No puedes subcontratar la responsabilidad. Pero puedes medirla.</strong></p>
-
-        <p style="font-size:14px; color:var(--green); margin-top:0.2rem;">GL Verifier rompe este ciclo — no cambiando los incentivos, sino haciendo que el rendimiento sea medible.</p>
 
         <h2>El GL Framework: una metodología de diagnóstico.</h2>
         <p style="font-size:18px; font-family:var(--mono); color:var(--green);">GL = (Fs × Vn) / (Pd × Cf)</p>
@@ -753,7 +1068,7 @@
             <p style="color:var(--green);"><span class="highlight">15 minutos · Sin red · Sin retención de datos</span></p>
         </div>
 
-        <hr>
+        <hr />
 
         <div class="btn-wrapper">
             <a href="index.html" class="btn-main">
@@ -766,23 +1081,46 @@
             <span><a href="#">gfiintel.com</a></span>
         </div>
         <div style="font-size:11px; color:rgba(255,255,255,0.12); margin-top:0.4rem; font-family:var(--mono); letter-spacing:0.04em;">Kickstarter lanzamiento 2026 · Más información en gfiintel.com</div>
+        <div style="font-size:10px; color:rgba(255,255,255,0.08); margin-top:0.2rem; font-family:var(--mono); letter-spacing:0.04em;">
+            Fuente: FAR Council Orientación Oficial (1 de julio de 2026) · EO 14402 (30 de abril de 2026) · GL Framework Technical White Paper v1.1 (2026)
+        </div>
     </div>
 
+    <!-- ===== 頁尾 ===== -->
     <div class="footnote">
         GFI Flow Intelligence · Boston · <a href="#">gfiintel.com</a>
     </div>
+
 </div>
 
 <script>
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            const lang = this.dataset.lang;
-            document.querySelectorAll('.lang-panel').forEach(p => p.classList.remove('active'));
-            document.querySelector(`.lang-panel[data-lang="${lang}"]`).classList.add('active');
+    // ===== 語言切換 =====
+    (function() {
+        const btns = document.querySelectorAll('.lang-btn');
+        const panels = document.querySelectorAll('.lang-panel');
+
+        function setLang(lang) {
+            btns.forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+            panels.forEach(p => p.classList.toggle('active', p.dataset.lang === lang));
+        }
+
+        btns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const lang = this.dataset.lang;
+                setLang(lang);
+                try { localStorage.setItem('gl-verifier-lang', lang); } catch(e) {}
+                history.pushState(null, '', '#' + lang);
+            });
         });
-    });
+
+        const hash = window.location.hash.replace('#', '');
+        const stored = (() => { try { return localStorage.getItem('gl-verifier-lang'); } catch(e) { return null; } })();
+        const validLangs = ['en', 'zh-Hant', 'zh-Hans', 'es'];
+        let preferred = validLangs.includes(hash) ? hash :
+                        validLangs.includes(stored) ? stored : 'en';
+        setLang(preferred);
+    })();
 </script>
+
 </body>
 </html>
