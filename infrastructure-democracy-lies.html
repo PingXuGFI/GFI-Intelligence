@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infrastructure and the Lies of Democracy · GL Framework</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0b1220;
+            --bg2: #0d1526;
+            --text: #f8fbff;
+            --muted: #c7d2e3;
+            --sub: #9fb0c8;
+            --dim: rgba(255,255,255,.06);
+            --green: #9FE870;
+            --blue: #7DD3FC;
+            --red: #f87171;
+            --gold: #fbbf24;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --mono: 'DM Mono', monospace;
+            --sans: 'DM Sans', system-ui, sans-serif;
+        }
+        body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 1.7; }
+        .container { max-width: 820px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+        .nav { position: fixed; inset: 0 0 auto 0; z-index: 100; height: 56px; padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; background: rgba(11,18,32,0.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--dim); }
+        .logo { color:#fff; text-decoration:none; font-family:var(--mono); font-size:12px; letter-spacing:.12em; text-transform:uppercase; }
+        .lang-grp { display:flex; gap:4px; }
+        .lang-btn { font-family:var(--mono); font-size:10px; padding:3px 10px; border:1px solid rgba(255,255,255,0.08); border-radius:4px; background:none; color:var(--sub); cursor:pointer; transition:all .2s; }
+        .lang-btn:hover { color:var(--text); border-color:rgba(255,255,255,0.2); }
+        .lang-btn.on { color:var(--green); border-color:rgba(159,232,112,0.35); background:rgba(159,232,112,0.07); }
+        .lang-content { display:none; padding-top: 70px; }
+        .lang-content.active { display:block; animation:fadeIn .3s ease; }
+        @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+        h1 { font-family: var(--serif); font-size: 2rem; font-weight: 500; margin-bottom: 1rem; border-bottom: 2px solid var(--green); padding-bottom: 0.75rem; display: inline-block; }
+        h2 { font-family: var(--serif); font-size: 1.4rem; font-weight: 500; margin: 2rem 0 1rem; border-left: 4px solid var(--green); padding-left: 1rem; }
+        h3 { font-family: var(--serif); font-size: 1.1rem; margin: 1.5rem 0 0.8rem; color: var(--green); }
+        .meta { font-family: var(--mono); font-size: 0.7rem; color: var(--sub); margin-bottom: 1.5rem; border-left: 2px solid var(--green); padding-left: 1rem; }
+        .quote { font-family: var(--serif); font-size: 1.3rem; font-style: italic; color: var(--blue); border-left: 4px solid var(--green); margin: 2rem 0; padding: 1rem 1.5rem; background: rgba(125,211,252,0.05); border-radius: 0 1rem 1rem 0; }
+        .callout { background: rgba(159,232,112,0.05); border: 1px solid rgba(159,232,112,0.15); border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; }
+        .callout strong { color: var(--green); }
+        .gl-table-wrap { overflow-x: auto; margin: 1.5rem 0; border-radius: 12px; border: 1px solid var(--dim); }
+        .gl-table-wrap table { width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: 0.7rem; }
+        .gl-table-wrap th { background: rgba(255,255,255,.03); padding: 0.7rem 0.8rem; text-align: left; color: var(--sub); border-bottom: 1px solid var(--dim); font-weight: 400; letter-spacing: 0.06em; }
+        .gl-table-wrap td { padding: 0.5rem 0.8rem; border-bottom: 1px solid rgba(255,255,255,.04); color: var(--muted); }
+        .gl-table-wrap .highlight-green { color: var(--green); font-weight: 600; }
+        .gl-table-wrap .highlight-red { color: var(--red); font-weight: 600; }
+        .country-list { columns: 2; column-gap: 2rem; margin: 1rem 0 1.5rem 1.5rem; }
+        .country-list li { margin-bottom: 0.4rem; color: var(--muted); font-size: 0.9rem; }
+        .back-link { display: inline-block; margin-top: 2rem; color: var(--green); text-decoration: none; font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em; }
+        .back-link:hover { text-decoration: underline; }
+        .footer { text-align: center; padding: 2rem; font-family: var(--mono); font-size: 0.6rem; color: var(--sub); border-top: 1px solid var(--dim); margin-top: 2rem; opacity: 0.5; }
+        @media (max-width: 700px) { .container { padding: 1rem; } h1 { font-size: 1.5rem; } .quote { font-size: 1rem; } .country-list { columns: 1; } }
+    </style>
+</head>
+<body>
+
+<!-- ===== NAV ===== -->
+<nav class="nav">
+    <a href="index.html" class="logo">GFI Flow Intelligence</a>
+    <div class="lang-grp">
+        <button class="lang-btn on" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="tw">繁</button>
+        <button class="lang-btn" data-lang="cn">简</button>
+        <button class="lang-btn" data-lang="es">ES</button>
+    </div>
+</nav>
+
+<!-- ============================================================ -->
+<!-- ==================== ENGLISH ================================ -->
+<!-- ============================================================ -->
+<div class="lang-content active" data-lang="en">
+    <div class="container">
+        <h1>🚧 Infrastructure and the Lies of Democracy</h1>
+        <div class="meta">GL Framework · Policy Analysis · June 2026</div>
+
+        <div class="quote">
+            "A nation that cannot update its own infrastructure has lost its governance legitimacy — no matter how loudly it shouts 'freedom and democracy.'"
+        </div>
+
+        <p><strong>They shout freedom and democracy. They cannot build a subway.</strong></p>
+
+        <p>Not because they lack money. The United States spends over $800 billion annually on its military. The UK is one of the world's wealthiest nations. Germany is Europe's economic engine. France has the highest taxes in Europe. Australia exports hundreds of billions in minerals every year. Canada is a G7 member. Italy's real estate in Milan and Rome is worth billions.</p>
+
+        <p><strong>The money is there. It just flows in the wrong direction.</strong></p>
+
+        <p>Democracy, as practiced in these countries, has become a <strong>cost-shifting machine</strong>. It shifts costs to taxpayers — and shifts value to contractors, consultants, lawyers, political donors, and landowners.</p>
+
+        <p>This is not a failure of execution. <strong>It is the intended outcome of institutional design.</strong></p>
+
+        <h2>🇺🇸 United States: The World's Richest Country, Third-World Subways</h2>
+
+        <ul style="margin-left:1.5rem; color:var(--muted);">
+            <li style="margin-bottom:0.6rem;"><strong>New York Subway</strong> — opened in 1904. In 2024, its signal system is still from the last century. Tracks are decaying. Cars are falling apart. Delays, derailments, fires, and people being pushed onto the tracks are weekly news. <span style="color:var(--red);">Over $20 billion spent — a few stations renovated.</span></li>
+            <li style="margin-bottom:0.6rem;"><strong>California High-Speed Rail</strong> — approved in 2008 with a $33 billion budget. In 2026, it's still not finished. Actual cost has exceeded $100 billion. Only a few dozen miles have been completed. <span style="color:var(--red);">Over 18 years, zero high-speed trains running.</span></li>
+            <li style="margin-bottom:0.6rem;"><strong>Boston's Big Dig</strong> — one of the most expensive highway projects in history. <span style="color:var(--red);">Budget: $2 billion. Final cost: over $20 billion. Ten times over budget.</span> And the ceiling collapsed, killing a driver.</li>
+        </ul>
+
+        <div class="callout">
+            <strong>The U.S. has money.</strong> $800 billion in military spending. What it lacks is a system that prevents value from being captured by contractors, consultants, lawyers, interest payments, and political donors. <strong>Infrastructure is just their ATM.</strong>
+        </div>
+
+        <h2>🇬🇧 United Kingdom: The Empire That Can't Build a Train</h2>
+
+        <ul style="margin-left:1.5rem; color:var(--muted);">
+            <li style="margin-bottom:0.6rem;"><strong>British Rail</strong> — privatized. Ticket prices skyrocketed. Delays are constant. Carriages are ancient. One winter storm and the entire network collapses.</li>
+            <li style="margin-bottom:0.6rem;"><strong>HS2</strong> — launched in 2009 with a £30 billion budget. In 2026, half the route has been cancelled. Budget has ballooned to £100 billion. <span style="color:var(--red);">Over 17 years — zero high-speed trains running.</span> Only a few holes in the ground.</li>
+            <li style="margin-bottom:0.6rem;"><strong>London Underground</strong> — no air conditioning. Every summer, platform temperatures exceed 40°C. Passengers fainting from heatstroke is normal news.</li>
+        </ul>
+
+        <div class="callout">
+            <strong>The UK has money.</strong> A single house in Mayfair costs £28 million. But that money was captured centuries ago — by the Grosvenors, by the aristocracy. <strong>They treat the UK as their rent-extraction machine.</strong>
+        </div>
+
+        <h2>🇩🇪 Germany: Europe's Engine, Trains That Never Run on Time</h2>
+
+        <ul style="margin-left:1.5rem; color:var(--muted);">
+            <li style="margin-bottom:0.6rem;"><strong>Deutsche Bahn</strong> — in 2024, long-distance train punctuality was below 65%. Winter means delays. Summer means broken AC. <span style="color:var(--red);">The trains are late. The system is broken.</span></li>
+            <li style="margin-bottom:0.6rem;"><strong>Berlin Brandenburg Airport</strong> — planned in 1990. Opened in 2020. <span style="color:var(--red);">30 years. €2 billion budget → over €8 billion final cost.</span> A textbook case of democratic paralysis.</li>
+            <li style="margin-bottom:0.6rem;"><strong>Digital infrastructure?</strong> Many government offices still use fax machines. Germany's administrative system still runs on paper.</li>
+        </ul>
+
+        <div class="callout">
+            <strong>Germany has money.</strong> It's Europe's richest country. But its tax system, federal structure, and bureaucratic review process turn every infrastructure project into a <strong>decade-long negotiation</strong> over who pays, who builds, and who profits. By the time the negotiation ends, the decade is over.
+        </div>
+
+        <h2>🇫🇷 France: Romantic Country, Infrastructure on Strike</h2>
+
+        <ul style="margin-left:1.5rem; color:var(--muted);">
+            <li style="margin-bottom:0.6rem;"><strong>TGV</strong> — world-class. Built in the 1980s. New lines? Almost none.</li>
+            <li style="margin-bottom:0.6rem;"><strong>Paris Metro</strong> — old carriages, rat infestations, no air conditioning on platforms. Tourists getting robbed is part of the daily scenery.</li>
+            <li style="margin-bottom:0.6rem;"><strong>Nuclear plants</strong> — aging. <strong>Road bridges</strong> — collapsing. <strong>Water systems</strong> — leaking. Everywhere you look: "needs repair but no money."</li>
+        </ul>
+
+        <div class="callout">
+            <strong>France has money.</strong> It has one of the highest tax rates in Europe. But the money goes to welfare, unions, pensions, and protests. Infrastructure? <strong>That's "capitalist" — so the left won't build it. The right can't afford it.</strong> Result: nothing gets built.
+        </div>
+
+        <h2>🇦🇺 Australia: Mining Boom, Developing-World Infrastructure</h2>
+
+        <ul style="margin-left:1.5rem; color:var(--muted);">
+            <li style="margin-bottom:0.6rem;"><strong>Sydney Metro</strong> — the first real metro line opened in 2019. <span style="color:var(--red);">Forty years behind Asian cities.</span></li>
+            <li style="margin-bottom:0.6rem;"><strong>Brisbane, Perth, Adelaide</strong> — public transit is barely functional. Locals have given up expecting more.</li>
+            <li style="margin-bottom:0.6rem;"><strong>NBN</strong> — Australia's national broadband network. Launched in 2009 with a $43 billion budget. In 2026, it's still laying copper wires. <span style="color:var(--red);">Internet slower than Thailand and Vietnam.</span></li>
+        </ul>
+
+        <div class="callout">
+            <strong>Australia has money.</strong> Hundreds of billions in mineral exports every year. But the money goes to mining companies, foreign shareholders, and landowners. <strong>Infrastructure? That's an election promise, not national construction.</strong>
+        </div>
+
+        <h2>🇨🇦 Canada: G7 Member, Township Infrastructure</h2>
+
+        <ul style="margin-left:1.5rem; color:var(--muted);">
+            <li style="margin-bottom:0.6rem;"><strong>Toronto Subway</strong> — the last new line opened in 1996. <span style="color:var(--red);">Thirty years without a new line.</span></li>
+            <li style="margin-bottom:0.6rem;"><strong>Vancouver, Montreal, Calgary</strong> — public transit barely functions. A proper rapid transit system? Don't even think about it.</li>
+            <li style="margin-bottom:0.6rem;"><strong>Water pipes, bridges, highways</strong> — all decades old. Every assessment says "urgent repairs needed." Every year, no money.</li>
+        </ul>
+
+        <div class="callout">
+            <strong>Canada has money.</strong> Vancouver real estate prices are among the highest in the world — driven by foreign capital. Taxes were collected. Land was sold. <strong>Where did the money go? Not to the bridges.</strong>
+        </div>
+
+        <h2>🇮🇹 Italy: Europe's Most Beautiful Ruin</h2>
+
+        <ul style="margin-left:1.5rem; color:var(--muted);">
+            <li style="margin-bottom:0.6rem;"><strong>Morandi Bridge</strong> — collapsed in 2018. 43 dead. Cause: decades of neglect. Why no maintenance? <span style="color:var(--red);">No money.</span> Yet a single apartment facing Milan's cathedral can sell for millions of euros.</li>
+            <li style="margin-bottom:0.6rem;"><strong>Highways</strong> — expensive tolls, terrible quality. Potholes large enough to swallow car wheels. Crashes from road conditions are routine.</li>
+            <li style="margin-bottom:0.6rem;"><strong>Rome Metro</strong> — only three lines. Line C started construction in 2000. In 2026, it's still not fully complete. <span style="color:var(--red);">25 years — one metro line.</span></li>
+        </ul>
+
+        <div class="callout">
+            <strong>Italy has money.</strong> It's Europe's third-largest economy. But its institutional design ensures that money never reaches infrastructure. <strong>The system is designed to capture value — not to deliver it.</strong>
+        </div>
+
+        <h2>Why They Shout "Freedom and Democracy"</h2>
+
+        <p>Because they have nothing else to say.</p>
+
+        <p>If they stopped shouting and told the truth:</p>
+
+        <div class="quote">
+            "We cannot update our infrastructure because our system lets capital capture all the money."
+        </div>
+
+        <p>No one would vote for them.</p>
+
+        <p>So they keep shouting "freedom and democracy." <strong>Not because they believe it. Because they have no other words left.</strong></p>
+
+        <h2>GL Framework Diagnosis</h2>
+
+        <p>The democracy they shout about solves none of the eight parameters in the GL Framework:</p>
+
+        <div class="gl-table-wrap">
+            <table>
+                <thead><tr><th>GL Parameter</th><th>Western Democratic Infrastructure Performance</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>1. Waiting Cost</strong></td><td><span class="highlight-red">Subways delayed, high-speed rail 30 years late, airports 50 years late</span></td></tr>
+                    <tr><td><strong>2. Repetition Cost</strong></td><td><span class="highlight-red">Environmental reviews, lawsuits, re-bidding, more lawsuits</span></td></tr>
+                    <tr><td><strong>3. Collapse Cost</strong></td><td><span class="highlight-red">Bridges collapse, tunnels leak, ceilings fall — people die</span></td></tr>
+                    <tr><td><strong>4. Information Asymmetry</strong></td><td><span class="highlight-red">Politicians say "opens next year." Everyone knows it's a lie.</span></td></tr>
+                    <tr><td><strong>5. Psychological Cost</strong></td><td><span class="highlight-red">You commute on broken infrastructure every day. You have given up.</span></td></tr>
+                    <tr><td><strong>6. Opportunity Cost</strong></td><td><span class="highlight-red">If you were born in Tokyo or Shanghai, your life would be different.</span></td></tr>
+                    <tr><td><strong>7. Shift Pathway</strong></td><td><span class="highlight-red">Taxpayers pay. Contractors profit. Politicians get votes.</span></td></tr>
+                    <tr><td><strong>8. Loop Closure</strong></td><td><span class="highlight-red">Value does not return to the people. Value is captured by capital.</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>Conclusion</h2>
+
+        <div class="quote">
+            "A nation that cannot update its infrastructure for its own citizens — no matter how many times it shouts 'freedom and democracy' — is just doing political PR."
+        </div>
+
+        <p>Infrastructure is the most fundamental promise of governance: <strong>What do you get in exchange for your taxes?</strong></p>
+
+        <p>If the answer is broken subways, collapsing bridges, and high-speed rail that takes 30 years to not even open — then that nation's governance legitimacy, no matter how loudly it shouts, has been hollowed out.</p>
+
+        <p>And they keep shouting "freedom and democracy."</p>
+
+        <p><strong>Because they have nothing else to say.</strong></p>
+
+        <div style="margin-top: 2rem; padding: 1rem; background: rgba(159,232,112,0.05); border-radius: 12px; text-align: center; font-size: 0.85rem; color: var(--sub);">
+            <span style="color: var(--green);">GL Framework</span> · Diagnosing cost-shifting — not ideology.
+        </div>
+
+        <a href="index.html" class="back-link">← Back to Home</a>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- ==================== 繁體中文 =============================== -->
+<!-- ============================================================ -->
+<div class="lang-content" data-lang="tw">
+    <div class="container">
+        <h1>🚧 基礎設施與民主的謊言</h1>
+        <div class="meta">GL 框架 · 政策分析 · 2026年6月</div>
+
+        <div class="quote">
+            「一個無法為自己國民更新基礎設施的國家，無論它喊再多次『自由民主』，都已經失去了治理正當性。」
+        </div>
+
+        <p><strong>他們高呼自由民主。他們蓋不出地鐵。</strong></p>
+
+        <p>不是因為沒錢。美國每年軍費超過8,000億美元。英國是全球最富有的國家之一。德國是歐洲經濟引擎。法國是歐洲稅率最高的國家之一。澳洲每年出口數千億礦產。加拿大是G7成員。義大利米蘭和羅馬的房地產價值數十億歐元。</p>
+
+        <p><strong>錢在那裡。只是流向了錯誤的方向。</strong></p>
+
+        <p>這些國家的民主制度，已經變成了一台<strong>成本轉嫁機器</strong>。它把成本轉嫁給納稅人——把價值轉移給包商、顧問、律師、政治獻金者和地主。</p>
+
+        <p>這不是執行失敗。<strong>這是制度設計的必然結果。</strong></p>
+
+        <h2>🇺🇸 美國：世界最富的國家，第三世界的地鐵</h2>
+
+        <ul style="margin-left:1.5rem; color:var(--muted);">
+            <li style="margin-bottom:0.6rem;"><strong>紐約地鐵</strong> — 1904年通車。2024年，信號系統還是上世紀的，軌道老舊，車廂破爛，誤點、出軌、火災、有人被推下月臺是每週新聞。花了超過<span style="color:var(--red);">200億美元</span>，只修了幾個站。</li>
+            <li style="margin-bottom:0.6rem;"><strong>加州高鐵</strong> — 2008年通過，預算330億美元。2026年還沒完工，實際成本已超過1,000億美元。唯一完成的路段只有幾十里。<span style="color:var(--red);">18年了，沒有高鐵在跑。</span></li>
+            <li style="margin-bottom:0.6rem;"><strong>波士頓大挖掘</strong> — 全球最貴公路工程之一。預算<span style="color:var(--red);">20億 → 最終超過200億</span>，超支十倍。天花板崩塌，壓死駕駛人。</li>
+        </ul>
+
+        <div class="callout">
+            <strong>美國有錢。</strong> 8,000億軍費。但它缺少一個防止價值被包商、顧問、律師、利息和政治獻金捕獲的制度。<strong>基礎設施只是他們的提款機。</strong>
+        </div>
+
+        <h2>🇬🇧 英國：殖民全球的帝國，蓋不出一條高鐵</h2>
+
+        <ul style="margin-left:1.5rem; color:var(--muted);">
+            <li style="margin-bottom:0.6rem;"><strong>英國鐵路</strong> — 私有化後票價暴漲、誤點連連、車廂老舊。一場冬季風暴就能讓全線癱瘓。</li>
+            <li style="margin-bottom:0.6rem;"><strong>HS2高鐵</strong> — 2009年啟動，預算300億英鎊。2026年一半路線被砍，預算飆到1,000億英鎊。<span style="color:var(--red);">17年了，沒有高鐵在跑。</span>只挖了幾個洞。</li>
+            <li style="margin-bottom:0.6rem;"><strong>倫敦地鐵</strong> — 沒有冷氣。每年夏天月臺超過40°C，乘客中暑送醫是正常新聞。</li>
+        </ul>
+
+        <div class="callout">
+            <strong>英國有錢。</strong> 梅菲爾區一棟房子2,800萬英鎊。但錢幾個世紀前就被貴族捕獲了。<strong>他們把英國當成收租的提款機。</strong>
+        </div>
+
+        <h2>🇩🇪 德國：歐洲引擎，火車從不準時</h2>
+
+        <ul style="margin-left:1.5rem; color:var(--muted);">
+            <li style="margin-bottom:0.6rem;"><strong>德國鐵路</strong> — 2024年長途列車準點率低於65%。冬天誤點，夏天冷氣故障。<span style="color:var(--red);">火車永遠遲到。系統是壞的。</span></li>
+            <li style="margin-bottom:0.6rem;"><strong>柏林布蘭登堡機場</strong> — 1990年規劃，2020年啟用。<span style="color:var(--red);">30年。20億歐元預算 → 超過80億實際成本。</span>民主癱瘓的教科書案例。</li>
+            <li style="margin-bottom:0.6rem;"><strong>數位基礎設施？</strong> 很多政府辦公室還在用傳真機。德國行政系統還在用紙本。</li>
+        </ul>
+
+        <div class="callout">
+            <strong>德國有錢。</strong> 它是歐洲最富的國家。但它的稅制、聯邦結構和官僚審查程序，把每個基礎設施項目都變成了一場<span style="color:var(--red);">長達十年的「誰出錢、誰蓋、誰獲利」談判</span>。談判完，十年過去了。
+        </div>
+
+        <h2>🇫🇷 法國：浪漫的國度，基礎設施在罷工</h2>
+
+        <ul style="margin-left:1.5rem; color:var(--muted);">
+            <li style="margin-bottom:0.6rem;"><strong>TGV</strong> — 世界級，但那是1980年代蓋的。新線？幾乎沒有。</li>
+            <li style="margin-bottom:0.6rem;"><strong>巴黎地鐵</strong> — 老舊車廂、老鼠橫行、月臺沒冷氣。觀光客被搶是日常風景。</li>
+            <li style="margin-bottom:0.6rem;"><strong>核電廠</strong> — 老舊。<strong>公路橋樑</strong> — 崩塌。<strong>水力系統</strong> — 漏水。到處都是「該修但沒錢」的廢墟感。</li>
+        </ul>
+
+        <div class="callout">
+            <strong>法國有錢。</strong> 它是歐洲稅率最高的國家之一。但錢去了福利、工會、退休金、抗議。基礎設施？那是「資本主義的產物」——左派不蓋，右派蓋不起。<strong>結果就是什麼都沒有。</strong>
+        </div>
+
+        <h2>🇦🇺 澳洲：礦業繁榮，開發中國家的基礎設施</h2>
+
+        <ul style="margin-left:1.5rem; color:var(--muted);">
+            <li style="margin-bottom:0.6rem;"><strong>雪梨地鐵</strong> — 第一條真正的地鐵2019年才通車。<span style="color:var(--red);">落後亞洲城市40年。</span></li>
+            <li style="margin-bottom:0.6rem;"><strong>布里斯本、柏斯、阿德雷德</strong> — 公共交通勉強算有，爛到當地人習以為常。</li>
+            <li style="margin-bottom:0.6rem;"><strong>NBN</strong> — 澳洲國家寬頻。2009年啟動，預算430億澳元。2026年還在鋪銅線。<span style="color:var(--red);">網速比泰國和越南還慢。</span></li>
+        </ul>
+
+        <div class="callout">
+            <strong>澳洲有錢。</strong> 每年數千億礦產出口。但錢去了礦業公司、外國股東、地主。<strong>基礎設施？那是選舉支票，不是國家建設。</strong>
+        </div>
+
+        <h2>🇨🇦 加拿大：G7成員，鄉鎮等級的基礎設施</h2>
+
+        <ul style="margin-left:1.5rem; color:var(--muted);">
+            <li style="margin-bottom:0.6rem;"><strong>多倫多地鐵</strong> — 最後一條新線是1996年開通的。<span style="color:var(--red);">三十年沒有新線。</span></li>
+            <li style="margin-bottom:0.6rem;"><strong>溫哥華、蒙特婁、卡加利</strong> — 公共交通勉強能動。像樣的捷運？別想了。</li>
+            <li style="margin-bottom:0.6rem;"><strong>水管、橋樑、公路</strong> — 都是幾十年前的東西。年年說「急需更新」，年年沒有錢。</li>
+        </ul>
+
+        <div class="callout">
+            <strong>加拿大有錢。</strong> 溫哥華房價全球最高之一——外資炒出來的。稅收了，地賣了。<strong>錢去了哪裡？不知道。反正不在橋樑上。</strong>
+        </div>
+
+        <h2>🇮🇹 義大利：歐洲最美麗的廢墟</h2>
+
+        <ul style="margin-left:1.5rem; color:var(--muted);">
+            <li style="margin-bottom:0.6rem;"><strong>莫蘭迪大橋</strong> — 2018年崩塌，43人死亡。原因：長期缺乏維護。為什麼不維護？<span style="color:var(--red);">沒有錢。</span>但在米蘭，一棟看得見大教堂的公寓可以賣幾百萬歐元。</li>
+            <li style="margin-bottom:0.6rem;"><strong>高速公路</strong> — 收費高、品質差。路面的坑洞可以大到車輪陷進去。路面導致的車禍是日常。</li>
+            <li style="margin-bottom:0.6rem;"><strong>羅馬地鐵</strong> — 只有三條線。第三條線2000年動工，2026年還沒蓋完。<span style="color:var(--red);">25年，一條地鐵。</span></li>
+        </ul>
+
+        <div class="callout">
+            <strong>義大利有錢。</strong> 它是歐洲第三大經濟體。但它的制度設計確保了錢永遠到不了基礎設施。<strong>制度設計是為了捕獲價值——不是為了交付價值。</strong>
+        </div>
+
+        <h2>為什麼他們高呼「自由民主」？</h2>
+
+        <p>因為他們沒有別的話可以說了。</p>
+
+        <p>如果他們停止喊口號，說出實話：</p>
+
+        <div class="quote">
+            「我們無法更新基礎設施，因為我們的制度讓資本捕獲了所有錢。」
+        </div>
+
+        <p>沒有人會投票給他們。</p>
+
+        <p>所以他們繼續高呼「自由民主」。<strong>不是因為他們相信。是因為他們沒有別的話可以說了。</strong></p>
+
+        <h2>GL 框架診斷</h2>
+
+        <p>他們高呼的民主，沒有解決 GL 框架八個參數中的任何一個：</p>
+
+        <div class="gl-table-wrap">
+            <table>
+                <thead><tr><th>GL 參數</th><th>西方民主基礎設施的表現</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>1. 等待成本</strong></td><td><span class="highlight-red">地鐵延誤、高鐵拖30年、機場蓋50年</span></td></tr>
+                    <tr><td><strong>2. 重複成本</strong></td><td><span class="highlight-red">環評、訴訟、重新招標、再訴訟</span></td></tr>
+                    <tr><td><strong>3. 崩潰成本</strong></td><td><span class="highlight-red">橋樑崩塌、隧道漏水、天花板砸死人</span></td></tr>
+                    <tr><td><strong>4. 資訊不對稱</strong></td><td><span class="highlight-red">政客說「明年通車」——你知道那是謊言</span></td></tr>
+                    <tr><td><strong>5. 心理成本</strong></td><td><span class="highlight-red">每天搭破爛基礎設施上班——你已經放棄了</span></td></tr>
+                    <tr><td><strong>6. 機會成本</strong></td><td><span class="highlight-red">如果你生在東京或上海，你的人生會不一樣</span></td></tr>
+                    <tr><td><strong>7. 轉嫁路徑</strong></td><td><span class="highlight-red">納稅人付錢，包商獲利，政客拿選票</span></td></tr>
+                    <tr><td><strong>8. 閉環程度</strong></td><td><span class="highlight-red">價值沒有回到人民——價值被資本捕獲</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>結論</h2>
+
+        <div class="quote">
+            「一個無法為自己國民更新基礎設施的國家，無論它喊再多次『自由民主』，都只是政治公關。」
+        </div>
+
+        <p>基礎設施是國家治理最根本的承諾：<strong>你用納稅人的錢，換來了什麼？</strong></p>
+
+        <p>如果答案是破爛的地鐵、崩塌的橋樑、30年蓋不出來的高鐵——那這個國家的治理正當性，不管它怎麼喊，都已經被掏空了。</p>
+
+        <p>而他們還在喊自由民主。</p>
+
+        <p><strong>因為他們沒有別的話可以喊了。</strong></p>
+
+        <div style="margin-top: 2rem; padding: 1rem; background: rgba(159,232,112,0.05); border-radius: 12px; text-align: center; font-size: 0.85rem; color: var(--sub);">
+            <span style="color: var(--green);">GL Framework</span> · 診斷轉嫁路徑，不是診斷意識形態。
+        </div>
+
+        <a href="index.html" class="back-link">← 返回首頁</a>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- ==================== 简体中文 =============================== -->
+<!-- ============================================================ -->
+<div class="lang-content" data-lang="cn">
+    <div class="container">
+        <h1>🚧 基础设施与民主的谎言</h1>
+        <div class="meta">GL 框架 · 政策分析 · 2026年6月</div>
+
+        <div class="quote">
+            "一个无法为自己国民更新基础设施的国家，无论它喊再多次'自由民主'，都已经失去了治理正当性。"
+        </div>
+
+        <p><strong>他们高呼自由民主。他们盖不出地铁。</strong></p>
+
+        <p>不是因为没钱。美国每年军费超过8,000亿美元。英国是全球最富有的国家之一。德国是欧洲经济引擎。法国是欧洲税率最高的国家之一。澳大利亚每年出口数千亿矿产。加拿大是G7成员。意大利米兰和罗马的房地产价值数十亿欧元。</p>
+
+        <p><strong>钱在那里。只是流向了错误的方向。</strong></p>
+
+        <p>这些国家的民主制度，已经变成了一台<strong>成本转嫁机器</strong>。它把成本转嫁给纳税人——把价值转移给承包商、顾问、律师、政治献金者和地主。</p>
+
+        <p>这不是执行失败。<strong>这是制度设计的必然结果。</strong></p>
+
+        <h2>🇺🇸 美国：世界最富的国家，第三世界的地铁</h2>
+
+        <ul style="margin-left:1.5rem; color:var(--muted);">
+            <li style="margin-bottom:0.6rem;"><strong>纽约地铁</strong> — 1904年通车。2024年，信号系统还是上世纪的，轨道老旧，车厢破烂，误点、出轨、火灾、有人被推下月台是每周新闻。花了超过<span style="color:var(--red);">200亿美元</span>，只修了几个站。</li>
+            <li style="margin-bottom:0.6rem;"><strong>加州高铁</strong> — 2008年通过，预算330亿美元。2026年还没完工，实际成本已超过1,000亿美元。唯一完成的路段只有几十里。<span style="color:var(--red);">18年了，没有高铁在跑。</span></li>
+            <li style="margin-bottom:0.6rem;"><strong>波士顿大挖掘</strong> — 全球最贵公路工程之一。预算<span style="color:var(--red);">20亿 → 最终超过200亿</span>，超支十倍。天花板崩塌，压死驾驶人。</li>
+        </ul>
+
+        <div class="callout">
+            <strong>美国有钱。</strong> 8,000亿军费。但它缺少一个防止价值被承包商、顾问、律师、利息和政治献金捕获的制度。<strong>基础设施只是他们的提款机。</strong>
+        </div>
+
+        <h2>🇬🇧 英国：殖民全球的帝国，盖不出一条高铁</h2>
+
+        <ul style="margin-left:1.5rem; color:var(--muted);">
+            <li style="margin-bottom:0.6rem;"><strong>英国铁路</strong> — 私有化后票价暴涨、误点连连、车厢老旧。一场冬季风暴就能让全线瘫痪。</li>
+            <li style="margin-bottom:0.6rem;"><strong>HS2高铁</strong> — 2009年启动，预算300亿英镑。2026年一半路线被砍，预算飙到1,000亿英镑。<span style="color:var(--red);">17年了，没有高铁在跑。</span>只挖了几个洞。</li>
+            <li style="margin-bottom:0.6rem;"><strong>伦敦地铁</strong> — 没有冷气。每年夏天月台超过40°C，乘客中暑送医是正常新闻。</li>
+        </ul>
+
+        <div class="callout">
+            <strong>英国有钱。</strong> 梅菲尔区一栋房子2,800万英镑。但钱几个世纪前就被贵族捕获了。<strong>他们把英国当成收租的提款机。</strong>
+        </div>
+
+        <h2>🇩🇪 德国：欧洲引擎，火车从不准时</h2>
+
+        <ul style="margin-left:1.5rem; color:var(--muted);">
+            <li style="margin-bottom:0.6rem;"><strong>德国铁路</strong> — 2024年长途列车准点率低于65%。冬天误点，夏天冷气故障。<span style="color:var(--red);">火车永远迟到。系统是坏的。</span></li>
+            <li style="margin-bottom:0.6rem;"><strong>柏林勃兰登堡机场</strong> — 1990年规划，2020年启用。<span style="color:var(--red);">30年。20亿欧元预算 → 超过80亿实际成本。</span>民主瘫痪的教科书案例。</li>
+            <li style="margin-bottom:0.6rem;"><strong>数字基础设施？</strong> 很多政府办公室还在用传真机。德国行政系统还在用纸本。</li>
+        </ul>
+
+        <div class="callout">
+            <strong>德国有钱。</strong> 它是欧洲最富的国家。但它的税制、联邦结构和官僚审查程序，把每个基础设施项目都变成了一场<span style="color:var(--red);">长达十年的「谁出钱、谁盖、谁获利」谈判</span>。谈判完，十年过去了。
+        </div>
+
+        <h2>🇫🇷 法国：浪漫的国度，基础设施在罢工</h2>
+
+        <ul style="margin-left:1.5rem; color:var(--muted);">
+            <li style="margin-bottom:0.6rem;"><strong>TGV</strong> — 世界级，但那是1980年代盖的。新线？几乎没有。</li>
+            <li style="margin-bottom:0.6rem;"><strong>巴黎地铁</strong> — 老旧车厢、老鼠横行、月台没冷气。观光客被抢是日常风景。</li>
+            <li style="margin-bottom:0.6rem;"><strong>核电厂</strong> — 老旧。<strong>公路桥梁</strong> — 崩塌。<strong>水力系统</strong> — 漏水。到处都是「该修但没钱」的废墟感。</li>
+        </ul>
+
+        <div class="callout">
+            <strong>法国有钱。</strong> 它是欧洲税率最高的国家之一。但钱去了福利、工会、退休金、抗议。基础设施？那是「资本主义的产物」——左派不盖，右派盖不起。<strong>结果就是什么都没有。</strong>
+        </div>
+
+        <h2>🇦🇺 澳大利亚：矿业繁荣，发展中国家的基础设施</h2>
+
+        <ul style="margin-left:1.5rem; color:var(--muted);">
+            <li style="margin-bottom:0.6rem;"><strong>悉尼地铁</strong> — 第一条真正的地铁2019年才通车。<span style="color:var(--red);">落后亚洲城市40年。</span></li>
+            <li style="margin-bottom:0.6rem;"><strong>布里斯班、珀斯、阿德莱德</strong> — 公共交通勉强算有，烂到当地人习以为常。</li>
+            <li style="margin-bottom:0.6rem;"><strong>NBN</strong> — 澳大利亚国家宽带。2009年启动，预算430亿澳元。2026年还在铺铜线。<span style="color:var(--red);">网速比泰国和越南还慢。</span></li>
+        </ul>
+
+        <div class="callout">
+            <strong>澳大利亚有钱。</strong> 每年数千亿矿产出口。但钱去了矿业公司、外国股东、地主。<strong>基础设施？那是选举支票，不是国家建设。</strong>
+        </div>
+
+        <h2>🇨🇦 加拿大：G7成员，乡镇等级的基础设施</h2>
+
+        <ul style="margin-left:1.5rem; color:var(--muted);">
+            <li style="margin-bottom:0.6rem;"><strong>多伦多地铁</strong> — 最后一条新线是1996年开通的。<span style="color:var(--red);">三十年没有新线。</span></li>
+            <li style="margin-bottom:0.6rem;"><strong>温哥华、蒙特利尔、卡尔加里</strong> — 公共交通勉强能动。像样的捷运？别想了。</li>
+            <li style="margin-bottom:0.6rem;"><strong>水管、桥梁、公路</strong> — 都是几十年前的东西。年年说「急需更新」，年年没有钱。</li>
+        </ul>
+
+        <div class="callout">
+            <strong>加拿大有钱。</strong> 温哥华房价全球最高之一——外资炒出来的。税收了，地卖了。<strong>钱去了哪里？不知道。反正不在桥梁上。</strong>
+        </div>
+
+        <h2>🇮🇹 意大利：欧洲最美丽的废墟</h2>
+
+        <ul style="margin-left:1.5rem; color:var(--muted);">
+            <li style="margin-bottom:0.6rem;"><strong>莫兰迪大桥</strong> — 2018年崩塌，43人死亡。原因：长期缺乏维护。为什么不维护？<span style="color:var(--red);">没有钱。</span>但在米兰，一栋看得见大教堂的公寓可以卖几百万欧元。</li>
+            <li style="margin-bottom:0.6rem;"><strong>高速公路</strong> — 收费高、品质差。路面的坑洞可以大到车轮陷进去。路面导致的车祸是日常。</li>
+            <li style="margin-bottom:0.6rem;"><strong>罗马地铁</strong> — 只有三条线。第三条线2000年动工，2026年还没盖完。<span style="color:var(--red);">25年，一条地铁。</span></li>
+        </ul>
+
+        <div class="callout">
+            <strong>意大利有钱。</strong> 它是欧洲第三大经济体。但它的制度设计确保了钱永远到不了基础设施。<strong>制度设计是为了捕获价值——不是为了交付价值。</strong>
+        </div>
+
+        <h2>为什么他们高呼「自由民主」？</h2>
+
+        <p>因为他们没有别的话可以说了。</p>
+
+        <p>如果他们停止喊口号，说出实话：</p>
+
+        <div class="quote">
+            "我们无法更新基础设施，因为我们的制度让资本捕获了所有的钱。"
+        </div>
+
+        <p>没有人会投票给他们。</p>
+
+        <p>所以他们继续高呼「自由民主」。<strong>不是因为他们相信。是因为他们没有别的话可以说了。</strong></p>
+
+        <h2>GL 框架诊断</h2>
+
+        <p>他们高呼的民主，没有解决 GL 框架八个参数中的任何一个：</p>
+
+        <div class="gl-table-wrap">
+            <table>
+                <thead><tr><th>GL 参数</th><th>西方民主基础设施的表现</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>1. 等待成本</strong></td><td><span class="highlight-red">地铁延误、高铁拖30年、机场盖50年</span></td></tr>
+                    <tr><td><strong>2. 重复成本</strong></td><td><span class="highlight-red">环评、诉讼、重新招标、再诉讼</span></td></tr>
+                    <tr><td><strong>3. 崩溃成本</strong></td><td><span class="highlight-red">桥梁崩塌、隧道漏水、天花板砸死人</span></td></tr>
+                    <tr><td><strong>4. 信息不对称</strong></td><td><span class="highlight-red">政客说「明年通车」——你知道那是谎言</span></td></tr>
+                    <tr><td><strong>5. 心理成本</strong></td><td><span class="highlight-red">每天搭破烂基础设施上班——你已经放弃了</span></td></tr>
+                    <tr><td><strong>6. 机会成本</strong></td><td><span class="highlight-red">如果你生在东京或上海，你的人生会不一样</span></td></tr>
+                    <tr><td><strong>7. 转嫁路径</strong></td><td><span class="highlight-red">纳税人付钱，承包商获利，政客拿选票</span></td></tr>
+                    <tr><td><strong>8. 闭环程度</strong></td><td><span class="highlight-red">价值没有回到人民——价值被资本捕获</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>结论</h2>
+
+        <div class="quote">
+            "一个无法为自己国民更新基础设施的国家，无论它喊再多次'自由民主'，都只是政治公关。"
+        </div>
+
+        <p>基础设施是国家治理最根本的承诺：<strong>你用纳税人的钱，换来了什么？</strong></p>
+
+        <p>如果答案是破烂的地铁、崩塌的桥梁、30年盖不出来高铁——那这个国家的治理正当性，不管它怎么喊，都已经被掏空了。</p>
+
+        <p>而他们还在喊自由民主。</p>
+
+        <p><strong>因为他们没有别的话可以喊了。</strong></p>
+
+        <div style="margin-top: 2rem; padding: 1rem; background: rgba(159,232,112,0.05); border-radius: 12px; text-align: center; font-size: 0.85rem; color: var(--sub);">
+            <span style="color: var(--green);">GL Framework</span> · 诊断转嫁路径，不是诊断意识形态。
+        </div>
+
+        <a href="index.html" class="back-link">← 返回首页</a>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- ==================== ESPAÑOL ================================ -->
+<!-- ============================================================ -->
+<div class="lang-content" data-lang="es">
+    <div class="container">
+        <h1>🚧 Infraestructura y las Mentiras de la Democracia</h1>
+        <div class="meta">Marco GL · Análisis de Políticas · Junio 2026</div>
+
+        <div class="quote">
+            "Una nación que no puede actualizar su infraestructura ha perdido su legitimidad gubernamental — no importa cuán fuerte grite 'libertad y democracia'."
+        </div>
+
+        <p><strong>Gritan libertad y democracia. No pueden construir un metro.</strong></p>
+
+        <p>No porque les falte dinero. Estados Unidos gasta más de $800 mil millones al año en su ejército. Reino Unido es una de las naciones más ricas del mundo. Alemania es el motor económico de Europa. Francia tiene los impuestos más altos de Europa. Australia exporta cientos de miles de millones en minerales cada año. Canadá es miembro del G7. Los bienes raíces en Milán y Roma valen miles de millones.</p>
+
+        <p><strong>El dinero está allí. Solo fluye en la dirección equivocada.</strong></p>
+
+        <p>La democracia, tal como se practica en estos países, se ha convertido en una <strong>máquina de transferencia de costos</strong>. Transfiere costos a los contribuyentes — y transfiere valor a contratistas, consultores, abogados, donantes políticos y terratenientes.</p>
+
+        <p>Esto no es un fracaso de ejecución. <strong>Es el resultado previsto del diseño institucional.</strong></p>
+
+        <h2>🇺🇸 Estados Unidos: El País Más Rico del Mundo, Metros de Tercer Mundo</h2>
+
+        <ul style="margin-left:1.5rem; color:var(--muted);">
+            <li style="margin-bottom:0.6rem;"><strong>Metro de Nueva York</strong> — inaugurado en 1904. En 2024, su sistema de señales sigue siendo del siglo pasado. Vías envejecidas, vagones rotos. Retrasos, descarrilamientos, incendios y personas empujadas a las vías son noticias semanales. <span style="color:var(--red);">Más de $20 mil millones gastados — unas pocas estaciones renovadas.</span></li>
+            <li style="margin-bottom:0.6rem;"><strong>Tren de Alta Velocidad de California</strong> — aprobado en 2008 con un presupuesto de $33 mil millones. En 2026, aún no está terminado. El costo real ha superado los $100 mil millones. Solo se han completado unas pocas docenas de millas. <span style="color:var(--red);">Más de 18 años, cero trenes de alta velocidad funcionando.</span></li>
+            <li style="margin-bottom:0.6rem;"><strong>Big Dig de Boston</strong> — uno de los proyectos de carreteras más caros de la historia. <span style="color:var(--red);">Presupuesto: $2 mil millones. Costo final: más de $20 mil millones. Diez veces por encima del presupuesto.</span> Y el techo se derrumbó, matando a un conductor.</li>
+        </ul>
+
+        <div class="callout">
+            <strong>EE.UU. tiene dinero.</strong> $800 mil millones en gasto militar. Lo que le falta es un sistema que impida que el valor sea capturado por contratistas, consultores, abogados, intereses y donantes políticos. <strong>La infraestructura es solo su cajero automático.</strong>
+        </div>
+
+        <h2>🇬🇧 Reino Unido: El Imperio que no Puede Construir un Tren</h2>
+
+        <ul style="margin-left:1.5rem; color:var(--muted);">
+            <li style="margin-bottom:0.6rem;"><strong>British Rail</strong> — privatizado. Los precios de los boletos se dispararon. Los retrasos son constantes. Los vagones son antiguos. Una tormenta de invierno y toda la red colapsa.</li>
+            <li style="margin-bottom:0.6rem;"><strong>HS2</strong> — lanzado en 2009 con un presupuesto de £30 mil millones. En 2026, la mitad de la ruta ha sido cancelada. El presupuesto ha aumentado a £100 mil millones. <span style="color:var(--red);">Más de 17 años — cero trenes de alta velocidad funcionando.</span> Solo unos pocos agujeros en el suelo.</li>
+            <li style="margin-bottom:0.6rem;"><strong>Metro de Londres</strong> — sin aire acondicionado. Cada verano, las temperaturas en los andenes superan los 40°C. Pasajeros desmayados por golpe de calor son noticias normales.</li>
+        </ul>
+
+        <div class="callout">
+            <strong>El Reino Unido tiene dinero.</strong> Una sola casa en Mayfair cuesta £28 millones. Pero ese dinero fue capturado hace siglos — por los Grosvenors, por la aristocracia. <strong>Tratan al Reino Unido como su máquina de extracción de rentas.</strong>
+        </div>
+
+        <h2>🇩🇪 Alemania: El Motor de Europa, Trenes que Nunca Llegan a Tiempo</h2>
+
+        <ul style="margin-left:1.5rem; color:var(--muted);">
+            <li style="margin-bottom:0.6rem;"><strong>Deutsche Bahn</strong> — en 2024, la puntualidad de los trenes de larga distancia estaba por debajo del 65%. Invierno significa retrasos. Verano significa aire acondicionado roto. <span style="color:var(--red);">Los trenes llegan tarde. El sistema está roto.</span></li>
+            <li style="margin-bottom:0.6rem;"><strong>Aeropuerto de Berlín Brandeburgo</strong> — planificado en 1990. Inaugurado en 2020. <span style="color:var(--red);">30 años. Presupuesto de €2 mil millones → costo final de más de €8 mil millones.</span> Un caso de libro de texto de parálisis democrática.</li>
+            <li style="margin-bottom:0.6rem;"><strong>Infraestructura digital?</strong> Muchas oficinas gubernamentales todavía usan fax. El sistema administrativo alemán todavía funciona en papel.</li>
+        </ul>
+
+        <div class="callout">
+            <strong>Alemania tiene dinero.</strong> Es el país más rico de Europa. Pero su sistema fiscal, estructura federal y proceso de revisión burocrática convierten cada proyecto de infraestructura en una <strong>negociación de una década</strong> sobre quién paga, quién construye y quién se beneficia. Cuando termina la negociación, la década ha terminado.
+        </div>
+
+        <h2>🇫🇷 Francia: País Romántico, Infraestructura en Huelga</h2>
+
+        <ul style="margin-left:1.5rem; color:var(--muted);">
+            <li style="margin-bottom:0.6rem;"><strong>TGV</strong> — de clase mundial. Construido en la década de 1980. ¿Nuevas líneas? Casi ninguna.</li>
+            <li style="margin-bottom:0.6rem;"><strong>Metro de París</strong> — vagones viejos, infestación de ratas, sin aire acondicionado en los andenes. Turistas siendo robados es parte del paisaje diario.</li>
+            <li style="margin-bottom:0.6rem;"><strong>Plantas nucleares</strong> — envejecidas. <strong>Puentes de carretera</strong> — colapsando. <strong>Sistemas de agua</strong> — con fugas. En todas partes: "necesita reparación pero no hay dinero."</li>
+        </ul>
+
+        <div class="callout">
+            <strong>Francia tiene dinero.</strong> Tiene una de las tasas impositivas más altas de Europa. Pero el dinero va a bienestar, sindicatos, pensiones y protestas. ¿Infraestructura? Eso es "capitalista" — la izquierda no la construye. La derecha no puede permitírsela. <strong>Resultado: nada se construye.</strong>
+        </div>
+
+        <h2>🇦🇺 Australia: Auge Minero, Infraestructura de País en Desarrollo</h2>
+
+        <ul style="margin-left:1.5rem; color:var(--muted);">
+            <li style="margin-bottom:0.6rem;"><strong>Metro de Sídney</strong> — la primera línea de metro real se inauguró en 2019. <span style="color:var(--red);">Cuarenta años detrás de las ciudades asiáticas.</span></li>
+            <li style="margin-bottom:0.6rem;"><strong>Brisbane, Perth, Adelaida</strong> — el transporte público apenas funciona. Los locales han renunciado a esperar más.</li>
+            <li style="margin-bottom:0.6rem;"><strong>NBN</strong> — la red de banda ancha nacional de Australia. Lanzada en 2009 con un presupuesto de $43 mil millones AUD. En 2026, todavía está tendiendo cables de cobre. <span style="color:var(--red);">Internet más lento que Tailandia y Vietnam.</span></li>
+        </ul>
+
+        <div class="callout">
+            <strong>Australia tiene dinero.</strong> Cientos de miles de millones en exportaciones de minerales cada año. Pero el dinero va a empresas mineras, accionistas extranjeros y terratenientes. <strong>¿Infraestructura? Esa es una promesa electoral, no construcción nacional.</strong>
+        </div>
+
+        <h2>🇨🇦 Canadá: Miembro del G7, Infraestructura de Pueblo</h2>
+
+        <ul style="margin-left:1.5rem; color:var(--muted);">
+            <li style="margin-bottom:0.6rem;"><strong>Metro de Toronto</strong> — la última línea nueva se inauguró en 1996. <span style="color:var(--red);">Treinta años sin una línea nueva.</span></li>
+            <li style="margin-bottom:0.6rem;"><strong>Vancouver, Montreal, Calgary</strong> — el transporte público apenas funciona. ¿Un sistema de tránsito rápido adecuado? Ni lo pienses.</li>
+            <li style="margin-bottom:0.6rem;"><strong>Tuberías de agua, puentes, carreteras</strong> — todo tiene décadas de antigüedad. Cada evaluación dice "reparaciones urgentes necesarias." Cada año, no hay dinero.</li>
+        </ul>
+
+        <div class="callout">
+            <strong>Canadá tiene dinero.</strong> Los precios de los bienes raíces en Vancouver están entre los más altos del mundo — impulsados por capital extranjero. Se recaudaron impuestos. Se vendió tierra. <strong>¿A dónde fue el dinero? No a los puentes.</strong>
+        </div>
+
+        <h2>🇮🇹 Italia: La Ruina Más Bella de Europa</h2>
+
+        <ul style="margin-left:1.5rem; color:var(--muted);">
+            <li style="margin-bottom:0.6rem;"><strong>Puente Morandi</strong> — colapsó en 2018. 43 muertos. Causa: décadas de abandono. ¿Por qué no se mantuvo? <span style="color:var(--red);">No hay dinero.</span> Sin embargo, un apartamento frente a la catedral de Milán puede venderse por millones de euros.</li>
+            <li style="margin-bottom:0.6rem;"><strong>Autopistas</strong> — peajes caros, calidad terrible. Baches lo suficientemente grandes como para tragarse las ruedas de los coches. Accidentes por el estado de la carretera son rutinarios.</li>
+            <li style="margin-bottom:0.6rem;"><strong>Metro de Roma</strong> — solo tres líneas. La Línea C comenzó la construcción en 2000. En 2026, todavía no está completamente terminada. <span style="color:var(--red);">25 años — una línea de metro.</span></li>
+        </ul>
+
+        <div class="callout">
+            <strong>Italia tiene dinero.</strong> Es la tercera economía de Europa. Pero su diseño institucional asegura que el dinero nunca llegue a la infraestructura. <strong>El sistema está diseñado para capturar valor — no para entregarlo.</strong>
+        </div>
+
+        <h2>¿Por Qué Gritan "Libertad y Democracia"?</h2>
+
+        <p>Porque no tienen nada más que decir.</p>
+
+        <p>Si dejaran de gritar y dijeran la verdad:</p>
+
+        <div class="quote">
+            "No podemos actualizar nuestra infraestructura porque nuestro sistema permite que el capital capture todo el dinero."
+        </div>
+
+        <p>Nadie votaría por ellos.</p>
+
+        <p>Así que siguen gritando "libertad y democracia". <strong>No porque lo crean. Porque no les quedan otras palabras.</strong></p>
+
+        <h2>Diagnóstico del Marco GL</h2>
+
+        <p>La democracia que gritan no resuelve ninguno de los ocho parámetros del Marco GL:</p>
+
+        <div class="gl-table-wrap">
+            <table>
+                <thead><tr><th>Parámetro GL</th><th>Rendimiento de la Infraestructura Democrática Occidental</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>1. Costo de Espera</strong></td><td><span class="highlight-red">Metros retrasados, trenes de alta velocidad 30 años tarde, aeropuertos 50 años tarde</span></td></tr>
+                    <tr><td><strong>2. Costo de Repetición</strong></td><td><span class="highlight-red">Evaluaciones ambientales, demandas, re-licitaciones, más demandas</span></td></tr>
+                    <tr><td><strong>3. Costo de Colapso</strong></td><td><span class="highlight-red">Puentes colapsan, túneles filtran, techos caen — la gente muere</span></td></tr>
+                    <tr><td><strong>4. Asimetría de Información</strong></td><td><span class="highlight-red">Los políticos dicen "abre el año que viene." Todos saben que es mentira.</span></td></tr>
+                    <tr><td><strong>5. Costo Psicológico</strong></td><td><span class="highlight-red">Viajas en infraestructura rota todos los días. Ya te has rendido.</span></td></tr>
+                    <tr><td><strong>6. Costo de Oportunidad</strong></td><td><span class="highlight-red">Si naciste en Tokio o Shanghái, tu vida sería diferente.</span></td></tr>
+                    <tr><td><strong>7. Vía de Transferencia</strong></td><td><span class="highlight-red">Los contribuyentes pagan. Los contratistas se benefician. Los políticos obtienen votos.</span></td></tr>
+                    <tr><td><strong>8. Grado de Cierre</strong></td><td><span class="highlight-red">El valor no regresa al pueblo. El valor es capturado por el capital.</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>Conclusión</h2>
+
+        <div class="quote">
+            "Una nación que no puede actualizar su infraestructura para sus propios ciudadanos — no importa cuántas veces grite 'libertad y democracia' — solo está haciendo relaciones públicas políticas."
+        </div>
+
+        <p>La infraestructura es la promesa más fundamental de la gobernanza: <strong>¿Qué obtienes a cambio de tus impuestos?</strong></p>
+
+        <p>Si la respuesta es metros rotos, puentes colapsando y trenes de alta velocidad que tardan 30 años en no abrir — entonces la legitimidad gubernamental de esa nación, no importa cuán fuerte grite, ha sido vaciada.</p>
+
+        <p>Y siguen gritando "libertad y democracia".</p>
+
+        <p><strong>Porque no tienen nada más que decir.</strong></p>
+
+        <div style="margin-top: 2rem; padding: 1rem; background: rgba(159,232,112,0.05); border-radius: 12px; text-align: center; font-size: 0.85rem; color: var(--sub);">
+            <span style="color: var(--green);">GL Framework</span> · Diagnosticando la transferencia de costos — no ideología.
+        </div>
+
+        <a href="index.html" class="back-link">← Volver al Inicio</a>
+    </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div class="footer">© 2026 GFI Flow Intelligence · <a href="index.html" style="color:var(--sub);">GL Framework</a></div>
+
+<script>
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('on'));
+            this.classList.add('on');
+            document.querySelectorAll('.lang-content').forEach(c => c.classList.remove('active'));
+            document.querySelector(`.lang-content[data-lang="${this.dataset.lang}"]`).classList.add('active');
+        });
+    });
+</script>
+</body>
+</html>
