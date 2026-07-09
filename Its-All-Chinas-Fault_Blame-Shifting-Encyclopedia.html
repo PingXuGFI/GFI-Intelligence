@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>都是中國的錯 · 甩鍋百科全書</title>
+    <style>
+        /* === 全域設定 === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f4f1eb;
+            font-family: 'Georgia', 'Times New Roman', 'Segoe UI', serif;
+            color: #1e1c1a;
+            padding: 2rem 1rem;
+            line-height: 1.8;
+        }
+
+        .book {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fefcf7;
+            padding: 3rem 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 6px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        /* === 語言切換按鈕 === */
+        .lang-switcher {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: flex-end;
+            margin-bottom: 1.2rem;
+            border-bottom: 1px solid #e1dad1;
+            padding-bottom: 1rem;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: 1px solid #d6d0c8;
+            padding: 0.3rem 1.4rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            color: #4a4a4a;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .lang-btn:hover {
+            background: #eae5de;
+            border-color: #b0a89e;
+        }
+
+        .lang-btn.active {
+            background: #1e1e1e;
+            color: #ffffff;
+            border-color: #1e1e1e;
+        }
+
+        /* === 內容區塊 — 預設全部隱藏 === */
+        .lang-content {
+            display: none;
+        }
+
+        .lang-content.active {
+            display: block;
+        }
+
+        /* === 目錄樣式 === */
+        .toc {
+            background: #f8f5f0;
+            padding: 2rem 2rem 1.8rem;
+            border-radius: 10px;
+            margin-bottom: 3rem;
+            border-left: 6px solid #b8a79a;
+        }
+
+        .toc h2 {
+            font-size: 1.6rem;
+            letter-spacing: 1px;
+            color: #2d2a26;
+            border-bottom: 2px solid #d9d0c6;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .toc-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.2rem 2rem;
+        }
+
+        .toc-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.25rem 0;
+            border-bottom: 1px dashed #e1dad1;
+            font-size: 0.95rem;
+        }
+
+        .toc-item .chap {
+            color: #6b5f55;
+            font-weight: 600;
+            margin-right: 0.8rem;
+        }
+
+        .toc-item .title {
+            color: #2d2a26;
+        }
+
+        /* === 標題與內文 === */
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-align: center;
+            margin-top: 0.2rem;
+            margin-bottom: 0.2rem;
+            color: #1c1815;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #6b5f55;
+            border-bottom: 3px double #d9d0c6;
+            padding-bottom: 1.8rem;
+            margin-bottom: 2.2rem;
+            font-style: italic;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-top: 3rem;
+            margin-bottom: 0.8rem;
+            color: #2a2521;
+            border-bottom: 2px solid #e1dad1;
+            padding-bottom: 0.3rem;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.4rem;
+            color: #3d3630;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        /* === 案例表格 === */
+        .case-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0 1.8rem;
+            font-size: 0.92rem;
+            background: #fcfaf7;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+        }
+
+        .case-table th {
+            background: #e8e1d9;
+            color: #2a2521;
+            font-weight: 600;
+            padding: 0.6rem 0.8rem;
+            text-align: left;
+            border-bottom: 2px solid #cbc0b5;
+        }
+
+        .case-table td {
+            padding: 0.6rem 0.8rem;
+            border-bottom: 1px solid #e8e1d9;
+            vertical-align: top;
+        }
+
+        .case-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .case-table .label {
+            font-weight: 600;
+            color: #4d443c;
+            width: 22%;
+        }
+
+        /* === 統計小結 === */
+        .summary-box {
+            background: #f4f0ea;
+            padding: 1.2rem 1.6rem;
+            border-radius: 10px;
+            margin: 1.6rem 0;
+            border-left: 6px solid #8f8074;
+        }
+
+        .summary-box table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.92rem;
+        }
+
+        .summary-box td {
+            padding: 0.2rem 0.6rem 0.2rem 0;
+            border-bottom: 1px solid #e1dad1;
+        }
+
+        .summary-box tr:last-child td {
+            border-bottom: none;
+        }
+
+        .summary-box .stat-label {
+            font-weight: 600;
+            color: #3d3630;
+        }
+
+        .summary-box .stat-value {
+            text-align: right;
+            font-weight: 500;
+            color: #1c1815;
+        }
+
+        /* === 總帳表格 === */
+        .grand-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .grand-table th {
+            background: #2d2a26;
+            color: #f4f1eb;
+            padding: 0.6rem 0.8rem;
+            text-align: left;
+        }
+
+        .grand-table td {
+            padding: 0.5rem 0.8rem;
+            border-bottom: 1px solid #ddd6cd;
+        }
+
+        .grand-table .status-red {
+            color: #b03a2e;
+            font-weight: 600;
+        }
+
+        .grand-table .status-yellow {
+            color: #b8860b;
+            font-weight: 600;
+        }
+
+        /* === 金句引用 === */
+        .quote-block {
+            background: #f8f5f0;
+            padding: 1.2rem 1.8rem;
+            border-radius: 10px;
+            margin: 1.2rem 0;
+            border-left: 5px solid #b8a79a;
+            font-style: italic;
+            color: #2d2a26;
+        }
+
+        .quote-block .speaker {
+            display: block;
+            margin-top: 0.4rem;
+            font-style: normal;
+            font-weight: 600;
+            color: #6b5f55;
+            font-size: 0.9rem;
+        }
+
+        /* === 頁尾 === */
+        .footer {
+            margin-top: 3.5rem;
+            padding-top: 1.8rem;
+            border-top: 2px solid #d9d0c6;
+            text-align: center;
+            font-size: 0.95rem;
+            color: #6b5f55;
+        }
+
+        .footer .big-icon {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 0.2rem;
+        }
+
+        /* === 響應式 === */
+        @media (max-width: 700px) {
+            .book {
+                padding: 1.8rem 1.2rem;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            .subtitle {
+                font-size: 1rem;
+                padding-bottom: 1rem;
+            }
+            h2 {
+                font-size: 1.6rem;
+            }
+            h3 {
+                font-size: 1.15rem;
+            }
+            .toc-grid {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+            .toc-item {
+                font-size: 0.85rem;
+            }
+            .case-table {
+                font-size: 0.82rem;
+            }
+            .case-table .label {
+                width: 30%;
+            }
+            .summary-box {
+                padding: 1rem;
+            }
+            .grand-table {
+                font-size: 0.78rem;
+            }
+            .grand-table th,
+            .grand-table td {
+                padding: 0.4rem 0.5rem;
+            }
+            .lang-switcher {
+                justify-content: center;
+            }
+            .lang-btn {
+                padding: 0.25rem 1rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 450px) {
+            body {
+                padding: 0.8rem 0.4rem;
+            }
+            .book {
+                padding: 1rem 0.8rem;
+            }
+            h1 {
+                font-size: 1.6rem;
+            }
+            .case-table .label {
+                width: 35%;
+            }
+        }
+
+        hr {
+            border: none;
+            border-top: 2px dashed #ddd6cd;
+            margin: 2.2rem 0;
+        }
+
+        ol {
+            padding-left: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.4rem;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+        .fw-700 {
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+<div class="book">
+
+    <!-- ===== 語言切換按鈕 ===== -->
+    <div class="lang-switcher">
+        <button class="lang-btn active" data-lang="zh">繁體中文</button>
+        <button class="lang-btn" data-lang="en">English</button>
+    </div>
+
+    <!-- ========================================================== -->
+    <!-- 繁體中文版 -->
+    <!-- ========================================================== -->
+    <div id="lang-zh" class="lang-content active">
+
+        <h1>📖 都是中國的錯</h1>
+        <div class="subtitle">一本西方政客的甩鍋百科全書</div>
+
+        <!-- 目錄 -->
+        <div class="toc">
+            <h2>📑 目錄</h2>
+            <div class="toc-grid">
+                <div class="toc-item"><span><span class="chap">第一章</span><span class="title">基礎設施老舊 → 怪中國竊取技術</span></span></div>
+                <div class="toc-item"><span><span class="chap">第二章</span><span class="title">醫療系統崩潰 → 怪中國疫情數據</span></span></div>
+                <div class="toc-item"><span><span class="chap">第三章</span><span class="title">產業競爭失利 → 怪中國不公平補貼</span></span></div>
+                <div class="toc-item"><span><span class="chap">第四章</span><span class="title">物價房價飛漲 → 怪中國經濟脅迫</span></span></div>
+                <div class="toc-item"><span><span class="chap">第五章</span><span class="title">社會撕裂加劇 → 怪中國認知作戰</span></span></div>
+                <div class="toc-item"><span><span class="chap">第六章</span><span class="title">氣候變遷失控 → 怪中國碳排放</span></span></div>
+                <div class="toc-item"><span><span class="chap">第七章</span><span class="title">教育水準下滑 → 怪中國學生太強</span></span></div>
+                <div class="toc-item"><span><span class="chap">第八章</span><span class="title">犯罪率上升 → 怪中國網路犯罪</span></span></div>
+                <div class="toc-item"><span><span class="chap">第九章</span><span class="title">選舉輸了 → 怪中國干預</span></span></div>
+                <div class="toc-item"><span><span class="chap">第十章</span><span class="title">什麼都怪完了，問題還在</span></span></div>
+                <div class="toc-item" style="grid-column: 1 / -1; border-bottom: none; padding-top: 0.3rem;"><span><span class="chap">附錄</span><span class="title">西方政客甩鍋金句全集</span></span></div>
+            </div>
+        </div>
+
+        <!-- 第一章 -->
+        <h2>第一章：基礎設施老舊 → 怪中國竊取技術</h2>
+
+        <h3>🇺🇸 案例 001｜美國巴爾的摩大橋崩塌（2024年3月）</h3>
+        <table class="case-table">
+            <tr><td class="label">實際原因</td><td>貨輪失去動力撞擊橋墩</td></tr>
+            <tr><td class="label">甩鍋版本</td><td>某議員暗示「可能是中國發動網路攻擊導致船隻失控」</td></tr>
+            <tr><td class="label">事實查核</td><td>調查報告：船舶機械故障，無任何網路攻擊證據</td></tr>
+            <tr><td class="label">後續處理</td><td>無人討論橋樑本身的安全檢測標準為何失效</td></tr>
+        </table>
+
+        <h3>🇺🇸 案例 002｜美國高鐵「加州夢碎」（2008–至今）</h3>
+        <table class="case-table">
+            <tr><td class="label">實際原因</td><td>政治內鬥、土地徵收困難、成本管理失控</td></tr>
+            <tr><td class="label">甩鍋版本</td><td>「中國高鐵技術都是偷美國的，他們憑什麼跑那麼快？」</td></tr>
+            <tr><td class="label">事實查核</td><td>中國高鐵核心技術有自主專利，美國自己連一條像樣的示範線都蓋不出來</td></tr>
+            <tr><td class="label">後續處理</td><td>繼續罵中國，然後看著中國高鐵里程突破4.5萬公里</td></tr>
+        </table>
+
+        <h3>🇬🇧 案例 003｜英國HS2高鐵造價暴漲（2023年）</h3>
+        <table class="case-table">
+            <tr><td class="label">實際原因</td><td>規劃變更、地質評估失誤、承包商報價膨脹</td></tr>
+            <tr><td class="label">甩鍋版本</td><td>「中國低價傾銷鋼鐵，搞亂國際市場價格，害我們成本估算失準」</td></tr>
+            <tr><td class="label">事實查核</td><td>HS2預算從330億英鎊一路膨脹到1,060億，最大問題是英國自己的招標和管理制度</td></tr>
+            <tr><td class="label">後續處理</td><td>HS2北段被砍，曼城段取消，倫敦到伯明罕段繼續延宕</td></tr>
+        </table>
+
+        <h3>🇦🇺 案例 004｜澳洲5G網路建設落後（2020–2023）</h3>
+        <table class="case-table">
+            <tr><td class="label">實際原因</td><td>地理幅員遼闊、投資不足、政策反覆</td></tr>
+            <tr><td class="label">甩鍋版本</td><td>「華為是中國軍方企業，禁用華為是保護國安」</td></tr>
+            <tr><td class="label">事實查核</td><td>禁用華為後，澳洲5G建設成本增加30%、速度延遲2年，諾基亞和愛立信也無法填補缺口</td></tr>
+            <tr><td class="label">後續處理</td><td>澳洲5G覆蓋率仍落後於多數已開發國家，華為在東南亞的訂單接到手軟</td></tr>
+        </table>
+
+        <div class="summary-box">
+            <table>
+                <tr><td class="stat-label">案例數</td><td class="stat-value">4</td></tr>
+                <tr><td class="stat-label">其中確實與中國有關的</td><td class="stat-value">0</td></tr>
+                <tr><td class="stat-label">西方國家實際做出的改革</td><td class="stat-value">0</td></tr>
+                <tr><td class="stat-label">中國高鐵新增里程（同期）</td><td class="stat-value">約 2,000 公里</td></tr>
+            </table>
+        </div>
+
+        <hr />
+
+        <!-- 第二章 -->
+        <h2>第二章：醫療系統崩潰 → 怪中國疫情數據</h2>
+
+        <h3>🇬🇧 案例 005｜英國NHS候診創紀錄（2022–2024）</h3>
+        <table class="case-table">
+            <tr><td class="label">實際原因</td><td>十幾年緊縮政策、醫護薪資過低導致人才外流、床位數不足</td></tr>
+            <tr><td class="label">甩鍋版本</td><td>「中國隱瞞疫情數據，誤導英國防疫判斷，導致NHS人力資源錯配」</td></tr>
+            <tr><td class="label">事實查核</td><td>NHS的結構性問題早在2008年金融危機後就開始惡化，疫情只是暴露問題，不是製造問題</td></tr>
+            <tr><td class="label">後續處理</td><td>候診名單從700萬人降到750萬人（對，不降反升），政客仍在罵中國</td></tr>
+        </table>
+
+        <h3>🇺🇸 案例 006｜美國新冠死亡人數全球第一（2020–2023）</h3>
+        <table class="case-table">
+            <tr><td class="label">實際原因</td><td>聯邦與州政府協調失靈、公共衛生體系碎片化、民眾疫苗接種率偏低</td></tr>
+            <tr><td class="label">甩鍋版本</td><td>「如果中國早一點通報，美國可以少死很多人」</td></tr>
+            <tr><td class="label">事實查核</td><td>中國於2019年12月31日向世衛通報，美國於2020年1月21日出現首例確診，中間有21天準備時間——但美國什麼都沒做</td></tr>
+            <tr><td class="label">後續處理</td><td>國會聽證會繼續檢討「中國責任」，而非檢討CDC的應變流程</td></tr>
+        </table>
+
+        <h3>🇨🇦 案例 007｜加拿大醫療資源分配不均（2023）</h3>
+        <table class="case-table">
+            <tr><td class="label">實際原因</td><td>省與聯邦之間經費撥款爭議、醫護人力短缺</td></tr>
+            <tr><td class="label">甩鍋版本</td><td>「中國壟斷藥品原料供應，導致加拿大藥品短缺」</td></tr>
+            <tr><td class="label">事實查核</td><td>加拿大的藥品短缺更多來自於國內供應鏈管理問題和依賴單一來源的採購策略</td></tr>
+            <tr><td class="label">後續處理</td><td>政策辯論聚焦在「如何減少對中國藥品原料依賴」，而非如何建立更強韌的國內供應系統</td></tr>
+        </table>
+
+        <div class="summary-box">
+            <table>
+                <tr><td class="stat-label">案例數</td><td class="stat-value">3</td></tr>
+                <tr><td class="stat-label">問題改善情況</td><td class="stat-value">無明顯改善</td></tr>
+                <tr><td class="stat-label">怪中國佔檢討報告篇幅</td><td class="stat-value">平均 30–40%</td></tr>
+                <tr><td class="stat-label">檢討自身結構問題篇幅</td><td class="stat-value">平均不到 10%</td></tr>
+            </table>
+        </div>
+
+        <hr />
+
+        <!-- 第三章 -->
+        <h2>第三章：產業競爭失利 → 怪中國不公平補貼</h2>
+
+        <h3>🇩🇪 案例 008｜德國汽車工業被電動車超車（2022–2024）</h3>
+        <table class="case-table">
+            <tr><td class="label">實際原因</td><td>德國車廠在電動車研發上嚴重滯後、軟體能力落後、決策層保守</td></tr>
+            <tr><td class="label">甩鍋版本</td><td>「中國用國家資本主義和鉅額補貼扭曲市場，不公平競爭」</td></tr>
+            <tr><td class="label">事實查核</td><td>中國電動車補貼逐年退場，2023年起新車已無法領取購置補貼；德國車廠自己拖延電動化轉型長達十年</td></tr>
+            <tr><td class="label">後續處理</td><td>歐盟對中國電動車加徵最高38%關稅，德國車廠仍繼續裁員</td></tr>
+        </table>
+
+        <h3>🇺🇸 案例 009｜美國半導體製造落後（2020–2024）</h3>
+        <table class="case-table">
+            <tr><td class="label">實際原因</td><td>美國長期將晶片製造外包、教育體系STEM人才培養不足</td></tr>
+            <tr><td class="label">甩鍋版本</td><td>「中國竊取美國半導體技術，才得以快速追趕」</td></tr>
+            <tr><td class="label">事實查核</td><td>美國半導體製造佔全球比重從1990年的37%下降到2023年的約12%，這個趨勢在中國崛起前就已發生</td></tr>
+            <tr><td class="label">後續處理</td><td>《晶片法案》砸520億美元補貼，但目前多數資金仍未落地，台積電亞利桑那廠量產時間延後到2025年</td></tr>
+        </table>
+
+        <h3>🇪🇺 案例 010｜歐洲太陽能產業全軍覆沒（2010–2024）</h3>
+        <table class="case-table">
+            <tr><td class="label">實際原因</td><td>歐洲各國太陽能補貼政策搖擺不定、中國企業規模化生產降低成本</td></tr>
+            <tr><td class="label">甩鍋版本</td><td>「中國傾銷太陽能板，摧毀歐洲太陽能產業」</td></tr>
+            <tr><td class="label">事實查核</td><td>歐洲太陽能產業的衰退是因為無法在成本上競爭，而中國太陽能板的降價正降低了歐洲的能源轉型成本——這是好事，不是壞事</td></tr>
+            <tr><td class="label">後續處理</td><td>歐洲繼續買中國太陽能板（因為沒有替代選擇），同時繼續罵中國補貼</td></tr>
+        </table>
+
+        <div class="summary-box">
+            <table>
+                <tr><td class="stat-label">案例數</td><td class="stat-value">3</td></tr>
+                <tr><td class="stat-label">被擊敗的中國產業</td><td class="stat-value">電動車、半導體、太陽能（都是全球領先）</td></tr>
+                <tr><td class="stat-label">西方對應補貼額</td><td class="stat-value">數千億美元／歐元</td></tr>
+                <tr><td class="stat-label">競爭力提升情況</td><td class="stat-value">未見顯著改善</td></tr>
+            </table>
+        </div>
+
+        <hr />
+
+        <!-- 第四章 -->
+        <h2>第四章：物價房價飛漲 → 怪中國經濟脅迫</h2>
+
+        <h3>🇨🇦 案例 011｜加拿大房價10年漲3倍（2013–2023）</h3>
+        <table class="case-table">
+            <tr><td class="label">實際原因</td><td>低利率、土地供應限制、移民人口增長、投資炒作</td></tr>
+            <tr><td class="label">甩鍋版本</td><td>「中國資金大舉進入加拿大房地產市場，炒高房價」</td></tr>
+            <tr><td class="label">事實查核</td><td>外國買家佔加拿大房地產交易不到2%，其中中國買家佔比極低（溫哥華約1.1%、多倫多約0.8%）</td></tr>
+            <tr><td class="label">後續處理</td><td>外國買家禁令實施後，房價仍在上漲——問題顯然在國內供給面</td></tr>
+        </table>
+
+        <h3>🇺🇸 案例 012｜美國通膨創40年新高（2022）</h3>
+        <table class="case-table">
+            <tr><td class="label">實際原因</td><td>疫情後供應鏈混亂、烏克蘭戰爭推升能源價格、企業趁機漲價</td></tr>
+            <tr><td class="label">甩鍋版本</td><td>「中國的動態清零政策造成供應鏈中斷，推升全球通膨」</td></tr>
+            <tr><td class="label">事實查核</td><td>美國通膨在2021年就開始飆升，當時中國的供應鏈反而是全球少數穩定的環節</td></tr>
+            <tr><td class="label">後續處理</td><td>Fed暴力升息後通膨降溫，但政客繼續指責中國「輸出通膨」</td></tr>
+        </table>
+
+        <h3>🇦🇺 案例 013｜澳洲能源價格飆漲（2022–2023）</h3>
+        <table class="case-table">
+            <tr><td class="label">實際原因</td><td>俄烏戰爭導致全球天然氣供應緊張、國內能源政策混亂</td></tr>
+            <tr><td class="label">甩鍋版本</td><td>「中國搶購澳洲天然氣，推高價格」</td></tr>
+            <tr><td class="label">事實查核</td><td>中國從澳洲進口天然氣確實不少，但價格上漲是全球性的，歐洲也在搶氣、日本也在搶——難道全都要怪中國？</td></tr>
+            <tr><td class="label">後續處理</td><td>澳洲政府祭出國內天然氣價格上限，市場供應問題稍有緩解</td></tr>
+        </table>
+
+        <div class="summary-box">
+            <table>
+                <tr><td class="stat-label">案例數</td><td class="stat-value">3</td></tr>
+                <tr><td class="stat-label">外國買家佔加拿大房市</td><td class="stat-value">&lt; 2%</td></tr>
+                <tr><td class="stat-label">美國通膨峰值</td><td class="stat-value">9.1% (2022.06)</td></tr>
+                <tr><td class="stat-label">全球天然氣價格漲幅</td><td class="stat-value">約 300%（同期）</td></tr>
+            </table>
+        </div>
+
+        <hr />
+
+        <!-- 第五章 -->
+        <h2>第五章：社會撕裂加劇 → 怪中國認知作戰</h2>
+
+        <h3>🇺🇸 案例 014｜美國種族衝突與政治極化（2020–2024）</h3>
+        <table class="case-table">
+            <tr><td class="label">實際原因</td><td>社交媒體演算法放大對立、福斯新聞與MSNBC各說各話、政黨惡鬥</td></tr>
+            <tr><td class="label">甩鍋版本</td><td>「中國在抖音／TikTok上投放認知作戰內容，加劇美國社會分裂」</td></tr>
+            <tr><td class="label">事實查核</td><td>美國國會研究報告顯示，TikTok的主要問題是數據安全，而非內容干預——美國人自己做的研究，清清楚楚</td></tr>
+            <tr><td class="label">後續處理</td><td>禁令討論持續，但美國社會分裂持續惡化，2024大選後更是裂痕加深</td></tr>
+        </table>
+
+        <h3>🇬🇧 案例 015｜英國脫歐後遺症與蘇格蘭獨立（2020–2024）</h3>
+        <table class="case-table">
+            <tr><td class="label">實際原因</td><td>英格蘭與蘇格蘭的政治分歧、脫歐經濟後果不如預期</td></tr>
+            <tr><td class="label">甩鍋版本</td><td>「中國干預英國民意，試圖利用脫歐混亂削弱英國」</td></tr>
+            <tr><td class="label">事實查核</td><td>英國情報機構MI5明確表示：「沒有證據顯示中國直接干預英國大選或公投」</td></tr>
+            <tr><td class="label">後續處理</td><td>蘇格蘭獨立呼聲持續，工黨上台後仍無法解決</td></tr>
+        </table>
+
+        <h3>🇫🇷 案例 016｜法國黃背心運動與街頭暴動（2018–2019，持續延燒）</h3>
+        <table class="case-table">
+            <tr><td class="label">實際原因</td><td>燃油稅調漲、所得分配不均、對馬克宏改革的不滿</td></tr>
+            <tr><td class="label">甩鍋版本</td><td>「中國透過社交媒體資助法國抗議團體，煽動反政府運動」</td></tr>
+            <tr><td class="label">事實查核</td><td>法國情報機關DGSI調查結果：未發現中國資金介入的證據，抗議運動自發性起於社群網路</td></tr>
+            <tr><td class="label">後續處理</td><td>馬克宏讓步暫停燃油稅，抗議浪潮消退——靠的是實質政策調整，不是靠調查中國</td></tr>
+        </table>
+
+        <div class="summary-box">
+            <table>
+                <tr><td class="stat-label">案例數</td><td class="stat-value">3</td></tr>
+                <tr><td class="stat-label">有證據顯示中國干預</td><td class="stat-value">0</td></tr>
+                <tr><td class="stat-label">西方社會撕裂程度（自評）</td><td class="stat-value">持續惡化</td></tr>
+                <tr><td class="stat-label">真正改善撕裂的政策</td><td class="stat-value">無</td></tr>
+            </table>
+        </div>
+
+        <hr />
+
+        <!-- 第六章 -->
+        <h2>第六章：氣候變遷失控 → 怪中國碳排放</h2>
+
+        <h3>🌍 案例 017｜COP氣候峰會中國議題（2015–2024）</h3>
+        <table class="case-table">
+            <tr><td class="label">實際原因</td><td>已開發國家承諾的氣候資金遲遲不到位、減排責任分配爭議</td></tr>
+            <tr><td class="label">甩鍋版本</td><td>「中國是全球最大排放國，所有氣候問題都是中國造成的」</td></tr>
+            <tr><td class="label">事實查核</td><td>中國人均排放遠低於美國（約7.5噸 vs 14.5噸），且中國新能源裝機量全球第一</td></tr>
+            <tr><td class="label">後續處理</td><td>已開發國家的「氣候賠償」承諾至今未兌現，中國仍在被罵</td></tr>
+        </table>
+
+        <h3>🇪🇺 案例 018｜歐盟碳邊境稅（2023–2024）</h3>
+        <table class="case-table">
+            <tr><td class="label">實際原因</td><td>歐盟想保護本土產業、同時推動減碳</td></tr>
+            <tr><td class="label">甩鍋版本</td><td>「中國企業環保標準太低，不正當競爭」</td></tr>
+            <tr><td class="label">事實查核</td><td>中國已建立全球最大的碳排放交易市場，碳定價機制逐年完善，進度比美國快得多</td></tr>
+            <tr><td class="label">後續處理</td><td>歐盟CBAM上路，但全球碳定價機制仍碎片化，美國沒有聯邦碳稅</td></tr>
+        </table>
+
+        <div class="summary-box">
+            <table>
+                <tr><td class="stat-label">中國2023年新增太陽能裝機</td><td class="stat-value">約 217 GW（全球第一）</td></tr>
+                <tr><td class="stat-label">中國2023年新增電動車銷售</td><td class="stat-value">約 950 萬輛（全球60%）</td></tr>
+                <tr><td class="stat-label">美國人均排放／中國人均排放</td><td class="stat-value">約 2 倍</td></tr>
+                <tr><td class="stat-label">美國氣候資金承諾兌現率</td><td class="stat-value">不到 20%</td></tr>
+            </table>
+        </div>
+
+        <hr />
+
+        <!-- 第七章 -->
+        <h2>第七章：教育水準下滑 → 怪中國學生太強</h2>
+
+        <h3>📊 案例 019｜PISA國際學生評比（2023）</h3>
+        <table class="case-table">
+            <tr><td class="label">實際原因</td><td>美國K-12教育資源分配不均、教師薪資過低、STEM教育落後</td></tr>
+            <tr><td class="label">甩鍋版本</td><td>「中國學生靠死記硬背和應試教育刷分，根本不代表真正的教育實力」</td></tr>
+            <tr><td class="label">事實查核</td><td>PISA測的是批判性思維和應用能力，死記硬背是沒用的——中國學生就是考得好，西方不願意承認</td></tr>
+            <tr><td class="label">後續處理</td><td>持續妖魔化中國教育體系，但美國數學成績仍持續下滑</td></tr>
+        </table>
+
+        <h3>🇺🇸 案例 020｜美國大學依賴中國留學生（2023）</h3>
+        <table class="case-table">
+            <tr><td class="label">實際原因</td><td>美國大學財務結構脆弱、本地學生不足、學費收入高度仰賴國際生</td></tr>
+            <tr><td class="label">甩鍋版本</td><td>「中國留學生是來偷技術的，不是來學習的」</td></tr>
+            <tr><td class="label">事實查核</td><td>中國留學生為美國經濟貢獻超過150億美元／年，STEM領域的中國留學生畢業後多留在美國工作——這是美國的人才紅利，不是威脅</td></tr>
+            <tr><td class="label">後續處理</td><td>簽證限制加嚴後，美國大學開始哭喊「國際生不夠了」，澳洲、英國、加拿大搶人搶得比美國還積極</td></tr>
+        </table>
+
+        <div class="summary-box">
+            <table>
+                <tr><td class="stat-label">PISA 2022數學前三名</td><td class="stat-value">新加坡、澳門、台灣（中國都在前段班）</td></tr>
+                <tr><td class="stat-label">美國數學排名</td><td class="stat-value">第34名</td></tr>
+                <tr><td class="stat-label">中國留學生佔美國國際生比例</td><td class="stat-value">約 30–35%</td></tr>
+                <tr><td class="stat-label">美國大學財務危機（2023）</td><td class="stat-value">超過 50 所大學合併或關閉</td></tr>
+            </table>
+        </div>
+
+        <hr />
+
+        <!-- 第八章 -->
+        <h2>第八章：犯罪率上升 → 怪中國網路犯罪</h2>
+
+        <h3>🇺🇸 案例 021｜美國勒索軟體攻擊激增（2020–2024）</h3>
+        <table class="case-table">
+            <tr><td class="label">實際原因</td><td>美國企業資安投資不足、老舊系統漏洞多</td></tr>
+            <tr><td class="label">甩鍋版本</td><td>「中國駭客組織支援勒索軟體攻擊美國基礎設施」</td></tr>
+            <tr><td class="label">事實查核</td><td>多數勒索軟體攻擊的來源是俄羅斯和東歐駭客，中國相關攻擊多為間諜活動而非勒索</td></tr>
+            <tr><td class="label">後續處理</td><td>企業繼續省資安預算，政府繼續指控中國</td></tr>
+        </table>
+
+        <h3>🇬🇧 案例 022｜英國網路詐騙案件暴增（2022–2024）</h3>
+        <table class="case-table">
+            <tr><td class="label">實際原因</td><td>銀行安全驗證機制落後、民眾數位素養不足、跨國詐騙集團利用英國金融體系</td></tr>
+            <tr><td class="label">甩鍋版本</td><td>「中國詐騙集團利用社群平台對英國民眾進行大量詐騙」</td></tr>
+            <tr><td class="label">事實查核</td><td>英國本身的金融開放和監管漏洞才是詐騙猖獗的主因，許多詐騙根本不用出英國境內</td></tr>
+            <tr><td class="label">後續處理</td><td>銀行被要求賠償詐騙受害者，但源頭問題仍無解</td></tr>
+        </table>
+
+        <div class="summary-box">
+            <table>
+                <tr><td class="stat-label">勒索軟體來源佔比（俄羅斯）</td><td class="stat-value">約 60–70%</td></tr>
+                <tr><td class="stat-label">勒索軟體來源佔比（中國）</td><td class="stat-value">約 5–10%（多為間諜而非勒索）</td></tr>
+                <tr><td class="stat-label">企業資安預算佔IT比例</td><td class="stat-value">平均不到 10%</td></tr>
+            </table>
+        </div>
+
+        <hr />
+
+        <!-- 第九章 -->
+        <h2>第九章：選舉輸了 → 怪中國干預</h2>
+
+        <h3>🇺🇸 案例 023｜美國大選「通中門」反覆上演（2016–2024）</h3>
+        <table class="case-table">
+            <tr><td class="label">實際原因</td><td>候選人個人魅力不足、政策不討喜、競選策略失誤</td></tr>
+            <tr><td class="label">甩鍋版本</td><td>「中國干預選舉，影響選民投票意向」</td></tr>
+            <tr><td class="label">事實查核</td><td>每一次FBI／ODNI調查的結論都一樣：「沒有證據顯示中國直接干預」</td></tr>
+            <tr><td class="label">後續處理</td><td>輸家繼續喊「中國干預」，贏家繼續執政，什麼都沒改變</td></tr>
+        </table>
+
+        <h3>🇦🇺 案例 024｜澳洲大選「外國干預」議題（2022）</h3>
+        <table class="case-table">
+            <tr><td class="label">實際原因</td><td>選民對執政黨不滿、氣候政策爭議</td></tr>
+            <tr><td class="label">甩鍋版本</td><td>「中國試圖影響澳洲選舉結果」</td></tr>
+            <tr><td class="label">事實查核</td><td>ASIO（澳洲安全情報組織）公開表示：未發現中國系統性干預澳洲選舉的證據</td></tr>
+            <tr><td class="label">後續處理</td><td>選後檢討報告寫了一堆，但「中國」章節的證據幾乎都是情節推測，而非具體事實</td></tr>
+        </table>
+
+        <div class="summary-box">
+            <table>
+                <tr><td class="stat-label">西方國家選舉「怪中國干預」次數（2016–2024）</td><td class="stat-value">至少 12 起</td></tr>
+                <tr><td class="stat-label">其中有確鑿證據的</td><td class="stat-value">0</td></tr>
+                <tr><td class="stat-label">選後進行實質改革的</td><td class="stat-value">0</td></tr>
+                <tr><td class="stat-label">怪中國佔敗選檢討比例</td><td class="stat-value">約 30–50%</td></tr>
+            </table>
+        </div>
+
+        <hr />
+
+        <!-- 第十章 -->
+        <h2>第十章：什麼都怪完了，問題還在</h2>
+
+        <h3>📊 總帳：十年甩鍋一覽</h3>
+        <table class="grand-table">
+            <thead>
+                <tr><th>科目</th><th>問題惡化程度</th><th>怪中國次數</th><th>實際改革次數</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>基礎建設</td><td class="status-red">🔴 持續惡化</td><td>500+</td><td>3</td></tr>
+                <tr><td>醫療系統</td><td class="status-red">🔴 持續惡化</td><td>800+</td><td>2</td></tr>
+                <tr><td>產業競爭</td><td class="status-yellow">🟡 未見好轉</td><td>1,200+</td><td>5</td></tr>
+                <tr><td>物價房價</td><td class="status-red">🔴 持續惡化</td><td>400+</td><td>4</td></tr>
+                <tr><td>社會撕裂</td><td class="status-red">🔴 持續惡化</td><td>1,000+</td><td>1</td></tr>
+                <tr><td>氣候變遷</td><td class="status-yellow">🟡 進度落後</td><td>600+</td><td>3</td></tr>
+                <tr><td>教育水準</td><td class="status-yellow">🟡 持續下滑</td><td>200+</td><td>2</td></tr>
+                <tr><td>網路安全</td><td class="status-yellow">🟡 持續威脅</td><td>300+</td><td>3</td></tr>
+                <tr><td>選舉政治</td><td class="status-red">🔴 惡性循環</td><td>150+</td><td>0</td></tr>
+                <tr style="font-weight:700; background:#f8f5f0;"><td>總計</td><td>多數惡化</td><td>5,000+</td><td>23</td></tr>
+            </tbody>
+        </table>
+
+        <hr />
+
+        <!-- 附錄 -->
+        <h2>📖 附錄：西方政客甩鍋金句全集</h2>
+
+        <h3>🇺🇸 美國篇</h3>
+        <div class="quote-block">
+            「如果中國早一點告訴我們，我們可以做得更好。」
+            <span class="speaker">—— 某總統，疫情死亡破百萬時</span>
+        </div>
+        <div class="quote-block">
+            「中國偷了我們的技術，然後超越了我們。」
+            <span class="speaker">—— 某參議員，解釋為什麼美國高鐵輸給中國</span>
+        </div>
+        <div class="quote-block">
+            「TikTok是中國的認知作戰武器。」
+            <span class="speaker">—— 眾議院聽證會，2023</span>
+        </div>
+        <div class="quote-block">
+            「中國的電動車就像當年的日本車，會摧毀美國汽車產業。」
+            <span class="speaker">—— 某工會領袖，2024</span>
+        </div>
+
+        <h3>🇬🇧 英國篇</h3>
+        <div class="quote-block">
+            「中國隱瞞疫情，讓NHS承受了不必要的壓力。」
+            <span class="speaker">—— 某衛生大臣，NHS候診破700萬時</span>
+        </div>
+        <div class="quote-block">
+            「華為是國安威脅，我們必須移除它。」
+            <span class="speaker">—— 某首相，5G建設延誤兩年後</span>
+        </div>
+
+        <h3>🇪🇺 歐洲篇</h3>
+        <div class="quote-block">
+            「中國的補貼政策違反了市場規則。」
+            <span class="speaker">—— 歐盟貿易專員，歐洲太陽能產業滅亡後</span>
+        </div>
+        <div class="quote-block">
+            「中國的『一帶一路』是債務陷阱，不是發展計劃。」
+            <span class="speaker">—— 某歐洲官員，自己的基建計劃毫無進展時</span>
+        </div>
+
+        <h3>🇨🇦 加拿大篇</h3>
+        <div class="quote-block">
+            「外國資金正在摧毀我們的住房市場。」
+            <span class="speaker">—— 某省長，外國買家佔比不到2%時</span>
+        </div>
+
+        <hr />
+
+        <!-- 全書總結 -->
+        <h2>🏁 全書總結</h2>
+
+        <p>這本書不是為了證明「中國沒有問題」——中國當然有問題，任何國家都有問題。</p>
+
+        <p><strong>這本書要證明的是：</strong></p>
+
+        <ol>
+            <li><strong>西方國家的問題，絕大多數是自己造成的。</strong> 制度慣性、短視政治、成本轉嫁——這些才是真正的元兇。</li>
+            <li><strong>「怪中國」已經成為一種替代改革的行為。</strong> 當政客罵中國的時候，他們不需要提出方案、不需要說服選民、不需要改變任何事。</li>
+            <li><strong>罵了十年，問題還在，甚至更嚴重。</strong> 而中國，在這些罵聲中，已經建好了全球最大的高鐵網絡、電動車產業、太陽能產業、碳排放交易市場……</li>
+            <li><strong>真正能解決問題的，從來不是找敵人，而是修自己。</strong></li>
+        </ol>
+
+        <div style="background:#f4f0ea; padding:1.6rem 2rem; border-radius:12px; margin:2rem 0; text-align:center; font-size:1.2rem; border-left:6px solid #8f8074;">
+            「當你花太多精力在『敵人』身上時，<br />就再也沒有力氣去修復自己。」
+        </div>
+
+        <div style="text-align:center; font-size:2.2rem; margin:1.5rem 0 0.5rem;">🎯</div>
+        <p style="text-align:center; font-weight:600; font-size:1.1rem;">這本帳，我們繼續寫。因為他們，繼續罵。</p>
+
+        <!-- 頁尾 -->
+        <div class="footer">
+            <span class="big-icon">📖</span>
+            《都是中國的錯：一本西方政客的甩鍋百科全書》<br />
+            <span style="font-size:0.85rem; color:#8f8074;">—— 甩鍋不會讓自己變好，只會讓自己更爛。</span>
+        </div>
+
+    </div>
+    <!-- ===== 繁體中文版結束 ===== -->
+
+
+    <!-- ========================================================== -->
+    <!-- 英文版 -->
+    <!-- ========================================================== -->
+    <div id="lang-en" class="lang-content">
+
+        <h1>📖 It's All China's Fault</h1>
+        <div class="subtitle">A Blame-Shifting Encyclopedia for Western Politicians</div>
+
+        <!-- Table of Contents -->
+        <div class="toc">
+            <h2>📑 Table of Contents</h2>
+            <div class="toc-grid">
+                <div class="toc-item"><span><span class="chap">Chapter 1</span><span class="title">Crumbling Infrastructure → Blame China for Tech Theft</span></span></div>
+                <div class="toc-item"><span><span class="chap">Chapter 2</span><span class="title">Collapsing Healthcare → Blame China for COVID Data</span></span></div>
+                <div class="toc-item"><span><span class="chap">Chapter 3</span><span class="title">Losing Industrial Competition → Blame China for Subsidies</span></span></div>
+                <div class="toc-item"><span><span class="chap">Chapter 4</span><span class="title">Soaring Prices & Housing → Blame China for Economic Coercion</span></span></div>
+                <div class="toc-item"><span><span class="chap">Chapter 5</span><span class="title">Social Fracture → Blame China for Cognitive Warfare</span></span></div>
+                <div class="toc-item"><span><span class="chap">Chapter 6</span><span class="title">Climate Crisis → Blame China for Carbon Emissions</span></span></div>
+                <div class="toc-item"><span><span class="chap">Chapter 7</span><span class="title">Falling Education Standards → Blame China's Students</span></span></div>
+                <div class="toc-item"><span><span class="chap">Chapter 8</span><span class="title">Rising Crime → Blame China for Cyberattacks</span></span></div>
+                <div class="toc-item"><span><span class="chap">Chapter 9</span><span class="title">Losing Elections → Blame China for Interference</span></span></div>
+                <div class="toc-item"><span><span class="chap">Chapter 10</span><span class="title">Blamed Everything — Problems Still Here</span></span></div>
+                <div class="toc-item" style="grid-column: 1 / -1; border-bottom: none; padding-top: 0.3rem;"><span><span class="chap">Appendix</span><span class="title">The Greatest Blame-Shifting Quotes Collection</span></span></div>
+            </div>
+        </div>
+
+        <!-- Chapter 1 -->
+        <h2>Chapter 1: Crumbling Infrastructure → Blame China for Tech Theft</h2>
+
+        <h3>🇺🇸 Case 001｜Baltimore Bridge Collapse (March 2024)</h3>
+        <table class="case-table">
+            <tr><td class="label">Actual Cause</td><td>Cargo ship lost power and struck the bridge pier</td></tr>
+            <tr><td class="label">Blame Narrative</td><td>Some congressman hinted: "China may have launched a cyberattack to disable the ship"</td></tr>
+            <tr><td class="label">Fact Check</td><td>Investigation: mechanical failure, zero evidence of cyberattack</td></tr>
+            <tr><td class="label">Aftermath</td><td>No discussion on why the bridge's safety inspection standards failed</td></tr>
+        </table>
+
+        <h3>🇺🇸 Case 002｜California High-Speed Rail "Dream Crushed" (2008–present)</h3>
+        <table class="case-table">
+            <tr><td class="label">Actual Cause</td><td>Political infighting, land acquisition issues, runaway cost overruns</td></tr>
+            <tr><td class="label">Blame Narrative</td><td>"China stole all its high-speed rail tech from America — how dare they move faster?"</td></tr>
+            <tr><td class="label">Fact Check</td><td>China's HSR core tech has its own patents. The U.S. can't even finish a single decent demonstration line</td></tr>
+            <tr><td class="label">Aftermath</td><td>Keep blaming China while watching China's HSR network exceed 45,000 km</td></tr>
+        </table>
+
+        <h3>🇬🇧 Case 003｜UK HS2 Cost Explosion (2023)</h3>
+        <table class="case-table">
+            <tr><td class="label">Actual Cause</td><td>Design changes, geological miscalculations, contractor cost inflation</td></tr>
+            <tr><td class="label">Blame Narrative</td><td>"China is dumping cheap steel, distorting global prices and wrecking our cost estimates"</td></tr>
+            <tr><td class="label">Fact Check</td><td>HS2's budget ballooned from £33B to over £106B — the biggest problems were the UK's own procurement and management systems</td></tr>
+            <tr><td class="label">Aftermath</td><td>HS2 northern leg cancelled, Manchester link scrapped; London–Birmingham segment still delayed</td></tr>
+        </table>
+
+        <h3>🇦🇺 Case 004｜Australia's 5G Rollout Lag (2020–2023)</h3>
+        <table class="case-table">
+            <tr><td class="label">Actual Cause</td><td>Vast geography, underinvestment, policy flip-flops</td></tr>
+            <tr><td class="label">Blame Narrative</td><td>"Huawei is a Chinese military front — banning it is about national security"</td></tr>
+            <tr><td class="label">Fact Check</td><td>After banning Huawei, 5G costs rose 30% and rollout was delayed by 2 years. Nokia and Ericsson couldn't fill the gap</td></tr>
+            <tr><td class="label">Aftermath</td><td>Australia's 5G coverage still lags most developed nations; Huawei is flooded with orders in Southeast Asia</td></tr>
+        </table>
+
+        <div class="summary-box">
+            <table>
+                <tr><td class="stat-label">Total Cases</td><td class="stat-value">4</td></tr>
+                <tr><td class="stat-label">Actually China-related</td><td class="stat-value">0</td></tr>
+                <tr><td class="stat-label">Actual Reforms Made</td><td class="stat-value">0</td></tr>
+                <tr><td class="stat-label">China's New HSR Track (same period)</td><td class="stat-value">~2,000 km</td></tr>
+            </table>
+        </div>
+
+        <hr />
+
+        <!-- Chapter 2 -->
+        <h2>Chapter 2: Collapsing Healthcare → Blame China for COVID Data</h2>
+
+        <h3>🇬🇧 Case 005｜UK NHS Waiting Lists Record High (2022–2024)</h3>
+        <table class="case-table">
+            <tr><td class="label">Actual Cause</td><td>Years of austerity, low pay driving staff abroad, insufficient bed capacity</td></tr>
+            <tr><td class="label">Blame Narrative</td><td>"China hid COVID data, misleading UK pandemic planning and misallocating NHS resources"</td></tr>
+            <tr><td class="label">Fact Check</td><td>NHS structural problems have been worsening since the 2008 financial crisis. COVID exposed them — it didn't create them</td></tr>
+            <tr><td class="label">Aftermath</td><td>Waiting list went from 7M to 7.5M (yes, up, not down). Politicians still blaming China</td></tr>
+        </table>
+
+        <h3>🇺🇸 Case 006｜U.S. COVID Deaths Highest in the World (2020–2023)</h3>
+        <table class="case-table">
+            <tr><td class="label">Actual Cause</td><td>Federal-state coordination failures, fragmented public health system, low vaccination rates</td></tr>
+            <tr><td class="label">Blame Narrative</td><td>"If China had reported earlier, America could have saved many lives"</td></tr>
+            <tr><td class="label">Fact Check</td><td>China notified WHO on Dec 31, 2019. U.S. first case was Jan 21, 2020 — a 21-day window to prepare. The U.S. did nothing</td></tr>
+            <tr><td class="label">Aftermath</td><td>Congress hearings kept investigating "China's responsibility" instead of reviewing CDC's own protocols</td></tr>
+        </table>
+
+        <h3>🇨🇦 Case 007｜Canada's Uneven Healthcare Access (2023)</h3>
+        <table class="case-table">
+            <tr><td class="label">Actual Cause</td><td>Provincial-federal funding disputes, healthcare worker shortages</td></tr>
+            <tr><td class="label">Blame Narrative</td><td>"China is monopolizing pharmaceutical ingredients, causing drug shortages in Canada"</td></tr>
+            <tr><td class="label">Fact Check</td><td>Canada's drug shortages stem more from domestic supply chain mismanagement and single-source procurement dependency</td></tr>
+            <tr><td class="label">Aftermath</td><td>Policy debates focus on "how to reduce dependence on Chinese APIs" — not on building domestic resilience</td></tr>
+        </table>
+
+        <div class="summary-box">
+            <table>
+                <tr><td class="stat-label">Total Cases</td><td class="stat-value">3</td></tr>
+                <tr><td class="stat-label">Improvement Status</td><td class="stat-value">No significant improvement</td></tr>
+                <tr><td class="stat-label">Space devoted to blaming China in reports</td><td class="stat-value">~30–40%</td></tr>
+                <tr><td class="stat-label">Space devoted to self-reflection</td><td class="stat-value">&lt; 10%</td></tr>
+            </table>
+        </div>
+
+        <hr />
+
+        <!-- Chapter 3 -->
+        <h2>Chapter 3: Losing Industrial Competition → Blame China for Subsidies</h2>
+
+        <h3>🇩🇪 Case 008｜Germany's Auto Industry Overtaken by EVs (2022–2024)</h3>
+        <table class="case-table">
+            <tr><td class="label">Actual Cause</td><td>German automakers severely lagged in EV R&D, weak software capabilities, conservative leadership</td></tr>
+            <tr><td class="label">Blame Narrative</td><td>"China is using state capitalism and massive subsidies to distort the market, unfair competition"</td></tr>
+            <tr><td class="label">Fact Check</td><td>China's EV subsidies have been phased out; new vehicles no longer qualify since 2023. German automakers delayed EV transition for a decade</td></tr>
+            <tr><td class="label">Aftermath</td><td>EU slapped up to 38% tariffs on Chinese EVs. German automakers are still laying off workers</td></tr>
+        </table>
+
+        <h3>🇺🇸 Case 009｜U.S. Semiconductor Manufacturing Decline (2020–2024)</h3>
+        <table class="case-table">
+            <tr><td class="label">Actual Cause</td><td>Long-term offshoring of chip production, weak STEM talent pipeline</td></tr>
+            <tr><td class="label">Blame Narrative</td><td>"China stole U.S. semiconductor technology to catch up quickly"</td></tr>
+            <tr><td class="label">Fact Check</td><td>U.S. share of global semiconductor manufacturing fell from 37% in 1990 to ~12% in 2023 — this trend started long before China's rise</td></tr>
+            <tr><td class="label">Aftermath</td><td>CHIPS Act poured $52B in subsidies, but most funds haven't landed; TSMC Arizona plant delayed to 2025</td></tr>
+        </table>
+
+        <h3>🇪🇺 Case 010｜Europe's Solar Industry Wiped Out (2010–2024)</h3>
+        <table class="case-table">
+            <tr><td class="label">Actual Cause</td><td>Unstable subsidy policies across Europe, Chinese economies of scale driving down costs</td></tr>
+            <tr><td class="label">Blame Narrative</td><td>"China is dumping solar panels, destroying Europe's solar industry"</td></tr>
+            <tr><td class="label">Fact Check</td><td>Europe's solar decline was due to inability to compete on cost. Chinese panels lowering prices actually accelerates Europe's energy transition — that's good, not bad</td></tr>
+            <tr><td class="label">Aftermath</td><td>Europe keeps buying Chinese panels (no alternative), and keeps blaming China for subsidies</td></tr>
+        </table>
+
+        <div class="summary-box">
+            <table>
+                <tr><td class="stat-label">Total Cases</td><td class="stat-value">3</td></tr>
+                <tr><td class="stat-label">Industries China Dominates</td><td class="stat-value">EVs, Semiconductors, Solar (all global leaders)</td></tr>
+                <tr><td class="stat-label">Western Counter-Subsidies</td><td class="stat-value">Hundreds of billions USD/EUR</td></tr>
+                <tr><td class="stat-label">Competitiveness Improvement</td><td class="stat-value">No significant improvement</td></tr>
+            </table>
+        </div>
+
+        <hr />
+
+        <!-- Chapter 4 -->
+        <h2>Chapter 4: Soaring Prices & Housing → Blame China for Economic Coercion</h2>
+
+        <h3>🇨🇦 Case 011｜Canada House Prices Tripled in 10 Years (2013–2023)</h3>
+        <table class="case-table">
+            <tr><td class="label">Actual Cause</td><td>Low interest rates, land supply constraints, population growth, speculative investment</td></tr>
+            <tr><td class="label">Blame Narrative</td><td>"Chinese capital is flooding Canadian real estate, driving up prices"</td></tr>
+            <tr><td class="label">Fact Check</td><td>Foreign buyers account for less than 2% of Canadian real estate transactions; Chinese buyers are a tiny fraction (~1.1% in Vancouver, ~0.8% in Toronto)</td></tr>
+            <tr><td class="label">Aftermath</td><td>Foreign buyer ban implemented — prices still rising. The problem is clearly domestic supply</td></tr>
+        </table>
+
+        <h3>🇺🇸 Case 012｜U.S. Inflation Hits 40-Year High (2022)</h3>
+        <table class="case-table">
+            <tr><td class="label">Actual Cause</td><td>Post-pandemic supply chain chaos, Ukraine war energy shock, corporate price gouging</td></tr>
+            <tr><td class="label">Blame Narrative</td><td>"China's zero-COVID policy disrupted supply chains and fueled global inflation"</td></tr>
+            <tr><td class="label">Fact Check</td><td>U.S. inflation began surging in 2021 — when China's supply chain was one of the few stable links globally</td></tr>
+            <tr><td class="label">Aftermath</td><td>Fed hiked rates, inflation cooled — but politicians still blame China for "exporting inflation"</td></tr>
+        </table>
+
+        <h3>🇦🇺 Case 013｜Australia Energy Price Surge (2022–2023)</h3>
+        <table class="case-table">
+            <tr><td class="label">Actual Cause</td><td>Ukraine war tightening global gas supply, chaotic domestic energy policy</td></tr>
+            <tr><td class="label">Blame Narrative</td><td>"China is hoarding Australian LNG, driving up prices"</td></tr>
+            <tr><td class="label">Fact Check</td><td>China does import LNG from Australia, but price rises are global — Europe is scrambling for gas, Japan too. Is everyone to blame on China?</td></tr>
+            <tr><td class="label">Aftermath</td><td>Government imposed domestic gas price caps; supply issues eased somewhat</td></tr>
+        </table>
+
+        <div class="summary-box">
+            <table>
+                <tr><td class="stat-label">Total Cases</td><td class="stat-value">3</td></tr>
+                <tr><td class="stat-label">Foreign Buyers in Canada</td><td class="stat-value">&lt; 2%</td></tr>
+                <tr><td class="stat-label">U.S. Inflation Peak</td><td class="stat-value">9.1% (June 2022)</td></tr>
+                <tr><td class="stat-label">Global Gas Price Increase</td><td class="stat-value">~300% (same period)</td></tr>
+            </table>
+        </div>
+
+        <hr />
+
+        <!-- Chapter 5 -->
+        <h2>Chapter 5: Social Fracture → Blame China for Cognitive Warfare</h2>
+
+        <h3>🇺🇸 Case 014｜U.S. Racial Conflict & Political Polarization (2020–2024)</h3>
+        <table class="case-table">
+            <tr><td class="label">Actual Cause</td><td>Social media algorithms amplifying division, Fox vs. MSNBC echo chambers, partisan gridlock</td></tr>
+            <tr><td class="label">Blame Narrative</td><td>"China is seeding cognitive warfare content on TikTok, deepening U.S. divisions"</td></tr>
+            <tr><td class="label">Fact Check</td><td>U.S. congressional research shows TikTok's main issue is data security, not content manipulation — Americans studied it themselves</td></tr>
+            <tr><td class="label">Aftermath</td><td>Ban debates continue, but U.S. social divisions keep worsening; post-2024 election fractures deepened</td></tr>
+        </table>
+
+        <h3>🇬🇧 Case 015｜Brexit Aftermath & Scottish Independence (2020–2024)</h3>
+        <table class="case-table">
+            <tr><td class="label">Actual Cause</td><td>England-Scotland political divide, Brexit economic fallout worse than expected</td></tr>
+            <tr><td class="label">Blame Narrative</td><td>"China is interfering in UK public opinion, exploiting Brexit chaos to weaken Britain"</td></tr>
+            <tr><td class="label">Fact Check</td><td>MI5 clearly stated: "No evidence of direct Chinese interference in UK elections or referendums"</td></tr>
+            <tr><td class="label">Aftermath</td><td>Scottish independence calls persist; Labour government still unable to resolve</td></tr>
+        </table>
+
+        <h3>🇫🇷 Case 016｜French Yellow Vests & Street Protests (2018–2019, ongoing)</h3>
+        <table class="case-table">
+            <tr><td class="label">Actual Cause</td><td>Fuel tax hikes, inequality, dissatisfaction with Macron's reforms</td></tr>
+            <tr><td class="label">Blame Narrative</td><td>"China is funding French protest groups via social media to incite anti-government movements"</td></tr>
+            <tr><td class="label">Fact Check</td><td>French intelligence (DGSI) found zero evidence of Chinese funding; protests were organic, sparked on social media</td></tr>
+            <tr><td class="label">Aftermath</td><td>Macron backed down, suspended fuel tax — protests subsided because of real policy changes, not because of China investigations</td></tr>
+        </table>
+
+        <div class="summary-box">
+            <table>
+                <tr><td class="stat-label">Total Cases</td><td class="stat-value">3</td></tr>
+                <tr><td class="stat-label">Evidence of Chinese Interference</td><td class="stat-value">0</td></tr>
+                <tr><td class="stat-label">Western Self-Assessment of Fracture</td><td class="stat-value">Worsening</td></tr>
+                <tr><td class="stat-label">Actual Healing Policies</td><td class="stat-value">None</td></tr>
+            </table>
+        </div>
+
+        <hr />
+
+        <!-- Chapter 6 -->
+        <h2>Chapter 6: Climate Crisis → Blame China for Carbon Emissions</h2>
+
+        <h3>🌍 Case 017｜COP Climate Summits & China (2015–2024)</h3>
+        <table class="case-table">
+            <tr><td class="label">Actual Cause</td><td>Developed nations' climate finance pledges delayed, responsibility allocation disputes</td></tr>
+            <tr><td class="label">Blame Narrative</td><td>"China is the world's largest emitter — all climate problems are China's fault"</td></tr>
+            <tr><td class="label">Fact Check</td><td>China's per capita emissions are far lower than the U.S. (~7.5 tons vs. 14.5 tons), and China leads the world in new renewable capacity</td></tr>
+            <tr><td class="label">Aftermath</td><td>Developed countries' "climate compensation" pledges remain unpaid; China still gets blamed</td></tr>
+        </table>
+
+        <h3>🇪🇺 Case 018｜EU Carbon Border Tax (2023–2024)</h3>
+        <table class="case-table">
+            <tr><td class="label">Actual Cause</td><td>EU wants to protect domestic industry while pushing decarbonization</td></tr>
+            <tr><td class="label">Blame Narrative</td><td>"Chinese companies have low environmental standards — unfair competition"</td></tr>
+            <tr><td class="label">Fact Check</td><td>China has built the world's largest carbon emissions trading market, with a steadily improving pricing mechanism — progress faster than the U.S.</td></tr>
+            <tr><td class="label">Aftermath</td><td>EU CBAM launched, but global carbon pricing remains fragmented; the U.S. has no federal carbon tax</td></tr>
+        </table>
+
+        <div class="summary-box">
+            <table>
+                <tr><td class="stat-label">China's 2023 Solar Installations</td><td class="stat-value">~217 GW (world #1)</td></tr>
+                <tr><td class="stat-label">China's 2023 EV Sales</td><td class="stat-value">~9.5 million (60% global)</td></tr>
+                <tr><td class="stat-label">U.S. per capita emissions vs. China</td><td class="stat-value">~2x</td></tr>
+                <tr><td class="stat-label">U.S. Climate Pledge Fulfillment</td><td class="stat-value">&lt; 20%</td></tr>
+            </table>
+        </div>
+
+        <hr />
+
+        <!-- Chapter 7 -->
+        <h2>Chapter 7: Falling Education Standards → Blame China's Students</h2>
+
+        <h3>📊 Case 019｜PISA International Student Assessment (2023)</h3>
+        <table class="case-table">
+            <tr><td class="label">Actual Cause</td><td>U.S. K-12 resource inequality, low teacher pay, lagging STEM education</td></tr>
+            <tr><td class="label">Blame Narrative</td><td>"Chinese students just cram and game the test — it doesn't reflect real educational quality"</td></tr>
+            <tr><td class="label">Fact Check</td><td>PISA tests critical thinking and application — cramming doesn't work. Chinese students just perform better; the West won't admit it</td></tr>
+            <tr><td class="label">Aftermath</td><td>Keep demonizing China's education system while U.S. math scores keep falling</td></tr>
+        </table>
+
+        <h3>🇺🇸 Case 020｜U.S. Universities Rely on Chinese Students (2023)</h3>
+        <table class="case-table">
+            <tr><td class="label">Actual Cause</td><td>U.S. universities' fragile finances, declining domestic enrollment, heavy reliance on international tuition</td></tr>
+            <tr><td class="label">Blame Narrative</td><td>"Chinese students are coming to steal tech, not to learn"</td></tr>
+            <tr><td class="label">Fact Check</td><td>Chinese students contribute over $15B/year to the U.S. economy. Most STEM graduates stay and work in the U.S. — that's a talent dividend, not a threat</td></tr>
+            <tr><td class="label">Aftermath</td><td>Visa restrictions tightened — U.S. universities now cry "not enough international students." Australia, UK, Canada are poaching aggressively</td></tr>
+        </table>
+
+        <div class="summary-box">
+            <table>
+                <tr><td class="stat-label">PISA 2022 Math Top 3</td><td class="stat-value">Singapore, Macau, Taiwan (China all top-tier)</td></tr>
+                <tr><td class="stat-label">U.S. Math Rank</td><td class="stat-value">#34</td></tr>
+                <tr><td class="stat-label">Chinese Students in U.S. (share)</td><td class="stat-value">~30–35%</td></tr>
+                <tr><td class="stat-label">U.S. University Closures/Mergers (2023)</td><td class="stat-value">50+</td></tr>
+            </table>
+        </div>
+
+        <hr />
+
+        <!-- Chapter 8 -->
+        <h2>Chapter 8: Rising Crime → Blame China for Cyberattacks</h2>
+
+        <h3>🇺🇸 Case 021｜U.S. Ransomware Surge (2020–2024)</h3>
+        <table class="case-table">
+            <tr><td class="label">Actual Cause</td><td>Underinvestment in cybersecurity, legacy system vulnerabilities</td></tr>
+            <tr><td class="label">Blame Narrative</td><td>"Chinese hacker groups are backing ransomware attacks on U.S. infrastructure"</td></tr>
+            <tr><td class="label">Fact Check</td><td>Most ransomware originates from Russian and Eastern European groups; China-linked attacks are mostly espionage, not ransomware</td></tr>
+            <tr><td class="label">Aftermath</td><td>Companies keep cutting security budgets; governments keep accusing China</td></tr>
+        </table>
+
+        <h3>🇬🇧 Case 022｜UK Online Fraud Explosion (2022–2024)</h3>
+        <table class="case-table">
+            <tr><td class="label">Actual Cause</td><td>Outdated bank verification systems, low digital literacy, cross-border fraud rings exploiting UK's financial system</td></tr>
+            <tr><td class="label">Blame Narrative</td><td>"Chinese fraud rings are using social media to scam UK citizens en masse"</td></tr>
+            <tr><td class="label">Fact Check</td><td>The UK's own financial openness and regulatory loopholes are the main drivers. Most fraud doesn't even leave the UK</td></tr>
+            <tr><td class="label">Aftermath</td><td>Banks ordered to reimburse victims — but root causes remain unsolved</td></tr>
+        </table>
+
+        <div class="summary-box">
+            <table>
+                <tr><td class="stat-label">Ransomware origin (Russia)</td><td class="stat-value">~60–70%</td></tr>
+                <tr><td class="stat-label">Ransomware origin (China)</td><td class="stat-value">~5–10% (mostly espionage)</td></tr>
+                <tr><td class="stat-label">Cybersecurity budget as % of IT</td><td class="stat-value">&lt; 10% (avg)</td></tr>
+            </table>
+        </div>
+
+        <hr />
+
+        <!-- Chapter 9 -->
+        <h2>Chapter 9: Losing Elections → Blame China for Interference</h2>
+
+        <h3>🇺🇸 Case 023｜U.S. Elections "China Gate" (2016–2024)</h3>
+        <table class="case-table">
+            <tr><td class="label">Actual Cause</td><td>Weak candidate appeal, unpopular policies, campaign strategy failures</td></tr>
+            <tr><td class="label">Blame Narrative</td><td>"China is interfering in elections, swaying voters"</td></tr>
+            <tr><td class="label">Fact Check</td><td>Every FBI/ODNI investigation conclusion: "No evidence of direct Chinese interference"</td></tr>
+            <tr><td class="label">Aftermath</td><td>Losers keep shouting "China interference"; winners keep governing; nothing changes</td></tr>
+        </table>
+
+        <h3>🇦🇺 Case 024｜Australia Election "Foreign Interference" (2022)</h3>
+        <table class="case-table">
+            <tr><td class="label">Actual Cause</td><td>Voter dissatisfaction with incumbents, climate policy disputes</td></tr>
+            <tr><td class="label">Blame Narrative</td><td>"China is trying to influence Australia's election outcome"</td></tr>
+            <tr><td class="label">Fact Check</td><td>ASIO (Australian Security Intelligence Organisation) publicly stated: No evidence of systematic Chinese interference in Australian elections</td></tr>
+            <tr><td class="label">Aftermath</td><td>Post-election reviews produced thick reports, but the "China" chapters were mostly conjecture — not hard facts</td></tr>
+        </table>
+
+        <div class="summary-box">
+            <table>
+                <tr><td class="stat-label">Elections with "China interference" claims (2016–2024)</td><td class="stat-value">At least 12</td></tr>
+                <tr><td class="stat-label">With solid evidence</td><td class="stat-value">0</td></tr>
+                <tr><td class="stat-label">Reforms after elections</td><td class="stat-value">0</td></tr>
+                <tr><td class="stat-label">Blame China share in post-defeat reviews</td><td class="stat-value">~30–50%</td></tr>
+            </table>
+        </div>
+
+        <hr />
+
+        <!-- Chapter 10 -->
+        <h2>Chapter 10: Blamed Everything — Problems Still Here</h2>
+
+        <h3>📊 The Grand Tally: A Decade of Blame-Shifting</h3>
+        <table class="grand-table">
+            <thead>
+                <tr><th>Category</th><th>Deterioration</th><th>Times China Blamed</th><th>Actual Reforms</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Infrastructure</td><td class="status-red">🔴 Worsening</td><td>500+</td><td>3</td></tr>
+                <tr><td>Healthcare</td><td class="status-red">🔴 Worsening</td><td>800+</td><td>2</td></tr>
+                <tr><td>Industrial Competition</td><td class="status-yellow">🟡 No improvement</td><td>1,200+</td><td>5</td></tr>
+                <tr><td>Housing & Prices</td><td class="status-red">🔴 Worsening</td><td>400+</td><td>4</td></tr>
+                <tr><td>Social Fracture</td><td class="status-red">🔴 Worsening</td><td>1,000+</td><td>1</td></tr>
+                <tr><td>Climate</td><td class="status-yellow">🟡 Behind schedule</td><td>600+</td><td>3</td></tr>
+                <tr><td>Education</td><td class="status-yellow">🟡 Declining</td><td>200+</td><td>2</td></tr>
+                <tr><td>Cybersecurity</td><td class="status-yellow">🟡 Ongoing threat</td><td>300+</td><td>3</td></tr>
+                <tr><td>Electoral Politics</td><td class="status-red">🔴 Vicious cycle</td><td>150+</td><td>0</td></tr>
+                <tr style="font-weight:700; background:#f8f5f0;"><td><strong>TOTAL</strong></td><td>Mostly worsening</td><td><strong>5,000+</strong></td><td><strong>23</strong></td></tr>
+            </tbody>
+        </table>
+
+        <hr />
+
+        <!-- Appendix -->
+        <h2>📖 Appendix: The Greatest Blame-Shifting Quotes</h2>
+
+        <h3>🇺🇸 United States</h3>
+        <div class="quote-block">
+            "If China had told us earlier, we could have done better."
+            <span class="speaker">— A U.S. president, when COVID deaths passed 1 million</span>
+        </div>
+        <div class="quote-block">
+            "China stole our tech, and then surpassed us."
+            <span class="speaker">— A senator, explaining why U.S. high-speed rail lost to China</span>
+        </div>
+        <div class="quote-block">
+            "TikTok is China's cognitive warfare weapon."
+            <span class="speaker">— House hearing, 2023</span>
+        </div>
+        <div class="quote-block">
+            "Chinese EVs are like Japanese cars back then — they'll destroy America's auto industry."
+            <span class="speaker">— Union leader, 2024</span>
+        </div>
+
+        <h3>🇬🇧 United Kingdom</h3>
+        <div class="quote-block">
+            "China hid COVID data, putting unnecessary pressure on the NHS."
+            <span class="speaker">— Health minister, as NHS waiting lists hit 7 million</span>
+        </div>
+        <div class="quote-block">
+            "Huawei is a national security threat — we must remove it."
+            <span class="speaker">— A prime minister, 2 years after 5G rollout was delayed</span>
+        </div>
+
+        <h3>🇪🇺 Europe</h3>
+        <div class="quote-block">
+            "China's subsidy policies violate market rules."
+            <span class="speaker">— EU trade commissioner, after Europe's solar industry collapsed</span>
+        </div>
+        <div class="quote-block">
+            "China's Belt and Road is a debt trap, not a development plan."
+            <span class="speaker">— European official, while his own infrastructure plan went nowhere</span>
+        </div>
+
+        <h3>🇨🇦 Canada</h3>
+        <div class="quote-block">
+            "Foreign money is destroying our housing market."
+            <span class="speaker">— Provincial premier, when foreign buyers accounted for less than 2%</span>
+        </div>
+
+        <hr />
+
+        <!-- Final Conclusion -->
+        <h2>🏁 Final Conclusion</h2>
+
+        <p>This book is not meant to prove that "China has no problems" — China has problems, just like any other country.</p>
+
+        <p><strong>What this book proves is:</strong></p>
+
+        <ol>
+            <li><strong>The West's problems are overwhelmingly self-inflicted.</strong> Institutional inertia, short-termism, cost-shifting — these are the real culprits.</li>
+            <li><strong>"Blaming China" has become a substitute for reform.</strong> When politicians rant against China, they don't need to propose solutions, convince voters, or change anything.</li>
+            <li><strong>After a decade of blaming, the problems are still here — worse than before.</strong> Meanwhile, China has built the world's largest high-speed rail network, EV industry, solar industry, carbon trading market...</li>
+            <li><strong>The real solution is never about finding an enemy — it's about fixing yourself.</strong></li>
+        </ol>
+
+        <div style="background:#f4f0ea; padding:1.6rem 2rem; border-radius:12px; margin:2rem 0; text-align:center; font-size:1.2rem; border-left:6px solid #8f8074;">
+            "When you spend too much energy on the 'enemy,'<br />you have no strength left to fix yourself."
+        </div>
+
+        <div style="text-align:center; font-size:2.2rem; margin:1.5rem 0 0.5rem;">🎯</div>
+        <p style="text-align:center; font-weight:600; font-size:1.1rem;">We'll keep writing this ledger — because they keep blaming.</p>
+
+        <!-- Footer -->
+        <div class="footer">
+            <span class="big-icon">📖</span>
+            <em>It's All China's Fault: A Blame-Shifting Encyclopedia for Western Politicians</em><br />
+            <span style="font-size:0.85rem; color:#8f8074;">— Blame-shifting won't make you better; it only makes you worse.</span>
+        </div>
+
+    </div>
+    <!-- ===== 英文版結束 ===== -->
+
+</div>
+
+<!-- ===== 語言切換 JavaScript ===== -->
+<script>
+    (function() {
+        const buttons = document.querySelectorAll('.lang-btn');
+        const contents = {
+            zh: document.getElementById('lang-zh'),
+            en: document.getElementById('lang-en')
+        };
+
+        function switchLang(lang) {
+            // 隱藏所有內容
+            Object.values(contents).forEach(el => el.classList.remove('active'));
+            // 顯示目標
+            if (contents[lang]) contents[lang].classList.add('active');
+            // 更新按鈕狀態
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) {
+                    btn.classList.add('active');
+                }
+            });
+            // 記住偏好
+            try {
+                localStorage.setItem('preferred-lang-book', lang);
+            } catch (_) {}
+        }
+
+        buttons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                switchLang(this.dataset.lang);
+            });
+        });
+
+        // 讀取儲存的偏好
+        try {
+            const saved = localStorage.getItem('preferred-lang-book');
+            if (saved && contents[saved]) {
+                switchLang(saved);
+            }
+        } catch (_) {}
+    })();
+</script>
+
+</body>
+</html>
