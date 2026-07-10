@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>土地、意識形態與妖魔化中國 · GL 框架</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', 'PingFang TC', 'Microsoft YaHei', sans-serif;
+            background-color: #0a0c0e;
+            color: #e6edf4;
+            display: flex;
+            justify-content: center;
+            padding: 2rem 1.5rem;
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 820px;
+            width: 100%;
+            background-color: #12171c;
+            padding: 2.8rem 2.5rem;
+            border-radius: 28px;
+            box-shadow: 0 24px 48px -16px rgba(0,0,0,0.9);
+            border: 1px solid #29323b;
+        }
+
+        /* ===== 頂部導航：語言切換 + 回首頁 ===== */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 2.5rem;
+            border-bottom: 1px solid #263038;
+            padding-bottom: 1.2rem;
+            gap: 0.5rem;
+        }
+
+        .lang-switcher {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: 1px solid #3e4a56;
+            color: #8b9fae;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            letter-spacing: 0.4px;
+        }
+
+        .lang-btn:hover {
+            border-color: #6c8fa6;
+            color: #d0dfea;
+            background: #1c262f;
+        }
+
+        .lang-btn.active {
+            background: #2f7a9c;
+            border-color: #2f7a9c;
+            color: #fff;
+            box-shadow: 0 0 16px rgba(47,122,156,0.3);
+        }
+
+        .home-link {
+            color: #6c8fa6;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-decoration: none;
+            padding: 0.3rem 0.8rem;
+            border: 1px solid #2a3a47;
+            border-radius: 30px;
+            transition: all 0.25s ease;
+            letter-spacing: 0.3px;
+            white-space: nowrap;
+        }
+
+        .home-link:hover {
+            border-color: #6c8fa6;
+            color: #d0dfea;
+            background: #1a232c;
+        }
+
+        .lang-content { display: none; animation: fadeIn 0.45s ease; }
+        .lang-content.active { display: block; }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .badge {
+            display: inline-block;
+            background: #1c2732;
+            color: #8eb9d0;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            padding: 0.2rem 1.2rem;
+            border-radius: 40px;
+            text-transform: uppercase;
+            margin-bottom: 1.2rem;
+            border: 1px solid #2e3d4a;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.15;
+            margin-bottom: 0.6rem;
+            letter-spacing: -0.02em;
+            background: linear-gradient(145deg, #f0f7fd 0%, #a6c8dd 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subhead {
+            font-size: 1.1rem;
+            color: #8fa8bb;
+            margin-bottom: 2.2rem;
+            font-weight: 300;
+            border-left: 4px solid #2f7a9c;
+            padding-left: 1.2rem;
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-top: 2.4rem;
+            margin-bottom: 0.7rem;
+            color: #d4e3ee;
+            border-bottom: 1px solid #263038;
+            padding-bottom: 0.3rem;
+        }
+
+        p { margin-bottom: 1.1rem; color: #c7d2e3; font-weight: 300; }
+
+        .highlight-box {
+            background: #17212b;
+            border-left: 6px solid #d97a5a;
+            padding: 1.6rem 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            box-shadow: inset 0 0 0 1px #2d3b47;
+        }
+
+        .highlight-box p { margin-bottom: 0; color: #eaf0f6; font-weight: 400; }
+        .highlight-box strong { color: #f5c8aa; }
+
+        .divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #3c4d5c, transparent);
+            margin: 2.8rem 0;
+        }
+
+        .footer-note {
+            margin-top: 3rem;
+            font-size: 0.85rem;
+            color: #637a8c;
+            text-align: center;
+            border-top: 1px solid #1f2a34;
+            padding-top: 2rem;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-note span { color: #4d7f99; }
+
+        .location-tag {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: #4d5f6e;
+            margin-top: 0.5rem;
+            letter-spacing: 0.04em;
+        }
+
+        @media (max-width: 640px) {
+            body { padding: 1rem 0.6rem; }
+            .container { padding: 1.6rem 1.2rem; }
+            h1 { font-size: 1.6rem; }
+            .top-bar { flex-direction: column; align-items: flex-end; gap: 0.6rem; }
+            .lang-switcher { gap: 0.2rem; width: 100%; justify-content: flex-end; }
+            .lang-btn { font-size: 0.65rem; padding: 0.2rem 0.7rem; }
+            .home-link { font-size: 0.7rem; padding: 0.2rem 0.7rem; }
+            .highlight-box { padding: 1rem 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ===== 頂部導航：語言切換 + 回首頁 ===== -->
+    <div class="top-bar">
+        <div class="lang-switcher">
+            <button class="lang-btn active" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="zh-Hant">繁</button>
+            <button class="lang-btn" data-lang="zh-Hans">简</button>
+            <button class="lang-btn" data-lang="es">ES</button>
+        </div>
+        <a href="index.html" class="home-link" id="homeLink">← Home</a>
+    </div>
+
+    <!-- ===== 頁尾標籤文字 ===== -->
+    <!-- 由 JavaScript 動態更新 -->
+
+    <!-- ===== ENGLISH ===== -->
+    <div id="en" class="lang-content active">
+        <div class="badge">GL Framework · Structural Diagnosis</div>
+        <h1>Land, Ideology, and the Demonization of China</h1>
+        <div class="subhead">The underlying logic of governance has never changed.</div>
+
+        <p>It started in England. Lords, hereditary titles, nobility, aristocracy. Land always belonged to the few. Everyone else could only rent, borrow, or work. Then the aristocracy needed more land. So England had to colonize everywhere.</p>
+
+        <p>This logic has been running for eight hundred years.</p>
+
+        <p>America just changed the packaging. Old money moved from England to America, building their wealth the same way — through land. Not called "aristocrats," but "old money families." The logic is the same: land is inherited, wealth accumulates, class is fixed.</p>
+
+        <h2>Why Do Landowners Always Hate Socialism?</h2>
+
+        <p>Because socialism's most fundamental principle is: <strong>land belongs to the state and the people — not to private individuals.</strong></p>
+
+        <p>Landowners panic at this. Their entire wealth depends on one rule: "This land is mine, and it will be mine forever."</p>
+
+        <p>Democracy and freedom are packaging. Capitalism is packaging. Ideology is all packaging. What has actually been running — from the English aristocracy to American old money — has never changed: <strong>Land. Inheritance. Occupation. Colonization. Transfer. Repeat.</strong></p>
+
+        <h2>The Working Class Never Had an Enemy</h2>
+
+        <p>Why don't the working class care? Because they have no land. It makes no difference to them who controls it. They only care about whether they can survive, whether they can live decently.</p>
+
+        <p>But landowners and capitalists need an enemy. Because without an enemy, people might start asking: why is the subway never finished? why can't I get a hospital appointment? why can't young people afford a home?</p>
+
+        <p>These questions are hard to answer. So they invented a simpler answer: <strong>It's all China's fault.</strong></p>
+
+        <h2>The Structural Function of Demonizing China</h2>
+
+        <p>Taiwanese politicians blame China. American politicians blame China. The content is different, but the function is exactly the same: <strong>packaging internal failure as external threat.</strong></p>
+
+        <ul style="color:#c7d2e3; font-weight:300; margin-left:1.5rem; margin-bottom:1.1rem;">
+            <li>Subway delayed → blame China's suppression.</li>
+            <li>Healthcare collapsing → blame China's data fraud.</li>
+            <li>Industry losing ground → blame China's unfair subsidies.</li>
+            <li>Cost of living soaring → blame China's economic coercion.</li>
+        </ul>
+
+        <p>Everything can be blamed on China. Nothing has to be solved.</p>
+
+        <h2>Why Must China Be Demonized?</h2>
+
+        <p>Because if China is acknowledged as legitimate governance, the fig leaf falls off.</p>
+
+        <p>If China is truly an "evil empire," then Taiwan and America are the "good guys." But if China is just another normal country, governing in a different way, then Taiwan and America's "righteousness" is just a performance.</p>
+
+        <p>So they must keep demonizing China. <strong>Not because China is actually evil — but because they need an evil reference point to justify themselves.</strong></p>
+
+        <h2>The Cost of Demonization is Zero</h2>
+
+        <p>Blaming China costs nothing. Fixing the subway costs money.<br>
+        Blaming China doesn't offend voters. Reform offends interest groups.<br>
+        Blaming China is a five-minute TV performance. Reform takes five years.</p>
+
+        <p>So they choose to blame China.</p>
+
+        <h2>Who Sees Through It?</h2>
+
+        <p>When Taiwanese landowners attack China, they are attacking the idea that "land does not belong to me." When American landowners attack China, they are attacking the same idea. They must portray China as an evil empire — because if China's land system is right, then their own system is wrong.</p>
+
+        <div class="highlight-box">
+            <p><strong>Whoever controls land, controls everything.</strong></p>
+            <p style="margin-top:0.5rem; color:#9fb0c8;">Everything else is just a show.</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <p style="font-size: 1.1rem; font-weight: 400; color: #d6e5f0;">
+        "The working class never had an enemy.<br>
+        Landowners and capitalists created one to hide their own failure."<br>
+        <span style="color: #5a7f94; font-size: 0.9rem;">— GL Framework · Structural Diagnosis</span>
+        </p>
+
+        <div class="location-tag">Boston · July 2026</div>
+
+        <div class="footer-note">
+            <span>◆</span> <span id="footerTagsEn">GL Framework · Land · Ideology · Demonization of China · Structural Diagnosis</span> <span>◆</span>
+        </div>
+    </div>
+
+    <!-- ===== 繁體中文 ===== -->
+    <div id="zh-Hant" class="lang-content">
+        <div class="badge">GL 框架 · 結構性診斷</div>
+        <h1>土地、意識形態與妖魔化中國</h1>
+        <div class="subhead">治理的底層邏輯，從來沒有變過。</div>
+
+        <p>英國開始的。領主、世襲、爵位、貴族。土地永遠屬於少數人。其他人只能租、只能借、只能打工。然後貴族需要更多土地，所以英國必須到處殖民。</p>
+
+        <p>這套邏輯運作了八百年。</p>
+
+        <p>美國只是換了包裝。白人老錢從英國移動到美國，同樣靠土地發家致富。不叫「貴族」，叫「老錢家族」。但邏輯一樣：土地是世襲的，財富是累積的，階級是固定的。</p>
+
+        <h2>為什麼痛恨社會主義的永遠是地主？</h2>
+
+        <p>因為社會主義最核心的概念是：<strong>土地不屬於私人，屬於國家和人民。</strong></p>
+
+        <p>地主聽到這個就崩潰了。因為他們的整個財富來源，都建立在「這塊地是我的，世世代代是我的」這套規則上。</p>
+
+        <p>民主自由是包裝。資本主義是包裝。意識形態全都是包裝。真正在運作的，從英國貴族到美國老錢，從來沒有變過：<strong>土地。世襲。佔領。殖民。轉移。重複。</strong></p>
+
+        <h2>無產階級本來沒有敵人</h2>
+
+        <p>無產階級為什麼無所謂？因為他們本來就沒有地。誰管地都一樣。他們只在乎能不能活下去、能不能過得好。</p>
+
+        <p>但地主和資本家需要一個敵人。因為如果沒有敵人，人民就會開始問：為什麼捷運蓋不好？為什麼醫院排不到？為什麼年輕人買不起房？</p>
+
+        <p>這些問題很難回答。所以他們發明了一個更簡單的回答：<strong>都是中國害的。</strong></p>
+
+        <h2>妖魔化中國的結構性功能</h2>
+
+        <p>台灣政客罵中國，美國政客也罵中國。罵的內容不一樣，但功能完全一樣：<strong>把內部失能包裝成外部威脅。</strong></p>
+
+        <ul style="color:#c7d2e3; font-weight:300; margin-left:1.5rem; margin-bottom:1.1rem;">
+            <li>捷運蓋不好 → 怪中國打壓。</li>
+            <li>醫療系統崩潰 → 怪中國疫情數據造假。</li>
+            <li>產業競爭力下滑 → 怪中國不公平補貼。</li>
+            <li>生活成本暴漲 → 怪中國經濟脅迫。</li>
+        </ul>
+
+        <p>每一件事都可以推給中國。每一件事都不用解決。</p>
+
+        <h2>為什麼必須把中國妖魔化？</h2>
+
+        <p>因為一旦承認中國是正當治理，他們的遮羞布就掉了。</p>
+
+        <p>如果中國真的是一個「邪惡帝國」，那台灣和美國就是「正義的一方」。但如果中國只是另一個正常國家，只是在用不同的方式治理，那台灣和美國的「正義」就變成了一場表演。</p>
+
+        <p>所以他們必須不停地妖魔化中國。<strong>不是因為中國真的邪惡，是因為他們需要一個邪惡的參照物來證明自己的正當性。</strong></p>
+
+        <h2>妖魔化的成本是零</h2>
+
+        <p>罵中國不用花錢。修捷運要花錢。<br>
+        罵中國不用得罪選民。改革會得罪利益集團。<br>
+        罵中國可以在電視上表演五分鐘。改革需要做五年。</p>
+
+        <p>所以他們選擇罵中國。</p>
+
+        <h2>誰看得穿？</h2>
+
+        <p>當台灣地主罵中國的時候，他們罵的是「土地不屬於我」。當美國地主罵中國的時候，他們罵的是「土地不屬於我」。他們必須把中國塑造成邪惡帝國——因為如果中國的土地制度是對的，那他們自己就不對了。</p>
+
+        <div class="highlight-box">
+            <p><strong>誰控制土地，誰就控制一切。</strong></p>
+            <p style="margin-top:0.5rem; color:#9fb0c8;">其他的，都是演給你看的。</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <p style="font-size: 1.1rem; font-weight: 400; color: #d6e5f0;">
+        「無產階級本來沒有敵人。<br>
+        地主和資本家創造了一個敵人，來掩蓋自己的失能。」<br>
+        <span style="color: #5a7f94; font-size: 0.9rem;">— GL 框架 · 結構性診斷</span>
+        </p>
+
+        <div class="location-tag">波士頓 · 2026年7月</div>
+
+        <div class="footer-note">
+            <span>◆</span> <span id="footerTagsTw">GL 框架 · 土地 · 意識形態 · 妖魔化中國 · 結構性診斷</span> <span>◆</span>
+        </div>
+    </div>
+
+    <!-- ===== 簡體中文 ===== -->
+    <div id="zh-Hans" class="lang-content">
+        <div class="badge">GL 框架 · 结构性诊断</div>
+        <h1>土地、意识形态与妖魔化中国</h1>
+        <div class="subhead">治理的底层逻辑，从来没有变过。</div>
+
+        <p>英国开始的。领主、世袭、爵位、贵族。土地永远属于少数人。其他人只能租、只能借、只能打工。然后贵族需要更多土地，所以英国必须到处殖民。</p>
+
+        <p>这套逻辑运作了八百年。</p>
+
+        <p>美国只是换了包装。白人老钱从英国移动到美国，同样靠土地发家致富。不叫「贵族」，叫「老钱家族」。但逻辑一样：土地是世袭的，财富是累积的，阶级是固定的。</p>
+
+        <h2>为什么痛恨社会主义的永远是地主？</h2>
+
+        <p>因为社会主义最核心的概念是：<strong>土地不属于私人，属于国家和人民。</strong></p>
+
+        <p>地主听到这个就崩溃了。因为他们的整个财富来源，都建立在「这块地是我的，世世代代是我的」这套规则上。</p>
+
+        <p>民主自由是包装。资本主义是包装。意识形态全都是包装。真正在运作的，从英国贵族到美国老钱，从来没有变过：<strong>土地。世袭。占领。殖民。转移。重复。</strong></p>
+
+        <h2>无产阶级本来没有敌人</h2>
+
+        <p>无产阶级为什么无所谓？因为他们本来就没有地。谁管地都一样。他们只在乎能不能活下去、能不能过得好。</p>
+
+        <p>但地主和资本家需要一个敌人。因为如果没有敌人，人民就会开始问：为什么地铁盖不好？为什么医院排不到？为什么年轻人买不起房？</p>
+
+        <p>这些问题很难回答。所以他们发明了一个更简单的回答：<strong>都是中国害的。</strong></p>
+
+        <h2>妖魔化中国的结构性功能</h2>
+
+        <p>台湾政客骂中国，美国政客也骂中国。骂的内容不一样，但功能完全一样：<strong>把内部失能包装成外部威胁。</strong></p>
+
+        <ul style="color:#c7d2e3; font-weight:300; margin-left:1.5rem; margin-bottom:1.1rem;">
+            <li>地铁盖不好 → 怪中国打压。</li>
+            <li>医疗系统崩溃 → 怪中国疫情数据造假。</li>
+            <li>产业竞争力下滑 → 怪中国不公平补贴。</li>
+            <li>生活成本暴涨 → 怪中国经济胁迫。</li>
+        </ul>
+
+        <p>每一件事都可以推给中国。每一件事都不用解决。</p>
+
+        <h2>为什么必须把中国妖魔化？</h2>
+
+        <p>因为一旦承认中国是正当治理，他们的遮羞布就掉了。</p>
+
+        <p>如果中国真的是一个「邪恶帝国」，那台湾和美国就是「正义的一方」。但如果中国只是另一个正常国家，只是在用不同的方式治理，那台湾和美国的「正义」就变成了一场表演。</p>
+
+        <p>所以他们必须不停地妖魔化中国。<strong>不是因为中国真的邪恶，是因为他们需要一个邪恶的参照物来证明自己的正当性。</strong></p>
+
+        <h2>妖魔化的成本是零</h2>
+
+        <p>骂中国不用花钱。修地铁要花钱。<br>
+        骂中国不用得罪选民。改革会得罪利益集团。<br>
+        骂中国可以在电视上表演五分钟。改革需要做五年。</p>
+
+        <p>所以他们选择骂中国。</p>
+
+        <h2>谁看得穿？</h2>
+
+        <p>当台湾地主骂中国的时候，他们骂的是「土地不属于我」。当美国地主骂中国的时候，他们骂的是「土地不属于我」。他们必须把中国塑造成邪恶帝国——因为如果中国的土地制度是对的，那他们自己就不对了。</p>
+
+        <div class="highlight-box">
+            <p><strong>谁控制土地，谁就控制一切。</strong></p>
+            <p style="margin-top:0.5rem; color:#9fb0c8;">其他的，都是演给你看的。</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <p style="font-size: 1.1rem; font-weight: 400; color: #d6e5f0;">
+        「无产阶级本来没有敌人。<br>
+        地主和资本家创造了一个敌人，来掩盖自己的失能。」<br>
+        <span style="color: #5a7f94; font-size: 0.9rem;">— GL 框架 · 结构性诊断</span>
+        </p>
+
+        <div class="location-tag">波士顿 · 2026年7月</div>
+
+        <div class="footer-note">
+            <span>◆</span> <span id="footerTagsCn">GL 框架 · 土地 · 意识形态 · 妖魔化中国 · 结构性诊断</span> <span>◆</span>
+        </div>
+    </div>
+
+    <!-- ===== SPANISH ===== -->
+    <div id="es" class="lang-content">
+        <div class="badge">GL Framework · Diagnóstico Estructural</div>
+        <h1>Tierra, Ideología y la Demonización de China</h1>
+        <div class="subhead">La lógica subyacente de la gobernanza nunca ha cambiado.</div>
+
+        <p>Todo comenzó en Inglaterra. Señores, títulos hereditarios, nobleza, aristocracia. La tierra siempre perteneció a unos pocos. El resto solo podía alquilar, pedir prestado o trabajar. Luego la aristocracia necesitó más tierra. Así que Inglaterra tuvo que colonizar en todas partes.</p>
+
+        <p>Esta lógica ha estado funcionando durante ochocientos años.</p>
+
+        <p>Estados Unidos solo cambió el envase. El viejo dinero se trasladó de Inglaterra a Estados Unidos, construyendo su riqueza de la misma manera — a través de la tierra. No llamados "aristócratas", sino "familias de dinero antiguo". La lógica es la misma: la tierra es heredada, la riqueza se acumula, la clase es fija.</p>
+
+        <h2>¿Por Qué los Terratenientes Siempre Odian el Socialismo?</h2>
+
+        <p>Porque el principio más fundamental del socialismo es: <strong>la tierra pertenece al estado y al pueblo — no a los individuos privados.</strong></p>
+
+        <p>Los terratenientes entran en pánico ante esto. Toda su riqueza depende de una regla: "Esta tierra es mía, y lo será para siempre".</p>
+
+        <p>La democracia y la libertad son envoltorios. El capitalismo es envoltorio. La ideología es todo envoltorio. Lo que realmente ha estado funcionando — desde la aristocracia inglesa hasta el viejo dinero estadounidense — nunca ha cambiado: <strong>Tierra. Herencia. Ocupación. Colonización. Transferencia. Repetición.</strong></p>
+
+        <h2>La Clase Trabajadora Nunca Tuvo un Enemigo</h2>
+
+        <p>¿Por qué a la clase trabajadora no le importa? Porque no tienen tierra. No les importa quién la controla. Solo les importa si pueden sobrevivir, si pueden vivir decentemente.</p>
+
+        <p>Pero los terratenientes y capitalistas necesitan un enemigo. Porque sin un enemigo, la gente podría empezar a preguntar: ¿por qué el metro nunca se termina? ¿por qué no puedo conseguir una cita en el hospital? ¿por qué los jóvenes no pueden permitirse una casa?</p>
+
+        <p>Estas preguntas son difíciles de responder. Así que inventaron una respuesta más simple: <strong>Todo es culpa de China.</strong></p>
+
+        <h2>La Función Estructural de Demonizar a China</h2>
+
+        <p>Los políticos taiwaneses culpan a China. Los políticos estadounidenses culpan a China. El contenido es diferente, pero la función es exactamente la misma: <strong>empacar el fracaso interno como una amenaza externa.</strong></p>
+
+        <ul style="color:#c7d2e3; font-weight:300; margin-left:1.5rem; margin-bottom:1.1rem;">
+            <li>Metro retrasado → culpa a la represión china.</li>
+            <li>Salud colapsando → culpa al fraude de datos chino.</li>
+            <li>Industria perdiendo terreno → culpa a los subsidios injustos de China.</li>
+            <li>Costo de vida disparado → culpa a la coerción económica china.</li>
+        </ul>
+
+        <p>Todo se puede culpar a China. Nada tiene que resolverse.</p>
+
+        <h2>¿Por Qué Debe Demonizarse a China?</h2>
+
+        <p>Porque si se reconoce a China como una gobernanza legítima, la hoja de parra se cae.</p>
+
+        <p>Si China es verdaderamente un "imperio maligno", entonces Taiwán y Estados Unidos son los "buenos". Pero si China es solo otro país normal, gobernando de manera diferente, entonces la "rectitud" de Taiwán y Estados Unidos es solo una actuación.</p>
+
+        <p>Así que deben seguir demonizando a China. <strong>No porque China sea realmente malvada — sino porque necesitan un punto de referencia malvado para justificarse a sí mismos.</strong></p>
+
+        <h2>El Costo de la Demonización es Cero</h2>
+
+        <p>Culpar a China no cuesta nada. Arreglar el metro cuesta dinero.<br>
+        Culpar a China no ofende a los votantes. La reforma ofende a los grupos de interés.<br>
+        Culpar a China es una actuación televisiva de cinco minutos. La reforma lleva cinco años.</p>
+
+        <p>Así que eligen culpar a China.</p>
+
+        <h2>¿Quién Lo Ve Claro?</h2>
+
+        <p>Cuando los terratenientes taiwaneses atacan a China, están atacando la idea de que "la tierra no me pertenece". Cuando los terratenientes estadounidenses atacan a China, están atacando la misma idea. Deben retratar a China como un imperio malvado — porque si el sistema de tierras de China es correcto, entonces el suyo propio está equivocado.</p>
+
+        <div class="highlight-box">
+            <p><strong>Quien controla la tierra, controla todo.</strong></p>
+            <p style="margin-top:0.5rem; color:#9fb0c8;">Todo lo demás es solo un espectáculo.</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <p style="font-size: 1.1rem; font-weight: 400; color: #d6e5f0;">
+        "La clase trabajadora nunca tuvo un enemigo.<br>
+        Los terratenientes y capitalistas crearon uno para ocultar su propio fracaso."<br>
+        <span style="color: #5a7f94; font-size: 0.9rem;">— GL Framework · Diagnóstico Estructural</span>
+        </p>
+
+        <div class="location-tag">Boston · Julio 2026</div>
+
+        <div class="footer-note">
+            <span>◆</span> <span id="footerTagsEs">GL Framework · Tierra · Ideología · Demonización de China · Diagnóstico Estructural</span> <span>◆</span>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const buttons = document.querySelectorAll('.lang-btn');
+        const contents = {
+            'en': document.getElementById('en'),
+            'zh-Hant': document.getElementById('zh-Hant'),
+            'zh-Hans': document.getElementById('zh-Hans'),
+            'es': document.getElementById('es')
+        };
+        const homeLink = document.getElementById('homeLink');
+        const footerTags = {
+            'en': document.getElementById('footerTagsEn'),
+            'zh-Hant': document.getElementById('footerTagsTw'),
+            'zh-Hans': document.getElementById('footerTagsCn'),
+            'es': document.getElementById('footerTagsEs')
+        };
+        const homeTexts = {
+            'en': '← Home',
+            'zh-Hant': '← 回首頁',
+            'zh-Hans': '← 回首页',
+            'es': '← Inicio'
+        };
+        let currentLang = 'en';
+
+        function switchLang(lang) {
+            // 切換文章內容
+            Object.values(contents).forEach(el => el.classList.remove('active'));
+            if (contents[lang]) contents[lang].classList.add('active');
+
+            // 切換語言按鈕狀態
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
+
+            // 切換回首頁文字
+            homeLink.textContent = homeTexts[lang] || homeTexts['en'];
+
+            // 切換頁尾標籤（不需要額外動作，因為每個語言的 footer-note 已內嵌對應標籤）
+            // 但為了確保顯示正確，我們只需要確保對應的語言內容區塊已顯示
+
+            currentLang = lang;
+        }
+
+        buttons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const lang = this.dataset.lang;
+                if (lang && lang !== currentLang) switchLang(lang);
+            });
+        });
+
+        // 初始化
+        const activeBtn = document.querySelector('.lang-btn.active');
+        if (activeBtn) {
+            const defaultLang = activeBtn.dataset.lang;
+            Object.keys(contents).forEach(key => {
+                if (key === defaultLang) contents[key].classList.add('active');
+                else contents[key].classList.remove('active');
+            });
+            homeLink.textContent = homeTexts[defaultLang] || homeTexts['en'];
+        }
+    });
+</script>
+
+</body>
+</html>
