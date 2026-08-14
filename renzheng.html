@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="仁政 · 从千年治理传统到当代中国的减贫奇迹 — 徐萍 著">
+    <title>仁政 · 从千年治理传统到当代中国的减贫奇迹</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0b1220;
+            --bg2: #0d1526;
+            --text: #f8fbff;
+            --muted: #c7d2e3;
+            --sub: #9fb0c8;
+            --dim: rgba(255,255,255,.06);
+            --green: #9FE870;
+            --blue: #7DD3FC;
+            --gold: #fbbf24;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --mono: 'DM Mono', monospace;
+            --sans: 'DM Sans', system-ui, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 1.8; overflow-x: hidden; }
+
+        .nav {
+            position: fixed;
+            inset: 0 0 auto 0;
+            z-index: 100;
+            height: 62px;
+            padding: 0 clamp(18px, 5vw, 52px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(11,18,32,0.92);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--dim);
+        }
+        .logo { color: #fff; text-decoration: none; font-family: var(--mono); font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; }
+        .logo:hover { text-decoration: none; }
+        .lang-grp { display: flex; gap: 6px; }
+        .lb-btn { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; padding: 5px 10px; border: 1px solid rgba(255,255,255,0.1); border-radius: 5px; background: none; color: var(--sub); cursor: pointer; transition: all 0.2s; }
+        .lb-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+        .lb-btn.on { color: var(--green); border-color: rgba(159,232,112,0.35); background: rgba(159,232,112,0.07); }
+        .lb { display: none; }
+        .lb.active { display: block; }
+
+        .book-container {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 6rem 1.8rem 4rem;
+        }
+
+        /* ===== 标题页 ===== */
+        .title-page {
+            text-align: center;
+            padding: 3rem 0 2.5rem;
+            border-bottom: 1px solid var(--dim);
+            margin-bottom: 2.5rem;
+        }
+        .title-page h1 {
+            font-family: var(--serif);
+            font-size: 4rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.3em;
+            margin-bottom: 0.3rem;
+        }
+        .title-page .sub {
+            font-size: 1.1rem;
+            color: var(--sub);
+            font-style: italic;
+            letter-spacing: 0.05em;
+        }
+        .title-page .author-line {
+            margin-top: 1.5rem;
+            font-size: 1rem;
+            color: var(--muted);
+            letter-spacing: 0.08em;
+        }
+        .title-page .org-line {
+            font-size: 0.8rem;
+            color: var(--sub);
+            margin-top: 0.2rem;
+            opacity: 0.5;
+        }
+        .download-bar {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1.2rem;
+        }
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 22px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: 0.06em;
+            transition: all 0.2s;
+            border: 1px solid rgba(159,232,112,0.3);
+            color: var(--green);
+            background: rgba(159,232,112,0.06);
+        }
+        .download-btn:hover {
+            background: rgba(159,232,112,0.15);
+            border-color: var(--green);
+            transform: translateY(-2px);
+        }
+        .download-btn.pdf {
+            border-color: rgba(251,191,36,0.3);
+            color: var(--gold);
+            background: rgba(251,191,36,0.06);
+        }
+        .download-btn.pdf:hover {
+            background: rgba(251,191,36,0.15);
+            border-color: var(--gold);
+        }
+
+        /* ===== 版权 ===== */
+        .copyright-bar {
+            text-align: center;
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.12);
+            padding: 1rem 0;
+            border-top: 1px solid var(--dim);
+            border-bottom: 1px solid var(--dim);
+            margin-bottom: 2rem;
+            line-height: 2;
+        }
+
+        /* ===== 目录 ===== */
+        .toc {
+            background: rgba(255,255,255,0.015);
+            border: 1px solid var(--dim);
+            border-radius: 12px;
+            padding: 1.8rem 2.2rem;
+            margin: 2rem 0 3rem;
+        }
+        .toc h2 {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.2);
+            text-align: center;
+            border-bottom: 1px solid var(--dim);
+            padding-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
+        }
+        .toc-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.1rem 2rem;
+            font-size: 0.88rem;
+            line-height: 2.2;
+        }
+        .toc-grid a {
+            color: var(--muted);
+            text-decoration: none;
+            border-bottom: 1px dotted rgba(255,255,255,0.05);
+            transition: color 0.2s;
+        }
+        .toc-grid a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+        .toc-grid .part-label {
+            color: var(--sub);
+            font-weight: 600;
+            border-bottom: none;
+            cursor: default;
+        }
+
+        /* ===== 正文 ===== */
+        .section { margin-bottom: 2.5rem; }
+        .part-head {
+            font-family: var(--serif);
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: #fff;
+            border-bottom: 2px solid var(--dim);
+            padding-bottom: 0.4rem;
+            margin: 3rem 0 1.2rem;
+            letter-spacing: 0.02em;
+        }
+        .part-head .badge {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--bg);
+            font-family: var(--mono);
+            font-size: 0.55rem;
+            padding: 0.05rem 0.7rem;
+            border-radius: 30px;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+            font-weight: 700;
+        }
+        .chapter-title {
+            font-family: var(--serif);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            border-left: 4px solid var(--gold);
+            padding-left: 1rem;
+            margin: 2rem 0 0.6rem;
+        }
+        .epigraph {
+            font-style: italic;
+            color: var(--sub);
+            background: rgba(255,255,255,0.02);
+            padding: 0.6rem 1.5rem;
+            border-radius: 6px;
+            margin: 0.4rem 0 1.2rem;
+            font-size: 0.92rem;
+            border-left: 3px solid rgba(251,191,36,0.25);
+        }
+        .epigraph cite {
+            display: block;
+            text-align: right;
+            font-style: normal;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.15);
+            margin-top: 0.1rem;
+        }
+        .section p {
+            margin-bottom: 0.9rem;
+            text-align: justify;
+            color: var(--muted);
+        }
+        .section p.no-indent { text-indent: 0; }
+        .section ul, .section ol {
+            margin: 0.5rem 0 1rem 2rem;
+            color: var(--muted);
+        }
+        .section ul li, .section ol li { margin-bottom: 0.2rem; }
+
+        .highlight-box {
+            background: rgba(159,232,112,0.04);
+            border-left: 4px solid var(--green);
+            padding: 1rem 1.6rem;
+            border-radius: 6px;
+            margin: 1.2rem 0;
+        }
+        .highlight-box p { text-indent: 0; margin-bottom: 0.2rem; }
+        .highlight-box .golden {
+            color: var(--gold);
+            font-weight: 600;
+            font-size: 1.02rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0;
+            font-size: 0.82rem;
+            background: rgba(255,255,255,0.015);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        table th {
+            background: rgba(255,255,255,0.04);
+            color: #fff;
+            font-family: var(--mono);
+            font-size: 0.55rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 0.5rem 0.9rem;
+            text-align: left;
+            border-bottom: 1px solid var(--dim);
+        }
+        table td {
+            padding: 0.5rem 0.9rem;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            color: var(--muted);
+            vertical-align: top;
+        }
+        table tr:last-child td { border-bottom: none; }
+
+        .golden-list {
+            list-style: none;
+            padding: 0;
+        }
+        .golden-list li {
+            padding: 0.4rem 0 0.4rem 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            position: relative;
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+        .golden-list li::before {
+            content: "◆";
+            color: var(--gold);
+            position: absolute;
+            left: 0;
+            top: 0.4rem;
+            font-size: 0.55rem;
+        }
+
+        /* ===== 作者简介 ===== */
+        .author-box {
+            background: rgba(255,255,255,0.015);
+            border: 1px solid var(--dim);
+            border-radius: 12px;
+            padding: 1.6rem 2rem;
+            margin-bottom: 2.5rem;
+        }
+        .author-box h3 {
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.2);
+            margin-bottom: 0.6rem;
+            border-bottom: 1px solid var(--dim);
+            padding-bottom: 0.3rem;
+        }
+        .author-box p {
+            font-size: 0.9rem;
+            color: var(--muted);
+            margin-bottom: 0.6rem;
+        }
+        .author-box .testimonial {
+            background: rgba(251,191,36,0.05);
+            border-left: 3px solid var(--gold);
+            padding: 0.6rem 1.2rem;
+            margin: 0.6rem 0;
+            border-radius: 4px;
+        }
+        .author-box .testimonial p { font-style: italic; font-size: 0.88rem; color: var(--sub); margin-bottom: 0.1rem; }
+        .author-box .testimonial .source { font-style: normal; font-size: 0.78rem; color: rgba(255,255,255,0.2); }
+
+        /* ===== 页脚 ===== */
+        .book-footer {
+            text-align: center;
+            padding: 2rem 0 1.5rem;
+            font-family: var(--mono);
+            font-size: 11px;
+            color: rgba(255,255,255,0.12);
+            border-top: 1px solid var(--dim);
+            margin-top: 2.5rem;
+            line-height: 2;
+        }
+        .book-footer a { color: rgba(255,255,255,0.2); text-decoration: none; }
+        .book-footer a:hover { color: #fff; }
+
+        /* ===== 回到顶部 ===== */
+        .back-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(159,232,112,0.12);
+            border: 1px solid rgba(159,232,112,0.25);
+            color: var(--green);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            opacity: 0;
+            pointer-events: none;
+            text-decoration: none;
+        }
+        .back-top.visible { opacity: 1; pointer-events: auto; }
+        .back-top:hover { background: rgba(159,232,112,0.2); transform: translateY(-3px); }
+
+        @media (max-width: 640px) {
+            .book-container { padding: 5rem 1rem 2.5rem; }
+            .title-page h1 { font-size: 2.6rem; letter-spacing: 0.15em; }
+            .title-page .sub { font-size: 0.95rem; }
+            .toc-grid { grid-template-columns: 1fr; font-size: 0.82rem; }
+            .part-head { font-size: 1.3rem; }
+            .chapter-title { font-size: 1.15rem; }
+            table { font-size: 0.7rem; }
+            table th, table td { padding: 0.3rem 0.5rem; }
+            .author-box { padding: 1.2rem 1.2rem; }
+            .back-top { bottom: 16px; right: 16px; width: 38px; height: 38px; font-size: 15px; }
+        }
+        @media (max-width: 400px) {
+            .title-page h1 { font-size: 2rem; }
+            .toc { padding: 1rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== 导航 ===== -->
+    <nav class="nav">
+        <a href="index.html" class="logo">GFI Flow Intelligence</a>
+        <div class="lang-grp">
+            <button class="lb-btn on" data-lang="zh">中文</button>
+            <button class="lb-btn" data-lang="en">EN</button>
+        </div>
+    </nav>
+
+    <!-- ============================================================ -->
+    <!-- ==================== 中文版 ================================ -->
+    <!-- ============================================================ -->
+    <div class="lb active page" data-lang="zh">
+        <div class="book-container" id="top-zh">
+
+            <!-- 书名页 -->
+            <div class="title-page">
+                <h1>仁 政</h1>
+                <div class="sub">从千年治理传统到当代中国的减贫奇迹</div>
+                <div class="author-line">徐萍 著</div>
+                <div class="org-line">GFI Flow Intelligence · gfiintel.com</div>
+                <div class="download-bar">
+                    <a href="仁政.pdf" download class="download-btn pdf">📄 下载 中文 PDF</a>
+                    <a href="Benevolent_Governance.pdf" download class="download-btn">📄 下载 English PDF</a>
+                </div>
+            </div>
+
+            <!-- 版权 -->
+            <div class="copyright-bar">
+                <div>仁政 · 从千年治理传统到当代中国的减贫奇迹</div>
+                <div>徐萍 著 · © 2026 徐萍 · GFI Flow Intelligence · gfiintel.com</div>
+                <div style="font-size:0.65rem; color:rgba(255,255,255,0.06);">All rights reserved. 本书所引数据均来自公开可查证的官方渠道。</div>
+            </div>
+
+            <!-- 作者简介 -->
+            <div class="author-box">
+                <h3>作者简介</h3>
+                <p><strong>徐萍</strong>，GFI Flow Intelligence 创始人。出生于台湾，成年后赴美工作生活多年。在美期间，亲历资本主义社会高度发达的表象之下，国家政策被资本与地产阶层深度操控的现实——土地增值被少数人捕获、竞选政治被巨额资金裹挟、社会福利沦为“管理穷人”的工具而非“消除贫困”的路径。正是这种切身的观察与思考，促使作者将研究视野投向全球不同制度下的社会治理比较。</p>
+                <p><strong>2016年2月，作者亲赴美国佛罗里达州维纳斯基地（The Venus Project）访问</strong>，与创始人雅克·弗斯科（Jacque Fresco）合影交流。维纳斯计划所倡导的 <strong>“资源导向型经济”</strong>——一种主张最终彻底超越货币体系、以科学方法管理全球资源的社会设计理念——在当时美国主流社会氛围中被视为过于超前甚至不切实际。作者认同维纳斯计划对货币体系不可持续的诊断，但主张以 <strong>“无条件基本收入”（UBI）</strong> 作为货币体系崩塌前的 <strong>“软着陆”</strong> 方案，避免社会在转型过程中陷入失序。</p>
+                <p>基于这一理念，作者撰写了 <strong>《The Last Poverty Solution: A Global Commons Funding System for Universal Essential Access》</strong>。该书提出了一套以 <strong>“全球公域贡献机制”（GCCM）</strong> 和 <strong>“人道主义消费配额”（HCQ）</strong> 为核心的双轨架构，旨在为联合国系统提供可预测、不侵犯主权、法律可依的21世纪融资机制。</p>
+                <div class="testimonial">
+                    <p>“非常令人印象深刻的作品，它似乎是原创的。”</p>
+                    <div class="source">— Peter T. Knight，前世界银行巴西局首席经济学家 · 斯坦福大学经济学博士</div>
+                </div>
+                <p><strong>2025年9月，作者获联合国邀请</strong>，成为“资深高级经济事务官”（Senior Economic Affairs Officer, P5）候选人。</p>
+                <p style="font-size:0.78rem; color:rgba(255,255,255,0.12); text-align:right; margin-top:0.3rem;">—— 2026年8月 · gfiintel.com</p>
+            </div>
+
+            <!-- 目录 -->
+            <div class="toc">
+                <h2>目 录</h2>
+                <div class="toc-grid">
+                    <a href="#preface-zh" style="font-weight:700;">篇首语</a>
+                    <span></span>
+                    <span class="part-label">— 上篇 · 千年之根 —</span>
+                    <span></span>
+                    <a href="#ch1-zh">第一章　从“民惟邦本”到“以人民为中心”</a>
+                    <a href="#ch2-zh">第二章　选贤与能——中国干部选拔的制度基因</a>
+                    <a href="#ch3-zh">第三章　“大一统”与国家能力</a>
+                    <span class="part-label">— 中篇 · 西方迷思 —</span>
+                    <span></span>
+                    <a href="#ch4-zh">第四章　土地、资本与权力——西方治理结构的制度性分析</a>
+                    <a href="#ch5-zh">第五章　选举政治的治理效能悖论</a>
+                    <a href="#ch6-zh">第六章　GDP核算的局限性及其政策含义</a>
+                    <a href="#ch7-zh">第七章　公共服务供给能力的国际比较</a>
+                    <a href="#ch8-zh">第八章　福利制度的设计困境</a>
+                    <a href="#ch9-zh">第九章　复杂治理中的系统思维</a>
+                    <span class="part-label">— 下篇 · 当代实践 —</span>
+                    <span></span>
+                    <a href="#ch10-zh">第十章　规模与速度——减贫绩效的实证分析</a>
+                    <a href="#ch11-zh">第十一章　制度设计——精准扶贫的执行机制</a>
+                    <a href="#ch12-zh">第十二章　土地政策与治理正当性</a>
+                    <a href="#ch13-zh">第十三章　基础设施与公共服务——制度效能的比较视角</a>
+                    <a href="#final-zh" style="font-weight:700;">终章　治理的正当性——基于绩效的理论审视</a>
+                    <a href="#afterword-zh" style="font-weight:700;">后记</a>
+                    <a href="#appendix-zh" style="font-weight:700;">附录　数据来源与关键论点摘录</a>
+                </div>
+            </div>
+
+            <!-- ===== 正文 ===== -->
+
+            <!-- 篇首语 -->
+            <div class="section" id="preface-zh">
+                <div class="part-head">篇首语</div>
+                <p>本书名为《仁政》。</p>
+                <p>“仁政”二字，源于中国最古老的政治传统。两千多年前，孟子对梁惠王说：“王如施仁政于民，省刑罚，薄税敛，深耕易耨。”他告诉君王：真正的治理，不是压榨，不是管控，是让人民过上好日子。</p>
+                <p>四千年后，这个古老的理想在中国大地上变成了现实——9899万农村贫困人口全部脱贫，8亿多人摆脱贫困。这是人类历史上规模最大、速度最快、成效最显著的减贫行动。</p>
+                <p>这不是“奇迹”。奇迹是从天而降的、不可解释的、无法复制的。而中国减贫的每一步，都清清楚楚、有迹可循——有制度、有方法、有人干、有结果。</p>
+                <p>这是“仁政”。仁政不是恩赐，是本分；不是施舍，是责任；不是奇迹，是制度必然。</p>
+                <p>与此同时，那些自封“民主灯塔”的西方国家，正在经历深刻的制度危机。他们盖不出地铁、修不好公路、让人民睡大街、让儿童挨饿——却还有脸把一套自己都不信的制度硬塞给中国。</p>
+                <p>本书要做的，就是两件事：</p>
+                <p><strong>第一，讲清楚中国做对了什么。</strong> 从千年治理传统的民本思想，到当代脱贫攻坚的系统实践，中国走出了一条完全不同于西方的道路。这条道路根植于自己的文明，服务于自己的人民，用实实在在的“交付”证明了自己的正当性。</p>
+                <p><strong>第二，戳穿西方硬塞给中国的谎言。</strong> 选举不是民主的全部，自由不是资本的专利，治理不是表演的舞台。西方政府早已退化为资本地主的资产管理公司——他们没有资格教别人怎么治理。</p>
+                <p>“仁政”不是一本书的名字。它是中国治理的底色，是8亿人命运改变的总称，是人间正道。</p>
+                <p style="text-align:right; margin-top:1.2rem;">是为序。</p>
+            </div>
+
+            <!-- 上篇 -->
+            <div class="section" id="part1-zh">
+                <div class="part-head"><span class="badge">上篇</span> 千年之根 —— 中国治理传统中的民本思想</div>
+                <p class="no-indent" style="font-style:italic; color:var(--sub);">一个连续五千年未中断的文明，其治理思想必然是在长期的历史实践中累积形成的。中国治理传统中的核心概念——如“民本”“选贤”“大一统”——并非源于抽象的理论建构，而是从大禹治水、都江堰、大运河、科举制度、荒政赈灾等具体治理实践中逐步提炼而成的。</p>
+                <p>“民惟邦本，本固邦宁”——《尚书》中的这一表述，可以视为中国政治传统中关于国家与人民关系的最早理论概括。它提出了一个核心命题：<strong>国家的正当性基础在于人民的福祉，而非君主、精英或特定集团的意志。</strong></p>
+                <p>本章将从这一命题出发，梳理中国治理传统中三个核心概念的历史演变及其当代延续。</p>
+            </div>
+
+            <!-- 第一章 -->
+            <div class="section" id="ch1-zh">
+                <div class="chapter-title">第一章　从“民惟邦本”到“以人民为中心”</div>
+                <div class="epigraph">“民惟邦本，本固邦宁。”<cite>——《尚书·五子之歌》</cite></div>
+                <p><strong>（一）民本思想的经典表述</strong></p>
+                <p>中国治理思想中最早的核心概念之一，是“民本”。</p>
+                <p>《尚书·五子之歌》记载：“民惟邦本，本固邦宁。”这一表述将“人民”确立为国家的根本——只有当这一根本牢固时，国家才能安宁。在公元前两千多年的历史语境中，这一命题的提出具有超越时代的理论价值。</p>
+                <p>孔子提出：“节用而爱人，使民以时。”这一主张包含了对治理者的具体要求：节约公共资源、关注民众福祉、不随意征用民力。老子则以“治大国若烹小鲜”为喻，强调治理应当尊重事物本身的规律，避免过度干预和朝令夕改。</p>
+                <p>孟子将“民本”思想进一步系统化。他对梁惠王说：“王如施仁政于民，省刑罚，薄税敛，深耕易耨。”在此，“仁政”被具体化为减轻刑罚、降低税负、保障生产等可操作的政策方向。孟子更为著名的表述是：“民为贵，社稷次之，君为轻。”这一命题将人民置于国家（社稷）和君主之上，确立了“民”作为政治正当性最终来源的理论地位。</p>
+                <p>此外，孟子还提出：“老吾老以及人之老，幼吾幼以及人之幼。”这一表述将家庭伦理扩展为社会伦理，包含了对社会成员之间相互扶助的期待——这一思想在后世的社会救助传统中获得了制度性的回应。</p>
+                <p><strong>（二）民本思想的历史延续与当代转化</strong></p>
+                <p>从《尚书》到《孟子》，从“民惟邦本”到“以人民为中心”——这一思想脉络在中国历史中虽历经起伏，但其基本命题持续存在于中国政治话语的传统之中。</p>
+                <p>当代中国脱贫攻坚的实践，在理念层面与“民本”思想形成了可辨识的延续关系。其核心逻辑的一致性在于：<strong>将人民的基本生活保障视为国家治理的优先目标，并通过制度化的方式加以实现。</strong> 在这一意义上，脱贫攻坚可被理解为“民本”理念在当代的一种制度转化。</p>
+            </div>
+
+            <!-- 第二章 -->
+            <div class="section" id="ch2-zh">
+                <div class="chapter-title">第二章　选贤与能——中国干部选拔的制度基因</div>
+                <div class="epigraph">“为政以德，譬如北辰，居其所而众星共之。”<cite>——《论语·为政》</cite></div>
+                <p><strong>（一）选拔机制的核心问题</strong></p>
+                <p>任何政治体系都需要回答一个基础性问题：<strong>以何种标准选拔治理者？</strong></p>
+                <p>不同的政治传统对此给出了不同的回答。在中国治理传统中，“选贤与能”是一个长期延续的核心理念——治理者的正当性来源于其能力和德行，而非其出身、财富或言辞技巧。</p>
+                <p><strong>（二）科举制度的历史经验</strong></p>
+                <p>从汉代察举制到隋唐科举制，中国在两千多年前便开始探索以考试方式选拔官员的制度化路径。科举制度在多个世纪的时间内，构成了中国官员选拔的主要渠道。其基本特征是：标准相对客观、面向社会开放、内容与治理相关。科举制度作为一套大规模、标准化的人才选拔机制，在世界政治史上具有开创性意义。</p>
+                <p><strong>（三）当代干部选拔的制度特征</strong></p>
+                <p>当代中国的干部选拔制度在理念层面与“选贤与能”传统存在延续关系，在具体运作上则具有以下特征：多层级历练机制、实绩导向的考核体系、组织考察与群众评价相结合。</p>
+                <p><strong>（四）选拔机制的比较视角</strong></p>
+                <p>在比较政治学的框架下，不同政治体系对“选拔标准”的设定存在显著差异。选举制度倾向于奖励“选举能力”——包括公众演讲、媒体应对、竞选组织等技能——而这些技能与治理所需要的政策分析、行政管理、跨部门协调等能力并不必然重合。</p>
+                <p>当代中国干部选拔制度的设计逻辑是：通过多层级历练和长期绩效观察，筛选出具备实际治理能力的人才。这一制度在实践中是否总能达到预期目标，是一个需要持续检验的开放问题。但其设计理念——<strong>以治理实绩而非言辞能力为选拔依据</strong>——在逻辑上与“治理”这一职能本身具有更高的匹配度。</p>
+            </div>
+
+            <!-- 第三章 -->
+            <div class="section" id="ch3-zh">
+                <div class="chapter-title">第三章　“大一统”与国家能力</div>
+                <div class="epigraph">“不谋万世者，不足谋一时；不谋全局者，不足谋一域。”<cite>—— 陈澹然《寤言》</cite></div>
+                <p><strong>（一）“大一统”的历史形成</strong></p>
+                <p>公元前221年，秦统一六国，推行“书同文、车同轨、度同制”。这一系列措施在政治统一的基础上，进一步实现了制度统一、市场统一和文化统一。中国由此成为世界上最早建立统一大市场的国家之一。</p>
+                <p>“大一统”并非仅指领土的统一，更是指制度框架的统一——包括统一的度量衡、统一的文字系统、统一的法律体系，以及贯通全国的交通网络。这些制度安排为大规模公共工程的建设提供了必要条件。</p>
+                <p><strong>（二）历史案例：大型公共工程的组织能力</strong></p>
+                <p>都江堰（始建于公元前256年）和大运河（始建于公元605年）是中国历史上两个具有代表性的大型公共工程。从公共经济学的角度来看，大型基础设施具有投资规模大、建设周期长、受益范围广的特征，通常需要由国家作为主要组织者来推进。</p>
+                <p><strong>（三）当代延续：基础设施建设的制度基础</strong></p>
+                <p>当代中国在基础设施领域的大规模建设，与“大一统”传统在制度逻辑上存在延续关系：政策连续性机制、跨区域协调能力、资源动员能力。其成果包括：高铁运营里程4.6万公里、高速公路18万公里、行政村100%通电、行政村通光纤率超98%。</p>
+                <p><strong>（四）比较分析：制度传统与治理效能</strong></p>
+                <p>在危机应对和大规模公共工程领域，不同的制度传统产生了可观察的绩效差异。这一差异反映了<strong>制度在“跨区域协调”和“长期规划”等维度上的设计差异</strong>。中国的“大一统”传统在当代的制度转化——包括统一的规划体系、层级化的执行机制、以及持续的政策框架——构成了其在大型公共工程领域供给效能的制度基础。</p>
+            </div>
+
+            <!-- 中篇 -->
+            <div class="section" id="part2-zh">
+                <div class="part-head"><span class="badge">中篇</span> 西方迷思 —— 选举民主为什么不等于善治</div>
+                <p class="no-indent" style="font-style:italic; color:var(--sub);">西方政治传统中，“民主”被定义为“人民的统治”。然而，当我们将目光从理念转向现实，一组数据对比值得深思：</p>
+                <ul>
+                    <li>英国约0.6%的人口掌握全国三分之二的土地；</li>
+                    <li>2024年美国大选总花费高达159亿美元；</li>
+                    <li>美国无家可归者超过65万人，约2600万人缺乏基本医保；</li>
+                    <li>英国超过1400万人生活在贫困中，其中约100万儿童处于“赤贫”状态；</li>
+                    <li>美国基础设施评级为C-，大规模基建计划屡因政党博弈而搁浅。</li>
+                </ul>
+                <p>这些事实引出一个根本性的追问：一个标榜“民主”的制度，为何在解决土地集中、贫富分化、医疗覆盖、基础设施等基本民生问题上，表现得如此乏力？</p>
+                <p>与此同时，中国在过去四十年里让8亿多人摆脱了贫困。两种治理路径的绩效差异，促使我们不得不重新审视西方“民主”模式的普适性主张。</p>
+                <p>本篇旨在从<strong>土地制度、选举机制、经济统计、政府效能、福利设计、决策思维</strong>六个维度，对西方“民主”模式进行结构性的再审视——不是基于意识形态的好恶，而是基于可验证的事实与逻辑。</p>
+            </div>
+
+            <!-- 第四章 -->
+            <div class="section" id="ch4-zh">
+                <div class="chapter-title">第四章　土地、资本与权力——西方治理结构的制度性分析</div>
+                <div class="epigraph">“民为贵，社稷次之，君为轻。”<cite>——《孟子·尽心下》</cite></div>
+                <p>西方国家的宪法文本普遍宣称“主权在民”。然而，政治学的经典研究早已指出：制度的文本规定与实际的权力运作之间，往往存在显著落差。要理解西方治理的真实逻辑，有必要从三个基础性维度入手：<strong>土地所有权结构、资本对政治过程的影响，以及社会财富的分配机制。</strong></p>
+
+                <p><strong>（一）英国：土地所有权的高度集中及其制度性成因</strong></p>
+                <p>英国是世界上土地所有权集中度最高的国家之一。仅占人口约0.6%的世袭贵族和乡绅阶层，掌握了全国约三分之二（约2000万英亩）的土地。英格兰地区约一半的土地，由不足1%的人口持有。英国上议院中保留的92个世袭贵族席位，意味着约6600万英国公民的立法机构中，仍有部分成员是依据出身而非选举产生的。</p>
+                <p>值得关注的是土地增值的分配机制。在英国，当一块农业用地被规划为开发用地时，其市场价值可增长数十倍甚至上百倍——这一增值并非土地所有者的贡献所致，而是社会发展和公共投资的结果。然而，现行制度允许这一增值被私人完全捕获。</p>
+
+                <p><strong>（二）美国：竞选资金、旋转门与政策偏差</strong></p>
+                <p>2024年大选总花费约159亿美元，排名前1%的捐赠者提供了超过70%的“超级政治行动委员会”资金。“旋转门”现象进一步加剧了资本与政策的关联——政府高层职位与私营部门之间的人员流动是制度化常态。</p>
+                <p>政策输出的结果提供了佐证：收入最低的50%家庭仅持有全国约2.5%的财富；约2600万美国人缺乏基本医疗保险；年均枪击死亡人数约4万，联邦层面的控枪立法长期陷入僵局；基础设施评级为C-。</p>
+
+                <p><strong>（三）社会流动性：承诺与现实的差距</strong></p>
+                <p>在英国，私立学校学生仅占学龄人口的约7%，却在牛津大学和剑桥大学的录取名额中占40%以上，并在英国约80%的顶级职位中占据主导地位。在美国，出生于收入最低20%家庭的孩子，最终进入收入最高20%的概率约为7.5%。</p>
+
+                <div class="highlight-box">
+                    <p><strong>英国模式：</strong>你出生在哪座庄园，决定了你一生的高度。</p>
+                    <p><strong>中国模式：</strong>你出生在哪座大山，国家修路架桥、建学校、搞扶贫，把你接出来。</p>
+                    <p><strong>谁在真正治理？谁在替地主管家？高下立判。</strong></p>
+                </div>
+
+                <p><strong>（四）模式输出的正当性问题</strong></p>
+                <p>基于上述分析，我们可以提出一个审慎但明确的判断：一个在立法机构中为世袭贵族保留席位、在政策过程中对资本高度开放、在社会流动性上持续低迷的制度——以其自身的绩效标准来衡量，尚难以为“民主”提供令人信服的范例。</p>
+                <p>当一个国家的治理体系连其本国民众的基本民生需求都难以有效回应时，其向其他国家输出“民主模式”的正当性，便成为一个需要被严肃质疑的命题。</p>
+            </div>
+
+            <!-- 第五章 -->
+            <div class="section" id="ch5-zh">
+                <div class="chapter-title">第五章　选举政治的治理效能悖论——选拔机制与治理能力的结构性错配</div>
+                <div class="epigraph">“巧言令色，鲜矣仁。”<cite>——《论语·学而》</cite></div>
+                <p>选举是现代民主政治的核心制度安排之一。然而，一个长期被忽视的理论问题是：<strong>选举所奖励的能力，与治理所要求的能力，并非同一组能力。</strong></p>
+                <p>选举动员所需的技能主要包括：公共演讲与修辞能力、媒体关系管理、对手攻击策略、选民情绪把握。这些技能与公共治理所需的技能——政策分析与决策、跨部门协调、长期战略规划、制度运行与危机管理——之间存在显著差异。</p>
+
+                <p><strong>（二）选举周期与政策短期化的制度性成因</strong></p>
+                <p>以美国为例，总统任期四年，连任不超过两届。在一届政府真正可用于政策实施的有效时间不足一半的约束下，政策制定呈现“短期偏好”现象：基础设施投资被推迟、气候政策反复摇摆、社会保障改革被搁置。</p>
+                <p>比较而言，中国的政策规划以“五年规划”为基本周期，自1953年以来已连续执行七十余年，形成了“一任接着一任干”的政策连续性。</p>
+
+                <p><strong>（三）选举的间接性：人民授权与权力运作之间的制度距离</strong></p>
+                <p>美国选举人团制度使得一个候选人可以在全国普选票落后的情况下赢得总统职位。英国首相并非全国直选产生，选民投票选的是地方选区议员。这种制度性的间接授权，引发了关于“民主浓度”的讨论。</p>
+
+                <p><strong>（四）本章小结：选拔机制与治理效能的结构性思考</strong></p>
+                <p>一种制度是否称得上“民主”，不仅取决于其选举程序的形式完整性，更取决于其能否通过持续有效的“交付”，赢得民众对治理体系的实质性认可。</p>
+            </div>
+
+            <!-- 第六章 -->
+            <div class="section" id="ch6-zh">
+                <div class="chapter-title">第六章　GDP核算的局限性及其政策含义——经济增长与民生福祉的关联性分析</div>
+                <div class="epigraph">“名实相符，则治；名实不符，则乱。”<cite>——《管子·君臣上》</cite></div>
+                <p><strong>（一）引言：一个被误解的指标及其政策后果</strong></p>
+                <p>GDP的发明者西蒙·库兹涅茨在1934年向美国国会提交的报告中，即已明确指出其根本局限——“国民生产总值不应被用来衡量经济福利”。</p>
+
+                <p><strong>（二）GDP核算的三大结构性局限</strong></p>
+                <p><strong>局限一：交易性质的“价值中立”。</strong> GDP核算的是市场交易的总金额，而非交易的社会净收益——清理环境灾难的支出与建设学校的支出在统计上等价。</p>
+                <p><strong>局限二：“产出”与“损耗”的失衡。</strong> 自然资本损耗和基础设施折旧在GDP中未予扣除。据联合国环境署估算，由于资源使用效率低下，全球每年造成的经济损失规模巨大。</p>
+                <p><strong>局限三：总量掩盖分配。</strong> GDP核算的是总量，不问“谁得到了价值”。美国实际GDP增长了数倍，但经通胀调整后的中位数时薪增长率远低于劳动生产率增速。</p>
+
+                <p><strong>（三）GDP与民生脱节的实证案例：以美国为例</strong></p>
+                <p>美国人均GDP超过7.5万美元，但基础设施评级C-，约2600万人缺乏基本医保，无家可归者超过65万。</p>
+
+                <p><strong>（四）中国的超越：从“唯GDP”到多维绩效评价</strong></p>
+                <p>2013年，中组部明确不能搞GDP及增长率排名，对限制开发区域和生态脆弱的扶贫重点县取消GDP考核。中国学术界也在推动“超越GDP”的统计框架。</p>
+
+                <div class="highlight-box">
+                    <p class="golden">GDP是半套账本，仁政才是全套答卷。</p>
+                    <p>GDP可以告诉你一个国家“生产了多少”，但它从不告诉你——谁饿着肚子？谁睡在街头？谁的孩子上不起学？谁的老人看不起病？</p>
+                </div>
+            </div>
+
+            <!-- 第七章 -->
+            <div class="section" id="ch7-zh">
+                <div class="chapter-title">第七章　公共服务供给能力的国际比较——基础设施、医疗与治理效能</div>
+                <div class="epigraph">“为政以德，譬如北辰，居其所而众星共之。”<cite>——《论语·为政》</cite></div>
+                <p><strong>（一）引言：公共服务供给作为治理效能的核心维度</strong></p>
+                <p>政府的正当性不仅源于其产生的程序，更源于其履行的职能。公共服务供给是民众对政府绩效最直接、最可感知的评估依据。</p>
+
+                <p><strong>（二）美国：全球最高GDP与基础设施长期失修的反差</strong></p>
+                <p>美国土木工程师学会2021年评估结果为C-：43%的公共道路状况“差”或“一般”，超过4.6万座桥梁结构有缺陷。成因包括选举周期导致的短期偏好、利益集团影响、政府核心能力空心化、政党极化。</p>
+
+                <p><strong>（三）英国：全民医疗体系的供给危机</strong></p>
+                <p>NHS候诊名单超过750万人，因候诊延误导致的额外死亡人数每年达数千至上万人。英国政府日益依赖外部咨询公司，政府内部专业能力持续流失。</p>
+
+                <p><strong>（四）公共品供给的替代机制：慈善作为“失能”的补偿</strong></p>
+                <p>美国2023年慈善捐款超过5570亿美元，但同时无家可归者超过65万人、贫困人口约3700万。将基本民生保障寄望于慈善，实质上是一种系统性的风险转嫁。</p>
+
+                <p><strong>（五）比较的参照系：中国公共服务供给的制度逻辑</strong></p>
+                <p>中国在基础设施领域的成效包括：高铁4.6万公里、高速公路18万公里、行政村100%通电。其制度基础包括政策连续性、政府核心能力保持、财政资源导向配置、动员与执行机制。</p>
+
+                <div class="highlight-box">
+                    <p class="golden">治理的正当性，归根结底应当建立在政府能否有效履行其核心职能——为人民提供安全、福祉与公平的发展机会——这一基础之上。</p>
+                </div>
+            </div>
+
+            <!-- 第八章 -->
+            <div class="section" id="ch8-zh">
+                <div class="chapter-title">第八章　福利制度的设计困境——“管理贫困”与“消除贫困”的路径分歧</div>
+                <div class="epigraph">“老吾老以及人之老，幼吾幼以及人之幼。”<cite>——《孟子·梁惠王上》</cite></div>
+                <p><strong>（一）引言：福利制度的两种设计哲学</strong></p>
+                <p>对弱势群体的帮助，应当以“人”的尊严为核心，而非以“管控”为目的。福利制度存在两条根本性的分界线：“管理贫困”与“消除贫困”。</p>
+
+                <p><strong>（二）福利悬崖效应：制度设计的激励扭曲</strong></p>
+                <p>美国社会救助体系中，收入的小幅增加可能导致福利的大幅丧失——一个低收入家庭若年收入增加1000美元，可能因此失去总计约4600美元的福利。SNAP项目的不当支付率约10.62%，不当支付总额约101亿美元。</p>
+
+                <p><strong>（三）惩罚性条件设计：以行为约束为导向的救助逻辑</strong></p>
+                <p>英国有超过1400万人生活在相对贫困之中，其中约100万儿童处于“严重贫困”状态。国际特赦组织2025年报告指出，英国社会保障制度是“通过其设立的程序来惩罚、伤害和非人化人民的制度”。</p>
+
+                <p><strong>（四）福利污名化：贫困归因的结构性偏差</strong></p>
+                <p>“贫困文化”理论将贫困主要归因于受助者的个人选择，而大量实证研究表明：贫困的主要成因是结构性的。</p>
+
+                <p><strong>（五）发展导向的救助体系：中国的低保制度与精准扶贫</strong></p>
+                <p>中国低保制度覆盖曾超过7000万城乡贫困人口，设计特征包括家庭收入认定、分类施保、动态管理、渐进式退出。精准扶贫则从“被动输血”转向“主动造血”。</p>
+
+                <p><strong>（六）无条件基本收入运动与中国低保的制度呼应</strong></p>
+                <p>中国低保制度在不附加行为条件这一维度上，与UBI主张存在理念交集。脱贫人口的劳动参与率并未因获得转移支付而下降，反而实现了持续就业。</p>
+
+                <div class="highlight-box">
+                    <p class="golden">西方的福利制度，是用金钱把穷人关进笼子。中国的扶贫事业，是用发展把穷人领出大山。</p>
+                </div>
+            </div>
+
+            <!-- 第九章 -->
+            <div class="section" id="ch9-zh">
+                <div class="chapter-title">第九章　复杂治理中的系统思维——公共政策的方法论反思</div>
+                <div class="epigraph">“不谋万世者，不足谋一时；不谋全局者，不足谋一域。”<cite>—— 陈澹然《寤言》</cite></div>
+                <p><strong>（一）引言：复杂系统中的认知局限</strong></p>
+                <p>公共政策所作用的对象——人类社会——是复杂适应系统，具有反馈回路、涌现效应和时间延迟等特征。</p>
+
+                <p><strong>（二）线性思维及其在公共政策中的局限性</strong></p>
+                <p>线性思维（A导致B，B导致C）在简单机械系统中有效，在复杂系统中则往往导致政策干预失效。</p>
+
+                <p><strong>（三）政策失效案例：线性思维的代价</strong></p>
+                <p>阿富汗安全部队建设：830亿美元投入、20年时间，撤军后11天崩溃。越战策略套用：将古巴危机的“逐步升级压力”策略套用于越南，导致58220名美军阵亡。德国病假政策：限制病假天数导致带病上班、病情加重、病假反而增加。</p>
+
+                <p><strong>（四）系统思维在治理中的应用：以脱贫攻坚为例</strong></p>
+                <p>脱贫攻坚展现了系统思维的多维度应用：问题识别（因病？因灾？因路不通？）、干预设计（差异化方案）、执行组织（多层级体系）、动态监测（防止返贫）、长期规划（五年过渡期）。</p>
+
+                <p><strong>（五）理论视角：泰恩特与复杂社会崩溃的启示</strong></p>
+                <p>泰恩特指出：复杂社会通过不断增加制度复杂性来解决问题，但当边际成本超过边际收益时，系统便面临崩溃风险。</p>
+
+                <div class="highlight-box">
+                    <p class="golden">西方用线性思维治理复杂系统——花830亿美元训练阿富汗军队，11天崩塌。中国用系统思维治理复杂系统——花40年让8亿人脱贫。</p>
+                </div>
+            </div>
+
+            <!-- 下篇 -->
+            <div class="section" id="part3-zh">
+                <div class="part-head"><span class="badge">下篇</span> 当代实践 —— 脱贫攻坚，人类历史上最大的仁政</div>
+                <p class="no-indent" style="font-style:italic; color:var(--sub);">中国政治传统中的“仁政”理念，其核心要义可概括为：以民为本、轻徭薄赋、施惠于众。这一理念在当代中国的政策实践中获得了新的制度载体——脱贫攻坚。</p>
+                <p>9899万农村贫困人口脱贫、832个贫困县摘帽、12.8万个贫困村出列、改革开放以来8亿多人摆脱贫困——这些数据构成了人类减贫史上规模最大、覆盖范围最广的系统性社会工程。</p>
+            </div>
+
+            <!-- 第十章 -->
+            <div class="section" id="ch10-zh">
+                <div class="chapter-title">第十章　规模与速度——减贫绩效的实证分析</div>
+                <div class="epigraph">“民惟邦本，本固邦宁。”<cite>——《尚书·五子之歌》</cite></div>
+                <p><strong>（一）减贫规模：可验证的实证数据</strong></p>
+                <p>2021年2月25日，中国官方正式宣布：现行标准下9899万农村贫困人口全部脱贫，832个贫困县全部摘帽，12.8万个贫困村全部出列。改革开放以来中国累计8亿多人摆脱贫困，占同期全球减贫人口的70%以上，提前10年实现联合国2030年可持续发展议程减贫目标。</p>
+
+                <p><strong>（二）减贫速度：年均减贫1238万人的制度基础</strong></p>
+                <p>在脱贫攻坚阶段（2012-2020年），中国年均减贫1238万人，是此前三个阶段年均减贫数量的近2倍。从国际比较来看，美国官方贫困率在过去五十年间未呈现持续下降趋势；英国约1400万人生活在相对贫困中。</p>
+
+                <div class="highlight-box">
+                    <p class="golden">西方用选票“证明”自己代表人民——中国用8亿人脱贫，证明自己代表人民。</p>
+                    <p>9899万人脱贫，不是数字——是9899万条命，从饥饿走向温饱，从绝望走向希望，从大山走向世界。</p>
+                </div>
+            </div>
+
+            <!-- 第十一章 -->
+            <div class="section" id="ch11-zh">
+                <div class="chapter-title">第十一章　制度设计——精准扶贫的执行机制</div>
+                <p><strong>（一）精准扶贫的制度框架</strong></p>
+                <p>2013年提出“精准扶贫”概念，随后被系统化为一套完整的制度框架。“六个精准”识别与干预机制、“五个一批”分类施策路径。</p>
+
+                <p><strong>（二）执行体系的组织架构</strong></p>
+                <p>纵向执行链条（中央统筹、省负总责、市县抓落实）、驻村工作队制度（25.5万个工作队、300多万名干部）、东西部协作机制（东部8省与西部10省结对，30年持续运行）。</p>
+
+                <p><strong>（三）巩固机制：五年过渡期的制度安排</strong></p>
+                <p>2020年后设立五年过渡期，保持主要帮扶政策总体稳定。“十四五”期间中央财政累计安排衔接资金8505亿元，累计帮扶超过700万监测对象消除返贫致贫风险。</p>
+            </div>
+
+            <!-- 第十二章 -->
+            <div class="section" id="ch12-zh">
+                <div class="chapter-title">第十二章　土地政策与治理正当性——基于中英比较的分析</div>
+                <div class="epigraph">“民为贵，社稷次之，君为轻。”<cite>——《孟子·尽心下》</cite></div>
+                <p><strong>（一）土地制度作为治理分析的切入点</strong></p>
+                <p>土地价值增长的本质是社会发展的集体成果。土地增值的分配机制，直接关系到社会公平和治理正当性。</p>
+
+                <p><strong>（二）英国模式：土地增值的私人捕获</strong></p>
+                <p>在英国，当农业用地被规划为开发用地时，市场价值可增长数十倍至上百倍，但增值被土地所有者全部或大部分私人捕获。</p>
+
+                <p><strong>（三）中国模式：土地公有与增值共享</strong></p>
+                <p>中国城市土地归国家所有，农村土地归集体所有。土地出让金纳入地方财政，用于支持交通基础设施、学校、医院等公共项目建设。</p>
+
+                <p><strong>（四）比较分析：两种土地制度的治理含义</strong></p>
+                <p>英国模式：保护既有产权，土地是财富储存与代际传递工具。中国模式：土地是公共资源与政策工具，服务于公共目标。</p>
+            </div>
+
+            <!-- 第十三章 -->
+            <div class="section" id="ch13-zh">
+                <div class="chapter-title">第十三章　基础设施与公共服务——制度效能的比较视角</div>
+                <div class="epigraph">“治大国若烹小鲜。”<cite>——《老子》</cite></div>
+                <p><strong>（一）基础设施作为治理效能的观察窗口</strong></p>
+                <p>基础设施是衡量国家治理效能的可观测维度，需要长期稳定的资金投入、跨周期的政策连续性、跨区域的协调能力。</p>
+
+                <p><strong>（二）美国基础设施的供给困境</strong></p>
+                <p>C-评级、43%公路状况差、4.6万座桥梁有缺陷。成因包括选举周期与长期投资的矛盾、决策体系的多重否决点、公共职能的外包。</p>
+
+                <p><strong>（三）中国基础设施的制度基础</strong></p>
+                <p>政策连续性（五年规划机制）、土地制度配合、政府专业能力保持。成果包括4.6万公里高铁、18万公里高速、行政村100%通电。</p>
+
+                <p><strong>（四）基础设施供给的制度比较</strong></p>
+                <p>制度比较表呈现了中美在高铁、高速公路、港口、通电率、通光纤率等维度的差异及其制度成因。</p>
+
+                <div class="highlight-box">
+                    <p class="golden">一个连地铁都盖不出来的国家，有什么资格教别人怎么“治理”？中国没有多说话，中国修了全世界最长的高铁。</p>
+                </div>
+            </div>
+
+            <!-- 终章 -->
+            <div class="section" id="final-zh">
+                <div class="part-head">终章　治理的正当性——基于绩效的理论审视</div>
+                <div class="epigraph">“治大国若烹小鲜。”<cite>—— 《老子》</cite></div>
+                <p><strong>（一）治理正当性的理论基础</strong></p>
+                <p>政治学关于治理正当性的讨论，通常可区分为两个维度：<strong>程序正当性</strong>与<strong>绩效正当性</strong>。这两种正当性来源并非相互排斥，但在不同的政治传统和制度体系中，二者的权重有所不同。</p>
+
+                <p><strong>（二）绩效正当性的可观测指标</strong></p>
+                <p>包括基础设施供给、基本民生保障、社会流动性、危机应对能力。</p>
+
+                <p><strong>（三）不同制度路径的绩效比较</strong></p>
+                <p>中国在基础设施、减贫、医疗保障等领域的绩效数据，为绩效正当性理论提供了具有参考价值的案例。</p>
+
+                <p><strong>（四）关于制度输出的审慎思考</strong></p>
+                <p>制度移植往往涉及复杂的社会条件和历史背景，国际政治中的制度交流更应被视为相互借鉴和因地制宜的学习过程。</p>
+
+                <p><strong>（五）结语：回到治理的原点</strong></p>
+                <p>治理的最终目的，不是程序的自我运转，而是通过持续有效的行动，回应人民对安全、福祉、公平和发展的基本需求。</p>
+
+                <div class="highlight-box">
+                    <p class="golden">我们不需要一个让0.6%的人掌握三分之二土地的制度来教我们怎么治理。我们需要的，是人民过上好日子——这个目标，我们已经实现了8亿次。</p>
+                </div>
+            </div>
+
+            <!-- 后记 -->
+            <div class="section" id="afterword-zh">
+                <div class="part-head">后记</div>
+                <p>写作这本书的过程中，一个核心问题始终贯穿其中：<strong>如何评估一个治理体系的优劣？</strong></p>
+                <p>一种回答聚焦于程序——政府是否通过选举产生、是否存在多党竞争。另一种回答聚焦于结果——政府是否有效提供了安全、福祉、基础设施和公平的发展机会。</p>
+                <p>本书的写作立场是：<strong>对治理体系的评估，应当同时关注程序和结果，但在最终意义上，治理的目的是人民的福祉，而非程序的自我运转。</strong></p>
+                <p>中国的治理传统提供了一套以“民本”为核心的价值体系。这套体系在当代的制度转化中，形成了以绩效为导向的干部选拔机制、以长期规划为特征的政策框架、以及以大规模资源动员为支撑的公共品供给模式。</p>
+                <p>本书所呈现的中国减贫实践，是这套治理逻辑在一个具体政策领域中的应用案例。它并非一个封闭的“成功故事”，而是一个仍在展开的制度演进过程。其所指向的目标——<strong>让人民过上好日子</strong>——是所有治理体系都应共同追求的命题。</p>
+                <p>我们把这个目标所对应的治理理念，称为“仁政”。</p>
+                <p><strong>它不是古代的理想，是当代中国的日常。</strong></p>
+            </div>
+
+            <!-- 附录 -->
+            <div class="section" id="appendix-zh">
+                <div class="part-head">附录　数据来源与关键论点摘录</div>
+
+                <p><strong>一、数据来源说明</strong></p>
+                <p>本书引用的主要数据，均来自以下公开渠道：</p>
+                <ul>
+                    <li><strong>中国官方发布：</strong>国务院新闻办公室白皮书、农业农村部（国家乡村振兴局）监测数据、国家统计局统计公报、新华社及人民日报公开报道</li>
+                    <li><strong>国际组织公开数据：</strong>联合国开发计划署（UNDP）报告、世界银行公开数据库、国际货币基金组织（IMF）数据</li>
+                    <li><strong>其他国家公开数据：</strong>美国土木工程师学会（ASCE）基础设施报告卡、美国人口普查局贫困率数据、英国国家统计局（ONS）数据、国际特赦组织调查报告</li>
+                </ul>
+                <p>所有数据均可在上述渠道查证核实。</p>
+
+                <p><strong>二、关键论点摘录</strong></p>
+                <ul class="golden-list">
+                    <li>“民惟邦本，本固邦宁”——中国政治传统中将人民福祉视为国家正当性基础的核心理念，在当代脱贫攻坚实践中获得了制度化的延续。</li>
+                    <li>中国干部选拔制度以“选贤与能”为理念基础，通过多层级历练和长期绩效观察筛选治理人才，其设计逻辑与“治理”职能本身具有较高的匹配度。</li>
+                    <li>“大一统”传统在当代中国转化为政策连续性机制和跨区域协调能力，为大规模公共工程和减贫行动提供了制度基础。</li>
+                    <li>西方“民主”模式在土地分配、资本影响政策、社会流动性等维度上面临持续的绩效质疑，其作为“普适模板”的正当性应当被审慎审视。</li>
+                    <li>选举制度在机制设计上倾向于奖励“选举能力”而非“治理能力”，这一结构性特征与治理效能之间存在张力。</li>
+                    <li>GDP作为经济统计指标具有内在局限性——它不区分交易性质、不扣除资源损耗、不问财富分配，不宜作为民生福祉的唯一衡量标准。</li>
+                    <li>公共服务供给的效能取决于政府核心能力的保持。当政府日益依赖外部咨询机构时，其自主规划与执行能力可能面临结构性侵蚀。</li>
+                    <li>福利制度存在两种设计路径——“管理贫困”导向的惩罚性模式与“消除贫困”导向的发展型模式。二者在政策效能上存在显著差异。</li>
+                    <li>公共政策所作用的对象是复杂适应系统，线性思维在此类系统中的运用往往产生非预期后果，系统思维是复杂治理的必要方法论基础。</li>
+                    <li>对治理体系的评估，应当同时关注程序和结果。治理的最终目的是人民的福祉，而非程序的自我运转。</li>
+                </ul>
+
+                <p style="margin-top:1.2rem;"><strong>三、关于 GL 框架</strong></p>
+                <p>本书作者徐萍基于其在国际政策研究领域的长期积累，设计了 <strong>GL 框架（Governance Legitimacy Framework，治理正当性框架）</strong>——一套检测“治理摩擦力”的诊断工具。GL 框架通过八大参数（等待成本、重复成本、崩溃成本、信息不对称成本、心理成本、机会成本、转移路径、闭环程度）对全球100个经济体的治理正当性进行量化评估。其核心理念在于：<strong>一个将行政成本系统性地转移给弱势群体的政府，无论其程序多么合规，其正当性都已受损。</strong>GL 框架与《仁政》的论述内核高度一致——前者提供量化诊断工具，后者展开历史与制度分析。二者共同构成了一个从理论到方法论的完整体系。详情可访问 <strong>gfiintel.com</strong>。</p>
+
+                <p style="text-align:right; color:rgba(255,255,255,0.15); margin-top:1.2rem; font-style:italic;">—— 全书完 ——</p>
+            </div>
+
+            <!-- 页脚 -->
+            <div class="book-footer">
+                《仁政》· 从千年治理传统到当代中国的减贫奇迹<br>
+                徐萍 著 · GFI Flow Intelligence · gfiintel.com
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ==================== 英文版 ================================ -->
+    <!-- ============================================================ -->
+    <div class="lb page" data-lang="en">
+        <div class="book-container" id="top-en">
+
+            <!-- 书名页 -->
+            <div class="title-page">
+                <h1>Benevolent Governance</h1>
+                <div class="sub">From Millennia of Governing Tradition to China's Poverty Alleviation Miracle</div>
+                <div class="author-line">Xu Ping</div>
+                <div class="org-line">GFI Flow Intelligence · gfiintel.com</div>
+                <div class="download-bar">
+                    <a href="Benevolent_Governance.pdf" download class="download-btn">📄 Download English PDF</a>
+                    <a href="仁政.pdf" download class="download-btn pdf">📄 下载 中文 PDF</a>
+                </div>
+            </div>
+
+            <!-- 版权 -->
+            <div class="copyright-bar">
+                <div>Benevolent Governance · From Millennia of Governing Tradition to China's Poverty Alleviation Miracle</div>
+                <div>Xu Ping · © 2026 Xu Ping · GFI Flow Intelligence · gfiintel.com</div>
+                <div style="font-size:0.65rem; color:rgba(255,255,255,0.06);">All rights reserved. All data cited in this book are drawn from publicly verifiable official sources.</div>
+            </div>
+
+            <!-- 作者简介 -->
+            <div class="author-box">
+                <h3>About the Author</h3>
+                <p><strong>Xu Ping</strong> is the founder of GFI Flow Intelligence. Born in Taiwan, she moved to the United States as an adult and lived and worked there for many years. During her time in the U.S., she witnessed firsthand the reality of how national policy is deeply manipulated by capital and landed interests beneath the veneer of a highly developed capitalist society—land value appreciation captured by a few, electoral politics hijacked by vast sums of money, and social welfare reduced to a tool for "managing the poor" rather than a pathway for "eliminating poverty." It is this direct observation and reflection that led her to expand her research horizon to comparative social governance across different systems.</p>
+                <p><strong>In February 2016, Xu Ping visited The Venus Project in Florida</strong> and met with its founder, Jacque Fresco. The Venus Project advocates a "Resource-Based Economy"—a social design philosophy that ultimately seeks to transcend the monetary system entirely and manage global resources through scientific methods. At the time, this vision was largely dismissed by mainstream American society as overly futuristic and impractical. While Xu Ping shares the Venus Project's diagnosis that the monetary system is unsustainable, she advocates for <strong>Unconditional Basic Income (UBI)</strong> as a <strong>"soft landing"</strong> mechanism to ease the transition and prevent social disorder during the systemic collapse.</p>
+                <p>Based on this理念, she authored <strong><em>The Last Poverty Solution: A Global Commons Funding System for Universal Essential Access</em></strong>. The book proposes a dual-track architecture centered on the <strong>Global Commons Contribution Mechanism (GCCM)</strong> and the <strong>Humanitarian Consumption Quota (HCQ)</strong>—a rules-based, usage-linked contribution system that generates predictable structural resources from activities affecting the global commons or transboundary systems, converting them into traceable, accountable humanitarian consumption entitlements. The system is designed to provide the UN with predictable, sovereignty-safe, legally grounded 21st-century financing.</p>
+                <div class="testimonial">
+                    <p>"Very impressive work, it seems to be original."</p>
+                    <div class="source">— Peter T. Knight, Former Lead Economist for the Brazil Department, World Bank · Ph.D. in Economics, Stanford University</div>
+                </div>
+                <p><strong>In September 2025, Xu Ping was invited by the United Nations</strong> as a candidate for <strong>Senior Economic Affairs Officer (P5)</strong>.</p>
+                <p style="font-size:0.78rem; color:rgba(255,255,255,0.12); text-align:right; margin-top:0.3rem;">— August 2026 · gfiintel.com</p>
+            </div>
+
+            <!-- 目录 -->
+            <div class="toc">
+                <h2>Contents</h2>
+                <div class="toc-grid">
+                    <a href="#preface-en" style="font-weight:700;">Preface</a>
+                    <span></span>
+                    <span class="part-label">— Part I: Millennia of Governance —</span>
+                    <span></span>
+                    <a href="#ch1-en">Chapter 1: From "The People Are the Foundation of the State" to "People-Centered"</a>
+                    <a href="#ch2-en">Chapter 2: Selecting the Virtuous and Capable</a>
+                    <a href="#ch3-en">Chapter 3: "Great Unity" and State Capacity</a>
+                    <span class="part-label">— Part II: The Western Illusion —</span>
+                    <span></span>
+                    <a href="#ch4-en">Chapter 4: Land, Capital, and Power</a>
+                    <a href="#ch5-en">Chapter 5: The Governance-Effectiveness Paradox of Electoral Politics</a>
+                    <a href="#ch6-en">Chapter 6: The Limitations of GDP Accounting</a>
+                    <a href="#ch7-en">Chapter 7: An International Comparison of Public Service Delivery Capacity</a>
+                    <a href="#ch8-en">Chapter 8: The Design Dilemma of Welfare Systems</a>
+                    <a href="#ch9-en">Chapter 9: Systems Thinking in Complex Governance</a>
+                    <span class="part-label">— Part III: Contemporary Practice —</span>
+                    <span></span>
+                    <a href="#ch10-en">Chapter 10: Scale and Speed — An Empirical Analysis of Poverty Reduction Performance</a>
+                    <a href="#ch11-en">Chapter 11: Institutional Design — The Implementation Mechanisms of Targeted Poverty Alleviation</a>
+                    <a href="#ch12-en">Chapter 12: Land Policy and Governance Legitimacy</a>
+                    <a href="#ch13-en">Chapter 13: Infrastructure and Public Services — A Comparative Perspective on Institutional Effectiveness</a>
+                    <a href="#final-en" style="font-weight:700;">Final Chapter: The Legitimacy of Governance — A Performance-Based Theoretical Examination</a>
+                    <a href="#afterword-en" style="font-weight:700;">Afterword</a>
+                    <a href="#appendix-en" style="font-weight:700;">Appendix: Data Sources and Key Theses</a>
+                </div>
+            </div>
+
+            <!-- ===== 正文（英文版） ===== -->
+
+            <!-- Preface -->
+            <div class="section" id="preface-en">
+                <div class="part-head">Preface</div>
+                <p>This book is titled <em>Benevolent Governance</em>.</p>
+                <p>The term "benevolent governance" (<em>renzheng</em>) originates from China's oldest political tradition. More than two thousand years ago, Mencius said to King Hui of Liang: "If the king practices benevolent governance for the people, reducing punishments and fines, lowering taxes and levies, and allowing deep plowing and timely weeding." He told the ruler that true governance is not exploitation nor control—it is enabling the people to live good lives.</p>
+                <p>Four thousand years later, this ancient ideal has become reality on Chinese soil—98.99 million rural poor have been lifted out of poverty, and more than 800 million people have escaped poverty overall. This is the largest-scale, fastest, and most effective poverty reduction campaign in human history.</p>
+                <p>This is not a "miracle." A miracle is something that descends from the heavens, inexplicable and unrepeatable. But every step of China's poverty reduction is clear and traceable—with institutions, methods, people who executed, and results that can be verified.</p>
+                <p>This is "benevolent governance." Benevolent governance is not charity—it is a fundamental duty. Not alms—it is responsibility. Not a miracle—it is institutional inevitability.</p>
+                <p>At the same time, those Western countries that style themselves as "beacons of democracy" are experiencing profound institutional crises. They cannot build subways, repair roads, house their people, or feed their children—yet they still have the audacity to force upon China a system in which they themselves do not believe.</p>
+                <p>This book has two purposes:</p>
+                <p><strong>First, to explain clearly what China has done right.</strong> From the people-centered philosophy of a millennia-old governing tradition to the systematic practice of contemporary poverty alleviation, China has forged a path completely different from the West. This path is rooted in its own civilization, serves its own people, and proves its legitimacy through tangible "delivery."</p>
+                <p><strong>Second, to expose the lies the West tries to force upon China.</strong> Elections are not the entirety of democracy, freedom is not the monopoly of capital, and governance is not a stage for performance. Western governments have long devolved into asset management firms for capitalists and landlords—they have no standing to teach others how to govern.</p>
+                <p>"Benevolent governance" is not just the title of a book. It is the foundation of Chinese governance, the collective name for the transformed destinies of 800 million people, and the right path for humanity.</p>
+                <p style="text-align:right; margin-top:1.2rem;">So begins the preface.</p>
+            </div>
+
+            <!-- Part I -->
+            <div class="section" id="part1-en">
+                <div class="part-head"><span class="badge">Part I</span> Millennia of Governance — The People-Centered Tradition in Chinese Statecraft</div>
+                <p class="no-indent" style="font-style:italic; color:var(--sub);">A civilization uninterrupted for five thousand years necessarily accumulates its governing wisdom through long historical practice. Core concepts in China's governing tradition—such as "people-centered," "selecting the virtuous and capable," and "great unity"—did not arise from abstract theoretical construction but were gradually distilled from concrete governing practices: Yu the Great taming the floods, the Dujiangyan Irrigation System, the Grand Canal, the imperial examination system, and famine relief.</p>
+                <p>"The people are the foundation of the state; when the foundation is firm, the state is at peace." This statement from the <em>Book of Documents</em> can be regarded as the earliest theoretical formulation in China's political tradition concerning the relationship between state and people. It proposes a core proposition: <strong>the legitimacy of the state rests on the well-being of the people, not on the will of the sovereign, elites, or any particular group.</strong></p>
+                <p>This part proceeds from this proposition to trace the historical evolution and contemporary continuity of three core concepts in China's governing tradition.</p>
+            </div>
+
+            <!-- Chapter 1 -->
+            <div class="section" id="ch1-en">
+                <div class="chapter-title">Chapter 1<br>From "The People Are the Foundation of the State" to "People-Centered"</div>
+                <div class="epigraph">"The people are the foundation of the state; when the foundation is firm, the state is at peace."<cite>— <em>Book of Documents</em>, "Songs of the Five Sons"</cite></div>
+                <p><strong>(I) The Classical Formulation of People-Centered Thought</strong></p>
+                <p>One of the earliest core concepts in Chinese governing thought is "people-centered."</p>
+                <p>The <em>Book of Documents</em> records: "The people are the foundation of the state; when the foundation is firm, the state is at peace." This formulation establishes "the people" as the foundation of the state—only when this foundation is firm can the state be secure. In the historical context of more than two thousand years BCE, this proposition had theoretical value far beyond its time.</p>
+                <p>Confucius proposed: "Practice frugality and love the people; employ the people in accordance with the seasons." This proposition contains specific requirements for rulers: conserve public resources, care for the people's welfare, and do not arbitrarily conscript labor. Laozi used the metaphor "governing a great state is like cooking a small fish" to emphasize that governance should respect the inherent laws of things and avoid excessive intervention and capricious changes.</p>
+                <p>Mencius further systematized "people-centered" thought. He said to King Hui of Liang: "If the king practices benevolent governance for the people, reducing punishments and fines, lowering taxes and levies, and allowing deep plowing and timely weeding." Here, "benevolent governance" is concretized into actionable policy directions: reducing punishments, lowering taxes, and ensuring production. Mencius's more famous formulation is: "The people are the most important, the state comes next, and the sovereign is the least." This proposition places the people above the state and the sovereign, establishing "the people" as the ultimate source of political legitimacy.</p>
+                <p>Mencius also proposed: "Extend respect for the elderly in your own family to the elderly in others' families; extend care for the young in your own family to the young in others' families." This statement extends family ethics to social ethics, expressing an expectation of mutual assistance among members of society—an idea that later received institutional responses in social relief traditions.</p>
+                <p><strong>(II) Historical Continuity and Contemporary Transformation of People-Centered Thought</strong></p>
+                <p>From the <em>Book of Documents</em> to Mencius, from "the people are the foundation of the state" to "people-centered"—this intellectual thread, despite its ups and downs in Chinese history, has continuously existed within the tradition of Chinese political discourse.</p>
+                <p>The practice of contemporary poverty alleviation in China forms a discernible continuity with "people-centered" thought at the conceptual level. The consistency of its core logic lies in: <strong>treating the basic livelihood security of the people as the priority of national governance and realizing it through institutionalized means.</strong> In this sense, poverty alleviation can be understood as an institutional transformation of the "people-centered" concept in the contemporary era.</p>
+            </div>
+
+            <!-- Chapter 2 -->
+            <div class="section" id="ch2-en">
+                <div class="chapter-title">Chapter 2<br>Selecting the Virtuous and Capable — The Institutional Gene of China's Cadre Selection</div>
+                <div class="epigraph">"Governing with virtue is like the North Star: it remains in its place while all the other stars orbit around it."<cite>— <em>The Analects</em>, "Wei Zheng"</cite></div>
+                <p><strong>(I) The Core Question of Selection Mechanisms</strong></p>
+                <p>Every political system must answer a fundamental question: <strong>By what criteria are rulers selected?</strong></p>
+                <p>Different political traditions give different answers. In China's governing tradition, "selecting the virtuous and capable" is a long-standing core concept—the legitimacy of rulers derives from their ability and moral character, not from their birth, wealth, or rhetorical skills.</p>
+                <p><strong>(II) The Historical Experience of the Imperial Examination System</strong></p>
+                <p>From the Han dynasty's recommendation system to the Sui and Tang dynasties' imperial examination system, China began exploring institutionalized paths for selecting officials through examination more than two thousand years ago. The imperial examination system constituted the main channel for official selection in China for many centuries. Its basic features were: relatively objective standards, openness to all social strata, and content relevant to governance. As a large-scale, standardized talent selection mechanism, it was pioneering in world political history.</p>
+                <p><strong>(III) Institutional Features of Contemporary Cadre Selection</strong></p>
+                <p>Contemporary China's cadre selection system maintains continuity with the "selecting the virtuous and capable" tradition at the conceptual level. In concrete operation, it features: multi-tiered training mechanisms, performance-oriented assessment systems, and a combination of organizational review and public evaluation.</p>
+                <p><strong>(IV) A Comparative Perspective on Selection Mechanisms</strong></p>
+                <p>Within the framework of comparative politics, different political systems show significant differences in their "selection criteria." Electoral systems tend to reward "electoral capacity"—including public speaking, media management, and campaign organization—yet these skills do not necessarily overlap with the policy analysis, administrative management, and cross-sectoral coordination required for governance.</p>
+                <p>The design logic of contemporary China's cadre selection system is: through multi-tiered training and long-term performance observation, it screens for talent with proven governing ability. Whether this system always achieves its intended goals in practice is an open question requiring ongoing examination. But its design concept—<strong>selecting based on governing performance rather than rhetorical ability</strong>—is logically more congruent with the function of "governance" itself.</p>
+            </div>
+
+            <!-- Chapter 3 -->
+            <div class="section" id="ch3-en">
+                <div class="chapter-title">Chapter 3<br>"Great Unity" and State Capacity</div>
+                <div class="epigraph">"One who does not plan for ten thousand generations is insufficient to plan for a single moment; one who does not plan for the whole situation is insufficient to plan for a single part."<cite>— Chen Danran, <em>Wu Yan</em></cite></div>
+                <p><strong>(I) The Historical Formation of "Great Unity"</strong></p>
+                <p>In 221 BCE, Qin unified the six states and implemented "uniform writing, uniform wheel tracks, and uniform weights and measures." These measures, on the basis of political unification, further realized institutional unification, market unification, and cultural unification. China thereby became one of the earliest countries in the world to establish a unified large market.</p>
+                <p>"Great unity" does not refer merely to territorial unity, but to the unity of the institutional framework—including unified weights and measures, a unified writing system, a unified legal system, and a transportation network connecting the entire country. These institutional arrangements provided the necessary conditions for large-scale public works.</p>
+                <p><strong>(II) Historical Cases: Organizational Capacity for Large-Scale Public Works</strong></p>
+                <p>The Dujiangyan Irrigation System (begun in 256 BCE) and the Grand Canal (begun in 605 CE) are two representative large-scale public works in Chinese history. From the perspective of public economics, large-scale infrastructure is characterized by large investment, long construction periods, and broad benefits, and typically requires the state to act as the primary organizer.</p>
+                <p><strong>(III) Contemporary Continuity: The Institutional Basis of Infrastructure Construction</strong></p>
+                <p>Contemporary China's large-scale infrastructure construction maintains continuity with the "great unity" tradition in institutional logic: policy continuity mechanisms, cross-regional coordination capacity, and resource mobilization capacity. Its achievements include: 46,000 km of high-speed rail, 180,000 km of expressways, 100% electrification of administrative villages, and over 98% fiber-optic coverage of administrative villages.</p>
+                <p><strong>(IV) Comparative Analysis: Institutional Tradition and Governance Effectiveness</strong></p>
+                <p>In crisis response and large-scale public works, different institutional traditions produce observable performance differences. These differences reflect <strong>institutional design variations in "cross-regional coordination" and "long-term planning."</strong> The contemporary institutional transformation of China's "great unity" tradition—including unified planning systems, tiered implementation mechanisms, and sustained policy frameworks—constitutes the institutional foundation for its effectiveness in large-scale public works provision.</p>
+            </div>
+
+            <!-- Part II -->
+            <div class="section" id="part2-en">
+                <div class="part-head"><span class="badge">Part II</span> The Western Illusion — Why Electoral Democracy Does Not Equal Good Governance</div>
+                <p class="no-indent" style="font-style:italic; color:var(--sub);">In the Western political tradition, "democracy" is defined as "rule by the people." However, when we shift our gaze from ideas to reality, a set of data comparisons warrants reflection:</p>
+                <ul>
+                    <li>In the UK, approximately 0.6% of the population controls two-thirds of the land;</li>
+                    <li>The 2024 U.S. election cost a total of $15.9 billion;</li>
+                    <li>The U.S. has over 650,000 homeless people and approximately 26 million without basic health insurance;</li>
+                    <li>The UK has over 14 million people living in poverty, with about 1 million children in "destitution";</li>
+                    <li>U.S. infrastructure is rated C-, and large-scale infrastructure plans are repeatedly stalled by partisan gridlock.</li>
+                </ul>
+                <p>These facts raise a fundamental question: Why does a system that claims to be "democratic" perform so poorly in addressing basic livelihood issues such as land concentration, wealth disparity, healthcare coverage, and infrastructure?</p>
+                <p>At the same time, China has lifted more than 800 million people out of poverty over the past forty years. The performance gap between these two governance paths compels us to re-examine the universalist claims of the Western "democratic" model.</p>
+                <p>This part aims to conduct a structural re-examination of the Western "democratic" model from six dimensions—land systems, electoral mechanisms, economic statistics, government effectiveness, welfare design, and decision-making thinking—based not on ideological preference but on verifiable facts and logic.</p>
+            </div>
+
+            <!-- Chapter 4 -->
+            <div class="section" id="ch4-en">
+                <div class="chapter-title">Chapter 4<br>Land, Capital, and Power — An Institutional Analysis of Western Governance Structures</div>
+                <div class="epigraph">"The people are the most important, the state comes next, and the sovereign is the least."<cite>— Mencius, <em>Jin Xin Xia</em></cite></div>
+                <p>The constitutional texts of Western countries generally proclaim "popular sovereignty." However, classic political science studies have long pointed out that there is often a significant gap between textual provisions and actual power operations. To understand the real logic of Western governance, it is necessary to start from three fundamental dimensions: <strong>land ownership structure, capital's influence on the political process, and the distribution mechanisms of social wealth.</strong></p>
+
+                <p><strong>(I) The UK: Extreme Concentration of Land Ownership and Its Institutional Causes</strong></p>
+                <p>The UK has one of the highest concentrations of land ownership in the world. Hereditary aristocrats and gentry—approximately 0.6% of the population—control about two-thirds of the country's land (approximately 20 million acres). About half of England's land is held by less than 1% of the population. The 92 hereditary seats in the House of Lords mean that in the legislative body of approximately 66 million British citizens, some members participate in lawmaking by birthright rather than by election.</p>
+                <p>Of particular concern is the distribution mechanism for land value appreciation. In the UK, when agricultural land is rezoned for development, its market value can increase tenfold or even a hundredfold—this appreciation does not derive from the landowner's contribution but from social development and public investment. Yet the current system allows this appreciation to be entirely captured privately.</p>
+
+                <p><strong>(II) The U.S.: Campaign Finance, the Revolving Door, and Policy Bias</strong></p>
+                <p>The 2024 U.S. election cost approximately $15.9 billion, with the top 1% of donors providing over 70% of Super PAC funding. The "revolving door" phenomenon further exacerbates the link between capital and policy—the movement of personnel between senior government positions and the private sector is an institutionalized norm.</p>
+                <p>The results of policy outputs provide supporting evidence: the lowest-income 50% of households hold only about 2.5% of national wealth; approximately 26 million Americans lack basic health insurance; gun deaths average about 40,000 annually, with federal gun control legislation stuck in long-term stalemate; infrastructure is rated C-.</p>
+
+                <p><strong>(III) Social Mobility: The Gap Between Promise and Reality</strong></p>
+                <p>In the UK, private school students are only about 7% of the school-age population, yet they account for over 40% of admissions to Oxford and Cambridge and over 80% of top-tier positions in the UK. In the U.S., a child born into the lowest-income 20% of families has only about a 7.5% chance of reaching the highest-income 20%.</p>
+
+                <div class="highlight-box">
+                    <p><strong>UK model:</strong> Where you are born into the manor determines your life trajectory.</p>
+                    <p><strong>China model:</strong> Where you are born into the mountains, the state builds roads, bridges, schools, and poverty alleviation programs to bring you out.</p>
+                    <p><strong>Who is truly governing? Who is merely managing assets for the landlord class? The contrast is stark.</strong></p>
+                </div>
+
+                <p><strong>(IV) The Legitimacy of Model Export</strong></p>
+                <p>Based on the above analysis, we can make a prudent but clear judgment: a system that reserves seats in its legislature for hereditary aristocrats, is highly open to capital in its policy process, and has persistently low social mobility—by the standards of its own performance—can hardly provide a convincing example of "democracy."</p>
+                <p>When a country's governance system cannot even effectively respond to the basic livelihood needs of its own citizens, the legitimacy of exporting its "democratic model" to other countries becomes a proposition that must be seriously questioned.</p>
+            </div>
+
+            <!-- Chapter 5 -->
+            <div class="section" id="ch5-en">
+                <div class="chapter-title">Chapter 5<br>The Governance-Effectiveness Paradox of Electoral Politics — Structural Mismatch Between Selection Mechanisms and Governing Capacity</div>
+                <div class="epigraph">"Fine words and an insinuating appearance are seldom associated with true benevolence."<cite>— <em>The Analects</em>, "Xue Er"</cite></div>
+                <p>Elections are one of the core institutional arrangements of modern democracy. However, a theoretical question long ignored is: <strong>the capabilities rewarded by elections are not the same set of capabilities required for governance.</strong></p>
+                <p>The skills required for electoral mobilization mainly include: public speaking and rhetoric, media relations management, opponent attack strategies, and voter sentiment management. These skills differ significantly from those required for public governance—policy analysis and decision-making, cross-sectoral coordination, long-term strategic planning, institutional operations, and crisis management.</p>
+
+                <p><strong>(II) The Institutional Causes of Electoral Cycles and Policy Short-Termism</strong></p>
+                <p>Taking the U.S. as an example, the presidential term is four years, with a maximum of two terms. Under this institutional constraint, the effective time a government can truly devote to policy implementation is often less than half—the first year is for transition and team building, and after the midterm elections, it enters the next campaign cycle.</p>
+                <p>This cyclical electoral pressure produces a "short-term preference" in policy-making: infrastructure investment is delayed (large-scale projects take too long to translate into votes), climate policy oscillates (one administration signs, the next withdraws, the next re-enters), and social security reform is postponed (reforms alienate voting blocs in the short term).</p>
+                <p>By comparison, China's policy planning takes the "Five-Year Plan" as its basic cycle, has been continuously implemented since 1953 for over seventy years, and has formed the policy continuity of "one term following another." The U.S. policy-making process, by contrast, exhibits cyclical swings—each new president's executive orders can overturn those of the previous administration, causing policy directions to reverse every four to eight years.</p>
+
+                <p><strong>(III) The Indirectness of Elections: Institutional Distance Between Popular Authorization and Power Operations</strong></p>
+                <p>The U.S. Electoral College system allows a candidate to win the presidency despite losing the national popular vote. The UK prime minister is not directly elected by popular vote—voters vote for local constituency MPs, and the party with the parliamentary majority chooses its leader as prime minister. This institutional indirect authorization raises questions about "democratic density."</p>
+
+                <p><strong>(IV) Chapter Summary: Structural Reflections on Selection Mechanisms and Governance Effectiveness</strong></p>
+                <p>Whether a system deserves to be called "democratic" depends not only on the formal completeness of its electoral procedures but also on whether it can gain substantive recognition from the people for the governance system through sustained and effective "delivery."</p>
+            </div>
+
+            <!-- Chapter 6 -->
+            <div class="section" id="ch6-en">
+                <div class="chapter-title">Chapter 6<br>The Limitations of GDP Accounting and Their Policy Implications — Analyzing the Link Between Economic Growth and Human Well-Being</div>
+                <div class="epigraph">"When name and reality correspond, there is order; when name and reality do not correspond, there is disorder."<cite>— <em>Guanzi</em>, "Jun Chen Shang"</cite></div>
+                <p><strong>(I) Introduction: A Misunderstood Indicator and Its Policy Consequences</strong></p>
+                <p>GDP's inventor, Simon Kuznets, clearly pointed out its fundamental limitation when presenting his report to the U.S. Congress in 1934—"the welfare of a nation can scarcely be inferred from a measure of national income."</p>
+
+                <p><strong>(II) Three Structural Limitations of GDP Accounting</strong></p>
+                <p><strong>Limitation One: Value-neutrality of transaction nature.</strong> GDP measures the total amount of market transactions, not the net social benefit of transactions—spending to clean up an environmental disaster is statistically equivalent in GDP to spending to build a school.</p>
+                <p><strong>Limitation Two: Imbalance between "output" and "depletion."</strong> Natural capital depletion and infrastructure depreciation are not deducted in GDP. According to UNEP estimates, the global economic loss caused by resource inefficiency is enormous.</p>
+                <p><strong>Limitation Three: Aggregate figures mask distribution.</strong> GDP measures the total, not asking "who got the value." U.S. real GDP has grown several times over, but inflation-adjusted median hourly wage growth has been far below labor productivity growth.</p>
+
+                <p><strong>(III) Empirical Case of GDP-Livelihood Decoupling: The United States</strong></p>
+                <p>U.S. GDP per capita exceeds $75,000, yet infrastructure is rated C-, about 26 million lack basic health insurance, and homeless people exceed 650,000.</p>
+
+                <p><strong>(IV) China's Transcendence: From "GDP Worship" to Multi-Dimensional Performance Evaluation</strong></p>
+                <p>In 2013, China's Organization Department explicitly stated that GDP and growth rate rankings should not be used, and GDP assessment was abolished for poverty-focused counties in restricted development zones and ecologically fragile areas. Chinese academia is also promoting statistical frameworks to "go beyond GDP."</p>
+
+                <div class="highlight-box">
+                    <p class="golden">GDP is only half the account book; benevolent governance is the complete answer.</p>
+                    <p>GDP can tell you how much a country has "produced," but it never tells you—who is hungry? Who sleeps on the streets? Whose child cannot afford school? Whose elderly cannot afford medical care?</p>
+                </div>
+            </div>
+
+            <!-- Chapter 7 -->
+            <div class="section" id="ch7-en">
+                <div class="chapter-title">Chapter 7<br>An International Comparison of Public Service Delivery Capacity — Infrastructure, Healthcare, and Governance Effectiveness</div>
+                <div class="epigraph">"Governing with virtue is like the North Star: it remains in its place while all the other stars orbit around it."<cite>— <em>The Analects</em>, "Wei Zheng"</cite></div>
+                <p><strong>(I) Introduction: Public Service Delivery as a Core Dimension of Governance Effectiveness</strong></p>
+                <p>The legitimacy of government derives not only from the procedures by which it is produced but also from the functions it performs. Public service delivery is the most direct and perceptible basis for the people's assessment of government performance.</p>
+
+                <p><strong>(II) The U.S.: The World's Highest GDP and Long-Term Infrastructure Decay</strong></p>
+                <p>The American Society of Civil Engineers' 2021 assessment rated U.S. infrastructure C-: 43% of public roads are in "poor" or "mediocre" condition, and over 46,000 bridges have structural defects. Causes include election-cycle short-termism, interest group influence, hollowing-out of government core capacity, and partisan polarization.</p>
+
+                <p><strong>(III) The UK: The Delivery Crisis of the National Health Service</strong></p>
+                <p>The NHS waiting list exceeds 7.5 million people, with excess deaths from waiting list delays estimated in the thousands to tens of thousands annually. The UK government increasingly relies on external consulting firms, with government internal professional capacity continuing to erode.</p>
+
+                <p><strong>(IV) Alternative Mechanisms for Public Goods Provision: Charity as Compensation for "Dysfunction"</strong></p>
+                <p>U.S. charitable donations exceeded $557 billion in 2023, yet simultaneously there were over 650,000 homeless people and about 37 million in poverty. Entrusting basic livelihood security to charity is essentially a systemic risk transfer—shifting the government's statutory responsibility onto unpredictable private benevolence.</p>
+
+                <p><strong>(V) A Comparative Reference: The Institutional Logic of China's Public Service Delivery</strong></p>
+                <p>China's infrastructure achievements include: 46,000 km of high-speed rail, 180,000 km of expressways, and 100% electrification of administrative villages. Its institutional foundations include policy continuity, maintenance of government core capacity, fiscal resource allocation direction, and mobilization and implementation mechanisms.</p>
+
+                <div class="highlight-box">
+                    <p class="golden">The legitimacy of governance must ultimately rest on whether the government can effectively perform its core functions—providing the people with security, well-being, and fair opportunities for development.</p>
+                </div>
+            </div>
+
+            <!-- Chapter 8 -->
+            <div class="section" id="ch8-en">
+                <div class="chapter-title">Chapter 8<br>The Design Dilemma of Welfare Systems — The Divergent Paths of "Managing Poverty" and "Eliminating Poverty"</div>
+                <div class="epigraph">"Extend respect for the elderly in your own family to the elderly in others' families; extend care for the young in your own family to the young in others' families."<cite>— Mencius, <em>Liang Hui Wang I</em></cite></div>
+                <p><strong>(I) Introduction: Two Design Philosophies of Welfare Systems</strong></p>
+                <p>Help for vulnerable groups should center on human dignity, not on "control." There is a fundamental dividing line in welfare systems: "managing poverty" versus "eliminating poverty."</p>
+
+                <p><strong>(II) The Welfare Cliff Effect: Incentive Distortion in Institutional Design</strong></p>
+                <p>In the U.S. social assistance system, a small increase in income can lead to a large loss of benefits—a low-income family that increases its annual income by $1,000 may lose approximately $4,600 in food, housing, and child care subsidies. The SNAP program has an improper payment rate of about 10.62%, totaling approximately $10.1 billion in improper payments.</p>
+
+                <p><strong>(III) Punitive Conditional Design: Assistance Logic Oriented Toward Behavioral Control</strong></p>
+                <p>The UK has over 14 million people living in relative poverty, with about 1 million children in severe poverty. Amnesty International's 2025 report points out that the UK social security system is a system that "punishes, harms, and dehumanizes people through the procedures it establishes."</p>
+
+                <p><strong>(IV) Welfare Stigmatization: Structural Bias in Poverty Attribution</strong></p>
+                <p>The "culture of poverty" theory attributes poverty mainly to the individual choices of recipients, while a large body of empirical research shows that the main causes of poverty are structural.</p>
+
+                <p><strong>(V) Development-Oriented Assistance Systems: China's Dibao System and Targeted Poverty Alleviation</strong></p>
+                <p>China's dibao (minimum subsistence guarantee) system once covered over 70 million urban and rural poor, with design features including household income assessment, categorical protection, dynamic management, and gradual exit. Targeted poverty alleviation shifted from "passive transfusion" to "active blood production."</p>
+
+                <p><strong>(VI) The Unconditional Basic Income Movement and China's Dibao System</strong></p>
+                <p>China's dibao system, in not attaching behavioral conditions, has conceptual intersections with UBI proposals. The labor participation rate of the poverty-alleviated population did not decrease due to receiving transfers but actually achieved sustained employment.</p>
+
+                <div class="highlight-box">
+                    <p class="golden">The Western welfare system uses money to lock the poor in cages. China's poverty alleviation work uses development to lead the poor out of the mountains.</p>
+                </div>
+            </div>
+
+            <!-- Chapter 9 -->
+            <div class="section" id="ch9-en">
+                <div class="chapter-title">Chapter 9<br>Systems Thinking in Complex Governance — A Methodological Reflection on Public Policy</div>
+                <div class="epigraph">"One who does not plan for ten thousand generations is insufficient to plan for a single moment; one who does not plan for the whole situation is insufficient to plan for a single part."<cite>— Chen Danran, <em>Wu Yan</em></cite></div>
+                <p><strong>(I) Introduction: Cognitive Limitations in Complex Systems</strong></p>
+                <p>The object of public policy—human society—is a complex adaptive system, characterized by feedback loops, emergence effects, and time delays.</p>
+
+                <p><strong>(II) Linear Thinking and Its Limitations in Public Policy</strong></p>
+                <p>Linear thinking (A leads to B, B leads to C) is effective in simple mechanical systems, but in complex systems it often leads to policy intervention failure.</p>
+
+                <p><strong>(III) Cases of Policy Failure: The Cost of Linear Thinking</strong></p>
+                <p><strong>Afghanistan Security Forces:</strong> $83 billion invested over 20 years, collapsed 11 days after withdrawal. <strong>Vietnam War strategy misapplication:</strong> applying the "graduated escalation" strategy from the Cuban Missile Crisis to Vietnam led to 58,220 U.S. military deaths. <strong>German sick leave policy:</strong> restricting sick leave days led to employees working while sick, worsening conditions, and increasing sick leave overall.</p>
+
+                <p><strong>(IV) Systems Thinking in Governance: The Case of Poverty Alleviation</strong></p>
+                <p>Poverty alleviation demonstrates multi-dimensional applications of systems thinking: problem identification (due to illness? disaster? impassable roads?), intervention design (differentiated solutions), execution organization (multi-tiered systems), dynamic monitoring (preventing return to poverty), and long-term planning (five-year transition period).</p>
+
+                <p><strong>(V) Theoretical Perspective: Tainter and the Lessons of Complex Society Collapse</strong></p>
+                <p>Tainter pointed out that complex societies solve problems by continuously increasing institutional complexity, but when the marginal cost exceeds the marginal benefit, the system faces collapse risk.</p>
+
+                <div class="highlight-box">
+                    <p class="golden">The West uses linear thinking to govern complex systems—spending $83 billion to train the Afghan army, collapsing in 11 days. China uses systems thinking to govern complex systems—spending 40 years to lift 800 million people out of poverty.</p>
+                </div>
+            </div>
+
+            <!-- Part III -->
+            <div class="section" id="part3-en">
+                <div class="part-head"><span class="badge">Part III</span> Contemporary Practice — Poverty Alleviation, the Greatest Benevolent Governance in Human History</div>
+                <p class="no-indent" style="font-style:italic; color:var(--sub);">The core meaning of the "benevolent governance" concept in China's political tradition can be summarized as: people-centered, light corvée and low taxes, benefiting all. This concept has gained a new institutional vehicle in contemporary China's policy practice—poverty alleviation.</p>
+                <p>98.99 million rural poor lifted out of poverty, 832 impoverished counties removed from the list, 128,000 impoverished villages removed from the list, and over 800 million people lifted out of poverty since reform and opening-up—these figures constitute the largest-scale, widest-coverage systemic social engineering project in human poverty reduction history.</p>
+            </div>
+
+            <!-- Chapter 10 -->
+            <div class="section" id="ch10-en">
+                <div class="chapter-title">Chapter 10<br>Scale and Speed — An Empirical Analysis of Poverty Reduction Performance</div>
+                <div class="epigraph">"The people are the foundation of the state; when the foundation is firm, the state is at peace."<cite>— <em>Book of Documents</em>, "Songs of the Five Sons"</cite></div>
+                <p><strong>(I) Poverty Reduction Scale: Verifiable Empirical Data</strong></p>
+                <p>On February 25, 2021, China officially announced: 98.99 million rural poor have been lifted out of poverty under the current standard, 832 impoverished counties have all been removed from the list, and 128,000 impoverished villages have all been removed from the list. Since reform and opening-up, China has lifted a cumulative total of over 800 million people out of poverty, accounting for over 70% of global poverty reduction during the same period, and achieved the UN 2030 Sustainable Development Goals poverty reduction target 10 years ahead of schedule.</p>
+
+                <p><strong>(II) Poverty Reduction Speed: The Institutional Foundation of 12.38 Million Annual Poverty Reduction</strong></p>
+                <p>During the poverty alleviation phase (2012-2020), China lifted an average of 12.38 million people out of poverty annually, nearly twice the average of the previous three phases. From an international comparison, the U.S. official poverty rate has shown no sustained downward trend over the past fifty years; the UK has about 14 million people living in relative poverty.</p>
+
+                <div class="highlight-box">
+                    <p class="golden">The West uses votes to "prove" that it represents the people—China uses 800 million people lifted out of poverty to prove that it represents the people.</p>
+                    <p>98.99 million people lifted out of poverty are not numbers—they are 98.99 million lives, moving from hunger to food security, from despair to hope, from the mountains to the world.</p>
+                </div>
+            </div>
+
+            <!-- Chapter 11 -->
+            <div class="section" id="ch11-en">
+                <div class="chapter-title">Chapter 11<br>Institutional Design — The Implementation Mechanisms of Targeted Poverty Alleviation</div>
+                <p><strong>(I) The Institutional Framework of Targeted Poverty Alleviation</strong></p>
+                <p>The concept of "targeted poverty alleviation" was proposed in 2013 and subsequently systematized into a complete institutional framework. The "Six Precisions" identification and intervention mechanisms and the "Five Approaches" categorical poverty reduction pathways.</p>
+
+                <p><strong>(II) The Organizational Structure of the Implementation System</strong></p>
+                <p>The vertical implementation chain (central coordination, provincial responsibility, county-level implementation), the village-based work team system (255,000 work teams, over 3 million first secretaries and resident cadres), and the East-West cooperation mechanism (8 eastern provinces paired with 10 western provinces, 30 years of continuous operation).</p>
+
+                <p><strong>(III) Consolidation Mechanisms: The Five-Year Transition Period</strong></p>
+                <p>After 2020, a five-year transition period was established to maintain overall stability of major assistance policies. During the "14th Five-Year Plan" period, central finance allocated a cumulative 850.5 billion yuan in convergence funds, assisting over 7 million monitored individuals to stably eliminate the risk of returning to poverty.</p>
+            </div>
+
+            <!-- Chapter 12 -->
+            <div class="section" id="ch12-en">
+                <div class="chapter-title">Chapter 12<br>Land Policy and Governance Legitimacy — A Comparative Analysis Based on China and the UK</div>
+                <div class="epigraph">"The people are the most important, the state comes next, and the sovereign is the least."<cite>— Mencius, <em>Jin Xin Xia</em></cite></div>
+                <p><strong>(I) Land System as an Entry Point for Governance Analysis</strong></p>
+                <p>The essence of land value growth is the collective outcome of social development. The distribution mechanism of land value appreciation directly affects social equity and governance legitimacy.</p>
+
+                <p><strong>(II) The UK Model: Private Capture of Land Value Appreciation</strong></p>
+                <p>In the UK, when agricultural land is rezoned for development, market value can increase tenfold to a hundredfold, but this appreciation is entirely or mostly captured privately by the landowner.</p>
+
+                <p><strong>(III) The China Model: Public Land Ownership and Shared Appreciation</strong></p>
+                <p>In China, urban land is owned by the state and rural land by collectives. Land transfer fees are incorporated into local finance and used to support transportation infrastructure, schools, hospitals, and other public projects.</p>
+
+                <p><strong>(IV) Comparative Analysis: The Governance Implications of Two Land Systems</strong></p>
+                <p><strong>UK model:</strong> Protecting existing property rights, land as a tool for wealth storage and intergenerational transmission. <strong>China model:</strong> Land as a public resource and policy tool, serving public purposes.</p>
+            </div>
+
+            <!-- Chapter 13 -->
+            <div class="section" id="ch13-en">
+                <div class="chapter-title">Chapter 13<br>Infrastructure and Public Services — A Comparative Perspective on Institutional Effectiveness</div>
+                <div class="epigraph">"Governing a great state is like cooking a small fish."<cite>— <em>Laozi</em></cite></div>
+                <p><strong>(I) Infrastructure as an Observational Window on Governance Effectiveness</strong></p>
+                <p>Infrastructure is an observable dimension for measuring national governance effectiveness, requiring long-term stable funding, cross-cycle policy continuity, and cross-regional coordination capacity.</p>
+
+                <p><strong>(II) The Supply Dilemma of U.S. Infrastructure</strong></p>
+                <p>C- rating, 43% of roads in poor condition, and 46,000 bridges with structural defects. Causes include the contradiction between electoral cycles and long-term investment, multiple veto points in the decision-making system, and outsourcing of public functions.</p>
+
+                <p><strong>(III) The Institutional Foundations of Chinese Infrastructure</strong></p>
+                <p>Policy continuity (five-year planning mechanism), land system coordination, and maintenance of government professional capacity. Outcomes include 46,000 km of high-speed rail, 180,000 km of expressways, and 100% electrification of administrative villages.</p>
+
+                <p><strong>(IV) Institutional Comparison of Infrastructure Supply</strong></p>
+                <p>The institutional comparison shows the differences between China and the U.S. in high-speed rail, expressways, ports, electrification rates, and fiber-optic coverage rates and their institutional causes.</p>
+
+                <div class="highlight-box">
+                    <p class="golden">A country that cannot even build a subway has no standing to teach others how to "govern." China did not say much; China built the longest high-speed railway in the world.</p>
+                </div>
+            </div>
+
+            <!-- Final Chapter -->
+            <div class="section" id="final-en">
+                <div class="part-head">Final Chapter<br>The Legitimacy of Governance — A Performance-Based Theoretical Examination</div>
+                <div class="epigraph">"Governing a great state is like cooking a small fish."<cite>— <em>Laozi</em></cite></div>
+                <p><strong>(I) The Theoretical Foundations of Governance Legitimacy</strong></p>
+                <p>Discussions of governance legitimacy in political science can generally be divided into two dimensions: <strong>procedural legitimacy</strong> and <strong>performance legitimacy</strong>. These two sources of legitimacy are not mutually exclusive, but in different political traditions and institutional systems, their weights differ.</p>
+
+                <p><strong>(II) Observable Indicators of Performance Legitimacy</strong></p>
+                <p>These include infrastructure provision, basic livelihood security, social mobility, and crisis response capacity.</p>
+
+                <p><strong>(III) Performance Comparison of Different Institutional Paths</strong></p>
+                <p>China's performance data in infrastructure, poverty reduction, and healthcare provide a reference case for performance legitimacy theory.</p>
+
+                <p><strong>(IV) Prudent Reflections on Institutional Export</strong></p>
+                <p>Institutional transplantation often involves complex social conditions and historical backgrounds. International institutional exchange should be seen as a mutual learning and locally adaptive process, not a one-way model export.</p>
+
+                <p><strong>(V) Conclusion: Returning to the Origin of Governance</strong></p>
+                <p>The ultimate purpose of governance is not the self-operation of procedures but, through sustained and effective action, responding to the people's basic needs for security, well-being, fairness, and development.</p>
+
+                <div class="highlight-box">
+                    <p class="golden">We do not need a system in which 0.6% of the people control two-thirds of the land to teach us how to govern. What we need is for the people to live good lives—and this goal, we have already achieved 800 million times over.</p>
+                </div>
+            </div>
+
+            <!-- Afterword -->
+            <div class="section" id="afterword-en">
+                <div class="part-head">Afterword</div>
+                <p>Throughout the writing of this book, one core question has persisted: <strong>How does one evaluate the quality of a governance system?</strong></p>
+                <p>One answer focuses on procedures—whether the government is produced through elections and whether there is multi-party competition. Another answer focuses on outcomes—whether the government has effectively provided security, well-being, infrastructure, and fair opportunities for development.</p>
+                <p>The position taken by this book is: <strong>The evaluation of governance systems should attend to both procedures and outcomes, but in the final analysis, the purpose of governance is the well-being of the people, not the self-operation of procedures.</strong></p>
+                <p>China's governing tradition has provided a value system centered on "people-centeredness." The contemporary institutional transformation of this system has formed a performance-oriented cadre selection mechanism, a long-term planning policy framework, and a public goods provision model supported by large-scale resource mobilization.</p>
+                <p>The poverty alleviation practice presented in this book is an application case of this governance logic in a specific policy domain. It is not a closed "success story" but an ongoing institutional evolutionary process. The goal toward which it points—<strong>enabling the people to live good lives</strong>—is a proposition that all governance systems should jointly pursue.</p>
+                <p>We call this governance concept "benevolent governance."</p>
+                <p><strong>It is not an ancient ideal; it is the daily reality of contemporary China.</strong></p>
+            </div>
+
+            <!-- Appendix -->
+            <div class="section" id="appendix-en">
+                <div class="part-head">Appendix<br>Data Sources and Key Theses</div>
+
+                <p><strong>I. Data Sources</strong></p>
+                <p>The main data cited in this book come from the following publicly available channels:</p>
+                <ul>
+                    <li><strong>Chinese official publications:</strong> White Papers of the State Council Information Office, monitoring data from the Ministry of Agriculture and Rural Affairs (National Rural Revitalization Bureau), statistical bulletins of the National Bureau of Statistics, and public reports from Xinhua News Agency and People's Daily.</li>
+                    <li><strong>International organization public data:</strong> United Nations Development Programme (UNDP) reports, World Bank open databases, International Monetary Fund (IMF) data.</li>
+                    <li><strong>Other countries' public data:</strong> American Society of Civil Engineers (ASCE) Infrastructure Report Card, U.S. Census Bureau poverty rate data, UK Office for National Statistics (ONS) data, Amnesty International investigation reports.</li>
+                </ul>
+                <p>All data can be verified through the above channels.</p>
+
+                <p><strong>II. Key Theses</strong></p>
+                <ul class="golden-list">
+                    <li><strong>"The people are the foundation of the state; when the foundation is firm, the state is at peace."</strong> — The core concept in China's political tradition of regarding people's well-being as the basis of state legitimacy has received institutional continuity in contemporary poverty alleviation practice.</li>
+                    <li>China's cadre selection system is conceptually based on "selecting the virtuous and capable," screening governance talent through multi-tiered training and long-term performance observation—a design logic highly congruent with the function of "governance" itself.</li>
+                    <li>The "great unity" tradition has been transformed in contemporary China into policy continuity mechanisms and cross-regional coordination capacity, providing the institutional foundation for large-scale public works and poverty reduction.</li>
+                    <li>The Western "democratic" model faces persistent performance challenges in land distribution, capital's influence on policy, and social mobility—the legitimacy of its claim to be a "universal template" should be prudently examined.</li>
+                    <li>Electoral systems tend to reward "electoral capacity" rather than "governing capacity"—a structural feature that creates tension with governance effectiveness.</li>
+                    <li>GDP as an economic indicator has inherent limitations—it does not distinguish types of transactions, deduct resource depletion, or ask about wealth distribution—and should not be used as a sole measure of human well-being.</li>
+                    <li>The effectiveness of public service delivery depends on the maintenance of government core capacity. When governments increasingly rely on external consultants, their autonomous planning and implementation capacity may face structural erosion.</li>
+                    <li>Welfare systems have two design paths—a punitive model oriented toward "managing poverty" and a developmental model oriented toward "eliminating poverty." The policy effectiveness of the two paths differs significantly.</li>
+                    <li>The object of public policy is a complex adaptive system; linear thinking in such systems often produces unintended consequences. Systems thinking is a necessary methodological foundation for complex governance.</li>
+                    <li>The evaluation of governance systems should attend to both procedures and outcomes. The ultimate purpose of governance is the well-being of the people, not the self-operation of procedures.</li>
+                </ul>
+
+                <p style="margin-top:1.2rem;"><strong>III. On the GL Framework</strong></p>
+                <p>The author, Xu Ping, based on her long-term accumulation in international policy research, has designed the <strong>GL Framework (Governance Legitimacy Framework)</strong>—a diagnostic tool for detecting "governance friction." The GL Framework quantifies the governance legitimacy of 100 global economies through eight parameters (waiting cost, repetition cost, collapse cost, information asymmetry cost, psychological cost, opportunity cost, transfer pathways, and degree of closed-loop). Its core concept is: <strong>a government that systematically transfers administrative costs to the most vulnerable groups, no matter how procedurally compliant, has already had its legitimacy undermined.</strong> The GL Framework is highly consistent with the core argument of <em>Benevolent Governance</em>—the former provides a quantitative diagnostic tool, while the latter unfolds historical and institutional analysis. Together they form a complete system from theory to methodology. For details, please visit <strong>gfiintel.com</strong>.</p>
+
+                <p style="text-align:right; color:rgba(255,255,255,0.15); margin-top:1.2rem; font-style:italic;">— End of Book —</p>
+            </div>
+
+            <!-- Footer -->
+            <div class="book-footer">
+                <em>Benevolent Governance</em> · From Millennia of Governing Tradition to China's Poverty Alleviation Miracle<br>
+                Xu Ping · GFI Flow Intelligence · gfiintel.com
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== 回到顶部 ===== -->
+    <a href="#top-zh" class="back-top" id="backTop" title="回到顶部">↑</a>
+
+    <script>
+        // ===== 语言切换 =====
+        document.addEventListener('DOMContentLoaded', function() {
+            const btns = document.querySelectorAll('.lb-btn');
+            const pages = document.querySelectorAll('.lb');
+            const backTop = document.getElementById('backTop');
+
+            function setLang(lang) {
+                btns.forEach(b => b.classList.toggle('on', b.dataset.lang === lang));
+                pages.forEach(p => p.classList.toggle('active', p.dataset.lang === lang));
+                // 更新回到顶部链接
+                if (lang === 'zh') {
+                    backTop.href = '#top-zh';
+                } else {
+                    backTop.href = '#top-en';
+                }
+            }
+
+            btns.forEach(b => {
+                b.addEventListener('click', function() {
+                    const lang = this.dataset.lang;
+                    setLang(lang);
+                    history.pushState(null, '', '#' + lang);
+                });
+            });
+
+            const hash = window.location.hash.replace('#', '');
+            if (hash && ['zh', 'en'].includes(hash)) {
+                setLang(hash);
+            }
+
+            window.addEventListener('hashchange', function() {
+                const h = window.location.hash.replace('#', '');
+                if (h && ['zh', 'en'].includes(h)) {
+                    setLang(h);
+                }
+            });
+
+            // ===== 回到顶部按钮可见性 =====
+            let lastScroll = 0;
+            window.addEventListener('scroll', function() {
+                const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+                if (currentScroll > 300) {
+                    backTop.classList.add('visible');
+                } else {
+                    backTop.classList.remove('visible');
+                }
+                lastScroll = currentScroll;
+            });
+        });
+    </script>
+
+</body>
+</html>
