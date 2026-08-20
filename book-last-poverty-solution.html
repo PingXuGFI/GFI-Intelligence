@@ -70,7 +70,8 @@
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
         .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.2rem; margin: 1.5rem 0; }
         .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
-        @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } .grid-3 { grid-template-columns: 1fr 1fr; } .grid-4 { grid-template-columns: 1fr 1fr; } }
+        .infra-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
+        @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } .grid-3 { grid-template-columns: 1fr 1fr; } .grid-4 { grid-template-columns: 1fr 1fr; } .infra-grid { grid-template-columns: 1fr; } }
         @media (max-width: 480px) { .grid-3 { grid-template-columns: 1fr; } .grid-4 { grid-template-columns: 1fr; } }
 
         .card { background: rgba(255,255,255,0.03); border: 1px solid var(--dim); border-radius: 16px; padding: 1.5rem; }
@@ -88,8 +89,24 @@
         .card.ai .stat { color: var(--green); }
         .card.ai .big { color: var(--green); }
 
+        .infra-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 1.5rem; transition: border-color 0.3s; }
+        .infra-card:hover { border-color: rgba(159,232,112,0.25); }
+        .infra-card .icon { font-size: 1.8rem; margin-bottom: 0.3rem; }
+        .infra-card h4 { font-family: var(--serif); font-size: 1.1rem; color: var(--green); margin-bottom: 0.2rem; }
+        .infra-card .sub { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sub); margin-bottom: 0.3rem; }
+        .infra-card p { font-size: 0.85rem; color: var(--muted); margin-bottom: 0; }
+        .infra-card .highlight-stat { font-family: var(--mono); font-size: 0.75rem; color: var(--gold); margin-top: 0.3rem; }
+
+        .infra-summary { background: rgba(159,232,112,0.04); border: 1px solid rgba(159,232,112,0.1); border-radius: 16px; padding: 1.5rem 2rem; margin: 1.5rem 0; text-align: center; }
+        .infra-summary p { margin-bottom: 0; font-size: 0.95rem; color: var(--muted); }
+        .infra-summary strong { color: var(--green); }
+
         ul, ol { color: var(--muted); margin: 0.8rem 0 1.5rem 1.8rem; }
         li { margin-bottom: 0.3rem; }
+
+        .toc { columns: 2 180px; column-gap: 2rem; margin: 1.5rem 0; }
+        .toc li { font-size: 0.85rem; color: var(--sub); list-style: none; padding: 0.15rem 0; border-bottom: 1px solid rgba(255,255,255,0.02); }
+        .toc li .num { color: var(--blue); font-family: var(--mono); font-size: 0.7rem; margin-right: 0.3rem; }
 
         .download-section { background: rgba(159,232,112,0.04); border: 1px solid rgba(159,232,112,0.15); border-radius: 20px; padding: 2rem; margin: 2.5rem 0; text-align: center; }
         .download-section .btn-group { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-top: 0.5rem; }
@@ -99,10 +116,6 @@
         .download-section .btn-secondary { border: 1px solid rgba(159,232,112,0.4); background: rgba(159,232,112,0.08); color: var(--green); }
         .download-section .btn-secondary:hover { background: rgba(159,232,112,0.18); transform: translateY(-2px); text-decoration: none; }
         .download-section .hint { font-size: 0.7rem; color: var(--sub); margin-top: 1rem; }
-
-        .toc { columns: 2 180px; column-gap: 2rem; margin: 1.5rem 0; }
-        .toc li { font-size: 0.85rem; color: var(--sub); list-style: none; padding: 0.15rem 0; border-bottom: 1px solid rgba(255,255,255,0.02); }
-        .toc li .num { color: var(--blue); font-family: var(--mono); font-size: 0.7rem; margin-right: 0.3rem; }
 
         .footer-note { border-top: 1px solid var(--dim); padding-top: 2rem; margin-top: 3rem; font-size: 0.8rem; color: var(--sub); text-align: center; }
         .footer-note a { color: var(--sub); }
@@ -115,6 +128,8 @@
         .feature-list .item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--sub); }
         .feature-list .item .icon { color: var(--green); font-size: 1rem; }
         @media (max-width: 480px) { .feature-list { grid-template-columns: 1fr; } }
+
+        .ref-citation { font-size: 0.65rem; color: rgba(255,255,255,0.15); font-family: var(--mono); margin-left: 0.1rem; }
     </style>
 </head>
 <body>
@@ -245,12 +260,12 @@
             <div class="card ai">
                 <div class="stat">First</div>
                 <div class="stat-label">Super AI Hospital (Boao, May 2026)</div>
-                <p style="font-size:0.8rem; margin-top:0.3rem;">Global first — "AI proactive matching" scans worldwide medical data to find treatments</p>
+                <p style="font-size:0.8rem; margin-top:0.3rem;">"AI proactive matching" — scans worldwide medical data to find treatments</p>
             </div>
             <div class="card ai">
                 <div class="stat">42</div>
                 <div class="stat-label">AI doctors · Tsinghua AI Hospital</div>
-                <p style="font-size:0.8rem; margin-top:0.3rem;">26 departments · over 1,000 diseases · 96%+ accuracy on medical exams</p>
+                <p style="font-size:0.8rem; margin-top:0.3rem;">26 departments · over 1,000 diseases · 96%+ accuracy</p>
             </div>
             <div class="card ai">
                 <div class="stat">90+</div>
@@ -260,7 +275,7 @@
             <div class="card ai">
                 <div class="stat">5 sec</div>
                 <div class="stat-label">AI generates critical patient profiles</div>
-                <p style="font-size:0.8rem; margin-top:0.3rem;">Diagnostic efficiency up <strong style="color:var(--gold);">1.5×</strong> · accuracy <strong style="color:var(--gold);">87.8%</strong> · physician adoption rate <strong style="color:var(--gold);">90%+</strong></p>
+                <p style="font-size:0.8rem; margin-top:0.3rem;">Diagnostic efficiency up <strong style="color:var(--gold);">1.5×</strong> · accuracy <strong style="color:var(--gold);">87.8%</strong> · adoption rate <strong style="color:var(--gold);">90%+</strong></p>
             </div>
         </div>
 
@@ -269,20 +284,66 @@
             <p style="font-size:0.9rem; color:var(--sub);">Beijing Anzhen Hospital's AI cardiovascular model already serves <strong>1,000+</strong> institutions across <strong>31</strong> provinces, covering <strong>1.3 million</strong> births and over <strong>524,000</strong> patient services.</p>
         </div>
 
-        <div class="feature-list">
-            <div class="item"><span class="icon">✓</span> 90+ top-tier hospitals deployed nationwide</div>
-            <div class="item"><span class="icon">✓</span> 42 AI doctors · 26 departments · 1,000+ diseases</div>
-            <div class="item"><span class="icon">✓</span> 5-second critical patient profiling</div>
-            <div class="item"><span class="icon">✓</span> 96%+ accuracy on international medical exams</div>
-            <div class="item"><span class="icon">✓</span> 24/7 operation · no fatigue · no shortage of doctors</div>
-            <div class="item"><span class="icon">✓</span> Multilingual interface · instant knowledge updates</div>
+        <!-- ===== MOBILE REFUGEE INFRASTRUCTURE ===== -->
+        <h3>🏗️ China's Mobile Refugee Infrastructure — The Benevolent Superpower in Action</h3>
+        <p>When war strips people of shelter, sanitation, and healthcare, China's manufacturing ecosystem can restore them within <strong style="color:var(--gold);">48 hours</strong>. Below is a documented inventory of China's mobile infrastructure capabilities deployed for refugees and disaster victims worldwide.</p>
+
+        <div class="infra-grid">
+            <div class="infra-card">
+                <div class="icon">🏠</div>
+                <h4>Folding Container Houses</h4>
+                <div class="sub">Rapid Deployment · Minutes to Set Up</div>
+                <p>Small crews can rapidly deploy folding container houses in minutes. Expandable camp houses ship in a single container and unfold by hand to provide extensive usable space. Flat-pack and detachable containers are designed for modular stacking into multi-story dormitories and site offices.</p>
+                <div class="highlight-stat">🇨🇳 WELLCAMP: 100,000+ m² production capacity · 60%+ annual revenue growth</div>
+            </div>
+
+            <div class="infra-card">
+                <div class="icon">🚚</div>
+                <h4>Mobile Shower & Sanitation Units</h4>
+                <div class="sub">12 Showers · 7-8 Hours Continuous Hot Water</div>
+                <p>Mobile shower trucks with <strong>12 shower stalls</strong> provide continuous hot water for <strong>7-8 hours</strong>, equipped with water purification systems that treat and discharge wastewater without pollution. Units can serve 8 people simultaneously with shower, water purification, storage, and heating functions.</p>
+                <div class="highlight-stat">🇨🇳 Deployed in Tibet at 4,000m+ altitude</div>
+            </div>
+
+            <div class="infra-card">
+                <div class="icon">🏥</div>
+                <h4>Modular Medical Facilities</h4>
+                <div class="sub">Backup Hospitals · Field Clinics</div>
+                <p>Chinese modular container houses have served as backup medical facilities during the pandemic in Guangzhou, Paraguay, and Tanzania. WELLCAMP's mountain house modules are engineered for installation in rugged terrain where conventional equipment is impractical.</p>
+                <div class="highlight-stat">🇨🇳 42 AI doctors · 26 departments · 1,000+ diseases</div>
+            </div>
+
+            <div class="infra-card">
+                <div class="icon">🌍</div>
+                <h4>Global Aid Deliveries</h4>
+                <div class="sub">Gaza · Afghanistan · Myanmar · Ukraine</div>
+                <p>Chinese companies won major UN contracts for <strong>tens of thousands of mobile homes</strong> for Gaza's displaced, backed by state subsidies covering logistics and export costs. China donated <strong>141 prefabricated houses</strong> to Afghanistan's Ministry of Refugees, <strong>1,000 modular housing units</strong> to Myanmar, and 100 "packing box" shelter units to Myanmar. Four batches of aid to Gaza included food, medicines, tents, blankets, cotton clothes, <strong>mobile toilets, and ventilators</strong>.</p>
+                <div class="highlight-stat">🇨🇳 74 countries reached by Chinese modular housing exports</div>
+            </div>
+
+            <div class="infra-card">
+                <div class="icon">⚡</div>
+                <h4>Emergency Shelter Systems</h4>
+                <div class="sub">Earthquake Response · Disaster Relief</div>
+                <p>In Tibet's 6.8-magnitude earthquake, <strong>20 folding container units</strong> were deployed from Hefei to Lhasa and fully assembled in <strong>48 hours</strong>, accommodating 200 people. Over <strong>1,000 prefabricated houses</strong> from across China arrived in Xizang's quake-hit areas. 2,000 portable homes were rapidly assembled across affected sites.</p>
+                <div class="highlight-stat">🇨🇳 4 workers + crane = 5 minutes to frame assembly</div>
+            </div>
+
+            <div class="infra-card">
+                <div class="icon">🏭</div>
+                <h4>The "World Factory" Advantage</h4>
+                <div class="sub">Closed-Loop Supply Chain</div>
+                <p>Chinese manufacturers offer unbeatable prices due to <strong>state subsidies covering logistics and export costs</strong>, outcompeting international rivals. One manufacturer's production footprint exceeds <strong>100,000 m²</strong>, with revenue growth over <strong>60%</strong> in 2024. "Packing box" shelters — prefabricated wall, roof, and floor modules — require no foundation and can be assembled on-site in minutes.</p>
+                <div class="highlight-stat">🇨🇳 "Packing box" shelters: 20-year lifespan · multiple relocations · minimal wear</div>
+            </div>
         </div>
 
-        <p><strong>What this means for refugee rescue:</strong> AI hospitals complete the full-cycle humanitarian response: <span style="color:var(--green);">shelter (mobile housing) + sanitation (mobile showers) + healthcare (AI hospitals)</span>. A complete "manufacturing + technology" closed loop that the world has never seen before.</p>
+        <div class="infra-summary">
+            <p><strong>In every major crisis — Gaza, Afghanistan, Myanmar, Ukraine, Tibet, Japan, Nepal — China's mobile infrastructure has been there first, faster, and in greater quantity.</strong> This is not charity. This is the <strong style="color:var(--gold);">systemic capability</strong> of a manufacturing superpower that treats humanitarian response as an industrial mission, not a political gesture.</p>
+        </div>
 
         <div class="highlight-box">
-            <p><strong>When war strips people of their basic dignity, China's manufacturing and technology can give it back within 48 hours</strong> — in the form of mobile housing, hot showers, clean drinking water, and AI-powered healthcare.</p>
-            <p style="font-size:0.9rem; color:var(--sub);">The old order had enforcers. The new order needs builders. China is the only nation with both the will and the physical-technological foundation to fill that role.</p>
+            <p><strong>When war strips people of their basic dignity, China's manufacturing ecosystem can give it back within 48 hours</strong> — in the form of folding homes, hot showers, clean water, AI-powered healthcare, and mobile medical facilities. No other nation has this closed-loop industrial capacity.</p>
         </div>
 
         <!-- ===== THE BRIDGE: GUARDIAN OF THE NEW ORDER ===== -->
@@ -290,7 +351,7 @@
             <div class="highlight-box-gold">
                 <p><strong>This plan is written for institutions like the United Nations.</strong></p>
                 <p>But any new global governance architecture requires a <strong style="color:var(--gold);">guardian of the new order</strong> — a power with the physical capacity to enforce, connect, and sustain the systems that keep it running.</p>
-                <p>China has proven itself to be the <span class="highlight-blue">only superpower currently possessing this level of capability</span> — not just in financial reserves or diplomatic influence, but in <strong>steel, ships, satellites, cables, and AI infrastructure</strong>. The hard and soft infrastructure that makes global commons governance physically possible.</p>
+                <p>China has proven itself to be the <span class="highlight-blue">only superpower currently possessing this level of capability</span> — not just in financial reserves or diplomatic influence, but in <strong>steel, ships, satellites, cables, AI infrastructure, and the world's largest manufacturing ecosystem</strong>. The hard infrastructure that makes global commons governance physically possible.</p>
                 <p style="font-size:0.9rem; color:var(--sub); margin-top:0.5rem;">The old order had an enforcer. The new order needs a builder. China is the only candidate with both the will and the physical foundation to fill that role.</p>
             </div>
         </div>
@@ -495,50 +556,96 @@
 
         <!-- ===== AI HOSPITALS ===== -->
         <h3>🏥 AI 医院——战地救援的终极拼图</h3>
-        <p>中国的 AI 医疗已经走过了“概念探索”阶段，进入了 <strong style="color:var(--green);">系统性落地</strong> 的阶段——为大规模战争难民救援提供了全新的技术可能性。</p>
+        <p>中国的 AI 医疗已从“概念探索”进入 <strong style="color:var(--green);">系统性落地</strong> 阶段，为战区与难民营的大规模伤亡应对提供了全新技术可能。</p>
 
         <div class="grid-4">
             <div class="card ai">
                 <div class="stat">全球首家</div>
-                <div class="stat-label">超级AI医院（博鳌，2026年5月）</div>
-                <p style="font-size:0.8rem; margin-top:0.3rem;">“AI主动匹配”机制，在全球医学数据中为患者寻找新药和疗法</p>
+                <div class="stat-label">超级 AI 医院（博鳌，2026年5月）</div>
+                <p style="font-size:0.8rem; margin-top:0.3rem;">“AI 主动匹配”——扫描全球医学数据寻找疗法</p>
             </div>
             <div class="card ai">
                 <div class="stat">42位</div>
-                <div class="stat-label">AI医生 · 清华AI医院</div>
-                <p style="font-size:0.8rem; margin-top:0.3rem;">26个科室 · 超300种疾病 · 医学测试准确率96%+</p>
+                <div class="stat-label">AI 医生 · 清华 AI 医院</div>
+                <p style="font-size:0.8rem; margin-top:0.3rem;">26个科室 · 超过300种疾病 · 准确率96%+</p>
             </div>
             <div class="card ai">
                 <div class="stat">近90家</div>
-                <div class="stat-label">三甲医院部署DeepSeek AI</div>
-                <p style="font-size:0.8rem; margin-top:0.3rem;">全国超100家医院完成本地部署</p>
+                <div class="stat-label">三甲医院部署 DeepSeek AI</div>
+                <p style="font-size:0.8rem; margin-top:0.3rem;">全国超过100家医院完成本地部署</p>
             </div>
             <div class="card ai">
                 <div class="stat">5秒内</div>
-                <div class="stat-label">AI生成重症患者画像</div>
+                <div class="stat-label">AI 生成重症患者画像</div>
                 <p style="font-size:0.8rem; margin-top:0.3rem;">诊疗效率提升 <strong style="color:var(--gold);">1.5倍</strong> · 准确率 <strong style="color:var(--gold);">87.8%</strong> · 采纳率 <strong style="color:var(--gold);">90%+</strong></p>
             </div>
         </div>
 
         <div class="highlight-box">
-            <p><strong>AI 医院 = 可移动、可扩展、标准化的医疗基础设施</strong>，可以在48小时内部署到任何一个难民营或战区。它不会累、不会生病、不会缺医生、不会缺知识。</p>
-            <p style="font-size:0.9rem; color:var(--sub);">北京安贞医院的AI心血管诊断模型，已在全国 <strong>31个省</strong> 的 <strong>1000余家</strong> 医疗机构落地，覆盖 <strong>130万</strong> 出生人口，累计服务超 <strong>52.4万</strong> 人次。</p>
+            <p><strong>AI 医院 = 可移动、可扩展、标准化的医疗基础设施</strong>，可在48小时内部署到任何一个难民营或战区。它不会累、不会生病、不会缺医生、不会缺知识。</p>
+            <p style="font-size:0.9rem; color:var(--sub);">北京安贞医院的AI心血管诊断模型，已在全国 <strong>31个省</strong> 的 <strong>1,000余家</strong> 医疗机构落地，覆盖 <strong>130万</strong> 出生人口，累计服务超 <strong>52.4万</strong> 人次。</p>
         </div>
 
-        <div class="feature-list">
-            <div class="item"><span class="icon">✓</span> 近90家三甲医院全国部署</div>
-            <div class="item"><span class="icon">✓</span> 42位AI医生 · 26个科室 · 超300种疾病</div>
-            <div class="item"><span class="icon">✓</span> 5秒内重症患者画像</div>
-            <div class="item"><span class="icon">✓</span> 国际医学测试准确率96%+</div>
-            <div class="item"><span class="icon">✓</span> 全天候运作 · 不疲劳 · 不缺医生</div>
-            <div class="item"><span class="icon">✓</span> 多语言界面 · 实时更新全球医疗知识</div>
+        <!-- ===== MOBILE REFUGEE INFRASTRUCTURE ===== -->
+        <h3>🏗️ 中国移动式难民基础设施——仁慈超级大国的实践</h3>
+        <p>当战争夺走人们的住所、卫生与医疗时，中国的制造生态系统能在 <strong style="color:var(--gold);">48小时内</strong> 将它们归还。以下是中国在全球部署的移动式基础设施清单。</p>
+
+        <div class="infra-grid">
+            <div class="infra-card">
+                <div class="icon">🏠</div>
+                <h4>折叠式集装箱屋</h4>
+                <div class="sub">快速部署 · 数分钟完成搭建</div>
+                <p>小型团队可在数分钟内快速部署折叠式集装箱屋。可扩展营房以单个集装箱运输，徒手展开即可提供大面积可用空间。平板包装可拆卸集装箱设计为可堆叠成多层宿舍与临时设施。</p>
+                <div class="highlight-stat">🇨🇳 WELLCAMP：10万+ m² 产能 · 60%+ 年营收成长</div>
+            </div>
+
+            <div class="infra-card">
+                <div class="icon">🚚</div>
+                <h4>移动淋浴与卫生设备</h4>
+                <div class="sub">12间淋浴间 · 连续热水7-8小时</div>
+                <p>移动淋浴车配备 <strong>12间淋浴间</strong>，可连续供应热水 <strong>7-8小时</strong>，车内装有净水装置，废水净化后排出不造成污染。可同时满足8人淋浴需求，具备淋浴、净水、储水及加热功能。</p>
+                <div class="highlight-stat">🇨🇳 已部署于海拔4,000米以上西藏震区</div>
+            </div>
+
+            <div class="infra-card">
+                <div class="icon">🏥</div>
+                <h4>模块化医疗设施</h4>
+                <div class="sub">备用医院 · 野战诊所</div>
+                <p>中国模块化集装箱屋曾在新冠疫情期间于广州、巴拉圭、坦桑尼亚作为备用医疗设施使用。WELLCAMP 的山地房屋模块专为传统设备无法进入的崎岖地形设计。</p>
+                <div class="highlight-stat">🇨🇳 42位AI医生 · 26个科室 · 1,000+种疾病</div>
+            </div>
+
+            <div class="infra-card">
+                <div class="icon">🌍</div>
+                <h4>全球援助交付</h4>
+                <div class="sub">加沙 · 阿富汗 · 缅甸 · 乌克兰</div>
+                <p>中国企业赢得联合国 <strong>数万套移动房屋</strong> 重大标案，用于安置加沙流离失所者，国家补贴全额覆盖物流与出口成本。中国向阿富汗难民部捐赠 <strong>141套</strong> 预制房屋、向缅甸捐赠 <strong>1,000套</strong> 模块化房屋及100套“打包箱”安置房。四批加沙援助包括食品、药品、帐篷、毛毯、棉衣、<strong>移动厕所与呼吸机</strong>。</p>
+                <div class="highlight-stat">🇨🇳 中国模块化房屋已出口74个国家</div>
+            </div>
+
+            <div class="infra-card">
+                <div class="icon">⚡</div>
+                <h4>紧急避难系统</h4>
+                <div class="sub">地震应对 · 灾害救援</div>
+                <p>西藏6.8级强震中，<strong>20套</strong> 折叠集装箱屋从合肥运抵拉萨，<strong>48小时内</strong> 全部搭建完成，可供200人入住。全国各地超过 <strong>1,000套</strong> 预制房屋运抵西藏震区。2,000套移动房屋在受灾点快速组装。</p>
+                <div class="highlight-stat">🇨🇳 4名工人 + 吊车 = 5分钟完成框架搭建</div>
+            </div>
+
+            <div class="infra-card">
+                <div class="icon">🏭</div>
+                <h4>“世界工厂”优势</h4>
+                <div class="sub">闭环供应链</div>
+                <p>中国制造商因 <strong>国家补贴覆盖物流与出口成本</strong> 而具备无可比拟的价格优势，击败国际竞争对手。单一制造商生产面积超过 <strong>10万m²</strong>，2024年营收成长超过 <strong>60%</strong>。“打包箱”避难屋——预制墙体、顶框、底框模块——无需地基，现场数分钟即可完成组装。</p>
+                <div class="highlight-stat">🇨🇳 “打包箱”避难屋：20年寿命 · 可多次拆装运输 · 低损耗</div>
+            </div>
         </div>
 
-        <p><strong>这对难民救援意味着什么：</strong> AI 医院补齐了“硬实力”的最后一个短板——<span style="color:var(--green);">住所（移动住宅）+ 卫生（移动淋浴）+ 医疗（AI 医院）</span>，构成了一个完整的闭环人道响应体系。这是世界从未见过的“制造 + 科技”的全链路闭环。</p>
+        <div class="infra-summary">
+            <p><strong>每一次重大危机——加沙、阿富汗、缅甸、乌克兰、西藏、日本、尼泊尔——中国的移动基础设施总是第一个到达、速度最快、数量最多。</strong> 这不是慈善。这是 <strong style="color:var(--gold);">系统性能力</strong>——一个将人道救援视为工业使命、而非政治姿态的制造超级大国。</p>
+        </div>
 
         <div class="highlight-box">
-            <p><strong>当战争把人的基本尊严剥夺时，中国的制造与科技可以在48小时内把它还回来</strong>——以移动住宅、热水淋浴、干净饮用水和AI医疗的形式。</p>
-            <p style="font-size:0.9rem; color:var(--sub);">旧秩序有一个执法者。新秩序需要一个建设者。中国是唯一既具备意愿、又具备物理与科技基础来承担这个角色的候选者。</p>
+            <p><strong>当战争夺走人们的基本尊严时，中国的制造生态系统能在48小时内将它归还</strong>——以折叠房屋、热水淋浴、干净饮用水、AI医疗和移动医疗设施的形式。没有其他国家拥有这种闭环工业能力。</p>
         </div>
 
         <!-- ===== THE BRIDGE: GUARDIAN OF THE NEW ORDER ===== -->
@@ -546,7 +653,7 @@
             <div class="highlight-box-gold">
                 <p><strong>这个计划是为联合国这样的机构写的。</strong></p>
                 <p>但任何新的全球治理架构，都需要一个 <strong style="color:var(--gold);">新秩序的守护者</strong>——一个具备物理能力去执行、连接、维持系统运转的超级强国。</p>
-                <p>中国是目前唯一被证明具备这种实力的 <span class="highlight-blue">超级强国</span>——不是靠金融储备或外交影响力，而是靠 <strong>钢铁、舰船、卫星、光缆、AI 基础设施</strong>。这些硬实力与软实力，让全球公域治理从构想变为物理上可能。</p>
+                <p>中国是目前唯一被证明具备这种实力的 <span class="highlight-blue">超级强国</span>——不是靠金融储备或外交影响力，而是靠 <strong>钢铁、舰船、卫星、光缆、AI基础设施，以及全球最大的制造生态系统</strong>。这些硬实力让全球公域治理从构想变为物理上可能。</p>
                 <p style="font-size:0.9rem; color:var(--sub); margin-top:0.5rem;">旧秩序有一个执法者。新秩序需要一个建设者。中国是唯一既具备意愿、又具备物理基础来承担这个角色的候选者。</p>
             </div>
         </div>
@@ -567,7 +674,7 @@
                 <h4>🛒 GCV</h4>
                 <div class="big">全球公域价值</div>
                 <p>非货币、限定用途的消费配额，由联合国发行以确保获得必需品的直接权利。不可累积、不可交易、不可投机，每年重置。</p>
-                <p style="font-size:0.8rem; color:var(--gold); margin-top:0.3rem;">覆盖能力：约 3 亿人/年</p>
+                <p style="font-size:0.8rem; color:var(--gold); margin-top:0.3rem;">覆盖能力：约3亿人/年</p>
             </div>
         </div>
 
