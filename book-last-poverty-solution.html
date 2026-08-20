@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>终结全球贫穷方案 — 全球公域融资架构</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg:#0b1220;
+            --bg2:#0d1526;
+            --text:#f8fbff;
+            --muted:#c7d2e3;
+            --sub:#9fb0c8;
+            --dim:rgba(255,255,255,.06);
+            --green:#9FE870;
+            --blue:#7DD3FC;
+            --gold:#fbbf24;
+            --orange:#fb923c;
+            --red:#f87171;
+            --serif:'DM Serif Display',Georgia,serif;
+            --mono:'DM Mono',monospace;
+            --sans:'DM Sans',system-ui,sans-serif;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 1.7; padding: 2rem 1rem; }
+        a { color: var(--blue); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        .container { max-width: 960px; margin: 0 auto; }
+        .back-link { font-family: var(--mono); font-size: 0.8rem; color: var(--sub); margin-bottom: 2rem; display: inline-block; }
+        .back-link:hover { color: #fff; text-decoration: none; }
+
+        .book-header { border-bottom: 1px solid var(--dim); padding-bottom: 2rem; margin-bottom: 2.5rem; }
+        .book-header .badge { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--green); background: rgba(159,232,112,0.1); padding: 0.15rem 0.8rem; border-radius: 30px; display: inline-block; margin-bottom: 1rem; border: 1px solid rgba(159,232,112,0.15); }
+        .book-header h1 { font-family: var(--serif); font-size: 2.8rem; font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; color: #fff; margin-bottom: 0.2rem; }
+        .book-header .subtitle { font-size: 1.3rem; color: var(--sub); font-style: italic; margin-bottom: 0.6rem; }
+        .book-header .author { font-size: 1rem; color: var(--muted); }
+        .book-header .author span { color: var(--blue); }
+
+        .lang-switch { display: flex; gap: 0.5rem; margin: 1.5rem 0; flex-wrap: wrap; }
+        .lang-switch button { background: transparent; border: 1px solid rgba(255,255,255,0.12); padding: 0.3rem 1.2rem; border-radius: 30px; font-size: 0.8rem; font-family: var(--mono); color: var(--sub); cursor: pointer; transition: all 0.2s; }
+        .lang-switch button:hover { border-color: rgba(255,255,255,0.3); color: #fff; }
+        .lang-switch button.active { background: rgba(159,232,112,0.12); border-color: var(--green); color: var(--green); }
+
+        .content { display: none; }
+        .content.active { display: block; }
+
+        h2 { font-family: var(--serif); font-size: 1.8rem; color: #fff; margin: 2.5rem 0 1rem 0; }
+        h3 { font-size: 1.2rem; color: var(--green); margin: 1.8rem 0 0.5rem 0; }
+        h4 { font-size: 1rem; color: var(--blue); margin: 1.2rem 0 0.3rem 0; }
+        p { color: var(--muted); margin-bottom: 1rem; }
+
+        .highlight-box { background: rgba(255,255,255,0.03); border-left: 4px solid var(--green); padding: 1.5rem 2rem; border-radius: 0 12px 12px 0; margin: 1.5rem 0; }
+        .highlight-box p { margin-bottom: 0.5rem; }
+        .highlight-box strong { color: #fff; }
+
+        .warning-box { background: rgba(248,113,113,0.06); border: 1px solid rgba(248,113,113,0.2); border-radius: 16px; padding: 1.5rem 2rem; margin: 1.5rem 0; }
+        .warning-box h4 { color: var(--red); }
+        .warning-box p { font-size: 0.9rem; color: var(--muted); }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.2rem; margin: 1.5rem 0; }
+        @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } .grid-3 { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 480px) { .grid-3 { grid-template-columns: 1fr; } }
+
+        .card { background: rgba(255,255,255,0.03); border: 1px solid var(--dim); border-radius: 16px; padding: 1.5rem; }
+        .card h4 { font-family: var(--mono); font-size: 0.75rem; color: var(--blue); margin-bottom: 0.3rem; letter-spacing: 0.04em; }
+        .card .big { font-family: var(--serif); font-size: 1.6rem; color: var(--green); }
+        .card p { font-size: 0.9rem; color: var(--sub); margin-bottom: 0; }
+        .card .stat { font-family: var(--mono); font-size: 2.2rem; font-weight: 700; color: var(--gold); line-height: 1.2; }
+        .card .stat-label { font-size: 0.75rem; color: var(--sub); }
+
+        .card.capability { border-color: rgba(125,211,252,0.15); background: rgba(125,211,252,0.04); }
+        .card.capability .stat { color: var(--blue); }
+        .card.capability .big { color: var(--blue); }
+
+        ul, ol { color: var(--muted); margin: 0.8rem 0 1.5rem 1.8rem; }
+        li { margin-bottom: 0.3rem; }
+
+        .download-section { background: rgba(159,232,112,0.04); border: 1px solid rgba(159,232,112,0.15); border-radius: 20px; padding: 2rem; margin: 2.5rem 0; text-align: center; }
+        .download-section .btn-group { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-top: 0.5rem; }
+        .download-section .btn { display: inline-block; padding: 0.8rem 2.5rem; border-radius: 40px; font-family: var(--mono); font-size: 0.9rem; font-weight: 500; transition: all 0.2s; border: none; cursor: pointer; }
+        .download-section .btn-primary { background: var(--green); color: var(--bg); border: 1px solid transparent; }
+        .download-section .btn-primary:hover { background: #8fd460; transform: translateY(-2px); text-decoration: none; }
+        .download-section .btn-secondary { border: 1px solid rgba(159,232,112,0.4); background: rgba(159,232,112,0.08); color: var(--green); }
+        .download-section .btn-secondary:hover { background: rgba(159,232,112,0.18); transform: translateY(-2px); text-decoration: none; }
+        .download-section .hint { font-size: 0.7rem; color: var(--sub); margin-top: 1rem; }
+
+        .toc { columns: 2 180px; column-gap: 2rem; margin: 1.5rem 0; }
+        .toc li { font-size: 0.85rem; color: var(--sub); list-style: none; padding: 0.15rem 0; border-bottom: 1px solid rgba(255,255,255,0.02); }
+        .toc li .num { color: var(--blue); font-family: var(--mono); font-size: 0.7rem; margin-right: 0.3rem; }
+
+        .footer-note { border-top: 1px solid var(--dim); padding-top: 2rem; margin-top: 3rem; font-size: 0.8rem; color: var(--sub); text-align: center; }
+        .footer-note a { color: var(--sub); }
+        .footer-note a:hover { color: #fff; }
+        .gap { height: 0.5rem; }
+
+        .book-header .pages { font-size: 0.85rem; color: var(--sub); margin-top: 0.2rem; }
+        .book-header .pages span { color: var(--gold); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <a href="index.html" class="back-link">← Back to Home</a>
+
+    <!-- ============================================================ -->
+    <!-- 英文版 -->
+    <!-- ============================================================ -->
+    <div id="en-content" class="content active">
+
+        <div class="book-header">
+            <div class="badge">Open Access · 2025</div>
+            <h1>The Last Poverty Solution</h1>
+            <div class="subtitle">A Global Commons Funding System for Universal Essential Access</div>
+            <div class="author">By <span>Ping Xu</span> · 35 Chapters · <span class="pages"><span>275</span> Pages</span></div>
+        </div>
+
+        <div class="lang-switch">
+            <button class="active" data-lang="en">English</button>
+            <button data-lang="zh">中文</button>
+        </div>
+
+        <!-- ===== WHY NOW ===== -->
+        <h2>Why Now — The Window Is Closing</h2>
+
+        <div class="warning-box">
+            <h4>⚠️ The Old Order Is Running Out of Capacity</h4>
+            <p>The United States maintains approximately <strong style="color:var(--red);">750–800 military bases</strong> globally, with annual maintenance costs exceeding <strong style="color:var(--red);">$100 billion</strong>. This does not include personnel, equipment, fuel, or logistics. Meanwhile, domestically: infrastructure is crumbling, homelessness is at record highs, drug overdose deaths exceed <strong style="color:var(--red);">100,000 per year</strong>, and public education budgets are being slashed.</p>
+            <p style="margin-top:0.5rem;">The result: <strong style="color:#fff;">a system that spends its resources on maintaining global hegemony rather than the welfare of its own people is rotting from the inside.</strong></p>
+        </div>
+
+        <p>The old assumption — that the Western system, despite its flaws, is repairable — is no longer valid. The system's core logic is designed to <strong style="color:var(--red);">capture value, not deliver it</strong>. The cost of repair now exceeds the cost of rebuilding.</p>
+
+        <div class="highlight-box">
+            <p><strong>When the provider of the old order begins to withdraw, the new system must be ready before the withdrawal is complete.</strong></p>
+            <p style="font-size:0.9rem; color:var(--sub);">This book is not written for a stable world. It is written for the world that is arriving — designed before it's needed, so it's ready when it is.</p>
+        </div>
+
+        <!-- ===== HARD POWER ===== -->
+        <h2>China's Hard Power — The Physical Foundation</h2>
+        <p>Global commons development (deep sea, polar regions, space, cyberspace) requires physical infrastructure — steel, ships, satellites, cables. This is not financial engineering. This is the <strong style="color:var(--gold);">hard power</strong> that makes any global governance framework possible.</p>
+
+        <h3>🌊 Deep Sea — From Follower to Leader</h3>
+        <div class="grid-3">
+            <div class="card capability">
+                <div class="stat">1,746</div>
+                <div class="stat-label">Total manned dives (all three submersibles)</div>
+                <p style="font-size:0.8rem; margin-top:0.3rem;">As of 2025 — far exceeding all foreign counterparts combined</p>
+            </div>
+            <div class="card capability">
+                <div class="stat">314</div>
+                <div class="stat-label">Manned dives in 2025 alone</div>
+                <p style="font-size:0.8rem; margin-top:0.3rem;">More than all other nations' deep-sea submersibles combined in the same year</p>
+            </div>
+            <div class="card capability">
+                <div class="stat">10,909 m</div>
+                <div class="stat-label">Deepest dive record (Mariana Trench)</div>
+                <p style="font-size:0.8rem; margin-top:0.3rem;">"Fendouzhe" (Striver) reached the world's deepest point in 2020</p>
+            </div>
+        </div>
+        <p><strong>Key capabilities:</strong> Three manned submersibles (Jiaolong, Shenhai Yongshi, Fendouzhe) + unmanned series (Haidou, Qianlong) + 6,000m deep-sea mining test in the Western Pacific — the deepest mining test ever conducted globally. China also leads the UN-approved <strong style="color:var(--blue);">"Global Abyss Exploration Program"</strong> under the UN Ocean Decade.</p>
+
+        <h3>❄️ Polar Regions — A Permanent Presence</h3>
+        <div class="grid-3">
+            <div class="card capability">
+                <div class="stat">5</div>
+                <div class="stat-label">Antarctic research stations</div>
+                <p style="font-size:0.8rem; margin-top:0.3rem;">Qinling Station opened in Feb 2024 — 6th planned</p>
+            </div>
+            <div class="card capability">
+                <div class="stat">2+1</div>
+                <div class="stat-label">Icebreakers + Arctic station</div>
+                <p style="font-size:0.8rem; margin-top:0.3rem;">Huanghe Station (Arctic) · "Two ships, seven stations" polar network</p>
+            </div>
+            <div class="card capability">
+                <div class="stat">Sole</div>
+                <div class="stat-label">Nation with continuous manned dives in Arctic pack ice</div>
+                <p style="font-size:0.8rem; margin-top:0.3rem;">Achieved in October 2025 — unmatched capability</p>
+            </div>
+        </div>
+
+        <h3>🛰️ Space — Autonomous and Global</h3>
+        <div class="grid-3">
+            <div class="card capability">
+                <div class="stat">165</div>
+                <div class="stat-label">Capital cities covered by BeiDou</div>
+                <p style="font-size:0.8rem; margin-top:0.3rem;">Global coverage exceeding GPS — one of only four global navigation systems</p>
+            </div>
+            <div class="card capability">
+                <div class="stat">1 of 2</div>
+                <div class="stat-label">Space stations in orbit</div>
+                <p style="font-size:0.8rem; margin-top:0.3rem;">The only orbital station open to all UN member states</p>
+            </div>
+            <div class="card capability">
+                <div class="stat">"Thousand Sails"</div>
+                <div class="stat-label">Low-orbit satellite constellation</div>
+                <p style="font-size:0.8rem; margin-top:0.3rem;">Accelerating deployment to secure limited orbital slots and spectrum</p>
+            </div>
+        </div>
+
+        <h3>🌐 Cyberspace — The Digital Backbone</h3>
+        <div class="grid-3">
+            <div class="card capability">
+                <div class="stat">~99%</div>
+                <div class="stat-label">Intercontinental data via undersea cables</div>
+                <p style="font-size:0.8rem; margin-top:0.3rem;">China's cable installers have laid <strong>70,000+ km</strong> across the Atlantic, Pacific, and Indian Oceans</p>
+            </div>
+            <div class="card capability">
+                <div class="stat">17</div>
+                <div class="stat-label">Operational submarine cable systems invested</div>
+                <p style="font-size:0.8rem; margin-top:0.3rem;">Including SAIL — the first direct cable linking Africa and South America</p>
+            </div>
+            <div class="card capability">
+                <div class="stat">1 of 4</div>
+                <div class="stat-label">Global EPC contractors for intercontinental cable systems</div>
+                <p style="font-size:0.8rem; margin-top:0.3rem;">HMN Tech — capable of end-to-end submarine cable delivery</p>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <p><strong>The contrast is stark:</strong> The US spends over <span style="color:var(--red);">$100 billion/year</span> maintaining <span style="color:var(--red);">750+ military bases</span> — a model of control and consumption. China's global commons infrastructure — deep-sea research, polar stations, BeiDou satellites, submarine cables — is a model of <strong style="color:var(--green);">building and connecting</strong>.</p>
+            <p style="font-size:0.9rem; color:var(--sub);">When the old order's enforcer stumbles, only the builder can provide the physical foundation for the next one.</p>
+        </div>
+
+        <!-- ===== THE BOOK ===== -->
+        <h2>What This Book Offers</h2>
+        <p>Hard power alone is not enough. It must be matched by <strong style="color:var(--gold);">structural financing</strong> — a system that can deploy resources without waiting for political generosity.</p>
+        <p>This book presents a practical, legally consistent, and politically feasible financing architecture built on two components:</p>
+
+        <div class="grid-2">
+            <div class="card">
+                <h4>💰 GCSF</h4>
+                <div class="big">Global Commons Sustainable Fund</div>
+                <p>A rules‑based system linking contributions to activities affecting global commons or shared transboundary resources. Not a tax, not a currency, not a financial instrument.</p>
+                <p style="font-size:0.8rem; color:var(--gold); margin-top:0.3rem;">Estimated annual revenue: $85–110 billion</p>
+            </div>
+            <div class="card">
+                <h4>🛒 GCV</h4>
+                <div class="big">Global Commons Value</div>
+                <p>A non‑monetary, purpose‑bound consumption quota issued by the UN to ensure direct access to essential goods and services. Cannot be accumulated, traded, or speculated upon. Resets annually.</p>
+                <p style="font-size:0.8rem; color:var(--gold); margin-top:0.3rem;">Coverage capacity: ~300 million people per year</p>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <p><strong>Together, GCSF and GCV form a closed‑loop financing and distribution system</strong> that strengthens the UN without intruding on state sovereignty or domestic economic systems.</p>
+            <p style="font-size:0.9rem; color:var(--sub);">No taxes · No new treaties · No monetary impact · No sovereignty infringement</p>
+        </div>
+
+        <h3>Why This Book Matters</h3>
+        <p>The world's challenges have evolved, but the UN's financing model has not. Climate disasters intensify, fragile economies collapse, humanitarian needs expand, and displacement reaches historic levels — but the UN remains dependent on voluntary contributions that fluctuate with domestic politics.</p>
+        <p>This architecture is not about replacing existing funding mechanisms; it is about equipping the UN with the financial resilience required to fulfill its mandate in a world where crises are more frequent, more interconnected, and more costly.</p>
+
+        <h2>Table of Contents (35 Chapters)</h2>
+        <ul class="toc">
+            <li><span class="num">1.</span> The Structural Mandate-Resource Gap</li>
+            <li><span class="num">2.</span> The Logic Behind GCSF</li>
+            <li><span class="num">3.</span> GCV Non-Monetary Distribution</li>
+            <li><span class="num">4.</span> Sovereignty-Safe Design</li>
+            <li><span class="num">5.</span> GCSF→GCV Flow</li>
+            <li><span class="num">6.</span> Annual Reset Mechanism</li>
+            <li><span class="num">7.</span> Political Neutrality</li>
+            <li><span class="num">8.</span> Economic Neutrality</li>
+            <li><span class="num">9.</span> Unified Architecture</li>
+            <li><span class="num">10.</span> Implementation Path</li>
+            <li><span class="num">11.</span> Governance and Audit</li>
+            <li><span class="num">12.</span> Anti-Corruption Design</li>
+            <li><span class="num">13.</span> Global Stability Impact</li>
+            <li><span class="num">14.</span> Beneficiary-Centered Approach</li>
+            <li><span class="num">15.</span> Alignment with SDGs and Human Rights</li>
+            <li><span class="num">16.</span> Country Implementation Scenarios</li>
+            <li><span class="num">17.</span> 10-Year Rollout Strategy</li>
+            <li><span class="num">18.</span> Fiscal Neutrality</li>
+            <li><span class="num">19.</span> Comparison with Past Proposals</li>
+            <li><span class="num">20.</span> Inflation and Market Impact</li>
+            <li><span class="num">21.</span> Vendor Networks</li>
+            <li><span class="num">22.</span> Political Immunity</li>
+            <li><span class="num">23.</span> Daily Operational Blueprint</li>
+            <li><span class="num">24.</span> Crisis Scenario Testing</li>
+            <li><span class="num">25.</span> Digital Governance</li>
+            <li><span class="num">26.</span> Humanitarian Ethics</li>
+            <li><span class="num">27.</span> Global Commons Economics</li>
+            <li><span class="num">28.</span> Unified Architecture Synergy</li>
+            <li><span class="num">29.</span> Sovereignty Scenarios by Country</li>
+            <li><span class="num">30.</span> The 25 Hardest Questions</li>
+            <li><span class="num">31.</span> Global Rollout Strategy</li>
+            <li><span class="num">32.</span> UN Modernization</li>
+            <li><span class="num">33.</span> Global Social Floor</li>
+            <li><span class="num">34.</span> Quantitative Impact Modeling</li>
+            <li><span class="num">35.</span> Epilogue: Foundation of Civilization</li>
+        </ul>
+
+        <div class="download-section">
+            <p style="font-size:1.1rem; color:#fff; font-weight:500;">Download Full Book</p>
+            <p style="font-size:0.85rem; color:var(--sub);">The author makes this book fully open for free reading, citation, and discussion.</p>
+            <div class="btn-group">
+                <a href="the_Last_Poverty_Solution.pdf" class="btn btn-primary">📄 English PDF</a>
+                <a href="终结全球贫穷方案.pdf" class="btn btn-secondary">📄 中文 PDF</a>
+            </div>
+            <div class="hint">Bilingual · Full version · 35 chapters · 275 pages</div>
+        </div>
+
+        <div class="footer-note">
+            <p><em>The Last Poverty Solution</em> © 2025 Ping Xu · Released under open knowledge sharing spirit</p>
+            <p style="font-size:0.7rem; margin-top:0.2rem;"><a href="mailto:pingshyu@gmail.com">pingshyu@gmail.com</a></p>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 中文版 -->
+    <!-- ============================================================ -->
+    <div id="zh-content" class="content">
+
+        <div class="book-header">
+            <div class="badge">开放获取 · 2025</div>
+            <h1>终结全球贫穷方案</h1>
+            <div class="subtitle">全球公域融资系统 · 保障基本需求</div>
+            <div class="author">作者 <span>徐萍 (Ping Xu)</span> · 35章 · <span class="pages"><span>124</span> 页</span></div>
+        </div>
+
+        <div class="lang-switch">
+            <button data-lang="en">English</button>
+            <button class="active" data-lang="zh">中文</button>
+        </div>
+
+        <!-- ===== WHY NOW ===== -->
+        <h2>为什么现在就要准备</h2>
+
+        <div class="warning-box">
+            <h4>⚠️ 旧秩序的容量正在耗尽</h4>
+            <p>美国在全球维持着约 <strong style="color:var(--red);">750～800个军事基地</strong>，每年养护费用超过 <strong style="color:var(--red);">1000亿美元</strong>，这还不包括人员、装备、燃料和后勤。与此同时，国内：基础设施老化、无家可归者创历史新高、药物过量死亡每年超过 <strong style="color:var(--red);">10万人</strong>、公共教育经费被持续削减。</p>
+            <p style="margin-top:0.5rem;">结果是：<strong style="color:#fff;">一个把资源花在维持全球霸权而非维护本国人民福祉的系统，正在从内部腐烂。</strong></p>
+        </div>
+
+        <p>过去那种“虽然西方系统有问题，但它可以被修复”的假设，已经不再成立。系统的核心逻辑是 <strong style="color:var(--red);">捕获价值，而非交付价值</strong>。修复成本已经超过重建成本。</p>
+
+        <div class="highlight-box">
+            <p><strong>当旧秩序的提供者开始退出时，新系统必须在退出完成之前准备好。</strong></p>
+            <p style="font-size:0.9rem; color:var(--sub);">这本书不是为稳定的世界写的。它是为正在到来的世界写的——在需要之前就已经设计好，所以当需要时它已经就绪。</p>
+        </div>
+
+        <!-- ===== HARD POWER ===== -->
+        <h2>中国的硬实力——物理基础设施</h2>
+        <p>全球公域（深海、极地、太空、网络空间）的开发需要物理基础设施——钢铁、舰船、卫星、光缆。这不是金融工程。这是 <strong style="color:var(--gold);">硬实力</strong>，是任何全球治理框架得以成立的物理基础。</p>
+
+        <h3>🌊 深海——从跟跑到领跑</h3>
+        <div class="grid-3">
+            <div class="card capability">
+                <div class="stat">1,746</div>
+                <div class="stat-label">累计载人深潜次数</div>
+                <p style="font-size:0.8rem; margin-top:0.3rem;">截至2025年——远超国外同类潜水器总和</p>
+            </div>
+            <div class="card capability">
+                <div class="stat">314</div>
+                <div class="stat-label">2025年单年下潜次数</div>
+                <p style="font-size:0.8rem; margin-top:0.3rem;">超过全球其他国家同类型潜水器当年下潜次数总和</p>
+            </div>
+            <div class="card capability">
+                <div class="stat">10,909米</div>
+                <div class="stat-label">最深下潜纪录（马里亚纳海沟）</div>
+                <p style="font-size:0.8rem; margin-top:0.3rem;">“奋斗者”号于2020年抵达地球最深点</p>
+            </div>
+        </div>
+        <p><strong>核心装备：</strong>三台载人深潜器（蛟龙号、深海勇士号、奋斗者号）+ 无人系列（海斗号、潜龙号）+ 西太平洋 <strong style="color:var(--blue);">6,000米级</strong>深海采矿试验——迄今全球最深的采矿测试。中国还主导了联合国批准的 <strong style="color:var(--blue);">“全球深渊探索计划”</strong>，属于联合国“海洋十年”大科学计划。</p>
+
+        <h3>❄️ 极地——永久存在</h3>
+        <div class="grid-3">
+            <div class="card capability">
+                <div class="stat">5</div>
+                <div class="stat-label">南极科考站</div>
+                <p style="font-size:0.8rem; margin-top:0.3rem;">秦岭站于2024年2月建成——第6座已规划</p>
+            </div>
+            <div class="card capability">
+                <div class="stat">2+1</div>
+                <div class="stat-label">破冰船 + 北极科考站</div>
+                <p style="font-size:0.8rem; margin-top:0.3rem;">黄河站 · “两船七站”极地网络</p>
+            </div>
+            <div class="card capability">
+                <div class="stat">全球唯一</div>
+                <div class="stat-label">在北极密集冰区连续载人深潜</div>
+                <p style="font-size:0.8rem; margin-top:0.3rem;">2025年10月完成——无可匹敌的能力</p>
+            </div>
+        </div>
+
+        <h3>🛰️ 太空——自主可控 · 全球覆盖</h3>
+        <div class="grid-3">
+            <div class="card capability">
+                <div class="stat">165</div>
+                <div class="stat-label">覆盖的首都城市</div>
+                <p style="font-size:0.8rem; margin-top:0.3rem;">北斗覆盖范围超过GPS——全球四大导航系统之一</p>
+            </div>
+            <div class="card capability">
+                <div class="stat">全球2个之一</div>
+                <div class="stat-label">在轨空间站</div>
+                <p style="font-size:0.8rem; margin-top:0.3rem;">唯一向所有联合国成员国开放的空间站</p>
+            </div>
+            <div class="card capability">
+                <div class="stat">“千帆星座”</div>
+                <div class="stat-label">低轨道卫星星座</div>
+                <p style="font-size:0.8rem; margin-top:0.3rem;">加速部署以抢占有限轨道位置与频谱资源</p>
+            </div>
+        </div>
+
+        <h3>🌐 网络空间——数字骨干</h3>
+        <div class="grid-3">
+            <div class="card capability">
+                <div class="stat">约99%</div>
+                <div class="stat-label">国际通信由海缆承载</div>
+                <p style="font-size:0.8rem; margin-top:0.3rem;">中国海缆安装企业在三大洋铺设了 <strong>70,000+公里</strong> 海缆</p>
+            </div>
+            <div class="card capability">
+                <div class="stat">17个</div>
+                <div class="stat-label">已投资的在役国际海缆系统</div>
+                <p style="font-size:0.8rem; margin-top:0.3rem;">包括横跨南大西洋连接非洲与南美的 SAIL 海缆</p>
+            </div>
+            <div class="card capability">
+                <div class="stat">全球4家之一</div>
+                <div class="stat-label">洲际海缆系统总承包商</div>
+                <p style="font-size:0.8rem; margin-top:0.3rem;">HMN Tech——具备端到端海缆交付能力</p>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <p><strong>对比鲜明：</strong>美国每年花费 <span style="color:var(--red);">1000亿美元以上</span> 维持 <span style="color:var(--red);">750多个</span> 军事基地——这是 <strong style="color:var(--red);">“控制与消耗”</strong> 的模式。而中国的全球公域基础设施——深海科考、极地站、北斗卫星、海底光缆——是 <strong style="color:var(--green);">“建设与连接”</strong> 的模式。</p>
+            <p style="font-size:0.9rem; color:var(--sub);">当旧秩序的维护者步履蹒跚时，只有建设者能够为下一套秩序提供物理基础。</p>
+        </div>
+
+        <!-- ===== THE BOOK ===== -->
+        <h2>这本书提供了什么</h2>
+        <p>仅有硬实力是不够的。它必须与 <strong style="color:var(--gold);">结构性融资机制</strong> 相匹配——一个能够部署资源而不需要等待政治慷慨的系统。</p>
+        <p>本书提出一套实用、符合法律且政治可行的融资架构，由两个部分组成：</p>
+
+        <div class="grid-2">
+            <div class="card">
+                <h4>💰 GCSF</h4>
+                <div class="big">全球公域永续基金</div>
+                <p>基于使用量的贡献机制，将贡献与影响全球公域或共享跨境资源的活动挂钩。不是税、不是货币、不是金融工具。</p>
+                <p style="font-size:0.8rem; color:var(--gold); margin-top:0.3rem;">年化预估收入：850～1100 亿美元</p>
+            </div>
+            <div class="card">
+                <h4>🛒 GCV</h4>
+                <div class="big">全球公域价值</div>
+                <p>非货币、限定用途的消费配额，由联合国发行以确保获得必需品的直接权利。不可累积、不可交易、不可投机，每年重置。</p>
+                <p style="font-size:0.8rem; color:var(--gold); margin-top:0.3rem;">覆盖能力：约 3 亿人/年</p>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <p><strong>GCSF 和 GCV 共同形成一个封闭循环的融资与分配系统</strong>，在不侵犯国家主权或国内经济体系的前提下强化联合国。</p>
+            <p style="font-size:0.9rem; color:var(--sub);">无税收 · 无新条约 · 不影响货币 · 不侵犯主权</p>
+        </div>
+
+        <h3>为何重要</h3>
+        <p>世界的挑战已经改变，但联合国的融资模式没有。气候灾难加剧、脆弱经济崩溃、人道需求扩大、流离失所人数创历史新高——但联合国仍然依赖随国内政治波动的自愿捐款。</p>
+        <p>此架构不是要取代现有融资机制，而是要为联合国配备所需的财政韧性，以在危机更频繁、更互联、成本更高的世界中履行其使命。</p>
+
+        <h2>目录（35章）</h2>
+        <ul class="toc">
+            <li><span class="num">1.</span> 结构性任务-资金缺口</li>
+            <li><span class="num">2.</span> GCSF 的逻辑</li>
+            <li><span class="num">3.</span> GCV 非货币分配</li>
+            <li><span class="num">4.</span> 主权安全设计</li>
+            <li><span class="num">5.</span> GCSF→GCV 流程</li>
+            <li><span class="num">6.</span> 年度重置机制</li>
+            <li><span class="num">7.</span> 政治中立性</li>
+            <li><span class="num">8.</span> 经济中性</li>
+            <li><span class="num">9.</span> 统一架构</li>
+            <li><span class="num">10.</span> 实施路径</li>
+            <li><span class="num">11.</span> 治理与审计</li>
+            <li><span class="num">12.</span> 反腐败设计</li>
+            <li><span class="num">13.</span> 全球稳定影响</li>
+            <li><span class="num">14.</span> 受益者中心</li>
+            <li><span class="num">15.</span> 与SDGs/人权一致</li>
+            <li><span class="num">16.</span> 国家实施场景</li>
+            <li><span class="num">17.</span> 10年推广战略</li>
+            <li><span class="num">18.</span> 财政中立性</li>
+            <li><span class="num">19.</span> 对比过往提案</li>
+            <li><span class="num">20.</span> 通胀/市场影响</li>
+            <li><span class="num">21.</span> 供应商网络</li>
+            <li><span class="num">22.</span> 政治免疫</li>
+            <li><span class="num">23.</span> 日常运营蓝图</li>
+            <li><span class="num">24.</span> 危机场景测试</li>
+            <li><span class="num">25.</span> 数字治理</li>
+            <li><span class="num">26.</span> 人道伦理</li>
+            <li><span class="num">27.</span> 全球公域经济学</li>
+            <li><span class="num">28.</span> 统一架构协同</li>
+            <li><span class="num">29.</span> 各国主权场景</li>
+            <li><span class="num">30.</span> 25个最硬问题</li>
+            <li><span class="num">31.</span> 全球推广策略</li>
+            <li><span class="num">32.</span> 联合国现代化</li>
+            <li><span class="num">33.</span> 全球社会最低保障</li>
+            <li><span class="num">34.</span> 量化影响模型</li>
+            <li><span class="num">35.</span> 结语：文明之基</li>
+        </ul>
+
+        <div class="download-section">
+            <p style="font-size:1.1rem; color:#fff; font-weight:500;">下载全书</p>
+            <p style="font-size:0.85rem; color:var(--sub);">作者将本书完全开放，供全球政策制定者、研究者、开发者免费阅读、引用与讨论。</p>
+            <div class="btn-group">
+                <a href="the_Last_Poverty_Solution.pdf" class="btn btn-primary">📄 English PDF</a>
+                <a href="终结全球贫穷方案.pdf" class="btn btn-secondary">📄 中文 PDF</a>
+            </div>
+            <div class="hint">中英双语 · 完整版 · 35章 · 124页</div>
+        </div>
+
+        <div class="footer-note">
+            <p>《终结全球贫穷方案》© 2025 徐萍 (Ping Xu) · 基于开放知识共享精神发布</p>
+            <p style="font-size:0.7rem; margin-top:0.2rem;"><a href="mailto:pingshyu@gmail.com">pingshyu@gmail.com</a></p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // 语言切换
+    const btns = document.querySelectorAll('.lang-switch button');
+    const enContent = document.getElementById('en-content');
+    const zhContent = document.getElementById('zh-content');
+
+    btns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const lang = this.dataset.lang;
+            btns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            if (lang === 'en') {
+                enContent.classList.add('active');
+                zhContent.classList.remove('active');
+            } else {
+                zhContent.classList.add('active');
+                enContent.classList.remove('active');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
