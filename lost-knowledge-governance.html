@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="治理的术科本质 – The Lost Knowledge of Governance" />
+    <title>治理的术科本质 · GFI Flow Intelligence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #0b1220;
+            --bg2: #0d1526;
+            --text: #f8fbff;
+            --muted: #c7d2e3;
+            --sub: #9fb0c8;
+            --dim: rgba(255, 255, 255, .06);
+            --green: #9FE870;
+            --blue: #7DD3FC;
+            --gold: #fbbf24;
+            --red: #f87171;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --mono: 'DM Mono', monospace;
+            --sans: 'DM Sans', system-ui, sans-serif;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 16px;
+            line-height: 1.7;
+            overflow-x: hidden;
+            padding: 0 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 0 4rem;
+        }
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            height: 62px;
+            padding: 0 clamp(18px, 5vw, 52px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(11, 18, 32, 0.92);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--dim);
+            margin: 0 -20px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        .logo {
+            color: #fff;
+            text-decoration: none;
+            font-family: var(--mono);
+            font-size: 13px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .back-link {
+            color: var(--sub);
+            font-family: var(--mono);
+            font-size: 12px;
+            text-decoration: none;
+            letter-spacing: 0.04em;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--green); }
+        .lang-switch {
+            display: flex;
+            gap: 4px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 30px;
+            padding: 3px;
+            border: 1px solid var(--dim);
+        }
+        .lang-switch button {
+            background: none;
+            border: none;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: 0.04em;
+            color: var(--sub);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        .lang-switch button.active {
+            background: var(--green);
+            color: var(--bg);
+        }
+        .lang-switch button:hover:not(.active) {
+            color: #fff;
+            background: rgba(255,255,255,0.08);
+        }
+
+        .article-header {
+            margin: 2rem 0 2.5rem;
+            border-bottom: 1px solid var(--dim);
+            padding-bottom: 1.5rem;
+        }
+        .article-header .badge {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--green);
+            background: rgba(159, 232, 112, 0.1);
+            padding: 0.15rem 0.8rem;
+            border-radius: 30px;
+            display: inline-block;
+            border: 1px solid rgba(159, 232, 112, 0.15);
+            margin-bottom: 0.8rem;
+        }
+        .article-header h1 {
+            font-family: var(--serif);
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: #fff;
+            margin-bottom: 0.2rem;
+        }
+        .article-header .subhead {
+            font-size: 1.05rem;
+            color: var(--sub);
+            font-style: italic;
+            margin-bottom: 0.4rem;
+        }
+        .article-header .meta {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            color: var(--muted);
+            opacity: 0.6;
+        }
+
+        .lang-content { display: none; }
+        .lang-content.active { display: block; }
+
+        .lang-content p {
+            color: var(--muted);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+        .lang-content strong {
+            color: #fff;
+            font-weight: 600;
+        }
+        .lang-content .highlight { color: var(--gold); }
+        .lang-content .highlight-blue { color: var(--blue); }
+        .lang-content .highlight-red { color: var(--red); }
+        .lang-content .quote-block {
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 4px solid var(--gold);
+            padding: 1.2rem 1.8rem;
+            margin: 1.5rem 0;
+            border-radius: 0 12px 12px 0;
+        }
+        .lang-content .quote-block p {
+            font-family: var(--serif);
+            font-size: 1.1rem;
+            color: #fff;
+            font-style: italic;
+            margin-bottom: 0.2rem;
+        }
+        .lang-content .quote-block .attribution {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            color: var(--sub);
+            text-align: right;
+        }
+        .lang-content h2 {
+            font-family: var(--serif);
+            font-size: 1.5rem;
+            color: #fff;
+            margin: 2rem 0 0.8rem 0;
+        }
+        .lang-content h3 {
+            font-size: 1.1rem;
+            color: var(--green);
+            margin: 1.2rem 0 0.4rem 0;
+        }
+        .lang-content .table-wrap {
+            overflow-x: auto;
+            margin: 1.2rem 0;
+        }
+        .lang-content table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+            font-family: var(--mono);
+            border: 1px solid var(--dim);
+        }
+        .lang-content th, .lang-content td {
+            padding: 8px 12px;
+            border: 1px solid var(--dim);
+            text-align: left;
+            color: var(--muted);
+        }
+        .lang-content th {
+            background: rgba(255,255,255,0.04);
+            color: var(--sub);
+            font-weight: 500;
+            letter-spacing: 0.04em;
+        }
+        .lang-content ul {
+            list-style: none;
+            padding: 0;
+            margin: 0.4rem 0 1rem;
+        }
+        .lang-content ul li {
+            position: relative;
+            padding-left: 1.2rem;
+            margin-bottom: 0.3rem;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+        .lang-content ul li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--green);
+            font-family: var(--mono);
+            font-size: 0.7rem;
+        }
+        .lang-content .footnote {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--dim);
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.2);
+            text-align: center;
+        }
+        .lang-content .footnote a {
+            color: var(--sub);
+            text-decoration: none;
+        }
+        .lang-content .footnote a:hover { color: #fff; }
+
+        @media (max-width: 720px) {
+            .article-header h1 { font-size: 1.6rem; }
+            body { padding: 0 12px; }
+            .nav { margin: 0 -12px; padding-left: 12px; padding-right: 12px; }
+            .lang-switch button { padding: 3px 10px; font-size: 10px; }
+            .lang-content table { font-size: 0.7rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== 顶栏 ===== -->
+<div class="nav">
+    <a href="index.html" class="logo">GFI Flow Intelligence</a>
+    <div class="nav-right">
+        <a href="index.html" class="back-link">← Back</a>
+        <div class="lang-switch">
+            <button class="active" data-lang="en">EN</button>
+            <button data-lang="zh">中文</button>
+        </div>
+    </div>
+</div>
+
+<!-- ===== 文章主体 ===== -->
+<div class="container">
+
+    <div class="article-header">
+        <div class="badge">GFI Flow Intelligence · Governance Legitimacy Framework</div>
+        <h1 id="mainTitle">The Lost Knowledge of Governance:<br />How Practical Wisdom Is Systematically Eliminated</h1>
+        <div class="subhead" id="subTitle">治理的“术科”本质——知识是如何“失传”的</div>
+        <div class="meta">August 2026 · 2026年8月</div>
+    </div>
+
+    <!-- ===== 英文版 ===== -->
+    <div class="lang-content active" id="en-content">
+
+        <h2>I. The Two Forms of Knowledge</h2>
+        <p>In the context of classical piano training, there is a fundamental distinction that most governance theorists have never considered: <span class="highlight-blue">the difference between liberal arts and practical arts.</span></p>
+        <ul>
+            <li><strong>Liberal arts (学科)</strong> — knowledge acquired through reading, writing, and discussion. It can be transmitted through texts. Its essence is <span class="highlight-blue">“knowing‑that.”</span></li>
+            <li><strong>Practical arts (术科)</strong> — knowledge acquired through practice, repetition, and physical experience. It cannot be transmitted through texts. Its essence is <span class="highlight-blue">“knowing‑how.”</span></li>
+        </ul>
+        <p>You cannot learn to play the piano by reading a book. You cannot learn to govern by reading a policy paper.</p>
+        <p>This distinction is not academic. It is the key to understanding why Western governance has become a system that systematically eliminates the very knowledge it needs most.</p>
+
+        <h2>II. How Practical Knowledge Is Transmitted</h2>
+        <p>Practical knowledge is transmitted through a specific chain:</p>
+        <ul>
+            <li><span class="highlight">Time</span> — thousands of hours of practice</li>
+            <li><span class="highlight">Repetition</span> — doing the same thing until it becomes automatic</li>
+            <li><span class="highlight">Mentorship</span> — learning from someone who has already done it</li>
+            <li><span class="highlight">Failure</span> — making mistakes and correcting them in real time</li>
+            <li><span class="highlight">Physical memory</span> — knowledge that resides in the body, not the mind</li>
+        </ul>
+        <p>This is how a piano student becomes a pianist. This is also how a junior official becomes a governor.</p>
+        <p><strong>Practical knowledge cannot be rushed. It cannot be compressed into a semester or a training module. It requires <span class="highlight-red">years of immersion in the actual work.</span></strong></p>
+
+        <h2>III. The Western Path: How Practical Knowledge Is Eliminated</h2>
+        <p>The typical path to power in Western governance is:</p>
+        <ul>
+            <li>Elite university (liberal arts education) →</li>
+            <li>Think tank or law firm (analysis and writing) →</li>
+            <li>Government appointment (policy direction) →</li>
+            <li>Lobbying or consulting (advising others)</li>
+        </ul>
+        <p><span class="highlight-red">Notice what is missing: practice.</span></p>
+        <p>This path selects for people who are excellent at reading, writing, and debating — but it systematically eliminates people who have spent years <span class="highlight-blue">actually doing the work.</span></p>
+        <p>A Harvard graduate may have written a brilliant thesis on infrastructure policy. But they have never laid a brick. They have never managed a construction site. They have never negotiated with a local community. They have never seen a project fail and rebuilt it from scratch.</p>
+        <p><strong>They are experts in the liberal arts of governance. They are beginners in the practical arts.</strong></p>
+
+        <h2>IV. The Cycle of Forgetting</h2>
+        <p>Here is the most dangerous dynamic:</p>
+        <ul>
+            <li>Every generation of practitioners retires or is replaced</li>
+            <li>The practical knowledge they accumulated over decades leaves with them</li>
+            <li>New officials arrive with elite degrees and no practical experience</li>
+            <li>They have to “learn” what their predecessors already knew</li>
+            <li>But they cannot learn it from books — so they never truly learn it</li>
+        </ul>
+        <p><span class="highlight-red">Each political cycle, the practical knowledge of governance is reset to zero.</span></p>
+        <p>This is why the same mistakes are repeated. This is why infrastructure projects take eighteen years and still fail. This is why policies that worked in one administration are abandoned in the next.</p>
+        <p><strong>The system is not designed to accumulate practical knowledge. It is designed to forget it.</strong></p>
+
+        <h2>V. The Chinese Path: Practical Knowledge as Apprenticeship</h2>
+        <p>The Chinese governance path is almost the mirror image:</p>
+        <ul>
+            <li>Start at the grassroots (village, town, factory, construction site)</li>
+            <li>Work in multiple positions over decades</li>
+            <li>Prove your ability to <span class="highlight-blue">solve real problems</span> before being promoted</li>
+            <li>Accumulate practical knowledge through <span class="highlight-red">twenty years of doing</span></li>
+            <li>Only then enter senior leadership</li>
+        </ul>
+        <p><strong>This is not a system of selection by examination. It is a system of selection by apprenticeship.</strong></p>
+        <p>A Chinese official who manages transportation has actually built roads. An official who manages agriculture has actually farmed. An official who manages public health has actually handled epidemics.</p>
+        <p>The practical knowledge is not lost. It is passed down through <span class="highlight">generations of practice.</span></p>
+
+        <h2>VI. Why the West Cannot Copy This Path</h2>
+        <p>The West cannot simply “adopt” this model for structural reasons:</p>
+        <ul>
+            <li><strong>Election cycles</strong> — practitioners do not have decades to accumulate experience before being replaced</li>
+            <li><strong>Multi-party rotation</strong> — experienced officials are regularly removed for political reasons</li>
+            <li><strong>Elite culture</strong> — grassroots experience is seen as less prestigious than academic credentials</li>
+            <li><strong>Policy churn</strong> — long-term projects are abandoned when governments change</li>
+        </ul>
+        <p><span class="highlight-red">The Western system does not merely fail to preserve practical knowledge. It actively destroys it.</span></p>
+        <p>Every time a government changes, experienced officials are replaced by inexperienced ones. Every time a new party takes power, the accumulated wisdom of the previous administration is discarded.</p>
+        <p><strong>The system is optimized for ideological turnover — and optimized against practical continuity.</strong></p>
+
+        <h2>VII. The GFI Framework Diagnosis</h2>
+        <p>Under the GFI Governance Legitimacy Framework:</p>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Feature</th><th>Western System</th><th>Chinese System</th></tr></thead>
+                <tbody>
+                    <tr><td>Selection criterion</td><td>Academic credentials</td><td>Practical experience</td></tr>
+                    <tr><td>Knowledge type</td><td>Liberal arts (reading, writing)</td><td>Practical arts (doing, building)</td></tr>
+                    <tr><td>Knowledge transmission</td><td>Texts and degrees</td><td>Apprenticeship and time</td></tr>
+                    <tr><td>Continuity</td><td>Broken by electoral cycles</td><td>Preserved across generations</td></tr>
+                    <tr><td>Result</td><td>Systematic forgetting</td><td>Systematic accumulation</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p><span class="highlight">Governance legitimacy requires governance capability. Governance capability requires practical knowledge. Practical knowledge requires time, repetition, and apprenticeship.</span></p>
+        <p>The West has built a system that is excellent at producing credentialed experts — and terrible at preserving practical wisdom.</p>
+
+        <h2>VIII. The Irony</h2>
+        <p>Here is the ultimate irony:</p>
+        <p>Western elite universities have the world’s best libraries, the world’s best research methods, and the world’s best students. They can produce thousands of papers about <span class="highlight-blue">how to govern.</span></p>
+        <p>But they cannot produce a single practitioner who knows <span class="highlight-red">how to govern.</span></p>
+        <p>Because you cannot learn governance from a library. You can only learn it from a construction site, a village, a factory, a hospital — and <span class="highlight">twenty years of doing the work.</span></p>
+        <p>The West has built a system that trains the wrong people, selects the wrong people, and then wonders why it keeps failing.</p>
+        <p><span class="highlight-red">The knowledge is not in the books. It never was.</span></p>
+
+        <div class="footnote">
+            <span>GFI Flow Intelligence · Governance Legitimacy Framework</span><br />
+            <a href="index.html">← Back to Home</a> · <a href="legitimacy-migration-procedure-performance.html">Legitimacy Migration →</a>
+        </div>
+    </div>
+
+    <!-- ===== 中文版 ===== -->
+    <div class="lang-content" id="zh-content">
+
+        <h2>一、知识的两种形态</h2>
+        <p>在古典钢琴训练的语境中，有一个大多数治理理论家从未考虑过的根本区分：<span class="highlight-blue">学科与术科的区别。</span></p>
+        <ul>
+            <li><strong>学科（Liberal arts）</strong>——通过阅读、写作和讨论获得的知识。它可以通过文本传递。<span class="highlight-blue">其本质是“关于什么”（knowing‑that）。</span></li>
+            <li><strong>术科（Practical arts）</strong>——通过练习、重复和身体经验获得的知识。它无法通过文本传递。<span class="highlight-blue">其本质是“如何做到”（knowing‑how）。</span></li>
+        </ul>
+        <p>你不能通过读书来学弹钢琴。你不能通过阅读政策文件来学习治理。</p>
+        <p>这个区分不是学术性的。它是理解为什么西方治理成为一个系统性地消灭它最需要的那种知识的关键。</p>
+
+        <h2>二、实践知识是如何传递的</h2>
+        <p>实践知识通过一个特定的链条传递：</p>
+        <ul>
+            <li><span class="highlight">时间</span>——数千小时的练习</li>
+            <li><span class="highlight">重复</span>——反复做同一件事，直到它变成自动反应</li>
+            <li><span class="highlight">师徒制</span>——从已经做过的人那里学习</li>
+            <li><span class="highlight">失败</span>——在实时中犯错并修正</li>
+            <li><span class="highlight">身体记忆</span>——存在于身体而非大脑中的知识</li>
+        </ul>
+        <p>这就是钢琴学生成为钢琴家的方式。这也是初级官员成为治理者的方式。</p>
+        <p><strong>实践知识无法速成。它不能被压缩到一个学期或一个培训模块中。它需要 <span class="highlight-red">多年沉浸在真实工作中。</span></strong></p>
+
+        <h2>三、西方的路径：实践知识如何被消灭</h2>
+        <p>西方治理中通往权力的典型路径是：</p>
+        <ul>
+            <li>精英大学（学科教育）→</li>
+            <li>智库或律所（分析和写作）→</li>
+            <li>政府任命（政策方向）→</li>
+            <li>游说或咨询（建议他人）</li>
+        </ul>
+        <p><span class="highlight-red">注意缺了什么：实践。</span></p>
+        <p>这条路径选拔的是擅长阅读、写作和辩论的人——但它系统性地淘汰了那些花多年时间 <span class="highlight-blue">真正在做实际工作</span> 的人。</p>
+        <p>一个哈佛毕业生可能写过一篇关于基础设施政策的精彩论文。但他们从未铺过一块砖。他们从未管理过一个工地。他们从未与社区谈判过。他们从未见过一个项目失败并从头重建。</p>
+        <p><strong>他们是治理的学科专家。他们是治理的术科初学者。</strong></p>
+
+        <h2>四、遗忘的循环</h2>
+        <p>这是最危险的动态：</p>
+        <ul>
+            <li>每一代实践者退休或被替换</li>
+            <li>他们几十年积累的实践知识随他们而去</li>
+            <li>新官员带着精英学位上任，没有实践经验</li>
+            <li>他们不得不“学习”前辈已经知道的东西</li>
+            <li>但他们无法从书本中学到——所以他们从未真正学会</li>
+        </ul>
+        <p><span class="highlight-red">每一个政治周期，治理的实践知识都被重置为零。</span></p>
+        <p>这就是为什么同样的错误反复发生。这就是为什么基础设施项目花了十八年仍然失败。这就是为什么在一个政府中有效的政策，在下一个政府中被放弃。</p>
+        <p><strong>这个系统不是被设计来积累实践知识的。它是被设计来遗忘它的。</strong></p>
+
+        <h2>五、中国的路径：实践知识作为学徒制</h2>
+        <p>中国的治理路径几乎是镜像的反面：</p>
+        <ul>
+            <li>从基层开始（村庄、乡镇、工厂、工地）</li>
+            <li>在数十年中历经多个岗位</li>
+            <li>在被提拔之前，证明你 <span class="highlight-blue">解决真实问题</span> 的能力</li>
+            <li>通过 <span class="highlight-red">二十年的实践</span> 积累实践知识</li>
+            <li>只有然后才进入高层领导</li>
+        </ul>
+        <p><strong>这不是一个通过考试选拔的系统。这是一个通过学徒制选拔的系统。</strong></p>
+        <p>一个负责交通的中国官员真的建过路。一个负责农业的官员真的种过地。一个负责公共卫生的官员真的处理过疫情。</p>
+        <p>实践知识没有被丢失。它通过 <span class="highlight">一代代人的实践</span> 被传递下去。</p>
+
+        <h2>六、为什么西方无法复制这条路径</h2>
+        <p>西方不能简单地“采用”这个模式，原因如下：</p>
+        <ul>
+            <li><strong>选举周期</strong>——实践者没有数十年的时间来积累经验，然后就被替换了</li>
+            <li><strong>多党轮替</strong>——有经验的官员经常因政治原因被撤换</li>
+            <li><strong>精英文化</strong>——基层经验被认为不如学术资历有威望</li>
+            <li><strong>政策动荡</strong>——长期项目在政府更替时被放弃</li>
+        </ul>
+        <p><span class="highlight-red">西方系统不仅未能保存实践知识。它还在主动破坏它。</span></p>
+        <p>每次政府换届，有经验的官员被没有经验的人取代。每次新政党上台，前政府的积累智慧被丢弃。</p>
+        <p><strong>这个系统被优化为意识形态的更替——却被优化为反实践的连续性。</strong></p>
+
+        <h2>七、GFI框架下的诊断</h2>
+        <p>在GFI治理正当性框架下：</p>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>特征</th><th>西方系统</th><th>中国系统</th></tr></thead>
+                <tbody>
+                    <tr><td>选拔标准</td><td>学术资历</td><td>实践经验</td></tr>
+                    <tr><td>知识类型</td><td>学科（读、写）</td><td>术科（做、建）</td></tr>
+                    <tr><td>知识传递</td><td>文本和学位</td><td>学徒制和时间</td></tr>
+                    <tr><td>连续性</td><td>被选举周期打断</td><td>跨代保存</td></tr>
+                    <tr><td>结果</td><td>系统性遗忘</td><td>系统性积累</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p><span class="highlight">治理正当性需要治理能力。治理能力需要实践知识。实践知识需要时间、重复和学徒制。</span></p>
+        <p>西方建立了一个在培养有资历的专家方面极其出色的系统——但在保存实践智慧方面极其糟糕。</p>
+
+        <h2>八、讽刺之处</h2>
+        <p>这是最终的讽刺：</p>
+        <p>西方的精英大学拥有世界上最好的图书馆、最好的研究方法、最好的学生。它们可以生产数千篇关于 <span class="highlight-blue">如何治理</span> 的论文。</p>
+        <p>但它们无法培养出一个知道 <span class="highlight-red">如何治理</span> 的实践者。</p>
+        <p>因为你无法从图书馆里学到治理。你只能从工地、村庄、工厂、医院——以及 <span class="highlight">二十年的实践</span> 中学到。</p>
+        <p>西方建立了一个训练了错误的人、选拔了错误的人、然后不知道为什么不断失败的系统。</p>
+        <p><span class="highlight-red">知识不在书本里。从来就不在。</span></p>
+
+        <div class="footnote">
+            <span>GFI Flow Intelligence · 治理正当性框架</span><br />
+            <a href="index.html">← 返回首页</a> · <a href="legitimacy-migration-procedure-performance.html">合法性的迁移 →</a>
+        </div>
+    </div>
+
+</div>
+
+<!-- ===== 脚本 ===== -->
+<script>
+    (function() {
+        const btns = document.querySelectorAll('.lang-switch button');
+        const enContent = document.getElementById('en-content');
+        const zhContent = document.getElementById('zh-content');
+        const mainTitle = document.getElementById('mainTitle');
+        const subTitle = document.getElementById('subTitle');
+
+        const titles = {
+            en: {
+                main: 'The Lost Knowledge of Governance:<br />How Practical Wisdom Is Systematically Eliminated',
+                sub: '治理的“术科”本质——知识是如何“失传”的'
+            },
+            zh: {
+                main: '治理的“术科”本质——<br />知识是如何“失传”的',
+                sub: 'The Lost Knowledge of Governance: How Practical Wisdom Is Systematically Eliminated'
+            }
+        };
+
+        function setLanguage(lang) {
+            btns.forEach(b => b.classList.remove('active'));
+            document.querySelector(`.lang-switch button[data-lang="${lang}"]`).classList.add('active');
+
+            if (lang === 'en') {
+                enContent.classList.add('active');
+                zhContent.classList.remove('active');
+            } else {
+                zhContent.classList.add('active');
+                enContent.classList.remove('active');
+            }
+
+            mainTitle.innerHTML = titles[lang].main;
+            subTitle.textContent = titles[lang].sub;
+        }
+
+        btns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                setLanguage(this.dataset.lang);
+            });
+        });
+
+        setLanguage('en');
+    })();
+</script>
+
+</body>
+</html>
