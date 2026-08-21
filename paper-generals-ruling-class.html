@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="纸上谈兵的治理阶级 – The Ruling Class of Paper Generals" />
+    <title>纸上谈兵的治理阶级 · GFI Flow Intelligence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #0b1220;
+            --bg2: #0d1526;
+            --text: #f8fbff;
+            --muted: #c7d2e3;
+            --sub: #9fb0c8;
+            --dim: rgba(255, 255, 255, .06);
+            --green: #9FE870;
+            --blue: #7DD3FC;
+            --gold: #fbbf24;
+            --red: #f87171;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --mono: 'DM Mono', monospace;
+            --sans: 'DM Sans', system-ui, sans-serif;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 16px;
+            line-height: 1.7;
+            overflow-x: hidden;
+            padding: 0 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 0 4rem;
+        }
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            height: 62px;
+            padding: 0 clamp(18px, 5vw, 52px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(11, 18, 32, 0.92);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--dim);
+            margin: 0 -20px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        .logo {
+            color: #fff;
+            text-decoration: none;
+            font-family: var(--mono);
+            font-size: 13px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .back-link {
+            color: var(--sub);
+            font-family: var(--mono);
+            font-size: 12px;
+            text-decoration: none;
+            letter-spacing: 0.04em;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--green); }
+        .lang-switch {
+            display: flex;
+            gap: 4px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 30px;
+            padding: 3px;
+            border: 1px solid var(--dim);
+        }
+        .lang-switch button {
+            background: none;
+            border: none;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: 0.04em;
+            color: var(--sub);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        .lang-switch button.active {
+            background: var(--green);
+            color: var(--bg);
+        }
+        .lang-switch button:hover:not(.active) {
+            color: #fff;
+            background: rgba(255,255,255,0.08);
+        }
+
+        .article-header {
+            margin: 2rem 0 2.5rem;
+            border-bottom: 1px solid var(--dim);
+            padding-bottom: 1.5rem;
+        }
+        .article-header .badge {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--green);
+            background: rgba(159, 232, 112, 0.1);
+            padding: 0.15rem 0.8rem;
+            border-radius: 30px;
+            display: inline-block;
+            border: 1px solid rgba(159, 232, 112, 0.15);
+            margin-bottom: 0.8rem;
+        }
+        .article-header h1 {
+            font-family: var(--serif);
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: #fff;
+            margin-bottom: 0.2rem;
+        }
+        .article-header .subhead {
+            font-size: 1.05rem;
+            color: var(--sub);
+            font-style: italic;
+            margin-bottom: 0.4rem;
+        }
+        .article-header .meta {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            color: var(--muted);
+            opacity: 0.6;
+        }
+
+        .lang-content { display: none; }
+        .lang-content.active { display: block; }
+
+        .lang-content p {
+            color: var(--muted);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+        .lang-content strong {
+            color: #fff;
+            font-weight: 600;
+        }
+        .lang-content .highlight { color: var(--gold); }
+        .lang-content .highlight-blue { color: var(--blue); }
+        .lang-content .highlight-red { color: var(--red); }
+        .lang-content .quote-block {
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 4px solid var(--gold);
+            padding: 1.2rem 1.8rem;
+            margin: 1.5rem 0;
+            border-radius: 0 12px 12px 0;
+        }
+        .lang-content .quote-block p {
+            font-family: var(--serif);
+            font-size: 1.1rem;
+            color: #fff;
+            font-style: italic;
+            margin-bottom: 0.2rem;
+        }
+        .lang-content .quote-block .attribution {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            color: var(--sub);
+            text-align: right;
+        }
+        .lang-content h2 {
+            font-family: var(--serif);
+            font-size: 1.5rem;
+            color: #fff;
+            margin: 2rem 0 0.8rem 0;
+        }
+        .lang-content h3 {
+            font-size: 1.1rem;
+            color: var(--green);
+            margin: 1.2rem 0 0.4rem 0;
+        }
+        .lang-content .table-wrap {
+            overflow-x: auto;
+            margin: 1.2rem 0;
+        }
+        .lang-content table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+            font-family: var(--mono);
+            border: 1px solid var(--dim);
+        }
+        .lang-content th, .lang-content td {
+            padding: 8px 12px;
+            border: 1px solid var(--dim);
+            text-align: left;
+            color: var(--muted);
+        }
+        .lang-content th {
+            background: rgba(255,255,255,0.04);
+            color: var(--sub);
+            font-weight: 500;
+            letter-spacing: 0.04em;
+        }
+        .lang-content ul {
+            list-style: none;
+            padding: 0;
+            margin: 0.4rem 0 1rem;
+        }
+        .lang-content ul li {
+            position: relative;
+            padding-left: 1.2rem;
+            margin-bottom: 0.3rem;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+        .lang-content ul li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--green);
+            font-family: var(--mono);
+            font-size: 0.7rem;
+        }
+        .lang-content .footnote {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--dim);
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.2);
+            text-align: center;
+        }
+        .lang-content .footnote a {
+            color: var(--sub);
+            text-decoration: none;
+        }
+        .lang-content .footnote a:hover { color: #fff; }
+
+        @media (max-width: 720px) {
+            .article-header h1 { font-size: 1.6rem; }
+            body { padding: 0 12px; }
+            .nav { margin: 0 -12px; padding-left: 12px; padding-right: 12px; }
+            .lang-switch button { padding: 3px 10px; font-size: 10px; }
+            .lang-content table { font-size: 0.7rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== 顶栏 ===== -->
+<div class="nav">
+    <a href="index.html" class="logo">GFI Flow Intelligence</a>
+    <div class="nav-right">
+        <a href="index.html" class="back-link">← Back</a>
+        <div class="lang-switch">
+            <button class="active" data-lang="en">EN</button>
+            <button data-lang="zh">中文</button>
+        </div>
+    </div>
+</div>
+
+<!-- ===== 文章主体 ===== -->
+<div class="container">
+
+    <div class="article-header">
+        <div class="badge">GFI Flow Intelligence · Governance Legitimacy Framework</div>
+        <h1 id="mainTitle">The Ruling Class of Paper Generals:<br />Diplomas, Elite Schools, and the Gap in Execution</h1>
+        <div class="subhead" id="subTitle">纸上谈兵的治理阶级：文凭、名校与执行力的断裂</div>
+        <div class="meta">August 2026 · 2026年8月</div>
+    </div>
+
+    <!-- ===== 英文版 ===== -->
+    <div class="lang-content active" id="en-content">
+
+        <h2>I. Who Rules the West?</h2>
+        <p>A simple question: who rules Western countries?</p>
+        <p>The answer is not complicated. Open the roster of any Western government — cabinet ministers, senior advisors, policy directors — and you will find a highly homogeneous group:</p>
+        <ul>
+            <li>Degrees from Ivy League or equivalent elite universities</li>
+            <li>Backgrounds in law, political science, economics, international relations</li>
+            <li>Almost no real experience in “doing” anything</li>
+            <li>Career trajectory: university → think tank → government → lobbying firm</li>
+        </ul>
+        <p>They are the perfect products of <span class="highlight-blue">liberal‑arts governance</span>. They are excellent at reading, writing, and debating — but they have never built a bridge, never run a school, never laid a kilometer of road.</p>
+        <p>They are the <span class="highlight-red">paper generals</span> of our time.</p>
+
+        <h2>II. Elections Do Not Select Executors — They Select Speechmakers</h2>
+        <p>Western electoral systems have a structural flaw that is often overlooked: <span class="highlight-blue">they select for “electability,” not “deliverability.”</span></p>
+        <ul>
+            <li><strong>Campaigning requires speech, promises, and image management</strong> — these are performing arts, not governance skills.</li>
+            <li><strong>Governance requires budget management, project execution, and organizational coordination</strong> — these are practical skills, not rhetorical techniques.</li>
+        </ul>
+        <p>The electoral mechanism rewards <span class="highlight-blue">declarative capacity</span>, not <span class="highlight-red">delivery capacity.</span></p>
+        <p>A candidate can make the most moving promises, but that has nothing to do with whether they can build a railway within four years. Elections do not test that. Elections only test whether they can get enough people to vote for them on election day.</p>
+        <p><span class="highlight">The underlying logic of elections: whoever performs best, wins.</span></p>
+
+        <h2>III. Free Speech Creates a “Market of Opinions” — Not a “Market of Execution”</h2>
+        <p>Western free speech has a mythologized assumption: as long as information flows freely, truth will prevail and good policy will emerge.</p>
+        <p>But in reality, free speech creates a <span class="highlight-blue">market of opinions</span> — whoever is loudest, most articulate, and has the widest distribution network dominates the narrative.</p>
+        <p>This market does not reward <span class="highlight-red">execution capacity.</span></p>
+        <ul>
+            <li>You can talk every day on television about how to solve homelessness — but if you have never spoken to a homeless person on the street, your “opinion” is just noise.</li>
+            <li>You can write a hundred columns about infrastructure — but if you have never managed a construction project, your “advice” is just paper talk.</li>
+        </ul>
+        <p><span class="highlight-blue">Free speech makes “talking” cheap, but makes “doing” scarce.</span></p>
+        <p>It creates an institutional paradox: you can have an opinion about anything, but whether you have the capacity to do anything — it simply does not matter.</p>
+
+        <h2>IV. Multi‑Party Systems Turn Governance Into “Rotating Talk”</h2>
+        <p>The core mechanism of multi‑party systems is: different parties take turns in power, competing, debating, and checking each other to ensure governance quality.</p>
+        <p>But its actual effects are:</p>
+        <ul>
+            <li><strong>Lack of policy continuity</strong>: new governments overturn old plans, and everything restarts. The “reset” every four years makes any large project requiring more than a decade impossible to complete.</li>
+            <li><strong>Diluted accountability</strong>: when things go wrong, the ruling party blames the previous mess, the opposition blames the government’s incompetence. No one is truly responsible.</li>
+            <li><strong>Professional competence replaced by political loyalty</strong>: with every government turnover, large numbers of technical experts are dismissed and replaced with “our own people” — who often have only loyalty, not experience.</li>
+        </ul>
+        <p><span class="highlight">The logic of multi‑party systems is: competition improves quality. But in governance, competition often produces discontinuity, not accumulation.</span></p>
+
+        <h2>V. Elite Diplomas: The Entry Ticket to Power, the Barrier to Execution</h2>
+        <p>Another feature of the Western ruling class: <span class="highlight-blue">elite university diplomas are almost the only gateway to the core of power.</span></p>
+        <ul>
+            <li>Harvard, Yale, Oxford, Cambridge — their law schools and public policy schools are the conveyor belts to the White House and Downing Street.</li>
+            <li>What do these schools teach? Theory, frameworks, case analysis, critical thinking — these are all <span class="highlight-blue">liberal‑arts</span> content.</li>
+            <li>What do they not teach? Project management, construction management, grassroots governance, crisis scene handling — these are <span class="highlight-red">practical‑arts</span> skills.</li>
+        </ul>
+        <p>The result: the smartest people are selected, but they are trained to be <span class="highlight-red">paper experts.</span></p>
+        <p>They know how to analyze a case, but not how to solve a real problem. They know how to write a policy brief, but not how to implement a policy on the ground.</p>
+        <p><span class="highlight">The higher the diploma, the further from reality.</span></p>
+
+        <h2>VI. The Chinese Governance Logic in Reverse: From the Grassroots, Back to the Grassroots</h2>
+        <p>In contrast to the Western “elite university → think tank → government” path, the typical growth path of Chinese governance practitioners is:</p>
+        <ul>
+            <li>Start at the grassroots (townships, villages, factories, construction sites)</li>
+            <li>Gradually rise, proving execution capacity at every new post</li>
+            <li>Accumulate experience across multiple positions, regions, and fields</li>
+            <li>By the time they reach the top, they have over two decades of grassroots practice</li>
+        </ul>
+        <p>This is not “liberal‑arts” training. This is <span class="highlight-blue">“practical‑arts” apprenticeship.</span></p>
+        <p>China’s governance practitioners do not enter the core of power through examinations. They prove themselves by <span class="highlight">solving real problems in the real world.</span></p>
+        <ul>
+            <li>An official who has never built a road will not be placed in charge of transportation planning.</li>
+            <li>An official who has never managed agriculture will not be placed in charge of rural revitalization.</li>
+            <li>An official who has never handled a pandemic will not be placed in charge of public health.</li>
+        </ul>
+        <p><span class="highlight-blue">Governance is not learned from books. It grows from the land.</span></p>
+
+        <h2>VII. Why Can’t the West Replicate This Model?</h2>
+        <p>This is not a matter of values. It is a matter of <span class="highlight-red">institutional structural differences.</span></p>
+        <ul>
+            <li><strong>Electoral politics</strong> — its periodicity means long‑term experience accumulation is institutionally undervalued. Winning elections matters more than having experience.</li>
+            <li><strong>Multi‑party rotation</strong> — prevents grassroots experience from accumulating. Every party change, experienced people are replaced, and inexperienced people take power.</li>
+            <li><strong>Elite worship</strong> — isolates the elite from the grassroots. The path to advancement is not through grassroots practice, but through academic credentials and personal connections.</li>
+            <li><strong>Free speech</strong> — makes expression the primary skill, and execution a secondary capacity.</li>
+        </ul>
+        <p>The Western governance system, from selection to promotion, is <span class="highlight-red">systematically eliminating people with execution experience.</span></p>
+        <p>This explains why the West has the world’s best universities but cannot build the world’s best infrastructure.</p>
+
+        <h2>VIII. The GFI Framework Conclusion</h2>
+        <p>Under the GFI Governance Legitimacy Framework:</p>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Western Ruling Class</th><th>Chinese Ruling Class</th></tr></thead>
+                <tbody>
+                    <tr><td>Comes from elite universities</td><td>Comes from the grassroots</td></tr>
+                    <tr><td>Excels at reading, writing, debating</td><td>Excels at executing, implementing, solving problems</td></tr>
+                    <tr><td>Selected by electoral systems</td><td>Selected by practical systems</td></tr>
+                    <tr><td>Legitimacy from “procedural compliance”</td><td>Legitimacy from “outcome delivery”</td></tr>
+                    <tr><td>Lacks execution experience</td><td>Possesses execution experience</td></tr>
+                    <tr><td>Legitimacy from “being elected”</td><td>Legitimacy from “having done it”</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p><span class="highlight">The source of governance legitimacy is shifting from “who is elected” to “what has been accomplished.”</span></p>
+        <p>The crisis of the Western ruling class is not a moral crisis, not an ideological crisis — it is a <span class="highlight-red">capability crisis.</span></p>
+        <p>A group of people who only know how to read, write, and talk, when faced with tasks requiring doing, building, and fixing, are destined to fail.</p>
+
+        <h2>IX. A Final Observation</h2>
+        <p>Eighteen years ago, California began planning high‑speed rail.</p>
+        <p>In those eighteen years, Harvard graduated thousands of public policy masters, CNN broadcast tens of thousands of hours of discussion, and Congress held hundreds of hearings.</p>
+        <p>Eighteen years later, California high‑speed rail has not built a single kilometer.</p>
+        <p>Meanwhile, on China’s construction sites, the sons of farmers are laying tracks.</p>
+        <p><span class="highlight-blue">He is not a Harvard graduate. But he knows how to do it. He cannot write policy papers. But he knows how to build the road.</span></p>
+        <p>That is the difference between liberal arts and practical arts.</p>
+        <p>That is the difference between paper generals and doers.</p>
+        <p>That is why the Western governance system is losing legitimacy — and it does not even know why.</p>
+
+        <div class="footnote">
+            <span>GFI Flow Intelligence · Governance Legitimacy Framework</span><br />
+            <a href="index.html">← Back to Home</a> · <a href="governance-is-practical-art.html">Governance Is a Practical Art</a>
+        </div>
+    </div>
+
+    <!-- ===== 中文版 ===== -->
+    <div class="lang-content" id="zh-content">
+
+        <h2>一、谁在统治西方？</h2>
+        <p>一个简单的问题：谁在统治西方国家？</p>
+        <p>答案并不复杂。打开任何一个西方政府的名单——内阁部长、高级顾问、政策主管——你会发现一个高度同质化的群体：</p>
+        <ul>
+            <li>常春藤盟校或同等精英大学的学位</li>
+            <li>法律、政治学、经济学、国际关系的专业背景</li>
+            <li>几乎没有任何真正的“做”的经验</li>
+            <li>职业生涯轨迹：大学 → 智库 → 政府 → 游说公司</li>
+        </ul>
+        <p>他们是 <span class="highlight-blue">学科式治理</span> 的完美产物。他们擅长阅读、写作、辩论——但他们从未建过一座桥、从未办过一所学校、从未铺设过一公里道路。</p>
+        <p>他们是这个时代的 <span class="highlight-red">纸上将军</span>。</p>
+
+        <h2>二、选举不产生执行者，只产生演说家</h2>
+        <p>西方的选举系统有一个被忽视的结构性缺陷：<span class="highlight-blue">它选拔的是“被选上”的能力，而不是“做成事”的能力。</span></p>
+        <ul>
+            <li><strong>竞选需要的是演说、承诺、形象管理</strong>——这些是表演艺术，不是治理技术。</li>
+            <li><strong>治理需要的是预算管理、项目执行、组织协调</strong>——这些是实作能力，不是修辞技巧。</li>
+        </ul>
+        <p>选举机制奖励的是 <span class="highlight-blue">宣示能力</span>，而不是 <span class="highlight-red">交付能力</span>。</p>
+        <p>一个竞选者可以说出最动人的承诺，但这和他能否在四年内建成一条铁路毫无关系。选举不测试这一点。选举只测试他能不能让足够多的人在投票日选他。</p>
+        <p><span class="highlight">选举的底层逻辑是：谁演得好，谁上台。</span></p>
+
+        <h2>三、言论自由养出了“意见市场”，却没有“执行市场”</h2>
+        <p>西方的言论自由有一个被神化的假设：只要信息自由流动，真理就会胜出，好的政策就会产生。</p>
+        <p>但现实是，言论自由创造的是一个 <span class="highlight-blue">意见市场</span>——谁的声音大、谁的口才好、谁的传播渠道广，谁就能主导叙事。</p>
+        <p>这个市场不奖励 <span class="highlight-red">执行能力</span>。</p>
+        <ul>
+            <li>你可以每天在电视上谈论如何解决无家可归问题——但如果你从未在街头接触过一个无家可归者，你的“意见”只是噪音。</li>
+            <li>你可以写一百篇关于基础设施建设的专栏文章——但如果你从未管理过一个施工项目，你的“建议”只是纸上谈兵。</li>
+        </ul>
+        <p><span class="highlight-blue">言论自由使“说话”变得廉价，却使“做事”变得稀缺。</span></p>
+        <p>它在制度上制造了一个悖论：你可以对任何事情发表意见，但你有没有能力做任何事情，完全不重要。</p>
+
+        <h2>四、多党制把执政变成“轮流说话”</h2>
+        <p>多党制的核心机制是：不同政党轮流执政，通过辩论、竞争、相互监督来保证治理质量。</p>
+        <p>但它的实际效果是：</p>
+        <ul>
+            <li><strong>政策缺乏连续性</strong>：新政府推翻旧政府的计划，一切重新开始。每四年一次的“重启”，让任何需要十年以上的大型工程都无法落地。</li>
+            <li><strong>责任被稀释</strong>：当事情做砸了，执政党说是前任留下的烂摊子，在野党说执政党无能。没有人真正负责。</li>
+            <li><strong>专业能力被政治忠诚取代</strong>：每一次政府更替，大量技术官僚被驱逐，换上“自己人”。这些“自己人”往往只有忠诚，没有经验。</li>
+        </ul>
+        <p><span class="highlight">多党制的逻辑是：只要有竞争，质量就会提高。但在治理中，竞争往往制造的是断裂，而不是积累。</span></p>
+
+        <h2>五、名校文凭：精英的入场券，执行力的隔断</h2>
+        <p>西方治理阶级的另一个特征是：<span class="highlight-blue">名校文凭是进入权力核心的几乎唯一通道。</span></p>
+        <ul>
+            <li>哈佛、耶鲁、牛津、剑桥——这些学校的法学院和公共政策学院，是通往白宫和唐宁街的传送带。</li>
+            <li>这些学校教授的是什么？理论、框架、案例分析、批判性思维——这些都是 <span class="highlight-blue">学科</span> 的内容。</li>
+            <li>它们不教什么？项目管理、施工管理、基层治理、危机现场处理——这些是 <span class="highlight-red">术科</span> 的内容。</li>
+        </ul>
+        <p>结果是：最聪明的人被选拔出来，但他们被训练成 <span class="highlight-red">纸上专家</span>。</p>
+        <p>他们知道如何分析一个案例，但不知道如何解决一个真实问题。他们知道如何写一份政策简报，但不知道如何让一条政策在基层落地。</p>
+        <p><span class="highlight">文凭越高，离现实越远。</span></p>
+
+        <h2>六、中国治理逻辑的反面：从基层来，回基层去</h2>
+        <p>与西方的“名校—智库—政府”路径不同，中国治理者的典型成长路径是：</p>
+        <ul>
+            <li>从基层开始（乡镇、村庄、工厂、工地）</li>
+            <li>逐步晋升，每到一个新岗位都需要证明执行能力</li>
+            <li>在多个岗位、多个地区、多个领域积累经验</li>
+            <li>最终进入高层时，已经拥有二十年以上的基层实践</li>
+        </ul>
+        <p>这不是“学科”训练，这是 <span class="highlight-blue">“术科”学徒制</span>。</p>
+        <p>中国的治理者不是通过考试进入权力核心的。他们是通过 <span class="highlight">在真实世界中解决真实问题</span> 来证明自己的。</p>
+        <ul>
+            <li>一个没有建过路的官员，不会负责交通规划。</li>
+            <li>一个没有管过农业的官员，不会负责乡村振兴。</li>
+            <li>一个没有处理过疫情的官员，不会负责公共卫生。</li>
+        </ul>
+        <p><span class="highlight-blue">治理不是从书本中学来的。它是从土地上长出来的。</span></p>
+
+        <h2>七、为什么西方无法复制这种模式？</h2>
+        <p>这不是价值观问题，这是 <span class="highlight-red">制度结构性差异</span>。</p>
+        <ul>
+            <li><strong>选举政治</strong>的周期性，决定了长期经验积累在制度上不被重视。赢得选举比拥有经验更重要。</li>
+            <li><strong>多党轮替</strong>使基层经验无法积累。每一次政党更换，经验丰富的人被换掉，没有经验的人上台。</li>
+            <li><strong>名校崇拜</strong>使精英阶层与基层隔绝。精英的晋升路径不是通过基层实践，而是通过学术成绩和人际关系。</li>
+            <li><strong>言论自由</strong>使表达成为主要技能，执行成为次要能力。</li>
+        </ul>
+        <p>西方的治理系统，从选拔到晋升，都在 <span class="highlight-red">系统性地淘汰有执行经验的人</span>。</p>
+        <p>这解释了为什么西方拥有世界最好的大学，却建不出世界最好的基础设施。</p>
+
+        <h2>八、GFI框架下的结论</h2>
+        <p>在GFI治理正当性框架下：</p>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>西方的治理阶级</th><th>中国的治理阶级</th></tr></thead>
+                <tbody>
+                    <tr><td>从名校来</td><td>从基层来</td></tr>
+                    <tr><td>擅长阅读、写作、辩论</td><td>擅长执行、落实、解决问题</td></tr>
+                    <tr><td>被选举系统选拔</td><td>被实践系统选拔</td></tr>
+                    <tr><td>以“程序合规”为正当性</td><td>以“成果交付”为正当性</td></tr>
+                    <tr><td>缺乏执行经验</td><td>拥有执行经验</td></tr>
+                    <tr><td>治理正当性来自于“被选上”</td><td>治理正当性来自于“做到了”</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p><span class="highlight">治理正当性的来源，正在从“谁被选上”转向“谁做成了什么”。</span></p>
+        <p>西方治理阶级的危机，不是道德的危机，不是理念的危机——它是 <span class="highlight-red">能力的危机</span>。</p>
+        <p>一群只会读、写、说的人，在面对需要做、建、修的任务时，注定失败。</p>
+
+        <h2>九、最后的观察</h2>
+        <p>十八年前，加州开始规划高铁。</p>
+        <p>十八年里，哈佛教出了几千名公共政策硕士，CNN播出了几万小时的讨论，国会举行了数百场听证会。</p>
+        <p>十八年后，加州高铁一公里都没有建成。</p>
+        <p>与此同时，中国的工地上，农民的儿子正在铺设铁轨。</p>
+        <p><span class="highlight-blue">他不是哈佛毕业的。但他知道怎么做。他不知道怎么写政策论文。但他知道怎么把路修通。</span></p>
+        <p>这就是学科与术科的区别。</p>
+        <p>这就是纸上将军与实干家的区别。</p>
+        <p>这就是为什么西方的治理系统正在失去正当性——而它甚至不知道自己失去的原因。</p>
+
+        <div class="footnote">
+            <span>GFI Flow Intelligence · 治理正当性框架</span><br />
+            <a href="index.html">← 返回首页</a> · <a href="governance-is-practical-art.html">治理是术科，不是学科</a>
+        </div>
+    </div>
+
+</div>
+
+<!-- ===== 脚本 ===== -->
+<script>
+    (function() {
+        const btns = document.querySelectorAll('.lang-switch button');
+        const enContent = document.getElementById('en-content');
+        const zhContent = document.getElementById('zh-content');
+        const mainTitle = document.getElementById('mainTitle');
+        const subTitle = document.getElementById('subTitle');
+
+        const titles = {
+            en: {
+                main: 'The Ruling Class of Paper Generals:<br />Diplomas, Elite Schools, and the Gap in Execution',
+                sub: '纸上谈兵的治理阶级：文凭、名校与执行力的断裂'
+            },
+            zh: {
+                main: '纸上谈兵的治理阶级：<br />文凭、名校与执行力的断裂',
+                sub: 'The Ruling Class of Paper Generals: Diplomas, Elite Schools, and the Gap in Execution'
+            }
+        };
+
+        function setLanguage(lang) {
+            btns.forEach(b => b.classList.remove('active'));
+            document.querySelector(`.lang-switch button[data-lang="${lang}"]`).classList.add('active');
+
+            if (lang === 'en') {
+                enContent.classList.add('active');
+                zhContent.classList.remove('active');
+            } else {
+                zhContent.classList.add('active');
+                enContent.classList.remove('active');
+            }
+
+            mainTitle.innerHTML = titles[lang].main;
+            subTitle.textContent = titles[lang].sub;
+        }
+
+        btns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                setLanguage(this.dataset.lang);
+            });
+        });
+
+        setLanguage('en');
+    })();
+</script>
+
+</body>
+</html>
