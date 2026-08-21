@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="全球南方转向中国：治理效能的静默革命 – The Global South Turns to China" />
+    <title>全球南方转向中国 · GFI Flow Intelligence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #0b1220;
+            --bg2: #0d1526;
+            --text: #f8fbff;
+            --muted: #c7d2e3;
+            --sub: #9fb0c8;
+            --dim: rgba(255, 255, 255, .06);
+            --green: #9FE870;
+            --blue: #7DD3FC;
+            --gold: #fbbf24;
+            --red: #f87171;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --mono: 'DM Mono', monospace;
+            --sans: 'DM Sans', system-ui, sans-serif;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 16px;
+            line-height: 1.7;
+            overflow-x: hidden;
+            padding: 0 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 0 4rem;
+        }
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            height: 62px;
+            padding: 0 clamp(18px, 5vw, 52px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(11, 18, 32, 0.92);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--dim);
+            margin: 0 -20px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        .logo {
+            color: #fff;
+            text-decoration: none;
+            font-family: var(--mono);
+            font-size: 13px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .back-link {
+            color: var(--sub);
+            font-family: var(--mono);
+            font-size: 12px;
+            text-decoration: none;
+            letter-spacing: 0.04em;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--green); }
+        .lang-switch {
+            display: flex;
+            gap: 4px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 30px;
+            padding: 3px;
+            border: 1px solid var(--dim);
+        }
+        .lang-switch button {
+            background: none;
+            border: none;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: 0.04em;
+            color: var(--sub);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        .lang-switch button.active {
+            background: var(--green);
+            color: var(--bg);
+        }
+        .lang-switch button:hover:not(.active) {
+            color: #fff;
+            background: rgba(255,255,255,0.08);
+        }
+
+        .article-header {
+            margin: 2rem 0 2.5rem;
+            border-bottom: 1px solid var(--dim);
+            padding-bottom: 1.5rem;
+        }
+        .article-header .badge {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--green);
+            background: rgba(159, 232, 112, 0.1);
+            padding: 0.15rem 0.8rem;
+            border-radius: 30px;
+            display: inline-block;
+            border: 1px solid rgba(159, 232, 112, 0.15);
+            margin-bottom: 0.8rem;
+        }
+        .article-header h1 {
+            font-family: var(--serif);
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: #fff;
+            margin-bottom: 0.2rem;
+        }
+        .article-header .subhead {
+            font-size: 1.05rem;
+            color: var(--sub);
+            font-style: italic;
+            margin-bottom: 0.4rem;
+        }
+        .article-header .meta {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            color: var(--muted);
+            opacity: 0.6;
+        }
+
+        .lang-content { display: none; }
+        .lang-content.active { display: block; }
+
+        .lang-content p {
+            color: var(--muted);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+        .lang-content strong {
+            color: #fff;
+            font-weight: 600;
+        }
+        .lang-content .highlight { color: var(--gold); }
+        .lang-content .highlight-blue { color: var(--blue); }
+        .lang-content .highlight-red { color: var(--red); }
+        .lang-content .quote-block {
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 4px solid var(--gold);
+            padding: 1.2rem 1.8rem;
+            margin: 1.5rem 0;
+            border-radius: 0 12px 12px 0;
+        }
+        .lang-content .quote-block p {
+            font-family: var(--serif);
+            font-size: 1.1rem;
+            color: #fff;
+            font-style: italic;
+            margin-bottom: 0.2rem;
+        }
+        .lang-content .quote-block .attribution {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            color: var(--sub);
+            text-align: right;
+        }
+        .lang-content h2 {
+            font-family: var(--serif);
+            font-size: 1.5rem;
+            color: #fff;
+            margin: 2rem 0 0.8rem 0;
+        }
+        .lang-content h3 {
+            font-size: 1.1rem;
+            color: var(--green);
+            margin: 1.2rem 0 0.4rem 0;
+        }
+        .lang-content .table-wrap {
+            overflow-x: auto;
+            margin: 1.2rem 0;
+        }
+        .lang-content table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+            font-family: var(--mono);
+            border: 1px solid var(--dim);
+        }
+        .lang-content th, .lang-content td {
+            padding: 8px 12px;
+            border: 1px solid var(--dim);
+            text-align: left;
+            color: var(--muted);
+        }
+        .lang-content th {
+            background: rgba(255,255,255,0.04);
+            color: var(--sub);
+            font-weight: 500;
+            letter-spacing: 0.04em;
+        }
+        .lang-content ul {
+            list-style: none;
+            padding: 0;
+            margin: 0.4rem 0 1rem;
+        }
+        .lang-content ul li {
+            position: relative;
+            padding-left: 1.2rem;
+            margin-bottom: 0.3rem;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+        .lang-content ul li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--green);
+            font-family: var(--mono);
+            font-size: 0.7rem;
+        }
+        .lang-content .footnote {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--dim);
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.2);
+            text-align: center;
+        }
+        .lang-content .footnote a {
+            color: var(--sub);
+            text-decoration: none;
+        }
+        .lang-content .footnote a:hover { color: #fff; }
+
+        /* 国家列表样式 */
+        .country-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem 1.5rem;
+            margin: 1rem 0 1.2rem;
+        }
+        .country-item {
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+            font-size: 0.85rem;
+            color: var(--muted);
+            padding: 0.2rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+        .country-item .flag {
+            font-size: 0.9rem;
+            flex-shrink: 0;
+            width: 24px;
+        }
+        .country-item .name {
+            font-weight: 500;
+            color: #fff;
+            flex-shrink: 0;
+        }
+        .country-item .desc {
+            color: var(--sub);
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 720px) {
+            .country-grid { grid-template-columns: 1fr; }
+            .article-header h1 { font-size: 1.6rem; }
+            body { padding: 0 12px; }
+            .nav { margin: 0 -12px; padding-left: 12px; padding-right: 12px; }
+            .lang-switch button { padding: 3px 10px; font-size: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== 顶栏 ===== -->
+<div class="nav">
+    <a href="index.html" class="logo">GFI Flow Intelligence</a>
+    <div class="nav-right">
+        <a href="index.html" class="back-link">← Back</a>
+        <div class="lang-switch">
+            <button class="active" data-lang="en">EN</button>
+            <button data-lang="zh">中文</button>
+        </div>
+    </div>
+</div>
+
+<!-- ===== 文章主体 ===== -->
+<div class="container">
+
+    <div class="article-header">
+        <div class="badge">GFI Flow Intelligence · Governance Legitimacy Framework</div>
+        <h1 id="mainTitle">The Global South Turns to China:<br />The Silent Revolution of Governance Effectiveness</h1>
+        <div class="subhead" id="subTitle">全球南方转向中国：治理效能的静默革命</div>
+        <div class="meta">August 2026 · 2026年8月</div>
+    </div>
+
+    <!-- ===== 英文版 ===== -->
+    <div class="lang-content active" id="en-content">
+
+        <h2>I. A Paradigm Shift in the Making</h2>
+        <p>While Western mainstream media still frame the world through the outdated lens of “democracy vs. authoritarianism,” a <strong>silent revolution</strong> is unfolding across the Global South.</p>
+        <p>Uzbekistan’s Academy of Public Administration has partnered with Fudan University to launch a “Comparative Governance” workshop series — systematically studying China’s approaches to poverty alleviation, digital governance, and industrialization. <strong>Over 400 Cambodian officials</strong> have attended Peking University’s “China Development Model” seminars. South Africa’s National School of Government has sent officials for training in China. More than <strong>100 village heads from Indonesia</strong> have traveled to China to study agricultural modernization and rural governance.</p>
+        <p>These are not scattered cultural exchanges. They are a <span class="highlight">systematic South-South transfer of governance knowledge.</span></p>
+        <p>From Tashkent to Jakarta, from Nairobi to Brasília, from Mogadishu to Quito — they are all turning their eyes to China. Not because of ideology. Not because of geopolitics. But because of a simple, brutal fact: <span class="highlight-red">China has solved problems they have been unable to solve.</span></p>
+
+        <h2>II. Why the Global South?</h2>
+        <p>Global South nations face remarkably similar challenges:</p>
+        <ul>
+            <li><strong>Extreme poverty</strong> — hundreds of millions still struggling to survive</li>
+            <li><strong>Infrastructure deficits</strong> — gaps in electricity, roads, and communications</li>
+            <li><strong>Weak governance capacity</strong> — inefficient bureaucracies, policy volatility</li>
+            <li><strong>Digital divides</strong> — exclusion from the global digital economy</li>
+        </ul>
+        <p>China, in just forty years, has transformed from a poor agrarian country to the world’s second-largest economy. <span class="highlight">800 million people lifted out of poverty, over 40,000 kilometers of high-speed rail, the world’s largest digital payment ecosystem, and a grid-based governance system covering both urban and rural areas.</span></p>
+        <p>These are not theories. They are tangible realities.</p>
+
+        <h2>III. What Are They Specifically Learning?</h2>
+
+        <h3>🏛️ Poverty Alleviation — From “Targeted” to “Contextual”</h3>
+        <p>Thai royal advisory teams have repeatedly visited China to study targeted poverty alleviation. Indonesian village heads are learning how to precisely identify poverty targets. Ecuador’s former minister has written that China’s “contextualized” poverty reduction methods are worth emulating in Latin America.</p>
+        <p><strong>Core logic:</strong> China did not rely on “market self-correction” to address poverty. It used <span class="highlight-blue">systematic identification, precision targeting, and dynamic tracking.</span> This methodology is replicable and locally adaptable.</p>
+
+        <h3>🏗️ Infrastructure — From “Planning” to “Delivery”</h3>
+        <p>Kenyan mainstream media has noted that China’s “sophisticated governance architecture” translates institutional strengths into governance effectiveness. Uzbekistan is looking to learn from China’s industrialization and state capacity-building experience.</p>
+        <p><strong>Core logic:</strong> China has proven that a nation can build world-class infrastructure <span class="highlight-red">without electoral democracy</span>. For the Global South, this is a <span class="highlight">liberating revelation.</span></p>
+
+        <h3>📱 Digital Governance — From “Smart Cities” to “Inclusive Modernization”</h3>
+        <p>Tanzania’s <em>Guardian</em> editor-in-chief stated that China’s experience in digital finance and new energy vehicles is worth learning. Somalia’s ambassador to China said the country should learn from China’s “systematic governance” and “inclusive modernization.”</p>
+        <p><strong>Core logic:</strong> Digital governance is not a Western monopoly. China demonstrates that digital technology can enable <span class="highlight-blue">leapfrog development</span> — bypassing the “backward stages” of traditional governance.</p>
+
+        <h3>📋 Policy Continuity — From “Five-Year Plans” to “Long-Term Strategy”</h3>
+        <p>Hungary’s Workers’ Party chairman has suggested that the Global South should learn from China’s approaches to <span class="highlight-blue">stability maintenance, long-term planning, and grassroots participation.</span> Belarusian President Lukashenko has explicitly stated: “We should also learn from China in terms of national political system development.”</p>
+        <p><strong>Core logic:</strong> Election-cycle-driven short-termism has trapped the Global South in perpetual policy oscillation. China’s <span class="highlight">strategic continuity</span> offers an alternative.</p>
+
+        <h2>IV. What Are They Not Learning?</h2>
+        <p>The Global South’s approach to learning from China is characterized by a high degree of <span class="highlight">pragmatism:</span></p>
+        <ul>
+            <li><strong>Not learning:</strong> ideology, political systems</li>
+            <li><strong>Learning:</strong> policy tools, methodologies, governance techniques</li>
+        </ul>
+        <p>Brazilian scholars have published a book titled <em>“China: Tradition and Modernity in State Governance”</em> — with a special Portuguese edition for Lusophone countries. The title itself reveals the attitude: <span class="highlight-blue">focus on “governance” itself, not “who governs.”</span></p>
+        <p>Egyptian experts believe China’s governance modernization experience is worth learning for other developing countries. Lebanese experts say China’s governance philosophy is worth emulating for Arab nations. Central Asian experts see China’s modernization model as a possible template for their region.</p>
+        <p>These perspectives all point to one fact: <span class="highlight-red">the Global South is treating China as a “governance laboratory”</span> — extracting usable experimental results and applying them to their own development dilemmas.</p>
+
+        <h2>V. Why the Western Narrative Has Failed</h2>
+        <p>For decades, the West has sold the Global South a formula:</p>
+        <div class="quote-block">
+            <p>“Electoral democracy + market economy = development and prosperity”</p>
+        </div>
+        <p>But the delivery rate of this formula is plummeting. When the U.S. sees over 100,000 annual drug overdose deaths, when the UK’s economy remains adrift eight years after Brexit, when Germany’s sick leave policy punishes the genuinely ill — the Global South witnesses a system that is <span class="highlight-red">procedurally correct yet deliverably failed.</span></p>
+        <p>In contrast, China offers a different formula:</p>
+        <div class="quote-block">
+            <p>“Effective governance + sustained delivery = legitimacy”</p>
+        </div>
+        <p>It does not emphasize <em>how</em> you are chosen. It only emphasizes <span class="highlight">what you have done.</span></p>
+        <p>When a nation can build high-speed rail, eliminate extreme poverty, maintain social safety, and advance inclusive digital finance — debates about “procedure” become hollow.</p>
+
+        <h2>VI. A GFI Framework Interpretation</h2>
+        <p>Under the GFI Governance Legitimacy Framework, the Global South’s turn to China represents <span class="highlight">“outcome legitimacy” prevailing over “procedural legitimacy.”</span></p>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Old Paradigm (Western Promoted)</th><th>New Practice (China Offers)</th></tr></thead>
+                <tbody>
+                    <tr><td>Elections as the sole source of legitimacy</td><td>Delivery as the core source of legitimacy</td></tr>
+                    <tr><td>Procedural compliance first</td><td>Problem-solving first</td></tr>
+                    <tr><td>Political competition driven</td><td>Strategic planning driven</td></tr>
+                    <tr><td>Cyclic volatility</td><td>Continuity in execution</td></tr>
+                    <tr><td>Ideological thresholds</td><td>Results-orientation</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p>The Global South’s choice is not born of “admiration” for China, but of <span class="highlight-red">desperation and pragmatism</span> in the face of their own predicaments. They do not have time for philosophical debates about “what true democracy is.” They want roads, power grids, schools, hospitals, jobs, and dignity.</p>
+        <p><span class="highlight-blue">China provides these. The West does not.</span></p>
+
+        <h2>VII. Conclusion: Silent but Irreversible</h2>
+        <p>The Global South’s movement toward learning from China is rarely covered by Western mainstream media. It does not shout — but it is measurably reshaping the world.</p>
+        <p>Fudan University’s “Comparative Governance” workshop has already reached Vietnam, Laos, South Africa, and Uzbekistan. More than a dozen countries have participated in China’s “Sustainable Urbanization” training programs. From village heads to presidents, from local officials to national think tanks — they come, observe, learn, and bring back.</p>
+        <p>This is not ideology exported. It is <span class="highlight">effectiveness attracting.</span></p>
+        <div class="quote-block">
+            <p>“When a system can consistently deliver outcomes, its governance legitimacy establishes itself naturally.”</p>
+            <div class="attribution">— GFI Governance Legitimacy Framework</div>
+        </div>
+        <p>The Global South is not turning to China. <span class="highlight-red">It is turning to effectiveness.</span> And for now, China stands at that intersection.</p>
+
+        <div class="footnote">
+            <span>GFI Flow Intelligence · Governance Legitimacy Framework</span><br />
+            <a href="index.html">← Back to Home</a> · <a href="from-procedure-to-delivery.html">From Procedure to Delivery</a>
+        </div>
+    </div>
+
+    <!-- ===== 中文版 ===== -->
+    <div class="lang-content" id="zh-content">
+
+        <h2>一、现象：一场正在发生的范式转移</h2>
+        <p>当西方主流媒体仍在用“民主 vs 威权”的旧框架解读世界时，一场静默的革命正在全球南方发生。</p>
+        <p>乌兹别克斯坦总统直属行政学院与复旦大学合办“比较治理”讲习班，系统学习中国的脱贫攻坚、数字治理与工业化经验。柬埔寨超过400名官员参加北京大学“中国发展模式”研讨会。南非国家行政学院选派官员赴华培训。印尼超百名村长赴华研修农业现代化与乡村治理。</p>
+        <p>这不是零散的文化交流，而是一场 <span class="highlight">系统性的治理知识南南转移</span>。</p>
+        <p>从塔什干到雅加达，从内罗毕到巴西利亚，从索马里到厄瓜多尔——它们不约而同地将目光投向中国。不是因为意识形态，不是因为地缘政治，而是因为一个简单而残酷的事实：<span class="highlight-red">中国解决了它们解决不了的问题。</span></p>
+
+        <h2>二、为什么是全球南方？</h2>
+        <p>全球南方国家面临的挑战高度相似：</p>
+        <ul>
+            <li><strong>极端贫困</strong>——数亿人口仍在生存线挣扎</li>
+            <li><strong>基础设施匮乏</strong>——电力、道路、通信的缺口制约发展</li>
+            <li><strong>治理能力薄弱</strong>——官僚体系效率低下，政策缺乏连续性</li>
+            <li><strong>数字鸿沟</strong>——被排除在全球数字经济之外</li>
+        </ul>
+        <p>而中国，在短短四十年内，完成了从贫穷农业国到全球第二大经济体的跨越。<span class="highlight">8亿人摆脱贫困，4万公里高铁，世界最大的数字支付生态，覆盖城乡的网格化治理体系。</span></p>
+        <p>这些不是理论，是可以触摸的现实。</p>
+
+        <h2>三、它们具体在学什么？</h2>
+
+        <h3>🏛️ 减贫：从“精准扶贫”到“因地制宜”</h3>
+        <p>泰国王室顾问团队多次赴中国考察精准扶贫。印尼村长学习中国如何精准识别贫困对象。厄瓜多尔前部长撰文称，中国的“因地制宜”减贫方法值得拉美借鉴。</p>
+        <p><strong>核心逻辑</strong>：中国不是靠“市场自动调节”解决贫困，而是靠 <span class="highlight-blue">系统性识别、精准施策、动态追踪</span>。这套方法论可复制、可本地化。</p>
+
+        <h3>🏗️ 基础设施：从“规划”到“交付”</h3>
+        <p>肯尼亚主流媒体指出，中国“精密的治理架构”将制度优势转化为治理效能。乌兹别克斯坦期待借鉴中国的工业化与国家能力建设经验。</p>
+        <p><strong>核心逻辑</strong>：中国证明了——一个国家可以 <span class="highlight-red">在没有选举民主的情况下</span>，建成世界级的基础设施网络。这对全球南方而言，是一个 <span class="highlight">解放性的启示</span>。</p>
+
+        <h3>📱 数字治理：从“智慧城市”到“包容性现代化”</h3>
+        <p>坦桑尼亚《卫报》主编称，中国在数字金融、新能源汽车等领域的经验值得非洲学习。索马里驻华大使表示，应学习中国的“系统性治理”和“包容性现代化”。</p>
+        <p><strong>核心逻辑</strong>：数字治理不是西方专利。中国的经验表明，数字技术可以跨越传统治理的“落后阶段”，实现 <span class="highlight-blue">跳跃式发展</span>。</p>
+
+        <h3>📋 政策连续性：从“五年规划”到“长远战略”</h3>
+        <p>匈牙利工人党主席建议，全球南方应学习中国在 <span class="highlight-blue">维护稳定、长远规划和基层参与</span> 方面的做法。白俄罗斯总统卢卡申科明确表示：“在国家政治体制建设方面也应当向中国学习。”</p>
+        <p><strong>核心逻辑</strong>：选举周期驱动的短视政治，让全球南方长期陷入“政策摇摆”。中国的 <span class="highlight">战略连续性</span> 提供了另一种可能性。</p>
+
+        <h2>四、它们不学什么？</h2>
+        <p>值得注意的是，全球南方对中国治理经验的学习，呈现出高度的 <span class="highlight">务实主义</span> 特征：</p>
+        <ul>
+            <li><strong>不学</strong>：意识形态、政治体制</li>
+            <li><strong>学习</strong>：政策工具、方法论、治理技术</li>
+        </ul>
+        <p>巴西学者著书《中国，国家治理的传统和现代性》，并出版葡萄牙语特别版，向葡语国家系统介绍中国治理经验。书名本身就揭示了这种态度：<span class="highlight-blue">关注的是“治理”本身，而非“谁在治理”。</span></p>
+        <p>埃及专家认为中国治理现代化经验值得其他发展中国家借鉴。黎巴嫩专家认为中国治国理念值得阿拉伯国家借鉴。中亚专家认为中国式现代化模式可成为中亚国家样本。</p>
+        <p>这些观点共同指向一个事实：<span class="highlight-red">全球南方正在将中国视为一个“治理实验室”</span>——从中提取可用的实验成果，应用于自身的发展困境。</p>
+
+        <h2>五、西方叙事为何失效？</h2>
+        <p>西方长期向全球南方推销的公式是：</p>
+        <div class="quote-block">
+            <p>“选举民主 + 市场经济 = 发展与繁荣”</p>
+        </div>
+        <p>但这个公式的兑现率正在急剧下降。当美国药物过量死亡每年超过10万人，当英国脱欧八年后经济依然迷失，当德国病假政策惩罚真正的病人——全球南方看到的是一个 <span class="highlight-red">程序正确但交付失败的系统</span>。</p>
+        <p>与之相对，中国提供的公式是：</p>
+        <div class="quote-block">
+            <p>“有效治理 + 持续交付 = 正当性”</p>
+        </div>
+        <p>不强调你如何被选中，只强调 <span class="highlight">你做了什么</span>。</p>
+        <p>当一个国家能建造高铁、消除极端贫困、维护社会安全、推动数字普惠金融时，关于“程序”的争论就变得空洞。</p>
+
+        <h2>六、GFI框架下的解读</h2>
+        <p>在GFI治理正当性框架下，全球南方对中国的转向，是 <span class="highlight">“成果正当性”压倒“程序正当性”</span> 的典型案例：</p>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>旧范式（西方推广）</th><th>新实践（中国提供）</th></tr></thead>
+                <tbody>
+                    <tr><td>选举作为合法性的唯一来源</td><td>交付作为合法性的核心来源</td></tr>
+                    <tr><td>程序合规优先</td><td>问题解决优先</td></tr>
+                    <tr><td>政治竞争驱动</td><td>战略规划驱动</td></tr>
+                    <tr><td>周期性震荡</td><td>连续性执行</td></tr>
+                    <tr><td>意识形态门槛</td><td>实效导向</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p>全球南方国家的选择不是出于对中国的“崇拜”，而是出于对自身困境的 <span class="highlight-red">绝望与务实</span>。它们没有时间去参加关于“什么是真正的民主”的哲学辩论。它们要的是道路、电网、学校、医院、就业和尊严。</p>
+        <p><span class="highlight-blue">中国提供了这些。西方没有。</span></p>
+
+        <h2>七、结语：静默但不可逆转</h2>
+        <p>这场全球南方向中国学习的运动，很少被西方主流媒体报道。它不声张、不宣扬，却在实实在在地改变世界。</p>
+        <p>复旦大学的“比较治理”讲习班已经走进越南、老挝、南非、乌兹别克斯坦。十余国参加中国“可持续城镇”研修班。从村长到总统，从地方官员到国家智库，他们在中国学习、观察、记录、带回。</p>
+        <p>这不是意识形态的输出，而是 <span class="highlight">效能的吸引力</span>。</p>
+        <div class="quote-block">
+            <p>“当一个系统能够持续交付成果时，它的治理正当性就会自然建立起来。”</p>
+            <div class="attribution">— GFI 治理正当性框架</div>
+        </div>
+        <p>全球南方不是在转向中国。<span class="highlight-red">它们是在转向有效性。</span> 而此刻，中国恰好站在那个位置。</p>
+
+        <div class="footnote">
+            <span>GFI Flow Intelligence · 治理正当性框架</span><br />
+            <a href="index.html">← 返回首页</a> · <a href="from-procedure-to-delivery.html">从程序到交付</a>
+        </div>
+    </div>
+
+</div>
+
+<!-- ===== 脚本 ===== -->
+<script>
+    (function() {
+        const btns = document.querySelectorAll('.lang-switch button');
+        const enContent = document.getElementById('en-content');
+        const zhContent = document.getElementById('zh-content');
+        const mainTitle = document.getElementById('mainTitle');
+        const subTitle = document.getElementById('subTitle');
+
+        const titles = {
+            en: {
+                main: 'The Global South Turns to China:<br />The Silent Revolution of Governance Effectiveness',
+                sub: '全球南方转向中国：治理效能的静默革命'
+            },
+            zh: {
+                main: '全球南方转向中国：<br />治理效能的静默革命',
+                sub: 'The Global South Turns to China: The Silent Revolution of Governance Effectiveness'
+            }
+        };
+
+        function setLanguage(lang) {
+            btns.forEach(b => b.classList.remove('active'));
+            document.querySelector(`.lang-switch button[data-lang="${lang}"]`).classList.add('active');
+
+            if (lang === 'en') {
+                enContent.classList.add('active');
+                zhContent.classList.remove('active');
+            } else {
+                zhContent.classList.add('active');
+                enContent.classList.remove('active');
+            }
+
+            mainTitle.innerHTML = titles[lang].main;
+            subTitle.textContent = titles[lang].sub;
+        }
+
+        btns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                setLanguage(this.dataset.lang);
+            });
+        });
+
+        setLanguage('en');
+    })();
+</script>
+
+</body>
+</html>
