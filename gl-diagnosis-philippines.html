@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Philippines · GL Framework Diagnosis · 菲律宾诊断</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0b1220;
+            --bg2: #0d1526;
+            --text: #f8fbff;
+            --muted: #c7d2e3;
+            --sub: #9fb0c8;
+            --dim: rgba(255,255,255,.06);
+            --green: #9FE870;
+            --blue: #7DD3FC;
+            --amber: #fbbf24;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --mono: 'DM Mono', monospace;
+            --sans: 'DM Sans', system-ui, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 15px;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--dim);
+            border-radius: 24px;
+            padding: 2.2rem 2.5rem;
+            backdrop-filter: blur(2px);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green);
+            text-decoration: none;
+            font-family: var(--mono);
+            font-size: 13px;
+            letter-spacing: 0.08em;
+            border: 1px solid rgba(159,232,112,0.3);
+            padding: 8px 18px;
+            border-radius: 40px;
+            transition: all 0.2s;
+            margin-bottom: 1.8rem;
+        }
+        .back-link:hover {
+            background: rgba(159,232,112,0.1);
+            border-color: var(--green);
+            transform: translateX(-4px);
+        }
+        .lang-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.6rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--dim);
+            padding-bottom: 0.8rem;
+        }
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-family: var(--mono);
+            font-weight: 500;
+            color: var(--sub);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
+        .lang-btn.active {
+            background: rgba(159,232,112,0.15);
+            border-color: var(--green);
+            color: var(--green);
+        }
+        .lang-content { display: none; animation: fade 0.3s ease; }
+        .lang-content.active { display: block; }
+        @keyframes fade { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+        h1 {
+            font-size: 2.1rem;
+            font-family: var(--serif);
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            border-left: 6px solid var(--amber);
+            padding-left: 1.2rem;
+        }
+        .subhead {
+            font-size: 1rem;
+            color: var(--sub);
+            margin-bottom: 2rem;
+            padding-left: 1.2rem;
+            border-left: 3px solid rgba(251,191,36,0.3);
+            font-style: italic;
+        }
+        h2 {
+            font-size: 1.4rem;
+            font-family: var(--serif);
+            margin-top: 2.2rem;
+            margin-bottom: 0.6rem;
+            color: #eaf6ff;
+            border-bottom: 1px dashed rgba(255,255,255,0.08);
+            padding-bottom: 0.3rem;
+        }
+        h2 .badge {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: rgba(251,191,36,0.15);
+            color: var(--amber);
+            padding: 0.05rem 0.8rem;
+            border-radius: 30px;
+            margin-left: 0.8rem;
+            font-weight: 400;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1.4rem;
+            margin-bottom: 0.4rem;
+            color: var(--muted);
+        }
+        p { margin-bottom: 1rem; color: var(--muted); text-align: justify; }
+        ul, ol { margin: 0.5rem 0 1rem 1.8rem; list-style-type: disc; color: var(--muted); }
+        li { margin-bottom: 0.3rem; }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0 1.5rem 0;
+            font-size: 0.85rem;
+            font-family: var(--mono);
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .data-table th {
+            background: rgba(251,191,36,0.10);
+            color: var(--amber);
+            padding: 0.6rem 1rem;
+            text-align: left;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            border-bottom: 1px solid var(--dim);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+        .data-table td {
+            padding: 0.6rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            vertical-align: top;
+            color: var(--muted);
+        }
+        .data-table tr:last-child td { border-bottom: none; }
+
+        .highlight-box {
+            background: rgba(251,191,36,0.05);
+            border-left: 4px solid var(--amber);
+            padding: 1.2rem 1.8rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+        .highlight-box .big {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--amber);
+        }
+        .evidence-note {
+            background: rgba(125,211,252,0.04);
+            padding: 0.8rem 1.2rem;
+            border-radius: 6px;
+            margin: 0.5rem 0 1rem 0;
+            font-size: 0.85rem;
+            color: var(--sub);
+            border-left: 3px solid var(--blue);
+        }
+        .evidence-note strong { color: var(--blue); }
+
+        .conclusion-box {
+            background: rgba(255,255,255,0.03);
+            border-left: 4px solid var(--amber);
+            padding: 1.5rem 2rem;
+            margin-top: 2rem;
+            border-radius: 12px;
+        }
+        .conclusion-box h2 { border: none; margin-top:0; padding-top:0; }
+        .footnote {
+            font-size: 0.75rem;
+            color: var(--sub);
+            text-align: right;
+            margin-top: 2rem;
+            border-top: 1px solid var(--dim);
+            padding-top: 1rem;
+            font-style: italic;
+        }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.2rem; }
+            h1 { font-size: 1.6rem; padding-left:0.8rem; }
+            h2 { font-size: 1.2rem; }
+            .lang-bar { justify-content: center; }
+            .data-table { font-size: 0.7rem; }
+            .data-table th, .data-table td { padding: 0.4rem 0.6rem; }
+            .highlight-box { padding: 0.8rem 1rem; }
+            .conclusion-box { padding: 1rem 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- 返回首页 -->
+    <a href="index.html" class="back-link">← 返回首页 / Back to Home</a>
+
+    <!-- 语言切换 -->
+    <div class="lang-bar">
+        <button class="lang-btn" data-lang="zh">中文</button>
+        <button class="lang-btn active" data-lang="en">English</button>
+    </div>
+
+    <!-- ========== ENGLISH (default) ========== -->
+    <div id="en" class="lang-content active">
+        <h1>Philippines: Why Did the Transplantation of American‑Style Democracy Fail to Deliver American‑Style Governance?</h1>
+        <div class="subhead">— A GL Framework Diagnosis of a "Pseudo‑Democratic" System</div>
+
+        <p><strong>The Philippines is the country with the constitutional and political design most closely resembling that of the United States.</strong> After independence in 1946, it adopted a full set of American institutions: separation of powers, a presidential system, a bicameral legislature, an independent judiciary, and one‑person‑one‑vote elections.</p>
+
+        <p>Yet this "pioneer of Asian democracy" — which overthrew the 14‑year Marcos dictatorship through the 1986 People Power Revolution, once hailed as a landmark event for democracy in Asia — now presents a picture of <strong>a system that is democratic in form, but hollow and dysfunctional in substance.</strong></p>
+
+        <div class="evidence-note">
+            <strong>The Economist Intelligence Unit (EIU) Democracy Index 2024</strong> ranked the Philippines as a "flawed democracy" (6.66/10) — never having entered the "full democracy" category since the index was first published in 2006. <strong>Freedom House (2025)</strong> was more blunt: the Philippines is "partly free" (58/100), with <strong>particularly poor scores in government functioning and anti‑corruption capacity</strong>. <strong>Transparency International's Corruption Perceptions Index (2024/25)</strong> ranked the Philippines <strong>120th out of 182 countries and territories</strong> — third from the bottom in ASEAN, alongside Sierra Leone and Angola.
+        </div>
+
+        <p><strong>Why does a country with complete electoral institutions and an active media tradition perform so abysmally in governance?</strong></p>
+
+        <h2>I. GL Diagnosis: The Philippines Under Eight Parameters</h2>
+
+        <h3>1. Waiting Cost</h3>
+        <p>Waiting times for government services in the Philippines are systematically high. At public hospital emergency rooms, the Department of Health has acknowledged wait times of <strong>12 to 24 hours</strong>. Vehicle registration and license issuance could previously take months. Though the government has recently introduced digital platforms to compress some processes to 3 days, this "improvement" only exposes how broken the system was in the first place.</p>
+
+        <h3>2. Repetition Cost</h3>
+        <p>Filipinos repeatedly shuttling between government agencies is the norm. The Department of Social Welfare and Development has acknowledged that its assistance application process originally had <strong>five steps</strong> — after "simplification," it still has <strong>three</strong>: queuing for a number, social worker interview, and assessment. Three steps may sound streamlined, but each step means new queues, new waiting, and new back‑and‑forth travel.</p>
+
+        <h3>3. Collapse Cost</h3>
+        <p>The 2025 flood control corruption scandal is the most typical case of collapse cost. The Philippines is one of the world's most typhoon‑prone countries. Yet between 2021 and 2025, the government allocated approximately <strong>1.9 trillion pesos</strong> to flood control projects — only for audits to reveal large‑scale "ghost projects," quality defects, and document forgery. <strong>When those who need infrastructure protection most (typhoon victims) are confronted with projects that do not even exist, the system is no longer merely "filtering out" the vulnerable — it is actively placing their survival at risk.</strong></p>
+
+        <h3>4. Information Asymmetry Cost</h3>
+        <p>Government information opacity in the Philippines is structural. Civil society organisations have pointed out that "<strong>one cannot talk about participation without transparency</strong>" — key budget documents remain inaccessible and technically difficult to audit. The list of flood control "ghost projects" was kept from the public for long periods, and even local governments could not obtain complete technical documents. The 2025 legislative proposal to establish a centralised digital budget portal in the House of Representatives itself confirms that the entire budget system had been operating in a black box.</p>
+
+        <h3>5. Psychological Cost</h3>
+        <p>On September 21, 2025, more than 20 cities across the Philippines simultaneously held "Trillion Peso Protests," with hundreds of thousands taking to the streets. The choice of date carried powerful symbolism — September 21, 1972 was the day Ferdinand Marcos Sr. declared martial law. Citizens were linking the current government's corruption to the historical dictatorship, demonstrating that <strong>psychological cost had escalated from "dissatisfaction with specific policies" to "trust collapse in the entire system."</strong></p>
+        <div class="evidence-note">
+            <strong>Social Weather Stations (SWS) data</strong> shows that in 2025, <strong>51% of Filipino families still rated themselves as "poor"</strong> — despite the official poverty rate having dropped to 9.7%. The chasm between official statistics and public perception is itself evidence of accumulated psychological cost.
+        </div>
+
+        <h3>6. Opportunity Cost</h3>
+        <p>The Philippine economy relies heavily on foreign investment and remittances, while domestic industry remains weak. Youth unemployment rose to <strong>12.2%</strong> by the end of 2025. <strong>When a nation's young people cannot find jobs, its industries cannot upgrade, and its economy depends on overseas labour remittances — an entire generation's development opportunities are being systemically consumed.</strong></p>
+
+        <h3>7. Transfer Pathway</h3>
+        <p>The Philippines' cost transfer pathway is clearly identifiable:</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>Cost Creator</th><th>Cost Bearer</th><th>Transfer Mechanism</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Political Families</td><td>Ordinary Citizens</td><td>Elections become family rituals; policy serves family interests, not public welfare</td></tr>
+                <tr><td>Corrupt Officials</td><td>Taxpayers / Disaster Victims</td><td>Flood funds embezzled → "ghost projects" don't exist → citizens unprotected when typhoons hit</td></tr>
+                <tr><td>Interest Groups</td><td>Younger Generation</td><td>Economy dominated by foreign capital and oligarchs → industry cannot upgrade → youth unemployment</td></tr>
+            </tbody>
+        </table>
+
+        <p>In 2025, approximately 120,000 people marched in Manila demanding accountability for officials involved in the flood control corruption scandal. Protesters carried mock effigies of Marcos — <strong>their anger was not directed at abstract "corruption," but at the concrete system that had converted their tax payments into personal wealth and their safety into empty promises.</strong></p>
+
+        <h3>8. Closed‑Loop Degree</h3>
+        <p>The Philippines' governance system has <strong>virtually no closed loop</strong>. In the 2025 Senate impeachment proceedings, the Senate voted 18‑5 to return the impeachment articles against Vice President Sara Duterte to the House of Representatives, triggering public outrage. Commentators noted that this action <strong>"exposed a deeper malady: a citizenry that cannot fight back in a meaningful, coordinated way."</strong></p>
+
+        <h2>II. The Republic of Families: Why Philippine Democracy Is "Semi‑Democratic, Semi‑Feudal"</h2>
+
+        <p>The deeper problem of Philippine democratic institutions lies in the <strong>long‑term monopolisation of power by political families</strong>.</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>Indicator</th><th>Data</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Provinces controlled by political families (out of 82)</td><td><strong>71 (87%)</strong></td></tr>
+                <tr><td>House of Representatives members from political families</td><td><strong>212/254 (83%)</strong></td></tr>
+                <tr><td>Municipal mayors from political families</td><td><strong>113/149 (76%)</strong></td></tr>
+                <tr><td>"Fat Dynasties" (winning 5+ seats in one election)</td><td><strong>At least 18</strong></td></tr>
+                <tr><td>Provincial governors from political families</td><td><strong>87%</strong></td></tr>
+            </tbody>
+        </table>
+
+        <div class="evidence-note">
+            <strong>Article 26, Section 2 of the 1987 Constitution explicitly prohibits political dynasties.</strong> Yet for nearly four decades, all anti‑political‑dynasty bills have died in Congress — and Congress itself is dominated by political families. <strong>The system protects itself.</strong>
+        </div>
+
+        <h2>III. The Duterte Arrest: A "Stress Test" of the System</h2>
+
+        <p>On March 11, 2025, former President Rodrigo Duterte was arrested at Manila airport upon his return from Hong Kong, on an arrest warrant issued by the International Criminal Court (ICC). He was transferred to The Hague the following day to face charges of crimes against humanity.</p>
+
+        <p>This event exposed several deep contradictions in the Philippine system:</p>
+        <ul>
+            <li><strong>Sovereignty paradox</strong>: The Philippines formally withdrew from the ICC in 2019, yet the government executed an ICC arrest warrant. Critics called this a violation of sovereignty; the government insisted the procedure was legal.</li>
+            <li><strong>The logic of family politics turned against itself</strong>: The Duterte family is one of the Philippines' most powerful political families. When a family patriarch is arrested by an international court, <strong>the family's political security net fails</strong> — because the warrant came from outside, beyond the protection of local family alliances.</li>
+            <li><strong>Testing the boundaries of "democracy"</strong>: If the Philippines were truly a "democracy," the arrest of a former president by an international court should be celebrated as a "victory of the rule of law." But domestic reactions were deeply divided — some saw justice, others saw foreign intervention. <strong>The system could not form a domestic consensus, relying instead on external power to execute "justice."</strong></li>
+        </ul>
+
+        <div class="conclusion-box">
+            <h2>Conclusion: The Philippines Is Not a "Democracy Failure" — It Is a Textbook Case of Systemic Cost Transfer Under "Pseudo‑Democratic Freedom"</h2>
+            <p>The Philippines case clearly demonstrates the core proposition of the GL Framework:</p>
+            <p><strong>When a system formally meets all the criteria of "democracy" — elections, constitution, separation of powers, free press — but systematically transfers costs to the most vulnerable groups, it has already lost its governance legitimacy.</strong></p>
+            <p>Why is Philippine "democracy" "pseudo"? Not because it lacks elections, but because:</p>
+            <ul>
+                <li><strong>Elections are rituals of family power‑sharing, not channels of public expression</strong> — 83% of legislators come from political families; 87% of provincial governors are from political dynasties.</li>
+                <li><strong>The rule of law is an elite protection racket, not an impartial arbiter</strong> — four decades of anti‑political‑dynasty bills blocked by a Congress controlled by those very dynasties.</li>
+                <li><strong>Public resources are oligarchic ATMs, not public guarantees</strong> — 1.9 trillion pesos for flood control became "ghost projects."</li>
+                <li><strong>51% of families rate themselves as poor, while official data claims poverty is only 9.7%</strong> — <strong>numbers are not used to reflect reality, but to mask it.</strong></li>
+            </ul>
+            <p>The Philippines is not a "failure case of democracy." It is a <strong>textbook case of how "pseudo‑democratic freedom" systematically transfers costs to those without a voice.</strong></p>
+            <p>When a country copies the US constitution most faithfully, adopts US elections most completely, and transplants US institutions most thoroughly — <strong>yet leaves the poorest 51% of families in the ruins of "democracy"</strong> — it proves the GL Framework's core diagnosis:</p>
+            <p><strong>The legitimacy of a system lies not in whom it resembles, but in whether it returns value to the people.</strong></p>
+            <p>The Philippines' forty‑year "democracy experiment" has demonstrated that <strong>when "democracy" is merely a stage for family power‑sharing, "procedural justice" becomes the greatest lie.</strong></p>
+        </div>
+
+        <div class="footnote">— A GL Framework diagnosis of pseudo‑democratic governance</div>
+    </div>
+
+    <!-- ========== 中文 ========== -->
+    <div id="zh" class="lang-content">
+        <h1>菲律宾：美式民主的移植为何没有带来美式治理？</h1>
+        <div class="subhead">—— GL Framework 对一套“伪民主自由”制度的诊断</div>
+
+        <p><strong>菲律宾是世界上与美国宪法和政治设计最相似的国家。</strong>1946年独立后，菲律宾仿效美国建立了三权分立制度，包括总统制、两院制国会、独立司法，以及一人一票的民主选举。</p>
+
+        <p>然而，这个“亚洲民主的先行者”——1986年“人民力量革命”推翻了老马科斯十四年独裁统治，曾被视为亚洲民主运动的标志性事件——在近四十年后呈现出的图景却是：<strong>民主的外壳依然光鲜，壳下的机体早已千疮百孔。</strong></p>
+
+        <div class="evidence-note">
+            <strong>经济学人智库（EIU）2024年民主指数</strong>将菲律宾列为“有缺陷的民主国家”（6.66/10分），自2006年首次发布以来从未进入“完全民主”行列。<strong>自由之家（Freedom House）2025年报告</strong>更直白：菲律宾是“部分自由”国家，总分58/100，<strong>政府运作和反腐能力得分尤其惨淡</strong>。<strong>透明国际2024/25年清廉指数</strong>中，菲律宾排名全球<strong>第120位（共182个国家和地区）</strong>，在东盟排名倒数第三，与塞拉利昂和安哥拉为邻。
+        </div>
+
+        <p><strong>一个有着完备选举制度、活跃媒体传统的国家，为何治理绩效如此惨淡？</strong></p>
+
+        <h2>一、GL诊断：八项参数下的菲律宾</h2>
+
+        <h3>1. 等待成本</h3>
+        <p>菲律宾政府服务的等待时间是系统性的高。以公立医院急诊室为例，卫生部承认等待时间可达<strong>12至24小时</strong>。车辆登记和牌照发放曾需数月才能完成。尽管政府近年推出数字化平台试图将部分流程压缩至3天，但这种“改善”恰恰暴露了原有系统的崩坏程度。</p>
+
+        <h3>2. 重复成本</h3>
+        <p>菲律宾民众在政府机构间反复奔波是常态。社会福利部承认，其援助申请流程原有<strong>五个步骤</strong>，经“简化”后仍剩<strong>三个步骤</strong>：排队取号、社工面谈评估等。三步骤看似精简，但每一步都意味着新的排队、新的等待、新的往返。</p>
+
+        <h3>3. 崩溃成本</h3>
+        <p>2025年防洪工程贪腐案是最典型的“崩溃成本”案例。菲律宾是全球最易受台风侵袭的国家之一，政府却在2021至2025年间为防洪项目拨款约<strong>1.9万亿比索</strong>，结果出现大量“幽灵工程”、质量缺陷和文件造假。<strong>当最需要基础设施保护的人群面对的是根本不存在的工程时，系统已经不仅是在“过滤”弱势群体，而是在主动将他们的生存权置于风险之中。</strong></p>
+
+        <h3>4. 信息不对称成本</h3>
+        <p>菲律宾政府的信息不透明是结构性的。公民社会组织指出，“<strong>不能在没有透明的情况下谈论参与</strong>”——关键预算文件仍然无法获取、技术上难以审查。防洪工程“幽灵项目”的清单长期不公开，连地方政府都无法获取完整的技术文件。2025年众议院提出建立中央化数字预算门户的法案，恰恰说明此前整个预算体系处于黑箱状态。</p>
+
+        <h3>5. 心理成本</h3>
+        <p>2025年9月21日，菲律宾20多个城市同时爆发“万亿比索游行”，数十万民众走上街头。选择这一天具有强烈象征意义——1972年9月21日，老马科斯宣布戒严。民众将当前政府的腐败与历史上的独裁统治联系在一起，说明<strong>心理成本已从“对具体政策的不满”升级为“对整个体制的信任崩溃”</strong>。</p>
+        <div class="evidence-note">
+            <strong>社会气象站（SWS）数据</strong>显示，2025年仍有<strong>51%的菲律宾家庭自评为贫困</strong>——尽管官方贫困率已降至9.7%。官方数据与民众感知之间的巨大鸿沟，本身就是心理成本累积的证明。
+        </div>
+
+        <h3>6. 机会成本</h3>
+        <p>菲律宾经济高度依赖外资与侨汇，国内产业薄弱。青年失业率2025年底升至<strong>12.2%</strong>。<strong>当一个国家的年轻人无法就业、产业无法升级、经济发展依赖海外劳工汇款时，意味着整整一代人的发展机会被系统性吞噬。</strong></p>
+
+        <h3>7. 转移路径</h3>
+        <p>菲律宾的成本转移路径清晰可辨：</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>成本创造者</th><th>成本承担者</th><th>转移机制</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>政治家族</td><td>普通民众</td><td>选举成为家族分赃仪式，政策服务于家族利益而非公共利益</td></tr>
+                <tr><td>腐败官员</td><td>纳税人/灾民</td><td>防洪资金被侵吞→“幽灵工程”不存在→台风来临时民众无保护</td></tr>
+                <tr><td>利益集团</td><td>年轻一代</td><td>经济被外资和寡头主导→产业无法升级→青年失业</td></tr>
+            </tbody>
+        </table>
+
+        <p>2025年，约12万人在马尼拉游行，要求对防洪工程贪腐案涉案官员问责。抗议者举着马科斯的模拟像游行——<strong>他们愤怒的对象不是抽象的“腐败”，而是那些将他们的税款转化为个人财富、将他们的安全转化为空头支票的具体制度。</strong></p>
+
+        <h3>8. 闭环程度</h3>
+        <p>菲律宾的治理系统<strong>几乎没有闭环</strong>。2025年参议院弹劾案中，参议院以18票对5票将针对副总统莎拉·杜特尔特的弹劾条款退回众议院，引发公众愤怒。评论指出，这一行为<strong>“暴露了更深层的弊病：一个无法以有意义、有协调的方式反击的公民群体”</strong>。</p>
+
+        <h2>二、家族共和国：为什么菲律宾的民主是“半民主半封建”的？</h2>
+
+        <p>菲律宾民主制度的深层次问题，在于<strong>政治家族长期垄断权力</strong>。</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>指标</th><th>数据</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>全国82个省中受政治家族控制的省份</td><td><strong>71个（87%）</strong></td></tr>
+                <tr><td>众议院中属于政治家族的议员</td><td><strong>212/254（83%）</strong></td></tr>
+                <tr><td>市长中属于政治家族的比例</td><td><strong>113/149（76%）</strong></td></tr>
+                <tr><td>“肥胖王朝”（一次选举中赢得5个以上席位的家族）</td><td><strong>至少18个</strong></td></tr>
+                <tr><td>省长中来自政治家族的比例</td><td><strong>87%</strong></td></tr>
+            </tbody>
+        </table>
+
+        <div class="evidence-note">
+            <strong>1987年宪法明文规定禁止政治王朝</strong>。但近四十年来，所有反政治王朝法案都在国会中夭折——而国会本身由政治家族主导。<strong>系统用自身来保护自身。</strong>
+        </div>
+
+        <h2>三、杜特尔特被捕事件：制度的“压力测试”</h2>
+
+        <p>2025年3月11日，菲律宾前总统杜特尔特从香港返回马尼拉，在机场被菲律宾国家警察依据国际刑事法院（ICC）逮捕令逮捕。次日他被送往海牙，面对反人类罪指控。</p>
+
+        <p>这一事件暴露了菲律宾制度的多个深层矛盾：</p>
+        <ul>
+            <li><strong>主权悖论</strong>：菲律宾已于2019年正式退出ICC，但政府仍执行了ICC的逮捕令。批评者称这是对菲律宾主权的侵犯；政府则坚称程序合法。</li>
+            <li><strong>家族政治的逻辑反噬</strong>：杜特尔特家族是菲律宾最强大的政治家族之一。当一个家族领袖被国际法庭逮捕时，<strong>家族政治的安全网失效了</strong>——因为逮捕令来自外部，不受本地家族联盟的保护。</li>
+            <li><strong>“民主”的边界测试</strong>：如果菲律宾真的是“民主国家”，那么前总统被国际法庭逮捕应该被视为“法治的胜利”。但菲律宾国内的反应却充满了分裂——有人认为是正义，有人认为是外部干预。<strong>制度没有能力在国内形成共识，只能依赖外部力量来执行“正义”。</strong></li>
+        </ul>
+
+        <div class="conclusion-box">
+            <h2>结论：菲律宾不是“民主失败”，而是“伪民主自由”掩盖下的系统性成本转移</h2>
+            <p>菲律宾的案例清晰地展示了GL Framework的核心命题：</p>
+            <p><strong>当一套制度在形式上符合“民主”的所有标准——选举、宪法、三权分立、新闻自由——但实质上却将成本系统性地转移给最弱势的群体时，它就已经失去了治理的正当性。</strong></p>
+            <p>菲律宾的“民主”之所以是“伪”的，不在于它没有选举，而在于：</p>
+            <ul>
+                <li><strong>选举是家族分赃的仪式，而非民意表达的渠道</strong>——83%的议员来自政治家族，87%的省长出自政治门阀。</li>
+                <li><strong>法治是精英的保护伞，而非公正的裁判</strong>——近四十年反政治王朝法案无法通过，因为国会本身由政治家族控制。</li>
+                <li><strong>公共资源是寡头的提款机，而非人民的保障</strong>——1.9万亿比索的防洪拨款变成了“幽灵工程”。</li>
+                <li><strong>51%的家庭自评为贫困，而官方数据却说贫困率只有9.7%</strong>——<strong>数字不是用来反映现实，而是用来掩盖现实。</strong></li>
+            </ul>
+            <p>菲律宾不是“民主的失败案例”——它是<strong>“伪民主自由”如何系统性地将成本转移给无发言权群体的教科书式案例。</strong></p>
+            <p>当一个国家把美国的宪法抄得最像、把美国的选举学得最全、把美国的制度移植得最彻底——<strong>却把最贫困的51%家庭留在了“民主”的废墟里</strong>——这恰恰证明了GL Framework的核心诊断：</p>
+            <p><strong>制度的正当性，不在于它长得像谁，而在于它是否把价值还给了人民。</strong></p>
+            <p>菲律宾用四十年的“民主实验”证明了：<strong>当“民主”只是家族分赃的表演场地时，“程序正义”就成了最大的谎言。</strong></p>
+        </div>
+
+        <div class="footnote">—— GL Framework 对伪民主治理的诊断</div>
+    </div>
+
+</div>
+
+<script>
+    (function() {
+        const btns = document.querySelectorAll('.lang-btn');
+        const contents = { zh: document.getElementById('zh'), en: document.getElementById('en') };
+        function switchLang(lang) {
+            for (let key in contents) {
+                contents[key].classList.remove('active');
+            }
+            if (contents[lang]) contents[lang].classList.add('active');
+            btns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
+            if (history.pushState) history.pushState(null, '', '#' + lang);
+        }
+        btns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const lang = this.dataset.lang;
+                if (lang) switchLang(lang);
+            });
+        });
+        const hash = window.location.hash.replace('#', '');
+        if (hash === 'zh') {
+            switchLang('zh');
+        } else {
+            switchLang('en');
+        }
+        window.addEventListener('hashchange', function() {
+            const newHash = window.location.hash.replace('#', '');
+            if (newHash === 'zh' || newHash === 'en') {
+                switchLang(newHash);
+            } else {
+                switchLang('en');
+            }
+        });
+    })();
+</script>
+</body>
+</html>
