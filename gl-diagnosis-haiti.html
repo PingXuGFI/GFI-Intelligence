@@ -1,1 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Haiti · GL Framework Diagnosis · 海地诊断</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #0b1220;
+            --text: #f8fbff;
+            --muted: #c7d2e3;
+            --sub: #9fb0c8;
+            --dim: rgba(255,255,255,.06);
+            --green: #9FE870;
+            --blue: #7DD3FC;
+            --amber: #fbbf24;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --mono: 'DM Mono', monospace;
+            --sans: 'DM Sans', system-ui, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 15px;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--dim);
+            border-radius: 24px;
+            padding: 2.2rem 2.5rem;
+            backdrop-filter: blur(2px);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green);
+            text-decoration: none;
+            font-family: var(--mono);
+            font-size: 13px;
+            letter-spacing: 0.08em;
+            border: 1px solid rgba(159,232,112,0.3);
+            padding: 8px 18px;
+            border-radius: 40px;
+            transition: all 0.2s;
+            margin-bottom: 1.8rem;
+        }
+        .back-link:hover {
+            background: rgba(159,232,112,0.1);
+            border-color: var(--green);
+            transform: translateX(-4px);
+        }
+        .lang-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.6rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--dim);
+            padding-bottom: 0.8rem;
+        }
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-family: var(--mono);
+            font-weight: 500;
+            color: var(--sub);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
+        .lang-btn.active {
+            background: rgba(159,232,112,0.15);
+            border-color: var(--green);
+            color: var(--green);
+        }
+        .lang-content { display: none; animation: fade 0.3s ease; }
+        .lang-content.active { display: block; }
+        @keyframes fade { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
 
+        h1 {
+            font-size: 2.1rem;
+            font-family: var(--serif);
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            border-left: 6px solid var(--amber);
+            padding-left: 1.2rem;
+        }
+        .subhead {
+            font-size: 1rem;
+            color: var(--sub);
+            margin-bottom: 2rem;
+            padding-left: 1.2rem;
+            border-left: 3px solid rgba(251,191,36,0.3);
+            font-style: italic;
+        }
+        h2 {
+            font-size: 1.4rem;
+            font-family: var(--serif);
+            margin-top: 2.2rem;
+            margin-bottom: 0.6rem;
+            color: #eaf6ff;
+            border-bottom: 1px dashed rgba(255,255,255,0.08);
+            padding-bottom: 0.3rem;
+        }
+        h2 .badge {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: rgba(251,191,36,0.15);
+            color: var(--amber);
+            padding: 0.05rem 0.8rem;
+            border-radius: 30px;
+            margin-left: 0.8rem;
+            font-weight: 400;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1.4rem;
+            margin-bottom: 0.4rem;
+            color: var(--muted);
+        }
+        p { margin-bottom: 1rem; color: var(--muted); text-align: justify; }
+        ul, ol { margin: 0.5rem 0 1rem 1.8rem; list-style-type: disc; color: var(--muted); }
+        li { margin-bottom: 0.3rem; }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0 1.5rem 0;
+            font-size: 0.85rem;
+            font-family: var(--mono);
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .data-table th {
+            background: rgba(251,191,36,0.10);
+            color: var(--amber);
+            padding: 0.6rem 1rem;
+            text-align: left;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            border-bottom: 1px solid var(--dim);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+        .data-table td {
+            padding: 0.6rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            vertical-align: top;
+            color: var(--muted);
+        }
+        .data-table tr:last-child td { border-bottom: none; }
+
+        .evidence-note {
+            background: rgba(125,211,252,0.04);
+            padding: 0.8rem 1.2rem;
+            border-radius: 6px;
+            margin: 0.5rem 0 1rem 0;
+            font-size: 0.85rem;
+            color: var(--sub);
+            border-left: 3px solid var(--blue);
+        }
+        .evidence-note strong { color: var(--blue); }
+
+        .conclusion-box {
+            background: rgba(255,255,255,0.03);
+            border-left: 4px solid var(--amber);
+            padding: 1.5rem 2rem;
+            margin-top: 2rem;
+            border-radius: 12px;
+        }
+        .conclusion-box h2 { border: none; margin-top:0; padding-top:0; }
+        .footnote {
+            font-size: 0.75rem;
+            color: var(--sub);
+            text-align: right;
+            margin-top: 2rem;
+            border-top: 1px solid var(--dim);
+            padding-top: 1rem;
+            font-style: italic;
+        }
+
+        .score-pill {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            font-weight: 500;
+            background: rgba(251,191,36,0.12);
+            color: var(--amber);
+            padding: 0.05rem 0.8rem;
+            border-radius: 30px;
+            margin-left: 0.6rem;
+            letter-spacing: 0.02em;
+        }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.2rem; }
+            h1 { font-size: 1.6rem; padding-left:0.8rem; }
+            h2 { font-size: 1.2rem; }
+            .lang-bar { justify-content: center; }
+            .data-table { font-size: 0.7rem; }
+            .data-table th, .data-table td { padding: 0.4rem 0.6rem; }
+            .conclusion-box { padding: 1rem 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="global-south-diagnosis.html" class="back-link">← 返回首页 / Back to Home</a>
+
+    <div class="lang-bar">
+        <button class="lang-btn" data-lang="zh">中文</button>
+        <button class="lang-btn active" data-lang="en">English</button>
+    </div>
+
+    <!-- ===== ENGLISH ===== -->
+    <div id="en" class="lang-content active">
+        <h1>Haiti: The First Black Republic, Now a Gang‑State Collapse</h1>
+        <div class="subhead">— A GL Framework Diagnosis of a "Failed State" That Was Never Given the Chance to Function</div>
+
+        <p><strong>Haiti was born from the only successful slave revolution in history.</strong> In 1804, it became the world's first Black republic and the second independent nation in the Americas. Yet today, <strong>Haiti is a synonym for state collapse</strong> — not because of some inherent failure of its people, but because of <strong>a two‑century history of extraction: colonial debt, US occupation, dictatorship, and neoliberal exploitation</strong>.</p>
+
+        <p>The Haitian state, as it exists today, is <strong>no longer a state in the Weberian sense</strong> — it does not hold a monopoly on violence. Armed gangs control <strong>over 80% of Port‑au‑Prince</strong>. The government is a <strong>shadow of itself, unable to deliver services, protect citizens, or collect taxes beyond the capital's shrinking perimeter.</strong></p>
+
+        <div class="evidence-note">
+            <strong>UN OCHA (2025)</strong> reports that <strong>5.5 million Haitians — nearly half the population — require humanitarian assistance</strong>. <strong>WFP (2025)</strong> estimates that <strong>1.4 million Haitians are on the brink of famine</strong>. Gang violence has displaced <strong>over 200,000 people</strong> in the past 18 months. The state's <strong>annual budget is less than $2 billion</strong> — a sum that would not cover the maintenance of a single US aircraft carrier.
+        </div>
+
+        <h2>I. GL Diagnosis: Haiti Under Eight Parameters</h2>
+
+        <h3>1. Waiting Cost <span class="score-pill">0.5/10</span></h3>
+        <p>In Haiti, waiting is not a cost — it is a <strong>lifelong condition</strong>. <strong>Food aid distribution points operate unpredictably; people queue for days only to be turned away.</strong> Hospitals are overwhelmed; <strong>a single hospital in Port‑au‑Prince serves 1.2 million people</strong> with fewer than 200 beds. Patients wait <strong>weeks for surgeries that never come</strong>. Government services have largely ceased to function; those that still operate require <strong>weeks of waiting, multiple trips, and often bribe payments to even see a clerk</strong>. Waiting cost in Haiti has become indistinguishable from survival cost.</p>
+
+        <h3>2. Repetition Cost <span class="score-pill">0.5/10</span></h3>
+        <p>The Haitian administrative system is a <strong>colonial relic that collapsed but never reformed</strong>. To obtain any official document — a birth certificate, a land title, a business license — requires <strong>repeated trips to multiple agencies, each demanding paperwork that contradicts the others</strong>. In the absence of a functioning digital system, <strong>all documents must be hand‑carried and re‑submitted at every stop</strong>. For those displaced by gang violence, the repetition cost is compounded: they have <strong>no fixed address, no original documents, and no way to prove their identity</strong> — so they cannot access aid, school, or healthcare. The system is designed for a stable population, but Haiti no longer has one.</p>
+
+        <h3>3. Collapse Cost <span class="score-pill">0.5/10</span></h3>
+        <p>Haiti is collapse cost made manifest. <strong>The 2021 earthquake killed over 2,200 people and displaced 800,000; the reconstruction funds were never fully disbursed — much of it was embezzled.</strong> The 2024/25 gang offensive has <strong>burned schools, clinics, and public buildings; over 1,000 schools remain closed across the country.</strong> Collapse cost here is not a one‑time shock — it is <strong>permanent, compounding, and accelerating</strong>. Healthcare, education, and sanitation have <strong>regressed to levels worse than 1990</strong>. Cholera, which was eliminated in 2019, returned in 2022 and has never been fully controlled. The collapse cost is borne entirely by the poor.</p>
+
+        <h3>4. Information Asymmetry Cost <span class="score-pill">0.5/10</span></h3>
+        <p>Information in Haiti is <strong>actively withheld or simply absent</strong>. The government does not publish reliable budget data; what is published is <strong>months late and missing critical sections</strong>. <strong>Food aid and international funds are routed through NGOs and private contractors</strong> — their disbursement records are <strong>not accessible to the public or even to the Haitian parliament</strong>. Citizens have <strong>no way to know how much aid enters the country or where it goes</strong>. In a country where famine is looming, this information asymmetry is not incidental — it is a condition that enables theft.</p>
+
+        <h3>5. Psychological Cost <span class="score-pill">0.5/10</span></h3>
+        <p>The psychological cost in Haiti is <strong>generational trauma compounded by daily terror</strong>. Gangs control entire neighbourhoods; they <strong>kidnap children, rape women, and burn homes with impunity</strong>. The state offers no protection; police are outgunned and sometimes complicit. A 2025 study by the Haitian Psychological Association found that <strong>72% of Port‑au‑Prince residents met the criteria for PTSD</strong>. For children, the cost is higher: <strong>schools are closed, friends are killed, and the future is a horizon without hope.</strong> The psychological cost is not a side effect — it is a <strong>tool of social control</strong> that paralyses resistance and enables gangs to rule through fear.</p>
+
+        <h3>6. Opportunity Cost <span class="score-pill">0.5/10</span></h3>
+        <p>Haiti's opportunity cost is <strong>generational and catastrophic</strong>. The country has <strong>one of the highest emigration rates in the Western Hemisphere</strong> — over <strong>1.5 million Haitians now live abroad</strong>, and another <strong>200,000+ have been deported back in recent years</strong>, further straining the collapse. The <strong>brain drain has stripped Haiti of doctors, engineers, and teachers</strong>; the diaspora's remittances, which constitute <strong>over 35% of GDP</strong>, are used for consumption, not investment. Young Haitians face a choice: <strong>join a gang, risk a boat to the US, or starve.</strong> The country's youth potential — a population with a median age of 24 — is being systematically forfeited to violence, migration, and death.</p>
+
+        <h3>7. Transfer Pathway <span class="score-pill">0.5/10</span></h3>
+        <p>Haiti's cost transfer mechanisms are brutally simple:</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>Cost Creator</th><th>Cost Bearer</th><th>Transfer Mechanism</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Gangs</td><td>Civilians (especially the urban poor)</td><td>Kidnapping for ransom, protection rackets, sexual violence — the costs of gang rule are imposed directly on the population</td></tr>
+                <tr><td>Political Elites &amp; NGOs</td><td>Taxpayers / Aid Recipients</td><td>International aid is channelled through elite‑controlled NGOs; funds are diverted, and the aid never reaches the intended recipients</td></tr>
+                <tr><td>International Community</td><td>Haitians</td><td>Sanctions, debt, and "stabilisation missions" are carried out at Haiti's expense — the population pays the price for policies that preserve the status quo</td></tr>
+            </tbody>
+        </table>
+
+        <p><strong>The gang‑state symbiosis is the central transfer mechanism.</strong> Gangs provide protection and extraction; the state provides legitimacy and impunity. The population pays — in lives, in livelihoods, in futures.</p>
+
+        <h3>8. Closed‑Loop Degree <span class="score-pill">0.5/10</span></h3>
+        <p>Haiti's governance system has <strong>no closed loop</strong>. The government is a <strong>revolving door of prime ministers who cannot leave the palace</strong>. Elections have not been held since 2016; the last elected president was assassinated. The parliament is <strong>empty — there is no quorum, no legislation, no oversight</strong>. The judiciary is <strong>non‑functional; judges have been murdered or fled</strong>. Civil society has been <strong>destroyed by violence or co‑opted by gang funding</strong>. Feedback does not exist because <strong>there is no system to receive it</strong>. The only "feedback" the state receives is <strong>mass protest — which is met with state‑sanctioned gang violence</strong>. The loop is not just closed; it has been <strong>detonated from the inside</strong>.</p>
+
+        <h2>II. The Haitian Paradox: A State That Does Not Govern, Yet Still Transfers Costs</h2>
+        <p>Haiti is often called a "failed state." But the GL Framework suggests a more precise diagnosis: <strong>Haiti is not a state that failed — it is a state that was never allowed to function, and its dysfunction has become profitable to those who control its ruins.</strong></p>
+
+        <div class="evidence-note">
+            <strong>UN Integrated Office in Haiti (BINUH) 2025 report</strong> noted that <strong>80% of Port‑au‑Prince is under gang control</strong>, and <strong>the national police force has lost over 2,500 officers to resignation or death in the past three years.</strong> The state is not absent — it has been captured and hollowed out.
+        </div>
+
+        <p>The pattern is consistent with the GL Framework's diagnosis:</p>
+        <ul>
+            <li><strong>Value is extracted</strong> — through aid diversion, gang rackets, and the remittance economy.</li>
+            <li><strong>Costs are transferred</strong> — to the civilian population in the form of violence, displacement, hunger, and death.</li>
+            <li><strong>Feedback is impossible</strong> — because there is no functioning state to receive it.</li>
+            <li><strong>The loop is closed</strong> — not by design, but by collapse.</li>
+        </ul>
+
+        <div class="conclusion-box">
+            <h2>Conclusion: Haiti Is Not "Failed" — It Is a Cost‑Transfer Abyss</h2>
+            <p>Haiti's case is the most extreme in the GL Framework series. It demonstrates that <strong>when a state collapses entirely, the cost‑transfer machinery does not disappear — it becomes privatised, criminalised, and more brutal.</strong></p>
+            <p>Haiti shows us what happens when the GL Framework's eight parameters are pushed to their extreme:</p>
+            <ul>
+                <li><strong>Waiting costs</strong> become life‑threatening.</li>
+                <li><strong>Repetition costs</strong> become structural barriers to survival.</li>
+                <li><strong>Collapse costs</strong> become permanent and accelerating.</li>
+                <li><strong>Information asymmetry</strong> becomes a weapon of aid diversion.</li>
+                <li><strong>Psychological costs</strong> become generational and disabling.</li>
+                <li><strong>Opportunity costs</strong> become the forfeiture of an entire nation's future.</li>
+                <li><strong>Transfer pathways</strong> become gang‑state symbiosis.</li>
+                <li><strong>Closed‑loop governance</strong> becomes no governance at all.</li>
+            </ul>
+            <p>Haiti is not a country that needs "saving" — it is a country that needs <strong>a complete systemic reset</strong>. But that reset is blocked by the very actors — local elites, international institutions, and armed gangs — who profit from the current cost‑transfer architecture.</p>
+            <p><strong>The GL Framework does not ask if Haiti is "democratic" — it asks a more urgent question: who profits from Haiti's collapse, and who pays for it?</strong> The answer is clear: the elites profit, and the people pay.</p>
+        </div>
+
+        <div class="footnote">— A GL Framework diagnosis of collapsed‑state cost transfer</div>
+    </div>
+
+    <!-- ===== 中文 ===== -->
+    <div id="zh" class="lang-content">
+        <h1>海地：第一个黑人共和国，如今沦为黑帮主宰的崩溃国度</h1>
+        <div class="subhead">—— GL Framework 对一个"从未被允许运转的国家"的诊断</div>
+
+        <p><strong>海地诞生于历史上唯一成功的奴隶革命。</strong>1804年，它成为世界上第一个黑人共和国和美洲第二个独立国家。然而今天，<strong>海地是"国家崩溃"的代名词</strong>——不是因为其人民有任何内在缺陷，而是因为<strong>两个世纪的被掠夺史：殖民债务、美国占领、独裁统治和新自由主义剥削</strong>。</p>
+
+        <p>今天的海地国家，<strong>在韦伯意义上已不再是一个国家</strong>——它不再垄断暴力。武装黑帮控制着<strong>太子港80%以上的区域</strong>。政府是<strong>自身的影子</strong>，无法提供服务、保护公民或在首都不断缩小的范围之外征税。</p>
+
+        <div class="evidence-note">
+            <strong>联合国人道事务协调厅（2025年）</strong>报告称<strong>550万海地人——近一半人口——需要人道主义援助</strong>。<strong>世界粮食计划署（2025年）</strong>估计<strong>140万海地人濒临饥荒</strong>。黑帮暴力在过去18个月中迫使<strong>超过20万人流离失所</strong>。国家的<strong>年度预算不足20亿美元</strong>——这个数字甚至不够维护一艘美国航空母舰。
+        </div>
+
+        <h2>一、GL诊断：八项参数下的海地</h2>
+
+        <h3>1. 等待成本 <span class="score-pill">0.5/10</span></h3>
+        <p>在海地，等待不是一种成本——而是一种<strong>终身状态</strong>。<strong>食品援助分发点运作不可预测；人们排队数天却被拒之门外。</strong>医院人满为患；<strong>太子港一家医院要服务120万人</strong>，床位不足200张。患者等待<strong>数周却永远等不到手术</strong>。政府服务大多已停止运作；仍在运作的部门需要<strong>数周等待、多次往返和贿赂才能见到办事员</strong>。在海地，等待成本已与生存成本无法区分。</p>
+
+        <h3>2. 重复成本 <span class="score-pill">0.5/10</span></h3>
+        <p>海地的行政系统是一个<strong>殖民时代的遗留物——崩溃了却从未改革</strong>。获取任何官方文件——出生证明、地契、营业执照——都需要<strong>多次往返多个机构，每个机构要求的文件都与其他机构相矛盾</strong>。在没有有效数字系统的情况下，<strong>所有文件都必须人工携带并在每个环节重新提交</strong>。对因黑帮暴力而流离失所的人来说，重复成本更加沉重：他们<strong>没有固定地址、没有原始文件、无法证明身份</strong>——因此无法获得援助、入学或医疗。系统是为稳定人口设计的，但海地已不再拥有稳定人口。</p>
+
+        <h3>3. 崩溃成本 <span class="score-pill">0.5/10</span></h3>
+        <p>海地是崩溃成本的具象化。<strong>2021年地震造成2200多人死亡、80万人流离失所；重建资金从未全额拨付——大部分被侵吞。</strong>2024/25年的黑帮攻势<strong>烧毁了学校、诊所和公共建筑；全国超过1000所学校仍处于关闭状态。</strong>这里的崩溃成本不是一次性冲击——而是<strong>永久性的、不断累积且加速的</strong>。医疗、教育和卫生<strong>已倒退到比1990年更差的水平</strong>。霍乱在2019年被消灭，2022年卷土重来，至今未被完全控制。崩溃成本完全由穷人承担。</p>
+
+        <h3>4. 信息不对称成本 <span class="score-pill">0.5/10</span></h3>
+        <p>海地的信息<strong>被主动扣留或根本不存在</strong>。政府不公布可靠的预算数据；公布的也是<strong>延迟数月且缺失关键章节</strong>。<strong>食品援助和国际资金通过NGO和私人承包商输送</strong>——其拨付记录<strong>不向公众甚至海地议会开放</strong>。公民<strong>无法知道有多少援助进入国家、流向何处</strong>。在一个饥荒逼近的国家，这种信息不对称并非偶然——它是使盗窃成为可能的条件。</p>
+
+        <h3>5. 心理成本 <span class="score-pill">0.5/10</span></h3>
+        <p>海地的心理成本是<strong>代际创伤与日常恐怖叠加</strong>。黑帮控制整个社区；他们<strong>绑架儿童、强奸妇女、烧毁房屋，不受惩罚</strong>。国家不提供保护；警察火力不足且有时同流合污。海地心理协会2025年的一项研究发现，<strong>72%的太子港居民符合PTSD诊断标准</strong>。对儿童而言，成本更高：<strong>学校关闭、朋友被杀、未来是没有希望的远景。</strong>心理成本不是副作用——而是<strong>社会控制的工具</strong>，使抵抗瘫痪，使黑帮通过恐惧统治成为可能。</p>
+
+        <h3>6. 机会成本 <span class="score-pill">0.5/10</span></h3>
+        <p>海地的机会成本是<strong>代际性的、灾难性的</strong>。该国是<strong>西半球移民率最高的国家之一</strong>——超过<strong>150万海地人生活在国外</strong>，近年来又有<strong>超过20万人被驱逐回国</strong>，进一步加重了崩溃。<strong>人才流失使海地失去了医生、工程师和教师</strong>；侨汇占<strong>GDP的35%以上</strong>，却被用于消费而非投资。海地年轻人面临的选择是：<strong>加入黑帮、冒险乘船前往美国、或饿死。</strong>这个中位年龄仅24岁的国家的青年潜力，正被系统性地葬送于暴力、移民和死亡之中。</p>
+
+        <h3>7. 转移路径 <span class="score-pill">0.5/10</span></h3>
+        <p>海地的成本转移机制残酷而简单：</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>成本创造者</th><th>成本承担者</th><th>转移机制</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>黑帮</td><td>平民（尤其城市贫民）</td><td>绑架勒索、保护费、性暴力——黑帮统治的成本直接强加于人口</td></tr>
+                <tr><td>政治精英与NGO</td><td>纳税人/援助接受者</td><td>国际援助通过精英控制的NGO输送；资金被挪用，援助从未到达预期接收者</td></tr>
+                <tr><td>国际社会</td><td>海地人</td><td>制裁、债务和"稳定任务"以海地为代价进行——人口为维持现状的政策付出代价</td></tr>
+            </tbody>
+        </table>
+
+        <p><strong>黑帮-国家的共生是核心转移机制。</strong>黑帮提供保护和掠夺；国家提供合法性和豁免。人口付出代价——以生命、生计和未来为代价。</p>
+
+        <h3>8. 闭环程度 <span class="score-pill">0.5/10</span></h3>
+        <p>海地的治理系统<strong>没有闭环</strong>。政府是<strong>总理的旋转门——他们无法离开宫殿</strong>。自2016年以来未举行选举；最后一位民选总统被暗杀。议会<strong>空置——无法定人数、无立法、无监督</strong>。司法机构<strong>已停摆；法官被谋杀或逃离</strong>。公民社会<strong>被暴力摧毁或被黑帮资金收买</strong>。反馈不存在，因为<strong>没有系统可以接收它</strong>。国家收到的唯一"反馈"是<strong>大规模抗议——以国家认可的黑帮暴力作为回应</strong>。闭环不仅被关闭——而是从<strong>内部被炸毁</strong>。</p>
+
+        <h2>二、海地悖论：一个不治理却仍在转移成本的国家</h2>
+        <p>海地常被称为"失败国家"。但GL Framework提供了一个更精确的诊断：<strong>海地不是一个失败的国家——它是一个从未被允许运转的国家，而其失灵对控制废墟的人而言已成为有利可图的。</strong></p>
+
+        <div class="evidence-note">
+            <strong>联合国海地综合办事处（BINUH）2025年报告</strong>指出，<strong>太子港80%处于黑帮控制之下</strong>，<strong>国家警察在过去三年中已失去超过2500名警官（辞职或死亡）</strong>。国家并未缺席——它已被捕获和掏空。
+        </div>
+
+        <div class="conclusion-box">
+            <h2>结论：海地不是"失败"——而是一个成本转移的深渊</h2>
+            <p>海地的案例是GL Framework系列中最极端的。它表明<strong>当一个国家完全崩溃时，成本转移机器不会消失——而是被私有化、犯罪化，变得更加残酷。</strong></p>
+            <p>海地向我们展示了GL Framework八项参数被推到极端时的状态：</p>
+            <ul>
+                <li><strong>等待成本</strong>变得危及生命。</li>
+                <li><strong>重复成本</strong>成为生存的结构性障碍。</li>
+                <li><strong>崩溃成本</strong>成为永久性和加速性的。</li>
+                <li><strong>信息不对称</strong>成为援助转移的武器。</li>
+                <li><strong>心理成本</strong>成为代际性的和致残性的。</li>
+                <li><strong>机会成本</strong>成为整个国家未来的丧失。</li>
+                <li><strong>转移路径</strong>成为黑帮-国家共生。</li>
+                <li><strong>闭环治理</strong>变成完全没有治理。</li>
+            </ul>
+            <p>海地不需要被"拯救"——它需要<strong>一次完整的系统性重启</strong>。但这一重启被那些从当前成本转移架构中获利的行动者——地方精英、国际机构和武装黑帮——所阻止。</p>
+            <p><strong>GL Framework不问海地是否"民主"——它问一个更紧迫的问题：谁从海地的崩溃中获利，谁为之付出代价？</strong>答案很清楚：精英获利，人民付出代价。</p>
+        </div>
+
+        <div class="footnote">—— GL Framework 对崩溃型国家成本转移的诊断</div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const btns = document.querySelectorAll('.lang-btn');
+        const contents = { zh: document.getElementById('zh'), en: document.getElementById('en') };
+        function switchLang(lang) {
+            for (let key in contents) {
+                contents[key].classList.remove('active');
+            }
+            if (contents[lang]) contents[lang].classList.add('active');
+            btns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
+            if (history.pushState) history.pushState(null, '', '#' + lang);
+        }
+        btns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const lang = this.dataset.lang;
+                if (lang) switchLang(lang);
+            });
+        });
+        const hash = window.location.hash.replace('#', '');
+        if (hash === 'zh') {
+            switchLang('zh');
+        } else {
+            switchLang('en');
+        }
+        window.addEventListener('hashchange', function() {
+            const newHash = window.location.hash.replace('#', '');
+            if (newHash === 'zh' || newHash === 'en') {
+                switchLang(newHash);
+            } else {
+                switchLang('en');
+            }
+        });
+    })();
+</script>
+</body>
+</html>
