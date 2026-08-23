@@ -1,1 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iraq · GL Framework Diagnosis · 伊拉克诊断</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #0b1220;
+            --text: #f8fbff;
+            --muted: #c7d2e3;
+            --sub: #9fb0c8;
+            --dim: rgba(255,255,255,.06);
+            --green: #9FE870;
+            --blue: #7DD3FC;
+            --amber: #fbbf24;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --mono: 'DM Mono', monospace;
+            --sans: 'DM Sans', system-ui, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 15px;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--dim);
+            border-radius: 24px;
+            padding: 2.2rem 2.5rem;
+            backdrop-filter: blur(2px);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green);
+            text-decoration: none;
+            font-family: var(--mono);
+            font-size: 13px;
+            letter-spacing: 0.08em;
+            border: 1px solid rgba(159,232,112,0.3);
+            padding: 8px 18px;
+            border-radius: 40px;
+            transition: all 0.2s;
+            margin-bottom: 1.8rem;
+        }
+        .back-link:hover {
+            background: rgba(159,232,112,0.1);
+            border-color: var(--green);
+            transform: translateX(-4px);
+        }
+        .lang-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.6rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--dim);
+            padding-bottom: 0.8rem;
+        }
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-family: var(--mono);
+            font-weight: 500;
+            color: var(--sub);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
+        .lang-btn.active {
+            background: rgba(159,232,112,0.15);
+            border-color: var(--green);
+            color: var(--green);
+        }
+        .lang-content { display: none; animation: fade 0.3s ease; }
+        .lang-content.active { display: block; }
+        @keyframes fade { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
 
+        h1 {
+            font-size: 2.1rem;
+            font-family: var(--serif);
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            border-left: 6px solid var(--amber);
+            padding-left: 1.2rem;
+        }
+        .subhead {
+            font-size: 1rem;
+            color: var(--sub);
+            margin-bottom: 2rem;
+            padding-left: 1.2rem;
+            border-left: 3px solid rgba(251,191,36,0.3);
+            font-style: italic;
+        }
+        h2 {
+            font-size: 1.4rem;
+            font-family: var(--serif);
+            margin-top: 2.2rem;
+            margin-bottom: 0.6rem;
+            color: #eaf6ff;
+            border-bottom: 1px dashed rgba(255,255,255,0.08);
+            padding-bottom: 0.3rem;
+        }
+        h2 .badge {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: rgba(251,191,36,0.15);
+            color: var(--amber);
+            padding: 0.05rem 0.8rem;
+            border-radius: 30px;
+            margin-left: 0.8rem;
+            font-weight: 400;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1.4rem;
+            margin-bottom: 0.4rem;
+            color: var(--muted);
+        }
+        p { margin-bottom: 1rem; color: var(--muted); text-align: justify; }
+        ul, ol { margin: 0.5rem 0 1rem 1.8rem; list-style-type: disc; color: var(--muted); }
+        li { margin-bottom: 0.3rem; }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0 1.5rem 0;
+            font-size: 0.85rem;
+            font-family: var(--mono);
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .data-table th {
+            background: rgba(251,191,36,0.10);
+            color: var(--amber);
+            padding: 0.6rem 1rem;
+            text-align: left;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            border-bottom: 1px solid var(--dim);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+        .data-table td {
+            padding: 0.6rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            vertical-align: top;
+            color: var(--muted);
+        }
+        .data-table tr:last-child td { border-bottom: none; }
+
+        .evidence-note {
+            background: rgba(125,211,252,0.04);
+            padding: 0.8rem 1.2rem;
+            border-radius: 6px;
+            margin: 0.5rem 0 1rem 0;
+            font-size: 0.85rem;
+            color: var(--sub);
+            border-left: 3px solid var(--blue);
+        }
+        .evidence-note strong { color: var(--blue); }
+
+        .conclusion-box {
+            background: rgba(255,255,255,0.03);
+            border-left: 4px solid var(--amber);
+            padding: 1.5rem 2rem;
+            margin-top: 2rem;
+            border-radius: 12px;
+        }
+        .conclusion-box h2 { border: none; margin-top:0; padding-top:0; }
+        .footnote {
+            font-size: 0.75rem;
+            color: var(--sub);
+            text-align: right;
+            margin-top: 2rem;
+            border-top: 1px solid var(--dim);
+            padding-top: 1rem;
+            font-style: italic;
+        }
+
+        .score-pill {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            font-weight: 500;
+            background: rgba(251,191,36,0.12);
+            color: var(--amber);
+            padding: 0.05rem 0.8rem;
+            border-radius: 30px;
+            margin-left: 0.6rem;
+            letter-spacing: 0.02em;
+        }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.2rem; }
+            h1 { font-size: 1.6rem; padding-left:0.8rem; }
+            h2 { font-size: 1.2rem; }
+            .lang-bar { justify-content: center; }
+            .data-table { font-size: 0.7rem; }
+            .data-table th, .data-table td { padding: 0.4rem 0.6rem; }
+            .conclusion-box { padding: 1rem 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="global-south-diagnosis.html" class="back-link">← 返回首页 / Back to Home</a>
+
+    <div class="lang-bar">
+        <button class="lang-btn" data-lang="zh">中文</button>
+        <button class="lang-btn active" data-lang="en">English</button>
+    </div>
+
+    <!-- ===== ENGLISH ===== -->
+    <div id="en" class="lang-content active">
+        <h1>Iraq: Oil Wealth, Sectarian Capture, and the Machinery of Cost Transfer</h1>
+        <div class="subhead">— A GL Framework Diagnosis of a "Rentier Pseudo‑State"</div>
+
+        <p><strong>Iraq is one of the world's most oil‑rich countries.</strong> Since 2003, it has earned over <strong>$1.2 trillion</strong> in oil revenues. Yet it remains a country where <strong>40% of the population lives below the poverty line</strong>, where <strong>youth unemployment exceeds 35%</strong>, and where <strong>electricity cuts last 12–16 hours a day</strong> in summer temperatures exceeding 50°C.</p>
+
+        <p>The Iraqi state is not poor. It is <strong>captured</strong> — by sectarian parties, armed militias, and an entrenched patronage network that diverts oil wealth into elite pockets while transferring the costs of collapse, waiting, and survival to ordinary citizens.</p>
+
+        <div class="evidence-note">
+            <strong>World Bank (2024)</strong> estimated that <strong>40% of Iraq's oil revenue is lost to corruption, inefficiency, or outright theft</strong>. <strong>Transparency International (2025)</strong> ranks Iraq <strong>154th out of 182 countries</strong> on the Corruption Perceptions Index — among the most corrupt states in the world. <strong>UN OCHA (2025)</strong> reports that <strong>over 3.2 million Iraqis still require humanitarian assistance</strong>, a decade after the fall of ISIS.
+        </div>
+
+        <h2>I. GL Diagnosis: Iraq Under Eight Parameters</h2>
+
+        <h3>1. Waiting Cost <span class="score-pill">1.5/10</span></h3>
+        <p>Waiting in Iraq is not an inconvenience — it is a chronic condition. <strong>Government services are paralysed by bureaucratic overload and intentional delay</strong> (often to extract bribes for expediting). Passport issuance can take <strong>6–18 months</strong>. Court cases drag on for years. Electricity is rationed; households wait <strong>12–16 hours a day</strong> for power in summer. The healthcare system has <strong>waiting lists measured in months for even basic surgeries</strong>; those who can afford it flee to private clinics, leaving the poor to wait indefinitely.</p>
+
+        <h3>2. Repetition Cost <span class="score-pill">2/10</span></h3>
+        <p>Iraq's administrative system is a labyrinth. <strong>Each government ministry operates as a separate fiefdom</strong>, with its own documentation requirements, none of which are recognised by another. Citizens must <strong>repeat the same application across multiple offices</strong> — one for the Ministry of Interior, one for the Ministry of Planning, one for the provincial council. <strong>Digitisation remains a sham</strong>: even when systems exist online, they are not integrated, requiring physical re‑submission at each step. For women and religious minorities, additional layers of "security clearance" from militias add yet another cycle of repetition.</p>
+
+        <h3>3. Collapse Cost <span class="score-pill">1/10</span></h3>
+        <p>Iraq's infrastructure is a textbook case of collapse cost. <strong>Despite $1.2 trillion in oil revenue since 2003</strong>, the country cannot provide stable electricity, clean water, or functional sewage systems. <strong>Basra's water is so contaminated that locals call it "poison water"</strong> — yet the government continues to extract oil from the same region without investing in treatment plants. <strong>Marsh Arabs in the south have been displaced by upstream dams, while oil pollution has destroyed their traditional livelihoods.</strong> Collapse cost here is not accidental — it is the predictable outcome of a state that captures revenue and returns none of it to infrastructure.</p>
+
+        <h3>4. Information Asymmetry Cost <span class="score-pill">2/10</span></h3>
+        <p>Information in Iraq is a commodity, not a right. <strong>Oil contracts with international companies are classified as "state secrets,"</strong> even though they concern public resources. The national budget is published in aggregate form only — <strong>line‑item details are inaccessible</strong>, making it impossible for citizens to trace where revenue goes. <strong>Electricity load‑shedding schedules are not published</strong>; they are announced retroactively, so households cannot plan around blackouts. The state actively withholds information to maintain a monopoly on knowledge — and to preserve the informational advantage that enables rent extraction.</p>
+
+        <h3>5. Psychological Cost <span class="score-pill">1.5/10</span></h3>
+        <p>Iraqis carry the cumulative weight of <strong>four decades of war, sanctions, occupation, civil war, and ISIS</strong>. The post‑2003 sectarian system has institutionalised identity politics: <strong>citizens are assigned to ethno‑sectarian categories that determine their access to jobs, contracts, and security.</strong> This system does not build national identity — it <strong>traumatises entire communities</strong> into permanent insecurity. A 2025 survey by the Iraq Mental Health Network found that <strong>52% of Iraqis reported symptoms of PTSD</strong> — among the highest national rates recorded anywhere. The psychological cost is compounded by <strong>daily exposure to arbitrary arrests, kidnapping for ransom, and militia checkpoints</strong> that turn every commute into a psychological ordeal.</p>
+
+        <h3>6. Opportunity Cost <span class="score-pill">1/10</span></h3>
+        <p>Iraq is a country of wasted potential. <strong>Youth unemployment stands at 35%</strong> — among university graduates, it exceeds <strong>45%</strong>. The country has <strong>one of the highest rates of qualified professionals emigrating in the Middle East</strong>: doctors, engineers, and academics have fled in waves since 2003. A 2025 estimate suggests that <strong>over 500,000 Iraqi professionals now work abroad</strong>, representing a cumulative loss of <strong>$200 billion in human capital</strong>. The state offers no alternative: <strong>the public sector is bloated and underpaid; the private sector is dominated by crony capitalists</strong>. Young Iraqis face a choice: join a militia, bribe your way into a state job, or leave the country. The system is systematically trading a generation's future for the short‑term stability of its patronage networks.</p>
+
+        <h3>7. Transfer Pathway <span class="score-pill">1.5/10</span></h3>
+        <p>Iraq's cost transfer mechanisms are structural and transparent to those who study them:</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>Cost Creator</th><th>Cost Bearer</th><th>Transfer Mechanism</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Political Parties / Militias</td><td>Ordinary Citizens</td><td>Oil revenue is allocated to party‑controlled ministries; militias control checkpoints that "tax" goods and people; security costs are passed on as "protection fees"</td></tr>
+                <tr><td>Corrupt Procurement Officials</td><td>Taxpayers / Infrastructure Users</td><td>Public contracts are inflated by 40–60% — the difference comes out of service quality; citizens pay the collapse cost in the form of non‑existent electricity, clean water, and roads</td></tr>
+                <tr><td>Electricity Ministry</td><td>Households</td><td>Power outages are managed to favour wealthy neighbourhoods and government districts; poorer areas bear the full collapse cost of 20‑hour daily blackouts</td></tr>
+            </tbody>
+        </table>
+
+        <p><strong>The system is designed to extract value and transfer costs outward.</strong> Oil wealth enters the state, is captured by political factions, and what little trickles down is insufficient to cover the cost of collapse. The citizens bear the difference — in waiting, in repeated bureaucratic trips, in psychological trauma, in lost opportunities, and in daily survival costs.</p>
+
+        <h3>8. Closed‑Loop Degree <span class="score-pill">1.5/10</span></h3>
+        <p>Iraq's governance system has <strong>no functioning closed loop</strong>. Elections are held on schedule, but they are <strong>referendums on sectarian quotas, not on governance performance</strong>. The parliament is a theatre of factional bargaining; legislation that threatens patronage is blocked. The judiciary is <strong>captured by the executive and militias</strong> — court decisions that inconvenience powerful actors are simply ignored. Civil society is constrained by <strong>draconian NGO laws and direct militia intimidation</strong>. The media is controlled by party‑owned outlets or silenced by assassination — <strong>since 2003, over 600 journalists have been killed in Iraq</strong>. Without independent oversight, a free press, or functioning courts, <strong>there is no feedback loop to correct the system's cost‑transfer machinery</strong>. The loop is closed because the doors are welded shut by the armed actors who benefit from its dysfunction.</p>
+
+        <h2>II. The Sectarian State: Why Iraq's "Democracy" Is a Patronage Auction</h2>
+        <p>Iraq's post‑2003 constitution was designed as a power‑sharing agreement among sectarian groups. In practice, it became a <strong>permanent auction for state resources</strong>. Each sectarian bloc controls a set of ministries; those ministries are then used to <strong>hire party loyalists, award contracts to crony firms, and funnel oil revenue to the community's armed wings.</strong></p>
+
+        <div class="evidence-note">
+            <strong>International Crisis Group (2025)</strong> notes that <strong>90% of Iraq's state budget goes to salaries, pensions, and operating costs — leaving less than 10% for capital investment.</strong> In other words, the state has become a <strong>payroll machine for patronage, not a provider of public goods.</strong>
+        </div>
+
+        <p>This is not "democracy." It is <strong>systematised rent distribution under a democratic facade.</strong> The cost‑transfer framework explains why Iraq is simultaneously wealthy and impoverished, secure in some neighbourhoods and collapsing in others: <strong>the value never reaches the people; it is redirected at every node of the system.</strong></p>
+
+        <div class="conclusion-box">
+            <h2>Conclusion: Iraq Is Not "Failing" — It Is a System Designed for Elite Capture</h2>
+            <p>Iraq's case demonstrates the GL Framework's core proposition with devastating clarity:</p>
+            <p><strong>A system can generate enormous resource wealth and still transfer all costs to the population if the extraction architecture is more sophisticated than the service‑delivery architecture.</strong></p>
+            <p>Iraq is not a "failing state" — it is a <strong>high‑functioning cost‑transfer machine</strong> that has perfected the art of:</p>
+            <ul>
+                <li><strong>Capturing oil revenue</strong> before it reaches the people.</li>
+                <li><strong>Institutionalising sectarianism</strong> to prevent coalitional demands for public goods.</li>
+                <li><strong>Privatising security</strong> through militias, thereby creating a parallel cost‑transfer system that runs alongside the formal state.</li>
+                <li><strong>Displacing collapse costs</strong> onto infrastructure, healthcare, and education — the three sectors that should be the pillars of a functioning state.</li>
+                <li><strong>Closing the feedback loop</strong> through violence and media control, ensuring no correction mechanism exists.</li>
+            </ul>
+            <p>Iraq's oil wealth is not a curse — it is a <strong>magnifying glass for the system's cost‑transfer machinery</strong>. The more money enters the system, the more sophisticated the capture apparatus becomes, and the more costs are externalised to ordinary Iraqis.</p>
+            <p><strong>Governance legitimacy is not earned by oil revenue. It is earned by how that revenue is transformed into public value.</strong> In Iraq, it is transformed into private wealth and public collapse.</p>
+        </div>
+
+        <div class="footnote">— A GL Framework diagnosis of rentier‑sectarian governance</div>
+    </div>
+
+    <!-- ===== 中文 ===== -->
+    <div id="zh" class="lang-content">
+        <h1>伊拉克：石油财富、教派分肥与成本转移的精密机器</h1>
+        <div class="subhead">—— GL Framework 对一个“食利型伪国家”的诊断</div>
+
+        <p><strong>伊拉克是全球最富产油国之一。</strong>自2003年以来，其石油收入超过<strong>1.2万亿美元</strong>。然而，这个国家仍有<strong>40%的人口生活在贫困线以下</strong>，<strong>青年失业率超过35%</strong>，夏季气温超过50°C时<strong>每日停电长达12至16小时</strong>。</p>
+
+        <p>伊拉克国家并不贫穷。它是<strong>被劫持的</strong>——被教派政党、武装民兵和根深蒂固的庇护网络所劫持，这些势力将石油财富转入精英口袋，同时将崩溃、等待和生存的成本转移给普通公民。</p>
+
+        <div class="evidence-note">
+            <strong>世界银行（2024年）</strong>估计<strong>伊拉克40%的石油收入因腐败、低效或直接盗窃而流失</strong>。<strong>透明国际（2025年）</strong>将伊拉克列为全球清廉指数<strong>第154位（共182个国家）</strong>——全球最腐败的国家之一。<strong>联合国人道事务协调厅（2025年）</strong>报告称，在ISIS覆灭十年后，仍有<strong>超过320万伊拉克人需要人道主义援助</strong>。
+        </div>
+
+        <h2>一、GL诊断：八项参数下的伊拉克</h2>
+
+        <h3>1. 等待成本 <span class="score-pill">1.5/10</span></h3>
+        <p>在伊拉克，等待不是不便——而是一种慢性病。<strong>政府服务因官僚超载和故意拖延而瘫痪</strong>（通常是为了索取加速贿赂）。护照办理可能需要<strong>6至18个月</strong>。法庭案件拖延数年。电力配给：家庭在夏季每天<strong>等待12至16小时</strong>才能通电。医疗系统<strong>即使是基础手术也要排队数月</strong>；有能力的人逃往私人诊所，穷人则无限期等待。</p>
+
+        <h3>2. 重复成本 <span class="score-pill">2/10</span></h3>
+        <p>伊拉克的行政系统是一座迷宫。<strong>每个部委都是一个独立的领地</strong>，有自己的文件要求，互不承认。公民必须在<strong>多个办公室重复提交相同的申请</strong>——内政部一份、规划部一份、省议会一份。<strong>数字化是场骗局</strong>：即使存在在线系统，它们也是割裂的，每一步都需要物理性地重新提交。对于妇女和宗教少数群体，民兵还额外要求"安全审查"，进一步增加了重复循环。</p>
+
+        <h3>3. 崩溃成本 <span class="score-pill">1/10</span></h3>
+        <p>伊拉克的基础设施是崩溃成本的教科书案例。<strong>尽管自2003年以来石油收入达1.2万亿美元</strong>，该国却无法提供稳定的电力、清洁的水或有效的排污系统。<strong>巴士拉的水质污染严重，当地人称之为"毒水"</strong>——但政府继续在同一地区开采石油，却不投资建设水处理厂。<strong>南部的沼泽阿拉伯人因上游水坝而流离失所，石油污染摧毁了他们传统的生计。</strong>这里的崩溃成本并非偶然——而是国家捕获了收入却未将任何部分返还给基础设施的必然结果。</p>
+
+        <h3>4. 信息不对称成本 <span class="score-pill">2/10</span></h3>
+        <p>在伊拉克，信息是商品而非权利。<strong>与国际公司的石油合同被列为"国家机密"</strong>，尽管涉及的是公共资源。国家预算仅以汇总形式公布——<strong>细项明细无法获取</strong>，使公民无法追踪收入的流向。<strong>停电时间表不公布</strong>，而是事后通知，家庭无法提前规划。国家主动扣留信息以维持知识垄断——从而维持使租金提取成为可能的资讯优势。</p>
+
+        <h3>5. 心理成本 <span class="score-pill">1.5/10</span></h3>
+        <p>伊拉克人背负着<strong>四十年战争、制裁、占领、内战和ISIS</strong>的累积重压。2003年后的教派制度将身份政治制度化：<strong>公民被归入族裔-教派类别，这决定了他们获得工作、合同和安全的机会。</strong>这一制度不构建国家认同——它<strong>使整个社群遭受创伤</strong>，陷入永久性不安全。伊拉克心理健康网络2025年的一项调查发现，<strong>52%的伊拉克人有PTSD症状</strong>——全球记录最高的国家之一。心理成本因<strong>日常面对的任意逮捕、绑架勒索和民兵检查站</strong>而加剧，每一次通勤都是一次心理考验。</p>
+
+        <h3>6. 机会成本 <span class="score-pill">1/10</span></h3>
+        <p>伊拉克是一个潜力被浪费的国家。<strong>青年失业率为35%</strong>——大学毕业生中超过<strong>45%</strong>失业。该国是中东地区<strong>合格专业人士移民率最高的国家之一</strong>：自2003年以来，医生、工程师和学者成批逃离。2025年的一项估计显示，<strong>超过50万伊拉克专业人士现在在国外工作</strong>，累计损失<strong>2000亿美元的人力资本</strong>。国家不提供任何替代方案：<strong>公共部门臃肿且低薪；私营部门由裙带资本家主导</strong>。伊拉克年轻人面临的选择是：加入民兵、贿赂进入政府岗位、或离开这个国家。系统正在用一代人的未来换取庇护网络的短期稳定。</p>
+
+        <h3>7. 转移路径 <span class="score-pill">1.5/10</span></h3>
+        <p>伊拉克的成本转移机制是结构性的，对研究者而言清晰可见：</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>成本创造者</th><th>成本承担者</th><th>转移机制</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>政党/民兵</td><td>普通公民</td><td>石油收入分配给政党控制的部委；民兵控制检查站对货物和人员"征税"；安全成本以"保护费"形式转嫁</td></tr>
+                <tr><td>腐败采购官员</td><td>纳税人/基础设施使用者</td><td>公共合同虚高40-60%——差额来自服务质量；公民以不存在的电力、清洁水和道路的形式承担崩溃成本</td></tr>
+                <tr><td>电力部</td><td>家庭</td><td>停电管理偏向富裕社区和政府区；贫困地区承担每日20小时停电的全部崩溃成本</td></tr>
+            </tbody>
+        </table>
+
+        <p><strong>系统的设计就是提取价值并将成本向外转移。</strong>石油财富进入国家，被政治派系捕获，少量流出的资源不足以覆盖崩溃成本。公民承担差额——以等待、重复的官僚往返、心理创伤、失去的机会和每日生存成本的形式。</p>
+
+        <h3>8. 闭环程度 <span class="score-pill">1.5/10</span></h3>
+        <p>伊拉克的治理系统<strong>没有有效的闭环</strong>。选举按时举行，但它们是<strong>关于教派配额的公投，而非关于治理绩效</strong>。议会是派系讨价还价的剧场；威胁到庇护网络的立法被否决。司法机构<strong>被行政和民兵捕获</strong>——对有权势者不利的法院裁决被直接无视。公民社会受<strong>严苛的NGO法和直接的民兵恐吓</strong>所限制。媒体由政党控制的机构掌控或被暗杀压制——<strong>自2003年以来，超过600名记者在伊拉克被杀害</strong>。没有独立监督、新闻自由或有效的法院，<strong>就没有反馈回路来纠正系统的成本转移机制</strong>。闭环之所以封闭，是因为受益于其功能障碍的武装行为者将门焊死了。</p>
+
+        <h2>二、教派国家：为何伊拉克的"民主"是庇护拍卖会</h2>
+        <p>伊拉克2003年后的宪法被设计为教派团体之间的权力分享协议。在实践中，它变成了<strong>对国家资源的永久拍卖</strong>。每个教派集团控制一组部委；这些部委随后被用于<strong>雇佣党派忠诚者、向裙带企业授予合同、将石油收入输送到社群的武装分支</strong>。</p>
+
+        <div class="evidence-note">
+            <strong>国际危机组织（2025年）</strong>指出，<strong>伊拉克90%的国家预算用于工资、养老金和运营成本——留给资本投资的比例不足10%。</strong>换言之，国家已经变成了<strong>庇护的工资发放机器，而非公共物品的提供者。</strong>
+        </div>
+
+        <p>这不是"民主"。这是在<strong>民主外衣下的制度化租金分配。</strong>成本转移框架解释了为什么伊拉克同时富裕又贫穷，某些社区安全而另一些正在崩溃：<strong>价值从未到达人民手中；它在系统的每个节点上被重新导向。</strong></p>
+
+        <div class="conclusion-box">
+            <h2>结论：伊拉克不是"失败"——而是一个为精英捕获而设计的系统</h2>
+            <p>伊拉克的案例以毁灭性的清晰度展示了GL Framework的核心命题：</p>
+            <p><strong>一个系统可以产生巨大的资源财富，但若提取架构比服务交付架构更精密，它仍能将所有成本转移给人口。</strong></p>
+            <p>伊拉克不是一个"失败国家"——它是一个<strong>高功能成本转移机器</strong>，已将以下技艺磨练到极致：</p>
+            <ul>
+                <li><strong>在石油收入到达人民之前将其捕获。</strong></li>
+                <li><strong>将教派主义制度化</strong>以阻止对公共物品的联合需求。</li>
+                <li><strong>通过民兵实现安全私有化</strong>，从而在与正式国家平行的轨道上建立了一个成本转移系统。</li>
+                <li><strong>将崩溃成本转移到基础设施、医疗和教育</strong>——这三个本应成为功能国家的支柱的部门。</li>
+                <li><strong>通过暴力和媒体管制关闭反馈回路</strong>，确保不存在纠正机制。</li>
+            </ul>
+            <p>伊拉克的石油财富不是诅咒——它是<strong>系统成本转移机器的放大镜</strong>。进入系统的钱越多，捕获装置就越精密，成本就越被外部化到普通伊拉克人身上。</p>
+            <p><strong>治理的正当性不是由石油收入赢得的。而是由如何将收入转化为公共价值赢得的。</strong>在伊拉克，它被转化为私人财富和公共崩溃。</p>
+        </div>
+
+        <div class="footnote">—— GL Framework 对食利-教派型治理的诊断</div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const btns = document.querySelectorAll('.lang-btn');
+        const contents = { zh: document.getElementById('zh'), en: document.getElementById('en') };
+        function switchLang(lang) {
+            for (let key in contents) {
+                contents[key].classList.remove('active');
+            }
+            if (contents[lang]) contents[lang].classList.add('active');
+            btns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
+            if (history.pushState) history.pushState(null, '', '#' + lang);
+        }
+        btns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const lang = this.dataset.lang;
+                if (lang) switchLang(lang);
+            });
+        });
+        const hash = window.location.hash.replace('#', '');
+        if (hash === 'zh') {
+            switchLang('zh');
+        } else {
+            switchLang('en');
+        }
+        window.addEventListener('hashchange', function() {
+            const newHash = window.location.hash.replace('#', '');
+            if (newHash === 'zh' || newHash === 'en') {
+                switchLang(newHash);
+            } else {
+                switchLang('en');
+            }
+        });
+    })();
+</script>
+</body>
+</html>
