@@ -1,1 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>South Africa · GL Framework Diagnosis · 南非诊断</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #0b1220;
+            --text: #f8fbff;
+            --muted: #c7d2e3;
+            --sub: #9fb0c8;
+            --dim: rgba(255,255,255,.06);
+            --green: #9FE870;
+            --blue: #7DD3FC;
+            --amber: #fbbf24;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --mono: 'DM Mono', monospace;
+            --sans: 'DM Sans', system-ui, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 15px;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--dim);
+            border-radius: 24px;
+            padding: 2.2rem 2.5rem;
+            backdrop-filter: blur(2px);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green);
+            text-decoration: none;
+            font-family: var(--mono);
+            font-size: 13px;
+            letter-spacing: 0.08em;
+            border: 1px solid rgba(159,232,112,0.3);
+            padding: 8px 18px;
+            border-radius: 40px;
+            transition: all 0.2s;
+            margin-bottom: 1.8rem;
+        }
+        .back-link:hover {
+            background: rgba(159,232,112,0.1);
+            border-color: var(--green);
+            transform: translateX(-4px);
+        }
+        .lang-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.6rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--dim);
+            padding-bottom: 0.8rem;
+        }
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-family: var(--mono);
+            font-weight: 500;
+            color: var(--sub);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
+        .lang-btn.active {
+            background: rgba(159,232,112,0.15);
+            border-color: var(--green);
+            color: var(--green);
+        }
+        .lang-content { display: none; animation: fade 0.3s ease; }
+        .lang-content.active { display: block; }
+        @keyframes fade { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
 
+        h1 {
+            font-size: 2.1rem;
+            font-family: var(--serif);
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            border-left: 6px solid var(--amber);
+            padding-left: 1.2rem;
+        }
+        .subhead {
+            font-size: 1rem;
+            color: var(--sub);
+            margin-bottom: 2rem;
+            padding-left: 1.2rem;
+            border-left: 3px solid rgba(251,191,36,0.3);
+            font-style: italic;
+        }
+        h2 {
+            font-size: 1.4rem;
+            font-family: var(--serif);
+            margin-top: 2.2rem;
+            margin-bottom: 0.6rem;
+            color: #eaf6ff;
+            border-bottom: 1px dashed rgba(255,255,255,0.08);
+            padding-bottom: 0.3rem;
+        }
+        h2 .badge {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: rgba(251,191,36,0.15);
+            color: var(--amber);
+            padding: 0.05rem 0.8rem;
+            border-radius: 30px;
+            margin-left: 0.8rem;
+            font-weight: 400;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1.4rem;
+            margin-bottom: 0.4rem;
+            color: var(--muted);
+        }
+        p { margin-bottom: 1rem; color: var(--muted); text-align: justify; }
+        ul, ol { margin: 0.5rem 0 1rem 1.8rem; list-style-type: disc; color: var(--muted); }
+        li { margin-bottom: 0.3rem; }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0 1.5rem 0;
+            font-size: 0.85rem;
+            font-family: var(--mono);
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .data-table th {
+            background: rgba(251,191,36,0.10);
+            color: var(--amber);
+            padding: 0.6rem 1rem;
+            text-align: left;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            border-bottom: 1px solid var(--dim);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+        .data-table td {
+            padding: 0.6rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            vertical-align: top;
+            color: var(--muted);
+        }
+        .data-table tr:last-child td { border-bottom: none; }
+
+        .evidence-note {
+            background: rgba(125,211,252,0.04);
+            padding: 0.8rem 1.2rem;
+            border-radius: 6px;
+            margin: 0.5rem 0 1rem 0;
+            font-size: 0.85rem;
+            color: var(--sub);
+            border-left: 3px solid var(--blue);
+        }
+        .evidence-note strong { color: var(--blue); }
+
+        .conclusion-box {
+            background: rgba(255,255,255,0.03);
+            border-left: 4px solid var(--amber);
+            padding: 1.5rem 2rem;
+            margin-top: 2rem;
+            border-radius: 12px;
+        }
+        .conclusion-box h2 { border: none; margin-top:0; padding-top:0; }
+        .footnote {
+            font-size: 0.75rem;
+            color: var(--sub);
+            text-align: right;
+            margin-top: 2rem;
+            border-top: 1px solid var(--dim);
+            padding-top: 1rem;
+            font-style: italic;
+        }
+
+        .score-pill {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            font-weight: 500;
+            background: rgba(251,191,36,0.12);
+            color: var(--amber);
+            padding: 0.05rem 0.8rem;
+            border-radius: 30px;
+            margin-left: 0.6rem;
+            letter-spacing: 0.02em;
+        }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.2rem; }
+            h1 { font-size: 1.6rem; padding-left:0.8rem; }
+            h2 { font-size: 1.2rem; }
+            .lang-bar { justify-content: center; }
+            .data-table { font-size: 0.7rem; }
+            .data-table th, .data-table td { padding: 0.4rem 0.6rem; }
+            .conclusion-box { padding: 1rem 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="global-south-diagnosis.html" class="back-link">← 返回首页 / Back to Home</a>
+
+    <div class="lang-bar">
+        <button class="lang-btn" data-lang="zh">中文</button>
+        <button class="lang-btn active" data-lang="en">English</button>
+    </div>
+
+    <!-- ===== ENGLISH ===== -->
+    <div id="en" class="lang-content active">
+        <h1>South Africa: The Liberation Movement That Became a Cost‑Transfer Machine</h1>
+        <div class="subhead">— A GL Framework Diagnosis of a "Post‑Apartheid Elite Capture"</div>
+
+        <p><strong>South Africa is the continent's most industrialised economy, yet it also has the world's highest inequality.</strong> Thirty years after the end of apartheid, the African National Congress (ANC) — once the liberation movement that ended white minority rule — has transformed into a <strong>system of elite capture</strong> that transfers costs to the poor while preserving the wealth of a new Black elite.</p>
+
+        <p>The statistics are stark: <strong>unemployment at 35% (youth unemployment over 45%),</strong> <strong>load‑shedding (rolling blackouts) lasting 8–12 hours a day,</strong> <strong>crime rates among the highest in the world,</strong> and <strong>a public health system in collapse</strong>. Meanwhile, the ANC's leadership has become synonymous with <strong>corruption, cronyism, and the diversion of state resources</strong> to private enrichment.</p>
+
+        <div class="evidence-note">
+            <strong>World Bank (2025)</strong> ranks South Africa as the <strong>most unequal country in the world</strong> — with a Gini coefficient of 0.63. <strong>Transparency International (2025)</strong> ranks South Africa <strong>72nd out of 182 countries</strong> — a drop of 30 places since 2010. <strong>Stats SA (2025)</strong> reports that <strong>over 30% of South Africans live in poverty</strong>, with Black Africans disproportionately affected — <strong>60% of Black South Africans live below the poverty line, compared to 8% of whites.</strong>
+        </div>
+
+        <h2>I. GL Diagnosis: South Africa Under Eight Parameters</h2>
+
+        <h3>1. Waiting Cost <span class="score-pill">2/10</span></h3>
+        <p>Waiting in South Africa is a <strong>chronic feature of the post‑apartheid state</strong>. <strong>Public hospitals have waiting lists of 6–18 months for elective surgeries</strong>; emergency rooms are overwhelmed, with <strong>patients waiting 12–24 hours for basic triage</strong>. <strong>Driver's licenses take 3–6 months to issue</strong>; land claims under the restitution programme have been waiting for <strong>over 20 years</strong>. The Department of Home Affairs is notorious for <strong>multi‑day queues and collapsed IT systems</strong>, turning the simple act of obtaining an ID into a weeks‑long ordeal. Waiting cost is the tax the poor pay for a state that no longer delivers services efficiently.</p>
+
+        <h3>2. Repetition Cost <span class="score-pill">2/10</span></h3>
+        <p>South Africa's bureaucracy is a <strong>fragmented maze</strong>. Citizens must <strong>repeat the same application across multiple departments</strong> — for social grants, housing, and employment — because <strong>databases are not integrated and never have been</strong>. The <strong>Department of Home Affairs, Social Development, and SARS (tax authority)</strong> operate as <strong>separate kingdoms</strong>, each demanding original documents, each refusing to accept the others' verification. For rural South Africans, the repetition cost is multiplied by distance: they must <strong>travel hundreds of kilometres, repeat the same forms, wait in the same queues, only to be told to try again next month</strong>.</p>
+
+        <h3>3. Collapse Cost <span class="score-pill">1.5/10</span></h3>
+        <p>South Africa's collapse cost is most visible in its <strong>energy crisis</strong>. <strong>Eskom, the state‑owned electricity utility, has failed the country</strong> — load‑shedding has become a permanent feature of life, with <strong>Stage 6 blackouts</strong> (10–12 hours without power) now routine. The collapse cost is borne by <strong>small businesses that cannot operate, hospitals that cannot keep equipment running, and households that cannot store food</strong>. Water infrastructure is also collapsing; <strong>communities in Johannesburg and Durban face weeks without clean water</strong>. The collapse cost is compounded by <strong>state capture</strong> — the very institutions meant to maintain infrastructure were looted under the Zuma administration and have never recovered.</p>
+
+        <h3>4. Information Asymmetry Cost <span class="score-pill">2/10</span></h3>
+        <p>South Africa has an <strong>active press and a constitutional right to information</strong>, but the state has become expert at <strong>weaponising delays, redaction, and technical obfuscation</strong>. The <strong>Zondo Commission</strong> exposed massive corruption, but many of its recommendations remain unimplemented. <strong>State‑owned enterprises like Eskom and Transnet</strong> have been notoriously opaque; their procurement records are <strong>inaccessible or heavily redacted</strong>. Citizens and civil society organisations <strong>cannot track the flow of public funds</strong> — a condition that enables <strong>corruption to continue unpunished</strong>.</p>
+
+        <h3>5. Psychological Cost <span class="score-pill">1.5/10</span></h3>
+        <p>South Africa's psychological cost is <strong>rooted in the broken promise of the "rainbow nation."</strong> The euphoria of 1994 has given way to <strong>bitterness, disillusionment, and despair</strong>. A 2025 survey by the South African Depression and Anxiety Group (SADAG) found that <strong>45% of South Africans reported symptoms of anxiety and depression</strong> — a rate that has doubled since 2020. <strong>Crime is a constant psychological burden:</strong> South Africa has <strong>one of the highest murder rates in the world (over 42 per 100,000)</strong>, and <strong>fear of violence shapes every aspect of daily life</strong> — from how people commute to where they send their children to school. The psychological cost is not abstract; it is written in the <strong>gates, walls, and private security forces that have transformed urban space into a fortress.</strong></p>
+
+        <h3>6. Opportunity Cost <span class="score-pill">1/10</span></h3>
+        <p>South Africa's opportunity cost is <strong>generational and devastating</strong>. <strong>Youth unemployment exceeds 45%, and among Black youth, it exceeds 55%.</strong> The country has lost a <strong>generation of skilled professionals</strong> to emigration — doctors, engineers, teachers, and IT specialists have left in droves. <strong>Brain drain</strong> is not just a loss of talent; it is a <strong>loss of the tax base that could rebuild the state</strong>. Young South Africans face a stark choice: <strong>stay in a collapsing economy, or leave for Australia, the UK, or Canada.</strong> The system is not investing in the future — it is <strong>consuming its own seed corn</strong>.</p>
+
+        <h3>7. Transfer Pathway <span class="score-pill">1.5/10</span></h3>
+        <p>South Africa's cost transfer mechanisms are well‑documented:</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>Cost Creator</th><th>Cost Bearer</th><th>Transfer Mechanism</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>ANC Elite / Political Networks</td><td>Taxpayers / Service Recipients</td><td>State capture diverted billions from state‑owned enterprises; the cost of corruption is passed on as higher electricity prices, water shortages, and service collapse</td></tr>
+                <tr><td>Eskom Management</td><td>Households &amp; Businesses</td><td>Load‑shedding is a cost transfer from the state to the consumer — businesses bear the collapse cost of energy insecurity, while the poor pay for candles and diesel generators</td></tr>
+                <tr><td>Public Sector Unions</td><td>Taxpayers</td><td>Wage bills have ballooned while service delivery collapses — the cost is transferred from the state's budget to the population's quality of life</td></tr>
+            </tbody>
+        </table>
+
+        <p><strong>The transfer pathway is explicit: the state extracts taxes, but does not deliver services.</strong> The poor pay taxes (through VAT and fuel levies) but receive <strong>failing schools, collapsing hospitals, and a state that cannot keep the lights on</strong>. The elite capture the revenue, and the population bears the collapse.</p>
+
+        <h3>8. Closed‑Loop Degree <span class="score-pill">2/10</span></h3>
+        <p>South Africa has a <strong>functioning constitution and judicial system</strong>, but the feedback loop is <strong>increasingly blocked by political capture and institutional decay</strong>. <strong>Elections are still held, but voter turnout has declined steadily</strong> — from 89% in 1994 to below 60% in 2024. The <strong>public protector</strong> and other oversight bodies have been <strong>weakened by political interference and lack of funding</strong>. The <strong>Zondo Commission</strong> exposed state capture, but <strong>few prosecutions have followed</strong>. The loop is <strong>theoretically open, but practically clogged</strong> — feedback exists, but it no longer produces correction.</p>
+
+        <h2>II. The ANC's Transformation: From Liberation to Capture</h2>
+        <p>The African National Congress was once the movement of Nelson Mandela, Oliver Tambo, and the struggle against apartheid. Today, it is a <strong>patronage network</strong> that has <strong>become indistinguishable from the state</strong>.</p>
+
+        <div class="evidence-note">
+            <strong>South African Institute of Race Relations (2025)</strong> notes that <strong>the state's wage bill has grown to over 30% of GDP, while capital spending has fallen to record lows.</strong> The state has become a <strong>jobs programme for ANC loyalists, not a service‑delivery apparatus for citizens.</strong>
+        </div>
+
+        <p>The transformation is a classic GL Framework pattern:</p>
+        <ul>
+            <li><strong>The ANC captured the state</strong> after 1994, but instead of returning value to the majority, it <strong>transferred costs to the poor</strong> — through corruption, inefficiency, and collusion with capital.</li>
+            <li><strong>The "rainbow nation" myth</strong> disguised this cost transfer, allowing the elite to extract resources while <strong>managing public expectations through rhetoric</strong>.</li>
+            <li><strong>Feedback is broken</strong> because the ANC controls the state machinery, the media narrative, and the security apparatus — making it difficult for citizens to demand correction.</li>
+        </ul>
+
+        <div class="conclusion-box">
+            <h2>Conclusion: South Africa Is a Case of Elite Capture — Not a Democratic Failure, but a Democratic Betrayal</h2>
+            <p>South Africa's case demonstrates the GL Framework's core proposition: <strong>a liberation movement that captured the state, but failed to return value to the people, has become a cost‑transfer machine.</strong></p>
+            <p>The eight parameters show a system that:</p>
+            <ul>
+                <li><strong>Extracts taxes but collapses infrastructure</strong> — the poor pay for a state that fails them.</li>
+                <li><strong>Maintains democratic forms while elite capture undermines governance</strong> — elections are held, but they no longer enable correction.</li>
+                <li><strong>Transfers the costs of state collapse to the poorest citizens</strong> — through load‑shedding, water shortages, and crime.</li>
+                <li><strong>Closes the feedback loop through political capture and media management</strong> — dissent is managed, not resolved.</li>
+            </ul>
+            <p>South Africa is not a "failed state." It is a <strong>state that functions well for its elite and fails systematically for its majority.</strong> The liberation movement has become the cost‑transfer mechanism it was supposed to dismantle.</p>
+            <p><strong>Governance legitimacy is not earned by historical struggle. It is earned by what you do with power.</strong> The ANC has had power for thirty years — and it has used it to transfer costs to the poor and value to itself.</p>
+        </div>
+
+        <div class="footnote">— A GL Framework diagnosis of liberation‑movement‑turned‑elite‑capture</div>
+    </div>
+
+    <!-- ===== 中文 ===== -->
+    <div id="zh" class="lang-content">
+        <h1>南非：从解放运动到成本转移机器的转变</h1>
+        <div class="subhead">—— GL Framework 对一个"后种族隔离精英捕获"的诊断</div>
+
+        <p><strong>南非是非洲大陆最工业化的经济体，却也是全球最不平等的国家。</strong>种族隔离结束三十年后，非国大——曾经结束白人少数统治的解放运动——已转变为<strong>精英捕获系统</strong>，将成本转移给穷人，同时保留新黑人精英的财富。</p>
+
+        <p>数据触目惊心：<strong>失业率35%（青年失业率超过45%），</strong><strong>每日限电8至12小时，</strong><strong>犯罪率全球最高之一，</strong><strong>公共卫生系统濒临崩溃。</strong>与此同时，非国大领导层已成为<strong>腐败、裙带关系和国家资源转移的代名词</strong>。</p>
+
+        <div class="evidence-note">
+            <strong>世界银行（2025年）</strong>将南非列为<strong>全球最不平等的国家</strong>——基尼系数0.63。<strong>透明国际（2025年）</strong>将南非列为<strong>全球第72位（共182个国家）</strong>——自2010年以来下降了30位。<strong>南非统计局（2025年）</strong>报告称<strong>超过30%的南非人生活在贫困中</strong>，黑人比例尤其高——<strong>60%的黑人南非人生活在贫困线以下，而白人仅有8%。</strong>
+        </div>
+
+        <h2>一、GL诊断：八项参数下的南非</h2>
+
+        <h3>1. 等待成本 <span class="score-pill">2/10</span></h3>
+        <p>在南非，等待是<strong>后种族隔离国家的慢性病</strong>。<strong>公立医院择期手术等待名单长达6至18个月</strong>；急诊室人满为患，<strong>患者等待12至24小时才能进行基本分诊</strong>。<strong>驾照发放需3至6个月</strong>；土地恢复计划下的索赔已等待<strong>超过20年</strong>。内政部以<strong>数日排队和瘫痪的IT系统</strong>著称，使获取身份证这一简单行为变成数周的磨难。等待成本是穷人为一个不再高效提供服务的国家付出的税负。</p>
+
+        <h3>2. 重复成本 <span class="score-pill">2/10</span></h3>
+        <p>南非的官僚机构是一个<strong>碎片化的迷宫</strong>。公民必须在<strong>多个部门重复提交相同的申请</strong>——社会补助、住房和就业——因为<strong>数据库从未整合</strong>。<strong>内政部、社会发展部和税务局</strong>如同<strong>独立的王国</strong>，各自要求原始文件，互不承认对方的验证。对农村南非人而言，重复成本因距离而倍增：他们必须<strong>跋涉数百公里，重复填写相同的表格，在相同的队列中等待，然后被告知下个月再来</strong>。</p>
+
+        <h3>3. 崩溃成本 <span class="score-pill">1.5/10</span></h3>
+        <p>南非的崩溃成本在<strong>能源危机</strong>中最为明显。<strong>国有电力公司Eskom辜负了这个国家</strong>——限电已成为生活的永久特征，<strong>6级停电</strong>（每天10至12小时无电）已成常态。崩溃成本由<strong>无法运营的小企业、无法维持设备运行的医院、无法储存食品的家庭</strong>承担。供水基础设施也在崩溃；<strong>约翰内斯堡和德班的社区面临数周无清洁水的困境</strong>。崩溃成本因<strong>国家捕获</strong>而加剧——本应维护基础设施的机构在祖马政府时期被洗劫，至今未恢复。</p>
+
+        <h3>4. 信息不对称成本 <span class="score-pill">2/10</span></h3>
+        <p>南非拥有<strong>活跃的新闻界和宪法保障的信息权</strong>，但国家已成为<strong>拖延、删改和技术性混淆的专家</strong>。<strong>宗多委员会</strong>揭露了大规模腐败，但其许多建议仍未实施。<strong>Eskom和Transnet等国有企业</strong>以不透明著称；其采购记录<strong>无法获取或被大量删改</strong>。公民和公民社会组织<strong>无法追踪公共资金的流向</strong>——这为<strong>腐败持续不受惩罚</strong>创造了条件。</p>
+
+        <h3>5. 心理成本 <span class="score-pill">1.5/10</span></h3>
+        <p>南非的心理成本<strong>根植于"彩虹之国"承诺的破碎</strong>。1994年的狂喜已让位于<strong>苦涩、幻灭和绝望</strong>。南非抑郁与焦虑组织2025年的一项调查发现，<strong>45%的南非人报告有焦虑和抑郁症状</strong>——自2020年以来翻倍。<strong>犯罪是持续的心理负担：</strong>南非是全球<strong>谋杀率最高的国家之一（每10万人超过42起）</strong>，<strong>对暴力的恐惧塑造了日常生活的方方面面</strong>——从通勤方式到孩子上学的选择。心理成本并非抽象概念；它体现在<strong>将城市空间变为堡垒的大门、围墙和私人保安力量中。</strong></p>
+
+        <h3>6. 机会成本 <span class="score-pill">1/10</span></h3>
+        <p>南非的机会成本是<strong>代际性的、毁灭性的</strong>。<strong>青年失业率超过45%，黑人青年失业率超过55%。</strong>该国因移民失去了<strong>一整代技术专业人员</strong>——医生、工程师、教师和IT专家大量离开。<strong>人才流失</strong>不仅是人才的损失；也是<strong>能够重建国家的税基的损失</strong>。南非年轻人面临严峻选择：<strong>留在崩溃的经济中，还是前往澳大利亚、英国或加拿大。</strong>系统不在投资未来——而是在<strong>消耗自己的种子粮</strong>。</p>
+
+        <h3>7. 转移路径 <span class="score-pill">1.5/10</span></h3>
+        <p>南非的成本转移机制有充分记录：</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>成本创造者</th><th>成本承担者</th><th>转移机制</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>非国大精英/政治网络</td><td>纳税人/服务接受者</td><td>国家捕获从国有企业转移了数十亿；腐败成本以更高的电价、水资源短缺和服务崩溃的形式转嫁</td></tr>
+                <tr><td>Eskom管理层</td><td>家庭与企业</td><td>限电是国家向消费者转移成本——企业承担能源不安全的崩溃成本，而穷人支付蜡烛和发电机的费用</td></tr>
+                <tr><td>公共部门工会</td><td>纳税人</td><td>工资账单膨胀而服务交付崩溃——成本从国家预算转移到人口的生活质量</td></tr>
+            </tbody>
+        </table>
+
+        <p><strong>转移路径是明确的：国家征税，但不提供服务。</strong>穷人缴税（通过增值税和燃油税），但得到的却是<strong>失败的学校、崩溃的医院和一个无法保持灯亮的国家</strong>。精英捕获收入，人口承担崩溃。</p>
+
+        <h3>8. 闭环程度 <span class="score-pill">2/10</span></h3>
+        <p>南非拥有<strong>有效的宪法和司法系统</strong>，但反馈回路<strong>日益被政治捕获和制度衰败所阻塞</strong>。<strong>选举仍在举行，但投票率持续下降</strong>——从1994年的89%降至2024年的60%以下。<strong>公共保护官</strong>和其他监督机构因<strong>政治干预和资金不足</strong>而被削弱。<strong>宗多委员会</strong>揭露了国家捕获，但<strong>后续起诉寥寥无几</strong>。回路<strong>理论上是开放的，但实际已堵塞</strong>——反馈存在，但不再产生纠正。</p>
+
+        <h2>二、非国大的转变：从解放到捕获</h2>
+        <p>非洲人国民大会曾经是纳尔逊·曼德拉、奥利弗·坦博和反种族隔离斗争的运动。今天，它是一个<strong>庇护网络</strong>，已<strong>与国家难以区分</strong>。</p>
+
+        <div class="evidence-note">
+            <strong>南非种族关系研究所（2025年）</strong>指出，<strong>国家工资账单已增长到GDP的30%以上，而资本支出降至历史最低点。</strong>国家已成为<strong>非国大忠诚者的就业计划，而非公民的服务交付机构。</strong>
+        </div>
+
+        <div class="conclusion-box">
+            <h2>结论：南非是精英捕获的案例——不是民主失败，而是民主的背叛</h2>
+            <p>南非的案例展示了GL Framework的核心命题：<strong>一个捕获了国家却未能将价值返还给人民的解放运动，已成为成本转移机器。</strong></p>
+            <p>八项参数展示了一个这样的系统：</p>
+            <ul>
+                <li><strong>征税却让基础设施崩溃</strong>——穷人为辜负他们的国家付出代价。</li>
+                <li><strong>维持民主形式而精英捕获破坏治理</strong>——选举仍在举行，但不再产生纠正。</li>
+                <li><strong>将国家崩溃的成本转移给最贫困的公民</strong>——通过限电、缺水和犯罪。</li>
+                <li><strong>通过政治捕获和媒体管理关闭反馈回路</strong>——异议被管理，而非解决。</li>
+            </ul>
+            <p>南非不是一个"失败国家"。它是一个<strong>为其精英运转良好、为其多数系统性失败的国家。</strong>解放运动已变成它本应 dismantle 的成本转移机制。</p>
+            <p><strong>治理的正当性不是由历史斗争赢得的。而是由你如何运用权力赢得的。</strong>非国大掌握权力已三十年——它将其用于将成本转移给穷人、将价值留给自身。</p>
+        </div>
+
+        <div class="footnote">—— GL Framework 对解放运动转变为精英捕获的诊断</div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const btns = document.querySelectorAll('.lang-btn');
+        const contents = { zh: document.getElementById('zh'), en: document.getElementById('en') };
+        function switchLang(lang) {
+            for (let key in contents) {
+                contents[key].classList.remove('active');
+            }
+            if (contents[lang]) contents[lang].classList.add('active');
+            btns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
+            if (history.pushState) history.pushState(null, '', '#' + lang);
+        }
+        btns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const lang = this.dataset.lang;
+                if (lang) switchLang(lang);
+            });
+        });
+        const hash = window.location.hash.replace('#', '');
+        if (hash === 'zh') {
+            switchLang('zh');
+        } else {
+            switchLang('en');
+        }
+        window.addEventListener('hashchange', function() {
+            const newHash = window.location.hash.replace('#', '');
+            if (newHash === 'zh' || newHash === 'en') {
+                switchLang(newHash);
+            } else {
+                switchLang('en');
+            }
+        });
+    })();
+</script>
+</body>
+</html>
