@@ -1,1 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Afghanistan · GL Framework Diagnosis · 阿富汗诊断</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #0b1220;
+            --bg2: #0d1526;
+            --text: #f8fbff;
+            --muted: #c7d2e3;
+            --sub: #9fb0c8;
+            --dim: rgba(255,255,255,.06);
+            --green: #9FE870;
+            --blue: #7DD3FC;
+            --amber: #fbbf24;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --mono: 'DM Mono', monospace;
+            --sans: 'DM Sans', system-ui, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 15px;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--dim);
+            border-radius: 24px;
+            padding: 2.2rem 2.5rem;
+            backdrop-filter: blur(2px);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green);
+            text-decoration: none;
+            font-family: var(--mono);
+            font-size: 13px;
+            letter-spacing: 0.08em;
+            border: 1px solid rgba(159,232,112,0.3);
+            padding: 8px 18px;
+            border-radius: 40px;
+            transition: all 0.2s;
+            margin-bottom: 1.8rem;
+        }
+        .back-link:hover {
+            background: rgba(159,232,112,0.1);
+            border-color: var(--green);
+            transform: translateX(-4px);
+        }
+        .lang-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.6rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--dim);
+            padding-bottom: 0.8rem;
+        }
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-family: var(--mono);
+            font-weight: 500;
+            color: var(--sub);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
+        .lang-btn.active {
+            background: rgba(159,232,112,0.15);
+            border-color: var(--green);
+            color: var(--green);
+        }
+        .lang-content { display: none; animation: fade 0.3s ease; }
+        .lang-content.active { display: block; }
+        @keyframes fade { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
 
+        h1 {
+            font-size: 2.1rem;
+            font-family: var(--serif);
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            border-left: 6px solid var(--amber);
+            padding-left: 1.2rem;
+        }
+        .subhead {
+            font-size: 1rem;
+            color: var(--sub);
+            margin-bottom: 2rem;
+            padding-left: 1.2rem;
+            border-left: 3px solid rgba(251,191,36,0.3);
+            font-style: italic;
+        }
+        h2 {
+            font-size: 1.4rem;
+            font-family: var(--serif);
+            margin-top: 2.2rem;
+            margin-bottom: 0.6rem;
+            color: #eaf6ff;
+            border-bottom: 1px dashed rgba(255,255,255,0.08);
+            padding-bottom: 0.3rem;
+        }
+        h2 .badge {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: rgba(251,191,36,0.15);
+            color: var(--amber);
+            padding: 0.05rem 0.8rem;
+            border-radius: 30px;
+            margin-left: 0.8rem;
+            font-weight: 400;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1.4rem;
+            margin-bottom: 0.4rem;
+            color: var(--muted);
+        }
+        p { margin-bottom: 1rem; color: var(--muted); text-align: justify; }
+        ul, ol { margin: 0.5rem 0 1rem 1.8rem; list-style-type: disc; color: var(--muted); }
+        li { margin-bottom: 0.3rem; }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0 1.5rem 0;
+            font-size: 0.85rem;
+            font-family: var(--mono);
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .data-table th {
+            background: rgba(251,191,36,0.10);
+            color: var(--amber);
+            padding: 0.6rem 1rem;
+            text-align: left;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            border-bottom: 1px solid var(--dim);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+        .data-table td {
+            padding: 0.6rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            vertical-align: top;
+            color: var(--muted);
+        }
+        .data-table tr:last-child td { border-bottom: none; }
+
+        .highlight-box {
+            background: rgba(251,191,36,0.05);
+            border-left: 4px solid var(--amber);
+            padding: 1.2rem 1.8rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+        .highlight-box .big {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--amber);
+        }
+        .evidence-note {
+            background: rgba(125,211,252,0.04);
+            padding: 0.8rem 1.2rem;
+            border-radius: 6px;
+            margin: 0.5rem 0 1rem 0;
+            font-size: 0.85rem;
+            color: var(--sub);
+            border-left: 3px solid var(--blue);
+        }
+        .evidence-note strong { color: var(--blue); }
+
+        .conclusion-box {
+            background: rgba(255,255,255,0.03);
+            border-left: 4px solid var(--amber);
+            padding: 1.5rem 2rem;
+            margin-top: 2rem;
+            border-radius: 12px;
+        }
+        .conclusion-box h2 { border: none; margin-top:0; padding-top:0; }
+        .footnote {
+            font-size: 0.75rem;
+            color: var(--sub);
+            text-align: right;
+            margin-top: 2rem;
+            border-top: 1px solid var(--dim);
+            padding-top: 1rem;
+            font-style: italic;
+        }
+
+        .score-pill {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            font-weight: 500;
+            background: rgba(251,191,36,0.12);
+            color: var(--amber);
+            padding: 0.05rem 0.8rem;
+            border-radius: 30px;
+            margin-left: 0.6rem;
+            letter-spacing: 0.02em;
+        }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.2rem; }
+            h1 { font-size: 1.6rem; padding-left:0.8rem; }
+            h2 { font-size: 1.2rem; }
+            .lang-bar { justify-content: center; }
+            .data-table { font-size: 0.7rem; }
+            .data-table th, .data-table td { padding: 0.4rem 0.6rem; }
+            .highlight-box { padding: 0.8rem 1rem; }
+            .conclusion-box { padding: 1rem 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="global-south-diagnosis.html" class="back-link">← 返回首页 / Back to Home</a>
+
+    <div class="lang-bar">
+        <button class="lang-btn" data-lang="zh">中文</button>
+        <button class="lang-btn active" data-lang="en">English</button>
+    </div>
+
+    <!-- ===== ENGLISH ===== -->
+    <div id="en" class="lang-content active">
+        <h1>Afghanistan: When "Ending War" Becomes the Only Legitimacy — and Governance Becomes a Cost‑Transfer Machine</h1>
+        <div class="subhead">— A GL Framework Diagnosis of a "Post‑Conflict Pseudo‑State"</div>
+
+        <p><strong>In August 2021, the Taliban returned to power in Kabul, ending twenty years of US‑backed military presence.</strong> The world framed this as the end of a war. But for ordinary Afghans, what followed was not peace — it was the beginning of a new, more systematic form of dispossession.</p>
+
+        <p>The Taliban's claim to legitimacy rests almost entirely on <strong>one achievement: ending the war.</strong> Yet beyond that single point, the regime has shown little interest in returning value to the population. Instead, it has built a <strong>governance model that explicitly and institutionally transfers costs — time, opportunity, psychological security, and survival itself — to the most vulnerable: women, ethnic minorities, rural farmers, and the young.</strong></p>
+
+        <div class="evidence-note">
+            <strong>UNDP (2024)</strong> estimated that Afghanistan's GDP contracted by up to 35% since the Taliban takeover, with <strong>over 85% of the population living below the poverty line</strong>. <strong>UN OCHA (2025)</strong> reported that <strong>23.7 million Afghans — more than half the population — require humanitarian assistance</strong>, while <strong>Human Rights Watch (2025)</strong> documented over 80 decrees restricting women's rights since 2021, effectively erasing women from public life.
+        </div>
+
+        <h2>I. GL Diagnosis: Afghanistan Under Eight Parameters</h2>
+
+        <h3>1. Waiting Cost <span class="score-pill">0.5/10</span></h3>
+        <p>Government services in Taliban‑controlled Afghanistan are characterised by chronic unpredictability. Passport and ID applications — once processed in weeks — now stretch to months, with no transparent queuing system. International bank transfers, crippled by sanctions and the central bank's frozen assets, can take indefinite periods; many Afghans wait weeks for remittances that never arrive. Humanitarian aid distribution points often see queues lasting hours, only for supplies to run out before reaching the end of the line. Waiting is no longer a cost — it has become a lottery.</p>
+
+        <h3>2. Repetition Cost <span class="score-pill">1.5/10</span></h3>
+        <p>Afghans navigate a maze of overlapping authorities: the Ministry of Interior, the religious police (Ministry of Propagation of Virtue and Prevention of Vice), and local tribal councils each demand separate, often contradictory documentation. Women without a male guardian (mahram) must obtain "guardian permission" for nearly every transaction — effectively requiring them to repeat the entire process twice. International NGOs report that project approvals require simultaneous sign‑offs from both Taliban ministries and tribal elders; when one authority refuses to recognise the other's stamp, the process restarts from zero.</p>
+
+        <h3>3. Collapse Cost <span class="score-pill">0.5/10</span></h3>
+        <p>Afghanistan's infrastructure is in a state of near‑permanent collapse. Power outages last days, water supplies rupture weekly, and telecommunications fail without warning. The banking system — once fragile but functional — is now effectively paralysed: deposits cannot be fully withdrawn, private banks have collapsed, and there is no deposit insurance. The healthcare system, having lost 80% of its international funding, routinely turns away patients due to lack of medicines; routine surgeries have waiting lists measured not in weeks but in "indefinite." Collapse cost here is measured in lives.</p>
+
+        <h3>4. Information Asymmetry Cost <span class="score-pill">2/10</span></h3>
+        <p>Under the Taliban, official policies are communicated orally, rarely in writing. Decrees circulate through mosque announcements and radio broadcasts, but no central, accessible registry exists. Citizens rely on a cottage industry of "information brokers" — paid intermediaries who interpret rules — creating a hidden tax on access to basic knowledge. Foreign exchange rates, commodity prices, and security updates are tightly controlled; market traders make decisions based on rumour, not data. International sanctions have further isolated Afghanistan from global price signals, meaning farmers plant crops based on last year's prices — and often harvest at a loss.</p>
+
+        <h3>5. Psychological Cost <span class="score-pill">1/10</span></h3>
+        <p>Perhaps no parameter captures Afghanistan's crisis more starkly than psychological cost. Women have been erased from education, employment, and public space; secondary schools for girls remain closed for a third consecutive year, and university attendance is effectively banned. A 2025 survey by the Afghan Women's Network found that 92% of women reported feeling "constant fear" when leaving home — not fear of crime, but fear of state‑sanctioned harassment.</p>
+        <p>Former government employees, journalists, and minority Hazaras live under the shadow of arrest or forced disappearance. The cumulative effect is learned helplessness on a national scale: citizens describe a pervasive belief that "effort has no reward," because any achievement can be undone by a new decree. The psychological cost is not a by‑product — it is a policy tool.</p>
+        <div class="evidence-note">
+            <strong>International Rescue Committee (2025)</strong> reported that <strong>67% of Afghan adults exhibited symptoms of severe depression</strong> — among the highest rates globally. Suicide rates, though underreported, have risen sharply, particularly among young women.
+        </div>
+
+        <h3>6. Opportunity Cost <span class="score-pill">0.5/10</span></h3>
+        <p>Afghanistan's demographic profile is extraordinarily young — over 60% of the population is under 25. Yet this potential is being systematically squandered. Female university students — estimated at over 100,000 before 2021 — have been locked out of higher education. Young men face a job market where even basic employment requires connections to the Taliban apparatus; the youth unemployment rate exceeds 70% by most estimates.</p>
+        <p>Agriculture — Afghanistan's economic backbone — is trapped: high‑value crops like saffron and dried fruits cannot secure international certification or transport routes, while the country's opium economy (the world's largest) continues to thrive in parallel, despite official bans. The opportunity cost is generational: an entire cohort is growing up without skills, without income, and without hope. The system offers no pathway to economic participation — only survival.</p>
+
+        <h3>7. Transfer Pathway <span class="score-pill">1/10</span></h3>
+        <p>Afghanistan's cost transfer mechanisms are brutally transparent:</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>Cost Creator</th><th>Cost Bearer</th><th>Transfer Mechanism</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Taliban Leadership</td><td>Rural &amp; Minority Populations</td><td>International aid is channelled through Taliban ministries, which allocate resources to loyalist regions; ethnic Hazaras and Tajiks receive systematically less support</td></tr>
+                <tr><td>Currency &amp; Sanctions Regime</td><td>Small Importers / Consumers</td><td>Foreign exchange shortages are passed on via volatile exchange rates; central bank bans on dollar circulation force holders to accept devaluation losses</td></tr>
+                <tr><td>Religious Police</td><td>Women</td><td>Each decree restricting women's mobility or employment is framed as "religious duty" — but functionally transfers women's economic independence and personal security to the state's control apparatus</td></tr>
+            </tbody>
+        </table>
+
+        <p>The Taliban consistently externalises blame for Afghanistan's economic collapse onto international sanctions. While sanctions are indeed a factor, this narrative conveniently obscures the regime's own predatory taxation, extortion at checkpoints, and misallocation of scarce resources. By making the "external enemy" responsible for hunger, the regime insulates itself from domestic accountability.</p>
+
+        <h3>8. Closed‑Loop Degree <span class="score-pill">1/10</span></h3>
+        <p>Afghanistan under the Taliban has no meaningful feedback loop. Decision‑making is entirely opaque, concentrated in the hands of the supreme leader and a small council of religious scholars. There are no elections, no parliament, no independent judiciary, no free press. The few "consultative" gatherings (shuras) are appointed, not elected, and serve only to ratify decrees.</p>
+        <p>International monitoring organisations have been expelled or severely restricted. Domestic reporting is censored; journalists who report on famine or corruption face arrest. When no one can complain, and no one can verify, the system becomes immune to correction. Errors compound, corruption festers, and the population bears the accumulating cost — while the regime's only "feedback" is the occasional armed uprising, which is met with brute force. The loop is closed because the regime has locked the door from the inside.</p>
+
+        <h2>II. The Taliban's Governance Model: Stability as a Single‑Point Failure</h2>
+        <p>The Taliban's entire legitimacy rests on the proposition that they ended forty years of war. But "ending war" is a negative achievement — it defines what the regime is <em>not</em> (a combatant), not what it <em>is</em> (a governing authority).</p>
+        <p>When judged by positive governance criteria — delivering services, enabling economic participation, protecting rights — the Taliban fails on every dimension. The regime's strategy is to systematically transfer all operating costs of governance to those who cannot fight back:</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>Governance Function</th><th>Who Bears the Cost</th><th>Result</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Education</td><td>Girls &amp; Young Women</td><td>Lost generation of female professionals</td></tr>
+                <tr><td>Banking &amp; Currency</td><td>Small Traders &amp; Remittance Recipients</td><td>Economic paralysis; reliance on informal, extortionate money‑changers</td></tr>
+                <tr><td>Aid Distribution</td><td>Rural Poor / Ethnic Minorities</td><td>Famine concentrated in non‑Pashtun regions</td></tr>
+                <tr><td>Law Enforcement</td><td>All Citizens (especially non‑compliant)</td><td>Arbitrary arrests; no due process; everyone lives in fear</td></tr>
+            </tbody>
+        </table>
+
+        <div class="evidence-note">
+            <strong>Amnesty International (2025)</strong> noted that the Taliban's legal system is "a parallel universe of decrees that override any formal law," with <strong>no independent oversight, no appellate process, and no recourse for victims</strong>. This is not the rule of law — it is the rule of arbitrary power.
+        </div>
+
+        <h2>III. The "Recognition Paradox": Why the International Community Cannot Fix Afghanistan from Outside</h2>
+        <p>Since 2021, the international community has struggled to find a coherent approach to Afghanistan. Some countries advocate for engagement — arguing that dialogue can moderate the Taliban; others insist on isolation — viewing the regime as illegitimate and untouchable.</p>
+        <p>Neither approach addresses the structural reality captured by the GL Framework:</p>
+        <ul>
+            <li><strong>Engagement, without demanding governance reform, simply legitimises the cost‑transfer system.</strong> When aid is channelled through Taliban ministries without oversight, it becomes part of the regime's patronage network.</li>
+            <li><strong>Isolation, without providing alternatives for the population, punishes the wrong people.</strong> Sanctions make food and medicine more expensive — they hit the poor, not the leadership.</li>
+            <li><strong>The Taliban's survival strategy depends precisely on this impasse:</strong> they use international engagement to gain legitimacy, and international isolation to blame external forces for domestic failure. Either way, the cost is borne by ordinary Afghans.</li>
+        </ul>
+
+        <div class="conclusion-box">
+            <h2>Conclusion: Afghanistan Is Not "Failed" — It Is a Textbook Case of Governance as Extraction</h2>
+            <p>Afghanistan's post‑2021 trajectory confirms the GL Framework's core proposition with brutal clarity:</p>
+            <p><strong>When a regime's only legitimacy is negative — "we ended the war" — and its positive governance consists of systematically transferring costs to the most vulnerable groups, it has lost any claim to legitimacy regardless of its military victory.</strong></p>
+            <p>The Taliban regime exhibits <strong>all eight parameters of cost transfer in extreme form</strong>:</p>
+            <ul>
+                <li><strong>Waiting costs</strong> are offloaded onto citizens through broken administrative systems.</li>
+                <li><strong>Repetition costs</strong> are imposed through overlapping, opaque jurisdictions.</li>
+                <li><strong>Collapse costs</strong> are borne by the sick, the hungry, and the displaced.</li>
+                <li><strong>Information asymmetry</strong> is weaponised to extract bribes and maintain control.</li>
+                <li><strong>Psychological costs</strong> are deliberately inflicted, especially on women.</li>
+                <li><strong>Opportunity costs</strong> are generational — an entire youth cohort is being written off.</li>
+                <li><strong>Transfer pathways</strong> are clear, intentional, and relentlessly one‑way.</li>
+                <li><strong>Closed‑loop governance</strong> ensures that none of this can be corrected from within.</li>
+            </ul>
+            <p>Afghanistan is not a "failed state." It is a <strong>state that has perfected the art of extracting value from its own population while using the memory of war as a shield against accountability.</strong></p>
+            <p>The GL Framework does not ask whether Afghanistan is "democratic" or "authoritarian" — it asks a simpler, more fundamental question: <strong>Does the system return value to the people, or does it transfer costs to them?</strong> In Afghanistan, the answer is devastatingly clear.</p>
+            <p><strong>Governance legitimacy is not earned by ending a war. It is earned by what you do with the peace.</strong></p>
+        </div>
+
+        <div class="footnote">— A GL Framework diagnosis of extraction‑based governance</div>
+    </div>
+
+    <!-- ===== 中文 ===== -->
+    <div id="zh" class="lang-content">
+        <h1>阿富汗：当“结束战争”成为唯一合法性——治理沦为成本转移机器</h1>
+        <div class="subhead">—— GL Framework 对一个“后冲突伪国家”的诊断</div>
+
+        <p><strong>2021年8月，塔利班重返喀布尔，结束了美国长达二十年的军事存在。</strong>世界将此视为战争的终结。但对普通阿富汗人而言，随之而来的并非和平——而是一种更系统、更彻底的剥夺。</p>
+
+        <p>塔利班的合法性几乎完全建立在<strong>一个成就之上：结束了战争。</strong>但除此之外，该政权对向人民返还价值毫无兴趣。相反，它建立了一套<strong>明确而制度化地将成本——时间、机会、心理安全乃至生存本身——转移给最脆弱群体（妇女、少数民族、农村农民和年轻人）的治理模式。</strong></p>
+
+        <div class="evidence-note">
+            <strong>联合国开发计划署（UNDP，2024年）</strong>估计，塔利班接管后阿富汗GDP萎缩高达35%，<strong>超过85%的人口生活在贫困线以下</strong>。<strong>联合国人道事务协调厅（OCHA，2025年）</strong>报告称<strong>2370万阿富汗人（超过一半人口）需要人道主义援助</strong>，而<strong>人权观察（2025年）</strong>记录了自2021年以来超过80项限制妇女权利的法令，实质上将妇女从公共生活中抹去。
+        </div>
+
+        <h2>一、GL诊断：八项参数下的阿富汗</h2>
+
+        <h3>1. 等待成本 <span class="score-pill">0.5/10</span></h3>
+        <p>塔利班控制下的阿富汗政府服务以长期不可预测性为特征。护照和身份证申请——过去数周内可完成——现在延长至数月，且无透明排队系统。受制裁和央行资产冻结影响的国际汇款可能无限期延迟；许多阿富汗人等待数周却等不来侨汇。人道主义援助分发点经常排队长达数小时，物资却在队伍末尾到达前耗尽。等待不再是成本——而是一场赌博。</p>
+
+        <h3>2. 重复成本 <span class="score-pill">1.5/10</span></h3>
+        <p>阿富汗人在重叠的权力机构间穿梭：内政部、宗教警察（劝善惩恶部）和当地部落委员会各自要求不同且往往相互矛盾的文件。没有男性监护人（马赫拉姆）的女性在办理几乎所有事务时都必须获得“监护人许可”——实质上等于将整个流程重复两遍。国际NGO报告称，项目审批需要同时获得塔利班部委和部落长老的签章；当一方不承认另一方的印章时，流程从头开始。</p>
+
+        <h3>3. 崩溃成本 <span class="score-pill">0.5/10</span></h3>
+        <p>阿富汗的基础设施处于近乎永久性崩溃状态。停电持续数天，供水每周中断，通信无故失效。银行系统——曾经脆弱但尚能运转——如今已实际瘫痪：存款无法足额提取，私人银行倒闭，无存款保险。医疗系统在失去80%的国际资金后，常因药品短缺而拒收患者；常规手术的等待名单以“无限期”而非“周”为单位。这里的崩溃成本以生命为计量单位。</p>
+
+        <h3>4. 信息不对称成本 <span class="score-pill">2/10</span></h3>
+        <p>在塔利班治下，官方政策以口头传达为主，极少书面公开。法令通过清真寺公告和电台广播传播，但不存在中央可查的登记系统。公民依赖一个“信息掮客”的灰色产业——付费中间人来解读规则——形成了获取基本知识的隐性税负。汇率、商品价格和安全动态被严格管控；市场交易者凭传闻而非数据做决策。国际制裁进一步将阿富汗隔绝于全球价格信号之外，意味着农民根据去年的价格种植，往往在收获时亏损。</p>
+
+        <h3>5. 心理成本 <span class="score-pill">1/10</span></h3>
+        <p>或许没有哪个参数能比心理成本更尖锐地捕捉阿富汗的危机。妇女已被从教育、就业和公共空间中抹去；女子中学连续第三年关闭，大学教育实际上已被禁止。阿富汗妇女网络2025年的一项调查发现，92%的妇女表示外出时感到“持续恐惧”——不是对犯罪的恐惧，而是对国家认可的骚扰的恐惧。</p>
+        <p>前政府雇员、记者和哈扎拉少数民族生活在被逮捕或强迫失踪的阴影下。累积效应是全国规模的习得性无助：公民普遍认为“努力没有回报”，因为任何成就都可能被一项新法令抹去。心理成本不是副产品——而是政策工具。</p>
+        <div class="evidence-note">
+            <strong>国际救援委员会（2025年）</strong>报告称<strong>67%的阿富汗成年人表现出严重抑郁症状</strong>——全球最高之一。自杀率虽被低估，但急剧上升，尤其在年轻女性中。
+        </div>
+
+        <h3>6. 机会成本 <span class="score-pill">0.5/10</span></h3>
+        <p>阿富汗的人口结构极为年轻——超过60%的人口在25岁以下。但这一潜力正被系统性浪费。2021年前估计超过10万的女性大学生被锁在高等教育门外。年轻男性面临的就业市场即使基础工作也需要与塔利班机构建立关系；青年失业率据多数估计超过70%。</p>
+        <p>农业——阿富汗的经济支柱——陷入困境：高价值作物如藏红花和干果无法获得国际认证或运输通道，而该国的鸦片经济（全球最大）尽管官方禁止，仍在平行繁荣。机会成本是代际性的：整整一代人在没有技能、没有收入、没有希望中成长。系统不提供经济参与的路径——只提供生存。</p>
+
+        <h3>7. 转移路径 <span class="score-pill">1/10</span></h3>
+        <p>阿富汗的成本转移机制残酷而透明：</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>成本创造者</th><th>成本承担者</th><th>转移机制</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>塔利班领导层</td><td>农村及少数民族人口</td><td>国际援助通过塔利班部委分配，资源流向忠诚派系控制区；哈扎拉和塔吉克族获得系统性更少支持</td></tr>
+                <tr><td>货币与制裁体制</td><td>小型进口商/消费者</td><td>外汇短缺通过波动汇率转嫁；央行禁止美元流通迫使持有者承担贬值损失</td></tr>
+                <tr><td>宗教警察</td><td>妇女</td><td>每一项限制妇女行动或就业的法令都被包装为“宗教义务”——但功能上将妇女的经济独立和人身安全转移给国家控制机器</td></tr>
+            </tbody>
+        </table>
+
+        <p>塔利班一贯将阿富汗经济崩溃归咎于国际制裁。制裁确实是因素之一，但这一叙事巧妙地掩盖了政权自身的掠夺性税收、检查站勒索和稀缺资源的错误分配。通过将饥饿归咎于“外部敌人”，政权将自己隔离于国内问责之外。</p>
+
+        <h3>8. 闭环程度 <span class="score-pill">1/10</span></h3>
+        <p>塔利班治下的阿富汗没有任何有意义的反馈回路。决策完全封闭，集中于最高领袖和一小撮宗教学者委员会。没有选举、没有议会、没有独立司法、没有新闻自由。少数“协商性”集会（舒拉）是指定的而非选举的，仅用于批准法令。</p>
+        <p>国际监督组织被驱逐或严格限制。国内报道受审查；报道饥荒或腐败的记者面临逮捕。当无人能投诉、无人能核实时，系统对纠错免疫。错误累积，腐败滋生，而人口承担累积的成本——政权唯一的“反馈”是偶发的武装起义，被武力镇压。闭环之所以封闭，是因为政权从内部锁上了门。</p>
+
+        <h2>二、塔利班的治理模式：以“稳定性”为单一支点的脆弱结构</h2>
+        <p>塔利班的全部合法性建立在他们结束了四十年的战争这一主张上。但“结束战争”是一个消极成就——它定义了政权<em>不是</em>什么（战斗者），而非<em>是</em>什么（治理当局）。</p>
+        <p>当以积极的治理标准——提供服务、促进经济参与、保护权利——来衡量时，塔利班在每个维度上都失败了。该政权的策略是将所有治理运营成本系统性地转移给那些无法反击的人：</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>治理功能</th><th>成本承担者</th><th>结果</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>教育</td><td>女孩及年轻女性</td><td>失去一整代女性专业人士</td></tr>
+                <tr><td>银行与货币</td><td>小商贩及侨汇接收者</td><td>经济瘫痪；依赖非正规、敲诈性的货币兑换商</td></tr>
+                <tr><td>援助分配</td><td>农村贫困人口/少数民族</td><td>饥荒集中在非普什图地区</td></tr>
+                <tr><td>执法</td><td>所有公民（尤其不服从者）</td><td>任意逮捕；无正当程序；人人生活在恐惧中</td></tr>
+            </tbody>
+        </table>
+
+        <div class="evidence-note">
+            <strong>大赦国际（2025年）</strong>指出，塔利班的法律体系是“一个与任何正式法律相抵触的法令平行宇宙”，<strong>没有独立监督、没有上诉程序、受害者无法获得救济</strong>。这不是法治——而是任意权力的统治。
+        </div>
+
+        <h2>三、“承认悖论”：国际社会为何无法从外部修复阿富汗</h2>
+        <p>自2021年以来，国际社会一直在努力寻找对阿富汗的连贯方针。一些国家主张接触——认为对话可以温和化塔利班；另一些国家坚持孤立——视该政权为非法且不可触碰。</p>
+        <p>两种方式都未能触及GL Framework所揭示的结构性现实：</p>
+        <ul>
+            <li><strong>接触而不要求治理改革，只是使成本转移系统合法化。</strong>当援助在无监督的情况下通过塔利班部委输送时，它就成为政权庇护网络的一部分。</li>
+            <li><strong>孤立而不为民众提供替代方案，则惩罚了错误的对象。</strong>制裁使食品和药品更昂贵——打击的是穷人，而非领导层。</li>
+            <li><strong>塔利班的生存策略恰恰依赖这一僵局：</strong>他们利用国际接触获取合法性，又利用国际孤立将国内失败归咎于外部力量。无论哪种方式，成本都由普通阿富汗人承担。</li>
+        </ul>
+
+        <div class="conclusion-box">
+            <h2>结论：阿富汗不是“失败”——而是“治理即掠夺”的教科书</h2>
+            <p>阿富汗2021年后的轨迹以残酷的清晰度确认了GL Framework的核心命题：</p>
+            <p><strong>当一个政权的唯一合法性是消极的——“我们结束了战争”——而其积极的治理在于系统性地将成本转移给最脆弱群体时，无论其军事胜利如何，它已丧失了任何合法性主张。</strong></p>
+            <p>塔利班政权在<strong>全部八项成本转移参数上均以极端形式呈现</strong>：</p>
+            <ul>
+                <li><strong>等待成本</strong>通过崩溃的行政系统转嫁给公民。</li>
+                <li><strong>重复成本</strong>通过重叠、不透明的管辖权强加于人。</li>
+                <li><strong>崩溃成本</strong>由病人、饥饿者和流离失所者承担。</li>
+                <li><strong>信息不对称</strong>被武器化以榨取贿赂和维持控制。</li>
+                <li><strong>心理成本</strong>被故意施加，尤其针对妇女。</li>
+                <li><strong>机会成本</strong>是代际性的——整整一代年轻人被放弃。</li>
+                <li><strong>转移路径</strong>清晰、有意且无情地单向流动。</li>
+                <li><strong>闭环治理</strong>确保这一切无法从内部纠正。</li>
+            </ul>
+            <p>阿富汗不是一个“失败国家”。它是一个<strong>将“从自己人口中提取价值”的艺术推向极致，并以战争的记忆作为问责盾牌的国家。</strong></p>
+            <p>GL Framework不问阿富汗是“民主”还是“威权”——它问一个更简单、更根本的问题：<strong>系统是否将价值返还给人民，还是将成本转移给他们？</strong>在阿富汗，答案令人痛心地清晰。</p>
+            <p><strong>治理的正当性不是通过结束战争赢得的。而是通过你如何运用和平来赢得的。</strong></p>
+        </div>
+
+        <div class="footnote">—— GL Framework 对掠夺型治理的诊断</div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const btns = document.querySelectorAll('.lang-btn');
+        const contents = { zh: document.getElementById('zh'), en: document.getElementById('en') };
+        function switchLang(lang) {
+            for (let key in contents) {
+                contents[key].classList.remove('active');
+            }
+            if (contents[lang]) contents[lang].classList.add('active');
+            btns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
+            if (history.pushState) history.pushState(null, '', '#' + lang);
+        }
+        btns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const lang = this.dataset.lang;
+                if (lang) switchLang(lang);
+            });
+        });
+        const hash = window.location.hash.replace('#', '');
+        if (hash === 'zh') {
+            switchLang('zh');
+        } else {
+            switchLang('en');
+        }
+        window.addEventListener('hashchange', function() {
+            const newHash = window.location.hash.replace('#', '');
+            if (newHash === 'zh' || newHash === 'en') {
+                switchLang(newHash);
+            } else {
+                switchLang('en');
+            }
+        });
+    })();
+</script>
+</body>
+</html>
