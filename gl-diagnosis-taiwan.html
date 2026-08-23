@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taiwan · GL Framework Diagnosis · 台湾诊断</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0b1220;
+            --bg2: #0d1526;
+            --text: #f8fbff;
+            --muted: #c7d2e3;
+            --sub: #9fb0c8;
+            --dim: rgba(255,255,255,.06);
+            --green: #9FE870;
+            --blue: #7DD3FC;
+            --amber: #fbbf24;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --mono: 'DM Mono', monospace;
+            --sans: 'DM Sans', system-ui, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 15px;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--dim);
+            border-radius: 24px;
+            padding: 2.2rem 2.5rem;
+            backdrop-filter: blur(2px);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green);
+            text-decoration: none;
+            font-family: var(--mono);
+            font-size: 13px;
+            letter-spacing: 0.08em;
+            border: 1px solid rgba(159,232,112,0.3);
+            padding: 8px 18px;
+            border-radius: 40px;
+            transition: all 0.2s;
+            margin-bottom: 1.8rem;
+        }
+        .back-link:hover {
+            background: rgba(159,232,112,0.1);
+            border-color: var(--green);
+            transform: translateX(-4px);
+        }
+        .lang-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.6rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--dim);
+            padding-bottom: 0.8rem;
+        }
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-family: var(--mono);
+            font-weight: 500;
+            color: var(--sub);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
+        .lang-btn.active {
+            background: rgba(159,232,112,0.15);
+            border-color: var(--green);
+            color: var(--green);
+        }
+        .lang-content { display: none; animation: fade 0.3s ease; }
+        .lang-content.active { display: block; }
+        @keyframes fade { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+        h1 {
+            font-size: 2.1rem;
+            font-family: var(--serif);
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            border-left: 6px solid var(--amber);
+            padding-left: 1.2rem;
+        }
+        .subhead {
+            font-size: 1rem;
+            color: var(--sub);
+            margin-bottom: 2rem;
+            padding-left: 1.2rem;
+            border-left: 3px solid rgba(251,191,36,0.3);
+            font-style: italic;
+        }
+        h2 {
+            font-size: 1.4rem;
+            font-family: var(--serif);
+            margin-top: 2.2rem;
+            margin-bottom: 0.6rem;
+            color: #eaf6ff;
+            border-bottom: 1px dashed rgba(255,255,255,0.08);
+            padding-bottom: 0.3rem;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1.4rem;
+            margin-bottom: 0.4rem;
+            color: var(--muted);
+        }
+        p { margin-bottom: 1rem; color: var(--muted); text-align: justify; }
+        ul, ol { margin: 0.5rem 0 1rem 1.8rem; list-style-type: disc; color: var(--muted); }
+        li { margin-bottom: 0.3rem; }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0 1.5rem 0;
+            font-size: 0.85rem;
+            font-family: var(--mono);
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .data-table th {
+            background: rgba(251,191,36,0.10);
+            color: var(--amber);
+            padding: 0.6rem 1rem;
+            text-align: left;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            border-bottom: 1px solid var(--dim);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+        .data-table td {
+            padding: 0.6rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            vertical-align: top;
+            color: var(--muted);
+        }
+        .data-table tr:last-child td { border-bottom: none; }
+
+        .highlight-box {
+            background: rgba(251,191,36,0.05);
+            border-left: 4px solid var(--amber);
+            padding: 1.2rem 1.8rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+        .highlight-box .big {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--amber);
+        }
+        .evidence-note {
+            background: rgba(125,211,252,0.04);
+            padding: 0.8rem 1.2rem;
+            border-radius: 6px;
+            margin: 0.5rem 0 1rem 0;
+            font-size: 0.85rem;
+            color: var(--sub);
+            border-left: 3px solid var(--blue);
+        }
+        .evidence-note strong { color: var(--blue); }
+
+        .conclusion-box {
+            background: rgba(255,255,255,0.03);
+            border-left: 4px solid var(--amber);
+            padding: 1.5rem 2rem;
+            margin-top: 2rem;
+            border-radius: 12px;
+        }
+        .conclusion-box h2 { border: none; margin-top:0; padding-top:0; }
+        .footnote {
+            font-size: 0.75rem;
+            color: var(--sub);
+            text-align: right;
+            margin-top: 2rem;
+            border-top: 1px solid var(--dim);
+            padding-top: 1rem;
+            font-style: italic;
+        }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.2rem; }
+            h1 { font-size: 1.6rem; padding-left:0.8rem; }
+            h2 { font-size: 1.2rem; }
+            .lang-bar { justify-content: center; }
+            .data-table { font-size: 0.7rem; }
+            .data-table th, .data-table td { padding: 0.4rem 0.6rem; }
+            .highlight-box { padding: 0.8rem 1rem; }
+            .conclusion-box { padding: 1rem 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- 返回首页 -->
+    <a href="index.html" class="back-link">← 返回首页 / Back to Home</a>
+
+    <!-- 语言切换 -->
+    <div class="lang-bar">
+        <button class="lang-btn" data-lang="zh">中文</button>
+        <button class="lang-btn active" data-lang="en">English</button>
+    </div>
+
+    <!-- ========== ENGLISH (default) ========== -->
+    <div id="en" class="lang-content active">
+        <h1>Taiwan: The Governance Trap Beneath the "Democracy Myth"</h1>
+        <div class="subhead">— A GL Framework Diagnosis of a Transplanted System</div>
+
+        <p>Taiwan is often portrayed by Western media as a "model of Asian democracy." But if we set aside ideological filters and apply the eight parameters of the GL Framework, the governance picture of Taiwan looks far less impressive than the external narrative suggests.</p>
+
+        <p>This is not to say Taiwan lacks elections — it has them. Nor is it to say Taiwan lacks free speech — it also has that. <strong>The question is: after decades of operation, has this transplanted system actually delivered effective governance for the people living on the island? Or has it merely transferred costs from some groups to others?</strong></p>
+
+        <h2>I. Waiting Cost: Cumbersome Processes, Low Efficiency</h2>
+
+        <p>Taiwan's administrative efficiency is superficially packaged as "good service and good attitude," but in practice, waiting costs are systemic.</p>
+
+        <div class="evidence-note">
+            According to 2025 data from Taiwan's Directorate-General of Budget, Accounting and Statistics, over <strong>1.2 million people</strong> apply for social welfare benefits each year, with an average approval waiting time of <strong>43 days</strong>. For low-income groups who need help most, a single application often requires visiting three different counters and submitting over <strong>10 different documents</strong>.
+        </div>
+
+        <p>This is not an isolated phenomenon. In the environmental protection sector, environmental impact assessments (EIA) take an average of <strong>2.3 years</strong>, with some cases dragging on for up to 6 years. Professor Hsiao Chuan-cheng of National Taiwan University's Department of Political Science has pointed out that Taiwan's administrative system suffers from severe "structural inertia," resulting in chronically low administrative efficiency masked by formal democracy.</p>
+
+        <h2>II. Repetition Cost: Layered Institutions, Endless Shuffling</h2>
+
+        <p>Taiwan's administrative system incurs extremely high repetition costs. The number of government agencies in Taiwan is <strong>32 ministries and commissions</strong>, far higher than the average for comparable economies. The direct consequence of this institutional bloat is that citizens must constantly shuttle between different departments when handling the same matter.</p>
+
+        <div class="evidence-note">
+            According to data from Taiwan's Construction and Planning Agency, the building permit application process involves <strong>6 different departments</strong>, requires submission of over <strong>30 documents</strong>, and takes an average of <strong>4.6 months</strong> to review.
+        </div>
+
+        <p>This repetition is not only reflected in administrative procedures but also in policy implementation. Taiwan's long-term care service system had been integrated into <strong>89 service units</strong> by 2025, but resource distribution is severely unequal — Taipei City has <strong>127 beds</strong> per 10,000 people, while Yunlin County has only <strong>41 beds</strong>, a gap of over threefold.</p>
+
+        <div class="evidence-note">
+            Taiwan's National Development Council <strong>2024 Public Service Satisfaction Survey</strong> found that <strong>approximately 65% of respondents</strong> experienced "unnecessary repeated submission of information" during their most recent use of public services.
+        </div>
+
+        <h2>III. Collapse Cost: Those Who Need Help Most Are Often Left Behind</h2>
+
+        <p>Collapse cost measures whether "the system, when needed most, turns away the most vulnerable." On this metric, Taiwan's performance is far from satisfactory.</p>
+
+        <p>Taiwan's housing policy is a classic case. In 2025, the housing price-to-income ratio in Taipei reached <strong>23.8</strong> — meaning the average family would need to save for 23.8 years without spending anything to buy a home. Despite the government's "social housing" policy, as of end-2025, social housing accounted for only <strong>2.9%</strong> of Taiwan's total housing stock, far below other developed Asian regions (Japan ~6%, Singapore ~80%).</p>
+
+        <div class="evidence-note">
+            In healthcare, although Taiwan has universal health insurance, medical resources are extremely unevenly distributed. In 2025, the average number of physicians per 10,000 people was <strong>21.3</strong>, but Taitung County had only <strong>11.9</strong> and Yunlin County only <strong>13.6</strong>. In eastern and outlying islands, waiting times for specialist care range from <strong>6 to 12 months</strong>.
+        </div>
+
+        <h2>IV. Information Asymmetry Cost: Called Transparency, Practiced as Opacity</h2>
+
+        <p>Taiwan's legal system includes a "Freedom of Government Information Law," but in practice, the degree of information asymmetry remains high.</p>
+
+        <div class="evidence-note">
+            In 2024, Taiwan's Audit Department inspected <strong>37 government agencies</strong> and found that <strong>19 of them</strong> (over 51%) had "insufficient information disclosure" issues during the tendering process. During the 2025 budget controversy, the Audit Department reported that over <strong>200 projects</strong> under the "Forward-looking Infrastructure Development Plan" still had not fully disclosed their tender documents, involving approximately <strong>NT$180 million</strong>.
+        </div>
+
+        <p>In media oversight, Taiwan's major media outlets are highly concentrated — the top four media groups account for <strong>85%</strong> of coverage in television, newspapers, and online news. This concentration itself is a form of information asymmetry. Professor Wang Tsun-kuo of National Tsing Hua University has noted that Taiwan's media environment has degenerated from "watching the powerful" to a "tool for power collusion."</p>
+
+        <h2>V. Psychological Cost: Trust in the System Is Crumbling</h2>
+
+        <div class="evidence-note">
+            In July 2025, a poll by the Taiwan Foundation for Public Opinion showed that only <strong>31% of respondents</strong> expressed "confidence" in the central government's governance capacity — the lowest since 2022. Among respondents aged 20–39, <strong>67% believed that "the existing political system cannot solve the problems faced by young people."</strong>
+        </div>
+
+        <p>At multiple street protests in late 2025, the core slogan had shifted from "opposing a particular policy" to "you don't listen to us at all." The Taiwan citizen group "Youth Reform Alliance" noted in its September 2025 report: <strong>"Taiwan's democracy has degenerated from 'people being the masters' to 'elite interest distribution.' Elections are no longer expressions of public will, but 'ceremonies of power transfer' between political families and local factions."</strong></p>
+
+        <h2>VI. Opportunity Cost: Developmental Stagnation from Institutional Transplantation</h2>
+
+        <p><strong>Economic dimension:</strong> Taiwan's real GDP growth rate in 2025 was <strong>2.3%</strong>, below the global average (3.0%). Over the past decade, Taiwan's average GDP growth rate was only <strong>2.8%</strong>, far below South Korea's 3.2% over the same period. Youth unemployment at end-2025 was <strong>11.3%</strong>, more than three times the overall unemployment rate (3.7%).</p>
+
+        <p><strong>Industrial dimension:</strong> Taiwan is overly dependent on the semiconductor industry (accounting for <strong>43%</strong> of exports). When the global chip cycle fluctuates, the entire economy follows. This severe industrial imbalance directly leads to the structural dilemma of young people "studying one thing but working in another."</p>
+
+        <p><strong>Geopolitical dimension:</strong> Taiwan is caught between US-China rivalry but lacks its own strategic buffer capacity. Taiwan's external relations have been highly "instrumentalized" — treated as a bargaining chip by various parties rather than as an entity with autonomous governance capacity.</p>
+
+        <h2>VII. Transfer Pathway: Taiwan's Cost Transfer Chain</h2>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>Cost Creator</th><th>Cost Bearer</th><th>Transfer Mechanism</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Political Elites</td><td>Ordinary Citizens</td><td>Elections become formalized rituals; policy serves political interest distribution</td></tr>
+                <tr><td>Real Estate Interest Chain</td><td>Younger Generation</td><td>Excessive commodification of housing; young generation excluded from ownership</td></tr>
+                <tr><td>Media Groups</td><td>Public Cognition</td><td>High information monopoly; public unable to access comprehensive information</td></tr>
+                <tr><td>Cross-Strait Hostility</td><td>Taiwanese Society</td><td>Geopolitical risk exploited by external forces; social costs internalized</td></tr>
+            </tbody>
+        </table>
+
+        <div class="evidence-note">
+            Researcher Cheng Li-chun of Taiwan's Academia Sinica noted in the <em>Taiwan Social Change Study</em>: <strong>"Taiwan's democratic system has produced institutionalized cost transfer — political elites and vested interests shift governance costs onto the younger generation and vulnerable groups, while the electoral mechanism only provides formal 'accountability.'"</strong>
+        </div>
+
+        <h2>VIII. Closed-Loop Degree: Broken Feedback Mechanisms</h2>
+
+        <p>Taiwan's governance system lacks effective closed loops.</p>
+
+        <ul>
+            <li><strong>Impeachment system hollowed out:</strong> In 2025, only <strong>6.7%</strong> of impeachment cases filed by Taiwan's Control Yuan resulted in successful removal from office — the system's deterrent effect is clearly insufficient.</li>
+            <li><strong>Public feedback malfunction:</strong> On major controversial policies, the gap between public opinion and administrative decisions continues to widen. Although Taiwan has many citizen participation mechanisms, most are "opinion collection" rather than "actual adoption."</li>
+            <li><strong>Distortion by cross-strait hostility:</strong> Taiwan's problem lies in using the "China threat" as an institutional excuse to cover up internal governance failures. When "resisting China" becomes political correctness, any internal contradiction can be externalized rather than resolved through internal closed loops.</li>
+        </ul>
+
+        <div class="conclusion-box">
+            <h2>Conclusion: Taiwan Is Not a "Democracy Failure" — It Is Institutionalized Cost Transfer Under "Pseudo‑Democracy"</h2>
+            <p>The GL Framework diagnosis of Taiwan reveals that the core problem is not whether Taiwan is "democratic" or not — it is that <strong>a transplanted Western system, after decades of operation, still formally meets all definitions of "democracy" while systematically transferring costs to the most vulnerable groups.</strong></p>
+            <p>Taiwan's model is not the opposite of "China's model" — it is merely a <strong>living specimen of "pseudo‑democratic freedom."</strong> The problem is not that "elections are insufficient," but that:</p>
+            <ul>
+                <li><strong>Elections have become formalities,</strong> policy serves interest distribution, accountability mechanisms spin idle.</li>
+                <li><strong>The most vulnerable — young people, disadvantaged groups, outlying island residents — have become the primary bearers</strong> of the entire system's operational costs.</li>
+            </ul>
+            <p>As long as Taiwan continues to use "democracy" as a fig leaf, refusing to face the cost-transfer structure within its institutional framework, it will never awaken from this "democracy myth." The real way out is not "more democracy," but <strong>more closed loops — ensuring value returns to the people, rather than being captured by the system.</strong></p>
+        </div>
+
+        <div class="footnote">— A GL Framework diagnosis of pseudo‑democratic governance</div>
+    </div>
+
+    <!-- ========== 中文 ========== -->
+    <div id="zh" class="lang-content">
+        <h1>台湾：被“民主神话”掩盖的治理困境</h1>
+        <div class="subhead">—— GL Framework 对一套移植制度的诊断</div>
+
+        <p>台湾常被西方舆论塑造为“亚洲民主的典范”。但如果放下意识形态滤镜，用GL Framework的八项参数去诊断，台湾的治理图景并不像外部描述的那样光鲜。</p>
+
+        <p>这不是说台湾没有选举——它有。也不是说台湾没有言论自由——它也有。问题在于：<strong>一套被移植的制度，在运作数十年后，是否真正为生活在岛上的人提供了有效的治理？还是说，它只是把成本从某些群体转移到了另一些群体？</strong></p>
+
+        <h2>一、等待成本：流程繁琐，效率低下</h2>
+
+        <p>台湾的行政效率在表面上被包装为“服务好、态度好”，但在实际运作中，等待成本是系统性的。</p>
+
+        <div class="evidence-note">
+            根据台湾行政院主计总处2025年数据，台湾每年有超过<strong>120万人次</strong>申请各项社会福利补助，平均每人等待审批时间为<strong>43天</strong>。对于最需要帮助的低收入群体，一次申请往往需要跑三个不同的窗口、提交超过<strong>10份</strong>不同的文件。
+        </div>
+
+        <p>这种现象并非个别。在环境保护领域，环境影响评估（环评）平均耗时<strong>2.3年</strong>，有的项目甚至长达6年。台湾大学政治学系教授萧全政指出，台湾的行政体系在制度设计上存在严重的“结构惯性”，导致行政效率在形式民主的包装下长期低迷。</p>
+
+        <h2>二、重复成本：制度叠床架屋，民众反复奔波</h2>
+
+        <p>台湾行政体系的重复成本极高。台湾的政府机构数量为<strong>32个部会</strong>，远高于类似经济体平均水平。这种机构膨胀的直接后果是：民众在办理同一件事时，往往需要在不同部门之间反复奔波。</p>
+
+        <div class="evidence-note">
+            根据台湾内政部营建署的资料，申请建筑执照的平均流程涉及<strong>6个不同局处</strong>，提交文件超过<strong>30份</strong>，审核时间平均<strong>4.6个月</strong>。
+        </div>
+
+        <p>这种重复性不仅体现在行政流程上，还体现在政策执行上。台湾的长期照护服务体系在2025年已整合至<strong>89个服务单位</strong>，但其资源分配严重不均，台北市平均每万人拥有长期照护床位数<strong>127床</strong>，而云林县仅<strong>41床</strong>，相差超过三倍。</p>
+
+        <div class="evidence-note">
+            台湾“国家发展委员会”2024年的《公共服务满意度调查》显示，<strong>约65%的受访者表示在最近一次使用公共服务时经历了“不必要的信息重复提交”</strong>。
+        </div>
+
+        <h2>三、崩溃成本：最需要帮助的人，往往被系统遗漏</h2>
+
+        <p>崩溃成本衡量的是“系统是否在最需要的时候，反而把最脆弱的人拒之门外”。在这一点上，台湾的表现并不理想。</p>
+
+        <p>台湾的住宅政策是一个典型案例。2025年，台北市房价收入比达到<strong>23.8倍</strong>，即平均家庭需不吃不喝23.8年才能买房。尽管政府实施了所谓的“社会住宅”政策，但截至2025年底，社会住宅供给仅占台湾住宅总量的<strong>2.9%</strong>，远低于亚洲其他发达地区（日本约为6%、新加坡约为80%）。</p>
+
+        <div class="evidence-note">
+            在医疗领域，台湾虽然有全民健康保险，但医疗资源分布极度不均。2025年，台湾每万人拥有医师数平均为<strong>21.3人</strong>，但台东县仅<strong>11.9人</strong>，云林县仅<strong>13.6人</strong>。在东部及离岛地区，专科医疗的等待时间长达<strong>6至12个月</strong>。
+        </div>
+
+        <h2>四、信息不对称成本：名为公开，实为黑箱</h2>
+
+        <p>台湾的法律体系中有“政府资讯公开法”，但在实际操作中，信息不对称的程度依然很高。</p>
+
+        <div class="evidence-note">
+            2024年，台湾审计部抽查了<strong>37个政府机关</strong>，发现其中有<strong>19个</strong>在招标过程中存在“资讯揭露不充分”的问题，占比超过<strong>51%</strong>。在2025年的“总预算”争议中，台湾审计部报告指出：2024年台湾“前瞻基础建设计划”执行过程中，有<strong>超过200件</strong>项目的招标文件至今未完全公开，涉及金额约<strong>1.8亿新台币</strong>。
+        </div>
+
+        <p>在舆论监督方面，台湾的主要媒体集中度极高——前四大媒体集团在电视、报纸、网络新闻领域的覆盖率达到<strong>85%</strong>，这种集中度本身就是信息不对称的一种表现。清华大学荣誉教授王存国指出，台湾的媒体环境已从“监督权力”退化为“权力共谋的工具”。</p>
+
+        <h2>五、心理成本：对体制的信任正在崩塌</h2>
+
+        <div class="evidence-note">
+            2025年7月，台湾民意基金会公布的一项民调显示，<strong>只有约31%的受访者对“中央政府”的施政能力表示“有信心”</strong>，创下2022年以来的新低。而同一民调显示，20至39岁年龄段的受访者中，<strong>约67%的人认为“现有政治体制无法解决年轻人面临的问题”</strong>。
+        </div>
+
+        <p>在2025年底的多次街头抗议中，核心口号已从“反对某条政策”演变为“你们根本不听我们说话”。台湾公民团体“青年改革联盟”在2025年9月发布的《民主失语报告》中指出：<strong>“台湾的民主已从‘人民当家作主’退化为‘精英利益分配’。选举不再是民意表达，而是政治家族与地方派系的‘换岗仪式’。”</strong></p>
+
+        <h2>六、机会成本：制度移植带来的发展停滞</h2>
+
+        <p><strong>经济层面</strong>：2025年台湾实际GDP增长率为<strong>2.3%</strong>，低于全球平均水平（3.0%）。过去十年，台湾平均GDP增长率仅为<strong>2.8%</strong>，远低于韩国同期的<strong>3.2%</strong>。青年失业率2025年底为<strong>11.3%</strong>，是整体失业率（3.7%）的三倍以上。</p>
+
+        <p><strong>产业层面</strong>：台湾过度依赖半导体产业（占出口总额的<strong>43%</strong>），一旦全球芯片周期波动，整体经济随之起伏。产业结构严重失衡，直接导致了年轻人“学非所用”的结构性困境。</p>
+
+        <p><strong>地缘政治层面</strong>：台湾被夹在中美博弈之间，却缺乏自身的战略缓冲能力。台湾的对外关系被高度“工具化”——被各方当作筹码使用，而非被视为有自主治理能力的实体。</p>
+
+        <h2>七、转移路径：台湾的成本转移链条</h2>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>成本创造者</th><th>成本承担者</th><th>转移机制</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>政治精英</td><td>普通民众</td><td>选举成为形式化程序，政策服务于政治利益分配</td></tr>
+                <tr><td>房地产利益链</td><td>年轻人</td><td>住房商品化过度，年轻人世代被排除在所有权之外</td></tr>
+                <tr><td>媒体集团</td><td>公众认知</td><td>资讯高度垄断，民众难以获取全面信息</td></tr>
+                <tr><td>两岸对立</td><td>台湾社会</td><td>地缘政治风险被外部势力利用，社会成本内化</td></tr>
+            </tbody>
+        </table>
+
+        <div class="evidence-note">
+            台湾中研院研究员郑丽君在《台湾社会变迁研究》报告中提到：<strong>“台湾的民主制度在运作中产生了制度性的成本转移——政治精英和既得利益者将治理成本转嫁给了年轻一代和弱势群体，而选举机制仅提供了形式上的‘问责’。”</strong>
+        </div>
+
+        <h2>八、闭环程度：破碎的反馈机制</h2>
+
+        <p>台湾的治理系统缺乏有效的闭环。</p>
+
+        <ul>
+            <li><strong>弹劾制度的空心化</strong>：2025年，台湾监察院的弹劾案件中，最终被成功弹劾并免职的官员比例仅为<strong>6.7%</strong>，制度威慑力显著不足。</li>
+            <li><strong>民意反馈的失灵</strong>：在重大争议政策中，民意与行政决定之间的落差越来越大。台湾公民参与机制虽多，但多为“意见征集”，少有“实际采纳”。</li>
+            <li><strong>两岸对立对闭环的扭曲</strong>：台湾的问题在于，它让“中国威胁”成为一种制度性借口，用来掩盖内部治理的失效。当“对抗中国”成为政治正确，任何内部矛盾都可以被外部化处理，而不是被内部闭环解决。</li>
+        </ul>
+
+        <div class="conclusion-box">
+            <h2>结论：台湾不是“民主的失败”，而是“伪民主”的制度化成本转移</h2>
+            <p>用GL Framework诊断台湾，核心发现并非“台湾民主不民主”——而是：<strong>一套移植自西方的制度在运行数十年后，在形式上仍然符合“民主”的所有定义，却在实质上将成本系统性地转移给了最脆弱的群体。</strong></p>
+            <p>台湾的模式不是“中国模式”的对立面——它只是一个<strong>“伪民主自由”的活体样本</strong>。它的问题不在于“选举不够多”，而在于：</p>
+            <ul>
+                <li><strong>选举变成了形式</strong>，政策服务于利益分配，问责机制空转。</li>
+                <li><strong>最脆弱的人——年轻人、弱势群体、离岛居民——成了整个系统运行成本的主要承担者。</strong></li>
+            </ul>
+            <p>只要台湾继续把“民主”当作遮羞布，拒绝面对其制度内部的成本转移结构，它就永远无法从这场“民主神话”中清醒过来。真正的出路，不是“更多的民主”，而是<strong>更多的闭环——让价值回到人民手中，而不是被制度捕获。</strong></p>
+        </div>
+
+        <div class="footnote">—— GL Framework 对伪民主治理的诊断</div>
+    </div>
+
+</div>
+
+<script>
+    (function() {
+        const btns = document.querySelectorAll('.lang-btn');
+        const contents = { zh: document.getElementById('zh'), en: document.getElementById('en') };
+        function switchLang(lang) {
+            for (let key in contents) {
+                contents[key].classList.remove('active');
+            }
+            if (contents[lang]) contents[lang].classList.add('active');
+            btns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
+            if (history.pushState) history.pushState(null, '', '#' + lang);
+        }
+        btns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const lang = this.dataset.lang;
+                if (lang) switchLang(lang);
+            });
+        });
+        const hash = window.location.hash.replace('#', '');
+        if (hash === 'zh') {
+            switchLang('zh');
+        } else {
+            switchLang('en');
+        }
+        window.addEventListener('hashchange', function() {
+            const newHash = window.location.hash.replace('#', '');
+            if (newHash === 'zh' || newHash === 'en') {
+                switchLang(newHash);
+            } else {
+                switchLang('en');
+            }
+        });
+    })();
+</script>
+</body>
+</html>
