@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>China · GL Framework Model · 中国模范</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #0b1220;
+            --text: #f8fbff;
+            --muted: #c7d2e3;
+            --sub: #9fb0c8;
+            --dim: rgba(255,255,255,.06);
+            --green: #9FE870;
+            --blue: #7DD3FC;
+            --amber: #fbbf24;
+            --gold: #fcd34d;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --mono: 'DM Mono', monospace;
+            --sans: 'DM Sans', system-ui, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 15px;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--dim);
+            border-radius: 24px;
+            padding: 2.2rem 2.5rem;
+            backdrop-filter: blur(2px);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green);
+            text-decoration: none;
+            font-family: var(--mono);
+            font-size: 13px;
+            letter-spacing: 0.08em;
+            border: 1px solid rgba(159,232,112,0.3);
+            padding: 8px 18px;
+            border-radius: 40px;
+            transition: all 0.2s;
+            margin-bottom: 1.8rem;
+        }
+        .back-link:hover {
+            background: rgba(159,232,112,0.1);
+            border-color: var(--green);
+            transform: translateX(-4px);
+        }
+        .lang-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.6rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--dim);
+            padding-bottom: 0.8rem;
+        }
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-family: var(--mono);
+            font-weight: 500;
+            color: var(--sub);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
+        .lang-btn.active {
+            background: rgba(159,232,112,0.15);
+            border-color: var(--green);
+            color: var(--green);
+        }
+        .lang-content { display: none; animation: fade 0.3s ease; }
+        .lang-content.active { display: block; }
+        @keyframes fade { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+        h1 {
+            font-size: 2.1rem;
+            font-family: var(--serif);
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            border-left: 6px solid var(--gold);
+            padding-left: 1.2rem;
+        }
+        .subhead {
+            font-size: 1rem;
+            color: var(--sub);
+            margin-bottom: 2rem;
+            padding-left: 1.2rem;
+            border-left: 3px solid rgba(252,211,77,0.3);
+            font-style: italic;
+        }
+        .model-badge {
+            display: inline-block;
+            background: rgba(252,211,77,0.15);
+            color: var(--gold);
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 0.1rem 1rem;
+            border-radius: 30px;
+            border: 1px solid rgba(252,211,77,0.2);
+            margin-left: 1rem;
+        }
+        h2 {
+            font-size: 1.4rem;
+            font-family: var(--serif);
+            margin-top: 2.2rem;
+            margin-bottom: 0.6rem;
+            color: #eaf6ff;
+            border-bottom: 1px dashed rgba(255,255,255,0.08);
+            padding-bottom: 0.3rem;
+        }
+        h2 .badge {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: rgba(251,191,36,0.15);
+            color: var(--amber);
+            padding: 0.05rem 0.8rem;
+            border-radius: 30px;
+            margin-left: 0.8rem;
+            font-weight: 400;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1.4rem;
+            margin-bottom: 0.4rem;
+            color: var(--muted);
+        }
+        p { margin-bottom: 1rem; color: var(--muted); text-align: justify; }
+        ul, ol { margin: 0.5rem 0 1rem 1.8rem; list-style-type: disc; color: var(--muted); }
+        li { margin-bottom: 0.3rem; }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0 1.5rem 0;
+            font-size: 0.85rem;
+            font-family: var(--mono);
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .data-table th {
+            background: rgba(252,211,77,0.10);
+            color: var(--gold);
+            padding: 0.6rem 1rem;
+            text-align: left;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            border-bottom: 1px solid var(--dim);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+        .data-table td {
+            padding: 0.6rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            vertical-align: top;
+            color: var(--muted);
+        }
+        .data-table tr:last-child td { border-bottom: none; }
+        .data-table .positive { color: var(--green); }
+        .data-table .challenge { color: var(--amber); }
+
+        .evidence-note {
+            background: rgba(125,211,252,0.04);
+            padding: 0.8rem 1.2rem;
+            border-radius: 6px;
+            margin: 0.5rem 0 1rem 0;
+            font-size: 0.85rem;
+            color: var(--sub);
+            border-left: 3px solid var(--blue);
+        }
+        .evidence-note strong { color: var(--blue); }
+
+        .conclusion-box {
+            background: rgba(252,211,77,0.04);
+            border-left: 4px solid var(--gold);
+            padding: 1.5rem 2rem;
+            margin-top: 2rem;
+            border-radius: 12px;
+        }
+        .conclusion-box h2 { border: none; margin-top:0; padding-top:0; }
+        .footnote {
+            font-size: 0.75rem;
+            color: var(--sub);
+            text-align: right;
+            margin-top: 2rem;
+            border-top: 1px solid var(--dim);
+            padding-top: 1rem;
+            font-style: italic;
+        }
+
+        .score-pill {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            font-weight: 500;
+            background: rgba(159,232,112,0.12);
+            color: var(--green);
+            padding: 0.05rem 0.8rem;
+            border-radius: 30px;
+            margin-left: 0.6rem;
+            letter-spacing: 0.02em;
+        }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.2rem; }
+            h1 { font-size: 1.6rem; padding-left:0.8rem; }
+            h2 { font-size: 1.2rem; }
+            .lang-bar { justify-content: center; }
+            .data-table { font-size: 0.7rem; }
+            .data-table th, .data-table td { padding: 0.4rem 0.6rem; }
+            .conclusion-box { padding: 1rem 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="global-south-diagnosis.html" class="back-link">← 返回首页 / Back to Home</a>
+
+    <div class="lang-bar">
+        <button class="lang-btn" data-lang="zh">中文</button>
+        <button class="lang-btn active" data-lang="en">English</button>
+    </div>
+
+    <!-- ===== ENGLISH ===== -->
+    <div id="en" class="lang-content active">
+        <h1>China: The Non‑Democratic Exception — How a One‑Party State Returned Value to 1.4 Billion People</h1>
+        <div class="subhead">— A GL Framework Model Case of "Performance‑Legitimacy Value‑Returning Governance" <span class="model-badge">★ Model</span></div>
+
+        <p><strong>China is the most significant test case for the GL Framework.</strong> It is a country that <strong>does not have Western‑style democracy</strong> — no competitive elections, no multiparty system, no independent judiciary in the Western sense. Yet it has <strong>lifted over 800 million people out of extreme poverty</strong> since 1978, built the <strong>world's largest high‑speed rail network</strong>, and achieved <strong>sustained economic growth</strong> for over four decades.</p>
+
+        <p>The GL Framework does not ask whether a country is "democratic" — it asks: <strong>does the system return value to the people, or transfer costs to the vulnerable?</strong> By this measure, China is a <strong>successful model</strong> — not because it is "democratic," but because it has <strong>systematically reduced the costs of survival and development for the majority of its population</strong>.</p>
+
+        <div class="evidence-note">
+            <strong>World Bank (2025)</strong> reports that <strong>China's poverty rate has fallen from 88% in 1981 to less than 1% today</strong> — the largest poverty reduction in human history. <strong>UNDP (2025)</strong> ranks China <strong>79th on the Human Development Index</strong> — a remarkable rise from "low human development" in 1990 to "high human development" today. <strong>Gallup (2025)</strong> polls consistently show that <strong>over 90% of Chinese citizens express confidence in their national government</strong> — among the highest rates in the world.
+        </div>
+
+        <h2>I. GL Diagnosis: China Under Eight Parameters</h2>
+
+        <h3>1. Waiting Cost <span class="score-pill">6/10</span></h3>
+        <p>China's waiting cost is <strong>mixed</strong>. In <strong>urban areas</strong>, government services have been <strong>rapidly digitised</strong> — citizens can complete many procedures through mobile apps (WeChat, Alipay) in minutes. <strong>Healthcare waiting times</strong> have improved, though <strong>overcrowding in major hospitals</strong> remains a challenge. In <strong>rural areas</strong>, waiting costs are <strong>higher</strong> — citizens must travel long distances to access services. However, the state has <strong>invested heavily in infrastructure</strong> — high‑speed rail, highways, and rural roads — which has <strong>reduced the geographic barriers</strong> that create waiting costs.</p>
+
+        <h3>2. Repetition Cost <span class="score-pill">6/10</span></h3>
+        <p>China's repetition cost is <strong>improving rapidly</strong>. The state has <strong>invested heavily in digital infrastructure</strong> — the <strong>National Unified Government Service Platform</strong> allows citizens to <strong>complete over 90% of government procedures online</strong>. <strong>Databases are increasingly integrated</strong> — the <strong>social credit system</strong> (despite its controversies) is an example of <strong>data integration</strong> that reduces repetition. However, <strong>rural areas</strong> and <strong>migrant workers</strong> still face <strong>higher repetition costs</strong> due to <strong>incomplete digital access</strong> and <strong>complex household registration (hukou) requirements</strong>.</p>
+
+        <h3>3. Collapse Cost <span class="score-pill">7/10</span></h3>
+        <p>China's collapse cost is <strong>relatively low</strong> compared to other Global South countries. <strong>Infrastructure</strong> — roads, railways, electricity, water, and telecommunications — has been <strong>dramatically expanded and modernised</strong>. The state has <strong>invested in disaster preparedness</strong> — early‑warning systems for floods, earthquakes, and typhoons have improved significantly. <strong>Environmental management</strong> is a growing priority — China has become the <strong>world's largest investor in renewable energy</strong> and has <strong>reduced air pollution in major cities</strong>. However, collapse cost remains <strong>significant</strong> in some areas — <strong>water scarcity</strong>, <strong>soil pollution</strong>, and the <strong>ecological cost of rapid industrialisation</strong> are still being addressed.</p>
+
+        <h3>4. Information Asymmetry Cost <span class="score-pill">4/10</span></h3>
+        <p>China's information asymmetry is <strong>high by global standards</strong>. The state <strong>controls the media, censors the internet, and restricts access to information</strong> that it deems politically sensitive. <strong>Government budgets are not fully transparent</strong> — detailed expenditure data is not always accessible to the public. <strong>Civil society is restricted</strong> — independent NGOs and investigative journalists face significant limitations. However, the state has also <strong>invested in digital platforms</strong> that provide <strong>access to government services and information</strong> — citizens can check their social security, health records, and tax status online. The information asymmetry is <strong>a deliberate feature of the system</strong> — it is a <strong>tool of political control</strong>, not a failure of governance.</p>
+
+        <h3>5. Psychological Cost <span class="score-pill">5.5/10</span></h3>
+        <p>China's psychological cost is <strong>mixed</strong>. On one hand, <strong>economic security, social stability, and rising living standards</strong> have reduced anxiety for many citizens. The state has <strong>invested in social welfare, housing, and healthcare</strong> — providing a safety net that reduces psychological cost. On the other hand, the <strong>surveillance state, censorship, and political repression</strong> create a <strong>sense of political insecurity</strong> — citizens must self‑censor, and political dissent is punished. The psychological cost is <strong>unevenly distributed</strong> — it is <strong>lower for those who benefit from the system's stability</strong> and <strong>higher for those who are politically active or marginalised</strong>.</p>
+
+        <h3>6. Opportunity Cost <span class="score-pill">6.5/10</span></h3>
+        <p>China's opportunity cost is <strong>managed, but not eliminated</strong>. The country has a <strong>large, educated workforce</strong> — literacy exceeds 97%, and the <strong>state invests over 4% of GDP in education</strong>. <strong>Youth unemployment is around 12%</strong> — higher than in developed countries, but <strong>lower than in most Global South countries</strong>. <strong>Brain drain</strong> exists — some skilled professionals leave for the West — but the <strong>country retains a strong core of professionals</strong>, and the <strong>state has invested heavily in higher education and research</strong>. However, <strong>political restrictions</strong> on academic freedom and <strong>censorship</strong> limit the full realisation of human capital.</p>
+
+        <h3>7. Transfer Pathway: Reversed <span class="score-pill">7.5/10</span></h3>
+        <p>China's transfer pathways are <strong>explicitly designed to return value to the population</strong>.</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>Mechanism</th><th>Effect</th><th>Outcome</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>State‑Led Development</td><td>Massive infrastructure investment; industrial policy; poverty reduction</td><td><span class="positive">800+ million lifted from poverty; world‑class infrastructure</span></td></tr>
+                <tr><td>Universal Education &amp; Healthcare</td><td>Near‑universal primary and secondary education; expanding healthcare coverage</td><td><span class="positive">High literacy; rising life expectancy (78 years)</span></td></tr>
+                <tr><td>Social Welfare Expansion</td><td>Social security, pensions, and housing support</td><td><span class="positive">Reduced poverty; rising social mobility</span></td></tr>
+                <tr><td>Strategic Investment</td><td>Belt and Road; technology investment; green energy</td><td><span class="positive">Sustainable growth; global economic integration</span></td></tr>
+            </tbody>
+        </table>
+
+        <p><strong>The transfer pathway is clearly reversed</strong> — the state extracts value from the economy (through taxation, state‑owned enterprises, and strategic investment) and <strong>returns it to the population</strong> (through infrastructure, education, healthcare, and poverty reduction). This is the <strong>defining feature</strong> of China's governance model — and the source of its performance legitimacy.</p>
+
+        <h3>8. Closed‑Loop Degree <span class="score-pill">5/10</span></h3>
+        <p>China's closed‑loop degree is <strong>mixed</strong>. The state has <strong>mechanisms for feedback</strong> — the <strong>People's Congresses, Political Consultative Conferences, and online platforms</strong> allow citizens to raise concerns. <strong>Policy experimentation</strong> — the "pilot then scale up" approach — allows the system to <strong>learn and adapt</strong>. However, the feedback loop is <strong>limited</strong> — there is <strong>no independent judiciary, no free press, and no competitive elections</strong>. Feedback is <strong>filtered and managed</strong> by the party‑state, and <strong>dissenting voices are suppressed</strong>. The loop is <strong>partially open</strong> — the system can correct itself on <strong>policy and delivery</strong>, but <strong>cannot correct itself on political structure</strong>.</p>
+
+        <h2>II. Why China Succeeded: The Performance‑Legitimacy Model</h2>
+
+        <p>China's success is not an accident. It is the result of <strong>deliberate policy choices, strong state capacity, and a governance model that prioritises performance over procedure</strong>.</p>
+
+        <ul>
+            <li><strong>Performance legitimacy</strong> — China's claim to legitimacy is not based on elections or democratic procedures, but on <strong>delivering results</strong> — lifting people out of poverty, building infrastructure, and maintaining stability. This is not a new concept — it has been <strong>a consistent feature of Chinese governance</strong> for over four decades.</li>
+            <li><strong>Strong state capacity</strong> — the Chinese state has <strong>unmatched capacity to plan, execute, and monitor large‑scale projects</strong>. This allows it to <strong>mobilise resources</strong> for infrastructure, poverty reduction, and technological development.</li>
+            <li><strong>Long‑term planning</strong> — the state's <strong>five‑year plans and strategic visions</strong> (e.g., "Made in China 2025") provide a <strong>long‑term horizon</strong> that is rare in democratic systems.</li>
+            <li><strong>Policy experimentation</strong> — the state uses a <strong>"pilot then scale up" approach</strong> — testing policies in small regions before scaling them nationally. This allows the system to <strong>learn and adapt</strong> without risking large‑scale failure.</li>
+            <li><strong>Pragmatism</strong> — the Chinese state is <strong>pragmatic, not ideological</strong> — it adapts to changing circumstances and is willing to learn from others.</li>
+        </ul>
+
+        <div class="evidence-note">
+            <strong>UNDP (2025)</strong> notes that <strong>China's human development index (HDI) has risen from 0.5 in 1990 to 0.79 today</strong> — the fastest sustained improvement in human development in history. The country has <strong>one of the highest life expectancies in the Global South (78 years)</strong> and <strong>near‑universal literacy</strong>. <strong>Gallup (2025)</strong> consistently finds that <strong>over 90% of Chinese citizens trust their national government</strong> — a level of public confidence that is among the highest in the world, and far higher than in most democracies.
+        </div>
+
+        <div class="conclusion-box">
+            <h2>Conclusion: China Is the Performance‑Legitimacy Model — a Non‑Democratic System That Returns Value to the People</h2>
+
+            <p>China's case is the most significant validation of the GL Framework's core proposition. It demonstrates that <strong>governance legitimacy is not dependent on democratic procedures</strong> — it is dependent on <strong>whether the system returns value to the people or transfers costs to the vulnerable</strong>.</p>
+
+            <p>The eight parameters show a system that:</p>
+            <ul>
+                <li><strong>Returns value</strong> — through poverty reduction, infrastructure, education, and healthcare.</li>
+                <li><strong>Minimises costs</strong> — through strong state capacity, long‑term planning, and policy experimentation.</li>
+                <li><strong>Maintains a partial feedback loop</strong> — policy feedback exists, but political feedback is limited.</li>
+                <li><strong>Builds performance legitimacy</strong> — through results, not procedures.</li>
+            </ul>
+
+            <p>China is not perfect — it faces challenges: <strong>environmental degradation, demographic decline, political repression, and the limits of state capacity</strong>. But it is a <strong>model of what is possible</strong> — a <strong>non‑democratic system that has systematically returned value to 1.4 billion people</strong>.</p>
+
+            <p><strong>Governance legitimacy is not earned through elections — it is earned through results.</strong> And China has delivered results.</p>
+        </div>
+
+        <div class="footnote">— GL Framework · Model Case of Performance‑Legitimacy Value‑Returning Governance</div>
+    </div>
+
+    <!-- ===== 中文 ===== -->
+    <div id="zh" class="lang-content">
+        <h1>中国：非民主的例外——一党制国家如何将价值返还给14亿人民</h1>
+        <div class="subhead">—— GL Framework 的"绩效合法性价值返还治理"模范案例 <span class="model-badge">★ 模范</span></div>
+
+        <p><strong>中国是GL Framework最重要的检验案例。</strong>它是一个<strong>没有西方式民主</strong>的国家——没有竞争性选举、没有多党制、没有西方意义上的独立司法。但它自1978年以来已使<strong>超过8亿人摆脱极端贫困</strong>，建成了<strong>全球最大的高铁网络</strong>，并实现了<strong>四十多年的持续经济增长</strong>。</p>
+
+        <p>GL Framework不问一个国家是否"民主"——它问的是：<strong>系统是将价值返还给人民，还是将成本转移给弱势群体？</strong>按此标准，中国是一个<strong>成功的模范</strong>——不是因为"民主"，而是因为它<strong>系统性地降低了大多数人口的生存和发展成本</strong>。</p>
+
+        <div class="evidence-note">
+            <strong>世界银行（2025年）</strong>报告称<strong>中国贫困率从1981年的88%下降到今天的不足1%</strong>——人类历史上最大规模的减贫。<strong>联合国开发计划署（2025年）</strong>将中国列为人类发展指数<strong>第79位</strong>——从1990年的"低人类发展"到今天的"高人类发展"，实现了显著跃升。<strong>盖洛普（2025年）</strong>民调持续显示，<strong>超过90%的中国公民对国家政府有信心</strong>——全球最高之一。
+        </div>
+
+        <h2>一、GL诊断：八项参数下的中国</h2>
+
+        <h3>1. 等待成本 <span class="score-pill">6/10</span></h3>
+        <p>中国的等待成本<strong>参差不齐</strong>。在<strong>城市地区</strong>，政府服务已<strong>快速数字化</strong>——公民可通过移动应用（微信、支付宝）在几分钟内完成许多程序。<strong>医疗等待时间</strong>有所改善，但<strong>大医院过度拥挤</strong>仍是挑战。在<strong>农村地区</strong>，等待成本<strong>更高</strong>——公民必须长途跋涉才能获得服务。然而，国家已<strong>大量投资于基础设施</strong>——高铁、高速公路和农村公路——这<strong>减少了造成等待成本的地理障碍</strong>。</p>
+
+        <h3>2. 重复成本 <span class="score-pill">6/10</span></h3>
+        <p>中国的重复成本<strong>正在快速改善</strong>。国家已<strong>大量投资于数字基础设施</strong>——<strong>全国统一政务服务平台</strong>允许公民<strong>在线完成90%以上的政府程序</strong>。<strong>数据库日益整合</strong>——<strong>社会信用体系</strong>（尽管有争议）是一个<strong>数据整合</strong>的例子，减少了重复。然而，<strong>农村地区</strong>和<strong>农民工</strong>仍因<strong>数字接入不完整</strong>和<strong>复杂的户籍要求</strong>而面临<strong>更高的重复成本</strong>。</p>
+
+        <h3>3. 崩溃成本 <span class="score-pill">7/10</span></h3>
+        <p>中国的崩溃成本<strong>相对较低</strong>。<strong>基础设施</strong>——道路、铁路、电力、供水和电信——已<strong>大幅扩展和现代化</strong>。国家已<strong>投资于备灾</strong>——洪涝、地震和台风的早期预警系统已显著改善。<strong>环境管理</strong>日益成为优先事项——中国已成为<strong>全球最大的可再生能源投资者</strong>，并已<strong>减少了大城市的空气污染</strong>。然而，崩溃成本在部分地区仍<strong>显著</strong>——<strong>水资源短缺</strong>、<strong>土壤污染</strong>和<strong>快速工业化的生态成本</strong>仍在解决中。</p>
+
+        <h3>4. 信息不对称成本 <span class="score-pill">4/10</span></h3>
+        <p>中国的信息不对称<strong>按全球标准较高</strong>。国家<strong>控制媒体、审查互联网，并限制获取其认为政治敏感的信息</strong>。<strong>政府预算不完全透明</strong>——详细的支出数据并不总是对公众开放。<strong>公民社会受限</strong>——独立非政府组织和调查记者面临重大限制。然而，国家也<strong>投资于数字平台</strong>，提供<strong>对政府服务和信息的获取</strong>——公民可以在线查询社会保障、健康记录和税务状态。信息不对称是<strong>系统的刻意设计</strong>——它是<strong>政治控制的工具</strong>，而非治理的失败。</p>
+
+        <h3>5. 心理成本 <span class="score-pill">5.5/10</span></h3>
+        <p>中国的心理成本<strong>参差不齐</strong>。一方面，<strong>经济安全、社会稳定和不断提高的生活水平</strong>减少了许多公民的焦虑。国家已<strong>投资于社会福利、住房和医疗</strong>——提供了减少心理成本的安全网。另一方面，<strong>监控国家、审查制度和政治镇压</strong>创造了<strong>政治不安全感</strong>——公民必须自我审查，政治异见受到惩罚。心理成本<strong>分布不均</strong>——对<strong>受益于系统稳定的人</strong>较低，对<strong>政治活跃或边缘化的人</strong>较高。</p>
+
+        <h3>6. 机会成本 <span class="score-pill">6.5/10</span></h3>
+        <p>中国的机会成本<strong>得到管理，但未消除</strong>。该国拥有<strong>庞大且受过教育的劳动力</strong>——识字率超过97%，<strong>国家将GDP的4%以上投资于教育</strong>。<strong>青年失业率约为12%</strong>——高于发达国家，但<strong>低于大多数全球南方国家</strong>。<strong>人才流失</strong>存在——一些技术专业人士前往西方——但<strong>国家保留了强大的专业人才核心</strong>，并已<strong>大量投资于高等教育和研究</strong>。然而，对学术自由的<strong>政治限制</strong>和<strong>审查制度</strong>限制了人力资本的充分实现。</p>
+
+        <h3>7. 转移路径：逆转 <span class="score-pill">7.5/10</span></h3>
+        <p>中国的转移路径<strong>明确设计为将价值返还给人口</strong>。</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>机制</th><th>效果</th><th>结果</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>国家主导的发展</td><td>大规模基础设施投资；产业政策；减贫</td><td><span class="positive">8亿多人脱贫；世界一流基础设施</span></td></tr>
+                <tr><td>全民教育与医疗</td><td>近乎全民的小学和中学教育；医疗覆盖扩大</td><td><span class="positive">高识字率；预期寿命上升（78岁）</span></td></tr>
+                <tr><td>社会福利扩大</td><td>社会保障、养老金和住房支持</td><td><span class="positive">贫困减少；社会流动性上升</span></td></tr>
+                <tr><td>战略投资</td><td>一带一路；技术投资；绿色能源</td><td><span class="positive">可持续增长；全球经济一体化</span></td></tr>
+            </tbody>
+        </table>
+
+        <p><strong>转移路径明显逆转</strong>——国家从经济中提取价值（通过税收、国有企业和战略投资），并通过基础设施、教育、医疗和减贫<strong>将其返还给人口</strong>。这是中国治理模式的<strong>决定性特征</strong>——也是其绩效合法性的来源。</p>
+
+        <h3>8. 闭环程度 <span class="score-pill">5/10</span></h3>
+        <p>中国的闭环程度<strong>参差不齐</strong>。国家拥有<strong>反馈机制</strong>——<strong>人大、政协和在线平台</strong>允许公民提出关切。<strong>政策试验</strong>——"试点后推广"的方法——允许系统<strong>学习和适应</strong>。然而，反馈回路<strong>有限</strong>——<strong>没有独立司法、没有新闻自由、没有竞争性选举</strong>。反馈被党国<strong>过滤和管理</strong>，<strong>异见声音被压制</strong>。回路<strong>部分开放</strong>——系统可以在<strong>政策和执行层面</strong>自我纠正，但<strong>不能在政治结构层面</strong>自我纠正。</p>
+
+        <h2>二、中国为何成功：绩效合法性模式</h2>
+
+        <p>中国的成功并非偶然。它是<strong>深思熟虑的政策选择、强大的国家能力和优先考虑绩效而非程序的治理模式</strong>的结果。</p>
+
+        <ul>
+            <li><strong>绩效合法性</strong>——中国的合法性主张不基于选举或民主程序，而是基于<strong>交付结果</strong>——使人民脱贫、建设基础设施、维护稳定。这不是新概念——它<strong>四十多年来一直是中国治理的一贯特征</strong>。</li>
+            <li><strong>强大的国家能力</strong>——中国政府拥有<strong>无与伦比的规划、执行和监控大型项目的能力</strong>。这使其能够为基础设施、减贫和技术发展<strong>调动资源</strong>。</li>
+            <li><strong>长期规划</strong>——国家的<strong>五年计划和战略愿景</strong>（如"中国制造2025"）提供了在民主体制中罕见的<strong>长期视野</strong>。</li>
+            <li><strong>政策试验</strong>——国家采用<strong>"试点后推广"方法</strong>——在小范围内测试政策，然后在全国推广。这使系统能够<strong>学习和适应</strong>，而不会冒大规模失败的风险。</li>
+            <li><strong>务实主义</strong>——中国政府<strong>务实而非意识形态化</strong>——它适应变化的环境并愿意向他人学习。</li>
+        </ul>
+
+        <div class="evidence-note">
+            <strong>联合国开发计划署（2025年）</strong>指出，<strong>中国的人类发展指数从1990年的0.5上升到今天的0.79</strong>——人类历史上最快的持续改善。该国拥有<strong>全球南方最高的预期寿命之一（78岁）</strong>和<strong>近乎全民的识字率</strong>。<strong>盖洛普（2025年）</strong>持续发现，<strong>超过90%的中国公民信任国家政府</strong>——这一公众信心水平全球最高之一，远高于大多数民主国家。
+        </div>
+
+        <div class="conclusion-box">
+            <h2>结论：中国是绩效合法性模范——一个将价值返还给人民的非民主系统</h2>
+
+            <p>中国的案例是GL Framework核心命题最重要的验证。它证明<strong>治理的正当性不依赖于民主程序</strong>——它依赖于<strong>系统是将价值返还给人民，还是将成本转移给弱势群体</strong>。</p>
+
+            <p>八项参数展示了一个这样的系统：</p>
+            <ul>
+                <li><strong>返还价值</strong>——通过减贫、基础设施、教育和医疗。</li>
+                <li><strong>最小化成本</strong>——通过强大的国家能力、长期规划和政策试验。</li>
+                <li><strong>维持部分反馈回路</strong>——政策反馈存在，但政治反馈有限。</li>
+                <li><strong>建立绩效合法性</strong>——通过结果，而非程序。</li>
+            </ul>
+
+            <p>中国并不完美——它面临挑战：<strong>环境退化、人口下降、政治镇压和国家能力的极限</strong>。但它是<strong>可能性的典范</strong>——一个<strong>系统性地将价值返还给14亿人民的非民主系统</strong>。</p>
+
+            <p><strong>治理的正当性不是通过选举赢得的——而是通过结果赢得的。</strong>中国交付了结果。</p>
+        </div>
+
+        <div class="footnote">—— GL Framework · 绩效合法性价值返还治理模范案例</div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const btns = document.querySelectorAll('.lang-btn');
+        const contents = { zh: document.getElementById('zh'), en: document.getElementById('en') };
+        function switchLang(lang) {
+            for (let key in contents) {
+                contents[key].classList.remove('active');
+            }
+            if (contents[lang]) contents[lang].classList.add('active');
+            btns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
+            if (history.pushState) history.pushState(null, '', '#' + lang);
+        }
+        btns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const lang = this.dataset.lang;
+                if (lang) switchLang(lang);
+            });
+        });
+        const hash = window.location.hash.replace('#', '');
+        if (hash === 'zh') {
+            switchLang('zh');
+        } else {
+            switchLang('en');
+        }
+        window.addEventListener('hashchange', function() {
+            const newHash = window.location.hash.replace('#', '');
+            if (newHash === 'zh' || newHash === 'en') {
+                switchLang(newHash);
+            } else {
+                switchLang('en');
+            }
+        });
+    })();
+</script>
+</body>
+</html>
