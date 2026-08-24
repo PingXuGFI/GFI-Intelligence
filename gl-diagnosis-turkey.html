@@ -1,1 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Turkey · GL Framework Diagnosis · 土耳其诊断</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #0b1220;
+            --text: #f8fbff;
+            --muted: #c7d2e3;
+            --sub: #9fb0c8;
+            --dim: rgba(255,255,255,.06);
+            --green: #9FE870;
+            --blue: #7DD3FC;
+            --amber: #fbbf24;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --mono: 'DM Mono', monospace;
+            --sans: 'DM Sans', system-ui, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 15px;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--dim);
+            border-radius: 24px;
+            padding: 2.2rem 2.5rem;
+            backdrop-filter: blur(2px);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green);
+            text-decoration: none;
+            font-family: var(--mono);
+            font-size: 13px;
+            letter-spacing: 0.08em;
+            border: 1px solid rgba(159,232,112,0.3);
+            padding: 8px 18px;
+            border-radius: 40px;
+            transition: all 0.2s;
+            margin-bottom: 1.8rem;
+        }
+        .back-link:hover {
+            background: rgba(159,232,112,0.1);
+            border-color: var(--green);
+            transform: translateX(-4px);
+        }
+        .lang-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.6rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--dim);
+            padding-bottom: 0.8rem;
+        }
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-family: var(--mono);
+            font-weight: 500;
+            color: var(--sub);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
+        .lang-btn.active {
+            background: rgba(159,232,112,0.15);
+            border-color: var(--green);
+            color: var(--green);
+        }
+        .lang-content { display: none; animation: fade 0.3s ease; }
+        .lang-content.active { display: block; }
+        @keyframes fade { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
 
+        h1 {
+            font-size: 2.1rem;
+            font-family: var(--serif);
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            border-left: 6px solid var(--amber);
+            padding-left: 1.2rem;
+        }
+        .subhead {
+            font-size: 1rem;
+            color: var(--sub);
+            margin-bottom: 2rem;
+            padding-left: 1.2rem;
+            border-left: 3px solid rgba(251,191,36,0.3);
+            font-style: italic;
+        }
+        h2 {
+            font-size: 1.4rem;
+            font-family: var(--serif);
+            margin-top: 2.2rem;
+            margin-bottom: 0.6rem;
+            color: #eaf6ff;
+            border-bottom: 1px dashed rgba(255,255,255,0.08);
+            padding-bottom: 0.3rem;
+        }
+        h2 .badge {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: rgba(251,191,36,0.15);
+            color: var(--amber);
+            padding: 0.05rem 0.8rem;
+            border-radius: 30px;
+            margin-left: 0.8rem;
+            font-weight: 400;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1.4rem;
+            margin-bottom: 0.4rem;
+            color: var(--muted);
+        }
+        p { margin-bottom: 1rem; color: var(--muted); text-align: justify; }
+        ul, ol { margin: 0.5rem 0 1rem 1.8rem; list-style-type: disc; color: var(--muted); }
+        li { margin-bottom: 0.3rem; }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0 1.5rem 0;
+            font-size: 0.85rem;
+            font-family: var(--mono);
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .data-table th {
+            background: rgba(251,191,36,0.10);
+            color: var(--amber);
+            padding: 0.6rem 1rem;
+            text-align: left;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            border-bottom: 1px solid var(--dim);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+        .data-table td {
+            padding: 0.6rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            vertical-align: top;
+            color: var(--muted);
+        }
+        .data-table tr:last-child td { border-bottom: none; }
+
+        .evidence-note {
+            background: rgba(125,211,252,0.04);
+            padding: 0.8rem 1.2rem;
+            border-radius: 6px;
+            margin: 0.5rem 0 1rem 0;
+            font-size: 0.85rem;
+            color: var(--sub);
+            border-left: 3px solid var(--blue);
+        }
+        .evidence-note strong { color: var(--blue); }
+
+        .conclusion-box {
+            background: rgba(255,255,255,0.03);
+            border-left: 4px solid var(--amber);
+            padding: 1.5rem 2rem;
+            margin-top: 2rem;
+            border-radius: 12px;
+        }
+        .conclusion-box h2 { border: none; margin-top:0; padding-top:0; }
+        .footnote {
+            font-size: 0.75rem;
+            color: var(--sub);
+            text-align: right;
+            margin-top: 2rem;
+            border-top: 1px solid var(--dim);
+            padding-top: 1rem;
+            font-style: italic;
+        }
+
+        .score-pill {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            font-weight: 500;
+            background: rgba(251,191,36,0.12);
+            color: var(--amber);
+            padding: 0.05rem 0.8rem;
+            border-radius: 30px;
+            margin-left: 0.6rem;
+            letter-spacing: 0.02em;
+        }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.2rem; }
+            h1 { font-size: 1.6rem; padding-left:0.8rem; }
+            h2 { font-size: 1.2rem; }
+            .lang-bar { justify-content: center; }
+            .data-table { font-size: 0.7rem; }
+            .data-table th, .data-table td { padding: 0.4rem 0.6rem; }
+            .conclusion-box { padding: 1rem 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="global-south-diagnosis.html" class="back-link">← 返回首页 / Back to Home</a>
+
+    <div class="lang-bar">
+        <button class="lang-btn" data-lang="zh">中文</button>
+        <button class="lang-btn active" data-lang="en">English</button>
+    </div>
+
+    <!-- ===== ENGLISH ===== -->
+    <div id="en" class="lang-content active">
+        <h1>Turkey: The Failed Promise of "New Turkey" — a Cost‑Transfer Machine in the Heart of Eurasia</h1>
+        <div class="subhead">— A GL Framework Diagnosis of "Executive‑Captured Democracy"</div>
+
+        <p><strong>Turkey is a country of dramatic contradictions.</strong> It is a <strong>NATO member and an EU candidate</strong>, yet its democracy has been <strong>systematically eroded</strong> under President Erdoğan. It is a <strong>middle‑income economy with a large industrial base</strong>, yet <strong>inflation exceeds 40%</strong> and <strong>the currency has lost over 80% of its value</strong> against the dollar in the past five years. It is a <strong>regional power</strong> that projects military force from Libya to the Caucasus, yet its <strong>Kurdish minority</strong> — 15–20% of the population — has been <strong>subjected to decades of state‑sanctioned violence</strong>.</p>
+
+        <p>The Erdoğan era has been defined by the <strong>construction of a "New Turkey"</strong> — a project of <strong>executive centralisation, Islamist conservatism, and economic nationalism</strong>. But from the perspective of the GL Framework, "New Turkey" is primarily a <strong>cost‑transfer machine</strong> — a system that transfers the costs of economic mismanagement, political repression, and infrastructure collapse to the poor, the Kurdish population, and the young.</p>
+
+        <div class="evidence-note">
+            <strong>World Bank (2025)</strong> reports that <strong>Turkey's poverty rate has risen to 15%</strong> — up from 10% in 2020. <strong>Youth unemployment exceeds 25%</strong>, and <strong>inflation has eroded the purchasing power of the lira</strong> by over 80% since 2018. <strong>Human Rights Watch (2025)</strong> documents the <strong>systematic repression of Kurdish political parties, journalists, and activists</strong> — with over <strong>50,000 people arrested</strong> on politically motivated charges since 2016. <strong>The 2023 earthquake</strong> killed over <strong>50,000 people</strong> and destroyed <strong>over 200,000 buildings</strong> — a collapse cost that exposed the <strong>systemic failures of the state</strong>.
+        </div>
+
+        <h2>I. GL Diagnosis: Turkey Under Eight Parameters</h2>
+
+        <h3>1. Waiting Cost <span class="score-pill">2/10</span></h3>
+        <p>Turkey's waiting cost is <strong>visible in its public services and infrastructure</strong>. <strong>Public hospitals</strong> are overcrowded; patients wait <strong>hours for emergency care</strong> and <strong>months for specialist surgeries</strong>. The <strong>2023 earthquake</strong> response was catastrophic: survivors waited <strong>days for rescue</strong>, while the state's <strong>emergency response was slow and inadequate</strong>. <strong>Government services</strong> — passports, permits, and court cases — are <strong>notoriously slow</strong>; a simple court case can take <strong>3‑5 years</strong>. The waiting cost is compounded by <strong>economic inflation</strong> — as the lira devalues, the cost of waiting increases in real terms.</p>
+
+        <h3>2. Repetition Cost <span class="score-pill">2/10</span></h3>
+        <p>Turkey's bureaucracy is <strong>centralised but fragmented</strong>. Citizens must <strong>repeat applications across multiple agencies</strong> — for identity documents, land registration, and social services — because <strong>databases are not integrated</strong>. The <strong>e‑government system</strong> has improved access, but <strong>many services still require physical visits</strong> and <strong>repeated submissions</strong>. For <strong>Kurds</strong> and other minorities, the repetition cost is multiplied by <strong>language barriers, bureaucratic suspicion, and political discrimination</strong>.</p>
+
+        <h3>3. Collapse Cost <span class="score-pill">1/10</span></h3>
+        <p>Turkey's collapse cost is <strong>visible in its earthquake, its economy, and its infrastructure</strong>. The <strong>2023 earthquake</strong> was the most dramatic collapse cost — <strong>over 50,000 dead, 200,000 buildings destroyed</strong> — but it was not an accident of nature; it was a <strong>collapse of state capacity</strong>. Building codes were <strong>not enforced</strong>; construction inspections were <strong>corrupted</strong>; emergency response was <strong>slow and politicised</strong>. The <strong>economic collapse</strong> is also a collapse cost: inflation, currency devaluation, and <strong>rising poverty</strong> are costs transferred from the state to the population. <strong>Infrastructure</strong> — roads, bridges, and water systems — is <strong>aging and under‑maintained</strong>, with the collapse cost borne by citizens.</p>
+
+        <h3>4. Information Asymmetry Cost <span class="score-pill">1.5/10</span></h3>
+        <p>Turkey's information asymmetry is <strong>systematically weaponised</strong>. The <strong>state controls the media</strong> — over <strong>90% of Turkish media is owned by pro‑government conglomerates</strong>. <strong>Journalists are imprisoned</strong>; over <strong>200 journalists are currently in prison</strong>, making Turkey the <strong>world's largest jailer of journalists</strong>. <strong>Government budgets</strong> are <strong>opaque</strong>; the public cannot track expenditure. <strong>Earthquake‑related funds</strong> have been <strong>diverted</strong>, and the public has <strong>no way to know where the money went</strong>. Information asymmetry is not incidental — it is a <strong>tool of political control and elite enrichment</strong>.</p>
+
+        <h3>5. Psychological Cost <span class="score-pill">1/10</span></h3>
+        <p>Turkey's psychological cost is <strong>rooted in political repression, economic precarity, and collective trauma</strong>. The <strong>2016 coup attempt</strong> and the subsequent <strong>state of emergency</strong> (which lasted two years) left a <strong>deep psychological scar</strong>. The <strong>2023 earthquake</strong> added another layer of trauma — thousands of survivors remain <strong>displaced and traumatised</strong>. The <strong>Kurdish population</strong> carries the <strong>weight of decades of state violence, displacement, and political exclusion</strong>. A 2025 survey by the Turkish Psychiatric Association found that <strong>50% of Turks reported symptoms of anxiety and depression</strong> — a rate that has risen sharply since 2020. The psychological cost is compounded by the <strong>erosion of trust</strong> in the state and its institutions.</p>
+
+        <h3>6. Opportunity Cost <span class="score-pill">1/10</span></h3>
+        <p>Turkey's opportunity cost is <strong>generational and structural</strong>. The country has a <strong>large, educated youth population</strong> — but <strong>youth unemployment exceeds 25%</strong>, and <strong>brain drain has accelerated</strong>. Over <strong>2 million skilled Turks</strong> have left the country since 2016 — doctors, engineers, academics, and IT professionals. The <strong>education system</strong> has been <strong>politicised and degraded</strong>; the state has <strong>reduced funding for universities</strong> and <strong>curtailed academic freedom</strong>. The <strong>opportunity cost</strong> is a <strong>lost generation of talent</strong> — a generation that could have built a modern, prosperous Turkey, but instead has been <strong>driven abroad by repression and economic collapse</strong>.</p>
+
+        <h3>7. Transfer Pathway <span class="score-pill">1/10</span></h3>
+        <p>Turkey's cost transfer mechanisms are structural and well‑documented:</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>Cost Creator</th><th>Cost Bearer</th><th>Transfer Mechanism</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Erdoğan Government / AKP Elite</td><td>Poor &amp; Working Class</td><td>Currency devaluation transfers wealth from savers to the state; inflation erodes wages; the poor bear the cost of economic mismanagement</td></tr>
+                <tr><td>Construction Companies</td><td>Earthquake Survivors</td><td>Building codes are not enforced; construction companies profit from cheap materials; earthquake survivors bear the collapse cost</td></tr>
+                <tr><td>State Security Apparatus</td><td>Kurdish Population</td><td>State violence, displacement, and political exclusion — the cost of the Kurdish conflict is transferred to the Kurdish community</td></tr>
+            </tbody>
+        </table>
+
+        <p><strong>The transfer pathway is clear: the state extracts wealth, controls information, and represses dissent; the poor, the Kurdish population, and the young bear the costs.</strong> "New Turkey" is not a project of national renewal — it is a <strong>project of cost transfer</strong>.</p>
+
+        <h3>8. Closed‑Loop Degree <span class="score-pill">1/10</span></h3>
+        <p>Turkey has <strong>a parliament and a constitutional order</strong>, but the feedback loop is <strong>effectively closed</strong>. <strong>Elections are held, but they are not free and fair</strong> — the state controls the media, suppresses opposition, and manipulates the electoral process. The <strong>judiciary is politicised</strong>; courts have been used to <strong>jail opponents and acquit allies</strong>. The <strong>media is controlled by the state</strong>; independent journalism is <strong>systematically harassed and imprisoned</strong>. The loop <strong>does not exist in practice</strong> — feedback is suppressed, and the state does not correct itself.</p>
+
+        <h2>II. "New Turkey" — a Cost‑Transfer Machine in the Heart of Eurasia</h2>
+        <p>The Erdoğan era has been defined by the construction of a "New Turkey" — a project that has centralised power in the executive, promoted Islamist conservatism, and pursued economic nationalism. But from the perspective of the GL Framework, "New Turkey" is primarily a <strong>cost‑transfer machine</strong> — a system that transfers the costs of economic mismanagement, political repression, and infrastructure collapse to the poor, the Kurdish population, and the young.</p>
+
+        <div class="evidence-note">
+            <strong>Transparency International (2025)</strong> ranks Turkey <strong>103rd out of 182 countries</strong> on the Corruption Perceptions Index — a drop of over 40 places since 2010. <strong>Freedom House (2025)</strong> classifies Turkey as <strong>"partly free"</strong> — down from "free" in the 1990s. The <strong>World Bank (2025)</strong> notes that <strong>Turkey's economic growth has been driven by short‑term consumption, not long‑term investment</strong> — a pattern that is unsustainable and cost‑transfer‑intensive.
+        </div>
+
+        <p>The pattern is consistent with the GL Framework's diagnosis:</p>
+        <ul>
+            <li><strong>Value is extracted</strong> — by the AKP elite, construction companies, and the security apparatus.</li>
+            <li><strong>Costs are transferred</strong> — to the poor (inflation, unemployment), to the Kurdish population (violence, displacement), to the young (brain drain, unemployment), and to the future (unsustainable economic model).</li>
+            <li><strong>Feedback is blocked</strong> — by media control, political repression, and a politicised judiciary.</li>
+            <li><strong>The loop is closed</strong> — because the state is designed to preserve the power of the elite.</li>
+        </ul>
+
+        <div class="conclusion-box">
+            <h2>Conclusion: Turkey Is a Case of "Executive‑Captured Democracy" — a System That Transfers Costs to the Poor, the Kurds, and the Young</h2>
+            <p>Turkey's case demonstrates the GL Framework's core proposition: <strong>a country can have democratic forms and a powerful state — while systematically transferring costs to the most vulnerable populations.</strong></p>
+            <p>The eight parameters show a system that:</p>
+            <ul>
+                <li><strong>Centralises power</strong> — in the executive, at the expense of the judiciary, the parliament, and the media.</li>
+                <li><strong>Mismanages the economy</strong> — and transfers the cost of mismanagement to the poor and working class.</li>
+                <li><strong>Represses dissent</strong> — especially the Kurdish population, but also any political opposition.</li>
+                <li><strong>Fails to learn</strong> — because the feedback loop is closed, and the state cannot correct itself.</li>
+            </ul>
+            <p>"New Turkey" is not a project of national renewal — it is a <strong>project of cost transfer</strong>. The costs of the regime's policies are systematically transferred to those who have the least power: the poor, the Kurds, and the young.</p>
+            <p><strong>Governance legitimacy is not earned by centralising power or projecting military force. It is earned by returning value to the population.</strong> Turkey's "New Turkey" has not returned value — it has transferred costs.</p>
+        </div>
+
+        <div class="footnote">— A GL Framework diagnosis of executive‑captured democracy</div>
+    </div>
+
+    <!-- ===== 中文 ===== -->
+    <div id="zh" class="lang-content">
+        <h1>土耳其："新土耳其"的失败承诺——欧亚大陆心脏地带的成本转移机器</h1>
+        <div class="subhead">—— GL Framework 对一个"行政捕获民主"的诊断</div>
+
+        <p><strong>土耳其是一个充满戏剧性矛盾的国家。</strong>它是<strong>北约成员国和欧盟候选国</strong>，但其民主在埃尔多安总统任内<strong>被系统性侵蚀</strong>。它是<strong>拥有庞大工业基础的中等收入经济体</strong>，但<strong>通胀率超过40%</strong>，<strong>里拉对美元汇率在过去五年中贬值超过80%</strong>。它是从利比亚到高加索地区投射军事力量的<strong>区域大国</strong>，但其<strong>库尔德少数民族</strong>——占人口的15-20%——遭受了<strong>数十年国家认可的暴力</strong>。</p>
+
+        <p>埃尔多安时代以<strong>"新土耳其"的构建</strong>为特征——一个<strong>行政集权、伊斯兰保守主义和经济民族主义</strong>的项目。但从GL Framework的视角看，"新土耳其"主要是一个<strong>成本转移机器</strong>——一个将经济管理不善、政治镇压和基础设施崩溃的成本转移给穷人、库尔德人和年轻人的系统。</p>
+
+        <div class="evidence-note">
+            <strong>世界银行（2025年）</strong>报告称<strong>土耳其贫困率已升至15%</strong>——高于2020年的10%。<strong>青年失业率超过25%</strong>，<strong>通胀自2018年以来已侵蚀里拉购买力超过80%</strong>。<strong>人权观察（2025年）</strong>记录了<strong>对库尔德政党、记者和活动人士的系统性镇压</strong>——自2016年以来已有<strong>超过5万人</strong>因政治动机指控被捕。<strong>2023年地震</strong>造成<strong>超过5万人死亡</strong>，摧毁了<strong>超过20万栋建筑</strong>——一项暴露了<strong>国家系统性失败</strong>的崩溃成本。
+        </div>
+
+        <h2>一、GL诊断：八项参数下的土耳其</h2>
+
+        <h3>1. 等待成本 <span class="score-pill">2/10</span></h3>
+        <p>土耳其的等待成本<strong>体现在公共服务和基础设施中</strong>。<strong>公立医院</strong>人满为患；患者等待<strong>数小时才能获得急诊护理</strong>，<strong>数月才能进行专科手术</strong>。<strong>2023年地震</strong>应对是灾难性的：幸存者等待<strong>数天才获救</strong>，而国家的<strong>应急响应缓慢且不足</strong>。<strong>政府服务</strong>——护照、许可证和法庭案件——以<strong>缓慢著称</strong>；一宗简单的法庭案件可能需要<strong>3至5年</strong>。等待成本因<strong>经济通胀</strong>而加剧——随着里拉贬值，等待的实际成本在增加。</p>
+
+        <h3>2. 重复成本 <span class="score-pill">2/10</span></h3>
+        <p>土耳其的官僚机构<strong>集权但碎片化</strong>。公民必须在<strong>多个机构重复申请</strong>——身份证件、土地登记和社会服务——因为<strong>数据库未整合</strong>。<strong>电子政务系统</strong>改善了可及性，但<strong>许多服务仍需亲临现场</strong>和<strong>重复提交</strong>。对<strong>库尔德人</strong>和其他少数民族而言，重复成本因<strong>语言障碍、官僚怀疑和政治歧视</strong>而成倍增加。</p>
+
+        <h3>3. 崩溃成本 <span class="score-pill">1/10</span></h3>
+        <p>土耳其的崩溃成本<strong>体现在地震、经济和基础设施中</strong>。<strong>2023年地震</strong>是最具戏剧性的崩溃成本——<strong>超过5万人死亡、20万栋建筑被毁</strong>——但这并非自然事故；它是<strong>国家能力的崩溃</strong>。建筑规范<strong>未被执行</strong>；施工检查被<strong>腐化</strong>；应急响应<strong>缓慢且政治化</strong>。<strong>经济崩溃</strong>也是一种崩溃成本：通胀、货币贬值和<strong>贫困加剧</strong>是从国家转移到人口的成本。<strong>基础设施</strong>——道路、桥梁和供水系统——正在<strong>老化和维护不足</strong>，崩溃成本由公民承担。</p>
+
+        <h3>4. 信息不对称成本 <span class="score-pill">1.5/10</span></h3>
+        <p>土耳其的信息不对称被<strong>系统性地武器化</strong>。<strong>国家控制媒体</strong>——<strong>超过90%的土耳其媒体由亲政府财团拥有</strong>。<strong>记者被监禁</strong>；目前有<strong>超过200名记者在狱中</strong>，使土耳其成为<strong>全球最大的记者监禁国</strong>。<strong>政府预算</strong>不透明；公众无法追踪支出。<strong>地震相关资金</strong>被<strong>挪用</strong>，公众<strong>无法知道钱去了哪里</strong>。信息不对称并非偶然——它是<strong>政治控制和精英敛财的工具</strong>。</p>
+
+        <h3>5. 心理成本 <span class="score-pill">1/10</span></h3>
+        <p>土耳其的心理成本<strong>根植于政治镇压、经济不稳定和集体创伤</strong>。<strong>2016年政变未遂</strong>及随后的<strong>紧急状态</strong>（持续两年）留下了<strong>深刻的心理伤疤</strong>。<strong>2023年地震</strong>又增加了一层创伤——数千幸存者仍<strong>流离失所和受到创伤</strong>。<strong>库尔德人</strong>背负着<strong>数十年国家暴力、流离失所和政治排斥的重压</strong>。土耳其精神病学协会2025年的一项调查发现，<strong>50%的土耳其人有焦虑和抑郁症状</strong>——自2020年以来急剧上升。心理成本因对国家和其机构的<strong>信任侵蚀</strong>而加剧。</p>
+
+        <h3>6. 机会成本 <span class="score-pill">1/10</span></h3>
+        <p>土耳其的机会成本是<strong>代际性和结构性的</strong>。该国拥有<strong>庞大且受过教育的青年人口</strong>——但<strong>青年失业率超过25%</strong>，<strong>人才流失加速</strong>。自2016年以来，已有<strong>超过200万技术熟练的土耳其人</strong>离开该国——医生、工程师、学者和IT专业人士。<strong>教育系统</strong>被<strong>政治化和降级</strong>；国家<strong>削减了大学经费</strong>并<strong>限制了学术自由</strong>。<strong>机会成本</strong>是<strong>失去一整代人才</strong>——本可以建设一个现代化、繁荣的土耳其的一代人，却被<strong>镇压和经济崩溃驱赶到海外</strong>。</p>
+
+        <h3>7. 转移路径 <span class="score-pill">1/10</span></h3>
+        <p>土耳其的成本转移机制是结构性的且有充分记录：</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>成本创造者</th><th>成本承担者</th><th>转移机制</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>埃尔多安政府/正发党精英</td><td>穷人与工人阶级</td><td>货币贬值将储蓄财富转移给国家；通胀侵蚀工资；穷人承担经济管理不善的成本</td></tr>
+                <tr><td>建筑公司</td><td>地震幸存者</td><td>建筑规范未被执行；建筑公司从廉价材料中获利；地震幸存者承担崩溃成本</td></tr>
+                <tr><td>国家安全机器</td><td>库尔德人</td><td>国家暴力、流离失所和政治排斥——库尔德冲突的成本被转移给库尔德社区</td></tr>
+            </tbody>
+        </table>
+
+        <p><strong>转移路径是清晰的：国家提取财富、控制信息、压制异见；穷人、库尔德人和年轻人承担成本。</strong>"新土耳其"不是国家复兴的项目——它是<strong>成本转移的项目</strong>。</p>
+
+        <h3>8. 闭环程度 <span class="score-pill">1/10</span></h3>
+        <p>土耳其拥有<strong>议会和宪法秩序</strong>，但反馈回路<strong>实际上被封闭</strong>。<strong>选举举行，但并不自由公正</strong>——国家控制媒体、压制反对派、操纵选举过程。<strong>司法被政治化</strong>；法院被用于<strong>监禁反对者、赦免盟友</strong>。<strong>媒体由国家控制</strong>；独立新闻业被<strong>系统性地骚扰和监禁</strong>。回路<strong>在实践中不存在</strong>——反馈被压制，国家不自我纠正。</p>
+
+        <h2>二、"新土耳其"——欧亚大陆心脏地带的成本转移机器</h2>
+        <p>埃尔多安时代以"新土耳其"的构建为特征——一个将权力集中在行政部门、推广伊斯兰保守主义和追求经济民族主义的项目。但从GL Framework的视角看，"新土耳其"主要是一个<strong>成本转移机器</strong>——一个将经济管理不善、政治镇压和基础设施崩溃的成本转移给穷人、库尔德人和年轻人的系统。</p>
+
+        <div class="evidence-note">
+            <strong>透明国际（2025年）</strong>将土耳其列为清廉指数<strong>第103位（共182个国家）</strong>——自2010年以来下降了40多位。<strong>自由之家（2025年）</strong>将土耳其列为<strong>"部分自由"</strong>——较1990年代的"自由"有所下降。<strong>世界银行（2025年）</strong>指出，<strong>土耳其的经济增长由短期消费驱动，而非长期投资</strong>——一种不可持续且成本转移密集的模式。
+        </div>
+
+        <div class="conclusion-box">
+            <h2>结论：土耳其是"行政捕获民主"的案例——将成本转移给穷人、库尔德人和年轻人的系统</h2>
+            <p>土耳其的案例展示了GL Framework的核心命题：<strong>一个国家可以拥有民主形式和强大的国家——同时系统性地将成本转移给最脆弱的人群。</strong></p>
+            <p>八项参数展示了一个这样的系统：</p>
+            <ul>
+                <li><strong>集中权力</strong>——在行政部门，牺牲司法、议会和媒体。</li>
+                <li><strong>管理经济不善</strong>——并将管理不善的成本转移给穷人和工人阶级。</li>
+                <li><strong>压制异见</strong>——尤其是库尔德人，也包括任何政治反对派。</li>
+                <li><strong>无法学习</strong>——因为反馈回路被封闭，国家无法自我纠正。</li>
+            </ul>
+            <p>"新土耳其"不是国家复兴的项目——它是<strong>成本转移的项目</strong>。政权政策的成本被系统性地转移给权力最小的人：穷人、库尔德人和年轻人。</p>
+            <p><strong>治理的正当性不是通过集权或投射军事力量赢得的。而是通过将价值返还给人民赢得的。</strong>土耳其的"新土耳其"没有返还价值——它转移了成本。</p>
+        </div>
+
+        <div class="footnote">—— GL Framework 对行政捕获民主的诊断</div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const btns = document.querySelectorAll('.lang-btn');
+        const contents = { zh: document.getElementById('zh'), en: document.getElementById('en') };
+        function switchLang(lang) {
+            for (let key in contents) {
+                contents[key].classList.remove('active');
+            }
+            if (contents[lang]) contents[lang].classList.add('active');
+            btns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
+            if (history.pushState) history.pushState(null, '', '#' + lang);
+        }
+        btns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const lang = this.dataset.lang;
+                if (lang) switchLang(lang);
+            });
+        });
+        const hash = window.location.hash.replace('#', '');
+        if (hash === 'zh') {
+            switchLang('zh');
+        } else {
+            switchLang('en');
+        }
+        window.addEventListener('hashchange', function() {
+            const newHash = window.location.hash.replace('#', '');
+            if (newHash === 'zh' || newHash === 'en') {
+                switchLang(newHash);
+            } else {
+                switchLang('en');
+            }
+        });
+    })();
+</script>
+</body>
+</html>
