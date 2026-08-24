@@ -1,1 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Summary · GL Framework · 总结 · Resumen</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #0b1220;
+            --text: #f8fbff;
+            --muted: #c7d2e3;
+            --sub: #9fb0c8;
+            --dim: rgba(255,255,255,.06);
+            --green: #9FE870;
+            --blue: #7DD3FC;
+            --amber: #fbbf24;
+            --rose: #f87171;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --mono: 'DM Mono', monospace;
+            --sans: 'DM Sans', system-ui, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 15px;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--dim);
+            border-radius: 24px;
+            padding: 2.2rem 2.5rem;
+            backdrop-filter: blur(2px);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green);
+            text-decoration: none;
+            font-family: var(--mono);
+            font-size: 13px;
+            letter-spacing: 0.08em;
+            border: 1px solid rgba(159,232,112,0.3);
+            padding: 8px 18px;
+            border-radius: 40px;
+            transition: all 0.2s;
+            margin-bottom: 1.8rem;
+        }
+        .back-link:hover {
+            background: rgba(159,232,112,0.1);
+            border-color: var(--green);
+            transform: translateX(-4px);
+        }
+        .lang-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.6rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--dim);
+            padding-bottom: 0.8rem;
+        }
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-family: var(--mono);
+            font-weight: 500;
+            color: var(--sub);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
+        .lang-btn.active {
+            background: rgba(159,232,112,0.15);
+            border-color: var(--green);
+            color: var(--green);
+        }
+        .lang-content { display: none; animation: fade 0.3s ease; }
+        .lang-content.active { display: block; }
+        @keyframes fade { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
 
+        h1 {
+            font-size: 2.1rem;
+            font-family: var(--serif);
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            border-left: 6px solid var(--amber);
+            padding-left: 1.2rem;
+        }
+        .subhead {
+            font-size: 1rem;
+            color: var(--sub);
+            margin-bottom: 2rem;
+            padding-left: 1.2rem;
+            border-left: 3px solid rgba(251,191,36,0.3);
+            font-style: italic;
+        }
+        h2 {
+            font-size: 1.4rem;
+            font-family: var(--serif);
+            margin-top: 2.2rem;
+            margin-bottom: 0.6rem;
+            color: #eaf6ff;
+            border-bottom: 1px dashed rgba(255,255,255,0.08);
+            padding-bottom: 0.3rem;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1.4rem;
+            margin-bottom: 0.4rem;
+            color: var(--muted);
+        }
+        p { margin-bottom: 1rem; color: var(--muted); text-align: justify; }
+        ul, ol { margin: 0.5rem 0 1rem 1.8rem; list-style-type: disc; color: var(--muted); }
+        li { margin-bottom: 0.3rem; }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0 1.5rem 0;
+            font-size: 0.8rem;
+            font-family: var(--mono);
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .data-table th {
+            background: rgba(251,191,36,0.10);
+            color: var(--amber);
+            padding: 0.5rem 0.8rem;
+            text-align: left;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            border-bottom: 1px solid var(--dim);
+            font-size: 0.65rem;
+            text-transform: uppercase;
+        }
+        .data-table td {
+            padding: 0.5rem 0.8rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            vertical-align: top;
+            color: var(--muted);
+            font-size: 0.75rem;
+        }
+        .data-table tr:last-child td { border-bottom: none; }
+        .data-table .highlight { color: var(--amber); font-weight: 500; }
+
+        .evidence-note {
+            background: rgba(125,211,252,0.04);
+            padding: 0.8rem 1.2rem;
+            border-radius: 6px;
+            margin: 0.5rem 0 1rem 0;
+            font-size: 0.85rem;
+            color: var(--sub);
+            border-left: 3px solid var(--blue);
+        }
+        .evidence-note strong { color: var(--blue); }
+
+        .conclusion-box {
+            background: rgba(255,255,255,0.03);
+            border-left: 4px solid var(--amber);
+            padding: 1.5rem 2rem;
+            margin-top: 2rem;
+            border-radius: 12px;
+        }
+        .conclusion-box h2 { border: none; margin-top:0; padding-top:0; }
+        .footnote {
+            font-size: 0.75rem;
+            color: var(--sub);
+            text-align: right;
+            margin-top: 2rem;
+            border-top: 1px solid var(--dim);
+            padding-top: 1rem;
+            font-style: italic;
+        }
+
+        .score-pill {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            font-weight: 500;
+            background: rgba(251,191,36,0.12);
+            color: var(--amber);
+            padding: 0.05rem 0.7rem;
+            border-radius: 30px;
+            margin-left: 0.4rem;
+            letter-spacing: 0.02em;
+        }
+
+        .country-tag {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 0.55rem;
+            background: rgba(255,255,255,0.05);
+            padding: 0.05rem 0.5rem;
+            border-radius: 12px;
+            color: var(--sub);
+            margin-right: 0.3rem;
+        }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.2rem; }
+            h1 { font-size: 1.6rem; padding-left:0.8rem; }
+            h2 { font-size: 1.2rem; }
+            .lang-bar { justify-content: center; }
+            .data-table { font-size: 0.6rem; }
+            .data-table th, .data-table td { padding: 0.3rem 0.5rem; }
+            .conclusion-box { padding: 1rem 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="global-south-diagnosis.html" class="back-link">← 返回首页 / Back to Home</a>
+
+    <div class="lang-bar">
+        <button class="lang-btn" data-lang="zh">中文</button>
+        <button class="lang-btn active" data-lang="en">English</button>
+        <button class="lang-btn" data-lang="es">Español</button>
+    </div>
+
+    <!-- ===== ENGLISH ===== -->
+    <div id="en" class="lang-content active">
+        <h1>Pseudo‑Democratic Freedom: The Common Predicament of the Global South</h1>
+        <div class="subhead">— A GL Framework Synthesis of Eleven Country Diagnoses</div>
+
+        <p><strong>This is the concluding synthesis of the GL Framework · Global South Diagnostic Series.</strong> Across eleven countries — from the Philippines to India — a common pattern has emerged. Despite vast differences in history, culture, and economic development, <strong>all eleven cases exhibit the same fundamental dynamic: a system that captures value from the population and systematically transfers costs to the most vulnerable.</strong></p>
+
+        <p>This synthesis is not a summary — it is a <strong>diagnosis of a common pathology</strong>. The GL Framework has revealed that the countries of the Global South are not "failing" or "developing" in the conventional sense. They are <strong>cost‑transfer machines</strong> — systems designed (or captured) to extract value from the majority and concentrate it in the hands of a minority, while externalising the costs of collapse to the poor, the marginalised, and the environment.</p>
+
+        <h2>I. The GL Framework: A Recap</h2>
+
+        <p><strong>Core proposition:</strong> Governance legitimacy is measured by whether a system <em>returns value</em> to the people or <em>transfers costs</em> to the vulnerable.</p>
+
+        <p><strong>Eight diagnostic parameters:</strong></p>
+        <ul>
+            <li><strong>Waiting Cost</strong> — the time citizens waste waiting for services.</li>
+            <li><strong>Repetition Cost</strong> — the burden of repeating the same bureaucratic processes.</li>
+            <li><strong>Collapse Cost</strong> — the cost of infrastructure and service failure.</li>
+            <li><strong>Information Asymmetry Cost</strong> — the cost of not having access to information.</li>
+            <li><strong>Psychological Cost</strong> — the mental and emotional toll of systemic failure.</li>
+            <li><strong>Opportunity Cost</strong> — the lost potential of a generation.</li>
+            <li><strong>Transfer Pathway</strong> — the mechanisms by which costs are transferred.</li>
+            <li><strong>Closed‑Loop Degree</strong> — the extent to which the system can correct itself.</li>
+        </ul>
+
+        <h2>II. The Common Pattern: A Cost‑Transfer Machine</h2>
+
+        <p>Across all eleven countries, the following pattern is consistently observed:</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>Parameter</th><th>Common Pattern</th><th>Who Bears the Cost</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Waiting Cost</td><td>Chronic bureaucratic delays; healthcare and court backlogs</td><td>Poor, rural, marginalised communities</td></tr>
+                <tr><td>Repetition Cost</td><td>Fragmented, non‑integrated databases; redundant processes</td><td>Those with least time and resources</td></tr>
+                <tr><td>Collapse Cost</td><td>Infrastructure failure; environmental degradation; violence</td><td>The poor, the displaced, the environment</td></tr>
+                <tr><td>Information Asymmetry</td><td>State controls information; opaque budgets; suppressed media</td><td>Those without access to power</td></tr>
+                <tr><td>Psychological Cost</td><td>Trauma; anxiety; learned helplessness</td><td>Minorities, women, the young</td></tr>
+                <tr><td>Opportunity Cost</td><td>Brain drain; youth unemployment; lost potential</td><td>The next generation</td></tr>
+                <tr><td>Transfer Pathway</td><td>Corruption; regressive taxation; elite capture</td><td>Poor → rich; marginals → elites</td></tr>
+                <tr><td>Closed‑Loop Degree</td><td>Elections held, but feedback blocked</td><td>All citizens (system cannot correct)</td></tr>
+            </tbody>
+        </table>
+
+        <h2>III. The Eleven Countries: A Comparative Snapshot</h2>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>Country</th><th>Score (avg)</th><th>Core Diagnosis</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Philippines</td><td>2.1</td><td>Political family domination; "ghost projects"; 51% self‑rate as poor</td></tr>
+                <tr><td>Taiwan</td><td>3.4</td><td>Geopolitical shield; military spending crowds out welfare</td></tr>
+                <tr><td>Afghanistan</td><td>1.1</td><td>Taliban extraction regime; women erased; 85% below poverty line</td></tr>
+                <tr><td>Iraq</td><td>1.4</td><td>Oil wealth captured by sectarian elites; infrastructure collapse</td></tr>
+                <tr><td>Haiti</td><td>0.5</td><td>Gang‑state symbiosis; 80% of Port‑au‑Prince under gang control</td></tr>
+                <tr><td>South Africa</td><td>1.6</td><td>ANC elite capture; load‑shedding; world's highest inequality</td></tr>
+                <tr><td>Brazil</td><td>1.6</td><td>Oligarchic democracy; Amazon sacrificed for agribusiness</td></tr>
+                <tr><td>Bangladesh</td><td>1.8</td><td>Garment miracle built on cost externalisation; climate displacement</td></tr>
+                <tr><td>Thailand</td><td>1.7</td><td>Military‑monarchy capture; lèse‑majesté suppresses dissent</td></tr>
+                <tr><td>Turkey</td><td>1.2</td><td>"New Turkey" is a cost‑transfer machine; Kurds pay the price</td></tr>
+                <tr><td>India</td><td>1.6</td><td>Caste‑captured majoritarian democracy; world's largest cost‑transfer system</td></tr>
+            </tbody>
+        </table>
+
+        <h2>IV. What Do All Eleven Have in Common?</h2>
+
+        <p>Despite their diversity, all eleven countries share a set of <strong>structural features</strong> that constitute the GL Framework's definition of "pseudo‑democratic freedom":</p>
+
+        <ul>
+            <li><strong>Democratic forms without democratic substance.</strong> Elections are held, but they do not produce accountability. The rich and powerful capture the state, and the poor are excluded.</li>
+            <li><strong>Elite capture as a structural feature.</strong> Political families, corporate elites, military institutions, or sectarian parties control the state apparatus — and they use it to transfer costs to the vulnerable.</li>
+            <li><strong>Feedback loops that are blocked or non‑existent.</strong> Citizens cannot demand correction because the media, the judiciary, and the political system are all captured.</li>
+            <li><strong>Costs that are systematically externalised.</strong> The costs of infrastructure failure, environmental collapse, and state repression are transferred to the poor, the marginalised, and the environment.</li>
+            <li><strong>Economic growth that benefits the few.</strong> Growth is real, but it is concentrated in the top 10% (or 1%) — the majority are left behind.</li>
+            <li><strong>Psychological trauma as a policy tool.</strong> State violence, communal conflict, and economic precarity are used to maintain control.</li>
+        </ul>
+
+        <div class="evidence-note">
+            <strong>The GL Framework's core conclusion:</strong> The countries of the Global South are not "developing" in the conventional sense. They are <strong>cost‑transfer machines</strong> — systems that extract value from the majority and transfer it to a minority, while externalising the costs of collapse to the poor, the marginalised, and the environment.
+        </div>
+
+        <h2>V. Why Is This Pattern So Consistent?</h2>
+
+        <p>The consistency of this pattern suggests that it is not accidental. It is the result of <strong>structural factors</strong> that are common across the Global South:</p>
+
+        <ul>
+            <li><strong>Colonial legacies</strong> — the extraction economies established by colonial powers have been continued by local elites.</li>
+            <li><strong>Neoliberal economic policies</strong> — structural adjustment programmes have prioritised debt repayment and corporate profits over social welfare.</li>
+            <li><strong>Weak state capacity</strong> — the state cannot deliver services, so the poor bear the cost of collapse.</li>
+            <li><strong>Elite capture</strong> — political and economic elites have captured the state and use it to extract value.</li>
+            <li><strong>Geopolitical pressures</strong> — the Global South is caught in the crossfire of great power competition, which often reinforces authoritarian tendencies.</li>
+        </ul>
+
+        <h2>VI. The Common Predicament: Pseudo‑Democratic Freedom</h2>
+
+        <p>The GL Framework diagnoses this pattern as <strong>"pseudo‑democratic freedom."</strong> It is a system that:</p>
+
+        <ul>
+            <li><strong>Looks like democracy</strong> — elections, constitutions, parliaments — but <strong>functions like a cost‑transfer machine</strong>.</li>
+            <li><strong>Looks like freedom</strong> — formal rights and freedoms — but <strong>operates through systematic exclusion and repression</strong>.</li>
+            <li><strong>Looks like development</strong> — economic growth and modernisation — but <strong>transfers the costs of development to the most vulnerable</strong>.</li>
+        </ul>
+
+        <p>This is the common predicament of the Global South: <strong>a system that promises freedom and democracy, but delivers cost transfer and exclusion.</strong></p>
+
+        <div class="conclusion-box">
+            <h2>Conclusion: The GL Framework's Diagnosis of the Global South</h2>
+
+            <p>The GL Framework · Global South Diagnostic Series has revealed a <strong>systematic pattern</strong> across eleven countries. Despite their diversity, all eleven share the same fundamental dynamic: <strong>a system that captures value from the population and systematically transfers costs to the most vulnerable.</strong></p>
+
+            <p>This is not a failure of individual countries — it is a <strong>systemic failure of governance models</strong> that have been imposed or adopted across the Global South. The "pseudo‑democratic freedom" model is not a path to development — it is a <strong>path to cost transfer, elite enrichment, and perpetual crisis.</strong></p>
+
+            <p>The GL Framework offers a <strong>new lens</strong> for understanding governance: not by measuring institutions or procedures, but by <strong>measuring who bears the costs and who receives the value.</strong></p>
+
+            <p><strong>Governance legitimacy is not earned by holding elections, writing constitutions, or generating growth. It is earned by returning value to the people — and by not transferring costs to the vulnerable.</strong></p>
+
+            <p>The countries of the Global South do not need more "democracy promotion" or "development aid." They need <strong>a fundamental restructuring of the relationship between the state and the population</strong> — a shift from cost‑transfer to value‑return.</p>
+
+            <p>This is the <strong>common predicament</strong> of the Global South. And it is the <strong>common challenge</strong> that the GL Framework seeks to address.</p>
+        </div>
+
+        <div class="footnote">— GL Framework · Global South Diagnosis Series · Synthesis</div>
+    </div>
+
+    <!-- ===== 中文 ===== -->
+    <div id="zh" class="lang-content">
+        <h1>伪民主自由：全球南方的共同困境</h1>
+        <div class="subhead">—— GL Framework 十一国诊断的综合分析</div>
+
+        <p><strong>这是 GL Framework · 全球南方诊断系列的总结篇。</strong>跨越十一个国家——从菲律宾到印度——一个共同的模式已经浮现。尽管历史、文化和经济发展存在巨大差异，<strong>所有十一个案例都展现出相同的基本动态：一个从人口中捕获价值、系统性地将成本转移给最脆弱者的系统。</strong></p>
+
+        <p>这篇总结不是摘要——而是对<strong>一种共同病理的诊断</strong>。GL Framework揭示，全球南方国家并非传统意义上的"失败"或"发展中"。它们是<strong>成本转移机器</strong>——被设计（或捕获）用于从多数人中提取价值并将其集中在少数人手中，同时将崩溃的成本外部化给穷人、边缘群体和环境。</p>
+
+        <h2>一、GL Framework：回顾</h2>
+
+        <p><strong>核心命题：</strong>治理的正当性在于系统是将<em>价值返还</em>给人民，还是将<em>成本转移</em>给弱势群体。</p>
+
+        <p><strong>八项诊断参数：</strong></p>
+        <ul>
+            <li><strong>等待成本</strong>——公民等待服务所浪费的时间。</li>
+            <li><strong>重复成本</strong>——重复相同官僚程序的负担。</li>
+            <li><strong>崩溃成本</strong>——基础设施和服务失败的代价。</li>
+            <li><strong>信息不对称成本</strong>——无法获取信息的代价。</li>
+            <li><strong>心理成本</strong>——系统性失败带来的心理和情感负担。</li>
+            <li><strong>机会成本</strong>——一代人失去的潜力。</li>
+            <li><strong>转移路径</strong>——成本转移的机制。</li>
+            <li><strong>闭环程度</strong>——系统自我纠正的程度。</li>
+        </ul>
+
+        <h2>二、共同模式：成本转移机器</h2>
+
+        <p>在所有十一个国家中，以下模式被一致观察到：</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>参数</th><th>共同模式</th><th>成本承担者</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>等待成本</td><td>慢性官僚延迟；医疗和法院积压</td><td>穷人、农村、边缘社区</td></tr>
+                <tr><td>重复成本</td><td>碎片化、未整合的数据库；冗余流程</td><td>时间和资源最少的人</td></tr>
+                <tr><td>崩溃成本</td><td>基础设施失败；环境退化；暴力</td><td>穷人、流离失所者、环境</td></tr>
+                <tr><td>信息不对称</td><td>国家控制信息；不透明预算；媒体受压制</td><td>无法接触权力的人</td></tr>
+                <tr><td>心理成本</td><td>创伤；焦虑；习得性无助</td><td>少数群体、妇女、年轻人</td></tr>
+                <tr><td>机会成本</td><td>人才流失；青年失业；潜力丧失</td><td>下一代</td></tr>
+                <tr><td>转移路径</td><td>腐败；累退税；精英捕获</td><td>穷人→富人；边缘→精英</td></tr>
+                <tr><td>闭环程度</td><td>选举举行，但反馈被阻塞</td><td>所有公民（系统无法纠正）</td></tr>
+            </tbody>
+        </table>
+
+        <h2>三、十一个国家：比较快照</h2>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>国家</th><th>评分（平均）</th><th>核心诊断</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>菲律宾</td><td>2.1</td><td>政治家族主导；"幽灵工程"；51%自评为贫困</td></tr>
+                <tr><td>台湾</td><td>3.4</td><td>地缘政治盾牌；军费挤压福利</td></tr>
+                <tr><td>阿富汗</td><td>1.1</td><td>塔利班掠夺性政权；妇女被抹除；85%在贫困线以下</td></tr>
+                <tr><td>伊拉克</td><td>1.4</td><td>石油财富被教派精英捕获；基础设施崩溃</td></tr>
+                <tr><td>海地</td><td>0.5</td><td>黑帮-国家共生；太子港80%处于黑帮控制</td></tr>
+                <tr><td>南非</td><td>1.6</td><td>非国大精英捕获；限电；全球最高不平等</td></tr>
+                <tr><td>巴西</td><td>1.6</td><td>寡头民主；亚马逊为农业综合企业牺牲</td></tr>
+                <tr><td>孟加拉国</td><td>1.8</td><td>成衣奇迹建立在成本外部化之上；气候流离失所</td></tr>
+                <tr><td>泰国</td><td>1.7</td><td>军方-王室捕获；冒犯君主法压制异见</td></tr>
+                <tr><td>土耳其</td><td>1.2</td><td>"新土耳其"是成本转移机器；库尔德人付出代价</td></tr>
+                <tr><td>印度</td><td>1.6</td><td>种姓捕获的多数民主；全球最大成本转移系统</td></tr>
+            </tbody>
+        </table>
+
+        <h2>四、十一个国家有何共同点？</h2>
+
+        <p>尽管存在多样性，所有十一个国家都共享一组<strong>结构性特征</strong>，构成GL Framework对"伪民主自由"的定义：</p>
+
+        <ul>
+            <li><strong>有民主形式而无民主实质。</strong>选举举行，但不产生问责。富人和有权势者捕获国家，穷人被排斥。</li>
+            <li><strong>精英捕获是结构性特征。</strong>政治家族、企业精英、军事机构或教派政党控制国家机器——并用它将成本转移给弱势群体。</li>
+            <li><strong>反馈回路被阻塞或不存在。</strong>公民无法要求纠正，因为媒体、司法和政治系统都被捕获。</li>
+            <li><strong>成本被系统性地外部化。</strong>基础设施失败、环境崩溃和国家镇压的成本被转移给穷人、边缘群体和环境。</li>
+            <li><strong>经济增长只惠及少数人。</strong>增长是真实的，但集中在前10%（或1%）——多数人被抛在后面。</li>
+            <li><strong>心理创伤作为政策工具。</strong>国家暴力、社区冲突和经济不稳定被用于维持控制。</li>
+        </ul>
+
+        <div class="evidence-note">
+            <strong>GL Framework的核心结论：</strong>全球南方国家并非传统意义上的"发展"。它们是<strong>成本转移机器</strong>——从多数人提取价值并转移给少数人，同时将崩溃成本外部化给穷人、边缘群体和环境。
+        </div>
+
+        <h2>五、为何这种模式如此一致？</h2>
+
+        <p>这种模式的一致性表明它并非偶然。它是全球南方共同的<strong>结构性因素</strong>的结果：</p>
+
+        <ul>
+            <li><strong>殖民遗产</strong>——殖民者建立的提取经济被地方精英延续。</li>
+            <li><strong>新自由主义经济政策</strong>——结构调整计划优先考虑偿债和企业利润而非社会福利。</li>
+            <li><strong>国家能力薄弱</strong>——国家无法提供服务，因此穷人承担崩溃成本。</li>
+            <li><strong>精英捕获</strong>——政治和经济精英捕获国家并利用其提取价值。</li>
+            <li><strong>地缘政治压力</strong>——全球南方处于大国竞争的交叉火力中，这往往强化了威权倾向。</li>
+        </ul>
+
+        <h2>六、共同困境：伪民主自由</h2>
+
+        <p>GL Framework将此模式诊断为<strong>"伪民主自由"</strong>。这是一个这样的系统：</p>
+
+        <ul>
+            <li><strong>看起来像民主</strong>——选举、宪法、议会——但<strong>运作如成本转移机器</strong>。</li>
+            <li><strong>看起来像自由</strong>——正式权利和自由——但<strong>通过系统性排斥和压制运作</strong>。</li>
+            <li><strong>看起来像发展</strong>——经济增长和现代化——但<strong>将发展的成本转移给最脆弱者</strong>。</li>
+        </ul>
+
+        <p>这是全球南方的共同困境：<strong>一个承诺自由和民主，却交付成本转移和排斥的系统。</strong></p>
+
+        <div class="conclusion-box">
+            <h2>结论：GL Framework对全球南方的诊断</h2>
+
+            <p>GL Framework · 全球南方诊断系列揭示了十一个国家中的<strong>系统性模式</strong>。尽管存在多样性，所有十一个国家都共享相同的基本动态：<strong>一个从人口中捕获价值、系统性地将成本转移给最脆弱者的系统。</strong></p>
+
+            <p>这不是单个国家的失败——这是<strong>治理模式的系统性失败</strong>，这些模式在全球南方被强加或采纳。"伪民主自由"模式不是发展的道路——它是<strong>通往成本转移、精英致富和永久危机的道路。</strong></p>
+
+            <p>GL Framework提供了理解治理的<strong>新视角</strong>：不是通过衡量制度或程序，而是通过<strong>衡量谁承担成本、谁获得价值。</strong></p>
+
+            <p><strong>治理的正当性不是通过举行选举、制定宪法或产生增长赢得的。它是通过将价值返还给人民——以及不将成本转移给弱势群体——赢得的。</strong></p>
+
+            <p>全球南方国家不需要更多的"民主促进"或"发展援助"。它们需要<strong>国家与人口之间关系的根本性重构</strong>——从成本转移转向价值返还。</p>
+
+            <p>这是全球南方的<strong>共同困境</strong>。这也是GL Framework试图解决的<strong>共同挑战</strong>。</p>
+        </div>
+
+        <div class="footnote">—— GL Framework · 全球南方诊断系列 · 总结篇</div>
+    </div>
+
+    <!-- ===== ESPAÑOL ===== -->
+    <div id="es" class="lang-content">
+        <h1>Libertad Pseudodemocrática: El Predicamento Común del Sur Global</h1>
+        <div class="subhead">— Una Síntesis GL Framework de Once Diagnósticos Nacionales</div>
+
+        <p><strong>Esta es la síntesis conclusiva de la Serie de Diagnósticos GL Framework · Sur Global.</strong> A lo largo de once países — desde Filipinas hasta India — ha emergido un patrón común. A pesar de las vastas diferencias en historia, cultura y desarrollo económico, <strong>los once casos exhiben la misma dinámica fundamental: un sistema que captura valor de la población y transfiere sistemáticamente los costos a los más vulnerables.</strong></p>
+
+        <p>Esta síntesis no es un resumen — es un <strong>diagnóstico de una patología común</strong>. El GL Framework ha revelado que los países del Sur Global no están "fracasando" o "desarrollándose" en el sentido convencional. Son <strong>máquinas de transferencia de costos</strong> — sistemas diseñados (o capturados) para extraer valor de la mayoría y concentrarlo en manos de una minoría, mientras externalizan los costos del colapso a los pobres, los marginados y el medio ambiente.</p>
+
+        <h2>I. El GL Framework: Un Repaso</h2>
+
+        <p><strong>Proposición central:</strong> La legitimidad gubernativa se mide por si un sistema <em>devuelve valor</em> a la gente o <em>transfiere costos</em> a los vulnerables.</p>
+
+        <p><strong>Ocho parámetros de diagnóstico:</strong></p>
+        <ul>
+            <li><strong>Costo de Espera</strong> — el tiempo que los ciudadanos pierden esperando servicios.</li>
+            <li><strong>Costo de Repetición</strong> — la carga de repetir los mismos procesos burocráticos.</li>
+            <li><strong>Costo de Colapso</strong> — el costo del fracaso de infraestructura y servicios.</li>
+            <li><strong>Costo de Asimetría de Información</strong> — el costo de no tener acceso a la información.</li>
+            <li><strong>Costo Psicológico</strong> — el costo mental y emocional del fracaso sistémico.</li>
+            <li><strong>Costo de Oportunidad</strong> — el potencial perdido de una generación.</li>
+            <li><strong>Vía de Transferencia</strong> — los mecanismos por los cuales se transfieren los costos.</li>
+            <li><strong>Grado de Bucle Cerrado</strong> — la medida en que el sistema puede corregirse a sí mismo.</li>
+        </ul>
+
+        <h2>II. El Patrón Común: Una Máquina de Transferencia de Costos</h2>
+
+        <p>En todos los once países, se observa consistentemente el siguiente patrón:</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>Parámetro</th><th>Patrón Común</th><th>Quién Soporta el Costo</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Costo de Espera</td><td>Demoras burocráticas crónicas; atrasos en salud y tribunales</td><td>Comunidades pobres, rurales, marginadas</td></tr>
+                <tr><td>Costo de Repetición</td><td>Bases de datos fragmentadas y no integradas; procesos redundantes</td><td>Quienes tienen menos tiempo y recursos</td></tr>
+                <tr><td>Costo de Colapso</td><td>Fracaso de infraestructura; degradación ambiental; violencia</td><td>Los pobres, los desplazados, el medio ambiente</td></tr>
+                <tr><td>Asimetría de Información</td><td>El estado controla la información; presupuestos opacos; medios reprimidos</td><td>Aquellos sin acceso al poder</td></tr>
+                <tr><td>Costo Psicológico</td><td>Trauma; ansiedad; desamparo aprendido</td><td>Minorías, mujeres, jóvenes</td></tr>
+                <tr><td>Costo de Oportunidad</td><td>Fuga de cerebros; desempleo juvenil; potencial perdido</td><td>La próxima generación</td></tr>
+                <tr><td>Vía de Transferencia</td><td>Corrupción; impuestos regresivos; captura de élites</td><td>Pobres → ricos; marginados → élites</td></tr>
+                <tr><td>Grado de Bucle Cerrado</td><td>Elecciones realizadas, pero retroalimentación bloqueada</td><td>Todos los ciudadanos (el sistema no puede corregirse)</td></tr>
+            </tbody>
+        </table>
+
+        <h2>III. Los Once Países: Una Instantánea Comparativa</h2>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>País</th><th>Puntuación (prom.)</th><th>Diagnóstico Central</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Filipinas</td><td>2.1</td><td>Dominio de familias políticas; "proyectos fantasma"; 51% se auto‑califican como pobres</td></tr>
+                <tr><td>Taiwán</td><td>3.4</td><td>Escudo geopolítico; gasto militar desplaza el bienestar</td></tr>
+                <tr><td>Afganistán</td><td>1.1</td><td>Régimen de extracción talibán; mujeres borradas; 85% bajo el umbral de pobreza</td></tr>
+                <tr><td>Irak</td><td>1.4</td><td>Riqueza petrolera capturada por élites sectarias; colapso de infraestructura</td></tr>
+                <tr><td>Haití</td><td>0.5</td><td>Simbiosis estado‑pandillas; 80% de Puerto Príncipe bajo control de pandillas</td></tr>
+                <tr><td>Sudáfrica</td><td>1.6</td><td>Captura de élite del ANC; cortes de electricidad; desigualdad más alta del mundo</td></tr>
+                <tr><td>Brasil</td><td>1.6</td><td>Democracia oligárquica; Amazonas sacrificado por el agronegocio</td></tr>
+                <tr><td>Bangladés</td><td>1.8</td><td>Milagro textil construido sobre externalización de costos; desplazamiento climático</td></tr>
+                <tr><td>Tailandia</td><td>1.7</td><td>Captura militar‑monárquica; leyes de lesa majestad suprimen la disidencia</td></tr>
+                <tr><td>Turquía</td><td>1.2</td><td>"Nueva Turquía" es una máquina de transferencia de costos; los kurdos pagan el precio</td></tr>
+                <tr><td>India</td><td>1.6</td><td>Democracia mayoritaria capturada por castas; el mayor sistema de transferencia de costos del mundo</td></tr>
+            </tbody>
+        </table>
+
+        <h2>IV. ¿Qué Tienen en Común los Once Países?</h2>
+
+        <p>A pesar de su diversidad, los once países comparten un conjunto de <strong>características estructurales</strong> que constituyen la definición del GL Framework de "libertad pseudodemocrática":</p>
+
+        <ul>
+            <li><strong>Formas democráticas sin sustancia democrática.</strong> Se realizan elecciones, pero no producen rendición de cuentas. Los ricos y poderosos capturan el estado, y los pobres son excluidos.</li>
+            <li><strong>La captura de élites como característica estructural.</strong> Familias políticas, élites corporativas, instituciones militares o partidos sectarios controlan el aparato estatal — y lo usan para transferir costos a los vulnerables.</li>
+            <li><strong>Bucles de retroalimentación bloqueados o inexistentes.</strong> Los ciudadanos no pueden exigir corrección porque los medios, el poder judicial y el sistema político están capturados.</li>
+            <li><strong>Costos sistemáticamente externalizados.</strong> Los costos del fracaso de infraestructura, el colapso ambiental y la represión estatal se transfieren a los pobres, los marginados y el medio ambiente.</li>
+            <li><strong>Crecimiento económico que beneficia a unos pocos.</strong> El crecimiento es real, pero se concentra en el 10% (o 1%) superior — la mayoría queda atrás.</li>
+            <li><strong>Trauma psicológico como herramienta política.</strong> La violencia estatal, el conflicto comunal y la precariedad económica se utilizan para mantener el control.</li>
+        </ul>
+
+        <div class="evidence-note">
+            <strong>Conclusión central del GL Framework:</strong> Los países del Sur Global no se están "desarrollando" en el sentido convencional. Son <strong>máquinas de transferencia de costos</strong> — sistemas que extraen valor de la mayoría y lo transfieren a una minoría, mientras externalizan los costos del colapso a los pobres, los marginados y el medio ambiente.
+        </div>
+
+        <h2>V. ¿Por Qué Es Tan Consistente Este Patrón?</h2>
+
+        <p>La consistencia de este patrón sugiere que no es accidental. Es el resultado de <strong>factores estructurales</strong> comunes en todo el Sur Global:</p>
+
+        <ul>
+            <li><strong>Legados coloniales</strong> — las economías de extracción establecidas por los poderes coloniales han sido continuadas por las élites locales.</li>
+            <li><strong>Políticas económicas neoliberales</strong> — los programas de ajuste estructural han priorizado el pago de la deuda y las ganancias corporativas sobre el bienestar social.</li>
+            <li><strong>Capacidad estatal débil</strong> — el estado no puede prestar servicios, por lo que los pobres soportan el costo del colapso.</li>
+            <li><strong>Captura de élites</strong> — las élites políticas y económicas han capturado el estado y lo usan para extraer valor.</li>
+            <li><strong>Presiones geopolíticas</strong> — el Sur Global está atrapado en el fuego cruzado de la competencia entre grandes potencias, lo que a menudo refuerza las tendencias autoritarias.</li>
+        </ul>
+
+        <h2>VI. El Predicamento Común: Libertad Pseudodemocrática</h2>
+
+        <p>El GL Framework diagnostica este patrón como <strong>"libertad pseudodemocrática."</strong> Es un sistema que:</p>
+
+        <ul>
+            <li><strong>Parece democracia</strong> — elecciones, constituciones, parlamentos — pero <strong>funciona como una máquina de transferencia de costos</strong>.</li>
+            <li><strong>Parece libertad</strong> — derechos y libertades formales — pero <strong>opera a través de la exclusión y represión sistemáticas</strong>.</li>
+            <li><strong>Parece desarrollo</strong> — crecimiento económico y modernización — pero <strong>transfiere los costos del desarrollo a los más vulnerables</strong>.</li>
+        </ul>
+
+        <p>Este es el predicamento común del Sur Global: <strong>un sistema que promete libertad y democracia, pero entrega transferencia de costos y exclusión.</strong></p>
+
+        <div class="conclusion-box">
+            <h2>Conclusión: El Diagnóstico del GL Framework para el Sur Global</h2>
+
+            <p>La Serie de Diagnósticos GL Framework · Sur Global ha revelado un <strong>patrón sistemático</strong> en once países. A pesar de su diversidad, los once comparten la misma dinámica fundamental: <strong>un sistema que captura valor de la población y transfiere sistemáticamente los costos a los más vulnerables.</strong></p>
+
+            <p>Esto no es un fracaso de países individuales — es un <strong>fracaso sistémico de los modelos de gobernanza</strong> que han sido impuestos o adoptados en todo el Sur Global. El modelo de "libertad pseudodemocrática" no es un camino hacia el desarrollo — es un <strong>camino hacia la transferencia de costos, el enriquecimiento de las élites y la crisis perpetua.</strong></p>
+
+            <p>El GL Framework ofrece una <strong>nueva perspectiva</strong> para entender la gobernanza: no midiendo instituciones o procedimientos, sino <strong>midiendo quién soporta los costos y quién recibe el valor.</strong></p>
+
+            <p><strong>La legitimidad gubernativa no se gana celebrando elecciones, redactando constituciones o generando crecimiento. Se gana devolviendo valor a la gente — y no transfiriendo costos a los vulnerables.</strong></p>
+
+            <p>Los países del Sur Global no necesitan más "promoción de la democracia" o "ayuda al desarrollo." Necesitan <strong>una reestructuración fundamental de la relación entre el estado y la población</strong> — un cambio de la transferencia de costos a la devolución de valor.</p>
+
+            <p>Este es el <strong>predicamento común</strong> del Sur Global. Y es el <strong>desafío común</strong> que el GL Framework busca abordar.</p>
+        </div>
+
+        <div class="footnote">— GL Framework · Serie de Diagnóstico del Sur Global · Síntesis</div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const btns = document.querySelectorAll('.lang-btn');
+        const contents = {
+            en: document.getElementById('en'),
+            zh: document.getElementById('zh'),
+            es: document.getElementById('es')
+        };
+
+        function switchLang(lang) {
+            for (let key in contents) {
+                contents[key].classList.remove('active');
+            }
+            if (contents[lang]) contents[lang].classList.add('active');
+            btns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
+            if (history.pushState) history.pushState(null, '', '#' + lang);
+        }
+
+        btns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const lang = this.dataset.lang;
+                if (lang) switchLang(lang);
+            });
+        });
+
+        const hash = window.location.hash.replace('#', '');
+        if (hash === 'zh' || hash === 'es') {
+            switchLang(hash);
+        } else {
+            switchLang('en');
+        }
+
+        window.addEventListener('hashchange', function() {
+            const newHash = window.location.hash.replace('#', '');
+            if (newHash === 'zh' || newHash === 'es') {
+                switchLang(newHash);
+            } else {
+                switchLang('en');
+            }
+        });
+    })();
+</script>
+</body>
+</html>
