@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vietnam · GL Framework Diagnosis · 越南诊断</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #0b1220;
+            --text: #f8fbff;
+            --muted: #c7d2e3;
+            --sub: #9fb0c8;
+            --dim: rgba(255,255,255,.06);
+            --green: #9FE870;
+            --blue: #7DD3FC;
+            --amber: #fbbf24;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --mono: 'DM Mono', monospace;
+            --sans: 'DM Sans', system-ui, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 15px;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--dim);
+            border-radius: 24px;
+            padding: 2.2rem 2.5rem;
+            backdrop-filter: blur(2px);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green);
+            text-decoration: none;
+            font-family: var(--mono);
+            font-size: 13px;
+            letter-spacing: 0.08em;
+            border: 1px solid rgba(159,232,112,0.3);
+            padding: 8px 18px;
+            border-radius: 40px;
+            transition: all 0.2s;
+            margin-bottom: 1.8rem;
+        }
+        .back-link:hover {
+            background: rgba(159,232,112,0.1);
+            border-color: var(--green);
+            transform: translateX(-4px);
+        }
+        .lang-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.6rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--dim);
+            padding-bottom: 0.8rem;
+        }
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-family: var(--mono);
+            font-weight: 500;
+            color: var(--sub);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
+        .lang-btn.active {
+            background: rgba(159,232,112,0.15);
+            border-color: var(--green);
+            color: var(--green);
+        }
+        .lang-content { display: none; animation: fade 0.3s ease; }
+        .lang-content.active { display: block; }
+        @keyframes fade { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+        h1 {
+            font-size: 2.1rem;
+            font-family: var(--serif);
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            border-left: 6px solid var(--amber);
+            padding-left: 1.2rem;
+        }
+        .subhead {
+            font-size: 1rem;
+            color: var(--sub);
+            margin-bottom: 2rem;
+            padding-left: 1.2rem;
+            border-left: 3px solid rgba(251,191,36,0.3);
+            font-style: italic;
+        }
+        h2 {
+            font-size: 1.4rem;
+            font-family: var(--serif);
+            margin-top: 2.2rem;
+            margin-bottom: 0.6rem;
+            color: #eaf6ff;
+            border-bottom: 1px dashed rgba(255,255,255,0.08);
+            padding-bottom: 0.3rem;
+        }
+        h2 .badge {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: rgba(251,191,36,0.15);
+            color: var(--amber);
+            padding: 0.05rem 0.8rem;
+            border-radius: 30px;
+            margin-left: 0.8rem;
+            font-weight: 400;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1.4rem;
+            margin-bottom: 0.4rem;
+            color: var(--muted);
+        }
+        p { margin-bottom: 1rem; color: var(--muted); text-align: justify; }
+        ul, ol { margin: 0.5rem 0 1rem 1.8rem; list-style-type: disc; color: var(--muted); }
+        li { margin-bottom: 0.3rem; }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0 1.5rem 0;
+            font-size: 0.85rem;
+            font-family: var(--mono);
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .data-table th {
+            background: rgba(251,191,36,0.10);
+            color: var(--amber);
+            padding: 0.6rem 1rem;
+            text-align: left;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            border-bottom: 1px solid var(--dim);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+        .data-table td {
+            padding: 0.6rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            vertical-align: top;
+            color: var(--muted);
+        }
+        .data-table tr:last-child td { border-bottom: none; }
+
+        .evidence-note {
+            background: rgba(125,211,252,0.04);
+            padding: 0.8rem 1.2rem;
+            border-radius: 6px;
+            margin: 0.5rem 0 1rem 0;
+            font-size: 0.85rem;
+            color: var(--sub);
+            border-left: 3px solid var(--blue);
+        }
+        .evidence-note strong { color: var(--blue); }
+
+        .conclusion-box {
+            background: rgba(255,255,255,0.03);
+            border-left: 4px solid var(--amber);
+            padding: 1.5rem 2rem;
+            margin-top: 2rem;
+            border-radius: 12px;
+        }
+        .conclusion-box h2 { border: none; margin-top:0; padding-top:0; }
+        .footnote {
+            font-size: 0.75rem;
+            color: var(--sub);
+            text-align: right;
+            margin-top: 2rem;
+            border-top: 1px solid var(--dim);
+            padding-top: 1rem;
+            font-style: italic;
+        }
+
+        .score-pill {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            font-weight: 500;
+            background: rgba(251,191,36,0.12);
+            color: var(--amber);
+            padding: 0.05rem 0.8rem;
+            border-radius: 30px;
+            margin-left: 0.6rem;
+            letter-spacing: 0.02em;
+        }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.2rem; }
+            h1 { font-size: 1.6rem; padding-left:0.8rem; }
+            h2 { font-size: 1.2rem; }
+            .lang-bar { justify-content: center; }
+            .data-table { font-size: 0.7rem; }
+            .data-table th, .data-table td { padding: 0.4rem 0.6rem; }
+            .conclusion-box { padding: 1rem 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="global-south-diagnosis.html" class="back-link">← 返回首页 / Back to Home</a>
+
+    <div class="lang-bar">
+        <button class="lang-btn" data-lang="zh">中文</button>
+        <button class="lang-btn active" data-lang="en">English</button>
+    </div>
+
+    <!-- ===== ENGLISH ===== -->
+    <div id="en" class="lang-content active">
+        <h1>Vietnam: The "Bamboo Diplomacy" State — a Cost‑Transfer System Disguised as Socialist Development</h1>
+        <div class="subhead">— A GL Framework Diagnosis of "Single‑Party Rentier State"</div>
+
+        <p><strong>Vietnam is one of the world's most successful economic transformation stories.</strong> From a war‑torn, isolated country in the 1980s, it has become a <strong>lower‑middle‑income economy</strong>, a <strong>major manufacturing hub</strong>, and a <strong>key player in Southeast Asian geopolitics</strong>. The <strong>Đổi Mới (Renovation) reforms</strong> of 1986 opened the economy, attracted foreign investment, and lifted <strong>over 40 million people out of poverty</strong>.</p>
+
+        <p>Yet beneath this success story lies a <strong>systematic cost‑transfer machine</strong>. The Communist Party of Vietnam (CPV) has maintained a <strong>monopoly on political power</strong> while <strong>opening the economy to market forces</strong>. This has created a <strong>dual system</strong> — a <strong>socialist facade</strong> that legitimises party rule, and a <strong>capitalist reality</strong> that transfers costs to workers, farmers, and the environment.</p>
+
+        <div class="evidence-note">
+            <strong>World Bank (2025)</strong> reports that <strong>Vietnam's poverty rate has fallen to 5%</strong> — one of the most dramatic reductions in history. But <strong>inequality has risen sharply</strong>: the <strong>top 10% earn 35% of national income</strong>, while the <strong>bottom 50% earn less than 20%</strong>. <strong>ILO (2025)</strong> notes that <strong>factory workers earn an average of $180 per month</strong> — barely enough to cover basic needs in urban areas. <strong>Freedom House (2025)</strong> classifies Vietnam as <strong>"not free"</strong>, citing the <strong>suppression of political dissent, the control of the media, and the lack of independent civil society</strong>.
+        </div>
+
+        <h2>I. GL Diagnosis: Vietnam Under Eight Parameters</h2>
+
+        <h3>1. Waiting Cost <span class="score-pill">2.5/10</span></h3>
+        <p>Vietnam's waiting cost is <strong>visible in its public services and infrastructure</strong>. <strong>Public hospitals</strong> are overcrowded; patients wait <strong>hours for basic care</strong> and <strong>months for specialist surgeries</strong>. <strong>Government services</strong> — land registration, business permits, and court cases — are <strong>notoriously slow</strong>; a land title can take <strong>months to years</strong> to obtain. The <strong>waiting cost is compounded by corruption</strong> — those who pay bribes can bypass the queue, leaving the poor to wait indefinitely.</p>
+
+        <h3>2. Repetition Cost <span class="score-pill">2.5/10</span></h3>
+        <p>Vietnam's bureaucracy is a <strong>fragmented, repetition‑intensive maze</strong>. Citizens must <strong>repeat applications across multiple agencies</strong> — for identity documents, land registration, and social services — because <strong>databases are not integrated</strong>. The <strong>National Population Database</strong> exists, but it is <strong>not linked to other government records</strong>, forcing citizens to <strong>re‑submitt documents at every stop</strong>. For <strong>ethnic minorities</strong> in the highlands, the repetition cost is multiplied by <strong>language barriers, bureaucratic suspicion, and geographic isolation</strong>.</p>
+
+        <h3>3. Collapse Cost <span class="score-pill">2/10</span></h3>
+        <p>Vietnam's collapse cost is <strong>visible in its environment, its infrastructure, and its vulnerability to climate change</strong>. <strong>Flooding</strong> is an annual catastrophe — the Mekong Delta floods regularly, and the state's <strong>investment in flood control</strong> has been insufficient. <strong>Air pollution</strong> — especially in Hanoi and Ho Chi Minh City — is a <strong>chronic health crisis</strong>; the government's <strong>responses have been delayed and inadequate</strong>. <strong>Industrial accidents</strong> — such as the <strong>2016 Formosa disaster</strong>, which killed fish and devastated the coastal economy — are a collapse cost transferred to the affected communities. <strong>Climate change</strong> is projected to <strong>displace 10–15 million Vietnamese by 2050</strong> — a collapse cost borne by the poorest communities.</p>
+
+        <h3>4. Information Asymmetry Cost <span class="score-pill">2/10</span></h3>
+        <p>Vietnam's information asymmetry is <strong>systematically weaponised</strong>. The <strong>government controls the media</strong> — all news outlets are state‑owned or state‑controlled. <strong>Journalists are harassed and arrested</strong>; the <strong>government controls the narrative</strong> through censorship and <strong>pressure on independent outlets</strong>. <strong>Government budgets are opaque</strong>; the public cannot track expenditure. <strong>Environmental data</strong> — crucial for disaster preparedness — is often <strong>classified or delayed</strong>. Information asymmetry is not incidental — it is a <strong>tool of political control</strong>.</p>
+
+        <h3>5. Psychological Cost <span class="score-pill">2/10</span></h3>
+        <p>Vietnam's psychological cost is <strong>rooted in political repression, economic precarity, and collective trauma</strong>. The <strong>legacy of the Vietnam War</strong> — and the <strong>trauma of the "boat people" exodus</strong> — remains unresolved. The <strong>suppression of political dissent</strong> — the jailing of activists, the silencing of critics — creates an <strong>atmosphere of fear</strong>. A 2025 survey by the Vietnam Psychological Association found that <strong>35% of Vietnamese reported symptoms of anxiety and depression</strong> — a rate that has risen since the pandemic. The psychological cost is compounded by the <strong>erosion of trust</strong> in the state and its institutions.</p>
+
+        <h3>6. Opportunity Cost <span class="score-pill">1.5/10</span></h3>
+        <p>Vietnam's opportunity cost is <strong>generational and structural</strong>. The country has a <strong>large, young population</strong> — over <strong>50% of Vietnamese are under 35</strong>. Yet <strong>youth unemployment exceeds 10%</strong> — and among university graduates, it exceeds <strong>20%</strong>. The <strong>education system</strong> has been <strong>underfunded and politicised</strong>; the state has <strong>curtailed academic freedom</strong> and <strong>reduced funding for higher education</strong>. <strong>Brain drain</strong> has accelerated — over <strong>1 million skilled Vietnamese</strong> have left the country since 2010. The <strong>opportunity cost</strong> is a <strong>lost generation of talent</strong> — a generation that could have built a modern, prosperous Vietnam, but instead has been <strong>driven abroad by political repression and economic precarity</strong>.</p>
+
+        <h3>7. Transfer Pathway <span class="score-pill">1.5/10</span></h3>
+        <p>Vietnam's cost transfer mechanisms are structural and well‑documented:</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>Cost Creator</th><th>Cost Bearer</th><th>Transfer Mechanism</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>State‑Owned Enterprises / Party Elite</td><td>Poor &amp; Working Class</td><td>State‑owned enterprises are inefficient and loss‑making; the cost is transferred to taxpayers through subsidies and bailouts</td></tr>
+                <tr><td>Foreign Investors</td><td>Factory Workers &amp; Environment</td><td>Foreign investors exploit low wages and weak environmental regulations; the cost of industrial production is transferred to workers and the environment</td></tr>
+                <tr><td>Corrupt Officials</td><td>Taxpayers</td><td>Public funds are diverted to private pockets; citizens pay for infrastructure that is never built or maintained</td></tr>
+            </tbody>
+        </table>
+
+        <p><strong>The transfer pathway is clear: the party‑state extracts value from the population through taxation and state‑owned enterprises, transfers it to the elite through corruption and subsidies, and externalises the costs of environmental collapse and industrial production to workers and the environment.</strong></p>
+
+        <h3>8. Closed‑Loop Degree <span class="score-pill">1.5/10</span></h3>
+        <p>Vietnam has <strong>a constitution and a parliament</strong>, but the feedback loop is <strong>effectively closed</strong>. <strong>Elections are held, but they are not free and fair</strong> — the CPV controls the electoral process, and there is <strong>no opposition</strong>. The <strong>judiciary is politicised</strong>; courts are used to <strong>jail opponents and protect allies</strong>. The <strong>media is controlled by the state</strong>; independent journalism is <strong>systematically harassed</strong>. The loop <strong>does not exist in practice</strong> — feedback is suppressed, and the state does not correct itself.</p>
+
+        <h2>II. "Bamboo Diplomacy" — a State That Bends but Does Not Break</h2>
+        <p>Vietnam's foreign policy is often described as <strong>"bamboo diplomacy"</strong> — a state that bends with the wind but does not break. But from the perspective of the GL Framework, "bamboo diplomacy" is also a <strong>domestic strategy</strong> — a state that bends to market forces but does not break its monopoly on political power.</p>
+
+        <div class="evidence-note">
+            <strong>Transparency International (2025)</strong> ranks Vietnam <strong>110th out of 182 countries</strong> on the Corruption Perceptions Index — a decline from the 2010s. <strong>Freedom House (2025)</strong> classifies Vietnam as <strong>"not free"</strong> — a consistent rating for decades. The <strong>World Bank (2025)</strong> notes that <strong>Vietnam's economic growth has been driven by exports and foreign investment</strong> — a model that is vulnerable to external shocks and cost‑transfer‑intensive.
+        </div>
+
+        <p>The pattern is consistent with the GL Framework's diagnosis:</p>
+        <ul>
+            <li><strong>Value is extracted</strong> — by the party‑state, the elite, and foreign investors.</li>
+            <li><strong>Costs are transferred</strong> — to workers (low wages, unsafe conditions), to the environment (pollution, climate change), and to the young (unemployment, brain drain).</li>
+            <li><strong>Feedback is blocked</strong> — by media control, political repression, and a politicised judiciary.</li>
+            <li><strong>The loop is closed</strong> — because the system is designed to preserve the power of the party‑state.</li>
+        </ul>
+
+        <div class="conclusion-box">
+            <h2>Conclusion: Vietnam Is a Case of "Single‑Party Rentier State" — a Socialist Facade Over a Cost‑Transfer System</h2>
+            <p>Vietnam's case demonstrates the GL Framework's core proposition: <strong>a country can have economic success and a socialist facade — while systematically transferring costs to the most vulnerable populations.</strong></p>
+            <p>The eight parameters show a system that:</p>
+            <ul>
+                <li><strong>Generates economic growth</strong> — but the growth is driven by foreign investment and low wages, not by domestic innovation or productivity.</li>
+                <li><strong>Maintains a socialist facade</strong> — but the facade masks a system of elite capture and corruption.</li>
+                <li><strong>Suppresses dissent</strong> — through media control, political repression, and a politicised judiciary.</li>
+                <li><strong>Externalises costs</strong> — to workers (low wages), to the environment (pollution), and to the young (unemployment, brain drain).</li>
+            </ul>
+            <p>Vietnam is not a "development success story" in the sense of sustainable, equitable growth. It is a <strong>successful cost‑transfer machine</strong> — a system that extracts value from the population and transfers it to the elite, while externalising the costs of production to workers, the environment, and the future.</p>
+            <p><strong>Governance legitimacy is not earned by economic growth or a socialist facade. It is earned by returning value to the population — including workers, farmers, and the young.</strong> Vietnam's growth is real, but its distribution is deeply unequal, and its costs are being transferred to those who have the least power.</p>
+        </div>
+
+        <div class="footnote">— A GL Framework diagnosis of single‑party rentier state</div>
+    </div>
+
+    <!-- ===== 中文 ===== -->
+    <div id="zh" class="lang-content">
+        <h1>越南："竹式外交"国家——社会主义外衣下的成本转移系统</h1>
+        <div class="subhead">—— GL Framework 对一个"一党食利型国家"的诊断</div>
+
+        <p><strong>越南是全球最成功的经济转型故事之一。</strong>从1980年代一个饱受战争蹂躏、孤立的的国家，它已成长为<strong>中低收入经济体</strong>、<strong>主要制造业中心</strong>和<strong>东南亚地缘政治的关键参与者</strong>。1986年的<strong>革新开放</strong>改革开放了经济，吸引了外资，使<strong>超过4000万人摆脱了贫困</strong>。</p>
+
+        <p>然而，在这个成功故事之下，隐藏着一个<strong>系统性的成本转移机器</strong>。越南共产党（CPV）在<strong>向市场力量开放经济</strong>的同时，维持了<strong>政治权力的垄断</strong>。这创造了一个<strong>双重系统</strong>——一个使党的统治合法化的<strong>社会主义外衣</strong>，和一个将成本转移给工人、农民和环境的<strong>资本主义现实</strong>。</p>
+
+        <div class="evidence-note">
+            <strong>世界银行（2025年）</strong>报告称<strong>越南贫困率已降至5%</strong>——历史上最显著的减贫之一。但<strong>不平等急剧上升</strong>：<strong>前10%的人占国民收入的35%</strong>，而<strong>后50%的人仅占不到20%</strong>。<strong>国际劳工组织（2025年）</strong>指出，<strong>工厂工人平均月薪180美元</strong>——在城市地区几乎不足以满足基本需求。<strong>自由之家（2025年）</strong>将越南列为<strong>"不自由"</strong>，指出<strong>政治异见被压制、媒体受控制、独立公民社会缺失</strong>。
+        </div>
+
+        <h2>一、GL诊断：八项参数下的越南</h2>
+
+        <h3>1. 等待成本 <span class="score-pill">2.5/10</span></h3>
+        <p>越南的等待成本<strong>体现在公共服务和基础设施中</strong>。<strong>公立医院</strong>人满为患；患者等待<strong>数小时才能获得基本护理</strong>，<strong>数月才能进行专科手术</strong>。<strong>政府服务</strong>——土地登记、营业执照和法庭案件——以<strong>缓慢著称</strong>；地契可能需要<strong>数月甚至数年</strong>才能获得。<strong>等待成本因腐败而加剧</strong>——行贿者可以插队，穷人则无限期等待。</p>
+
+        <h3>2. 重复成本 <span class="score-pill">2.5/10</span></h3>
+        <p>越南的官僚机构是一个<strong>碎片化、重复密集的迷宫</strong>。公民必须在<strong>多个机构重复申请</strong>——身份证件、土地登记和社会服务——因为<strong>数据库未整合</strong>。<strong>国家人口数据库</strong>存在，但<strong>未与其他政府记录关联</strong>，迫使公民在<strong>每个环节重复提交文件</strong>。对<strong>山区少数民族</strong>而言，重复成本因<strong>语言障碍、官僚怀疑和地理隔离</strong>而成倍增加。</p>
+
+        <h3>3. 崩溃成本 <span class="score-pill">2/10</span></h3>
+        <p>越南的崩溃成本<strong>体现在环境、基础设施和对气候变化的脆弱性中</strong>。<strong>洪涝</strong>是年度灾难——湄公河三角洲定期被淹，而国家在<strong>防洪方面的投资</strong>不足。<strong>空气污染</strong>——尤其是河内和胡志明市——是<strong>慢性健康危机</strong>；政府的<strong>应对迟缓且不足</strong>。<strong>工业事故</strong>——如<strong>2016年台塑灾难</strong>，导致鱼类死亡并摧毁了沿海经济——是转移给受影响社区的成本。<strong>气候变化</strong>预计到2050年将导致<strong>1000万至1500万越南人流离失所</strong>——一项由最贫困社区承担的崩溃成本。</p>
+
+        <h3>4. 信息不对称成本 <span class="score-pill">2/10</span></h3>
+        <p>越南的信息不对称被<strong>系统性地武器化</strong>。<strong>政府控制媒体</strong>——所有新闻媒体均为国有或国家控制。<strong>记者被骚扰和逮捕</strong>；<strong>政府通过审查和对独立媒体的压力控制叙事</strong>。<strong>政府预算不透明</strong>；公众无法追踪支出。<strong>环境数据</strong>——对备灾至关重要——往往被<strong>分类或延迟</strong>。信息不对称并非偶然——它是<strong>政治控制的工具</strong>。</p>
+
+        <h3>5. 心理成本 <span class="score-pill">2/10</span></h3>
+        <p>越南的心理成本<strong>根植于政治镇压、经济不稳定和集体创伤</strong>。<strong>越南战争的遗产</strong>——以及<strong>"船民"外流的创伤</strong>——仍未解决。<strong>政治异见的压制</strong>——活动人士被监禁、批评者被噤声——制造了<strong>恐惧氛围</strong>。越南心理协会2025年的一项调查发现，<strong>35%的越南人有焦虑和抑郁症状</strong>——自疫情以来上升。心理成本因对国家和其机构的<strong>信任侵蚀</strong>而加剧。</p>
+
+        <h3>6. 机会成本 <span class="score-pill">1.5/10</span></h3>
+        <p>越南的机会成本是<strong>代际性和结构性的</strong>。该国拥有<strong>庞大且年轻的人口</strong>——<strong>超过50%的越南人在35岁以下</strong>。然而<strong>青年失业率超过10%</strong>——大学毕业生中超过<strong>20%</strong>。<strong>教育系统</strong>被<strong>资金不足和政治化</strong>；国家<strong>限制了学术自由</strong>并<strong>削减了高等教育经费</strong>。<strong>人才流失</strong>加速——自2010年以来已有<strong>超过100万技术熟练的越南人</strong>离开该国。<strong>机会成本</strong>是<strong>失去一整代人才</strong>——本可以建设一个现代化、繁荣的越南的一代人，却被<strong>政治镇压和经济不稳定驱赶到海外</strong>。</p>
+
+        <h3>7. 转移路径 <span class="score-pill">1.5/10</span></h3>
+        <p>越南的成本转移机制是结构性的且有充分记录：</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>成本创造者</th><th>成本承担者</th><th>转移机制</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>国有企业/党精英</td><td>穷人与工人阶级</td><td>国有企业效率低下且亏损；成本通过补贴和纾困转移给纳税人</td></tr>
+                <tr><td>外国投资者</td><td>工厂工人与环境</td><td>外国投资者利用低工资和薄弱的环境法规；工业生产的成本转移给工人和环境</td></tr>
+                <tr><td>腐败官员</td><td>纳税人</td><td>公共资金被转入私人腰包；公民为从未建造或维护的基础设施买单</td></tr>
+            </tbody>
+        </table>
+
+        <p><strong>转移路径是清晰的：党国通过税收和国有企业从人口中提取价值，通过腐败和补贴将其转移给精英，并将环境崩溃和工业生产的成本外部化给工人和环境。</strong></p>
+
+        <h3>8. 闭环程度 <span class="score-pill">1.5/10</span></h3>
+        <p>越南拥有<strong>宪法和议会</strong>，但反馈回路<strong>实际上被封闭</strong>。<strong>选举举行，但并不自由公正</strong>——越共控制选举过程，<strong>没有反对派</strong>。<strong>司法被政治化</strong>；法院被用于<strong>监禁反对者、保护盟友</strong>。<strong>媒体由国家控制</strong>；独立新闻业被<strong>系统性地骚扰</strong>。回路<strong>在实践中不存在</strong>——反馈被压制，国家不自我纠正。</p>
+
+        <h2>二、"竹式外交"——弯曲不折的国家</h2>
+        <p>越南的外交政策常被描述为<strong>"竹式外交"</strong>——随风弯曲但不折断的国家。但从GL Framework的视角看，"竹式外交"也是一种<strong>国内策略</strong>——向市场力量弯曲但不打破政治权力垄断的国家。</p>
+
+        <div class="evidence-note">
+            <strong>透明国际（2025年）</strong>将越南列为清廉指数<strong>第110位（共182个国家）</strong>——较2010年代有所下降。<strong>自由之家（2025年）</strong>将越南列为<strong>"不自由"</strong>——数十年一贯评级。<strong>世界银行（2025年）</strong>指出，<strong>越南的经济增长由出口和外资驱动</strong>——一种易受外部冲击且成本转移密集的模式。
+        </div>
+
+        <div class="conclusion-box">
+            <h2>结论：越南是"一党食利型国家"的案例——社会主义外衣下的成本转移系统</h2>
+            <p>越南的案例展示了GL Framework的核心命题：<strong>一个国家可以拥有经济成功和社会主义外衣——同时系统性地将成本转移给最脆弱的人群。</strong></p>
+            <p>八项参数展示了一个这样的系统：</p>
+            <ul>
+                <li><strong>产生经济增长</strong>——但增长由外资和低工资驱动，而非国内创新或生产率。</li>
+                <li><strong>维持社会主义外衣</strong>——但外衣掩盖了精英捕获和腐败系统。</li>
+                <li><strong>压制异见</strong>——通过媒体控制、政治镇压和政治化的司法。</li>
+                <li><strong>外部化成本</strong>——给工人（低工资）、给环境（污染）、给年轻人（失业、人才流失）。</li>
+            </ul>
+            <p>越南不是一个可持续、公平增长意义上的"发展成功故事"。它是一个<strong>成功的成本转移机器</strong>——一个从人口中提取价值并将其转移给精英、同时将生产成本外部化给工人、环境和未来的系统。</p>
+            <p><strong>治理的正当性不是由经济增长或社会主义外衣赢得的。它是通过将价值返还给人民——包括工人、农民和年轻人——赢得的。</strong>越南的增长是真实的，但分配极不平等，成本正被转移给权力最小的人。</p>
+        </div>
+
+        <div class="footnote">—— GL Framework 对一党食利型国家的诊断</div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const btns = document.querySelectorAll('.lang-btn');
+        const contents = { zh: document.getElementById('zh'), en: document.getElementById('en') };
+        function switchLang(lang) {
+            for (let key in contents) {
+                contents[key].classList.remove('active');
+            }
+            if (contents[lang]) contents[lang].classList.add('active');
+            btns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
+            if (history.pushState) history.pushState(null, '', '#' + lang);
+        }
+        btns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const lang = this.dataset.lang;
+                if (lang) switchLang(lang);
+            });
+        });
+        const hash = window.location.hash.replace('#', '');
+        if (hash === 'zh') {
+            switchLang('zh');
+        } else {
+            switchLang('en');
+        }
+        window.addEventListener('hashchange', function() {
+            const newHash = window.location.hash.replace('#', '');
+            if (newHash === 'zh' || newHash === 'en') {
+                switchLang(newHash);
+            } else {
+                switchLang('en');
+            }
+        });
+    })();
+</script>
+</body>
+</html>
