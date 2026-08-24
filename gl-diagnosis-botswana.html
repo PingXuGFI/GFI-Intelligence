@@ -1,1 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Botswana · GL Framework Model · 博茨瓦纳模范</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #0b1220;
+            --text: #f8fbff;
+            --muted: #c7d2e3;
+            --sub: #9fb0c8;
+            --dim: rgba(255,255,255,.06);
+            --green: #9FE870;
+            --blue: #7DD3FC;
+            --amber: #fbbf24;
+            --gold: #fcd34d;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --mono: 'DM Mono', monospace;
+            --sans: 'DM Sans', system-ui, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 15px;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--dim);
+            border-radius: 24px;
+            padding: 2.2rem 2.5rem;
+            backdrop-filter: blur(2px);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green);
+            text-decoration: none;
+            font-family: var(--mono);
+            font-size: 13px;
+            letter-spacing: 0.08em;
+            border: 1px solid rgba(159,232,112,0.3);
+            padding: 8px 18px;
+            border-radius: 40px;
+            transition: all 0.2s;
+            margin-bottom: 1.8rem;
+        }
+        .back-link:hover {
+            background: rgba(159,232,112,0.1);
+            border-color: var(--green);
+            transform: translateX(-4px);
+        }
+        .lang-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.6rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--dim);
+            padding-bottom: 0.8rem;
+        }
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-family: var(--mono);
+            font-weight: 500;
+            color: var(--sub);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
+        .lang-btn.active {
+            background: rgba(159,232,112,0.15);
+            border-color: var(--green);
+            color: var(--green);
+        }
+        .lang-content { display: none; animation: fade 0.3s ease; }
+        .lang-content.active { display: block; }
+        @keyframes fade { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
 
+        h1 {
+            font-size: 2.1rem;
+            font-family: var(--serif);
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            border-left: 6px solid var(--gold);
+            padding-left: 1.2rem;
+        }
+        .subhead {
+            font-size: 1rem;
+            color: var(--sub);
+            margin-bottom: 2rem;
+            padding-left: 1.2rem;
+            border-left: 3px solid rgba(252,211,77,0.3);
+            font-style: italic;
+        }
+        .model-badge {
+            display: inline-block;
+            background: rgba(252,211,77,0.15);
+            color: var(--gold);
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 0.1rem 1rem;
+            border-radius: 30px;
+            border: 1px solid rgba(252,211,77,0.2);
+            margin-left: 1rem;
+        }
+        h2 {
+            font-size: 1.4rem;
+            font-family: var(--serif);
+            margin-top: 2.2rem;
+            margin-bottom: 0.6rem;
+            color: #eaf6ff;
+            border-bottom: 1px dashed rgba(255,255,255,0.08);
+            padding-bottom: 0.3rem;
+        }
+        h2 .badge {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: rgba(251,191,36,0.15);
+            color: var(--amber);
+            padding: 0.05rem 0.8rem;
+            border-radius: 30px;
+            margin-left: 0.8rem;
+            font-weight: 400;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1.4rem;
+            margin-bottom: 0.4rem;
+            color: var(--muted);
+        }
+        p { margin-bottom: 1rem; color: var(--muted); text-align: justify; }
+        ul, ol { margin: 0.5rem 0 1rem 1.8rem; list-style-type: disc; color: var(--muted); }
+        li { margin-bottom: 0.3rem; }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0 1.5rem 0;
+            font-size: 0.85rem;
+            font-family: var(--mono);
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .data-table th {
+            background: rgba(252,211,77,0.10);
+            color: var(--gold);
+            padding: 0.6rem 1rem;
+            text-align: left;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            border-bottom: 1px solid var(--dim);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+        .data-table td {
+            padding: 0.6rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            vertical-align: top;
+            color: var(--muted);
+        }
+        .data-table tr:last-child td { border-bottom: none; }
+        .data-table .positive { color: var(--green); }
+        .data-table .challenge { color: var(--amber); }
+
+        .evidence-note {
+            background: rgba(125,211,252,0.04);
+            padding: 0.8rem 1.2rem;
+            border-radius: 6px;
+            margin: 0.5rem 0 1rem 0;
+            font-size: 0.85rem;
+            color: var(--sub);
+            border-left: 3px solid var(--blue);
+        }
+        .evidence-note strong { color: var(--blue); }
+
+        .conclusion-box {
+            background: rgba(252,211,77,0.04);
+            border-left: 4px solid var(--gold);
+            padding: 1.5rem 2rem;
+            margin-top: 2rem;
+            border-radius: 12px;
+        }
+        .conclusion-box h2 { border: none; margin-top:0; padding-top:0; }
+        .footnote {
+            font-size: 0.75rem;
+            color: var(--sub);
+            text-align: right;
+            margin-top: 2rem;
+            border-top: 1px solid var(--dim);
+            padding-top: 1rem;
+            font-style: italic;
+        }
+
+        .score-pill {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            font-weight: 500;
+            background: rgba(159,232,112,0.12);
+            color: var(--green);
+            padding: 0.05rem 0.8rem;
+            border-radius: 30px;
+            margin-left: 0.6rem;
+            letter-spacing: 0.02em;
+        }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.2rem; }
+            h1 { font-size: 1.6rem; padding-left:0.8rem; }
+            h2 { font-size: 1.2rem; }
+            .lang-bar { justify-content: center; }
+            .data-table { font-size: 0.7rem; }
+            .data-table th, .data-table td { padding: 0.4rem 0.6rem; }
+            .conclusion-box { padding: 1rem 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="global-south-diagnosis.html" class="back-link">← 返回首页 / Back to Home</a>
+
+    <div class="lang-bar">
+        <button class="lang-btn" data-lang="zh">中文</button>
+        <button class="lang-btn active" data-lang="en">English</button>
+    </div>
+
+    <!-- ===== ENGLISH ===== -->
+    <div id="en" class="lang-content active">
+        <h1>Botswana: The African Exception — How Diamond Wealth Was Turned into Public Value</h1>
+        <div class="subhead">— A GL Framework Model Case of "Resource‑Based Value‑Returning Governance" <span class="model-badge">★ Model</span></div>
+
+        <p><strong>Botswana is the African exception.</strong> In a continent marked by resource curse, corruption, and state collapse, Botswana has <strong>managed its diamond wealth prudently, built strong institutions, and maintained one of the continent's most stable democracies</strong> since independence in 1966.</p>
+
+        <p>Botswana's success is particularly remarkable because it is surrounded by countries that have experienced conflict, collapse, and elite capture — Zimbabwe, South Africa (during apartheid), Namibia, and Angola. Yet Botswana has <strong>consistently ranked as the least corrupt country in Africa</strong> and has <strong>one of the highest growth rates in the world</strong> over the past five decades.</p>
+
+        <div class="evidence-note">
+            <strong>World Bank (2025)</strong> reports that <strong>Botswana's GDP per capita is over $8,000</strong> — among the highest in Africa. Its <strong>poverty rate is 16%</strong> — lower than most Sub‑Saharan African countries. <strong>Transparency International (2025)</strong> ranks Botswana <strong>36th out of 182 countries</strong> on the Corruption Perceptions Index — the <strong>least corrupt country in Africa</strong> and among the <strong>cleanest in the Global South</strong>. <strong>V‑Dem (2025)</strong> ranks Botswana as a <strong>"liberal democracy"</strong> — one of only a few in Africa.
+        </div>
+
+        <h2>I. GL Diagnosis: Botswana Under Eight Parameters</h2>
+
+        <h3>1. Waiting Cost <span class="score-pill">6.5/10</span></h3>
+        <p>Botswana's waiting cost is <strong>lower than most of its African peers</strong>. <strong>Public healthcare</strong> is accessible and relatively well‑funded; patients wait <strong>weeks rather than months</strong> for specialist care. <strong>Government services</strong> — land registration, business permits, and court cases — are <strong>more efficient than the regional average</strong>, though delays still occur in rural areas. The state has <strong>invested in digitalisation and transparency initiatives</strong>, which have reduced waiting times for urban citizens. However, <strong>rural communities</strong> still face <strong>geographic barriers</strong> that increase waiting costs.</p>
+
+        <h3>2. Repetition Cost <span class="score-pill">6.5/10</span></h3>
+        <p>Botswana's bureaucracy is <strong>less fragmented than in most African countries</strong>. The state has <strong>invested in integrated databases and streamlined procedures</strong>. The <strong>Omang (National Identity Card)</strong> is linked to health, tax, and social security records, <strong>reducing the need for repeated submissions</strong>. However, <strong>digital access remains uneven</strong> — rural citizens often need to repeat procedures because they cannot access online systems. The repetition cost is <strong>manageable</strong>, but not yet fully eliminated.</p>
+
+        <h3>3. Collapse Cost <span class="score-pill">6.5/10</span></h3>
+        <p>Botswana's collapse cost is <strong>low by African standards</strong>. <strong>Infrastructure</strong> — roads, electricity, and water — is <strong>reliable and relatively well‑maintained</strong>. The state has <strong>invested in disaster preparedness</strong> and has <strong>effective early‑warning systems</strong> for drought and floods. <strong>Environmental protection</strong> is a priority: Botswana has <strong>one of the highest wildlife conservation rates in Africa</strong>, with <strong>over 30% of its territory designated as national parks or reserves</strong>. The collapse cost is <strong>minimised because the state prevents collapse</strong> rather than managing it after the fact. However, <strong>HIV/AIDS</strong> remains a challenge — the state has invested heavily in treatment and prevention, but the <strong>disease still imposes a significant collapse cost</strong> on the population.</p>
+
+        <h3>4. Information Asymmetry Cost <span class="score-pill">7/10</span></h3>
+        <p>Botswana has a <strong>free press and strong civil society</strong>. <strong>Government budgets are transparent</strong> — the state publishes detailed expenditure reports, and <strong>citizens can track public funds</strong>. The <strong>judiciary is independent</strong> and has a <strong>strong record of protecting rights</strong>. <strong>Freedom of information</strong> is protected by law and <strong>practised in reality</strong> — journalists investigate corruption without fear, and the state <strong>does not weaponise information</strong> against its citizens. Botswana's information asymmetry is <strong>among the lowest in Africa</strong>.</p>
+
+        <h3>5. Psychological Cost <span class="score-pill">6.5/10</span></h3>
+        <p>Botswana's psychological cost is <strong>relatively low</strong>. The country's <strong>political stability</strong> — no coups, no civil war, no authoritarian backsliding — has created a <strong>sense of security and trust</strong> in the state. A 2025 survey by the University of Botswana found that <strong>over 55% of Batswana trust the state</strong> — one of the highest rates in Africa. However, the psychological cost is <strong>not uniformly low</strong> — the <strong>San (Bushmen) community</strong> has faced displacement and discrimination, and the <strong>HIV/AIDS epidemic</strong> has created significant trauma. The state has <strong>recognised these challenges</strong> and is working to address them, but the psychological cost for marginalised communities remains higher than the national average.</p>
+
+        <h3>6. Opportunity Cost <span class="score-pill">6.5/10</span></h3>
+        <p>Botswana's opportunity cost is <strong>well‑managed</strong>. The country has a <strong>well‑educated population</strong> — literacy exceeds 88%, and the <strong>state invests over 8% of GDP in education</strong>. <strong>Youth unemployment is around 18%</strong> — high by global standards, but <strong>lower than most African countries</strong>. <strong>Brain drain</strong> exists — some skilled professionals leave for South Africa and Europe — but the <strong>country retains a strong core of professionals</strong>. The state has <strong>invested in higher education</strong> — the University of Botswana is one of the best in the region — and <strong>science and technology are growing</strong>. The opportunity cost is <strong>not being squandered</strong> — the state is <strong>investing in its people</strong>.</p>
+
+        <h3>7. Transfer Pathway: Reversed <span class="score-pill">7.5/10</span></h3>
+        <p>Botswana's transfer pathways are <strong>explicitly designed to return value to the population</strong>.</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>Mechanism</th><th>Effect</th><th>Outcome</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Diamond Revenue Managed Prudently</td><td>Diamond wealth invested in infrastructure, education, and health</td><td><span class="positive">High growth; strong public services</span></td></tr>
+                <tr><td>No Corruption</td><td>Public funds are not diverted to private pockets</td><td><span class="positive">Citizens receive the services they pay for</span></td></tr>
+                <tr><td>Universal Healthcare</td><td>Public health coverage for all citizens</td><td><span class="positive">High life expectancy (69 years); falling infant mortality</span></td></tr>
+                <tr><td>Free Public Education</td><td>Free and accessible education from primary to tertiary</td><td><span class="positive">Strong human capital; rising literacy</span></td></tr>
+            </tbody>
+        </table>
+
+        <p><strong>The transfer pathway is clearly reversed</strong> — the state extracts value from the diamond industry (through taxation and royalties) and <strong>returns it to the population</strong> (through universal services and infrastructure investment). This is the <strong>defining feature</strong> of Botswana's governance model — it is the <strong>exception to the resource curse</strong>.</p>
+
+        <h3>8. Closed‑Loop Degree <span class="score-pill">7/10</span></h3>
+        <p>Botswana has a <strong>functioning feedback loop</strong>. <strong>Elections are free and fair</strong> — the country has a <strong>strong multiparty system</strong> and <strong>high voter turnout</strong>. The <strong>judiciary is independent</strong> and has a <strong>strong record of protecting rights</strong>. <strong>Civil society is active</strong> — unions, NGOs, and community organisations <strong>monitor the state and demand correction</strong>. The <strong>media is free</strong> — journalists investigate corruption and <strong>hold officials accountable</strong>. The loop is <strong>open and functional</strong> — when the system fails, citizens can demand correction, and the state responds.</p>
+
+        <h2>II. Why Botswana Succeeded: The Resource Curse Reversed</h2>
+
+        <p>Botswana's success is not an accident. It is the result of <strong>deliberate policy choices, strong institutions, and a political culture that values prudence</strong>.</p>
+
+        <ul>
+            <li><strong>Prudent management of diamond wealth</strong> — unlike most resource‑rich countries, Botswana did not squander its diamond revenues. It <strong>invested in infrastructure, education, and health</strong> rather than elite consumption.</li>
+            <li><strong>Strong institutions</strong> — Botswana inherited <strong>relatively strong institutions</strong> from the British colonial administration, but <strong>strengthened them after independence</strong> — particularly the judiciary, the civil service, and the electoral system.</li>
+            <li><strong>Low corruption</strong> — Botswana has <strong>consistently ranked as the least corrupt country in Africa</strong> — a result of <strong>strong anti‑corruption institutions</strong> and a <strong>political culture that does not tolerate theft</strong>.</li>
+            <li><strong>Political stability</strong> — Botswana has been <strong>stable since independence</strong> — no coups, no civil war, no authoritarian backsliding — which has allowed <strong>long‑term planning and institutional continuity</strong>.</li>
+            <li><strong>Consensus politics</strong> — despite being a multiparty democracy, Botswana has <strong>strong traditions of consultation and consensus</strong> — the kgotla (village assembly) system has been <strong>integrated into modern governance</strong>.</li>
+        </ul>
+
+        <div class="evidence-note">
+            <strong>UNDP (2025)</strong> notes that <strong>Botswana's human development index (HDI) is 0.730</strong> — among the highest in Sub‑Saharan Africa. The country has <strong>one of the highest life expectancies in the region (69 years)</strong> and <strong>near‑universal primary education</strong>. <strong>Transparency International (2025)</strong> ranks Botswana <strong>36th out of 182 countries</strong> on the Corruption Perceptions Index — the <strong>cleanest in Africa</strong> and among the <strong>cleanest in the Global South</strong>.
+        </div>
+
+        <div class="conclusion-box">
+            <h2>Conclusion: Botswana Is the African Exception — a Resource‑Rich Country That Returned Value to Its People</h2>
+
+            <p>Botswana's case demonstrates that <strong>resource wealth does not have to be a curse</strong>. It is possible to <strong>extract value from natural resources and return it to the population</strong> through prudent management, strong institutions, and low corruption.</p>
+
+            <p>The eight parameters show a system that:</p>
+            <ul>
+                <li><strong>Returns value</strong> — through investment in infrastructure, education, and health.</li>
+                <li><strong>Minimises costs</strong> — through efficient bureaucracy, reliable infrastructure, and disaster preparedness.</li>
+                <li><strong>Maintains an open feedback loop</strong> — through free elections, independent courts, and an active civil society.</li>
+                <li><strong>Protects the environment</strong> — and builds a sustainable economy that does not collapse.</li>
+            </ul>
+
+            <p>Botswana is not perfect — it faces challenges: <strong>high HIV/AIDS prevalence, youth unemployment, and pressure on water resources</strong>. But it is a <strong>model of what is possible</strong> in the Global South. It proves that <strong>governance legitimacy is not determined by resource wealth or colonial legacy — it is determined by policy choices</strong>.</p>
+
+            <p><strong>Governance legitimacy is earned by returning value to the people — and Botswana has done exactly that.</strong></p>
+        </div>
+
+        <div class="footnote">— GL Framework · Model Case of Resource‑Based Value‑Returning Governance</div>
+    </div>
+
+    <!-- ===== 中文 ===== -->
+    <div id="zh" class="lang-content">
+        <h1>博茨瓦纳：非洲例外——钻石财富如何转化为公共价值</h1>
+        <div class="subhead">—— GL Framework 的"资源型价值返还治理"模范案例 <span class="model-badge">★ 模范</span></div>
+
+        <p><strong>博茨瓦纳是非洲的例外。</strong>在一个以资源诅咒、腐败和国家崩溃为特征的大陆上，博茨瓦纳自1966年独立以来，<strong>审慎地管理了钻石财富，建立了强大的制度，并维持了非洲大陆最稳定的民主之一</strong>。</p>
+
+        <p>博茨瓦纳的成功尤为引人注目，因为它的邻国——津巴布韦、南非（种族隔离时期）、纳米比亚和安哥拉——都经历了冲突、崩溃和精英捕获。然而博茨瓦纳<strong>持续被评为非洲最清廉的国家</strong>，并在过去五十年中拥有<strong>全球最高的增长率之一</strong>。</p>
+
+        <div class="evidence-note">
+            <strong>世界银行（2025年）</strong>报告称<strong>博茨瓦纳人均GDP超过8000美元</strong>——非洲最高之一。其<strong>贫困率为16%</strong>——低于大多数撒哈拉以南非洲国家。<strong>透明国际（2025年）</strong>将博茨瓦纳列为清廉指数<strong>第36位（共182个国家）</strong>——<strong>非洲最清廉</strong>，全球南方中最清廉的国家之一。<strong>V-Dem（2025年）</strong>将博茨瓦纳列为<strong>"自由民主"</strong>——非洲少数获此评级之一。
+        </div>
+
+        <h2>一、GL诊断：八项参数下的博茨瓦纳</h2>
+
+        <h3>1. 等待成本 <span class="score-pill">6.5/10</span></h3>
+        <p>博茨瓦纳的等待成本<strong>低于大多数非洲同行</strong>。<strong>公共医疗</strong>是可及的且资金相对充足；患者等待<strong>数周而非数月</strong>即可获得专科护理。<strong>政府服务</strong>——土地登记、营业执照和法庭案件——<strong>比地区平均水平更高效</strong>，尽管农村地区仍有延迟。国家已<strong>投资于数字化和透明度倡议</strong>，这减少了城市公民的等待时间。然而，<strong>农村社区</strong>仍面临<strong>地理障碍</strong>，增加了等待成本。</p>
+
+        <h3>2. 重复成本 <span class="score-pill">6.5/10</span></h3>
+        <p>博茨瓦纳的官僚机构<strong>碎片化程度低于大多数非洲国家</strong>。国家已<strong>投资于整合数据库和简化流程</strong>。<strong>奥芒（国民身份证）</strong>与健康、税务和社会保障记录关联，<strong>减少了重复提交的需求</strong>。然而，<strong>数字接入仍然不均</strong>——农村公民往往需要重复程序，因为他们无法访问在线系统。重复成本是<strong>可控的</strong>，但尚未完全消除。</p>
+
+        <h3>3. 崩溃成本 <span class="score-pill">6.5/10</span></h3>
+        <p>博茨瓦纳的崩溃成本<strong>按非洲标准较低</strong>。<strong>基础设施</strong>——道路、电力和供水——<strong>可靠且维护相对良好</strong>。国家已<strong>投资于备灾</strong>，拥有<strong>有效的干旱和洪涝早期预警系统</strong>。<strong>环境保护</strong>是优先事项：博茨瓦纳拥有<strong>非洲最高的野生动物保护率之一</strong>，<strong>超过30%的国土被划为国家公园或保护区</strong>。崩溃成本被<strong>最小化，因为国家预防崩溃</strong>，而非事后应对。然而，<strong>艾滋病</strong>仍然是一个挑战——国家已大量投资于治疗和预防，但<strong>该疾病仍给人口带来显著的崩溃成本</strong>。</p>
+
+        <h3>4. 信息不对称成本 <span class="score-pill">7/10</span></h3>
+        <p>博茨瓦纳拥有<strong>新闻自由和强大的公民社会</strong>。<strong>政府预算透明</strong>——国家公布详细的支出报告，<strong>公民可以追踪公共资金</strong>。<strong>司法独立</strong>，在<strong>保护权利方面有良好记录</strong>。<strong>信息自由</strong>受法律保护且在<strong>实践中得到落实</strong>——记者无畏地调查腐败，国家<strong>不将信息武器化</strong>来对付公民。博茨瓦纳的信息不对称<strong>在非洲最低之一</strong>。</p>
+
+        <h3>5. 心理成本 <span class="score-pill">6.5/10</span></h3>
+        <p>博茨瓦纳的心理成本<strong>相对较低</strong>。该国的<strong>政治稳定</strong>——无政变、无内战、无威权倒退——创造了<strong>对国家的安全感和信任</strong>。博茨瓦纳大学2025年的一项调查发现，<strong>超过55%的博茨瓦纳人信任国家</strong>——非洲最高之一。然而，心理成本<strong>并非均匀较低</strong>——<strong>桑人（布须曼人）社区</strong>面临流离失所和歧视，<strong>艾滋病疫情</strong>造成了显著的创伤。国家已<strong>认识到这些挑战</strong>并正在努力解决，但边缘化社区的心理成本仍高于全国平均水平。</p>
+
+        <h3>6. 机会成本 <span class="score-pill">6.5/10</span></h3>
+        <p>博茨瓦纳的机会成本<strong>管理良好</strong>。该国拥有<strong>受过良好教育的人口</strong>——识字率超过88%，<strong>国家将GDP的8%以上投资于教育</strong>。<strong>青年失业率约为18%</strong>——按全球标准较高，但<strong>低于大多数非洲国家</strong>。<strong>人才流失</strong>存在——一些技术专业人士前往南非和欧洲——但<strong>国家保留了强大的专业人才核心</strong>。国家已<strong>投资于高等教育</strong>——博茨瓦纳大学是该地区最好的大学之一——<strong>科技正在发展</strong>。机会成本<strong>未被浪费</strong>——国家正在<strong>投资于人民</strong>。</p>
+
+        <h3>7. 转移路径：逆转 <span class="score-pill">7.5/10</span></h3>
+        <p>博茨瓦纳的转移路径<strong>明确设计为将价值返还给人口</strong>。</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>机制</th><th>效果</th><th>结果</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>审慎管理钻石收入</td><td>钻石财富投资于基础设施、教育和医疗</td><td><span class="positive">高增长；强大的公共服务</span></td></tr>
+                <tr><td>无腐败</td><td>公共资金不被转入私人腰包</td><td><span class="positive">公民获得他们付费的服务</span></td></tr>
+                <tr><td>全民医疗</td><td>所有公民的公共医疗覆盖</td><td><span class="positive">高预期寿命（69岁）；婴儿死亡率下降</span></td></tr>
+                <tr><td>免费公共教育</td><td>从小学到高等教育的免费且可及的教育</td><td><span class="positive">强大的人力资本；识字率上升</span></td></tr>
+            </tbody>
+        </table>
+
+        <p><strong>转移路径明显逆转</strong>——国家从钻石行业提取价值（通过税收和特许权使用费），并通过全民服务和基础设施投资<strong>将其返还给人口</strong>。这是博茨瓦纳治理模式的<strong>决定性特征</strong>——它是<strong>资源诅咒的例外</strong>。</p>
+
+        <h3>8. 闭环程度 <span class="score-pill">7/10</span></h3>
+        <p>博茨瓦纳拥有<strong>运作良好的反馈回路</strong>。<strong>选举自由公正</strong>——该国拥有<strong>强大的多党制</strong>和<strong>高投票率</strong>。<strong>司法独立</strong>，在<strong>保护权利方面有良好记录</strong>。<strong>公民社会活跃</strong>——工会、非政府组织和社区组织<strong>监督国家并要求纠正</strong>。<strong>媒体自由</strong>——记者调查腐败并<strong>追究官员责任</strong>。回路<strong>开放且运作良好</strong>——当系统失败时，公民可以要求纠正，国家会回应。</p>
+
+        <h2>二、博茨瓦纳为何成功：资源诅咒的逆转</h2>
+
+        <p>博茨瓦纳的成功并非偶然。它是<strong>深思熟虑的政策选择、强大的制度和重视审慎的政治文化</strong>的结果。</p>
+
+        <ul>
+            <li><strong>审慎管理钻石财富</strong>——与大多数资源丰富的国家不同，博茨瓦纳没有挥霍其钻石收入。它<strong>投资于基础设施、教育和医疗</strong>，而非精英消费。</li>
+            <li><strong>强大的制度</strong>——博茨瓦纳继承了英国殖民统治时期<strong>相对强大的制度</strong>，但<strong>在独立后加强了它们</strong>——尤其是司法、公务员制度和选举制度。</li>
+            <li><strong>低腐败</strong>——博茨瓦纳<strong>持续被评为非洲最清廉的国家</strong>——这是<strong>强大的反腐败制度</strong>和<strong>不容忍盗窃的政治文化</strong>的结果。</li>
+            <li><strong>政治稳定</strong>——博茨瓦纳<strong>自独立以来一直稳定</strong>——无政变、无内战、无威权倒退——这允许了<strong>长期规划和制度连续性</strong>。</li>
+            <li><strong>共识政治</strong>——尽管是多党民主，博茨瓦纳拥有<strong>强有力的协商和共识传统</strong>——科特拉（村议会）制度已<strong>融入现代治理</strong>。</li>
+        </ul>
+
+        <div class="evidence-note">
+            <strong>联合国开发计划署（2025年）</strong>指出，<strong>博茨瓦纳的人类发展指数为0.730</strong>——撒哈拉以南非洲最高之一。该国拥有<strong>该地区最高的预期寿命之一（69岁）</strong>和<strong>近乎全民的小学教育</strong>。<strong>透明国际（2025年）</strong>将博茨瓦纳列为清廉指数<strong>第36位（共182个国家）</strong>——<strong>非洲最清廉</strong>，全球南方中最清廉的国家之一。
+        </div>
+
+        <div class="conclusion-box">
+            <h2>结论：博茨瓦纳是非洲例外——一个将价值返还给人民的资源丰富国家</h2>
+
+            <p>博茨瓦纳的案例表明，<strong>资源财富不一定是诅咒</strong>。通过审慎管理、强大制度和低腐败，从自然资源中<strong>提取价值并将其返还给人口</strong>是可能的。</p>
+
+            <p>八项参数展示了一个这样的系统：</p>
+            <ul>
+                <li><strong>返还价值</strong>——通过投资于基础设施、教育和医疗。</li>
+                <li><strong>最小化成本</strong>——通过高效的官僚机构、可靠的基础设施和备灾。</li>
+                <li><strong>维持开放的反馈回路</strong>——通过自由选举、独立法院和活跃的公民社会。</li>
+                <li><strong>保护环境</strong>——并建立一个不会崩溃的可持续经济。</li>
+            </ul>
+
+            <p>博茨瓦纳并不完美——它面临挑战：<strong>高艾滋病患病率、青年失业和水资源压力</strong>。但它是<strong>全球南方可能性的典范</strong>。它证明<strong>治理的正当性不是由资源财富或殖民遗产决定的——而是由政策选择决定的</strong>。</p>
+
+            <p><strong>治理的正当性是通过将价值返还给人民赢得的——博茨瓦纳正是这样做的。</strong></p>
+        </div>
+
+        <div class="footnote">—— GL Framework · 资源型价值返还治理模范案例</div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const btns = document.querySelectorAll('.lang-btn');
+        const contents = { zh: document.getElementById('zh'), en: document.getElementById('en') };
+        function switchLang(lang) {
+            for (let key in contents) {
+                contents[key].classList.remove('active');
+            }
+            if (contents[lang]) contents[lang].classList.add('active');
+            btns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
+            if (history.pushState) history.pushState(null, '', '#' + lang);
+        }
+        btns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const lang = this.dataset.lang;
+                if (lang) switchLang(lang);
+            });
+        });
+        const hash = window.location.hash.replace('#', '');
+        if (hash === 'zh') {
+            switchLang('zh');
+        } else {
+            switchLang('en');
+        }
+        window.addEventListener('hashchange', function() {
+            const newHash = window.location.hash.replace('#', '');
+            if (newHash === 'zh' || newHash === 'en') {
+                switchLang(newHash);
+            } else {
+                switchLang('en');
+            }
+        });
+    })();
+</script>
+</body>
+</html>
