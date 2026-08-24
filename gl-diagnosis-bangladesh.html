@@ -1,1 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bangladesh · GL Framework Diagnosis · 孟加拉国诊断</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #0b1220;
+            --text: #f8fbff;
+            --muted: #c7d2e3;
+            --sub: #9fb0c8;
+            --dim: rgba(255,255,255,.06);
+            --green: #9FE870;
+            --blue: #7DD3FC;
+            --amber: #fbbf24;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --mono: 'DM Mono', monospace;
+            --sans: 'DM Sans', system-ui, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 15px;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--dim);
+            border-radius: 24px;
+            padding: 2.2rem 2.5rem;
+            backdrop-filter: blur(2px);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green);
+            text-decoration: none;
+            font-family: var(--mono);
+            font-size: 13px;
+            letter-spacing: 0.08em;
+            border: 1px solid rgba(159,232,112,0.3);
+            padding: 8px 18px;
+            border-radius: 40px;
+            transition: all 0.2s;
+            margin-bottom: 1.8rem;
+        }
+        .back-link:hover {
+            background: rgba(159,232,112,0.1);
+            border-color: var(--green);
+            transform: translateX(-4px);
+        }
+        .lang-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.6rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--dim);
+            padding-bottom: 0.8rem;
+        }
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-family: var(--mono);
+            font-weight: 500;
+            color: var(--sub);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
+        .lang-btn.active {
+            background: rgba(159,232,112,0.15);
+            border-color: var(--green);
+            color: var(--green);
+        }
+        .lang-content { display: none; animation: fade 0.3s ease; }
+        .lang-content.active { display: block; }
+        @keyframes fade { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
 
+        h1 {
+            font-size: 2.1rem;
+            font-family: var(--serif);
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            border-left: 6px solid var(--amber);
+            padding-left: 1.2rem;
+        }
+        .subhead {
+            font-size: 1rem;
+            color: var(--sub);
+            margin-bottom: 2rem;
+            padding-left: 1.2rem;
+            border-left: 3px solid rgba(251,191,36,0.3);
+            font-style: italic;
+        }
+        h2 {
+            font-size: 1.4rem;
+            font-family: var(--serif);
+            margin-top: 2.2rem;
+            margin-bottom: 0.6rem;
+            color: #eaf6ff;
+            border-bottom: 1px dashed rgba(255,255,255,0.08);
+            padding-bottom: 0.3rem;
+        }
+        h2 .badge {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: rgba(251,191,36,0.15);
+            color: var(--amber);
+            padding: 0.05rem 0.8rem;
+            border-radius: 30px;
+            margin-left: 0.8rem;
+            font-weight: 400;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1.4rem;
+            margin-bottom: 0.4rem;
+            color: var(--muted);
+        }
+        p { margin-bottom: 1rem; color: var(--muted); text-align: justify; }
+        ul, ol { margin: 0.5rem 0 1rem 1.8rem; list-style-type: disc; color: var(--muted); }
+        li { margin-bottom: 0.3rem; }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0 1.5rem 0;
+            font-size: 0.85rem;
+            font-family: var(--mono);
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .data-table th {
+            background: rgba(251,191,36,0.10);
+            color: var(--amber);
+            padding: 0.6rem 1rem;
+            text-align: left;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            border-bottom: 1px solid var(--dim);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+        .data-table td {
+            padding: 0.6rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            vertical-align: top;
+            color: var(--muted);
+        }
+        .data-table tr:last-child td { border-bottom: none; }
+
+        .evidence-note {
+            background: rgba(125,211,252,0.04);
+            padding: 0.8rem 1.2rem;
+            border-radius: 6px;
+            margin: 0.5rem 0 1rem 0;
+            font-size: 0.85rem;
+            color: var(--sub);
+            border-left: 3px solid var(--blue);
+        }
+        .evidence-note strong { color: var(--blue); }
+
+        .conclusion-box {
+            background: rgba(255,255,255,0.03);
+            border-left: 4px solid var(--amber);
+            padding: 1.5rem 2rem;
+            margin-top: 2rem;
+            border-radius: 12px;
+        }
+        .conclusion-box h2 { border: none; margin-top:0; padding-top:0; }
+        .footnote {
+            font-size: 0.75rem;
+            color: var(--sub);
+            text-align: right;
+            margin-top: 2rem;
+            border-top: 1px solid var(--dim);
+            padding-top: 1rem;
+            font-style: italic;
+        }
+
+        .score-pill {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            font-weight: 500;
+            background: rgba(251,191,36,0.12);
+            color: var(--amber);
+            padding: 0.05rem 0.8rem;
+            border-radius: 30px;
+            margin-left: 0.6rem;
+            letter-spacing: 0.02em;
+        }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.2rem; }
+            h1 { font-size: 1.6rem; padding-left:0.8rem; }
+            h2 { font-size: 1.2rem; }
+            .lang-bar { justify-content: center; }
+            .data-table { font-size: 0.7rem; }
+            .data-table th, .data-table td { padding: 0.4rem 0.6rem; }
+            .conclusion-box { padding: 1rem 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="global-south-diagnosis.html" class="back-link">← 返回首页 / Back to Home</a>
+
+    <div class="lang-bar">
+        <button class="lang-btn" data-lang="zh">中文</button>
+        <button class="lang-btn active" data-lang="en">English</button>
+    </div>
+
+    <!-- ===== ENGLISH ===== -->
+    <div id="en" class="lang-content active">
+        <h1>Bangladesh: The Garment Miracle Built on a Cost‑Transfer Foundation</h1>
+        <div class="subhead">— A GL Framework Diagnosis of "Export‑Ledged Cost Externalisation"</div>
+
+        <p><strong>Bangladesh is one of the world's fastest‑growing economies.</strong> Its garment industry — the <strong>second largest in the world</strong> — has lifted millions out of extreme poverty. The country has achieved <strong>remarkable progress in health and education</strong>, and its economy has grown at <strong>over 6% annually for two decades</strong>.</p>
+
+        <p>Yet this growth story masks a <strong>brutal cost‑transfer system</strong>. The garments that clothe the world are produced by <strong>women paid below subsistence wages</strong>, in <strong>factories that collapse and burn</strong>, on land that is <strong>subsiding into the sea</strong> as climate change accelerates. The economic "miracle" is <strong>built on the transfer of costs — from the state, from garment workers, from the environment — to the most vulnerable populations</strong>.</p>
+
+        <div class="evidence-note">
+            <strong>World Bank (2025)</strong> reports that <strong>Bangladesh has lifted over 30 million people out of poverty since 2000</strong> — one of the most successful poverty reduction stories in history. But <strong>ILO (2025)</strong> also reports that <strong>garment workers earn an average of $95 per month</strong> — well below the living wage of $200–$300 per month. <strong>Rana Plaza</strong> (2013) killed <strong>1,134 workers</strong>; subsequent factory collapses and fires have killed <strong>hundreds more</strong>. <strong>Climate change is projected to displace 15–20 million Bangladeshis by 2050</strong> — the cost of environmental collapse transferred to the poorest communities.
+        </div>
+
+        <h2>I. GL Diagnosis: Bangladesh Under Eight Parameters</h2>
+
+        <h3>1. Waiting Cost <span class="score-pill">2.5/10</span></h3>
+        <p>Waiting in Bangladesh is a <strong>chronic feature of everyday life</strong>. <strong>Public hospitals are overwhelmed</strong>; a single ward often serves <strong>twice the number of beds</strong>. Patients wait <strong>days for basic treatments</strong>; ambulances are scarce, and <strong>roads are congested</strong> — the waiting cost begins before the patient reaches the hospital. <strong>Government offices are notoriously slow</strong>; a passport or land registration can take <strong>6–12 months</strong>. <strong>Electricity load‑shedding</strong> — which has declined but still occurs — adds another layer of waiting: factories stop production, homeworkers lose power, and families wait for the grid to return.</p>
+
+        <h3>2. Repetition Cost <span class="score-pill">2.5/10</span></h3>
+        <p>Bangladesh's bureaucracy is <strong>labyrinthine and repetition‑intensive</strong>. <strong>Registering a business</strong> still requires <strong>multiple visits to multiple agencies</strong>, despite digitisation efforts — each agency demands its own set of documents, <strong>none of which are shared</strong>. <strong>Land transactions</strong> are particularly costly: buyers must <strong>re‑submitt documents to the Land Registry, the Sub‑Registry, and the Ministry of Land</strong> — a process that <strong>takes months and often requires bribes</strong>. <strong>Exporters</strong> face a similar burden: customs, tax authority, and port authorities each require <strong>duplicate documentation</strong>. The repetition cost is a <strong>hidden tax on businesses and citizens</strong>.</p>
+
+        <h3>3. Collapse Cost <span class="score-pill">1.5/10</span></h3>
+        <p>Bangladesh's collapse cost is <strong>visible in its factories, its environment, and its vulnerability to climate change</strong>. <strong>Factory fires and collapses</strong> have killed thousands — the <strong>Rana Plaza collapse (2013)</strong> is the most emblematic, but <strong>similar disasters occur every year</strong>. The collapse cost is borne by workers, not by factory owners or buyers. <strong>Floods and cyclones</strong> are annual catastrophes; <strong>rising sea levels</strong> are slowly swallowing the coastal areas where millions of Bangladeshis live. <strong>Rivers are polluted</strong> — the <strong>Buriganga is biologically dead</strong> — and the collapse of the ecosystem is a cost transferred to the poor who depend on it for fishing and agriculture.</p>
+
+        <h3>4. Information Asymmetry Cost <span class="score-pill">2/10</span></h3>
+        <p>In Bangladesh, information is <strong>controlled by those in power</strong>. <strong>Government budgets are opaque</strong>; the public cannot track expenditure. <strong>Climate data</strong> — crucial for disaster preparedness — is often <strong>not communicated to the communities most at risk</strong>. <strong>Agricultural markets</strong> are dominated by <strong>middlemen who hoard information</strong> about prices, storage, and transport — farmers make decisions in the dark. <strong>Garment workers</strong> often do not know their legal rights; <strong>trade unions are suppressed</strong>, and <strong>factory owners control the flow of information about safety, wages, and conditions</strong>. Information asymmetry is not accidental — it is a <strong>tool of exploitation</strong>.</p>
+
+        <h3>5. Psychological Cost <span class="score-pill">1.5/10</span></h3>
+        <p>Bangladesh's psychological cost is <strong>rooted in climate anxiety, economic precarity, and the trauma of disasters</strong>. <strong>Millions of Bangladeshis live with the constant fear of floods, cyclones, and river erosion</strong> — their homes and livelihoods can be washed away in a single night. The <strong>psychological toll on garment workers</strong> is immense: they work <strong>12‑hour shifts</strong> in <strong>dangerous conditions</strong>, earning wages that <strong>barely cover food and rent</strong>. A 2025 study by the BRAC Institute found that <strong>60% of garment workers reported symptoms of anxiety and depression</strong>. The psychological cost is compounded by <strong>social stigma</strong> — mental health issues are rarely discussed in Bangladeshi society, so workers suffer in silence.</p>
+
+        <h3>6. Opportunity Cost <span class="score-pill">1/10</span></h3>
+        <p>Bangladesh's opportunity cost is <strong>generational and structural</strong>. The country has <strong>one of the highest youth populations in the world</strong> — over <strong>30% of the population is under 25</strong>. Yet <strong>youth unemployment exceeds 15%</strong> — and among university graduates, it exceeds <strong>40%</strong>. The <strong>garment industry</strong> employs millions, but <strong>it does not require high skills</strong> — it is a <strong>dead‑end for upward mobility</strong>. The state has <strong>failed to invest in technology, science, and higher education</strong>; the economy remains <strong>dependent on low‑value exports</strong>. The opportunity cost is clear: a <strong>generation of young Bangladeshis is being locked into low‑wage, low‑skill employment</strong>, while the country's potential for industrial upgrading remains unrealised.</p>
+
+        <h3>7. Transfer Pathway <span class="score-pill">1.5/10</span></h3>
+        <p>Bangladesh's cost transfer mechanisms are embedded in its export model:</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>Cost Creator</th><th>Cost Bearer</th><th>Transfer Mechanism</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Garment Buyers (Global Brands)</td><td>Garment Workers</td><td>Low wages, unsafe factories, and no union rights — the cost of cheap clothing is externalised to workers</td></tr>
+                <tr><td>Factory Owners</td><td>Workers &amp; Environment</td><td>Cost‑cutting leads to building collapses, fires, and pollution — workers and the environment bear the collapse cost</td></tr>
+                <tr><td>State / Political Elite</td><td>Taxpayers &amp; Small Farmers</td><td>Corruption diverts public funds; infrastructure projects are overpriced; farmers receive no subsidies or support</td></tr>
+            </tbody>
+        </table>
+
+        <p><strong>The transfer pathway is explicit: global consumers benefit from cheap garments; factory owners profit; the state extracts taxes and tolerates corruption; and workers, farmers, and the environment bear the cost.</strong> The system is designed to externalise costs — and Bangladesh has perfected this model.</p>
+
+        <h3>8. Closed‑Loop Degree <span class="score-pill">2/10</span></h3>
+        <p>Bangladesh has a <strong>democratic constitution, a functioning parliament, and an active civil society</strong>. But the <strong>feedback loop is compromised</strong> by the <strong>concentration of power in the executive</strong> and the <strong>influence of business elites</strong>. <strong>Elections are held, but they are not free and fair</strong> — the ruling party has used state machinery to suppress opposition. <strong>Trade unions are weak and often co‑opted</strong>; workers have no effective channel to demand better wages or safer conditions. <strong>Civil society organisations</strong> that criticise the government face <strong>harassment and funding cuts</strong>. The loop <strong>exists on paper, but in practice it is largely blocked</strong> — feedback reaches the system, but the system does not correct itself.</p>
+
+        <h2>II. The Garment Miracle: A Case of "Export‑Ledged Cost Externalisation"</h2>
+        <p>Bangladesh's economic growth is often celebrated as a "miracle." But from the perspective of the GL Framework, it is <strong>a miracle built on externalisation — the systematic transfer of costs to workers, the environment, and the future.</strong></p>
+
+        <div class="evidence-note">
+            <strong>ILO (2025)</strong> notes that <strong>Bangladeshi garment workers are among the lowest‑paid in the world</strong> — earning <strong>one‑third of what workers earn in China</strong>. <strong>Fire safety inspections</strong> have improved since Rana Plaza, but <strong>less than 50% of factories have passed basic safety tests</strong>. The <strong>cost of compliance</strong> is transferred to workers through <strong>unpaid overtime, unsafe working conditions, and job insecurity</strong>.
+        </div>
+
+        <p>The pattern is consistent with the GL Framework's diagnosis:</p>
+        <ul>
+            <li><strong>Value is extracted</strong> — by global buyers, factory owners, and political elites.</li>
+            <li><strong>Costs are transferred</strong> — to workers (low wages, dangerous conditions), to the environment (pollution, river death), and to the future (climate displacement).</li>
+            <li><strong>Feedback is blocked</strong> — workers have no voice, trade unions are weak, and the state suppresses dissent.</li>
+            <li><strong>The loop is closed</strong> — not by design, but by the systematic suppression of feedback.</li>
+        </ul>
+
+        <div class="conclusion-box">
+            <h2>Conclusion: Bangladesh Is a Case of "Export‑Ledged Cost Externalisation" — a Miracle Built on Transferred Costs</h2>
+            <p>Bangladesh's case demonstrates the GL Framework's core proposition: <strong>economic growth can coexist with systematic cost transfer — and indeed, can be built upon it.</strong></p>
+            <p>The eight parameters show a system that:</p>
+            <ul>
+                <li><strong>Produces growth</strong> — but the growth is concentrated in a few hands.</li>
+                <li><strong>Lifts people out of poverty</strong> — but leaves them in precarity and vulnerability.</li>
+                <li><strong>Exports garments</strong> — and exports the cost of production to workers and the environment.</li>
+                <li><strong>Resists correction</strong> — because the feedback loop is blocked by the very actors who profit from the cost‑transfer system.</li>
+            </ul>
+            <p>Bangladesh is not a "development success story" in the sense of sustainable, equitable growth. It is a <strong>successful cost‑externalisation machine</strong> — a system that transfers the costs of production to those who can least afford to bear them, while the benefits flow to the powerful.</p>
+            <p><strong>Governance legitimacy is not earned by economic growth alone. It is earned by how that growth is distributed — and who bears its costs.</strong> Bangladesh's growth is real, but its distribution is deeply unequal, and its costs are being transferred to the most vulnerable. The "miracle" is not a miracle — it is a <strong>system of cost externalisation that works, but only for a few.</strong></p>
+        </div>
+
+        <div class="footnote">— A GL Framework diagnosis of export‑ledged cost externalisation</div>
+    </div>
+
+    <!-- ===== 中文 ===== -->
+    <div id="zh" class="lang-content">
+        <h1>孟加拉国：建立在成本转移基础上的成衣奇迹</h1>
+        <div class="subhead">—— GL Framework 对一个"出口导向型成本外部化"的诊断</div>
+
+        <p><strong>孟加拉国是全球增长最快的经济体之一。</strong>其成衣产业——<strong>全球第二大</strong>——已使数百万人摆脱极端贫困。该国在<strong>健康和教育方面取得了显著进展</strong>，经济<strong>连续二十年以超过6%的年增长率</strong>增长。</p>
+
+        <p>然而，这一增长故事掩盖了一个<strong>残酷的成本转移系统</strong>。为世界提供衣物的服装由<strong>工资低于维持生计水平的女性</strong>生产，在<strong>倒塌和起火的工厂</strong>里，在因气候变化而<strong>沉入大海的土地</strong>上。经济"奇迹"<strong>建立在成本转移之上——从国家、从成衣工人、从环境——转移到最脆弱的人群身上</strong>。</p>
+
+        <div class="evidence-note">
+            <strong>世界银行（2025年）</strong>报告称<strong>自2000年以来，孟加拉国已使超过3000万人摆脱贫困</strong>——历史上最成功的减贫故事之一。但<strong>国际劳工组织（2025年）</strong>也报告称<strong>成衣工人平均月薪95美元</strong>——远低于每月200至300美元的生活工资。<strong>拉纳广场（2013年）</strong>造成<strong>1134名工人死亡</strong>；随后的工厂倒塌和火灾已造成<strong>数百人死亡</strong>。<strong>气候变化预计到2050年将导致1500万至2000万孟加拉人流离失所</strong>——环境崩溃的成本被转移给最贫困的社区。
+        </div>
+
+        <h2>一、GL诊断：八项参数下的孟加拉国</h2>
+
+        <h3>1. 等待成本 <span class="score-pill">2.5/10</span></h3>
+        <p>在孟加拉国，等待是<strong>日常生活的慢性特征</strong>。<strong>公立医院人满为患</strong>；一个病房往往容纳<strong>床位两倍</strong>的患者。患者等待<strong>数天才能获得基本治疗</strong>；救护车稀缺，<strong>道路拥堵</strong>——等待成本在患者到达医院之前就已开始。<strong>政府部门以缓慢著称</strong>；护照或土地登记可能需要<strong>6至12个月</strong>。<strong>限电</strong>——虽已减少但仍时有发生——又增加了一层等待：工厂停产、家庭工人断电、家庭等待电网恢复。</p>
+
+        <h3>2. 重复成本 <span class="score-pill">2.5/10</span></h3>
+        <p>孟加拉国的官僚机构<strong>迷宫般且重复密集</strong>。<strong>注册企业</strong>尽管已推进数字化，仍需<strong>多次往返多个机构</strong>——每个机构都要求自己的文件，<strong>互不共享</strong>。<strong>土地交易</strong>尤为昂贵：买家必须<strong>向土地登记处、副登记处和土地部重复提交文件</strong>——这一过程<strong>耗时数月且往往需要行贿</strong>。<strong>出口商</strong>面临类似负担：海关、税务机构和港务局各自要求<strong>重复文件</strong>。重复成本是对<strong>企业和公民的隐性税负</strong>。</p>
+
+        <h3>3. 崩溃成本 <span class="score-pill">1.5/10</span></h3>
+        <p>孟加拉国的崩溃成本<strong>体现在工厂、环境和对气候变化的脆弱性中</strong>。<strong>工厂火灾和倒塌</strong>已造成数千人死亡——<strong>拉纳广场倒塌（2013年）</strong>最具代表性，但<strong>类似灾难每年都在发生</strong>。崩溃成本由工人承担，而非工厂主或买家。<strong>洪水和气旋</strong>是年度灾难；<strong>海平面上升</strong>正在慢慢吞噬数百万孟加拉人居住的沿海地区。<strong>河流被污染</strong>——<strong>布里甘加河已生物性死亡</strong>——生态系统的崩溃是转移给依赖捕鱼和农业为生的穷人的成本。</p>
+
+        <h3>4. 信息不对称成本 <span class="score-pill">2/10</span></h3>
+        <p>在孟加拉国，信息<strong>由当权者控制</strong>。<strong>政府预算不透明</strong>；公众无法追踪支出。<strong>气候数据</strong>——对备灾至关重要——往往<strong>不传达给风险最大的社区</strong>。<strong>农产品市场</strong>由<strong>囤积价格、存储和运输信息的中介</strong>主导——农民在黑暗中做决策。<strong>成衣工人</strong>往往不了解自己的合法权利；<strong>工会被压制</strong>，<strong>工厂主控制有关安全、工资和条件的信息流</strong>。信息不对称并非偶然——它是<strong>剥削的工具</strong>。</p>
+
+        <h3>5. 心理成本 <span class="score-pill">1.5/10</span></h3>
+        <p>孟加拉国的心理成本<strong>根植于气候焦虑、经济不稳定和灾难创伤</strong>。<strong>数百万孟加拉人生活在洪涝、气旋和河流侵蚀的持续恐惧中</strong>——他们的家园和生计可能在一夜之间被冲走。对<strong>成衣工人的心理负担</strong>是巨大的：他们在<strong>危险条件下工作12小时轮班</strong>，工资<strong>仅够支付食品和房租</strong>。BRAC研究所2025年的一项研究发现，<strong>60%的成衣工人有焦虑和抑郁症状</strong>。心理成本因<strong>社会污名</strong>而加剧——心理健康问题在孟加拉国社会中很少被讨论，因此工人默默承受。</p>
+
+        <h3>6. 机会成本 <span class="score-pill">1/10</span></h3>
+        <p>孟加拉国的机会成本是<strong>代际性和结构性的</strong>。该国拥有<strong>全球最高的青年人口之一</strong>——<strong>超过30%的人口在25岁以下</strong>。然而<strong>青年失业率超过15%</strong>——大学毕业生中超过<strong>40%</strong>。<strong>成衣产业</strong>雇用数百万人，但<strong>不需要高技能</strong>——是<strong>向上流动的死胡同</strong>。国家<strong>未能投资于技术、科学和高等教育</strong>；经济仍然<strong>依赖低价值出口</strong>。机会成本是清晰的：<strong>一整代孟加拉年轻人正被困在低工资、低技能的工作中</strong>，而国家产业升级的潜力仍未实现。</p>
+
+        <h3>7. 转移路径 <span class="score-pill">1.5/10</span></h3>
+        <p>孟加拉国的成本转移机制嵌入其出口模式中：</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>成本创造者</th><th>成本承担者</th><th>转移机制</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>成衣买家（全球品牌）</td><td>成衣工人</td><td>低工资、不安全的工厂、无工会权利——廉价服装的成本被外部化给工人</td></tr>
+                <tr><td>工厂主</td><td>工人与环境</td><td>削减成本导致建筑倒塌、火灾和污染——工人和环境承担崩溃成本</td></tr>
+                <tr><td>国家/政治精英</td><td>纳税人与小农</td><td>腐败转移公共资金；基础设施项目定价过高；农民得不到补贴或支持</td></tr>
+            </tbody>
+        </table>
+
+        <p><strong>转移路径是明确的：全球消费者受益于廉价服装；工厂主获利；国家征税并容忍腐败；而工人、农民和环境承担成本。</strong>系统的设计就是外部化成本——孟加拉国已将此模式发挥到极致。</p>
+
+        <h3>8. 闭环程度 <span class="score-pill">2/10</span></h3>
+        <p>孟加拉国拥有<strong>民主宪法、运作中的议会和活跃的公民社会</strong>。但<strong>反馈回路因行政权力集中和商业精英的影响而受损</strong>。<strong>选举举行，但并不自由公正</strong>——执政党利用国家机器压制反对派。<strong>工会薄弱且常被收买</strong>；工人没有有效的渠道来要求更好的工资或更安全的条件。<strong>批评政府的公民社会组织</strong>面临<strong>骚扰和经费削减</strong>。回路<strong>纸面上存在，但实际上基本被阻塞</strong>——反馈到达系统，但系统不自我纠正。</p>
+
+        <h2>二、成衣奇迹：一个"出口导向型成本外部化"的案例</h2>
+        <p>孟加拉国的经济增长常被誉为"奇迹"。但从GL Framework的视角看，它是<strong>一个建立在外部化之上的奇迹——系统性地将成本转移给工人、环境和未来。</strong></p>
+
+        <div class="evidence-note">
+            <strong>国际劳工组织（2025年）</strong>指出，<strong>孟加拉国成衣工人是全球工资最低的之一</strong>——<strong>仅为中国工人收入的三分之一</strong>。<strong>消防安全检查</strong>自拉纳广场事件后有所改善，但<strong>不到50%的工厂通过了基本安全测试</strong>。<strong>合规成本</strong>通过<strong>无偿加班、不安全工作条件和就业不稳定</strong>转移给工人。
+        </div>
+
+        <div class="conclusion-box">
+            <h2>结论：孟加拉国是"出口导向型成本外部化"的案例——建立在转移成本之上的奇迹</h2>
+            <p>孟加拉国的案例展示了GL Framework的核心命题：<strong>经济增长可以与系统性成本转移共存——事实上，可以建立在其之上。</strong></p>
+            <p>八项参数展示了一个这样的系统：</p>
+            <ul>
+                <li><strong>产生增长</strong>——但增长集中在少数人手中。</li>
+                <li><strong>使人们摆脱贫困</strong>——但使他们处于不稳定和脆弱之中。</li>
+                <li><strong>出口成衣</strong>——并将生产成本出口给工人和环境。</li>
+                <li><strong>抵制纠正</strong>——因为反馈回路被那些从成本转移系统中获利的行动者所阻塞。</li>
+            </ul>
+            <p>孟加拉国不是一个可持续、公平增长意义上的"发展成功故事"。它是一个<strong>成功的成本外部化机器</strong>——一个将生产成本转移给最无力承担者、而利益流向强势者的系统。</p>
+            <p><strong>治理的正当性不是由经济增长本身赢得的。而是由增长如何分配——以及谁承担其成本——赢得的。</strong>孟加拉国的增长是真实的，但其分配极不平等，其成本正被转移给最脆弱者。"奇迹"不是奇迹——它是一个<strong>行之有效的成本外部化系统，但只对少数人有效。</strong></p>
+        </div>
+
+        <div class="footnote">—— GL Framework 对出口导向型成本外部化的诊断</div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const btns = document.querySelectorAll('.lang-btn');
+        const contents = { zh: document.getElementById('zh'), en: document.getElementById('en') };
+        function switchLang(lang) {
+            for (let key in contents) {
+                contents[key].classList.remove('active');
+            }
+            if (contents[lang]) contents[lang].classList.add('active');
+            btns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
+            if (history.pushState) history.pushState(null, '', '#' + lang);
+        }
+        btns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const lang = this.dataset.lang;
+                if (lang) switchLang(lang);
+            });
+        });
+        const hash = window.location.hash.replace('#', '');
+        if (hash === 'zh') {
+            switchLang('zh');
+        } else {
+            switchLang('en');
+        }
+        window.addEventListener('hashchange', function() {
+            const newHash = window.location.hash.replace('#', '');
+            if (newHash === 'zh' || newHash === 'en') {
+                switchLang(newHash);
+            } else {
+                switchLang('en');
+            }
+        });
+    })();
+</script>
+</body>
+</html>
