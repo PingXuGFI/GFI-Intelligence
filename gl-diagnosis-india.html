@@ -1,1 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>India · GL Framework Diagnosis · 印度诊断</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #0b1220;
+            --text: #f8fbff;
+            --muted: #c7d2e3;
+            --sub: #9fb0c8;
+            --dim: rgba(255,255,255,.06);
+            --green: #9FE870;
+            --blue: #7DD3FC;
+            --amber: #fbbf24;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --mono: 'DM Mono', monospace;
+            --sans: 'DM Sans', system-ui, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 15px;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--dim);
+            border-radius: 24px;
+            padding: 2.2rem 2.5rem;
+            backdrop-filter: blur(2px);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green);
+            text-decoration: none;
+            font-family: var(--mono);
+            font-size: 13px;
+            letter-spacing: 0.08em;
+            border: 1px solid rgba(159,232,112,0.3);
+            padding: 8px 18px;
+            border-radius: 40px;
+            transition: all 0.2s;
+            margin-bottom: 1.8rem;
+        }
+        .back-link:hover {
+            background: rgba(159,232,112,0.1);
+            border-color: var(--green);
+            transform: translateX(-4px);
+        }
+        .lang-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.6rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--dim);
+            padding-bottom: 0.8rem;
+        }
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-family: var(--mono);
+            font-weight: 500;
+            color: var(--sub);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
+        .lang-btn.active {
+            background: rgba(159,232,112,0.15);
+            border-color: var(--green);
+            color: var(--green);
+        }
+        .lang-content { display: none; animation: fade 0.3s ease; }
+        .lang-content.active { display: block; }
+        @keyframes fade { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
 
+        h1 {
+            font-size: 2.1rem;
+            font-family: var(--serif);
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            border-left: 6px solid var(--amber);
+            padding-left: 1.2rem;
+        }
+        .subhead {
+            font-size: 1rem;
+            color: var(--sub);
+            margin-bottom: 2rem;
+            padding-left: 1.2rem;
+            border-left: 3px solid rgba(251,191,36,0.3);
+            font-style: italic;
+        }
+        h2 {
+            font-size: 1.4rem;
+            font-family: var(--serif);
+            margin-top: 2.2rem;
+            margin-bottom: 0.6rem;
+            color: #eaf6ff;
+            border-bottom: 1px dashed rgba(255,255,255,0.08);
+            padding-bottom: 0.3rem;
+        }
+        h2 .badge {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: rgba(251,191,36,0.15);
+            color: var(--amber);
+            padding: 0.05rem 0.8rem;
+            border-radius: 30px;
+            margin-left: 0.8rem;
+            font-weight: 400;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1.4rem;
+            margin-bottom: 0.4rem;
+            color: var(--muted);
+        }
+        p { margin-bottom: 1rem; color: var(--muted); text-align: justify; }
+        ul, ol { margin: 0.5rem 0 1rem 1.8rem; list-style-type: disc; color: var(--muted); }
+        li { margin-bottom: 0.3rem; }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0 1.5rem 0;
+            font-size: 0.85rem;
+            font-family: var(--mono);
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .data-table th {
+            background: rgba(251,191,36,0.10);
+            color: var(--amber);
+            padding: 0.6rem 1rem;
+            text-align: left;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            border-bottom: 1px solid var(--dim);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+        .data-table td {
+            padding: 0.6rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            vertical-align: top;
+            color: var(--muted);
+        }
+        .data-table tr:last-child td { border-bottom: none; }
+
+        .evidence-note {
+            background: rgba(125,211,252,0.04);
+            padding: 0.8rem 1.2rem;
+            border-radius: 6px;
+            margin: 0.5rem 0 1rem 0;
+            font-size: 0.85rem;
+            color: var(--sub);
+            border-left: 3px solid var(--blue);
+        }
+        .evidence-note strong { color: var(--blue); }
+
+        .conclusion-box {
+            background: rgba(255,255,255,0.03);
+            border-left: 4px solid var(--amber);
+            padding: 1.5rem 2rem;
+            margin-top: 2rem;
+            border-radius: 12px;
+        }
+        .conclusion-box h2 { border: none; margin-top:0; padding-top:0; }
+        .footnote {
+            font-size: 0.75rem;
+            color: var(--sub);
+            text-align: right;
+            margin-top: 2rem;
+            border-top: 1px solid var(--dim);
+            padding-top: 1rem;
+            font-style: italic;
+        }
+
+        .score-pill {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            font-weight: 500;
+            background: rgba(251,191,36,0.12);
+            color: var(--amber);
+            padding: 0.05rem 0.8rem;
+            border-radius: 30px;
+            margin-left: 0.6rem;
+            letter-spacing: 0.02em;
+        }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.2rem; }
+            h1 { font-size: 1.6rem; padding-left:0.8rem; }
+            h2 { font-size: 1.2rem; }
+            .lang-bar { justify-content: center; }
+            .data-table { font-size: 0.7rem; }
+            .data-table th, .data-table td { padding: 0.4rem 0.6rem; }
+            .conclusion-box { padding: 1rem 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="global-south-diagnosis.html" class="back-link">← 返回首页 / Back to Home</a>
+
+    <div class="lang-bar">
+        <button class="lang-btn" data-lang="zh">中文</button>
+        <button class="lang-btn active" data-lang="en">English</button>
+    </div>
+
+    <!-- ===== ENGLISH ===== -->
+    <div id="en" class="lang-content active">
+        <h1>India: The World's Largest "Democracy" — and the World's Largest Cost‑Transfer System</h1>
+        <div class="subhead">— A GL Framework Diagnosis of "Caste‑Captured Majoritarian Democracy"</div>
+
+        <p><strong>India is the world's most populous country and its largest democracy.</strong> It is a <strong>nuclear power, a spacefaring nation, and one of the world's fastest‑growing economies</strong>. Yet it is also a country where <strong>over 200 million people live in extreme poverty</strong>, where <strong>caste violence is endemic</strong>, where <strong>communal riots are recurrent</strong>, and where the <strong>state has become a vehicle for transferring costs from the rich and powerful to the poor and marginalised</strong>.</p>
+
+        <p>India's "democracy" — celebrated by many as a model for the Global South — is in fact a <strong>systematic cost‑transfer machine</strong>. It is a system that <strong>extracts value from the poor through regressive taxation, transfers wealth to the rich through corporate subsidies and cronyism, and externalises the costs of environmental collapse, communal violence, and state repression to the most vulnerable communities</strong> — Dalits, Adivasis, Muslims, and the rural poor.</p>
+
+        <div class="evidence-note">
+            <strong>World Bank (2025)</strong> reports that <strong>India's poverty rate is 15%</strong> — down from 50% in 1990, but still <strong>over 200 million people in extreme poverty</strong>. <strong>Oxfam (2025)</strong> notes that <strong>the top 1% of Indians own 40% of the country's wealth</strong>, while the <strong>bottom 50% own less than 3%</strong>. <strong>Human Rights Watch (2025)</strong> documents <strong>systematic violence against Dalits and Muslims</strong>, and the <strong>suppression of civil society and independent media</strong>. <strong>Climate change</strong> is projected to <strong>displace 30–40 million Indians by 2050</strong> — a collapse cost transferred to the poorest communities.
+        </div>
+
+        <h2>I. GL Diagnosis: India Under Eight Parameters</h2>
+
+        <h3>1. Waiting Cost <span class="score-pill">2/10</span></h3>
+        <p>India's waiting cost is <strong>visible in its public health system, its courts, and its bureaucracy</strong>. <strong>Public hospitals</strong> are overcrowded; patients wait <strong>days for basic care</strong> and <strong>months for surgeries</strong>. The <strong>judicial system</strong> has a <strong>backlog of over 40 million cases</strong> — a case can take <strong>5–10 years to resolve</strong>. <strong>Government services</strong> — passports, land registration, and permits — are <strong>notoriously slow</strong>; a land title can take <strong>years to obtain</strong>. The <strong>waiting cost is not just a bureaucratic inconvenience — it is a form of exclusion</strong>, disproportionately affecting the poor, Dalits, Muslims, and rural communities.</p>
+
+        <h3>2. Repetition Cost <span class="score-pill">2/10</span></h3>
+        <p>India's bureaucracy is a <strong>fragmented, repetition‑intensive maze</strong>. Citizens must <strong>repeat applications across multiple agencies</strong> — for identity documents, social services, and government schemes — because <strong>databases are not integrated</strong>. The <strong>Aadhaar system</strong> — India's biometric ID — was supposed to <strong>simplify service delivery</strong>, but it has instead <strong>created new barriers</strong> for the poor who cannot access digital systems. <strong>Dalits and Muslims</strong> face additional repetition: they must often <strong>prove their identity multiple times</strong> because the bureaucracy treats them with suspicion.</p>
+
+        <h3>3. Collapse Cost <span class="score-pill">1.5/10</span></h3>
+        <p>India's collapse cost is <strong>visible in its environment, its infrastructure, and its communal violence</strong>. <strong>Air pollution</strong> is a public health emergency — over <strong>2 million Indians die prematurely each year</strong> from air pollution. <strong>Water scarcity</strong> is chronic; over <strong>600 million Indians face water shortages</strong>. <strong>Infrastructure</strong> — roads, railways, and power grids — is <strong>overstretched and under‑maintained</strong>. <strong>Communal violence</strong> is a collapse cost: <strong>Hindu‑Muslim riots</strong> have killed thousands and displaced millions. The collapse cost is borne by the poor, who lack the resources to protect themselves, and by the <strong>Dalits, Adivasis, and Muslims</strong> who are <strong>targeted in communal violence</strong>.</p>
+
+        <h3>4. Information Asymmetry Cost <span class="score-pill">2/10</span></h3>
+        <p>India has a <strong>free press in principle</strong>, but the <strong>state has systematically eroded media independence</strong>. <strong>Journalists are harassed and arrested</strong>; the <strong>government controls the narrative</strong> through state‑owned media and <strong>pressure on private outlets</strong>. <strong>Government budgets are opaque</strong>; the public cannot track expenditure. <strong>Environmental data</strong> — crucial for disaster preparedness — is often <strong>classified or delayed</strong>. <strong>COVID‑19 data</strong> was <strong>withheld or manipulated</strong> during the pandemic. Information asymmetry is not incidental — it is a <strong>tool of political control</strong>.</p>
+
+        <h3>5. Psychological Cost <span class="score-pill">1.5/10</span></h3>
+        <p>India's psychological cost is <strong>rooted in communal violence, caste discrimination, and economic precarity</strong>. <strong>Dalits and Adivasis</strong> carry the <strong>weight of centuries of caste oppression</strong>. <strong>Muslims</strong> face <strong>systematic discrimination and communal violence</strong>. A 2025 survey by the Indian Psychiatric Society found that <strong>40% of Indians reported symptoms of anxiety and depression</strong> — a rate that has risen sharply since the pandemic. The psychological cost is compounded by the <strong>erosion of trust</strong> in the state and its institutions.</p>
+
+        <h3>6. Opportunity Cost <span class="score-pill">1/10</span></h3>
+        <p>India's opportunity cost is <strong>generational and structural</strong>. The country has a <strong>large, young population</strong> — over <strong>50% of Indians are under 30</strong>. Yet <strong>youth unemployment exceeds 20%</strong> — and among university graduates, it exceeds <strong>30%</strong>. The <strong>education system</strong> has been <strong>underfunded and politicised</strong>; the state has <strong>curtailed academic freedom</strong> and <strong>reduced funding for higher education</strong>. <strong>Brain drain</strong> has accelerated — over <strong>1 million skilled Indians</strong> leave the country each year. The <strong>opportunity cost</strong> is a <strong>lost generation of talent</strong> — a generation that could have built a modern, prosperous India, but instead has been <strong>driven abroad by economic collapse and political repression</strong>.</p>
+
+        <h3>7. Transfer Pathway <span class="score-pill">1.5/10</span></h3>
+        <p>India's cost transfer mechanisms are structural and well‑documented:</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>Cost Creator</th><th>Cost Bearer</th><th>Transfer Mechanism</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Corporate Elite / Political Parties</td><td>Poor &amp; Working Class</td><td>Regressive taxation (GST) imposes a higher burden on the poor; corporate subsidies transfer wealth from the public to the rich</td></tr>
+                <tr><td>State Security Apparatus</td><td>Muslims &amp; Dalits</td><td>Communal violence, police brutality, and political exclusion — the cost of state repression is transferred to the most vulnerable communities</td></tr>
+                <tr><td>Industrial Polluters</td><td>Environment &amp; Poor Communities</td><td>Environmental collapse — air pollution, water contamination, and climate change — transfers costs to communities that lack the resources to protect themselves</td></tr>
+            </tbody>
+        </table>
+
+        <p><strong>The transfer pathway is clear: the state extracts value from the poor through regressive taxation, transfers it to the rich through corporate subsidies, and externalises the costs of environmental collapse, communal violence, and state repression to the most vulnerable communities.</strong></p>
+
+        <h3>8. Closed‑Loop Degree <span class="score-pill">1.5/10</span></h3>
+        <p>India has <strong>a functioning parliament and a constitution</strong>, but the feedback loop is <strong>increasingly compromised</strong>. <strong>Elections are held, but they are not free and fair</strong> — the state uses its power to <strong>influence the media, suppress opposition, and manipulate the electoral process</strong>. The <strong>judiciary has been politicised</strong>; courts have been used to <strong>jail opponents and acquit allies</strong>. The <strong>media is controlled or intimidated</strong>; independent journalism is <strong>systematically harassed</strong>. The loop <strong>exists on paper, but in practice it is largely blocked</strong> — feedback reaches the system, but it does not produce correction.</p>
+
+        <h2>II. The "World's Largest Democracy" — a Cost‑Transfer Machine</h2>
+        <p>India is often celebrated as the "world's largest democracy." But from the perspective of the GL Framework, it is a <strong>cost‑transfer machine</strong> that has perfected the art of <strong>extracting value from the poor, transferring it to the rich, and externalising the costs of state failure to the most vulnerable communities</strong>.</p>
+
+        <div class="evidence-note">
+            <strong>Freedom House (2025)</strong> classifies India as <strong>"partly free"</strong> — down from "free" in the 2000s. <strong>V-Dem (2025)</strong> ranks India as a <strong>democracy in decline</strong> — noting the erosion of civil liberties, the suppression of dissent, and the politicisation of the judiciary. The <strong>World Bank (2025)</strong> notes that <strong>India's economic growth has been driven by consumption, not investment</strong> — a pattern that is unsustainable and cost‑transfer‑intensive.
+        </div>
+
+        <p>The pattern is consistent with the GL Framework's diagnosis:</p>
+        <ul>
+            <li><strong>Value is extracted</strong> — by the corporate elite, the political class, and the state security apparatus.</li>
+            <li><strong>Costs are transferred</strong> — to the poor (through regressive taxation and inflation), to Dalits and Muslims (through communal violence and political exclusion), to the environment (through pollution and climate change), and to the young (through unemployment and brain drain).</li>
+            <li><strong>Feedback is blocked</strong> — by media control, political repression, and a politicised judiciary.</li>
+            <li><strong>The loop is closed</strong> — because the system is designed to preserve the power of the elite.</li>
+        </ul>
+
+        <div class="conclusion-box">
+            <h2>Conclusion: India Is a Case of "Caste‑Captured Majoritarian Democracy" — a System That Transfers Costs to the Poor, Dalits, Muslims, and the Young</h2>
+            <p>India's case demonstrates the GL Framework's core proposition: <strong>a country can have democratic forms and economic growth — while systematically transferring costs to the most vulnerable populations.</strong></p>
+            <p>The eight parameters show a system that:</p>
+            <ul>
+                <li><strong>Holds elections</strong> — but the elections are increasingly controlled by the state, the media, and the corporate elite.</li>
+                <li><strong>Generates growth</strong> — but the growth is concentrated in the top 1%, while the poor are left behind.</li>
+                <li><strong>Maintains a constitution</strong> — but the constitution is increasingly used to suppress dissent and target minorities.</li>
+                <li><strong>Externalises costs</strong> — to the poor (through regressive taxation), to the environment (through pollution), to minorities (through communal violence), and to the young (through unemployment).</li>
+            </ul>
+            <p>India is not a "failed democracy" — it is a <strong>democracy that has been captured by the elite, the state apparatus, and the majority community.</strong> The "world's largest democracy" is also the <strong>world's largest cost‑transfer machine</strong> — a system that extracts value from the poor and transfers it to the rich, while externalising the costs of state failure to the most vulnerable.</p>
+            <p><strong>Governance legitimacy is not earned by holding elections or generating growth. It is earned by returning value to the population — including the poor, Dalits, Muslims, and the young.</strong> India's growth is real, but its distribution is deeply unequal, and its costs are being transferred to those who have the least power.</p>
+        </div>
+
+        <div class="footnote">— A GL Framework diagnosis of caste‑captured majoritarian democracy</div>
+    </div>
+
+    <!-- ===== 中文 ===== -->
+    <div id="zh" class="lang-content">
+        <h1>印度：全球最大的"民主国家"——也是全球最大的成本转移系统</h1>
+        <div class="subhead">—— GL Framework 对一个"种姓捕获的多数民主"的诊断</div>
+
+        <p><strong>印度是全球人口最多的国家，也是全球最大的民主国家。</strong>它是<strong>核大国、航天国家，也是全球增长最快的经济体之一</strong>。然而，它也是一个<strong>超过2亿人生活在极端贫困中</strong>、<strong>种姓暴力盛行</strong>、<strong>社区骚乱频繁</strong>、<strong>国家已成为将成本从富人和有权势者转移给穷人和边缘群体的工具</strong>的国家。</p>
+
+        <p>印度的"民主"——被许多人誉为全球南方的典范——实际上是一个<strong>系统性的成本转移机器</strong>。这是一个<strong>通过累退税从穷人那里提取价值、通过企业补贴和裙带关系将财富转移给富人、将环境崩溃、社区暴力和社会镇压的成本外部化给最脆弱社区</strong>——达利特人、原住民、穆斯林和农村穷人——的系统。</p>
+
+        <div class="evidence-note">
+            <strong>世界银行（2025年）</strong>报告称<strong>印度贫困率为15%</strong>——低于1990年的50%，但仍有<strong>超过2亿人处于极端贫困</strong>。<strong>乐施会（2025年）</strong>指出，<strong>前1%的印度人拥有全国40%的财富</strong>，而<strong>后50%仅拥有不到3%</strong>。<strong>人权观察（2025年）</strong>记录了<strong>对达利特人和穆斯林的系统性暴力</strong>，以及<strong>对公民社会和独立媒体的压制</strong>。<strong>气候变化</strong>预计到2050年将导致<strong>3000万至4000万印度人流离失所</strong>——一项转移给最贫困社区的崩溃成本。
+        </div>
+
+        <h2>一、GL诊断：八项参数下的印度</h2>
+
+        <h3>1. 等待成本 <span class="score-pill">2/10</span></h3>
+        <p>印度的等待成本<strong>体现在公共卫生系统、法院和官僚机构中</strong>。<strong>公立医院</strong>人满为患；患者等待<strong>数天才能获得基本护理</strong>，<strong>数月才能进行手术</strong>。<strong>司法系统</strong>有<strong>超过4000万件积压案件</strong>——一宗案件可能需要<strong>5至10年才能解决</strong>。<strong>政府服务</strong>——护照、土地登记和许可证——以<strong>缓慢著称</strong>；地契可能需要<strong>数年才能获得</strong>。<strong>等待成本不仅是官僚不便——更是一种排斥形式</strong>，不成比例地影响穷人、达利特人、穆斯林和农村社区。</p>
+
+        <h3>2. 重复成本 <span class="score-pill">2/10</span></h3>
+        <p>印度的官僚机构是一个<strong>碎片化、重复密集的迷宫</strong>。公民必须在<strong>多个机构重复申请</strong>——身份证件、社会服务和政府计划——因为<strong>数据库未整合</strong>。<strong>阿达尔系统</strong>——印度的生物识别身份证——本应<strong>简化服务交付</strong>，但却为无法访问数字系统的穷人<strong>制造了新的障碍</strong>。<strong>达利特人和穆斯林</strong>面临额外的重复：他们往往需要<strong>多次证明身份</strong>，因为官僚机构对他们持怀疑态度。</p>
+
+        <h3>3. 崩溃成本 <span class="score-pill">1.5/10</span></h3>
+        <p>印度的崩溃成本<strong>体现在环境、基础设施和社区暴力中</strong>。<strong>空气污染</strong>是一场公共卫生紧急事件——每年有<strong>超过200万印度人</strong>因空气污染过早死亡。<strong>水资源短缺</strong>是慢性的；<strong>超过6亿印度人面临缺水</strong>。<strong>基础设施</strong>——道路、铁路和电网——<strong>超负荷且维护不足</strong>。<strong>社区暴力</strong>是一种崩溃成本：<strong>印度教-穆斯林骚乱</strong>已造成数千人死亡和数百万人流离失所。崩溃成本由缺乏资源保护自己的穷人承担，也由在社区暴力中<strong>成为目标的达利特人、原住民和穆斯林</strong>承担。</p>
+
+        <h3>4. 信息不对称成本 <span class="score-pill">2/10</span></h3>
+        <p>印度<strong>原则上有新闻自由</strong>，但<strong>国家系统性地侵蚀了媒体独立性</strong>。<strong>记者被骚扰和逮捕</strong>；<strong>政府通过国有媒体和对私营媒体的压力控制叙事</strong>。<strong>政府预算不透明</strong>；公众无法追踪支出。<strong>环境数据</strong>——对备灾至关重要——往往被<strong>分类或延迟</strong>。<strong>新冠疫情数据</strong>在疫情期间被<strong>隐瞒或操纵</strong>。信息不对称并非偶然——它是<strong>政治控制的工具</strong>。</p>
+
+        <h3>5. 心理成本 <span class="score-pill">1.5/10</span></h3>
+        <p>印度的心理成本<strong>根植于社区暴力、种姓歧视和经济不稳定</strong>。<strong>达利特人和原住民</strong>背负着<strong>数百年种姓压迫的重压</strong>。<strong>穆斯林</strong>面临<strong>系统性歧视和社区暴力</strong>。印度精神病学协会2025年的一项调查发现，<strong>40%的印度人有焦虑和抑郁症状</strong>——自疫情以来急剧上升。心理成本因对国家和其机构的<strong>信任侵蚀</strong>而加剧。</p>
+
+        <h3>6. 机会成本 <span class="score-pill">1/10</span></h3>
+        <p>印度的机会成本是<strong>代际性和结构性的</strong>。该国拥有<strong>庞大且年轻的人口</strong>——<strong>超过50%的印度人在30岁以下</strong>。然而<strong>青年失业率超过20%</strong>——大学毕业生中超过<strong>30%</strong>。<strong>教育系统</strong>被<strong>资金不足和政治化</strong>；国家<strong>限制了学术自由</strong>并<strong>削减了高等教育经费</strong>。<strong>人才流失</strong>加速——每年有<strong>超过100万技术熟练的印度人</strong>离开该国。<strong>机会成本</strong>是<strong>失去一整代人才</strong>——本可以建设一个现代化、繁荣的印度的一代人，却被<strong>经济崩溃和政治镇压驱赶到海外</strong>。</p>
+
+        <h3>7. 转移路径 <span class="score-pill">1.5/10</span></h3>
+        <p>印度的成本转移机制是结构性的且有充分记录：</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>成本创造者</th><th>成本承担者</th><th>转移机制</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>企业精英/政党</td><td>穷人与工人阶级</td><td>累退税（商品服务税）给穷人带来更高负担；企业补贴将财富从公共转移给富人</td></tr>
+                <tr><td>国家安全机器</td><td>穆斯林与达利特人</td><td>社区暴力、警察暴行和政治排斥——国家镇压的成本被转移给最脆弱的社区</td></tr>
+                <tr><td>工业污染者</td><td>环境与贫困社区</td><td>环境崩溃——空气污染、水污染和气候变化——将成本转移给缺乏资源保护自己的社区</td></tr>
+            </tbody>
+        </table>
+
+        <p><strong>转移路径是清晰的：国家通过累退税从穷人那里提取价值，通过企业补贴将其转移给富人，并将环境崩溃、社区暴力和社会镇压的成本外部化给最脆弱的社区。</strong></p>
+
+        <h3>8. 闭环程度 <span class="score-pill">1.5/10</span></h3>
+        <p>印度拥有<strong>运作中的议会和宪法</strong>，但反馈回路<strong>日益受损</strong>。<strong>选举举行，但并不自由公正</strong>——国家利用其权力<strong>影响媒体、压制反对派和操纵选举过程</strong>。<strong>司法已被政治化</strong>；法院被用于<strong>监禁反对者、赦免盟友</strong>。<strong>媒体被控制或恐吓</strong>；独立新闻业被<strong>系统性地骚扰</strong>。回路<strong>纸面上存在，但实际上大部分被阻塞</strong>——反馈到达系统，但不产生纠正。</p>
+
+        <h2>二、"全球最大的民主国家"——一个成本转移机器</h2>
+        <p>印度常被誉为"全球最大的民主国家"。但从GL Framework的视角看，它是一个<strong>成本转移机器</strong>，已将<strong>从穷人那里提取价值、将其转移给富人、将国家失败的成本外部化给最脆弱社区</strong>的艺术发挥到极致。</p>
+
+        <div class="evidence-note">
+            <strong>自由之家（2025年）</strong>将印度列为<strong>"部分自由"</strong>——较2000年代的"自由"有所下降。<strong>V-Dem（2025年）</strong>将印度列为<strong>民主衰退国家</strong>——指出公民自由受到侵蚀、异见被压制、司法被政治化。<strong>世界银行（2025年）</strong>指出，<strong>印度的经济增长由消费驱动，而非投资</strong>——一种不可持续且成本转移密集的模式。
+        </div>
+
+        <div class="conclusion-box">
+            <h2>结论：印度是"种姓捕获的多数民主"的案例——将成本转移给穷人、达利特人、穆斯林和年轻人的系统</h2>
+            <p>印度的案例展示了GL Framework的核心命题：<strong>一个国家可以拥有民主形式和经济成长——同时系统性地将成本转移给最脆弱的人群。</strong></p>
+            <p>八项参数展示了一个这样的系统：</p>
+            <ul>
+                <li><strong>举行选举</strong>——但选举日益受国家、媒体和企业精英控制。</li>
+                <li><strong>产生增长</strong>——但增长集中在前1%，穷人被抛在后面。</li>
+                <li><strong>维持宪法</strong>——但宪法日益被用于压制异见和针对少数群体。</li>
+                <li><strong>外部化成本</strong>——给穷人（通过累退税）、给环境（通过污染）、给少数群体（通过社区暴力）、给年轻人（通过失业）。</li>
+            </ul>
+            <p>印度不是一个"失败的民主国家"——它是一个<strong>被精英、国家机器和多数社区捕获的民主国家。</strong>"全球最大的民主国家"也是<strong>全球最大的成本转移机器</strong>——一个从穷人那里提取价值并将其转移给富人、同时将国家失败的成本外部化给最脆弱者的系统。</p>
+            <p><strong>治理的正当性不是通过举行选举或产生增长赢得的。它是通过将价值返还给人民——包括穷人、达利特人、穆斯林和年轻人——赢得的。</strong>印度的增长是真实的，但分配极不平等，成本正被转移给权力最小的人。</p>
+        </div>
+
+        <div class="footnote">—— GL Framework 对种姓捕获的多数民主的诊断</div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const btns = document.querySelectorAll('.lang-btn');
+        const contents = { zh: document.getElementById('zh'), en: document.getElementById('en') };
+        function switchLang(lang) {
+            for (let key in contents) {
+                contents[key].classList.remove('active');
+            }
+            if (contents[lang]) contents[lang].classList.add('active');
+            btns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
+            if (history.pushState) history.pushState(null, '', '#' + lang);
+        }
+        btns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const lang = this.dataset.lang;
+                if (lang) switchLang(lang);
+            });
+        });
+        const hash = window.location.hash.replace('#', '');
+        if (hash === 'zh') {
+            switchLang('zh');
+        } else {
+            switchLang('en');
+        }
+        window.addEventListener('hashchange', function() {
+            const newHash = window.location.hash.replace('#', '');
+            if (newHash === 'zh' || newHash === 'en') {
+                switchLang(newHash);
+            } else {
+                switchLang('en');
+            }
+        });
+    })();
+</script>
+</body>
+</html>
