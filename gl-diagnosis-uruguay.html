@@ -1,1 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Uruguay · GL Framework Model · 乌拉圭模范</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #0b1220;
+            --text: #f8fbff;
+            --muted: #c7d2e3;
+            --sub: #9fb0c8;
+            --dim: rgba(255,255,255,.06);
+            --green: #9FE870;
+            --blue: #7DD3FC;
+            --amber: #fbbf24;
+            --gold: #fcd34d;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --mono: 'DM Mono', monospace;
+            --sans: 'DM Sans', system-ui, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 15px;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--dim);
+            border-radius: 24px;
+            padding: 2.2rem 2.5rem;
+            backdrop-filter: blur(2px);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green);
+            text-decoration: none;
+            font-family: var(--mono);
+            font-size: 13px;
+            letter-spacing: 0.08em;
+            border: 1px solid rgba(159,232,112,0.3);
+            padding: 8px 18px;
+            border-radius: 40px;
+            transition: all 0.2s;
+            margin-bottom: 1.8rem;
+        }
+        .back-link:hover {
+            background: rgba(159,232,112,0.1);
+            border-color: var(--green);
+            transform: translateX(-4px);
+        }
+        .lang-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.6rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--dim);
+            padding-bottom: 0.8rem;
+        }
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-family: var(--mono);
+            font-weight: 500;
+            color: var(--sub);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
+        .lang-btn.active {
+            background: rgba(159,232,112,0.15);
+            border-color: var(--green);
+            color: var(--green);
+        }
+        .lang-content { display: none; animation: fade 0.3s ease; }
+        .lang-content.active { display: block; }
+        @keyframes fade { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
 
+        h1 {
+            font-size: 2.1rem;
+            font-family: var(--serif);
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            border-left: 6px solid var(--gold);
+            padding-left: 1.2rem;
+        }
+        .subhead {
+            font-size: 1rem;
+            color: var(--sub);
+            margin-bottom: 2rem;
+            padding-left: 1.2rem;
+            border-left: 3px solid rgba(252,211,77,0.3);
+            font-style: italic;
+        }
+        .model-badge {
+            display: inline-block;
+            background: rgba(252,211,77,0.15);
+            color: var(--gold);
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 0.1rem 1rem;
+            border-radius: 30px;
+            border: 1px solid rgba(252,211,77,0.2);
+            margin-left: 1rem;
+        }
+        h2 {
+            font-size: 1.4rem;
+            font-family: var(--serif);
+            margin-top: 2.2rem;
+            margin-bottom: 0.6rem;
+            color: #eaf6ff;
+            border-bottom: 1px dashed rgba(255,255,255,0.08);
+            padding-bottom: 0.3rem;
+        }
+        h2 .badge {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: rgba(251,191,36,0.15);
+            color: var(--amber);
+            padding: 0.05rem 0.8rem;
+            border-radius: 30px;
+            margin-left: 0.8rem;
+            font-weight: 400;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1.4rem;
+            margin-bottom: 0.4rem;
+            color: var(--muted);
+        }
+        p { margin-bottom: 1rem; color: var(--muted); text-align: justify; }
+        ul, ol { margin: 0.5rem 0 1rem 1.8rem; list-style-type: disc; color: var(--muted); }
+        li { margin-bottom: 0.3rem; }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0 1.5rem 0;
+            font-size: 0.85rem;
+            font-family: var(--mono);
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .data-table th {
+            background: rgba(252,211,77,0.10);
+            color: var(--gold);
+            padding: 0.6rem 1rem;
+            text-align: left;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            border-bottom: 1px solid var(--dim);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+        .data-table td {
+            padding: 0.6rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            vertical-align: top;
+            color: var(--muted);
+        }
+        .data-table tr:last-child td { border-bottom: none; }
+        .data-table .positive { color: var(--green); }
+
+        .evidence-note {
+            background: rgba(125,211,252,0.04);
+            padding: 0.8rem 1.2rem;
+            border-radius: 6px;
+            margin: 0.5rem 0 1rem 0;
+            font-size: 0.85rem;
+            color: var(--sub);
+            border-left: 3px solid var(--blue);
+        }
+        .evidence-note strong { color: var(--blue); }
+
+        .conclusion-box {
+            background: rgba(252,211,77,0.04);
+            border-left: 4px solid var(--gold);
+            padding: 1.5rem 2rem;
+            margin-top: 2rem;
+            border-radius: 12px;
+        }
+        .conclusion-box h2 { border: none; margin-top:0; padding-top:0; }
+        .footnote {
+            font-size: 0.75rem;
+            color: var(--sub);
+            text-align: right;
+            margin-top: 2rem;
+            border-top: 1px solid var(--dim);
+            padding-top: 1rem;
+            font-style: italic;
+        }
+
+        .score-pill {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            font-weight: 500;
+            background: rgba(159,232,112,0.12);
+            color: var(--green);
+            padding: 0.05rem 0.8rem;
+            border-radius: 30px;
+            margin-left: 0.6rem;
+            letter-spacing: 0.02em;
+        }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.2rem; }
+            h1 { font-size: 1.6rem; padding-left:0.8rem; }
+            h2 { font-size: 1.2rem; }
+            .lang-bar { justify-content: center; }
+            .data-table { font-size: 0.7rem; }
+            .data-table th, .data-table td { padding: 0.4rem 0.6rem; }
+            .conclusion-box { padding: 1rem 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="global-south-diagnosis.html" class="back-link">← 返回首页 / Back to Home</a>
+
+    <div class="lang-bar">
+        <button class="lang-btn" data-lang="zh">中文</button>
+        <button class="lang-btn active" data-lang="en">English</button>
+    </div>
+
+    <!-- ===== ENGLISH ===== -->
+    <div id="en" class="lang-content active">
+        <h1>Uruguay: The Quiet Success — How a Small Country Built the Most Equitable Society in the Americas</h1>
+        <div class="subhead">— A GL Framework Model Case of "Inclusive Value‑Returning Governance" <span class="model-badge">★ Model</span></div>
+
+        <p><strong>Uruguay is often overlooked.</strong> Sandwiched between the giants of Brazil and Argentina, this small country of 3.5 million people has built <strong>one of the most equitable, stable, and well‑governed societies in the Americas</strong>. It is a country that <strong>consistently ranks at the top</strong> of nearly every governance metric in Latin America — democracy, transparency, social welfare, and human development.</p>
+
+        <p>What makes Uruguay exceptional is not wealth — it has modest natural resources and a small economy — but <strong>institutional design, political culture, and deliberate policy choices</strong>. Uruguay has <strong>returned value to its population</strong> through a combination of <strong>progressive taxation, universal social services, and an open feedback loop</strong>.</p>
+
+        <div class="evidence-note">
+            <strong>World Bank (2025)</strong> reports that <strong>Uruguay's poverty rate is 9%</strong> — among the lowest in the Americas. Its <strong>Gini coefficient (0.40)</strong> is the <strong>lowest in the Americas</strong> — more equitable than the United States (0.48). <strong>UNDP (2025)</strong> ranks Uruguay <strong>58th on the Human Development Index</strong> — the highest in Latin America. <strong>Transparency International (2025)</strong> ranks Uruguay <strong>27th out of 182 countries</strong> on the Corruption Perceptions Index — the <strong>cleanest in Latin America</strong>. <strong>V‑Dem (2025)</strong> ranks Uruguay as a <strong>"liberal democracy"</strong> — one of only a handful in the Global South.
+        </div>
+
+        <h2>I. GL Diagnosis: Uruguay Under Eight Parameters</h2>
+
+        <h3>1. Waiting Cost <span class="score-pill">7.5/10</span></h3>
+        <p>Uruguay's waiting cost is <strong>low by regional and global standards</strong>. The <strong>public healthcare system (FONASA)</strong> is universal and well‑funded; patients wait <strong>days or weeks, not months</strong>, for specialist care. The <strong>public education system</strong> is free and accessible, with <strong>no significant bottlenecks</strong>. <strong>Government services</strong> — land registration, business permits, and tax filings — are <strong>digitised and efficient</strong>; many can be completed online without ever visiting an office. <strong>Waiting is an exception, not a rule</strong>.</p>
+
+        <h3>2. Repetition Cost <span class="score-pill">7/10</span></h3>
+        <p>Uruguay's bureaucracy is <strong>integrated and user‑friendly</strong>. The state has <strong>invested in a unified digital platform</strong> (Portal del Ciudadano) that allows citizens to <strong>complete most procedures in a single interface</strong>. <strong>Databases are linked across agencies</strong> — identity, health, taxes, and social security are <strong>integrated</strong>, minimising the need for repeated document submissions. The repetition cost is <strong>low because the system is designed to serve the citizen, not the bureaucracy</strong>.</p>
+
+        <h3>3. Collapse Cost <span class="score-pill">7/10</span></h3>
+        <p>Uruguay's collapse cost is <strong>among the lowest in the Global South</strong>. <strong>Infrastructure</strong> — roads, electricity, water, and telecommunications — is <strong>reliable and modern</strong>. The state has <strong>invested in disaster preparedness</strong> and has <strong>effective emergency response systems</strong>. <strong>Environmental management</strong> is a priority: Uruguay generates <strong>over 90% of its electricity from renewable sources</strong> (wind, solar, hydro, and biomass) — one of the highest rates in the world. Collapse cost is <strong>minimised because the state prevents collapse</strong> rather than managing it after the fact.</p>
+
+        <h3>4. Information Asymmetry Cost <span class="score-pill">8/10</span></h3>
+        <p>Uruguay has a <strong>free press, strong civil society, and transparent governance</strong>. <strong>Government budgets are published and accessible</strong>; citizens can <strong>track public expenditure in real‑time</strong> through the state's transparency portal. The <strong>judiciary is independent</strong> and has a <strong>strong record of holding the state accountable</strong>. <strong>Freedom of information</strong> is protected and <strong>practised in reality</strong>. Uruguay has one of the <strong>highest levels of trust in the state</strong> in the Americas — a direct result of <strong>low information asymmetry</strong>.</p>
+
+        <h3>5. Psychological Cost <span class="score-pill">7.5/10</span></h3>
+        <p>Uruguay's psychological cost is <strong>remarkably low</strong>. The country's <strong>political stability</strong> — no coups, no dictatorships, no civil war — has created a <strong>deep sense of security and trust</strong> among citizens. A 2025 survey by the Universidad de la República found that <strong>over 65% of Uruguayans trust the state</strong> — one of the highest rates in the world. The psychological cost is low because <strong>citizens expect the state to serve them</strong>, not to repress them. The <strong>legalisation of cannabis, same‑sex marriage, and abortion</strong> reflects a society that <strong>trusts its citizens</strong> and respects their autonomy.</p>
+
+        <h3>6. Opportunity Cost <span class="score-pill">7/10</span></h3>
+        <p>Uruguay's opportunity cost is <strong>well‑managed</strong>. The country has a <strong>highly educated population</strong> — literacy exceeds 98%, and the <strong>state invests over 5% of GDP in education</strong>. <strong>Youth unemployment is around 12%</strong> — relatively low for the region. <strong>Brain drain</strong> exists, but it is <strong>lower than in most Global South countries</strong>; many skilled professionals stay in Uruguay because the <strong>quality of life is high</strong> and the <strong>state provides a strong safety net</strong>. The state has <strong>invested in technology and innovation</strong> — Uruguay has become a <strong>regional hub for software development and fintech</strong>. The opportunity cost is <strong>not being squandered</strong> — the state is <strong>investing in its people</strong>.</p>
+
+        <h3>7. Transfer Pathway: Reversed <span class="score-pill">8/10</span></h3>
+        <p>Uruguay's transfer pathways are <strong>explicitly designed to return value to the population</strong>.</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>Mechanism</th><th>Effect</th><th>Outcome</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Progressive Taxation</td><td>Higher taxes on wealth, income, and corporate profits</td><td><span class="positive">Redistributes income to the poor and middle class</span></td></tr>
+                <tr><td>Universal Healthcare (FONASA)</td><td>Public health coverage for all citizens</td><td><span class="positive">High life expectancy (79 years); low infant mortality</span></td></tr>
+                <tr><td>Free Public Education</td><td>Free and accessible education from primary to tertiary</td><td><span class="positive">High literacy; strong human capital</span></td></tr>
+                <tr><td>Strong Safety Net</td><td>Social security, unemployment insurance, and housing support</td><td><span class="positive">Low poverty (9%); high social mobility</span></td></tr>
+            </tbody>
+        </table>
+
+        <p><strong>The transfer pathway is clearly reversed</strong> — the state extracts value from the wealthy (through progressive taxation) and <strong>returns it to the population</strong> (through universal services and social protection). This is the <strong>defining feature</strong> of Uruguay's governance model.</p>
+
+        <h3>8. Closed‑Loop Degree <span class="score-pill">8/10</span></h3>
+        <p>Uruguay has a <strong>highly functional feedback loop</strong>. <strong>Elections are free, fair, and competitive</strong> — the country has a <strong>strong multiparty system</strong> and <strong>high voter turnout</strong>. The <strong>judiciary is independent</strong> and has a <strong>strong record of protecting rights and enforcing accountability</strong>. <strong>Civil society is vibrant</strong> — unions, NGOs, and community organisations <strong>monitor the state and demand correction</strong>. The <strong>media is free and investigative</strong> — journalists hold officials accountable. The <strong>feedback loop is open and responsive</strong> — when citizens demand change, the state responds.</p>
+
+        <h2>II. Why Uruguay Succeeded: The Quiet Model</h2>
+
+        <p>Uruguay's success is not an accident. It is the result of <strong>deliberate policy choices, strong institutions, and a political culture that values inclusion</strong>.</p>
+
+        <ul>
+            <li><strong>The "Batllista" tradition</strong> — since the early 20th century, Uruguay has had a <strong>strong state‑building tradition</strong> that prioritised social welfare, education, and public health.</li>
+            <li><strong>Progressive taxation</strong> — Uruguay has one of the <strong>most progressive tax systems in the Americas</strong>, with higher taxes on wealth and corporate profits that fund social services.</li>
+            <li><strong>Universal social services</strong> — healthcare, education, and social security are <strong>universal and free</strong> — not conditional, not means‑tested, but <strong>available to all citizens</strong>.</li>
+            <li><strong>Institutional strength</strong> — the judiciary, the electoral system, and the civil service are <strong>independent, professional, and effective</strong>.</li>
+            <li><strong>Political consensus</strong> — despite ideological differences, <strong>major political parties agree on the fundamentals</strong> of the welfare state — a consensus that has <strong>protected the system from democratic backsliding</strong>.</li>
+        </ul>
+
+        <div class="evidence-note">
+            <strong>UNDP (2025)</strong> notes that <strong>Uruguay's human development index (HDI) is 0.825</strong> — the highest in Latin America and comparable to several European countries. The country has <strong>one of the highest life expectancies in the Americas (79 years)</strong> and <strong>near‑universal healthcare coverage</strong>. <strong>Transparency International (2025)</strong> ranks Uruguay <strong>27th out of 182 countries</strong> on the Corruption Perceptions Index — the <strong>cleanest in Latin America</strong> and among the <strong>cleanest in the Global South</strong>.
+        </div>
+
+        <div class="conclusion-box">
+            <h2>Conclusion: Uruguay Is the Quiet Model — a System That Returns Value to the People</h2>
+
+            <p>Uruguay's case demonstrates that <strong>inclusive, value‑returning governance is not only possible — it is sustainable</strong>. For over a century, Uruguay has built a system that <strong>extracts value from the wealthy and returns it to the population</strong> through universal services, progressive taxation, and strong institutions.</p>
+
+            <p>The eight parameters show a system that:</p>
+            <ul>
+                <li><strong>Returns value</strong> — through universal healthcare, free education, and progressive taxation.</li>
+                <li><strong>Minimises costs</strong> — through efficient bureaucracy, reliable infrastructure, and disaster preparedness.</li>
+                <li><strong>Maintains an open feedback loop</strong> — through free elections, independent courts, and an active civil society.</li>
+                <li><strong>Builds social trust</strong> — through transparency, accountability, and political consensus.</li>
+            </ul>
+
+            <p>Uruguay is not perfect — it faces challenges: <strong>an aging population, economic vulnerability, and the pressure of regional instability</strong>. But it is a <strong>model of what is possible</strong> in the Global South. It proves that <strong>governance legitimacy is not determined by geography, population size, or natural resources — it is determined by policy choices</strong>.</p>
+
+            <p><strong>Governance legitimacy is earned by returning value to the people — and Uruguay has done exactly that.</strong></p>
+        </div>
+
+        <div class="footnote">— GL Framework · Model Case of Inclusive Value‑Returning Governance</div>
+    </div>
+
+    <!-- ===== 中文 ===== -->
+    <div id="zh" class="lang-content">
+        <h1>乌拉圭：悄无声息的典范——小国如何建成美洲最公平的社会</h1>
+        <div class="subhead">—— GL Framework 的"包容性价值返还治理"模范案例 <span class="model-badge">★ 模范</span></div>
+
+        <p><strong>乌拉圭常被忽视。</strong>夹在巴西和阿根廷两个巨人之间，这个仅有350万人口的小国建立了<strong>美洲最公平、最稳定、治理最好的社会之一</strong>。它是一个在拉丁美洲几乎所有治理指标上——民主、透明度、社会福利和人类发展——<strong>持续位居前列</strong>的国家。</p>
+
+        <p>乌拉圭的非凡之处不在于财富——它自然资源有限，经济体量小——而在于<strong>制度设计、政治文化和深思熟虑的政策选择</strong>。乌拉圭通过<strong>累进税制、全民社会服务和开放的反馈回路</strong>，将<strong>价值返还给了人口</strong>。</p>
+
+        <div class="evidence-note">
+            <strong>世界银行（2025年）</strong>报告称<strong>乌拉圭贫困率为9%</strong>——美洲最低之一。其<strong>基尼系数（0.40）</strong>是<strong>美洲最低</strong>——比美国（0.48）更公平。<strong>联合国开发计划署（2025年）</strong>将乌拉圭列为人类发展指数<strong>第58位</strong>——拉丁美洲最高。<strong>透明国际（2025年）</strong>将乌拉圭列为清廉指数<strong>第27位（共182个国家）</strong>——<strong>拉丁美洲最清廉</strong>。<strong>V-Dem（2025年）</strong>将乌拉圭列为<strong>"自由民主"</strong>——全球南方少数获此评级之一。
+        </div>
+
+        <h2>一、GL诊断：八项参数下的乌拉圭</h2>
+
+        <h3>1. 等待成本 <span class="score-pill">7.5/10</span></h3>
+        <p>乌拉圭的等待成本<strong>在区域和全球标准下都较低</strong>。<strong>公共医疗系统（FONASA）</strong>是全民覆盖且资金充足的；患者等待<strong>数天或数周，而非数月</strong>即可获得专科护理。<strong>公共教育系统</strong>是免费且可及的，<strong>无明显瓶颈</strong>。<strong>政府服务</strong>——土地登记、营业执照和税务申报——<strong>已数字化且高效</strong>；许多程序可在线完成，无需前往办公室。<strong>等待是例外而非规则</strong>。</p>
+
+        <h3>2. 重复成本 <span class="score-pill">7/10</span></h3>
+        <p>乌拉圭的官僚机构<strong>整合且用户友好</strong>。国家已<strong>投资于统一的数字平台</strong>（公民门户网站），允许公民在<strong>单一界面中完成大多数程序</strong>。<strong>数据库在机构间关联</strong>——身份、健康、税务和社会保障<strong>整合</strong>，最大限度地减少了重复提交文件的需求。重复成本<strong>低，因为系统的设计是为公民服务，而非为官僚机构服务</strong>。</p>
+
+        <h3>3. 崩溃成本 <span class="score-pill">7/10</span></h3>
+        <p>乌拉圭的崩溃成本<strong>在全球南方中最低之一</strong>。<strong>基础设施</strong>——道路、电力、供水和电信——<strong>可靠且现代</strong>。国家已<strong>投资于备灾</strong>，拥有<strong>有效的应急响应系统</strong>。<strong>环境管理</strong>是优先事项：乌拉圭<strong>90%以上的电力来自可再生能源</strong>（风能、太阳能、水力和生物质）——全球最高之一。崩溃成本被<strong>最小化，因为国家预防崩溃</strong>，而非事后应对。</p>
+
+        <h3>4. 信息不对称成本 <span class="score-pill">8/10</span></h3>
+        <p>乌拉圭拥有<strong>新闻自由、强大的公民社会和透明的治理</strong>。<strong>政府预算公布且可查询</strong>；公民可以通过国家的透明度门户<strong>实时追踪公共支出</strong>。<strong>司法独立</strong>，在<strong>追究国家责任方面有良好记录</strong>。<strong>信息自由</strong>受到保护且在<strong>实践中得到落实</strong>。乌拉圭拥有美洲<strong>最高的国家信任度之一</strong>——这是<strong>低信息不对称</strong>的直接结果。</p>
+
+        <h3>5. 心理成本 <span class="score-pill">7.5/10</span></h3>
+        <p>乌拉圭的心理成本<strong>极低</strong>。该国的<strong>政治稳定</strong>——无政变、无独裁、无内战——在公民中创造了<strong>深刻的安全感和信任感</strong>。共和国大学2025年的一项调查发现，<strong>超过65%的乌拉圭人信任国家</strong>——全球最高之一。心理成本低是因为<strong>公民期望国家服务他们</strong>，而非镇压他们。<strong>大麻合法化、同性婚姻和堕胎合法化</strong>反映了一个<strong>信任公民</strong>并尊重其自主权的社会。</p>
+
+        <h3>6. 机会成本 <span class="score-pill">7/10</span></h3>
+        <p>乌拉圭的机会成本<strong>管理良好</strong>。该国拥有<strong>受过良好教育的人口</strong>——识字率超过98%，<strong>国家将GDP的5%以上投资于教育</strong>。<strong>青年失业率约为12%</strong>——在该地区相对较低。<strong>人才流失</strong>存在，但<strong>低于大多数全球南方国家</strong>；许多技术专业人员留在乌拉圭，因为<strong>生活质量高</strong>且<strong>国家提供强大的安全网</strong>。国家已<strong>投资于技术和创新</strong>——乌拉圭已成为<strong>软件开发和金融科技的区域中心</strong>。机会成本<strong>未被浪费</strong>——国家正在<strong>投资于人民</strong>。</p>
+
+        <h3>7. 转移路径：逆转 <span class="score-pill">8/10</span></h3>
+        <p>乌拉圭的转移路径<strong>明确设计为将价值返还给人口</strong>。</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>机制</th><th>效果</th><th>结果</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>累进税制</td><td>对财富、收入和企业利润征收更高税率</td><td><span class="positive">将收入再分配给穷人和中产阶级</span></td></tr>
+                <tr><td>全民医疗（FONASA）</td><td>所有公民的公共医疗覆盖</td><td><span class="positive">高预期寿命（79岁）；低婴儿死亡率</span></td></tr>
+                <tr><td>免费公共教育</td><td>从小学到高等教育的免费且可及的教育</td><td><span class="positive">高识字率；强大的人力资本</span></td></tr>
+                <tr><td>强大的安全网</td><td>社会保障、失业保险和住房支持</td><td><span class="positive">低贫困率（9%）；高社会流动性</span></td></tr>
+            </tbody>
+        </table>
+
+        <p><strong>转移路径明显逆转</strong>——国家从富人那里提取价值（通过累进税制），并通过全民服务和社保<strong>将其返还给人口</strong>。这是乌拉圭治理模式的<strong>决定性特征</strong>。</p>
+
+        <h3>8. 闭环程度 <span class="score-pill">8/10</span></h3>
+        <p>乌拉圭拥有<strong>高度运作的反馈回路</strong>。<strong>选举自由、公正且竞争激烈</strong>——该国拥有<strong>强大的多党制</strong>和<strong>高投票率</strong>。<strong>司法独立</strong>，在<strong>保护权利和执行问责方面有良好记录</strong>。<strong>公民社会活跃</strong>——工会、非政府组织和社区组织<strong>监督国家并要求纠正</strong>。<strong>媒体自由且具有调查精神</strong>——记者追究官员责任。<strong>反馈回路开放且响应迅速</strong>——当公民要求变革时，国家会回应。</p>
+
+        <h2>二、乌拉圭为何成功：无声的典范</h2>
+
+        <p>乌拉圭的成功并非偶然。它是<strong>深思熟虑的政策选择、强大的制度和重视包容的政治文化</strong>的结果。</p>
+
+        <ul>
+            <li><strong>"巴特列主义"传统</strong>——自20世纪初以来，乌拉圭就有<strong>强大的国家建设传统</strong>，优先考虑社会福利、教育和公共卫生。</li>
+            <li><strong>累进税制</strong>——乌拉圭拥有<strong>美洲最累进的税制之一</strong>，对财富和企业利润征收较高税率，为社会服务提供资金。</li>
+            <li><strong>全民社会服务</strong>——医疗、教育和社会保障是<strong>全民且免费的</strong>——非条件性、非经济状况调查，而是<strong>所有公民均可获得</strong>。</li>
+            <li><strong>制度力量</strong>——司法、选举制度和公务员制度<strong>独立、专业且有效</strong>。</li>
+            <li><strong>政治共识</strong>——尽管存在意识形态差异，<strong>主要政党在福利国家的基本原则上达成共识</strong>——这一共识<strong>保护了系统免受民主倒退的影响</strong>。</li>
+        </ul>
+
+        <div class="evidence-note">
+            <strong>联合国开发计划署（2025年）</strong>指出，<strong>乌拉圭的人类发展指数为0.825</strong>——拉丁美洲最高，与几个欧洲国家相当。该国拥有<strong>美洲最高的预期寿命之一（79岁）</strong>和<strong>近乎全民的医疗覆盖</strong>。<strong>透明国际（2025年）</strong>将乌拉圭列为清廉指数<strong>第27位（共182个国家）</strong>——<strong>拉丁美洲最清廉</strong>，全球南方中最清廉的国家之一。
+        </div>
+
+        <div class="conclusion-box">
+            <h2>结论：乌拉圭是无声的典范——一个将价值返还给人民的系统</h2>
+
+            <p>乌拉圭的案例表明，<strong>包容性、价值返还型治理不仅可能——而且可持续</strong>。一个多世纪以来，乌拉圭建立了一个<strong>从富人那里提取价值并通过全民服务、累进税制和强大制度将其返还给人口</strong>的系统。</p>
+
+            <p>八项参数展示了一个这样的系统：</p>
+            <ul>
+                <li><strong>返还价值</strong>——通过全民医疗、免费教育和累进税制。</li>
+                <li><strong>最小化成本</strong>——通过高效的官僚机构、可靠的基础设施和备灾。</li>
+                <li><strong>维持开放的反馈回路</strong>——通过自由选举、独立法院和活跃的公民社会。</li>
+                <li><strong>建立社会信任</strong>——通过透明度、问责和政治共识。</li>
+            </ul>
+
+            <p>乌拉圭并不完美——它面临挑战：<strong>人口老龄化、经济脆弱性和区域不稳定的压力</strong>。但它是<strong>全球南方可能性的典范</strong>。它证明<strong>治理的正当性不是由地理、人口规模或自然资源决定的——而是由政策选择决定的</strong>。</p>
+
+            <p><strong>治理的正当性是通过将价值返还给人民赢得的——乌拉圭正是这样做的。</strong></p>
+        </div>
+
+        <div class="footnote">—— GL Framework · 包容性价值返还治理模范案例</div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const btns = document.querySelectorAll('.lang-btn');
+        const contents = { zh: document.getElementById('zh'), en: document.getElementById('en') };
+        function switchLang(lang) {
+            for (let key in contents) {
+                contents[key].classList.remove('active');
+            }
+            if (contents[lang]) contents[lang].classList.add('active');
+            btns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
+            if (history.pushState) history.pushState(null, '', '#' + lang);
+        }
+        btns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const lang = this.dataset.lang;
+                if (lang) switchLang(lang);
+            });
+        });
+        const hash = window.location.hash.replace('#', '');
+        if (hash === 'zh') {
+            switchLang('zh');
+        } else {
+            switchLang('en');
+        }
+        window.addEventListener('hashchange', function() {
+            const newHash = window.location.hash.replace('#', '');
+            if (newHash === 'zh' || newHash === 'en') {
+                switchLang(newHash);
+            } else {
+                switchLang('en');
+            }
+        });
+    })();
+</script>
+</body>
+</html>
