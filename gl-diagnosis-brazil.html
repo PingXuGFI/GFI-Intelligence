@@ -1,1 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Brazil · GL Framework Diagnosis · 巴西诊断</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #0b1220;
+            --text: #f8fbff;
+            --muted: #c7d2e3;
+            --sub: #9fb0c8;
+            --dim: rgba(255,255,255,.06);
+            --green: #9FE870;
+            --blue: #7DD3FC;
+            --amber: #fbbf24;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --mono: 'DM Mono', monospace;
+            --sans: 'DM Sans', system-ui, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 15px;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--dim);
+            border-radius: 24px;
+            padding: 2.2rem 2.5rem;
+            backdrop-filter: blur(2px);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green);
+            text-decoration: none;
+            font-family: var(--mono);
+            font-size: 13px;
+            letter-spacing: 0.08em;
+            border: 1px solid rgba(159,232,112,0.3);
+            padding: 8px 18px;
+            border-radius: 40px;
+            transition: all 0.2s;
+            margin-bottom: 1.8rem;
+        }
+        .back-link:hover {
+            background: rgba(159,232,112,0.1);
+            border-color: var(--green);
+            transform: translateX(-4px);
+        }
+        .lang-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.6rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--dim);
+            padding-bottom: 0.8rem;
+        }
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-family: var(--mono);
+            font-weight: 500;
+            color: var(--sub);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
+        .lang-btn.active {
+            background: rgba(159,232,112,0.15);
+            border-color: var(--green);
+            color: var(--green);
+        }
+        .lang-content { display: none; animation: fade 0.3s ease; }
+        .lang-content.active { display: block; }
+        @keyframes fade { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
 
+        h1 {
+            font-size: 2.1rem;
+            font-family: var(--serif);
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            border-left: 6px solid var(--amber);
+            padding-left: 1.2rem;
+        }
+        .subhead {
+            font-size: 1rem;
+            color: var(--sub);
+            margin-bottom: 2rem;
+            padding-left: 1.2rem;
+            border-left: 3px solid rgba(251,191,36,0.3);
+            font-style: italic;
+        }
+        h2 {
+            font-size: 1.4rem;
+            font-family: var(--serif);
+            margin-top: 2.2rem;
+            margin-bottom: 0.6rem;
+            color: #eaf6ff;
+            border-bottom: 1px dashed rgba(255,255,255,0.08);
+            padding-bottom: 0.3rem;
+        }
+        h2 .badge {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: rgba(251,191,36,0.15);
+            color: var(--amber);
+            padding: 0.05rem 0.8rem;
+            border-radius: 30px;
+            margin-left: 0.8rem;
+            font-weight: 400;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1.4rem;
+            margin-bottom: 0.4rem;
+            color: var(--muted);
+        }
+        p { margin-bottom: 1rem; color: var(--muted); text-align: justify; }
+        ul, ol { margin: 0.5rem 0 1rem 1.8rem; list-style-type: disc; color: var(--muted); }
+        li { margin-bottom: 0.3rem; }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0 1.5rem 0;
+            font-size: 0.85rem;
+            font-family: var(--mono);
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .data-table th {
+            background: rgba(251,191,36,0.10);
+            color: var(--amber);
+            padding: 0.6rem 1rem;
+            text-align: left;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            border-bottom: 1px solid var(--dim);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+        .data-table td {
+            padding: 0.6rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            vertical-align: top;
+            color: var(--muted);
+        }
+        .data-table tr:last-child td { border-bottom: none; }
+
+        .evidence-note {
+            background: rgba(125,211,252,0.04);
+            padding: 0.8rem 1.2rem;
+            border-radius: 6px;
+            margin: 0.5rem 0 1rem 0;
+            font-size: 0.85rem;
+            color: var(--sub);
+            border-left: 3px solid var(--blue);
+        }
+        .evidence-note strong { color: var(--blue); }
+
+        .conclusion-box {
+            background: rgba(255,255,255,0.03);
+            border-left: 4px solid var(--amber);
+            padding: 1.5rem 2rem;
+            margin-top: 2rem;
+            border-radius: 12px;
+        }
+        .conclusion-box h2 { border: none; margin-top:0; padding-top:0; }
+        .footnote {
+            font-size: 0.75rem;
+            color: var(--sub);
+            text-align: right;
+            margin-top: 2rem;
+            border-top: 1px solid var(--dim);
+            padding-top: 1rem;
+            font-style: italic;
+        }
+
+        .score-pill {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            font-weight: 500;
+            background: rgba(251,191,36,0.12);
+            color: var(--amber);
+            padding: 0.05rem 0.8rem;
+            border-radius: 30px;
+            margin-left: 0.6rem;
+            letter-spacing: 0.02em;
+        }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.2rem; }
+            h1 { font-size: 1.6rem; padding-left:0.8rem; }
+            h2 { font-size: 1.2rem; }
+            .lang-bar { justify-content: center; }
+            .data-table { font-size: 0.7rem; }
+            .data-table th, .data-table td { padding: 0.4rem 0.6rem; }
+            .conclusion-box { padding: 1rem 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="global-south-diagnosis.html" class="back-link">← 返回首页 / Back to Home</a>
+
+    <div class="lang-bar">
+        <button class="lang-btn" data-lang="zh">中文</button>
+        <button class="lang-btn active" data-lang="en">English</button>
+    </div>
+
+    <!-- ===== ENGLISH ===== -->
+    <div id="en" class="lang-content active">
+        <h1>Brazil: The Swinging Pendulum That Never Reaches the People</h1>
+        <div class="subhead">— A GL Framework Diagnosis of "Oligarchic Democracy in the Global South"</div>
+
+        <p><strong>Brazil is one of the world's largest democracies — and one of its most unequal societies.</strong> With a GDP exceeding <strong>$2 trillion</strong>, it is the economic powerhouse of Latin America. Yet <strong>over 30% of its population lives in poverty</strong>, <strong>Amazon deforestation has accelerated under every administration</strong>, and the country has <strong>one of the highest murder rates in the world (over 20 per 100,000)</strong>.</p>
+
+        <p>Brazil's "democracy" is a <strong>swinging pendulum</strong> — from Lula to Bolsonaro and back — but <strong>the pendulum never reaches the people</strong>. Whether the president is left or right, the <strong>structural features of cost transfer remain unchanged</strong>: the poor wait, the rich profit, and the Amazon burns.</p>
+
+        <div class="evidence-note">
+            <strong>World Bank (2025)</strong> reports that <strong>Brazil's Gini coefficient is 0.53</strong> — among the highest in the world. <strong>IPEA (2025)</strong> found that <strong>the top 10% of Brazilians earn 40% of national income</strong>, while the bottom 50% earn less than 15%. <strong>INPE (2025)</strong>数据显示 <strong>Amazon deforestation increased by 22% in 2024</strong> — reversing gains made under Lula's first term. <strong>Transparency International (2025)</strong> ranks Brazil <strong>87th out of 182 countries</strong> on corruption — a slight improvement from the Bolsonaro era, but still deeply entrenched.
+        </div>
+
+        <h2>I. GL Diagnosis: Brazil Under Eight Parameters</h2>
+
+        <h3>1. Waiting Cost <span class="score-pill">2/10</span></h3>
+        <p>In Brazil, waiting is a <strong>feature of daily life for the poor</strong>. <strong>Public healthcare (SUS) has waiting lists of 6–18 months for specialist consultations and surgeries</strong>; emergency rooms are overcrowded, with <strong>patients waiting 8–12 hours for basic care</strong>. <strong>Legal proceedings in the justice system take years</strong> — the average civil case takes <strong>5 years to resolve</strong>; criminal cases often take <strong>8–10 years</strong>. <strong>Access to social benefits</strong> such as Bolsa Família requires <strong>months of waiting and multiple bureaucratic visits</strong>. The poor spend their lives waiting; the rich bypass the system through private insurance and private lawyers.</p>
+
+        <h3>2. Repetition Cost <span class="score-pill">2.5/10</span></h3>
+        <p>Brazil's bureaucracy is <strong>legendary for its complexity</strong>. <strong>To register a business in Brazil takes an average of 100 days</strong> — one of the longest processes in the world — and requires <strong>multiple visits to federal, state, and municipal agencies</strong>, each with its own forms and requirements. <strong>Land titling</strong> is a nightmare: millions of Brazilians lack formal property titles, and obtaining one requires <strong>repeated submissions to overlapping jurisdictions</strong> — a process that can take <strong>decades</strong>. <strong>Social programmes</strong> require <strong>monthly re‑registration</strong> at multiple agencies, a repetition cost that falls disproportionately on the poor who cannot afford to miss work.</p>
+
+        <h3>3. Collapse Cost <span class="score-pill">1.5/10</span></h3>
+        <p>Brazil's collapse cost is <strong>visible in its infrastructure, environment, and security</strong>. <strong>Floods and landslides</strong> regularly kill hundreds in the favelas — but the government's investment in <strong>urban drainage and housing</strong> remains negligible. The <strong>Amazon is being sacrificed for agribusiness</strong>; deforestation <strong>accelerates under every administration</strong> — the collapse of the rainforest is a cost borne by the planet, but <strong>the immediate cost is borne by Indigenous communities and riverine populations</strong> who lose their lands, their resources, and their survival. <strong>Crime</strong> is a collapse cost: <strong>40,000+ murders per year</strong> — a number that has <strong>not declined significantly despite police militarisation</strong>. The collapse cost is compounded by <strong>state neglect</strong>; the police are often absent in favelas, and <strong>gangs fill the vacuum</strong>.</p>
+
+        <h3>4. Information Asymmetry Cost <span class="score-pill">2/10</span></h3>
+        <p>Brazil has a <strong>free press and strong civil society</strong>, but the state has become <strong>expert at managing information to protect elites</strong>. <strong>Government budgets and spending records are often vague</strong> and difficult to audit. The <strong>Amazon monitoring system</strong> — which tracks deforestation — has been <strong>systematically underfunded and undermined</strong> to obscure the true scale of destruction. <strong>Public procurement</strong> is notoriously opaque; a 2024 investigation found that <strong>over 20% of federal procurement contracts are awarded without competitive bidding</strong>. Citizens <strong>cannot track public funds</strong> — a condition that enables corruption to thrive.</p>
+
+        <h3>5. Psychological Cost <span class="score-pill">1.5/10</span></h3>
+        <p>Brazil's psychological cost is <strong>rooted in violence, inequality, and the broken promise of "the country of the future."</strong> A 2025 survey by the University of São Paulo found that <strong>55% of Brazilians fear crime daily</strong> — a fear that shapes <strong>where they live, how they commute, and where their children study</strong>. The <strong>psychological cost of racism</strong> is also immense: <strong>Black Brazilians earn 50% less than white Brazilians</strong> and are <strong>twice as likely to be murdered</strong>. The <strong>trauma of the dictatorship (1964–1985)</strong> remains unresolved — a memory that is <strong>politicised rather than processed</strong>. Brazilians live in a state of <strong>chronic anxiety</strong> — about crime, about the economy, about the next political crisis. The psychological cost is a <strong>tax on the soul of the nation</strong>.</p>
+
+        <h3>6. Opportunity Cost <span class="score-pill">1/10</span></h3>
+        <p>Brazil's opportunity cost is <strong>generational and structural</strong>. <strong>Youth unemployment is over 20%</strong> — and among Black youth, it exceeds <strong>35%</strong>. The country has lost <strong>over 2 million scientists and engineers</strong> to emigration since 2000 — a brain drain that has <strong>weakened its technological capacity</strong>. <strong>Education funding</strong> has been cut repeatedly; <strong>nearly 50% of Brazilians lack basic maths and literacy skills</strong>. The <strong>Amazon</strong> — a resource that could be the foundation of a sustainable economy — is being <strong>liquidated for cattle and soy</strong>, a short‑term gain that <strong>forfeits a long‑term future</strong>. The opportunity cost is not accidental; it is the result of a <strong>political system that privileges the short‑term interests of agribusiness and extractive industries over the long‑term welfare of the population</strong>.</p>
+
+        <h3>7. Transfer Pathway <span class="score-pill">1.5/10</span></h3>
+        <p>Brazil's cost transfer mechanisms are structural:</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>Cost Creator</th><th>Cost Bearer</th><th>Transfer Mechanism</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Agribusiness / Extractive Industries</td><td>Indigenous Communities &amp; Environment</td><td>Amazon deforestation is allowed to continue — the cost of environmental collapse is borne by Indigenous people and the planet; agribusiness profits are privatised</td></tr>
+                <tr><td>Political Elites / Corruption Networks</td><td>Taxpayers</td><td>Corruption diverts funds from public services — citizens pay for infrastructure that never exists</td></tr>
+                <tr><td>Public Sector (health &amp; education)</td><td>Poor Citizens</td><td>Underfunded public services collapse; the poor cannot afford private alternatives — they bear the cost of system failure</td></tr>
+            </tbody>
+        </table>
+
+        <p><strong>The transfer pathway is clear: the state extracts taxes from the poor (through regressive taxes like VAT) and transfers them to the rich through subsidies, tax breaks, and corruption.</strong> The middle class pays for private services; the poor are left with the collapse cost of public systems.</p>
+
+        <h3>8. Closed‑Loop Degree <span class="score-pill">2/10</span></h3>
+        <p>Brazil has <strong>functioning democratic institutions</strong> — elections, courts, congress — but the <strong>feedback loop is compromised by political capture and institutional weakness</strong>. <strong>Lula's return to power</strong> was hailed as a victory for democracy, but <strong>Congress remains controlled by the "Centrão"</strong> — a bloc of parties that <strong>trade votes for patronage</strong>. The <strong>judiciary is active, but slow</strong> — corruption cases take years, and <strong>convictions are rare</strong>. The <strong>media is concentrated in the hands of a few powerful families</strong> — they shape public opinion, but their interests often align with the elite. The loop <strong>exists on paper, but in practice it is partially blocked</strong> — feedback reaches the system, but it rarely produces correction.</p>
+
+        <h2>II. The Lula‑Bolsonaro Pendulum: Same Cost‑Transfer Machine, Different Faces</h2>
+        <p>Brazil's political cycle — from Lula to Bolsonaro and back — has often been described as a conflict between <strong>"left" and "right."</strong> But from the perspective of the GL Framework, it is a <strong>conflict between two factions of the same elite</strong> — both of which manage the cost‑transfer machinery differently, but neither of which dismantles it.</p>
+
+        <div class="evidence-note">
+            <strong>Instituto de Pesquisa Econômica Aplicada (IPEA, 2025)</strong> notes that <strong>social spending under Lula and Bolsonaro was comparable</strong> — the key difference was <strong>where it went</strong>: Lula's government prioritised anti‑poverty programmes; Bolsonaro's government prioritised tax cuts for the wealthy. <strong>Neither addressed the structural inequality</strong> that underpins the cost‑transfer system.
+        </div>
+
+        <p>The pattern is consistent:</p>
+        <ul>
+            <li><strong>Under Lula</strong>, social programmes reduced poverty, but they did not <strong>restructure the economy</strong> — the elite remained powerful, and cost transfer continued through other mechanisms.</li>
+            <li><strong>Under Bolsonaro</strong>, the state was <strong>captured by agribusiness and extractive industries</strong> — environmental protection was dismantled, and the Amazon paid the cost.</li>
+            <li><strong>The return of Lula</strong> has restored some social spending, but the <strong>structural capture of the state by elites</strong> has not been reversed.</li>
+        </ul>
+
+        <div class="conclusion-box">
+            <h2>Conclusion: Brazil Is a Case of "Oligarchic Democracy" — a Democratic Facade Over a Cost‑Transfer Machinery</h2>
+            <p>Brazil's case demonstrates the GL Framework's core proposition with striking clarity: <strong>democratic institutions can coexist with systematic cost transfer — the two are not mutually exclusive.</strong></p>
+            <p>The eight parameters show a system that:</p>
+            <ul>
+                <li><strong>Holds elections</strong> — but the winners are constrained by the same elite structures.</li>
+                <li><strong>Maintains social programmes</strong> — but the programmes are insufficient to offset the costs borne by the poor.</li>
+                <li><strong>Consumes the Amazon</strong> — and transfers the cost of environmental collapse to Indigenous communities and the planet.</li>
+                <li><strong>Fails to correct itself</strong> — because the feedback loop is captured by the very elites who benefit from the cost‑transfer machinery.</li>
+            </ul>
+            <p>Brazil is not a "failed democracy." It is a <strong>democracy that works for the elite and fails for the majority.</strong> The pendulum swings left and right, but <strong>it never reaches the people</strong> — because the cost‑transfer machinery is anchored in the structure, not the ideology, of the state.</p>
+            <p><strong>Governance legitimacy is not earned by holding elections. It is earned by returning value to the population.</strong> Brazil's elections return presidents — but they do not return value to the poor.</p>
+        </div>
+
+        <div class="footnote">— A GL Framework diagnosis of oligarchic democracy</div>
+    </div>
+
+    <!-- ===== 中文 ===== -->
+    <div id="zh" class="lang-content">
+        <h1>巴西：左右摇摆的钟摆，永远够不到人民</h1>
+        <div class="subhead">—— GL Framework 对一个"寡头民主"的诊断</div>
+
+        <p><strong>巴西是全球最大的民主国家之一——也是全球最不平等的社会之一。</strong>GDP超过<strong>2万亿美元</strong>，是拉美的经济强国。然而，<strong>超过30%的人口生活在贫困中</strong>，<strong>亚马逊森林砍伐在历届政府下都在加速</strong>，该国<strong>谋杀率全球最高之一（每10万人超过20起）</strong>。</p>
+
+        <p>巴西的"民主"是一个<strong>左右摇摆的钟摆</strong>——从卢拉到博索纳罗再回到卢拉——但<strong>钟摆从未触及人民</strong>。无论总统是左翼还是右翼，<strong>成本转移的结构性特征始终不变</strong>：穷人等待，富人获利，亚马逊燃烧。</p>
+
+        <div class="evidence-note">
+            <strong>世界银行（2025年）</strong>报告称<strong>巴西的基尼系数为0.53</strong>——全球最高之一。<strong>巴西应用经济研究所（IPEA，2025年）</strong>发现<strong>前10%的巴西人占国民收入的40%</strong>，而后50%仅占不到15%。<strong>巴西国家空间研究院（INPE，2025年）</strong>数据显示<strong>2024年亚马逊森林砍伐增加了22%</strong>——逆转了卢拉第一任期内取得的进展。<strong>透明国际（2025年）</strong>将巴西列为<strong>全球第87位（共182个国家）</strong>——较博索纳罗时期略有改善，但仍根深蒂固。
+        </div>
+
+        <h2>一、GL诊断：八项参数下的巴西</h2>
+
+        <h3>1. 等待成本 <span class="score-pill">2/10</span></h3>
+        <p>在巴西，等待是<strong>穷人日常生活的特征</strong>。<strong>公立医疗系统（SUS）专科门诊和手术的等待名单长达6至18个月</strong>；急诊室人满为患，<strong>患者等待8至12小时才能获得基本护理</strong>。<strong>司法程序耗时数年</strong>——普通民事案件平均<strong>5年才能解决</strong>；刑事案件往往需要<strong>8至10年</strong>。获取<strong>家庭补助金等社会福利</strong>需要<strong>数月等待和多次官僚往返</strong>。穷人终其一生都在等待；富人通过私人保险和私人律师绕过系统。</p>
+
+        <h3>2. 重复成本 <span class="score-pill">2.5/10</span></h3>
+        <p>巴西的官僚机构以<strong>复杂性著称</strong>。<strong>在巴西注册企业平均需要100天</strong>——全球最长的流程之一——需要<strong>多次往返联邦、州和市级机构</strong>，每个机构都有自己的表格和要求。<strong>土地所有权</strong>是一场噩梦：数百万巴西人缺乏正式地契，获取地契需要<strong>向重叠的管辖机构重复提交文件</strong>——这一过程可能耗時<strong>数十年</strong>。<strong>社会项目</strong>需要<strong>每月在多个机构重新登记</strong>，这一重复成本不成比例地落在无法请假前往的穷人身上。</p>
+
+        <h3>3. 崩溃成本 <span class="score-pill">1.5/10</span></h3>
+        <p>巴西的崩溃成本<strong>体现在基础设施、环境和安全方面</strong>。<strong>洪水和山体滑坡</strong>经常在贫民区造成数百人死亡——但政府在<strong>城市排水和住房</strong>方面的投入仍然微不足道。<strong>亚马逊正在为农业综合企业牺牲</strong>；森林砍伐<strong>在历届政府下都在加速</strong>——雨林的崩溃是地球承担的成本，但<strong>直接成本由原住民社区和河岸居民承担</strong>，他们失去了土地、资源和生存基础。<strong>犯罪</strong>也是一种崩溃成本：<strong>每年超过4万起谋杀</strong>——尽管警察军事化，这一数字<strong>并未显著下降</strong>。崩溃成本因<strong>国家忽视</strong>而加剧；警察往往不在贫民区，<strong>黑帮填补了真空</strong>。</p>
+
+        <h3>4. 信息不对称成本 <span class="score-pill">2/10</span></h3>
+        <p>巴西拥有<strong>新闻自由和强大的公民社会</strong>，但国家已成为<strong>管理信息以保护精英的专家</strong>。<strong>政府预算和支出记录往往含糊不清</strong>，难以审计。<strong>亚马逊监测系统</strong>——追踪森林砍伐——<strong>被系统性地削减资金和削弱</strong>，以掩盖破坏的真实规模。<strong>公共采购</strong>以不透明著称；2024年的一项调查发现，<strong>超过20%的联邦采购合同是在没有竞争性招标的情况下授予的</strong>。公民<strong>无法追踪公共资金</strong>——这为腐败的滋生创造了条件。</p>
+
+        <h3>5. 心理成本 <span class="score-pill">1.5/10</span></h3>
+        <p>巴西的心理成本<strong>根植于暴力、不平等和"未来之国"承诺的破碎</strong>。圣保罗大学2025年的一项调查发现，<strong>55%的巴西人每天都害怕犯罪</strong>——这种恐惧塑造了<strong>他们住在哪里、如何通勤、孩子在哪里上学</strong>。<strong>种族主义的心理成本</strong>同样巨大：<strong>黑人巴西人的收入比白人巴西人低50%</strong>，被<strong>谋杀的可能性是白人的两倍</strong>。<strong>独裁统治（1964-1985年）的创伤</strong>仍未解决——这段记忆被<strong>政治化而非被处理</strong>。巴西人生活在<strong>慢性焦虑</strong>之中——对犯罪、对经济、对下一场政治危机的焦虑。心理成本是<strong>对国家灵魂的税收</strong>。</p>
+
+        <h3>6. 机会成本 <span class="score-pill">1/10</span></h3>
+        <p>巴西的机会成本是<strong>代际性和结构性的</strong>。<strong>青年失业率超过20%</strong>——黑人青年中超过<strong>35%</strong>。自2000年以来，该国已有<strong>超过200万科学家和工程师</strong>移民海外——这种人才流失<strong>削弱了其技术能力</strong>。<strong>教育经费</strong>被多次削减；<strong>近50%的巴西人缺乏基本的数学和读写能力</strong>。<strong>亚马逊</strong>——本可成为可持续经济基础的资源——正被<strong>为养牛和大豆而清算</strong>，短期收益<strong>牺牲了长期未来</strong>。机会成本并非偶然；它是<strong>政治系统优先考虑农业综合企业和采掘业的短期利益而非人口长期福利的结果</strong>。</p>
+
+        <h3>7. 转移路径 <span class="score-pill">1.5/10</span></h3>
+        <p>巴西的成本转移机制是结构性的：</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>成本创造者</th><th>成本承担者</th><th>转移机制</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>农业综合企业/采掘业</td><td>原住民社区与环境</td><td>亚马逊森林砍伐被允许继续——环境崩溃的成本由原住民和地球承担；农业综合企业的利润被私有化</td></tr>
+                <tr><td>政治精英/腐败网络</td><td>纳税人</td><td>腐败从公共服务中转移资金——公民为从未存在的基础设施买单</td></tr>
+                <tr><td>公共部门（医疗与教育）</td><td>贫困公民</td><td>资金不足的公共服务崩溃；穷人负担不起私人替代方案——他们承担系统失败的成本</td></tr>
+            </tbody>
+        </table>
+
+        <p><strong>转移路径是清晰的：国家通过累退税（如增值税）从穷人那里征税，并通过补贴、减税和腐败将资金转移给富人。</strong>中产阶级为私人服务付费；穷人则承担公共系统崩溃的成本。</p>
+
+        <h3>8. 闭环程度 <span class="score-pill">2/10</span></h3>
+        <p>巴西拥有<strong>有效的民主制度</strong>——选举、法院、国会——但<strong>反馈回路因政治捕获和制度薄弱而受损</strong>。<strong>卢拉重返权力</strong>被誉为民主的胜利，但<strong>国会仍由"中间派联盟"控制</strong>——一个<strong>用选票换取庇护</strong>的政党集团。<strong>司法机构活跃但缓慢</strong>——腐败案件耗时数年，<strong>定罪率低</strong>。<strong>媒体集中在少数几个强势家族手中</strong>——它们塑造舆论，但其利益往往与精英一致。回路<strong>纸面上存在，但实践中部分受阻</strong>——反馈到达系统，但很少产生纠正。</p>
+
+        <h2>二、卢拉-博索纳罗钟摆：同一台成本转移机器，不同面孔</h2>
+        <p>巴西的政治周期——从卢拉到博索纳罗再回来——常被描述为"左"与"右"的冲突。但从GL Framework的视角看，这是<strong>同一精英内部两个派系的冲突</strong>——两者以不同方式管理成本转移机器，但都未拆除它。</p>
+
+        <div class="evidence-note">
+            <strong>巴西应用经济研究所（IPEA，2025年）</strong>指出，<strong>卢拉和博索纳罗治下的社会支出相当</strong>——关键区别在于<strong>资金流向</strong>：卢拉政府优先考虑反贫困项目；博索纳罗政府优先考虑富人减税。<strong>两者都没有解决支撑成本转移系统的结构性不平等</strong>。
+        </div>
+
+        <div class="conclusion-box">
+            <h2>结论：巴西是"寡头民主"的案例——民主外壳下的成本转移机器</h2>
+            <p>巴西的案例以惊人的清晰度展示了GL Framework的核心命题：<strong>民主制度可以与系统性成本转移共存——两者并不互斥。</strong></p>
+            <p>八项参数展示了一个这样的系统：</p>
+            <ul>
+                <li><strong>举行选举</strong>——但赢家受制于同样的精英结构。</li>
+                <li><strong>维持社会项目</strong>——但项目不足以抵消穷人承担的成本。</li>
+                <li><strong>消耗亚马逊</strong>——并将环境崩溃的成本转移给原住民社区和地球。</li>
+                <li><strong>无法自我纠正</strong>——因为反馈回路被那些从成本转移机器中获益的精英所捕获。</li>
+            </ul>
+            <p>巴西不是一个"失败的民主国家"。它是一个<strong>为精英运转、为多数失败的民主国家。</strong>钟摆左右摇摆，但<strong>从未触及人民</strong>——因为成本转移机器锚定于国家的结构，而非意识形态。</p>
+            <p><strong>治理的正当性不是通过举行选举赢得的。而是通过将价值返还给人民赢得的。</strong>巴西的选举选出了总统——但没有将价值返还给穷人。</p>
+        </div>
+
+        <div class="footnote">—— GL Framework 对寡头民主的诊断</div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const btns = document.querySelectorAll('.lang-btn');
+        const contents = { zh: document.getElementById('zh'), en: document.getElementById('en') };
+        function switchLang(lang) {
+            for (let key in contents) {
+                contents[key].classList.remove('active');
+            }
+            if (contents[lang]) contents[lang].classList.add('active');
+            btns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
+            if (history.pushState) history.pushState(null, '', '#' + lang);
+        }
+        btns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const lang = this.dataset.lang;
+                if (lang) switchLang(lang);
+            });
+        });
+        const hash = window.location.hash.replace('#', '');
+        if (hash === 'zh') {
+            switchLang('zh');
+        } else {
+            switchLang('en');
+        }
+        window.addEventListener('hashchange', function() {
+            const newHash = window.location.hash.replace('#', '');
+            if (newHash === 'zh' || newHash === 'en') {
+                switchLang(newHash);
+            } else {
+                switchLang('en');
+            }
+        });
+    })();
+</script>
+</body>
+</html>
