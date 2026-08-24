@@ -1,1 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thailand · GL Framework Diagnosis · 泰国诊断</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #0b1220;
+            --text: #f8fbff;
+            --muted: #c7d2e3;
+            --sub: #9fb0c8;
+            --dim: rgba(255,255,255,.06);
+            --green: #9FE870;
+            --blue: #7DD3FC;
+            --amber: #fbbf24;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --mono: 'DM Mono', monospace;
+            --sans: 'DM Sans', system-ui, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 15px;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--dim);
+            border-radius: 24px;
+            padding: 2.2rem 2.5rem;
+            backdrop-filter: blur(2px);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green);
+            text-decoration: none;
+            font-family: var(--mono);
+            font-size: 13px;
+            letter-spacing: 0.08em;
+            border: 1px solid rgba(159,232,112,0.3);
+            padding: 8px 18px;
+            border-radius: 40px;
+            transition: all 0.2s;
+            margin-bottom: 1.8rem;
+        }
+        .back-link:hover {
+            background: rgba(159,232,112,0.1);
+            border-color: var(--green);
+            transform: translateX(-4px);
+        }
+        .lang-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.6rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--dim);
+            padding-bottom: 0.8rem;
+        }
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-family: var(--mono);
+            font-weight: 500;
+            color: var(--sub);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
+        .lang-btn.active {
+            background: rgba(159,232,112,0.15);
+            border-color: var(--green);
+            color: var(--green);
+        }
+        .lang-content { display: none; animation: fade 0.3s ease; }
+        .lang-content.active { display: block; }
+        @keyframes fade { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
 
+        h1 {
+            font-size: 2.1rem;
+            font-family: var(--serif);
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            border-left: 6px solid var(--amber);
+            padding-left: 1.2rem;
+        }
+        .subhead {
+            font-size: 1rem;
+            color: var(--sub);
+            margin-bottom: 2rem;
+            padding-left: 1.2rem;
+            border-left: 3px solid rgba(251,191,36,0.3);
+            font-style: italic;
+        }
+        h2 {
+            font-size: 1.4rem;
+            font-family: var(--serif);
+            margin-top: 2.2rem;
+            margin-bottom: 0.6rem;
+            color: #eaf6ff;
+            border-bottom: 1px dashed rgba(255,255,255,0.08);
+            padding-bottom: 0.3rem;
+        }
+        h2 .badge {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: rgba(251,191,36,0.15);
+            color: var(--amber);
+            padding: 0.05rem 0.8rem;
+            border-radius: 30px;
+            margin-left: 0.8rem;
+            font-weight: 400;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1.4rem;
+            margin-bottom: 0.4rem;
+            color: var(--muted);
+        }
+        p { margin-bottom: 1rem; color: var(--muted); text-align: justify; }
+        ul, ol { margin: 0.5rem 0 1rem 1.8rem; list-style-type: disc; color: var(--muted); }
+        li { margin-bottom: 0.3rem; }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0 1.5rem 0;
+            font-size: 0.85rem;
+            font-family: var(--mono);
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .data-table th {
+            background: rgba(251,191,36,0.10);
+            color: var(--amber);
+            padding: 0.6rem 1rem;
+            text-align: left;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            border-bottom: 1px solid var(--dim);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+        .data-table td {
+            padding: 0.6rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            vertical-align: top;
+            color: var(--muted);
+        }
+        .data-table tr:last-child td { border-bottom: none; }
+
+        .evidence-note {
+            background: rgba(125,211,252,0.04);
+            padding: 0.8rem 1.2rem;
+            border-radius: 6px;
+            margin: 0.5rem 0 1rem 0;
+            font-size: 0.85rem;
+            color: var(--sub);
+            border-left: 3px solid var(--blue);
+        }
+        .evidence-note strong { color: var(--blue); }
+
+        .conclusion-box {
+            background: rgba(255,255,255,0.03);
+            border-left: 4px solid var(--amber);
+            padding: 1.5rem 2rem;
+            margin-top: 2rem;
+            border-radius: 12px;
+        }
+        .conclusion-box h2 { border: none; margin-top:0; padding-top:0; }
+        .footnote {
+            font-size: 0.75rem;
+            color: var(--sub);
+            text-align: right;
+            margin-top: 2rem;
+            border-top: 1px solid var(--dim);
+            padding-top: 1rem;
+            font-style: italic;
+        }
+
+        .score-pill {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            font-weight: 500;
+            background: rgba(251,191,36,0.12);
+            color: var(--amber);
+            padding: 0.05rem 0.8rem;
+            border-radius: 30px;
+            margin-left: 0.6rem;
+            letter-spacing: 0.02em;
+        }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.2rem; }
+            h1 { font-size: 1.6rem; padding-left:0.8rem; }
+            h2 { font-size: 1.2rem; }
+            .lang-bar { justify-content: center; }
+            .data-table { font-size: 0.7rem; }
+            .data-table th, .data-table td { padding: 0.4rem 0.6rem; }
+            .conclusion-box { padding: 1rem 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="global-south-diagnosis.html" class="back-link">← 返回首页 / Back to Home</a>
+
+    <div class="lang-bar">
+        <button class="lang-btn" data-lang="zh">中文</button>
+        <button class="lang-btn active" data-lang="en">English</button>
+    </div>
+
+    <!-- ===== ENGLISH ===== -->
+    <div id="en" class="lang-content active">
+        <h1>Thailand: The "Land of Smiles" — a Kingdom of Cost Transfer</h1>
+        <div class="subhead">— A GL Framework Diagnosis of "Military‑Monarchy Captured Democracy"</div>
+
+        <p><strong>Thailand is one of Southeast Asia's most prosperous economies</strong> — a regional hub for tourism, manufacturing, and agriculture. Yet beneath the surface of its "Land of Smiles" image lies a <strong>brutal cost‑transfer system</strong> that has been perfected over decades of military rule, monarchical deference, and elite capture.</p>
+
+        <p>Thailand has had <strong>over a dozen coups since 1932</strong> — the most recent in 2014 — and its constitutions have been rewritten <strong>over 20 times</strong>, always to <strong>preserve the power of the monarchy, the military, and the Bangkok elite</strong>. The rural majority — especially in the north and northeast — has been <strong>systematically excluded from political power and economic opportunity</strong>.</p>
+
+        <div class="evidence-note">
+            <strong>World Bank (2025)</strong> reports that <strong>Thailand's poverty rate has dropped to 6%</strong> — a remarkable achievement. But <strong>inequality remains high</strong>: the <strong>top 10% earn 40% of the national income</strong>, while the <strong>bottom 50% earn less than 15%</strong>. <strong>ILO (2025)</strong> notes that <strong>rural workers earn 60% of the urban average</strong> — a gap that has not narrowed in decades. <strong>Amnesty International (2025)</strong> has documented the <strong>suppression of political dissent</strong> under Thailand's lèse‑majesté laws, which have been used to <strong>jail over 200 activists since 2020</strong>.
+        </div>
+
+        <h2>I. GL Diagnosis: Thailand Under Eight Parameters</h2>
+
+        <h3>1. Waiting Cost <span class="score-pill">2/10</span></h3>
+        <p>Thailand's waiting cost is <strong>visible in its public health system and bureaucratic delays</strong>. <strong>Public hospitals</strong> are overcrowded; patients wait <strong>hours for basic care</strong> and <strong>months for specialist consultations</strong>. <strong>Government services</strong> — land registration, permits, and licenses — are <strong>notoriously slow</strong>; a business license can take <strong>months to process</strong>. <strong>Rural communities</strong> face additional waiting: they must travel <strong>hundreds of kilometres to Bangkok or provincial capitals</strong> to access services that are unavailable in their villages. The waiting cost is <strong>not just a bureaucratic inconvenience — it is a cost of exclusion</strong> from the modern state.</p>
+
+        <h3>2. Repetition Cost <span class="score-pill">2.5/10</span></h3>
+        <p>Thailand's bureaucracy is a <strong>fragmented maze</strong>. Citizens must <strong>repeat applications across multiple agencies</strong> — for land titles, business permits, and social services — because <strong>databases are not integrated</strong>. The <strong>National ID system</strong> exists, but it is <strong>not linked to other government records</strong>, forcing citizens to <strong>re‑submitt documents at every stop</strong>. For <strong>migrants and ethnic minorities</strong> (especially in the north), the repetition cost is multiplied: they lack proper documentation and must <strong>repeat the process of proving their identity multiple times</strong>.</p>
+
+        <h3>3. Collapse Cost <span class="score-pill">1.5/10</span></h3>
+        <p>Thailand's collapse cost is <strong>visible in its environment, its infrastructure, and its vulnerability to climate change</strong>. <strong>Flooding</strong> is an annual catastrophe — Bangkok floods regularly, and the state's <strong>investment in flood control</strong> has been insufficient. <strong>Air pollution</strong> — especially in the north — is a <strong>chronic health crisis</strong>; the government's <strong>responses have been delayed and inadequate</strong>. <strong>Southern insurgency</strong> has been ongoing for decades, with <strong>over 7,000 deaths</strong> — a collapse cost transferred to the affected communities. <strong>Rural schools and hospitals</strong> are collapsing; the state has <strong>not invested in maintenance</strong>, and the collapse cost is borne by the poor.</p>
+
+        <h3>4. Information Asymmetry Cost <span class="score-pill">2/10</span></h3>
+        <p>Thailand's information asymmetry is <strong>systematically weaponised</strong>. The <strong>lèse‑majesté laws</strong> (Article 112 of the Criminal Code) make it <strong>illegal to criticise the monarchy</strong> — a law used to <strong>suppress political dissent, silence journalists, and create an atmosphere of fear</strong>. <strong>Government budgets</strong> are <strong>opaque</strong>; the public cannot track expenditure. <strong>Military spending</strong> is classified; the <strong>true cost of the military's political role</strong> is hidden from the public. <strong>Agrarian data</strong> — land prices, crop forecasts, and subsidies — is <strong>controlled by the state</strong> and used to <strong>favour certain constituencies</strong>. Information asymmetry is not incidental — it is a <strong>tool of political control</strong>.</p>
+
+        <h3>5. Psychological Cost <span class="score-pill">1.5/10</span></h3>
+        <p>Thailand's psychological cost is <strong>rooted in political trauma, inequality, and the suppression of dissent</strong>. The <strong>2014 coup</strong> — and the political turmoil that preceded it — has left a <strong>deep psychological scar</strong>. The <strong>2020 protests</strong> — led by young Thais demanding democratic reform — were <strong>met with state violence</strong>; over <strong>200 activists have been jailed under lèse‑majesté laws</strong>. A 2025 survey by the Thai Health Promotion Foundation found that <strong>40% of Thais reported symptoms of anxiety and depression</strong> — a rate that has risen steadily since 2020. The psychological cost is compounded by the <strong>"smile" culture</strong> — Thais are expected to <strong>hide their suffering behind a cheerful facade</strong>, which prevents open discussion of mental health issues.</p>
+
+        <h3>6. Opportunity Cost <span class="score-pill">1.5/10</span></h3>
+        <p>Thailand's opportunity cost is <strong>generational and regional</strong>. The country has a <strong>large, educated youth population</strong>, but <strong>youth unemployment is over 15%</strong> — and among recent graduates, it exceeds <strong>25%</strong>. The <strong>rural north and northeast</strong> have been <strong>systematically underinvested</strong>; young people migrate to Bangkok or abroad for work. The <strong>aging population</strong> is also an opportunity cost: Thailand's <strong>birth rate has fallen to 1.5</strong> — among the lowest in the region — and the <strong>labour force is shrinking</strong>, while the <strong>state has not invested in productivity‑enhancing policies</strong>. The opportunity cost is a <strong>slow erosion of the country's economic potential</strong>, masked by the tourism boom of the past.</p>
+
+        <h3>7. Transfer Pathway <span class="score-pill">1.5/10</span></h3>
+        <p>Thailand's cost transfer mechanisms are structural:</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>Cost Creator</th><th>Cost Bearer</th><th>Transfer Mechanism</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Monarchy / Military Elite</td><td>Rural Population</td><td>Political power is centralised in Bangkok; rural areas are underfunded and under‑served — the cost of elite rule is transferred to the countryside</td></tr>
+                <tr><td>Corrupt Officials</td><td>Taxpayers / Infrastructure Users</td><td>Public funds are diverted to private pockets; citizens pay for infrastructure that is never built or maintained</td></tr>
+                <tr><td>Southern Insurgency</td><td>Southern Communities</td><td>The cost of conflict — death, displacement, and trauma — is borne entirely by the affected communities</td></tr>
+            </tbody>
+        </table>
+
+        <p><strong>The transfer pathway is clear: the Bangkok elite captures political power, economic surplus, and information; the rural majority and the southern communities bear the costs.</strong> The "Land of Smiles" is a land where <strong>the smiles often hide suffering</strong>.</p>
+
+        <h3>8. Closed‑Loop Degree <span class="score-pill">1.5/10</span></h3>
+        <p>Thailand has a <strong>constitutional monarchy and a parliament</strong>, but the feedback loop is <strong>largely blocked</strong>. <strong>Elections are held, but they are not free and fair</strong> — the 2019 election was conducted under a constitution drafted by the military junta, and <strong>the military‑appointed Senate held a decisive veto</strong>. The <strong>judiciary is politicised</strong>; the Constitutional Court has <strong>dissolved political parties</strong> that challenged the status quo. The <strong>media is controlled by the state or the military</strong>; independent journalism is <strong>limited and increasingly harassed</strong>. The loop <strong>exists on paper, but in practice it is closed</strong> — feedback reaches the system, but it does not produce correction.</p>
+
+        <h2>II. The "Land of Smiles" — a Kingdom of Cost Transfer</h2>
+        <p>Thailand's image as a "Land of Smiles" is a <strong>powerful marketing narrative</strong> — but it is also a <strong>tool of cost transfer</strong>. The smile hides the suffering; the tourism boom masks the political repression; the economic growth obscures the structural inequality.</p>
+
+        <div class="evidence-note">
+            <strong>Human Rights Watch (2025)</strong> notes that <strong>Thailand's lèse‑majesté laws have been used to imprison over 200 people since 2020</strong> — including minors and activists who have never been charged with violence. The <strong>military's political influence</strong> remains pervasive, and the <strong>constitution guarantees the military's role</strong> in politics — a structural feature that has not been challenged.
+        </div>
+
+        <p>The pattern is consistent with the GL Framework's diagnosis:</p>
+        <ul>
+            <li><strong>Value is extracted</strong> — by the monarchy, the military, and the Bangkok elite.</li>
+            <li><strong>Costs are transferred</strong> — to the rural majority, to the southern communities, to the environment, and to the young.</li>
+            <li><strong>Feedback is blocked</strong> — by lèse‑majesté laws, by military control, and by the constitutional order.</li>
+            <li><strong>The loop is closed</strong> — because the system is designed to preserve the power of the elite.</li>
+        </ul>
+
+        <div class="conclusion-box">
+            <h2>Conclusion: Thailand Is a Case of "Military‑Monarchy Captured Democracy" — a System That Transfers Costs to the Rural Majority</h2>
+            <p>Thailand's case demonstrates the GL Framework's core proposition: <strong>a country can have economic prosperity and democratic forms — while systematically transferring costs to the most vulnerable populations.</strong></p>
+            <p>The eight parameters show a system that:</p>
+            <ul>
+                <li><strong>Generates economic growth</strong> — but the growth is concentrated in Bangkok and the urban elite.</li>
+                <li><strong>Maintains democratic forms</strong> — but the forms are hollowed out by military and monarchical power.</li>
+                <li><strong>Promotes tourism</strong> — and promotes a "smile" that hides the suffering of the rural poor.</li>
+                <li><strong>Suppresses dissent</strong> — through lèse‑majesté laws, military power, and a politicised judiciary.</li>
+            </ul>
+            <p>Thailand is not a "failed democracy" — it is a <strong>democracy that has been captured by the monarchy, the military, and the Bangkok elite.</strong> The "Land of Smiles" is a land of <strong>systematic cost transfer</strong> — where the smiles often hide the suffering, and the economic success masks the political repression.</p>
+            <p><strong>Governance legitimacy is not earned by economic growth or tourism. It is earned by returning value to the population — including the rural majority, the southern communities, and the young.</strong> Thailand's growth is real, but its distribution is deeply unequal, and its costs are being transferred to those who have the least power.</p>
+        </div>
+
+        <div class="footnote">— A GL Framework diagnosis of military‑monarchy captured democracy</div>
+    </div>
+
+    <!-- ===== 中文 ===== -->
+    <div id="zh" class="lang-content">
+        <h1>泰国："微笑之国"——一个成本转移的王国</h1>
+        <div class="subhead">—— GL Framework 对一个"军方-王室捕获民主"的诊断</div>
+
+        <p><strong>泰国是东南亚最繁荣的经济体之一</strong>——旅游、制造和农业的区域中心。然而，在其"微笑之国"形象的表面之下，隐藏着一个<strong>残酷的成本转移系统</strong>——经过数十年军事统治、王室尊崇和精英捕获的锤炼而臻于完善。</p>
+
+        <p>自1932年以来，泰国经历了<strong>十多次政变</strong>——最近一次在2014年——其宪法被重写了<strong>20多次</strong>，始终是为了<strong>维护王室、军方和曼谷精英的权力</strong>。农村多数人口——尤其是北部和东北部——被<strong>系统性地排除在政治权力和经济机会之外</strong>。</p>
+
+        <div class="evidence-note">
+            <strong>世界银行（2025年）</strong>报告称<strong>泰国贫困率已降至6%</strong>——一项显著成就。但<strong>不平等仍然严重</strong>：<strong>前10%的人占国民收入的40%</strong>，而<strong>后50%的人仅占不到15%</strong>。<strong>国际劳工组织（2025年）</strong>指出<strong>农村工人收入仅为城市平均水平的60%</strong>——这一差距数十年来未缩小。<strong>大赦国际（2025年）</strong>记录了泰国<strong>冒犯君主法对政治异见的压制</strong>，自2020年以来已有<strong>200多名活动人士</strong>因此入狱。
+        </div>
+
+        <h2>一、GL诊断：八项参数下的泰国</h2>
+
+        <h3>1. 等待成本 <span class="score-pill">2/10</span></h3>
+        <p>泰国的等待成本<strong>体现在公共卫生系统和官僚延迟中</strong>。<strong>公立医院</strong>人满为患；患者等待<strong>数小时才能获得基本护理</strong>，<strong>数月才能获得专科门诊</strong>。<strong>政府服务</strong>——土地登记、许可和执照——以<strong>缓慢著称</strong>；营业执照可能需要<strong>数月才能办完</strong>。<strong>农村社区</strong>面临额外的等待：他们必须跋涉<strong>数百公里到曼谷或省会城市</strong>才能获得村庄无法提供的服务。等待成本<strong>不仅是官僚不便——更是被排斥在现代国家之外的成本</strong>。</p>
+
+        <h3>2. 重复成本 <span class="score-pill">2.5/10</span></h3>
+        <p>泰国的官僚机构是<strong>碎片化的迷宫</strong>。公民必须在<strong>多个机构重复申请</strong>——地契、营业执照和社会服务——因为<strong>数据库未整合</strong>。<strong>国民身份证系统</strong>存在，但<strong>未与其他政府记录关联</strong>，迫使公民在<strong>每个环节重复提交文件</strong>。对<strong>移民和少数族裔</strong>（尤其是北部）而言，重复成本成倍增加：他们缺乏正式文件，必须<strong>多次重复身份证明过程</strong>。</p>
+
+        <h3>3. 崩溃成本 <span class="score-pill">1.5/10</span></h3>
+        <p>泰国的崩溃成本<strong>体现在环境、基础设施和对气候变化的脆弱性中</strong>。<strong>洪涝</strong>是年度灾难——曼谷定期被淹，而国家在<strong>防洪方面的投资</strong>不足。<strong>空气污染</strong>——尤其是北部——是<strong>慢性健康危机</strong>；政府的<strong>应对迟缓且不足</strong>。<strong>南部叛乱</strong>持续数十年，已造成<strong>超过7000人死亡</strong>——一项转移给受影响社区的成本。<strong>农村学校和医院</strong>正在崩溃；国家<strong>未投资于维护</strong>，崩溃成本由穷人承担。</p>
+
+        <h3>4. 信息不对称成本 <span class="score-pill">2/10</span></h3>
+        <p>泰国的信息不对称被<strong>系统性地武器化</strong>。<strong>冒犯君主法</strong>（刑法第112条）使<strong>批评王室为非法</strong>——这一法律被用于<strong>压制政治异见、压制记者和制造恐惧氛围</strong>。<strong>政府预算</strong>不透明；公众无法追踪支出。<strong>军事开支</strong>被分类；<strong>军方政治角色的真实成本</strong>对公众隐藏。<strong>农业数据</strong>——土地价格、作物预测和补贴——由<strong>国家控制</strong>并被用于<strong>偏袒某些选区</strong>。信息不对称并非偶然——它是<strong>政治控制的工具</strong>。</p>
+
+        <h3>5. 心理成本 <span class="score-pill">1.5/10</span></h3>
+        <p>泰国的心理成本<strong>根植于政治创伤、不平等和异见压制</strong>。<strong>2014年政变</strong>——及其前的政治动荡——留下了<strong>深刻的心理伤疤</strong>。<strong>2020年抗议</strong>——由要求民主改革的泰国年轻人领导——遭遇<strong>国家暴力</strong>；<strong>200多名活动人士在冒犯君主法下被监禁</strong>。泰国健康促进基金会2025年的一项调查发现，<strong>40%的泰国人有焦虑和抑郁症状</strong>——自2020年以来稳步上升。心理成本因<strong>"微笑"文化</strong>而加剧——泰国人被期望在<strong>快乐的外表下隐藏痛苦</strong>，这阻碍了对心理健康问题的公开讨论。</p>
+
+        <h3>6. 机会成本 <span class="score-pill">1.5/10</span></h3>
+        <p>泰国的机会成本是<strong>代际性和区域性的</strong>。该国拥有<strong>庞大且受过教育的青年人口</strong>，但<strong>青年失业率超过15%</strong>——应届毕业生中超过<strong>25%</strong>。<strong>北部和东北部农村</strong>被<strong>系统性投资不足</strong>；年轻人迁移到曼谷或海外工作。<strong>人口老龄化</strong>也是机会成本：泰国的<strong>出生率已降至1.5</strong>——区域最低之一——<strong>劳动力正在萎缩</strong>，而国家<strong>未投资于提升生产率的政策</strong>。机会成本是对国家经济潜力的<strong>缓慢侵蚀</strong>，被过去的旅游繁荣所掩盖。</p>
+
+        <h3>7. 转移路径 <span class="score-pill">1.5/10</span></h3>
+        <p>泰国的成本转移机制是结构性的：</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>成本创造者</th><th>成本承担者</th><th>转移机制</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>王室/军方精英</td><td>农村人口</td><td>政治权力集中在曼谷；农村地区资金不足、服务不足——精英统治的成本被转移给农村</td></tr>
+                <tr><td>腐败官员</td><td>纳税人/基础设施使用者</td><td>公共资金被转入私人腰包；公民为从未建造或维护的基础设施买单</td></tr>
+                <tr><td>南部叛乱</td><td>南部社区</td><td>冲突的成本——死亡、流离失所和创伤——完全由受影响社区承担</td></tr>
+            </tbody>
+        </table>
+
+        <p><strong>转移路径是清晰的：曼谷精英捕获政治权力、经济剩余和信息；农村多数和南部社区承担成本。</strong>"微笑之国"是一个<strong>微笑往往隐藏痛苦</strong>的土地。</p>
+
+        <h3>8. 闭环程度 <span class="score-pill">1.5/10</span></h3>
+        <p>泰国拥有<strong>君主立宪制和议会</strong>，但反馈回路<strong>在很大程度上被阻塞</strong>。<strong>选举举行，但并不自由公正</strong>——2019年选举是在军方起草的宪法下进行的，<strong>军方任命的参议院拥有决定性的否决权</strong>。<strong>司法被政治化</strong>；宪法法院曾<strong>解散挑战现状的政党</strong>。<strong>媒体由国家或军方控制</strong>；独立新闻业<strong>受限且日益受到骚扰</strong>。回路<strong>纸面上存在，但实际上被封闭</strong>——反馈到达系统，但不产生纠正。</p>
+
+        <h2>二、"微笑之国"——一个成本转移的王国</h2>
+        <p>泰国作为"微笑之国"的形象是一个<strong>强大的营销叙事</strong>——但它也是<strong>成本转移的工具</strong>。微笑隐藏痛苦；旅游繁荣掩盖政治镇压；经济增长掩盖结构性不平等。</p>
+
+        <div class="evidence-note">
+            <strong>人权观察（2025年）</strong>指出，<strong>泰国的冒犯君主法自2020年以来已被用于监禁200多人</strong>——包括从未被指控暴力的未成年人和活动人士。<strong>军方的政治影响力</strong>仍然普遍，<strong>宪法保障军方的政治角色</strong>——一个未被挑战的结构性特征。
+        </div>
+
+        <div class="conclusion-box">
+            <h2>结论：泰国是"军方-王室捕获民主"的案例——将成本转移给农村多数的系统</h2>
+            <p>泰国的案例展示了GL Framework的核心命题：<strong>一个国家可以拥有经济繁荣和民主形式——同时系统性地将成本转移给最脆弱的人群。</strong></p>
+            <p>八项参数展示了一个这样的系统：</p>
+            <ul>
+                <li><strong>产生经济增长</strong>——但增长集中在曼谷和城市精英手中。</li>
+                <li><strong>维持民主形式</strong>——但形式被军方和王室权力掏空。</li>
+                <li><strong>推广旅游</strong>——并推广隐藏农村贫困者痛苦的"微笑"。</li>
+                <li><strong>压制异见</strong>——通过冒犯君主法、军方权力和政治化的司法。</li>
+            </ul>
+            <p>泰国不是一个"失败的民主国家"——它是一个<strong>被王室、军方和曼谷精英捕获的民主国家。</strong>"微笑之国"是一个<strong>系统性成本转移</strong>的土地——微笑往往隐藏痛苦，经济成功掩盖政治镇压。</p>
+            <p><strong>治理的正当性不是由经济增长或旅游赢得的。而是由将价值返还给人民——包括农村多数、南部社区和年轻人——赢得的。</strong>泰国的增长是真实的，但分配极不平等，成本正被转移给权力最小的人。</p>
+        </div>
+
+        <div class="footnote">—— GL Framework 对军方-王室捕获民主的诊断</div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const btns = document.querySelectorAll('.lang-btn');
+        const contents = { zh: document.getElementById('zh'), en: document.getElementById('en') };
+        function switchLang(lang) {
+            for (let key in contents) {
+                contents[key].classList.remove('active');
+            }
+            if (contents[lang]) contents[lang].classList.add('active');
+            btns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
+            if (history.pushState) history.pushState(null, '', '#' + lang);
+        }
+        btns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const lang = this.dataset.lang;
+                if (lang) switchLang(lang);
+            });
+        });
+        const hash = window.location.hash.replace('#', '');
+        if (hash === 'zh') {
+            switchLang('zh');
+        } else {
+            switchLang('en');
+        }
+        window.addEventListener('hashchange', function() {
+            const newHash = window.location.hash.replace('#', '');
+            if (newHash === 'zh' || newHash === 'en') {
+                switchLang(newHash);
+            } else {
+                switchLang('en');
+            }
+        });
+    })();
+</script>
+</body>
+</html>
