@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>G7 · GL Framework · G7对照分析</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #0b1220;
+            --text: #f8fbff;
+            --muted: #c7d2e3;
+            --sub: #9fb0c8;
+            --dim: rgba(255,255,255,.06);
+            --green: #9FE870;
+            --blue: #7DD3FC;
+            --amber: #fbbf24;
+            --gold: #fcd34d;
+            --rose: #f87171;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --mono: 'DM Mono', monospace;
+            --sans: 'DM Sans', system-ui, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 15px;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--dim);
+            border-radius: 24px;
+            padding: 2.2rem 2.8rem;
+            backdrop-filter: blur(2px);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green);
+            text-decoration: none;
+            font-family: var(--mono);
+            font-size: 13px;
+            letter-spacing: 0.08em;
+            border: 1px solid rgba(159,232,112,0.3);
+            padding: 8px 18px;
+            border-radius: 40px;
+            transition: all 0.2s;
+            margin-bottom: 1.8rem;
+        }
+        .back-link:hover {
+            background: rgba(159,232,112,0.1);
+            border-color: var(--green);
+            transform: translateX(-4px);
+        }
+        .lang-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.6rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--dim);
+            padding-bottom: 0.8rem;
+        }
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-family: var(--mono);
+            font-weight: 500;
+            color: var(--sub);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
+        .lang-btn.active {
+            background: rgba(159,232,112,0.15);
+            border-color: var(--green);
+            color: var(--green);
+        }
+        .lang-content { display: none; animation: fade 0.3s ease; }
+        .lang-content.active { display: block; }
+        @keyframes fade { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+        h1 {
+            font-size: 2.1rem;
+            font-family: var(--serif);
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.3rem;
+            color: #fff;
+            border-left: 6px solid var(--amber);
+            padding-left: 1.2rem;
+        }
+        .subhead {
+            font-size: 1rem;
+            color: var(--sub);
+            margin-bottom: 2rem;
+            padding-left: 1.2rem;
+            border-left: 3px solid rgba(251,191,36,0.3);
+            font-style: italic;
+        }
+        .control-badge {
+            display: inline-block;
+            background: rgba(125,211,252,0.12);
+            color: var(--blue);
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 0.1rem 1rem;
+            border-radius: 30px;
+            border: 1px solid rgba(125,211,252,0.15);
+            margin-left: 1rem;
+        }
+        h2 {
+            font-size: 1.4rem;
+            font-family: var(--serif);
+            margin-top: 2.2rem;
+            margin-bottom: 0.6rem;
+            color: #eaf6ff;
+            border-bottom: 1px dashed rgba(255,255,255,0.08);
+            padding-bottom: 0.3rem;
+        }
+        h2 .badge {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: rgba(251,191,36,0.15);
+            color: var(--amber);
+            padding: 0.05rem 0.8rem;
+            border-radius: 30px;
+            margin-left: 0.8rem;
+            font-weight: 400;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1.4rem;
+            margin-bottom: 0.4rem;
+            color: var(--muted);
+        }
+        p { margin-bottom: 1rem; color: var(--muted); text-align: justify; }
+        ul, ol { margin: 0.5rem 0 1rem 1.8rem; list-style-type: disc; color: var(--muted); }
+        li { margin-bottom: 0.3rem; }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0 1.5rem 0;
+            font-size: 0.75rem;
+            font-family: var(--mono);
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .data-table th {
+            background: rgba(251,191,36,0.08);
+            color: var(--amber);
+            padding: 0.4rem 0.6rem;
+            text-align: left;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            border-bottom: 1px solid var(--dim);
+            font-size: 0.6rem;
+            text-transform: uppercase;
+        }
+        .data-table td {
+            padding: 0.4rem 0.6rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            vertical-align: top;
+            color: var(--muted);
+            font-size: 0.7rem;
+        }
+        .data-table tr:last-child td { border-bottom: none; }
+        .data-table .good { color: var(--green); }
+        .data-table .bad { color: var(--rose); }
+        .data-table .mixed { color: var(--amber); }
+
+        .evidence-note {
+            background: rgba(125,211,252,0.04);
+            padding: 0.8rem 1.2rem;
+            border-radius: 6px;
+            margin: 0.5rem 0 1rem 0;
+            font-size: 0.85rem;
+            color: var(--sub);
+            border-left: 3px solid var(--blue);
+        }
+        .evidence-note strong { color: var(--blue); }
+
+        .conclusion-box {
+            background: rgba(251,191,36,0.04);
+            border-left: 4px solid var(--amber);
+            padding: 1.5rem 2rem;
+            margin-top: 2rem;
+            border-radius: 12px;
+        }
+        .conclusion-box h2 { border: none; margin-top:0; padding-top:0; }
+        .conclusion-box .big {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--amber);
+        }
+
+        .footnote {
+            font-size: 0.75rem;
+            color: var(--sub);
+            text-align: right;
+            margin-top: 2rem;
+            border-top: 1px solid var(--dim);
+            padding-top: 1rem;
+            font-style: italic;
+        }
+
+        .tag {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 0.55rem;
+            padding: 0.05rem 0.5rem;
+            border-radius: 12px;
+            margin-left: 0.3rem;
+        }
+        .tag.good { background: rgba(159,232,112,0.12); color: var(--green); }
+        .tag.bad { background: rgba(248,113,113,0.12); color: var(--rose); }
+        .tag.mixed { background: rgba(251,191,36,0.12); color: var(--amber); }
+
+        .country-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--dim);
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            margin: 0.8rem 0;
+            transition: border-color 0.2s;
+        }
+        .country-card:hover {
+            border-color: rgba(255,255,255,0.12);
+        }
+        .country-card .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.3rem;
+        }
+        .country-card .name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .country-card .score {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+        }
+        .country-card .summary {
+            font-size: 0.8rem;
+            color: var(--sub);
+            margin: 0.2rem 0 0.4rem 0;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 700px) {
+            .container { padding: 1.2rem; }
+            h1 { font-size: 1.6rem; padding-left:0.8rem; }
+            h2 { font-size: 1.2rem; }
+            .lang-bar { justify-content: center; }
+            .data-table { font-size: 0.55rem; }
+            .data-table th, .data-table td { padding: 0.2rem 0.4rem; }
+            .conclusion-box { padding: 1rem 1.2rem; }
+            .country-card .header { flex-wrap: wrap; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="global-south-diagnosis.html" class="back-link">← 返回首页 / Back to Home</a>
+
+    <div class="lang-bar">
+        <button class="lang-btn" data-lang="zh">中文</button>
+        <button class="lang-btn active" data-lang="en">English</button>
+        <button class="lang-btn" data-lang="es">Español</button>
+    </div>
+
+    <!-- ===== ENGLISH ===== -->
+    <div id="en" class="lang-content active">
+        <h1>G7: The Global North Control Group</h1>
+        <div class="subhead">— A GL Framework Analysis of the World's Largest Economies <span class="control-badge">⏺ Control Group</span></div>
+
+        <p><strong>The G7 — the United States, United Kingdom, France, Germany, Japan, Italy, and Canada — represents the world's largest economies and most established democracies.</strong> If democracy were the key to governance legitimacy, these countries should all rank at the top of the GL Framework.</p>
+
+        <p>They do not.</p>
+
+        <p>The G7 reveals what the GL Framework has already shown in the Global South: <strong>democracy is not the decisive factor.</strong> Among the G7, there are <strong>value‑returning systems, mixed systems, and cost‑transfer systems</strong> — all under the same democratic umbrella.</p>
+
+        <p>This makes the G7 the <strong>perfect control group</strong> for the GL Framework's core thesis.</p>
+
+        <div class="evidence-note">
+            <strong>GL Framework's question:</strong> If democracy were the answer, why does the United States — the world's oldest democracy — have a Gini coefficient higher than that of Costa Rica, Uruguay, or Finland? Why does the UK have poverty rates higher than Germany? Why does Italy have youth unemployment three times higher than Germany? <strong>Democracy alone does not explain these differences.</strong>
+        </div>
+
+        <h2>I. G7 Scores: The GL Framework Assessment</h2>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Country</th>
+                    <th>Waiting</th>
+                    <th>Repetition</th>
+                    <th>Collapse</th>
+                    <th>Info Asym.</th>
+                    <th>Psych.</th>
+                    <th>Opportunity</th>
+                    <th>Transfer</th>
+                    <th>Closed Loop</th>
+                    <th><strong>AVG</strong></th>
+                    <th>Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Finland *</td>
+                    <td class="good">8.5</td>
+                    <td class="good">8.5</td>
+                    <td class="good">8.0</td>
+                    <td class="good">9.0</td>
+                    <td class="good">8.5</td>
+                    <td class="good">8.0</td>
+                    <td class="good">9.0</td>
+                    <td class="good">9.0</td>
+                    <td class="good"><strong>8.6</strong></td>
+                    <td><span class="tag good">Model</span></td>
+                </tr>
+                <tr>
+                    <td>Germany</td>
+                    <td class="good">7.0</td>
+                    <td class="good">7.0</td>
+                    <td class="good">7.5</td>
+                    <td class="good">7.5</td>
+                    <td class="good">7.0</td>
+                    <td class="good">7.0</td>
+                    <td class="good">7.5</td>
+                    <td class="good">8.0</td>
+                    <td class="good"><strong>7.3</strong></td>
+                    <td><span class="tag good">Model</span></td>
+                </tr>
+                <tr>
+                    <td>France</td>
+                    <td class="mixed">6.0</td>
+                    <td class="mixed">6.0</td>
+                    <td class="good">7.0</td>
+                    <td class="mixed">6.5</td>
+                    <td class="mixed">6.0</td>
+                    <td class="mixed">6.0</td>
+                    <td class="mixed">6.5</td>
+                    <td class="good">7.0</td>
+                    <td class="mixed"><strong>6.4</strong></td>
+                    <td><span class="tag mixed">Mixed</span></td>
+                </tr>
+                <tr>
+                    <td>Canada</td>
+                    <td class="mixed">6.5</td>
+                    <td class="mixed">6.5</td>
+                    <td class="good">7.0</td>
+                    <td class="good">7.5</td>
+                    <td class="mixed">6.5</td>
+                    <td class="mixed">6.5</td>
+                    <td class="mixed">6.5</td>
+                    <td class="good">7.5</td>
+                    <td class="mixed"><strong>6.8</strong></td>
+                    <td><span class="tag mixed">Mixed</span></td>
+                </tr>
+                <tr>
+                    <td>United Kingdom</td>
+                    <td class="mixed">5.5</td>
+                    <td class="mixed">6.0</td>
+                    <td class="mixed">5.5</td>
+                    <td class="good">7.0</td>
+                    <td class="mixed">5.5</td>
+                    <td class="mixed">5.5</td>
+                    <td class="mixed">5.5</td>
+                    <td class="mixed">6.5</td>
+                    <td class="mixed"><strong>5.9</strong></td>
+                    <td><span class="tag mixed">Mixed</span></td>
+                </tr>
+                <tr>
+                    <td>Italy</td>
+                    <td class="mixed">4.5</td>
+                    <td class="mixed">4.5</td>
+                    <td class="mixed">5.0</td>
+                    <td class="mixed">5.5</td>
+                    <td class="mixed">4.5</td>
+                    <td class="bad">4.0</td>
+                    <td class="mixed">4.5</td>
+                    <td class="mixed">5.5</td>
+                    <td class="mixed"><strong>4.8</strong></td>
+                    <td><span class="tag mixed">Mixed</span></td>
+                </tr>
+                <tr>
+                    <td>Japan</td>
+                    <td class="mixed">5.5</td>
+                    <td class="mixed">5.5</td>
+                    <td class="mixed">6.0</td>
+                    <td class="mixed">5.5</td>
+                    <td class="mixed">5.0</td>
+                    <td class="bad">4.0</td>
+                    <td class="mixed">5.0</td>
+                    <td class="mixed">6.0</td>
+                    <td class="mixed"><strong>5.3</strong></td>
+                    <td><span class="tag mixed">Mixed</span></td>
+                </tr>
+                <tr>
+                    <td>United States</td>
+                    <td class="bad">4.0</td>
+                    <td class="mixed">5.0</td>
+                    <td class="bad">4.0</td>
+                    <td class="mixed">6.0</td>
+                    <td class="bad">4.0</td>
+                    <td class="bad">4.0</td>
+                    <td class="bad">3.5</td>
+                    <td class="bad">4.5</td>
+                    <td class="bad"><strong>4.4</strong></td>
+                    <td><span class="tag bad">Cost‑Transfer</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>* Finland is included for comparison.</strong></p>
+
+        <h2>II. Country‑by‑Country Analysis</h2>
+
+        <div class="country-card">
+            <div class="header">
+                <span class="name">🇩🇪 Germany</span>
+                <span class="score" style="color:var(--green);">Score: 7.3 — Model</span>
+            </div>
+            <div class="summary">Germany is the G7's strongest performer. Its <strong>social market economy</strong>, <strong>strong welfare state</strong>, and <strong>effective federal system</strong> have delivered universal healthcare, free education, and a robust safety net. The <strong>feedback loop is relatively open</strong> — federalism, independent courts, and strong unions provide checks on power. However, <strong>rising inequality</strong> and <strong>aging population</strong> pose challenges. Germany demonstrates that <strong>democracy + strong institutions + social welfare = value return</strong>.</div>
+        </div>
+
+        <div class="country-card">
+            <div class="header">
+                <span class="name">🇫🇷 France</span>
+                <span class="score" style="color:var(--amber);">Score: 6.4 — Mixed</span>
+            </div>
+            <div class="summary">France has a <strong>strong welfare state</strong> and <strong>universal healthcare</strong>, but its <strong>bureaucracy is heavy</strong> and <strong>repetition costs are high</strong>. The <strong>waiting cost</strong> in public hospitals is significant. <strong>Political polarisation</strong> and <strong>rising inequality</strong> have weakened the feedback loop. France is a <strong>mixed case</strong> — it returns value, but does so inefficiently, and <strong>elite capture is visible in the political system</strong>.</div>
+        </div>
+
+        <div class="country-card">
+            <div class="header">
+                <span class="name">🇨🇦 Canada</span>
+                <span class="score" style="color:var(--amber);">Score: 6.8 — Mixed</span>
+            </div>
+            <div class="summary">Canada has <strong>universal healthcare</strong>, <strong>strong social services</strong>, and <strong>relatively low corruption</strong>. However, <strong>housing costs have exploded</strong>, <strong>indigenous communities face systemic exclusion</strong>, and the <strong>opportunity cost for young people</strong> is rising. Canada is a <strong>mixed case</strong> — it performs well on many parameters, but <strong>costs are increasingly being transferred to the young and marginalised</strong>.</div>
+        </div>
+
+        <div class="country-card">
+            <div class="header">
+                <span class="name">🇬🇧 United Kingdom</span>
+                <span class="score" style="color:var(--amber);">Score: 5.9 — Mixed</span>
+            </div>
+            <div class="summary">The UK has a <strong>strong legal system</strong>, <strong>free press</strong>, and <strong>relatively low corruption</strong>. But <strong>austerity policies</strong> have weakened the welfare state, <strong>NHS waiting lists</strong> are at record highs, and <strong>Brexit has disrupted the economy</strong>. The <strong>feedback loop is open in principle</strong> — but <strong>political polarisation and institutional decay</strong> have made it less effective. The UK is a <strong>mixed case</strong> — once a model, now <strong>moving toward cost‑transfer</strong>.</div>
+        </div>
+
+        <div class="country-card">
+            <div class="header">
+                <span class="name">🇮🇹 Italy</span>
+                <span class="score" style="color:var(--amber);">Score: 4.8 — Mixed</span>
+            </div>
+            <div class="summary">Italy has <strong>universal healthcare</strong> and <strong>strong social services</strong> — but <strong>institutional weaknesses</strong> are severe. <strong>Political instability</strong> (over 60 governments since 1946), <strong>high youth unemployment (over 20%)</strong>, <strong>corruption</strong>, and <strong>a dysfunctional judiciary</strong> create <strong>high waiting and repetition costs</strong>. Italy is a <strong>mixed case</strong> — it retains the <strong>form of a welfare state</strong>, but its <strong>institutions are too weak to deliver value efficiently</strong>.</div>
+        </div>
+
+        <div class="country-card">
+            <div class="header">
+                <span class="name">🇯🇵 Japan</span>
+                <span class="score" style="color:var(--amber);">Score: 5.3 — Mixed</span>
+            </div>
+            <div class="summary">Japan has <strong>excellent infrastructure</strong>, <strong>low crime</strong>, and <strong>universal healthcare</strong>. But its <strong>aging population</strong>, <strong>rigid bureaucracy</strong>, <strong>high repetition costs</strong>, and <strong>"lost decades" of economic stagnation</strong> have created <strong>high opportunity costs for the young</strong>. The <strong>feedback loop is weak</strong> — political culture suppresses dissent, and <strong>women and minorities face systemic exclusion</strong>. Japan is a <strong>mixed case</strong> — it returns value in some areas, but <strong>transfers costs to the young and marginalised</strong>.</div>
+        </div>
+
+        <div class="country-card" style="border-color:rgba(248,113,113,0.2);">
+            <div class="header">
+                <span class="name">🇺🇸 United States</span>
+                <span class="score" style="color:var(--rose);">Score: 4.4 — Cost‑Transfer Machine</span>
+            </div>
+            <div class="summary"><strong>The United States is the G7's worst performer — and a textbook case of "pseudo‑democratic freedom."</strong> Despite being the world's oldest democracy, the US has:
+                <ul style="margin:0.3rem 0 0.3rem 1.2rem; font-size:0.8rem;">
+                    <li><strong>The highest healthcare costs</strong> in the world — but <strong>millions remain uninsured</strong> (collapse cost).</li>
+                    <li><strong>The highest inequality</strong> in the G7 — and rising (transfer pathway).</li>
+                    <li><strong>Massive student debt</strong> — a cost transferred to young people (opportunity cost).</li>
+                    <li><strong>Political polarisation</strong> and <strong>institutional decay</strong> — the feedback loop is <strong>clogged</strong> (closed‑loop).</li>
+                    <li><strong>High psychological cost</strong> — gun violence, social distrust, and political anxiety (psychological cost).</li>
+                </ul>
+                <strong style="color:var(--rose);">The US is the G7's cost‑transfer machine.</strong> It has the <strong>forms of democracy</strong> — but <strong>the substance of cost transfer</strong>.
+            </div>
+        </div>
+
+        <h2>III. The G7 Pattern: Democracy Without Guarantees</h2>
+
+        <p>The G7 reveals a clear pattern:</p>
+
+        <ul>
+            <li><strong>Value‑returning systems:</strong> Finland (included), Germany — combine democracy with <strong>strong welfare states, progressive taxation, and open feedback loops</strong>.</li>
+            <li><strong>Mixed systems:</strong> France, Canada, UK, Italy, Japan — have the <strong>forms of value‑returning governance</strong>, but <strong>institutional weaknesses, rising inequality, or policy failures</strong> are transferring costs to the vulnerable.</li>
+            <li><strong>Cost‑transfer systems:</strong> United States — has the <strong>forms of democracy</strong>, but <strong>systematically transfers costs to the poor, the young, and the marginalised</strong>.</li>
+        </ul>
+
+        <p><strong>Democracy does not explain the difference.</strong> All G7 countries are democracies. But <strong>Germany returns value; the US transfers costs.</strong> The difference is <strong>institutional quality, policy choices, and the strength of the feedback loop</strong> — not democracy itself.</p>
+
+        <div class="evidence-note">
+            <strong>Key insight:</strong> The G7 control group proves that <strong>democracy is neither sufficient nor necessary for value‑returning governance</strong>. It is a vessel — and it can be filled with either value‑returning or cost‑transfer content. The US is the <strong>most powerful example</strong> of democratic cost transfer in the world.
+        </div>
+
+        <h2>IV. What This Means for the GL Framework</h2>
+
+        <p>The G7 control group confirms the GL Framework's core thesis:</p>
+
+        <ul>
+            <li><strong>Governance legitimacy is not about democracy.</strong> The US is democratic — but it transfers costs. Germany is democratic — but it returns value.</li>
+            <li><strong>Governance legitimacy is about value return vs cost transfer.</strong> This is the <strong>universal metric</strong> — it applies to the Global South, the G7, and everywhere in between.</li>
+            <li><strong>The G7 is not a model.</strong> It is a <strong>control group</strong> — a set of wealthy democracies that demonstrate the same pattern as the Global South, but with more resources.</li>
+            <li><strong>The US is the G7's "Philippines."</strong> It has the forms of democracy, but the substance of cost transfer. Elite capture, institutional decay, and rising inequality are not Global South problems — they are <strong>global problems</strong>.</li>
+        </ul>
+
+        <div class="conclusion-box">
+            <h2>Conclusion: The G7 Proves the GL Framework</h2>
+
+            <p class="big">If democracy were the answer, the US would be the model. It is not.</p>
+
+            <p>The G7 control group proves that <strong>governance legitimacy is not determined by democracy</strong>. It is determined by <strong>whether the system returns value to the people or transfers costs to the vulnerable</strong>.</p>
+
+            <p>Germany returns value. The US transfers costs. Both are democracies.</p>
+
+            <p>Finland returns value. China returns value. One is democratic; the other is not.</p>
+
+            <p><strong>Democracy is not the destination. Value return is.</strong></p>
+
+            <p>The GL Framework applies to <strong>every country</strong> — regardless of geography, development level, or political system. The question is always the same:</p>
+
+            <p><strong>Does the system return value to the people — or transfer costs to the vulnerable?</strong></p>
+
+            <p>The G7 has answered that question. <strong>And the answer is not what the West wants to hear.</strong></p>
+        </div>
+
+        <div class="footnote">— GL Framework · G7 Control Group Analysis</div>
+    </div>
+
+    <!-- ===== 中文 ===== -->
+    <div id="zh" class="lang-content">
+        <h1>G7：全球北方对照组</h1>
+        <div class="subhead">—— GL Framework 对全球最大经济体的分析 <span class="control-badge">⏺ 对照组</span></div>
+
+        <p><strong>G7——美国、英国、法国、德国、日本、意大利、加拿大——代表了全球最大的经济体和最成熟的民主国家。</strong>如果民主是治理正当性的关键，这些国家都应该在GL Framework中名列前茅。</p>
+
+        <p>事实并非如此。</p>
+
+        <p>G7揭示了GL Framework已经在全球南方展示的结论：<strong>民主不是决定性因素。</strong>在G7中，有<strong>价值返还系统、混合系统和成本转移系统</strong>——都在同一个民主伞下。</p>
+
+        <p>这使得G7成为GL Framework核心论题的<strong>完美对照组</strong>。</p>
+
+        <div class="evidence-note">
+            <strong>GL Framework的问题：</strong>如果民主是答案，为什么美国——世界上最古老的民主国家——的基尼系数高于哥斯达黎加、乌拉圭或芬兰？为什么英国的贫困率高于德国？为什么意大利的青年失业率是德国的三倍？<strong>仅靠民主无法解释这些差异。</strong>
+        </div>
+
+        <h2>一、G7评分：GL Framework评估</h2>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>国家</th>
+                    <th>等待</th>
+                    <th>重复</th>
+                    <th>崩溃</th>
+                    <th>信息不对称</th>
+                    <th>心理</th>
+                    <th>机会</th>
+                    <th>转移</th>
+                    <th>闭环</th>
+                    <th><strong>平均</strong></th>
+                    <th>类型</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>芬兰 *</td>
+                    <td class="good">8.5</td>
+                    <td class="good">8.5</td>
+                    <td class="good">8.0</td>
+                    <td class="good">9.0</td>
+                    <td class="good">8.5</td>
+                    <td class="good">8.0</td>
+                    <td class="good">9.0</td>
+                    <td class="good">9.0</td>
+                    <td class="good"><strong>8.6</strong></td>
+                    <td><span class="tag good">模范</span></td>
+                </tr>
+                <tr>
+                    <td>德国</td>
+                    <td class="good">7.0</td>
+                    <td class="good">7.0</td>
+                    <td class="good">7.5</td>
+                    <td class="good">7.5</td>
+                    <td class="good">7.0</td>
+                    <td class="good">7.0</td>
+                    <td class="good">7.5</td>
+                    <td class="good">8.0</td>
+                    <td class="good"><strong>7.3</strong></td>
+                    <td><span class="tag good">模范</span></td>
+                </tr>
+                <tr>
+                    <td>法国</td>
+                    <td class="mixed">6.0</td>
+                    <td class="mixed">6.0</td>
+                    <td class="good">7.0</td>
+                    <td class="mixed">6.5</td>
+                    <td class="mixed">6.0</td>
+                    <td class="mixed">6.0</td>
+                    <td class="mixed">6.5</td>
+                    <td class="good">7.0</td>
+                    <td class="mixed"><strong>6.4</strong></td>
+                    <td><span class="tag mixed">混合</span></td>
+                </tr>
+                <tr>
+                    <td>加拿大</td>
+                    <td class="mixed">6.5</td>
+                    <td class="mixed">6.5</td>
+                    <td class="good">7.0</td>
+                    <td class="good">7.5</td>
+                    <td class="mixed">6.5</td>
+                    <td class="mixed">6.5</td>
+                    <td class="mixed">6.5</td>
+                    <td class="good">7.5</td>
+                    <td class="mixed"><strong>6.8</strong></td>
+                    <td><span class="tag mixed">混合</span></td>
+                </tr>
+                <tr>
+                    <td>英国</td>
+                    <td class="mixed">5.5</td>
+                    <td class="mixed">6.0</td>
+                    <td class="mixed">5.5</td>
+                    <td class="good">7.0</td>
+                    <td class="mixed">5.5</td>
+                    <td class="mixed">5.5</td>
+                    <td class="mixed">5.5</td>
+                    <td class="mixed">6.5</td>
+                    <td class="mixed"><strong>5.9</strong></td>
+                    <td><span class="tag mixed">混合</span></td>
+                </tr>
+                <tr>
+                    <td>意大利</td>
+                    <td class="mixed">4.5</td>
+                    <td class="mixed">4.5</td>
+                    <td class="mixed">5.0</td>
+                    <td class="mixed">5.5</td>
+                    <td class="mixed">4.5</td>
+                    <td class="bad">4.0</td>
+                    <td class="mixed">4.5</td>
+                    <td class="mixed">5.5</td>
+                    <td class="mixed"><strong>4.8</strong></td>
+                    <td><span class="tag mixed">混合</span></td>
+                </tr>
+                <tr>
+                    <td>日本</td>
+                    <td class="mixed">5.5</td>
+                    <td class="mixed">5.5</td>
+                    <td class="mixed">6.0</td>
+                    <td class="mixed">5.5</td>
+                    <td class="mixed">5.0</td>
+                    <td class="bad">4.0</td>
+                    <td class="mixed">5.0</td>
+                    <td class="mixed">6.0</td>
+                    <td class="mixed"><strong>5.3</strong></td>
+                    <td><span class="tag mixed">混合</span></td>
+                </tr>
+                <tr>
+                    <td>美国</td>
+                    <td class="bad">4.0</td>
+                    <td class="mixed">5.0</td>
+                    <td class="bad">4.0</td>
+                    <td class="mixed">6.0</td>
+                    <td class="bad">4.0</td>
+                    <td class="bad">4.0</td>
+                    <td class="bad">3.5</td>
+                    <td class="bad">4.5</td>
+                    <td class="bad"><strong>4.4</strong></td>
+                    <td><span class="tag bad">成本转移</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>* 芬兰作为参照纳入比较。</strong></p>
+
+        <h2>二、各国分析</h2>
+
+        <div class="country-card">
+            <div class="header">
+                <span class="name">🇩🇪 德国</span>
+                <span class="score" style="color:var(--green);">评分：7.3 — 模范</span>
+            </div>
+            <div class="summary">德国是G7中表现最强的国家。其<strong>社会市场经济</strong>、<strong>强大的福利国家</strong>和<strong>有效的联邦制度</strong>实现了全民医疗、免费教育和稳健的安全网。<strong>反馈回路相对开放</strong>——联邦制、独立法院和强大的工会提供了权力制衡。然而，<strong>不平等加剧</strong>和<strong>人口老龄化</strong>构成挑战。德国证明<strong>民主 + 强大制度 + 社会福利 = 价值返还</strong>。</div>
+        </div>
+
+        <div class="country-card">
+            <div class="header">
+                <span class="name">🇫🇷 法国</span>
+                <span class="score" style="color:var(--amber);">评分：6.4 — 混合</span>
+            </div>
+            <div class="summary">法国拥有<strong>强大的福利国家</strong>和<strong>全民医疗</strong>，但其<strong>官僚机构沉重</strong>，<strong>重复成本高</strong>。公立医院的<strong>等待成本</strong>显著。<strong>政治极化</strong>和<strong>不平等加剧</strong>削弱了反馈回路。法国是<strong>混合案例</strong>——它返还价值，但效率低下，<strong>精英捕获在政治体系中可见</strong>。</div>
+        </div>
+
+        <div class="country-card">
+            <div class="header">
+                <span class="name">🇨🇦 加拿大</span>
+                <span class="score" style="color:var(--amber);">评分：6.8 — 混合</span>
+            </div>
+            <div class="summary">加拿大拥有<strong>全民医疗</strong>、<strong>强大的社会服务</strong>和<strong>相对较低的腐败</strong>。然而，<strong>住房成本暴涨</strong>，<strong>原住民社区面临系统性排斥</strong>，年轻人的<strong>机会成本</strong>在上升。加拿大是<strong>混合案例</strong>——在许多参数上表现良好，但<strong>成本正日益转移给年轻人和边缘群体</strong>。</div>
+        </div>
+
+        <div class="country-card">
+            <div class="header">
+                <span class="name">🇬🇧 英国</span>
+                <span class="score" style="color:var(--amber);">评分：5.9 — 混合</span>
+            </div>
+            <div class="summary">英国拥有<strong>强大的法律体系</strong>、<strong>新闻自由</strong>和<strong>相对较低的腐败</strong>。但<strong>紧缩政策</strong>削弱了福利国家，<strong>NHS等待名单</strong>创历史新高，<strong>脱欧</strong>扰乱了经济。<strong>反馈回路原则上是开放的</strong>——但<strong>政治极化和制度衰败</strong>使其效果减弱。英国是<strong>混合案例</strong>——曾经是模范，现在<strong>正朝成本转移方向移动</strong>。</div>
+        </div>
+
+        <div class="country-card">
+            <div class="header">
+                <span class="name">🇮🇹 意大利</span>
+                <span class="score" style="color:var(--amber);">评分：4.8 — 混合</span>
+            </div>
+            <div class="summary">意大利拥有<strong>全民医疗</strong>和<strong>强大的社会服务</strong>——但<strong>制度弱点</strong>严重。<strong>政治不稳定</strong>（自1946年以来超过60届政府）、<strong>高青年失业率（超过20%）</strong>、<strong>腐败</strong>和<strong>功能失调的司法</strong>造成了<strong>高等待和重复成本</strong>。意大利是<strong>混合案例</strong>——它保留了<strong>福利国家的形式</strong>，但其<strong>制度太弱，无法高效交付价值</strong>。</div>
+        </div>
+
+        <div class="country-card">
+            <div class="header">
+                <span class="name">🇯🇵 日本</span>
+                <span class="score" style="color:var(--amber);">评分：5.3 — 混合</span>
+            </div>
+            <div class="summary">日本拥有<strong>优秀的基础设施</strong>、<strong>低犯罪率</strong>和<strong>全民医疗</strong>。但其<strong>人口老龄化</strong>、<strong>僵化的官僚机构</strong>、<strong>高重复成本</strong>和经济停滞的<strong>"失去的几十年"</strong>给年轻人带来了<strong>高机会成本</strong>。<strong>反馈回路薄弱</strong>——政治文化压制异见，<strong>女性和少数群体面临系统性排斥</strong>。日本是<strong>混合案例</strong>——在某些领域返还价值，但<strong>将成本转移给年轻人和边缘群体</strong>。</div>
+        </div>
+
+        <div class="country-card" style="border-color:rgba(248,113,113,0.2);">
+            <div class="header">
+                <span class="name">🇺🇸 美国</span>
+                <span class="score" style="color:var(--rose);">评分：4.4 — 成本转移机器</span>
+            </div>
+            <div class="summary"><strong>美国是G7中表现最差的国家——也是"伪民主自由"的教科书案例。</strong>尽管是世界上最古老的民主国家，美国：
+                <ul style="margin:0.3rem 0 0.3rem 1.2rem; font-size:0.8rem;">
+                    <li><strong>全球最高的医疗成本</strong>——但<strong>数百万人无保险</strong>（崩溃成本）。</li>
+                    <li><strong>G7中最高的不平等</strong>——且在上升（转移路径）。</li>
+                    <li><strong>巨额学生债务</strong>——转移给年轻人的成本（机会成本）。</li>
+                    <li><strong>政治极化</strong>和<strong>制度衰败</strong>——反馈回路<strong>堵塞</strong>（闭环）。</li>
+                    <li><strong>高心理成本</strong>——枪支暴力、社会不信任和政治焦虑（心理成本）。</li>
+                </ul>
+                <strong style="color:var(--rose);">美国是G7的成本转移机器。</strong>它有<strong>民主的形式</strong>——但<strong>成本转移的实质</strong>。
+            </div>
+        </div>
+
+        <h2>三、G7模式：没有保证的民主</h2>
+
+        <p>G7揭示了一个清晰的模式：</p>
+
+        <ul>
+            <li><strong>价值返还系统：</strong>芬兰（纳入参照）、德国——将民主与<strong>强大的福利国家、累进税制和开放的反馈回路</strong>相结合。</li>
+            <li><strong>混合系统：</strong>法国、加拿大、英国、意大利、日本——拥有<strong>价值返还治理的形式</strong>，但<strong>制度弱点、不平等加剧或政策失败</strong>正在将成本转移给弱势群体。</li>
+            <li><strong>成本转移系统：</strong>美国——拥有<strong>民主的形式</strong>，但<strong>系统性地将成本转移给穷人、年轻人和边缘群体</strong>。</li>
+        </ul>
+
+        <p><strong>民主无法解释这种差异。</strong>所有G7国家都是民主国家。但<strong>德国返还价值；美国转移成本。</strong>差异在于<strong>制度质量、政策选择和反馈回路的强度</strong>——而非民主本身。</p>
+
+        <div class="evidence-note">
+            <strong>关键洞察：</strong>G7对照组证明<strong>民主对于价值返还治理既非充分条件也非必要条件</strong>。它是一个容器——可以被填充价值返还或成本转移的内容。美国是<strong>全球最有力的民主成本转移案例</strong>。
+        </div>
+
+        <h2>四、这对GL Framework意味着什么</h2>
+
+        <p>G7对照组确认了GL Framework的核心论题：</p>
+
+        <ul>
+            <li><strong>治理正当性无关民主。</strong>美国是民主的——但它转移成本。德国是民主的——但它返还价值。</li>
+            <li><strong>治理正当性关乎价值返还 vs 成本转移。</strong>这是<strong>普适标准</strong>——它适用于全球南方、G7以及两者之间的任何地方。</li>
+            <li><strong>G7不是模范。</strong>它是一个<strong>对照组</strong>——一组富裕的民主国家，展示出与全球南方相同的模式，但拥有更多资源。</li>
+            <li><strong>美国是G7的"菲律宾"。</strong>它有民主的形式，但成本转移的实质。精英捕获、制度衰败和不平等加剧不是全球南方的问题——它们是<strong>全球性问题</strong>。</li>
+        </ul>
+
+        <div class="conclusion-box">
+            <h2>结论：G7证明了GL Framework</h2>
+
+            <p class="big">如果民主是答案，美国应该是模范。但它不是。</p>
+
+            <p>G7对照组证明<strong>治理正当性不是由民主决定的</strong>。它是由<strong>系统是将价值返还给人民，还是将成本转移给弱势群体</strong>决定的。</p>
+
+            <p>德国返还价值。美国转移成本。两者都是民主国家。</p>
+
+            <p>芬兰返还价值。中国返还价值。一个是民主的；另一个不是。</p>
+
+            <p><strong>民主不是终点。价值返还才是。</strong></p>
+
+            <p>GL Framework适用于<strong>每个国家</strong>——无论地理、发展水平或政治制度。问题始终如一：</p>
+
+            <p><strong>系统是将价值返还给人民——还是将成本转移给弱势群体？</strong></p>
+
+            <p>G7已经回答了这个问题。<strong>答案不是西方想听到的。</strong></p>
+        </div>
+
+        <div class="footnote">—— GL Framework · G7对照组分析</div>
+    </div>
+
+    <!-- ===== ESPAÑOL ===== -->
+    <div id="es" class="lang-content">
+        <h1>G7: El Grupo de Control del Norte Global</h1>
+        <div class="subhead">— Un Análisis GL Framework de las Mayores Economías del Mundo <span class="control-badge">⏺ Grupo de Control</span></div>
+
+        <p><strong>El G7 — Estados Unidos, Reino Unido, Francia, Alemania, Japón, Italia y Canadá — representa las economías más grandes y las democracias más establecidas del mundo.</strong> Si la democracia fuera la clave de la legitimidad gubernativa, estos países deberían estar en la cima del GL Framework.</p>
+
+        <p>No lo están.</p>
+
+        <p>El G7 revela lo que el GL Framework ya ha mostrado en el Sur Global: <strong>la democracia no es el factor decisivo.</strong> Entre el G7, hay <strong>sistemas de devolución de valor, sistemas mixtos y sistemas de transferencia de costos</strong> — todos bajo el mismo paraguas democrático.</p>
+
+        <p>Esto convierte al G7 en el <strong>grupo de control perfecto</strong> para la tesis central del GL Framework.</p>
+
+        <div class="evidence-note">
+            <strong>Pregunta del GL Framework:</strong> Si la democracia fuera la respuesta, ¿por qué Estados Unidos — la democracia más antigua del mundo — tiene un coeficiente de Gini más alto que Costa Rica, Uruguay o Finlandia? ¿Por qué el Reino Unido tiene tasas de pobreza más altas que Alemania? ¿Por qué Italia tiene un desempleo juvenil tres veces mayor que Alemania? <strong>La democracia por sí sola no explica estas diferencias.</strong>
+        </div>
+
+        <h2>I. Puntuaciones del G7: Evaluación del GL Framework</h2>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>País</th>
+                    <th>Espera</th>
+                    <th>Repetición</th>
+                    <th>Colapso</th>
+                    <th>Asim. Info.</th>
+                    <th>Psicol.</th>
+                    <th>Oport.</th>
+                    <th>Transfer.</th>
+                    <th>Bucle</th>
+                    <th><strong>PROM.</strong></th>
+                    <th>Tipo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Finlandia *</td>
+                    <td class="good">8.5</td>
+                    <td class="good">8.5</td>
+                    <td class="good">8.0</td>
+                    <td class="good">9.0</td>
+                    <td class="good">8.5</td>
+                    <td class="good">8.0</td>
+                    <td class="good">9.0</td>
+                    <td class="good">9.0</td>
+                    <td class="good"><strong>8.6</strong></td>
+                    <td><span class="tag good">Modelo</span></td>
+                </tr>
+                <tr>
+                    <td>Alemania</td>
+                    <td class="good">7.0</td>
+                    <td class="good">7.0</td>
+                    <td class="good">7.5</td>
+                    <td class="good">7.5</td>
+                    <td class="good">7.0</td>
+                    <td class="good">7.0</td>
+                    <td class="good">7.5</td>
+                    <td class="good">8.0</td>
+                    <td class="good"><strong>7.3</strong></td>
+                    <td><span class="tag good">Modelo</span></td>
+                </tr>
+                <tr>
+                    <td>Francia</td>
+                    <td class="mixed">6.0</td>
+                    <td class="mixed">6.0</td>
+                    <td class="good">7.0</td>
+                    <td class="mixed">6.5</td>
+                    <td class="mixed">6.0</td>
+                    <td class="mixed">6.0</td>
+                    <td class="mixed">6.5</td>
+                    <td class="good">7.0</td>
+                    <td class="mixed"><strong>6.4</strong></td>
+                    <td><span class="tag mixed">Mixto</span></td>
+                </tr>
+                <tr>
+                    <td>Canadá</td>
+                    <td class="mixed">6.5</td>
+                    <td class="mixed">6.5</td>
+                    <td class="good">7.0</td>
+                    <td class="good">7.5</td>
+                    <td class="mixed">6.5</td>
+                    <td class="mixed">6.5</td>
+                    <td class="mixed">6.5</td>
+                    <td class="good">7.5</td>
+                    <td class="mixed"><strong>6.8</strong></td>
+                    <td><span class="tag mixed">Mixto</span></td>
+                </tr>
+                <tr>
+                    <td>Reino Unido</td>
+                    <td class="mixed">5.5</td>
+                    <td class="mixed">6.0</td>
+                    <td class="mixed">5.5</td>
+                    <td class="good">7.0</td>
+                    <td class="mixed">5.5</td>
+                    <td class="mixed">5.5</td>
+                    <td class="mixed">5.5</td>
+                    <td class="mixed">6.5</td>
+                    <td class="mixed"><strong>5.9</strong></td>
+                    <td><span class="tag mixed">Mixto</span></td>
+                </tr>
+                <tr>
+                    <td>Italia</td>
+                    <td class="mixed">4.5</td>
+                    <td class="mixed">4.5</td>
+                    <td class="mixed">5.0</td>
+                    <td class="mixed">5.5</td>
+                    <td class="mixed">4.5</td>
+                    <td class="bad">4.0</td>
+                    <td class="mixed">4.5</td>
+                    <td class="mixed">5.5</td>
+                    <td class="mixed"><strong>4.8</strong></td>
+                    <td><span class="tag mixed">Mixto</span></td>
+                </tr>
+                <tr>
+                    <td>Japón</td>
+                    <td class="mixed">5.5</td>
+                    <td class="mixed">5.5</td>
+                    <td class="mixed">6.0</td>
+                    <td class="mixed">5.5</td>
+                    <td class="mixed">5.0</td>
+                    <td class="bad">4.0</td>
+                    <td class="mixed">5.0</td>
+                    <td class="mixed">6.0</td>
+                    <td class="mixed"><strong>5.3</strong></td>
+                    <td><span class="tag mixed">Mixto</span></td>
+                </tr>
+                <tr>
+                    <td>Estados Unidos</td>
+                    <td class="bad">4.0</td>
+                    <td class="mixed">5.0</td>
+                    <td class="bad">4.0</td>
+                    <td class="mixed">6.0</td>
+                    <td class="bad">4.0</td>
+                    <td class="bad">4.0</td>
+                    <td class="bad">3.5</td>
+                    <td class="bad">4.5</td>
+                    <td class="bad"><strong>4.4</strong></td>
+                    <td><span class="tag bad">Transferencia</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>* Finlandia se incluye para comparación.</strong></p>
+
+        <h2>II. Análisis País por País</h2>
+
+        <div class="country-card">
+            <div class="header">
+                <span class="name">🇩🇪 Alemania</span>
+                <span class="score" style="color:var(--green);">Puntuación: 7.3 — Modelo</span>
+            </div>
+            <div class="summary">Alemania es el mejor desempeño del G7. Su <strong>economía social de mercado</strong>, <strong>fuerte estado de bienestar</strong> y <strong>sistema federal efectivo</strong> han proporcionado salud universal, educación gratuita y una red de seguridad robusta. El <strong>bucle de retroalimentación es relativamente abierto</strong> — el federalismo, los tribunales independientes y los sindicatos fuertes proporcionan controles al poder. Sin embargo, el <strong>aumento de la desigualdad</strong> y el <strong>envejecimiento de la población</strong> plantean desafíos. Alemania demuestra que <strong>democracia + instituciones sólidas + bienestar social = devolución de valor</strong>.</div>
+        </div>
+
+        <div class="country-card">
+            <div class="header">
+                <span class="name">🇫🇷 Francia</span>
+                <span class="score" style="color:var(--amber);">Puntuación: 6.4 — Mixto</span>
+            </div>
+            <div class="summary">Francia tiene un <strong>fuerte estado de bienestar</strong> y <strong>salud universal</strong>, pero su <strong>burocracia es pesada</strong> y los <strong>costos de repetición son altos</strong>. El <strong>costo de espera</strong> en los hospitales públicos es significativo. La <strong>polarización política</strong> y el <strong>aumento de la desigualdad</strong> han debilitado el bucle de retroalimentación. Francia es un <strong>caso mixto</strong> — devuelve valor, pero lo hace de manera ineficiente, y la <strong>captura de élites es visible en el sistema político</strong>.</div>
+        </div>
+
+        <div class="country-card">
+            <div class="header">
+                <span class="name">🇨🇦 Canadá</span>
+                <span class="score" style="color:var(--amber);">Puntuación: 6.8 — Mixto</span>
+            </div>
+            <div class="summary">Canadá tiene <strong>salud universal</strong>, <strong>fuertes servicios sociales</strong> y <strong>corrupción relativamente baja</strong>. Sin embargo, los <strong>costos de vivienda han explotado</strong>, las <strong>comunidades indígenas enfrentan exclusión sistémica</strong>, y el <strong>costo de oportunidad para los jóvenes</strong> está aumentando. Canadá es un <strong>caso mixto</strong> — funciona bien en muchos parámetros, pero los <strong>costos se están transfiriendo cada vez más a los jóvenes y marginados</strong>.</div>
+        </div>
+
+        <div class="country-card">
+            <div class="header">
+                <span class="name">🇬🇧 Reino Unido</span>
+                <span class="score" style="color:var(--amber);">Puntuación: 5.9 — Mixto</span>
+            </div>
+            <div class="summary">El Reino Unido tiene un <strong>sistema legal sólido</strong>, <strong>prensa libre</strong> y <strong>corrupción relativamente baja</strong>. Pero las <strong>políticas de austeridad</strong> han debilitado el estado de bienestar, las <strong>listas de espera del NHS</strong> están en niveles récord, y el <strong>Brexit</strong> ha perturbado la economía. El <strong>bucle de retroalimentación es abierto en principio</strong> — pero la <strong>polarización política y el deterioro institucional</strong> lo han hecho menos efectivo. El Reino Unido es un <strong>caso mixto</strong> — una vez un modelo, ahora <strong>moviéndose hacia la transferencia de costos</strong>.</div>
+        </div>
+
+        <div class="country-card">
+            <div class="header">
+                <span class="name">🇮🇹 Italia</span>
+                <span class="score" style="color:var(--amber);">Puntuación: 4.8 — Mixto</span>
+            </div>
+            <div class="summary">Italia tiene <strong>salud universal</strong> y <strong>fuertes servicios sociales</strong> — pero las <strong>debilidades institucionales</strong> son severas. La <strong>inestabilidad política</strong> (más de 60 gobiernos desde 1946), el <strong>alto desempleo juvenil (más del 20%)</strong>, la <strong>corrupción</strong> y un <strong>judicial disfuncional</strong> crean <strong>altos costos de espera y repetición</strong>. Italia es un <strong>caso mixto</strong> — conserva la <strong>forma de un estado de bienestar</strong>, pero sus <strong>instituciones son demasiado débiles para entregar valor de manera eficiente</strong>.</div>
+        </div>
+
+        <div class="country-card">
+            <div class="header">
+                <span class="name">🇯🇵 Japón</span>
+                <span class="score" style="color:var(--amber);">Puntuación: 5.3 — Mixto</span>
+            </div>
+            <div class="summary">Japón tiene <strong>infraestructura excelente</strong>, <strong>baja criminalidad</strong> y <strong>salud universal</strong>. Pero su <strong>población envejecida</strong>, su <strong>burocracia rígida</strong>, sus <strong>altos costos de repetición</strong> y las <strong>"décadas perdidas"</strong> de estancamiento económico han creado <strong>altos costos de oportunidad para los jóvenes</strong>. El <strong>bucle de retroalimentación es débil</strong> — la cultura política suprime la disidencia, y las <strong>mujeres y minorías enfrentan exclusión sistémica</strong>. Japón es un <strong>caso mixto</strong> — devuelve valor en algunas áreas, pero <strong>transfiere costos a los jóvenes y marginados</strong>.</div>
+        </div>
+
+        <div class="country-card" style="border-color:rgba(248,113,113,0.2);">
+            <div class="header">
+                <span class="name">🇺🇸 Estados Unidos</span>
+                <span class="score" style="color:var(--rose);">Puntuación: 4.4 — Máquina de Transferencia</span>
+            </div>
+            <div class="summary"><strong>Estados Unidos es el peor desempeño del G7 — y un caso de libro de "libertad pseudodemocrática."</strong> A pesar de ser la democracia más antigua del mundo, EE.UU. tiene:
+                <ul style="margin:0.3rem 0 0.3rem 1.2rem; font-size:0.8rem;">
+                    <li><strong>Los costos de salud más altos</strong> del mundo — pero <strong>millones siguen sin seguro</strong> (costo de colapso).</li>
+                    <li><strong>La desigualdad más alta</strong> del G7 — y en aumento (vía de transferencia).</li>
+                    <li><strong>Deuda estudiantil masiva</strong> — un costo transferido a los jóvenes (costo de oportunidad).</li>
+                    <li><strong>Polarización política</strong> y <strong>deterioro institucional</strong> — el bucle de retroalimentación está <strong>obstruido</strong> (bucle cerrado).</li>
+                    <li><strong>Alto costo psicológico</strong> — violencia armada, desconfianza social y ansiedad política (costo psicológico).</li>
+                </ul>
+                <strong style="color:var(--rose);">EE.UU. es la máquina de transferencia de costos del G7.</strong> Tiene las <strong>formas de la democracia</strong> — pero la <strong>sustancia de la transferencia de costos</strong>.
+            </div>
+        </div>
+
+        <h2>III. El Patrón del G7: Democracia Sin Garantías</h2>
+
+        <p>El G7 revela un patrón claro:</p>
+
+        <ul>
+            <li><strong>Sistemas de devolución de valor:</strong> Finlandia (incluida), Alemania — combinan democracia con <strong>fuertes estados de bienestar, impuestos progresivos y bucles de retroalimentación abiertos</strong>.</li>
+            <li><strong>Sistemas mixtos:</strong> Francia, Canadá, Reino Unido, Italia, Japón — tienen las <strong>formas de gobernanza de devolución de valor</strong>, pero las <strong>debilidades institucionales, el aumento de la desigualdad o los fracasos de políticas</strong> están transfiriendo costos a los vulnerables.</li>
+            <li><strong>Sistemas de transferencia de costos:</strong> Estados Unidos — tiene las <strong>formas de democracia</strong>, pero <strong>transfiere sistemáticamente costos a los pobres, los jóvenes y los marginados</strong>.</li>
+        </ul>
+
+        <p><strong>La democracia no explica la diferencia.</strong> Todos los países del G7 son democracias. Pero <strong>Alemania devuelve valor; EE.UU. transfiere costos.</strong> La diferencia es la <strong>calidad institucional, las opciones de política y la fuerza del bucle de retroalimentación</strong> — no la democracia en sí.</p>
+
+        <div class="evidence-note">
+            <strong>Perspectiva clave:</strong> El grupo de control del G7 prueba que <strong>la democracia no es ni suficiente ni necesaria para la gobernanza de devolución de valor</strong>. Es un recipiente — y puede ser llenado con contenido de devolución de valor o de transferencia de costos. EE.UU. es el <strong>ejemplo más poderoso</strong> de transferencia de costos democrática en el mundo.
+        </div>
+
+        <h2>IV. Qué Significa Esto para el GL Framework</h2>
+
+        <p>El grupo de control del G7 confirma la tesis central del GL Framework:</p>
+
+        <ul>
+            <li><strong>La legitimidad gubernativa no se trata de democracia.</strong> EE.UU. es democrático — pero transfiere costos. Alemania es democrática — pero devuelve valor.</li>
+            <li><strong>La legitimidad gubernativa se trata de devolución de valor vs transferencia de costos.</strong> Esta es la <strong>métrica universal</strong> — se aplica al Sur Global, al G7 y a todo lo demás.</li>
+            <li><strong>El G7 no es un modelo.</strong> Es un <strong>grupo de control</strong> — un conjunto de democracias ricas que demuestran el mismo patrón que el Sur Global, pero con más recursos.</li>
+            <li><strong>EE.UU. es el "Filipinas" del G7.</strong> Tiene las formas de democracia, pero la sustancia de la transferencia de costos. La captura de élites, el deterioro institucional y el aumento de la desigualdad no son problemas del Sur Global — son <strong>problemas globales</strong>.</li>
+        </ul>
+
+        <div class="conclusion-box">
+            <h2>Conclusión: El G7 Prueba el GL Framework</h2>
+
+            <p class="big">Si la democracia fuera la respuesta, EE.UU. sería el modelo. No lo es.</p>
+
+            <p>El grupo de control del G7 prueba que <strong>la legitimidad gubernativa no está determinada por la democracia</strong>. Está determinada por <strong>si el sistema devuelve valor a la gente o transfiere costos a los vulnerables</strong>.</p>
+
+            <p>Alemania devuelve valor. EE.UU. transfiere costos. Ambos son democracias.</p>
+
+            <p>Finlandia devuelve valor. China devuelve valor. Uno es democrático; el otro no.</p>
+
+            <p><strong>La democracia no es el destino. La devolución de valor sí lo es.</strong></p>
+
+            <p>El GL Framework se aplica a <strong>todos los países</strong> — independientemente de la geografía, el nivel de desarrollo o el sistema político. La pregunta es siempre la misma:</p>
+
+            <p><strong>¿El sistema devuelve valor a la gente — o transfiere costos a los vulnerables?</strong></p>
+
+            <p>El G7 ha respondido a esa pregunta. <strong>Y la respuesta no es lo que Occidente quiere escuchar.</strong></p>
+        </div>
+
+        <div class="footnote">— GL Framework · Análisis del Grupo de Control G7</div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const btns = document.querySelectorAll('.lang-btn');
+        const contents = {
+            en: document.getElementById('en'),
+            zh: document.getElementById('zh'),
+            es: document.getElementById('es')
+        };
+
+        function switchLang(lang) {
+            for (let key in contents) {
+                contents[key].classList.remove('active');
+            }
+            if (contents[lang]) contents[lang].classList.add('active');
+            btns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
+            if (history.pushState) history.pushState(null, '', '#' + lang);
+        }
+
+        btns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const lang = this.dataset.lang;
+                if (lang) switchLang(lang);
+            });
+        });
+
+        const hash = window.location.hash.replace('#', '');
+        if (hash === 'zh' || hash === 'es') {
+            switchLang(hash);
+        } else {
+            switchLang('en');
+        }
+
+        window.addEventListener('hashchange', function() {
+            const newHash = window.location.hash.replace('#', '');
+            if (newHash === 'zh' || newHash === 'es') {
+                switchLang(newHash);
+            } else {
+                switchLang('en');
+            }
+        });
+    })();
+</script>
+</body>
+</html>
