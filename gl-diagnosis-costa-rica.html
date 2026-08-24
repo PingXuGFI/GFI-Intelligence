@@ -1,1 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Costa Rica · GL Framework Model · 哥斯达黎加模范</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #0b1220;
+            --text: #f8fbff;
+            --muted: #c7d2e3;
+            --sub: #9fb0c8;
+            --dim: rgba(255,255,255,.06);
+            --green: #9FE870;
+            --blue: #7DD3FC;
+            --amber: #fbbf24;
+            --gold: #fcd34d;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --mono: 'DM Mono', monospace;
+            --sans: 'DM Sans', system-ui, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 15px;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--dim);
+            border-radius: 24px;
+            padding: 2.2rem 2.5rem;
+            backdrop-filter: blur(2px);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green);
+            text-decoration: none;
+            font-family: var(--mono);
+            font-size: 13px;
+            letter-spacing: 0.08em;
+            border: 1px solid rgba(159,232,112,0.3);
+            padding: 8px 18px;
+            border-radius: 40px;
+            transition: all 0.2s;
+            margin-bottom: 1.8rem;
+        }
+        .back-link:hover {
+            background: rgba(159,232,112,0.1);
+            border-color: var(--green);
+            transform: translateX(-4px);
+        }
+        .lang-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.6rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--dim);
+            padding-bottom: 0.8rem;
+        }
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-family: var(--mono);
+            font-weight: 500;
+            color: var(--sub);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
+        .lang-btn.active {
+            background: rgba(159,232,112,0.15);
+            border-color: var(--green);
+            color: var(--green);
+        }
+        .lang-content { display: none; animation: fade 0.3s ease; }
+        .lang-content.active { display: block; }
+        @keyframes fade { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
 
+        h1 {
+            font-size: 2.1rem;
+            font-family: var(--serif);
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            border-left: 6px solid var(--gold);
+            padding-left: 1.2rem;
+        }
+        .subhead {
+            font-size: 1rem;
+            color: var(--sub);
+            margin-bottom: 2rem;
+            padding-left: 1.2rem;
+            border-left: 3px solid rgba(252,211,77,0.3);
+            font-style: italic;
+        }
+        .model-badge {
+            display: inline-block;
+            background: rgba(252,211,77,0.15);
+            color: var(--gold);
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 0.1rem 1rem;
+            border-radius: 30px;
+            border: 1px solid rgba(252,211,77,0.2);
+            margin-left: 1rem;
+        }
+        h2 {
+            font-size: 1.4rem;
+            font-family: var(--serif);
+            margin-top: 2.2rem;
+            margin-bottom: 0.6rem;
+            color: #eaf6ff;
+            border-bottom: 1px dashed rgba(255,255,255,0.08);
+            padding-bottom: 0.3rem;
+        }
+        h2 .badge {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: rgba(251,191,36,0.15);
+            color: var(--amber);
+            padding: 0.05rem 0.8rem;
+            border-radius: 30px;
+            margin-left: 0.8rem;
+            font-weight: 400;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1.4rem;
+            margin-bottom: 0.4rem;
+            color: var(--muted);
+        }
+        p { margin-bottom: 1rem; color: var(--muted); text-align: justify; }
+        ul, ol { margin: 0.5rem 0 1rem 1.8rem; list-style-type: disc; color: var(--muted); }
+        li { margin-bottom: 0.3rem; }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0 1.5rem 0;
+            font-size: 0.85rem;
+            font-family: var(--mono);
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .data-table th {
+            background: rgba(252,211,77,0.10);
+            color: var(--gold);
+            padding: 0.6rem 1rem;
+            text-align: left;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            border-bottom: 1px solid var(--dim);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+        .data-table td {
+            padding: 0.6rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            vertical-align: top;
+            color: var(--muted);
+        }
+        .data-table tr:last-child td { border-bottom: none; }
+        .data-table .positive { color: var(--green); }
+        .data-table .neutral { color: var(--amber); }
+
+        .evidence-note {
+            background: rgba(125,211,252,0.04);
+            padding: 0.8rem 1.2rem;
+            border-radius: 6px;
+            margin: 0.5rem 0 1rem 0;
+            font-size: 0.85rem;
+            color: var(--sub);
+            border-left: 3px solid var(--blue);
+        }
+        .evidence-note strong { color: var(--blue); }
+
+        .conclusion-box {
+            background: rgba(252,211,77,0.04);
+            border-left: 4px solid var(--gold);
+            padding: 1.5rem 2rem;
+            margin-top: 2rem;
+            border-radius: 12px;
+        }
+        .conclusion-box h2 { border: none; margin-top:0; padding-top:0; }
+        .footnote {
+            font-size: 0.75rem;
+            color: var(--sub);
+            text-align: right;
+            margin-top: 2rem;
+            border-top: 1px solid var(--dim);
+            padding-top: 1rem;
+            font-style: italic;
+        }
+
+        .score-pill {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            font-weight: 500;
+            background: rgba(159,232,112,0.12);
+            color: var(--green);
+            padding: 0.05rem 0.8rem;
+            border-radius: 30px;
+            margin-left: 0.6rem;
+            letter-spacing: 0.02em;
+        }
+
+        @media (max-width: 640px) {
+            .container { padding: 1.2rem; }
+            h1 { font-size: 1.6rem; padding-left:0.8rem; }
+            h2 { font-size: 1.2rem; }
+            .lang-bar { justify-content: center; }
+            .data-table { font-size: 0.7rem; }
+            .data-table th, .data-table td { padding: 0.4rem 0.6rem; }
+            .conclusion-box { padding: 1rem 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="global-south-diagnosis.html" class="back-link">← 返回首页 / Back to Home</a>
+
+    <div class="lang-bar">
+        <button class="lang-btn" data-lang="zh">中文</button>
+        <button class="lang-btn active" data-lang="en">English</button>
+    </div>
+
+    <!-- ===== ENGLISH ===== -->
+    <div id="en" class="lang-content active">
+        <h1>Costa Rica: The Global South Model — How a Small Country Returned Value to Its People</h1>
+        <div class="subhead">— A GL Framework Model Case of "Value‑Returning Governance" <span class="model-badge">★ Model</span></div>
+
+        <p><strong>Costa Rica is the exception that proves the rule.</strong> In a region — Central America — marked by war, dictatorship, and inequality, Costa Rica has built a <strong>stable, peaceful, and relatively equitable society</strong>. It abolished its army in 1948, <strong>reinvested military spending in education and healthcare</strong>, and has maintained <strong>one of the highest democratic quality scores in Latin America</strong> for decades.</p>
+
+        <p>This is not to say Costa Rica is perfect — it faces challenges: <strong>rising inequality, fiscal deficits, and environmental pressures from tourism and agriculture</strong>. But compared to the other countries in this series, Costa Rica stands out as a <strong>case of governance that systematically returns value to its population</strong>, rather than transferring costs to the vulnerable.</p>
+
+        <div class="evidence-note">
+            <strong>V‑Dem (2025)</strong> ranks Costa Rica as the <strong>highest‑scoring democracy in Central America</strong> and among the <strong>top 20 globally</strong> on the Liberal Democracy Index. <strong>World Bank (2025)</strong> reports that <strong>Costa Rica's poverty rate is 18%</strong> — relatively low for the region — and its <strong>life expectancy (81 years)</strong> is among the highest in the Global South. <strong>UNDP (2025)</strong> ranks Costa Rica <strong>62nd on the Human Development Index</strong> — the highest in Central America, and comparable to several European countries. <strong>Freedom House (2025)</strong> classifies Costa Rica as <strong>"free"</strong> — one of the few countries in the Global South to receive this rating.
+        </div>
+
+        <h2>I. GL Diagnosis: Costa Rica Under Eight Parameters</h2>
+
+        <h3>1. Waiting Cost <span class="score-pill">7/10</span></h3>
+        <p>Costa Rica's waiting cost is <strong>relatively low</strong> compared to its peers. <strong>Public healthcare (Caja Costarricense de Seguro Social — CCSS)</strong> is universal and accessible; patients wait <strong>weeks rather than months</strong> for specialist consultations. <strong>Government services</strong> — land registration, business permits, and court cases — are <strong>more efficient than the regional average</strong>, though delays still occur. The state has <strong>invested in digitalisation</strong> to reduce waiting times, and <strong>transparency initiatives</strong> have made it easier for citizens to track the progress of their applications.</p>
+
+        <h3>2. Repetition Cost <span class="score-pill">6.5/10</span></h3>
+        <p>Costa Rica's bureaucracy is <strong>less fragmented</strong> than in most Global South countries. The state has <strong>invested in integrated databases</strong> and <strong>single‑window service delivery</strong> — citizens can complete many procedures online, and <strong>documentation is shared across agencies</strong>. The <strong>National Identification System</strong> is linked to health, tax, and social security records, <strong>reducing the need for repeated submissions</strong>. While bureaucratic hurdles still exist — especially for indigenous communities and migrants — the <strong>system is designed to minimise repetition</strong>.</p>
+
+        <h3>3. Collapse Cost <span class="score-pill">7/10</span></h3>
+        <p>Costa Rica's collapse cost is <strong>among the lowest in the Global South</strong>. <strong>Infrastructure</strong> — roads, electricity, and water — is <strong>reliable and well‑maintained</strong>. The state has <strong>invested in disaster preparedness</strong> — Costa Rica is one of the few countries in the region that has <strong>effective early‑warning systems for earthquakes and floods</strong>. <strong>Environmental protection</strong> is a national priority: over <strong>25% of the country's territory is protected as national parks or reserves</strong>, and <strong>renewable energy accounts for over 98% of electricity generation</strong>. Collapse cost is <strong>minimised because the state actively prevents collapse</strong> rather than responding to it after the fact.</p>
+
+        <h3>4. Information Asymmetry Cost <span class="score-pill">7/10</span></h3>
+        <p>Costa Rica has a <strong>free press and strong civil society</strong>. <strong>Government budgets are transparent</strong> — the state publishes detailed expenditure reports, and <strong>citizens can track public funds</strong>. The <strong>Constitutional Chamber of the Supreme Court (Sala IV)</strong> is <strong>independent and accessible</strong> — citizens can challenge government decisions, and the court has a <strong>strong record of protecting rights</strong>. <strong>Freedom of information</strong> is protected by law and <strong>practised in reality</strong> — journalists investigate corruption without fear, and the state <strong>does not weaponise information</strong> against its citizens.</p>
+
+        <h3>5. Psychological Cost <span class="score-pill">7/10</span></h3>
+        <p>Costa Rica's psychological cost is <strong>relatively low</strong>. The country's <strong>political stability</strong> — no coups, no civil war, no authoritarian backsliding — has created a <strong>sense of security and trust</strong> in the state. The <strong>abolition of the army in 1948</strong> was not just a symbolic act — it <strong>signalled a commitment to peaceful politics and social investment</strong>. A 2025 survey by the University of Costa Rica found that <strong>over 60% of Costa Ricans trust the state</strong> — one of the highest rates in the Global South. The psychological cost is low because <strong>citizens do not live in fear of the state</strong> — they expect the state to serve them, not to repress them.</p>
+
+        <h3>6. Opportunity Cost <span class="score-pill">6/10</span></h3>
+        <p>Costa Rica's opportunity cost is <strong>manageable</strong>. The country has a <strong>well‑educated population</strong> — literacy rates exceed 97%, and the <strong>state invests over 8% of GDP in education</strong>. <strong>Youth unemployment is around 15%</strong> — higher than in developed countries, but <strong>lower than the regional average</strong>. <strong>Brain drain</strong> exists — some skilled professionals leave for the US and Europe — but the <strong>country retains a strong core of professionals</strong>. The state has <strong>invested in higher education</strong> — the University of Costa Rica is one of the best in Latin America — and <strong>science and technology are growing</strong>. The opportunity cost is <strong>not being squandered</strong> — the state is investing in its people.</p>
+
+        <h3>7. Transfer Pathway: Reversed <span class="score-pill">8/10</span></h3>
+        <p>Costa Rica's transfer pathways are <strong>reversed</strong> — the system <strong>returns value to the population</strong> rather than transferring costs to the vulnerable.</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>Mechanism</th><th>Effect</th><th>Outcome</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>No Military</td><td>Army budget reinvested in health &amp; education</td><td><span class="positive">Universal healthcare, high literacy</span></td></tr>
+                <tr><td>Progressive Taxation</td><td>Higher taxes on wealth and income</td><td><span class="positive">Redistributes income to the poor</span></td></tr>
+                <tr><td>Social Security (CCSS)</td><td>Universal health and pension coverage</td><td><span class="positive">Reduces poverty and inequality</span></td></tr>
+                <tr><td>Environmental Protection</td><td>25% of territory protected; ecotourism model</td><td><span class="positive">Sustainable development; clean energy</span></td></tr>
+            </tbody>
+        </table>
+
+        <p><strong>The transfer pathway is explicitly designed to return value to the population — not to extract it and concentrate it in elite hands.</strong> This is the defining feature that distinguishes Costa Rica from the cost‑transfer machines in this series.</p>
+
+        <h3>8. Closed‑Loop Degree <span class="score-pill">7.5/10</span></h3>
+        <p>Costa Rica has a <strong>well‑functioning feedback loop</strong>. <strong>Elections are free and fair</strong> — the country has a <strong>strong multiparty system</strong> and <strong>high voter turnout</strong>. The <strong>judiciary is independent</strong> — the Constitutional Chamber (Sala IV) has a <strong>strong record of protecting rights</strong> and <strong>holding the state accountable</strong>. <strong>Civil society is active</strong> — unions, NGOs, and community organisations <strong>monitor the state and demand correction</strong>. The <strong>media is free</strong> — journalists investigate corruption and <strong>hold officials accountable</strong>. The loop is <strong>open and functional</strong> — when the system fails, citizens can demand correction, and the state responds.</p>
+
+        <h2>II. Why Costa Rica Succeeded: The Model Case</h2>
+
+        <p>Costa Rica's success is not an accident. It is the result of <strong>deliberate policy choices</strong> made over decades:</p>
+
+        <ul>
+            <li><strong>Abolition of the military (1948)</strong> — the decision to reinvest military spending in health and education was a <strong>generational investment</strong> in human capital.</li>
+            <li><strong>Investment in social services</strong> — the state has <strong>consistently prioritised healthcare, education, and social security</strong> over elite consumption.</li>
+            <li><strong>Environmental protection</strong> — the state has <strong>protected natural resources</strong> and built a <strong>sustainable ecotourism economy</strong>.</li>
+            <li><strong>Strong institutions</strong> — the judiciary, electoral system, and civil service are <strong>independent and effective</strong>.</li>
+            <li><strong>Democratic culture</strong> — Costa Ricans <strong>value democracy, trust the state, and participate in political life</strong>.</li>
+        </ul>
+
+        <div class="evidence-note">
+            <strong>UNDP (2025)</strong> notes that <strong>Costa Rica's human development index (HDI) is 0.810</strong> — the highest in Central America and comparable to several European countries. The country has <strong>one of the highest life expectancies in the Americas (81 years)</strong> and <strong>near‑universal healthcare coverage</strong>. <strong>Transparency International (2025)</strong> ranks Costa Rica <strong>47th out of 182 countries</strong> on the Corruption Perceptions Index — the <strong>highest in Central America</strong> and among the <strong>cleanest in the Global South</strong>.
+        </div>
+
+        <div class="conclusion-box">
+            <h2>Conclusion: Costa Rica Is the Global South Model — a System That Returns Value to the People</h2>
+
+            <p>Costa Rica's case demonstrates that <strong>value‑returning governance is possible in the Global South</strong>. It is not a miracle — it is the result of <strong>deliberate policy choices, strong institutions, and a democratic culture</strong>.</p>
+
+            <p>The eight parameters show a system that:</p>
+            <ul>
+                <li><strong>Returns value</strong> — through universal healthcare, free education, and progressive taxation.</li>
+                <li><strong>Minimises costs</strong> — through efficient bureaucracy, reliable infrastructure, and disaster preparedness.</li>
+                <li><strong>Maintains an open feedback loop</strong> — through free elections, independent courts, and an active civil society.</li>
+                <li><strong>Protects the environment</strong> — and builds a sustainable economy that does not collapse.</li>
+            </ul>
+
+            <p>Costa Rica is not perfect — it faces challenges: <strong>rising inequality, fiscal deficits, and the pressure of tourism on the environment</strong>. But it is a <strong>model of what is possible</strong> in the Global South. It proves that <strong>governance legitimacy is not determined by geography or colonial legacy — it is determined by policy choices</strong>.</p>
+
+            <p><strong>Governance legitimacy is earned by returning value to the people — and Costa Rica has done exactly that.</strong></p>
+        </div>
+
+        <div class="footnote">— GL Framework · Model Case of Value‑Returning Governance</div>
+    </div>
+
+    <!-- ===== 中文 ===== -->
+    <div id="zh" class="lang-content">
+        <h1>哥斯达黎加：全球南方模范——一个小国如何将价值返还给人民</h1>
+        <div class="subhead">—— GL Framework 的"价值返还治理"模范案例 <span class="model-badge">★ 模范</span></div>
+
+        <p><strong>哥斯达黎加是证明规则的例外。</strong>在一个以战争、独裁和不平等著称的地区——中美洲——哥斯达黎加建立了一个<strong>稳定、和平且相对公平的社会</strong>。它在1948年废除了军队，<strong>将军事支出重新投资于教育和医疗</strong>，并数十年来一直保持着<strong>拉丁美洲最高的民主质量评分之一</strong>。</p>
+
+        <p>这并不是说哥斯达黎加完美无缺——它面临挑战：<strong>不平等加剧、财政赤字、旅游业和农业对环境造成的压力</strong>。但与这个系列中的其他国家相比，哥斯达黎加是一个<strong>系统性地将价值返还给人口、而非将成本转移给弱势群体的治理案例</strong>。</p>
+
+        <div class="evidence-note">
+            <strong>V-Dem（2025年）</strong>将哥斯达黎加列为<strong>中美洲民主评分最高的国家</strong>，在自由民主指数中<strong>全球排名前20</strong>。<strong>世界银行（2025年）</strong>报告称<strong>哥斯达黎加贫困率为18%</strong>——在该地区相对较低——其<strong>预期寿命（81岁）</strong>在全球南方中名列前茅。<strong>联合国开发计划署（2025年）</strong>将哥斯达黎加列为人类发展指数<strong>第62位</strong>——中美洲最高，与几个欧洲国家相当。<strong>自由之家（2025年）</strong>将哥斯达黎加列为<strong>"自由"</strong>——全球南方少数获此评级的国家之一。
+        </div>
+
+        <h2>一、GL诊断：八项参数下的哥斯达黎加</h2>
+
+        <h3>1. 等待成本 <span class="score-pill">7/10</span></h3>
+        <p>哥斯达黎加的等待成本<strong>相对较低</strong>。<strong>公共医疗（哥斯达黎加社会保障局——CCSS）</strong>是全民覆盖且可及的；患者等待<strong>数周而非数月</strong>即可获得专科门诊。<strong>政府服务</strong>——土地登记、营业执照和法庭案件——<strong>比地区平均水平更高效</strong>，尽管仍有延迟。国家已<strong>投资于数字化</strong>以减少等待时间，<strong>透明度倡议</strong>使公民更容易追踪申请进度。</p>
+
+        <h3>2. 重复成本 <span class="score-pill">6.5/10</span></h3>
+        <p>哥斯达黎加的官僚机构<strong>碎片化程度较低</strong>。国家已<strong>投资于整合数据库</strong>和<strong>一站式服务</strong>——公民可以在线完成许多程序，<strong>文件在各机构间共享</strong>。<strong>国民身份识别系统</strong>与健康、税务和社会保障记录关联，<strong>减少了重复提交的需求</strong>。尽管官僚障碍仍然存在——尤其是对原住民社区和移民而言——但<strong>系统的设计旨在最小化重复</strong>。</p>
+
+        <h3>3. 崩溃成本 <span class="score-pill">7/10</span></h3>
+        <p>哥斯达黎加的崩溃成本<strong>在全球南方中最低之一</strong>。<strong>基础设施</strong>——道路、电力和供水——<strong>可靠且维护良好</strong>。国家已<strong>投资于备灾</strong>——哥斯达黎加是该地区少数拥有<strong>有效地震和洪涝早期预警系统</strong>的国家之一。<strong>环境保护</strong>是国家优先事项：超过<strong>25%的国土被划为国家公园或保护区</strong>，<strong>可再生能源占发电量的98%以上</strong>。崩溃成本被<strong>最小化，因为国家积极预防崩溃</strong>，而非事后应对。</p>
+
+        <h3>4. 信息不对称成本 <span class="score-pill">7/10</span></h3>
+        <p>哥斯达黎加拥有<strong>新闻自由和强大的公民社会</strong>。<strong>政府预算透明</strong>——国家公布详细的支出报告，<strong>公民可以追踪公共资金</strong>。<strong>最高法院宪法庭（第四庭）</strong>是<strong>独立且可及的</strong>——公民可以挑战政府决策，法院在<strong>保护权利方面有良好记录</strong>。<strong>信息自由</strong>受法律保护且<strong>在实践中得到落实</strong>——记者无畏地调查腐败，国家<strong>不将信息武器化</strong>来对付公民。</p>
+
+        <h3>5. 心理成本 <span class="score-pill">7/10</span></h3>
+        <p>哥斯达黎加的心理成本<strong>相对较低</strong>。该国的<strong>政治稳定</strong>——无政变、无内战、无威权倒退——创造了<strong>对国家的安全感和信任</strong>。<strong>1948年废除军队</strong>不仅是象征性行动——它<strong>表明了对和平政治和社会投资的承诺</strong>。哥斯达黎加大学2025年的一项调查发现，<strong>超过60%的哥斯达黎加人信任国家</strong>——全球南方最高之一。心理成本低是因为<strong>公民不生活在恐惧中</strong>——他们期望国家服务他们，而非镇压他们。</p>
+
+        <h3>6. 机会成本 <span class="score-pill">6/10</span></h3>
+        <p>哥斯达黎加的机会成本是<strong>可控的</strong>。该国拥有<strong>受过良好教育的人口</strong>——识字率超过97%，<strong>国家将GDP的8%以上投资于教育</strong>。<strong>青年失业率约为15%</strong>——高于发达国家，但<strong>低于地区平均水平</strong>。<strong>人才流失</strong>存在——一些技术专业人士前往美国和欧洲——但<strong>国家保留了强大的专业人才核心</strong>。国家已<strong>投资于高等教育</strong>——哥斯达黎加大学是拉丁美洲最好的大学之一——<strong>科技正在发展</strong>。机会成本<strong>未被浪费</strong>——国家正在投资于人民。</p>
+
+        <h3>7. 转移路径：逆转 <span class="score-pill">8/10</span></h3>
+        <p>哥斯达黎加的转移路径是<strong>逆转的</strong>——系统<strong>将价值返还给人口</strong>，而非将成本转移给弱势群体。</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>机制</th><th>效果</th><th>结果</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>废除军队</td><td>军事预算重新投资于医疗和教育</td><td><span class="positive">全民医疗、高识字率</span></td></tr>
+                <tr><td>累进税制</td><td>对财富和收入征收更高税率</td><td><span class="positive">将收入再分配给穷人</span></td></tr>
+                <tr><td>社会保障（CCSS）</td><td>全民医疗和养老金覆盖</td><td><span class="positive">减少贫困和不平等</span></td></tr>
+                <tr><td>环境保护</td><td>25%国土受保护；生态旅游模式</td><td><span class="positive">可持续发展；清洁能源</span></td></tr>
+            </tbody>
+        </table>
+
+        <p><strong>转移路径明确设计为将价值返还给人口——而非提取并集中在精英手中。</strong>这是将哥斯达黎加与这个系列中的成本转移机器区分开来的决定性特征。</p>
+
+        <h3>8. 闭环程度 <span class="score-pill">7.5/10</span></h3>
+        <p>哥斯达黎加拥有<strong>运作良好的反馈回路</strong>。<strong>选举自由公正</strong>——该国拥有<strong>强大的多党制</strong>和<strong>高投票率</strong>。<strong>司法独立</strong>——宪法庭（第四庭）在<strong>保护权利</strong>和<strong>追究国家责任</strong>方面有良好记录。<strong>公民社会活跃</strong>——工会、非政府组织和社区组织<strong>监督国家并要求纠正</strong>。<strong>媒体自由</strong>——记者调查腐败并<strong>追究官员责任</strong>。回路<strong>开放且运作良好</strong>——当系统失败时，公民可以要求纠正，国家会回应。</p>
+
+        <h2>二、哥斯达黎加为何成功：模范案例</h2>
+
+        <p>哥斯达黎加的成功并非偶然。它是数十年<strong>深思熟虑的政策选择</strong>的结果：</p>
+
+        <ul>
+            <li><strong>废除军队（1948年）</strong>——将军事支出重新投资于医疗和教育的决定是对人力资本的<strong>代际投资</strong>。</li>
+            <li><strong>投资社会服务</strong>——国家<strong>始终优先考虑医疗、教育和社会保障</strong>而非精英消费。</li>
+            <li><strong>环境保护</strong>——国家<strong>保护自然资源</strong>并建立了<strong>可持续的生态旅游经济</strong>。</li>
+            <li><strong>强大的制度</strong>——司法、选举制度和公务员制度<strong>独立且有效</strong>。</li>
+            <li><strong>民主文化</strong>——哥斯达黎加人<strong>重视民主、信任国家并参与政治生活</strong>。</li>
+        </ul>
+
+        <div class="evidence-note">
+            <strong>联合国开发计划署（2025年）</strong>指出，<strong>哥斯达黎加的人类发展指数为0.810</strong>——中美洲最高，与几个欧洲国家相当。该国拥有<strong>美洲最高的预期寿命之一（81岁）</strong>和<strong>近乎全民的医疗覆盖</strong>。<strong>透明国际（2025年）</strong>将哥斯达黎加列为清廉指数<strong>第47位（共182个国家）</strong>——<strong>中美洲最高</strong>，全球南方中最清廉的国家之一。
+        </div>
+
+        <div class="conclusion-box">
+            <h2>结论：哥斯达黎加是全球南方模范——一个将价值返还给人民的系统</h2>
+
+            <p>哥斯达黎加的案例表明，<strong>价值返还型治理在全球南方是可能的</strong>。它不是奇迹——它是<strong>深思熟虑的政策选择、强大的制度和民主文化</strong>的结果。</p>
+
+            <p>八项参数展示了一个这样的系统：</p>
+            <ul>
+                <li><strong>返还价值</strong>——通过全民医疗、免费教育和累进税制。</li>
+                <li><strong>最小化成本</strong>——通过高效的官僚机构、可靠的基础设施和备灾。</li>
+                <li><strong>维持开放的反馈回路</strong>——通过自由选举、独立法院和活跃的公民社会。</li>
+                <li><strong>保护环境</strong>——并建立一个不会崩溃的可持续经济。</li>
+            </ul>
+
+            <p>哥斯达黎加并不完美——它面临挑战：<strong>不平等加剧、财政赤字、旅游业对环境的压力</strong>。但它是<strong>全球南方可能性的典范</strong>。它证明<strong>治理的正当性不是由地理或殖民遗产决定的——而是由政策选择决定的</strong>。</p>
+
+            <p><strong>治理的正当性是通过将价值返还给人民赢得的——哥斯达黎加正是这样做的。</strong></p>
+        </div>
+
+        <div class="footnote">—— GL Framework · 价值返还治理模范案例</div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const btns = document.querySelectorAll('.lang-btn');
+        const contents = { zh: document.getElementById('zh'), en: document.getElementById('en') };
+        function switchLang(lang) {
+            for (let key in contents) {
+                contents[key].classList.remove('active');
+            }
+            if (contents[lang]) contents[lang].classList.add('active');
+            btns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
+            if (history.pushState) history.pushState(null, '', '#' + lang);
+        }
+        btns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const lang = this.dataset.lang;
+                if (lang) switchLang(lang);
+            });
+        });
+        const hash = window.location.hash.replace('#', '');
+        if (hash === 'zh') {
+            switchLang('zh');
+        } else {
+            switchLang('en');
+        }
+        window.addEventListener('hashchange', function() {
+            const newHash = window.location.hash.replace('#', '');
+            if (newHash === 'zh' || newHash === 'en') {
+                switchLang(newHash);
+            } else {
+                switchLang('en');
+            }
+        });
+    })();
+</script>
+</body>
+</html>
