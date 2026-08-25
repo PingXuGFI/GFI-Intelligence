@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>价值流向修正 · 执行手册 · GL Framework</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0b1220;
+            --bg2: #0d1526;
+            --text: #f8fbff;
+            --muted: #c7d2e3;
+            --sub: #9fb0c8;
+            --dim: rgba(255,255,255,.06);
+            --green: #9FE870;
+            --blue: #7DD3FC;
+            --amber: #fbbf24;
+            --gold: #fcd34d;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --mono: 'DM Mono', monospace;
+            --sans: 'DM Sans', system-ui, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 15px;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--dim);
+            border-radius: 24px;
+            padding: 2.2rem 2.5rem;
+            backdrop-filter: blur(2px);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green);
+            text-decoration: none;
+            font-family: var(--mono);
+            font-size: 13px;
+            letter-spacing: 0.08em;
+            border: 1px solid rgba(159,232,112,0.3);
+            padding: 8px 18px;
+            border-radius: 40px;
+            transition: all 0.2s;
+            margin-bottom: 1.8rem;
+        }
+        .back-link:hover {
+            background: rgba(159,232,112,0.1);
+            border-color: var(--green);
+            transform: translateX(-4px);
+        }
+        .lang-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.6rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--dim);
+            padding-bottom: 0.8rem;
+        }
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-family: var(--mono);
+            font-weight: 500;
+            color: var(--sub);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
+        .lang-btn.active {
+            background: rgba(159,232,112,0.15);
+            border-color: var(--green);
+            color: var(--green);
+        }
+        .lang-content { display: none; animation: fade 0.3s ease; }
+        .lang-content.active { display: block; }
+        @keyframes fade { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+        h1 {
+            font-size: 2.2rem;
+            font-family: var(--serif);
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.3rem;
+            color: #fff;
+            border-left: 6px solid var(--gold);
+            padding-left: 1.2rem;
+        }
+        .subhead {
+            font-size: 1.05rem;
+            color: var(--sub);
+            margin-bottom: 2rem;
+            padding-left: 1.2rem;
+            border-left: 3px solid rgba(252,211,77,0.3);
+            font-style: italic;
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            font-family: var(--serif);
+            margin-top: 2.2rem;
+            margin-bottom: 0.6rem;
+            color: #eaf6ff;
+            border-bottom: 1px dashed rgba(255,255,255,0.08);
+            padding-bottom: 0.3rem;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1.4rem;
+            margin-bottom: 0.4rem;
+            color: var(--muted);
+        }
+        p { margin-bottom: 1rem; color: var(--muted); text-align: justify; }
+        ul, ol { margin: 0.5rem 0 1rem 1.8rem; list-style-type: disc; color: var(--muted); }
+        li { margin-bottom: 0.3rem; }
+
+        .evidence-note {
+            background: rgba(252,211,77,0.04);
+            padding: 0.8rem 1.2rem;
+            border-radius: 6px;
+            margin: 0.5rem 0 1rem 0;
+            font-size: 0.85rem;
+            color: var(--sub);
+            border-left: 3px solid var(--gold);
+        }
+        .evidence-note strong { color: var(--gold); }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0 1.5rem 0;
+            font-size: 0.8rem;
+            font-family: var(--mono);
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .data-table th {
+            background: rgba(252,211,77,0.08);
+            color: var(--gold);
+            padding: 0.5rem 0.8rem;
+            text-align: left;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            border-bottom: 1px solid var(--dim);
+            font-size: 0.6rem;
+            text-transform: uppercase;
+        }
+        .data-table td {
+            padding: 0.5rem 0.8rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            vertical-align: top;
+            color: var(--muted);
+            font-size: 0.75rem;
+        }
+        .data-table tr:last-child td { border-bottom: none; }
+
+        .conclusion-box {
+            background: rgba(252,211,77,0.04);
+            border-left: 4px solid var(--gold);
+            padding: 1.5rem 2rem;
+            margin-top: 2rem;
+            border-radius: 12px;
+        }
+        .conclusion-box h2 { border: none; margin-top:0; padding-top:0; }
+        .conclusion-box .big {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .footnote {
+            font-size: 0.75rem;
+            color: var(--sub);
+            text-align: right;
+            margin-top: 2rem;
+            border-top: 1px solid var(--dim);
+            padding-top: 1rem;
+            font-style: italic;
+        }
+
+        .three-pillars {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.8rem;
+            margin: 1rem 0 1.2rem;
+        }
+        .three-pillars .pillar {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(252,211,77,0.15);
+            border-radius: 10px;
+            padding: 1rem 1.2rem;
+        }
+        .three-pillars .pillar .step {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            color: var(--gold);
+            opacity: 0.6;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .three-pillars .pillar .title {
+            font-weight: 600;
+            color: var(--text);
+            font-size: 0.95rem;
+            margin-top: 0.1rem;
+        }
+        .three-pillars .pillar .desc {
+            font-size: 0.8rem;
+            color: var(--sub);
+            margin-top: 0.2rem;
+        }
+        .three-pillars .pillar .ops {
+            font-size: 0.75rem;
+            color: var(--muted);
+            margin-top: 0.4rem;
+            padding-top: 0.3rem;
+            border-top: 1px solid rgba(255,255,255,0.04);
+        }
+        @media (max-width: 700px) {
+            .container { padding: 1.2rem; }
+            h1 { font-size: 1.6rem; padding-left:0.8rem; }
+            h2 { font-size: 1.2rem; }
+            .lang-bar { justify-content: center; }
+            .three-pillars { grid-template-columns: 1fr; }
+            .data-table { font-size: 0.65rem; }
+            .data-table th, .data-table td { padding: 0.3rem 0.5rem; }
+            .conclusion-box { padding: 1rem 1.2rem; }
+            .conclusion-box .big { font-size: 1rem; }
+        }
+
+        .step-number {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            background: rgba(252,211,77,0.1);
+            color: var(--gold);
+            padding: 0.05rem 0.5rem;
+            border-radius: 12px;
+            margin-right: 0.4rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <a href="global-south-diagnosis.html" class="back-link">← 返回索引 / Back to Index</a>
+
+    <div class="lang-bar">
+        <button class="lang-btn" data-lang="zh">中文</button>
+        <button class="lang-btn active" data-lang="en">English</button>
+    </div>
+
+    <!-- ===== 中文 ===== -->
+    <div id="zh" class="lang-content">
+        <h1>价值流向修正 · 执行手册</h1>
+        <div class="subhead">GL Framework 操作系统 —— 不依赖任何体制，只需追问三个问题</div>
+
+        <div class="evidence-note">
+            <strong>核心原则：</strong>价值流向修正不是意识形态口号，而是一套可执行的技术架构。它不需要推翻体制——只需要追问三个问题：<br>
+            ① 价值从哪里来？（收入透明）<br>
+            ② 价值到哪里去？（支出可追踪）<br>
+            ③ 谁承担了成本？（成本归属分析）<br>
+            <strong>当这三个问题可以被任何人、在任何时候回答时——治理正当性就不再是口号，而是可验证的事实。</strong>
+        </div>
+
+        <h2>一、三大支柱</h2>
+
+        <div class="three-pillars">
+            <div class="pillar">
+                <div class="step">第一步</div>
+                <div class="title">价值追溯</div>
+                <div class="desc">让价值流向可追踪。所有公共收入与支出进入公开账本，绘制价值流向地图，标注每个节点的成本与价值损耗。</div>
+                <div class="ops"><span class="step-number">1</span> 公共价值账本（区块链）<br><span class="step-number">2</span> 价值流向地图<br><span class="step-number">3</span> 成本-收益追踪器</div>
+            </div>
+            <div class="pillar">
+                <div class="step">第二步</div>
+                <div class="title">成本核算</div>
+                <div class="desc">让隐性成本显性化。将GL Framework八项参数量化为可追踪指标，每季度发布治理成本报告，让人民看到成本流向。</div>
+                <div class="ops"><span class="step-number">4</span> 八项成本指数化<br><span class="step-number">5</span> 成本归属分析<br><span class="step-number">6</span> 预算听证会</div>
+            </div>
+            <div class="pillar">
+                <div class="step">第三步</div>
+                <div class="title">反馈闭环</div>
+                <div class="desc">让人民有“纠偏”的权力。通过数字公民平台、独立审计与绩效问责机制，让价值流向错误可以被发现、被纠正。</div>
+                <div class="ops"><span class="step-number">7</span> 数字公民平台<br><span class="step-number">8</span> 独立审计与问责<br><span class="step-number">9</span> 纠偏机制</div>
+            </div>
+        </div>
+
+        <h2>二、九步执行细节</h2>
+
+        <h3>第一步：价值追溯</h3>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>工具</th><th>执行方式</th><th>核心问题</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>1. 公共价值账本</strong></td>
+                    <td>所有政府收入（税收、资源收益、国际援助）全部进入公开账本。所有支出按项目公开明细。使用区块链技术确保账本数据无法篡改。</td>
+                    <td>“钱从哪里来？到哪里去？”</td>
+                </tr>
+                <tr>
+                    <td><strong>2. 价值流向地图</strong></td>
+                    <td>对每个公共项目，绘制“价值流向路径”：纳税人/资源 → 政府 → 项目执行方 → 受益人。标注每个节点的成本与价值损耗。</td>
+                    <td>“谁受益？谁承担？”</td>
+                </tr>
+                <tr>
+                    <td><strong>3. 成本-收益追踪器</strong></td>
+                    <td>每个公共项目必须回答三个问题：投入多少？谁受益？（具体到人群、地区）谁承担了成本？（环境破坏、社区搬迁、机会成本）</td>
+                    <td>“投入产出合理吗？”</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>第二步：成本核算</h3>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>工具</th><th>执行方式</th><th>核心问题</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>4. 八项成本指数化</strong></td>
+                    <td>将GL Framework的八项参数（等待成本、重复成本、崩溃成本等）量化为可追踪的指标。每个季度发布“治理成本报告”。</td>
+                    <td>“成本在上升还是下降？”</td>
+                </tr>
+                <tr>
+                    <td><strong>5. 成本归属分析</strong></td>
+                    <td>每个政策执行后，分析其成本最终由谁承担。如果成本持续流向特定弱势群体（农村、妇女、少数族裔），系统自动预警。</td>
+                    <td>“谁在为这个政策买单？”</td>
+                </tr>
+                <tr>
+                    <td><strong>6. 预算听证会</strong></td>
+                    <td>每年度预算草案必须经过“成本-价值听证会”，由公民代表、专家、独立审计师三方共同审查。</td>
+                    <td>“预算分配合理吗？”</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>第三步：反馈闭环</h3>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>工具</th><th>执行方式</th><th>核心问题</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>7. 数字公民平台</strong></td>
+                    <td>建立“价值追踪平台”（如“我的政府”App），公民可实时查询公共项目进度、成本明细、受益人群。每个项目下方设“成本投诉”按钮。</td>
+                    <td>“我能看到价值流向吗？”</td>
+                </tr>
+                <tr>
+                    <td><strong>8. 独立审计与问责</strong></td>
+                    <td>设立“成本转移审计委员会”（独立于行政体系），定期审查公共支出的价值流向。审查结果公开，若发现系统性成本转移，启动问责程序。</td>
+                    <td>“谁在监督价值流向？”</td>
+                </tr>
+                <tr>
+                    <td><strong>9. 纠偏机制</strong></td>
+                    <td>如果某个项目连续两年出现“价值流向错误”（成本集中在弱势群体，收益集中在精英），则项目必须被终止或重新设计。</td>
+                    <td>“价值流向错了怎么办？”</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>三、执行架构总览</h2>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>工具</th><th>执行方式</th><th>核心问题</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>价值账本</td><td>区块链公开账本</td><td>“钱从哪里来？到哪里去？”</td></tr>
+                <tr><td>价值流向地图</td><td>节点追踪</td><td>“谁受益？谁承担？”</td></tr>
+                <tr><td>成本指数</td><td>季度公开报告</td><td>“八项成本在上升还是下降？”</td></tr>
+                <tr><td>预算听证会</td><td>公民+专家+审计师三方审查</td><td>“成本归属合理吗？”</td></tr>
+                <tr><td>数字公民平台</td><td>App/网页实时追踪</td><td>“我能看到价值流向吗？”</td></tr>
+                <tr><td>纠偏机制</td><td>项目终止或重新设计</td><td>“价值流向错了怎么办？”</td></tr>
+            </tbody>
+        </table>
+
+        <div class="evidence-note">
+            <strong>关键说明：</strong>这套操作系统不依赖任何体制。民主国家可以用，威权国家可以用，君主制也可以用。它只需要三样东西：<strong>公共账本公开（透明） + 成本追踪工具（核算） + 纠偏机制（闭环）</strong>。这三样，任何体制都可以做到。
+        </div>
+
+        <h2>四、最终原则</h2>
+
+        <div class="conclusion-box">
+            <h2>价值流向修正，不是意识形态口号</h2>
+
+            <p class="big">它是一套可执行的技术架构。</p>
+
+            <p>它不需要推翻体制——只需要追问三个问题：</p>
+            <ul>
+                <li><strong>价值从哪里来？</strong> —— 收入透明</li>
+                <li><strong>价值到哪里去？</strong> —— 支出可追踪</li>
+                <li><strong>谁承担了成本？</strong> —— 成本归属分析</li>
+            </ul>
+
+            <p><strong>当这三个问题可以被任何人、在任何时候回答时——治理正当性就不再是口号，而是可验证的事实。</strong></p>
+
+            <p style="margin-top: 1.2rem; font-size: 0.9rem; color: var(--gold);">体制是工具，不是目的。价值返还是目的。</p>
+        </div>
+
+        <div class="footnote">— GL Framework · 价值流向修正执行手册</div>
+    </div>
+
+    <!-- ===== ENGLISH ===== -->
+    <div id="en" class="lang-content active">
+        <h1>Value Flow Correction · Execution Manual</h1>
+        <div class="subhead">GL Framework Operating System — No System Required, Just Three Questions</div>
+
+        <div class="evidence-note">
+            <strong>Core principle:</strong> Value flow correction is not an ideological slogan — it is an executable technical architecture. It does not require overthrowing any system — only asking three questions:<br>
+            ① Where does value come from? (Revenue transparency)<br>
+            ② Where does value go? (Expenditure traceability)<br>
+            ③ Who bears the costs? (Cost attribution analysis)<br>
+            <strong>When these three questions can be answered by anyone, at any time — governance legitimacy is no longer a slogan, but a verifiable fact.</strong>
+        </div>
+
+        <h2>I. Three Pillars</h2>
+
+        <div class="three-pillars">
+            <div class="pillar">
+                <div class="step">Pillar 1</div>
+                <div class="title">Value Tracing</div>
+                <div class="desc">Make value flow traceable. All public revenue and expenditure enter an open ledger. Map value flow paths and mark costs and value loss at each node.</div>
+                <div class="ops"><span class="step-number">1</span> Public Value Ledger (Blockchain)<br><span class="step-number">2</span> Value Flow Map<br><span class="step-number">3</span> Cost-Benefit Tracker</div>
+            </div>
+            <div class="pillar">
+                <div class="step">Pillar 2</div>
+                <div class="title">Cost Accounting</div>
+                <div class="desc">Make hidden costs visible. Quantify the GL Framework's eight parameters into traceable indicators. Publish quarterly governance cost reports.</div>
+                <div class="ops"><span class="step-number">4</span> Eight Cost Indices<br><span class="step-number">5</span> Cost Attribution Analysis<br><span class="step-number">6</span> Budget Hearings</div>
+            </div>
+            <div class="pillar">
+                <div class="step">Pillar 3</div>
+                <div class="title">Feedback Loop</div>
+                <div class="desc">Give citizens the power to "correct." Through digital citizen platforms, independent audits, and accountability mechanisms, value flow errors can be detected and corrected.</div>
+                <div class="ops"><span class="step-number">7</span> Digital Citizen Platform<br><span class="step-number">8</span> Independent Audit & Accountability<br><span class="step-number">9</span> Correction Mechanism</div>
+            </div>
+        </div>
+
+        <h2>II. Nine Execution Steps</h2>
+
+        <h3>Pillar 1: Value Tracing</h3>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>Tool</th><th>Execution</th><th>Core Question</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>1. Public Value Ledger</strong></td>
+                    <td>All government revenue (taxes, resource revenues, aid) enters an open ledger. All expenditures are itemised by project. Blockchain ensures data integrity.</td>
+                    <td>"Where does money come from? Where does it go?"</td>
+                </tr>
+                <tr>
+                    <td><strong>2. Value Flow Map</strong></td>
+                    <td>For each public project, map the value flow: taxpayers/resources → government → implementers → beneficiaries. Mark costs and value loss at each node.</td>
+                    <td>"Who benefits? Who bears the cost?"</td>
+                </tr>
+                <tr>
+                    <td><strong>3. Cost-Benefit Tracker</strong></td>
+                    <td>Every public project must answer three questions: How much was invested? Who benefits? Who bears the costs (environmental damage, relocation, opportunity costs)?</td>
+                    <td>"Is the investment justified?"</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Pillar 2: Cost Accounting</h3>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>Tool</th><th>Execution</th><th>Core Question</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>4. Eight Cost Indices</strong></td>
+                    <td>Quantify the GL Framework's eight parameters (waiting cost, repetition cost, collapse cost, etc.) into traceable indicators. Publish quarterly governance cost reports.</td>
+                    <td>"Are costs rising or falling?"</td>
+                </tr>
+                <tr>
+                    <td><strong>5. Cost Attribution Analysis</strong></td>
+                    <td>After each policy is implemented, analyse who ultimately bears the cost. If costs consistently flow to specific vulnerable groups (rural, women, minorities), the system automatically alerts.</td>
+                    <td>"Who is paying for this policy?"</td>
+                </tr>
+                <tr>
+                    <td><strong>6. Budget Hearings</strong></td>
+                    <td>Annual budget proposals must undergo a "Cost-Value Hearing," reviewed by citizen representatives, experts, and independent auditors.</td>
+                    <td>"Is the budget allocation reasonable?"</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Pillar 3: Feedback Loop</h3>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>Tool</th><th>Execution</th><th>Core Question</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>7. Digital Citizen Platform</strong></td>
+                    <td>Build a "Value Tracking Platform" (similar to a government App) where citizens can track project progress, cost details, and beneficiaries in real-time. Each project has a "cost complaint" button.</td>
+                    <td>"Can I see the value flow?"</td>
+                </tr>
+                <tr>
+                    <td><strong>8. Independent Audit & Accountability</strong></td>
+                    <td>Establish a "Cost Transfer Audit Commission" independent of the executive branch to review value flows. Findings are public. If systemic cost transfer is found, accountability procedures are triggered.</td>
+                    <td>"Who monitors value flow?"</td>
+                </tr>
+                <tr>
+                    <td><strong>9. Correction Mechanism</strong></td>
+                    <td>If a project shows "value flow error" (costs concentrated on vulnerable groups, benefits concentrated on elites) for two consecutive years, the project must be terminated or redesigned.</td>
+                    <td>"What happens when value flow is wrong?"</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>III. Execution Architecture Summary</h2>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>Tool</th><th>Execution</th><th>Core Question</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Value Ledger</td><td>Blockchain open ledger</td><td>"Where does money come from? Where does it go?"</td></tr>
+                <tr><td>Value Flow Map</td><td>Node tracking</td><td>"Who benefits? Who bears the cost?"</td></tr>
+                <tr><td>Cost Indices</td><td>Quarterly public reports</td><td>"Are the eight costs rising or falling?"</td></tr>
+                <tr><td>Budget Hearings</td><td>Citizen + Expert + Auditor review</td><td>"Is cost attribution reasonable?"</td></tr>
+                <tr><td>Digital Citizen Platform</td><td>App/Website real-time tracking</td><td>"Can I see the value flow?"</td></tr>
+                <tr><td>Correction Mechanism</td><td>Project termination or redesign</td><td>"What happens when value flow is wrong?"</td></tr>
+            </tbody>
+        </table>
+
+        <div class="evidence-note">
+            <strong>Key note:</strong> This operating system does not depend on any system. Democracies can use it. Authoritarian systems can use it. Monarchies can use it. It only requires three things: <strong>Open public ledgers (transparency) + Cost tracking tools (accounting) + Correction mechanisms (feedback)</strong>. These three can be implemented in any system.
+        </div>
+
+        <h2>IV. Final Principle</h2>
+
+        <div class="conclusion-box">
+            <h2>Value Flow Correction Is Not an Ideological Slogan</h2>
+
+            <p class="big">It is an executable technical architecture.</p>
+
+            <p>It does not require overthrowing any system — only asking three questions:</p>
+            <ul>
+                <li><strong>Where does value come from?</strong> — Revenue transparency</li>
+                <li><strong>Where does value go?</strong> — Expenditure traceability</li>
+                <li><strong>Who bears the costs?</strong> — Cost attribution analysis</li>
+            </ul>
+
+            <p><strong>When these three questions can be answered by anyone, at any time — governance legitimacy is no longer a slogan, but a verifiable fact.</strong></p>
+
+            <p style="margin-top: 1.2rem; font-size: 0.9rem; color: var(--gold);">The system is a tool, not the goal. Value return is the goal.</p>
+        </div>
+
+        <div class="footnote">— GL Framework · Value Flow Correction Execution Manual</div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const btns = document.querySelectorAll('.lang-btn');
+        const contents = { zh: document.getElementById('zh'), en: document.getElementById('en') };
+        function switchLang(lang) {
+            for (let key in contents) {
+                contents[key].classList.remove('active');
+            }
+            if (contents[lang]) contents[lang].classList.add('active');
+            btns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
+            if (history.pushState) history.pushState(null, '', '#' + lang);
+        }
+        btns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const lang = this.dataset.lang;
+                if (lang) switchLang(lang);
+            });
+        });
+        const hash = window.location.hash.replace('#', '');
+        if (hash === 'zh') {
+            switchLang('zh');
+        } else {
+            switchLang('en');
+        }
+        window.addEventListener('hashchange', function() {
+            const newHash = window.location.hash.replace('#', '');
+            if (newHash === 'zh' || newHash === 'en') {
+                switchLang(newHash);
+            } else {
+                switchLang('en');
+            }
+        });
+    })();
+</script>
+</body>
+</html>
