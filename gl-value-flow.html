@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>价值流向 · GL Framework 最终结论</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0b1220;
+            --bg2: #0d1526;
+            --text: #f8fbff;
+            --muted: #c7d2e3;
+            --sub: #9fb0c8;
+            --dim: rgba(255,255,255,.06);
+            --green: #9FE870;
+            --blue: #7DD3FC;
+            --amber: #fbbf24;
+            --gold: #fcd34d;
+            --serif: 'DM Serif Display', Georgia, serif;
+            --mono: 'DM Mono', monospace;
+            --sans: 'DM Sans', system-ui, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 15px;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--dim);
+            border-radius: 24px;
+            padding: 2.5rem 3rem;
+            backdrop-filter: blur(2px);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green);
+            text-decoration: none;
+            font-family: var(--mono);
+            font-size: 13px;
+            letter-spacing: 0.08em;
+            border: 1px solid rgba(159,232,112,0.3);
+            padding: 8px 18px;
+            border-radius: 40px;
+            transition: all 0.2s;
+            margin-bottom: 2rem;
+        }
+        .back-link:hover {
+            background: rgba(159,232,112,0.1);
+            border-color: var(--green);
+            transform: translateX(-4px);
+        }
+        .lang-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.6rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--dim);
+            padding-bottom: 0.8rem;
+        }
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-family: var(--mono);
+            font-weight: 500;
+            color: var(--sub);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
+        .lang-btn.active {
+            background: rgba(159,232,112,0.15);
+            border-color: var(--green);
+            color: var(--green);
+        }
+        .lang-content { display: none; animation: fade 0.3s ease; }
+        .lang-content.active { display: block; }
+        @keyframes fade { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+        h1 {
+            font-size: 2.4rem;
+            font-family: var(--serif);
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            border-left: 6px solid var(--gold);
+            padding-left: 1.2rem;
+        }
+        .subhead {
+            font-size: 1.05rem;
+            color: var(--sub);
+            margin-bottom: 2rem;
+            padding-left: 1.2rem;
+            border-left: 3px solid rgba(252,211,77,0.3);
+            font-style: italic;
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            font-family: var(--serif);
+            margin-top: 2.2rem;
+            margin-bottom: 0.6rem;
+            color: #eaf6ff;
+            border-bottom: 1px dashed rgba(255,255,255,0.08);
+            padding-bottom: 0.3rem;
+        }
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1.4rem;
+            margin-bottom: 0.4rem;
+            color: var(--muted);
+        }
+        p { margin-bottom: 1rem; color: var(--muted); text-align: justify; }
+        ul, ol { margin: 0.5rem 0 1rem 1.8rem; list-style-type: disc; color: var(--muted); }
+        li { margin-bottom: 0.3rem; }
+
+        .evidence-note {
+            background: rgba(252,211,77,0.04);
+            padding: 0.8rem 1.2rem;
+            border-radius: 6px;
+            margin: 0.5rem 0 1rem 0;
+            font-size: 0.85rem;
+            color: var(--sub);
+            border-left: 3px solid var(--gold);
+        }
+        .evidence-note strong { color: var(--gold); }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0 1.5rem 0;
+            font-size: 0.8rem;
+            font-family: var(--mono);
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .data-table th {
+            background: rgba(252,211,77,0.08);
+            color: var(--gold);
+            padding: 0.5rem 0.8rem;
+            text-align: left;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            border-bottom: 1px solid var(--dim);
+            font-size: 0.6rem;
+            text-transform: uppercase;
+        }
+        .data-table td {
+            padding: 0.5rem 0.8rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            vertical-align: top;
+            color: var(--muted);
+            font-size: 0.75rem;
+        }
+        .data-table tr:last-child td { border-bottom: none; }
+        .data-table .positive { color: var(--green); }
+        .data-table .negative { color: #f87171; }
+
+        .conclusion-box {
+            background: rgba(252,211,77,0.04);
+            border-left: 4px solid var(--gold);
+            padding: 1.5rem 2rem;
+            margin-top: 2rem;
+            border-radius: 12px;
+        }
+        .conclusion-box h2 { border: none; margin-top:0; padding-top:0; }
+        .conclusion-box .big {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--gold);
+            text-align: center;
+        }
+
+        .footnote {
+            font-size: 0.75rem;
+            color: var(--sub);
+            text-align: right;
+            margin-top: 2rem;
+            border-top: 1px solid var(--dim);
+            padding-top: 1rem;
+            font-style: italic;
+        }
+
+        .three-tools {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.8rem;
+            margin: 1rem 0 1.2rem;
+        }
+        .three-tools .tool {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--dim);
+            border-radius: 10px;
+            padding: 1rem 1.2rem;
+        }
+        .three-tools .tool .num {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            color: var(--gold);
+            opacity: 0.6;
+        }
+        .three-tools .tool .title {
+            font-weight: 600;
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+        .three-tools .tool .desc {
+            font-size: 0.8rem;
+            color: var(--sub);
+            margin-top: 0.2rem;
+        }
+        @media (max-width: 700px) {
+            .container { padding: 1.2rem; }
+            h1 { font-size: 1.6rem; padding-left:0.8rem; }
+            h2 { font-size: 1.2rem; }
+            .lang-bar { justify-content: center; }
+            .three-tools { grid-template-columns: 1fr; }
+            .data-table { font-size: 0.6rem; }
+            .data-table th, .data-table td { padding: 0.3rem 0.5rem; }
+            .conclusion-box { padding: 1rem 1.2rem; }
+            .conclusion-box .big { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <a href="global-south-diagnosis.html" class="back-link">← 返回索引 / Back to Index</a>
+
+    <div class="lang-bar">
+        <button class="lang-btn" data-lang="zh">中文</button>
+        <button class="lang-btn active" data-lang="en">English</button>
+    </div>
+
+    <!-- ===== 中文 ===== -->
+    <div id="zh" class="lang-content">
+        <h1>价值流向</h1>
+        <div class="subhead">GL Framework 最终结论 —— 不论什么体制，只要修正价值流向即可</div>
+
+        <div class="evidence-note">
+            <strong>核心命题：</strong>治理正当性的唯一标准，是系统是否将价值返还给人民，还是将成本转移给弱势群体。它不问你是民主还是威权、选举还是任命、多党还是一党、西方还是东方。它只问：<strong>价值流向哪里？成本由谁承担？</strong>
+        </div>
+
+        <h2>一、体制只是容器，价值流向才是内容</h2>
+
+        <p>同样的容器，可以装不同的内容。体制不决定结果。价值流向决定结果。</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>体制类型</th><th>代表国家</th><th>容器</th><th>内容（价值流向）</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>民主</td>
+                    <td>美国</td>
+                    <td>选举、宪法、法治</td>
+                    <td class="negative">成本转移给穷人、全球南方</td>
+                </tr>
+                <tr>
+                    <td>民主</td>
+                    <td>芬兰、哥斯达黎加</td>
+                    <td>选举、宪法、法治</td>
+                    <td class="positive">价值返还给人民</td>
+                </tr>
+                <tr>
+                    <td>威权</td>
+                    <td>中国</td>
+                    <td>一党、集中决策</td>
+                    <td class="positive">价值返还给人民（减贫、基建、医疗）</td>
+                </tr>
+                <tr>
+                    <td>威权</td>
+                    <td>阿富汗（塔利班）</td>
+                    <td>神权、独裁</td>
+                    <td class="negative">成本转移给妇女、少数族裔</td>
+                </tr>
+                <tr>
+                    <td>君主制</td>
+                    <td>博茨瓦纳</td>
+                    <td>传统君主制+民主</td>
+                    <td class="positive">价值返还给人民（钻石财富审慎管理）</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>体制是工具，不是目的。价值返还是目的。</strong></p>
+
+        <h2>二、修正价值流向，就是修正一切</h2>
+
+        <p>所有治理问题的根源，都可以追溯到同一个源头：<strong>价值流向错了。</strong></p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>问题</th><th>根源</th><th>修正方向</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>贫困</td><td>价值流向精英，不流向人民</td><td>让价值流向底层</td></tr>
+                <tr><td>腐败</td><td>价值流向官员，不流向公共</td><td>让价值流向公共</td></tr>
+                <tr><td>不平等</td><td>价值流向少数，不流向多数</td><td>让价值流向多数</td></tr>
+                <tr><td>公共服务崩溃</td><td>价值流向私囊，不流向基础设施</td><td>让价值流向基础设施</td></tr>
+                <tr><td>人民不信任政府</td><td>价值不返还，成本在转移</td><td>停止转移，开始返还</td></tr>
+            </tbody>
+        </table>
+
+        <div class="evidence-note">
+            <strong>GL Framework 诊断：</strong>所有治理问题的共同病因，是“价值流向错误”。修正价值流向，就是修正一切。不需要推翻体制，只需要改变流向。
+        </div>
+
+        <h2>三、修正价值流向的三个工具</h2>
+
+        <div class="three-tools">
+            <div class="tool">
+                <div class="num">工具一</div>
+                <div class="title">透明化</div>
+                <div class="desc">让价值流向可追踪。预算公开、采购透明、决策可追溯。目标：让所有人看到价值去了哪里。</div>
+            </div>
+            <div class="tool">
+                <div class="num">工具二</div>
+                <div class="title">闭环化</div>
+                <div class="desc">让反馈可以纠正流向。人民可以投诉，投诉可以被处理，处理可以改善政策。目标：让价值流向可以被纠正。</div>
+            </div>
+            <div class="tool">
+                <div class="num">工具三</div>
+                <div class="title">本地化</div>
+                <div class="desc">让价值留在本地。资源收益留在本地，税收用于本地服务，决策权下放本地。目标：让价值不被提取到远处。</div>
+            </div>
+        </div>
+
+        <p><strong>这三个工具，不依赖任何体制。任何体制都可以使用它们。</strong></p>
+
+        <p>民主国家可以用，威权国家也可以用。资本主义可以用，社会主义也可以用。它们不要求改变体制——只要求改变流向。</p>
+
+        <h2>四、最终结论</h2>
+
+        <div class="conclusion-box">
+            <h2>不论什么体制，只要修正价值流向即可</h2>
+
+            <p class="big">体制不重要。价值流向才重要。</p>
+
+            <p>民主可以转移成本（美国、菲律宾、印度）。</p>
+            <p>威权可以返还价值（中国）。</p>
+            <p>民主也可以返还价值（北欧、哥斯达黎加、乌拉圭）。</p>
+            <p>威权也可以转移成本（阿富汗、伊拉克）。</p>
+
+            <p><strong>体制不是决定因素。价值流向是。</strong></p>
+
+            <p>所以，不论什么体制，只要修正价值流向——让价值从少数人流向多数人，从精英流向人民，从中心流向边缘——系统就会趋于正当。</p>
+
+            <p>这等于说：<strong>GL Framework 不输出体制。它只输出标准。</strong></p>
+
+            <p>任何体制，只要符合“价值返还 vs 成本转移”的标准，就是正当的。</p>
+            <p>任何体制，只要不符合这个标准，就是不正当的。</p>
+
+            <p><strong>体制是工具，不是目的。价值返还是目的。</strong></p>
+        </div>
+
+        <div class="footnote">— GL Framework · 最终结论</div>
+    </div>
+
+    <!-- ===== ENGLISH ===== -->
+    <div id="en" class="lang-content active">
+        <h1>Value Flow</h1>
+        <div class="subhead">GL Framework Final Conclusion — No Matter the System, Just Correct the Value Flow</div>
+
+        <div class="evidence-note">
+            <strong>Core proposition:</strong> The only measure of governance legitimacy is whether the system returns value to the people or transfers costs to the vulnerable. It does not ask whether you are democratic or authoritarian, elected or appointed, multi‑party or one‑party, Western or Eastern. It only asks: <strong>Where does value flow? Who bears the costs?</strong>
+        </div>
+
+        <h2>I. System Is Only the Container — Value Flow Is the Content</h2>
+
+        <p>The same container can hold different contents. The system does not determine the outcome. Value flow determines the outcome.</p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>System Type</th><th>Representative</th><th>Container</th><th>Content (Value Flow)</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Democracy</td>
+                    <td>United States</td>
+                    <td>Elections, Constitution, Rule of Law</td>
+                    <td class="negative">Cost transfer to the poor and Global South</td>
+                </tr>
+                <tr>
+                    <td>Democracy</td>
+                    <td>Finland, Costa Rica</td>
+                    <td>Elections, Constitution, Rule of Law</td>
+                    <td class="positive">Value return to the people</td>
+                </tr>
+                <tr>
+                    <td>Authoritarian</td>
+                    <td>China</td>
+                    <td>One‑party, centralised decision‑making</td>
+                    <td class="positive">Value return to the people (poverty reduction, infrastructure, healthcare)</td>
+                </tr>
+                <tr>
+                    <td>Authoritarian</td>
+                    <td>Afghanistan (Taliban)</td>
+                    <td>Theocracy, dictatorship</td>
+                    <td class="negative">Cost transfer to women and minorities</td>
+                </tr>
+                <tr>
+                    <td>Monarchy</td>
+                    <td>Botswana</td>
+                    <td>Traditional monarchy + democracy</td>
+                    <td class="positive">Value return to the people (prudent diamond management)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>The system is a tool, not the goal. Value return is the goal.</strong></p>
+
+        <h2>II. Correcting Value Flow Corrects Everything</h2>
+
+        <p>All governance problems trace back to the same source: <strong>value flow is wrong.</strong></p>
+
+        <table class="data-table">
+            <thead>
+                <tr><th>Problem</th><th>Root Cause</th><th>Correction Direction</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Poverty</td><td>Value flows to elites, not to the people</td><td>Let value flow to the bottom</td></tr>
+                <tr><td>Corruption</td><td>Value flows to officials, not to the public</td><td>Let value flow to the public</td></tr>
+                <tr><td>Inequality</td><td>Value flows to the few, not the many</td><td>Let value flow to the many</td></tr>
+                <tr><td>Public service collapse</td><td>Value flows to private pockets, not infrastructure</td><td>Let value flow to infrastructure</td></tr>
+                <tr><td>Public distrust in government</td><td>Value is not returned, costs are transferred</td><td>Stop transferring, start returning</td></tr>
+            </tbody>
+        </table>
+
+        <div class="evidence-note">
+            <strong>GL Framework diagnosis:</strong> The common cause of all governance problems is "wrong value flow." Correcting value flow corrects everything. There is no need to overthrow the system — only to change the flow.
+        </div>
+
+        <h2>III. Three Tools for Correcting Value Flow</h2>
+
+        <div class="three-tools">
+            <div class="tool">
+                <div class="num">Tool 1</div>
+                <div class="title">Transparency</div>
+                <div class="desc">Make value flow traceable. Open budgets, transparent procurement, traceable decisions. Goal: let everyone see where value is going.</div>
+            </div>
+            <div class="tool">
+                <div class="num">Tool 2</div>
+                <div class="title">Closed‑Loop Feedback</div>
+                <div class="desc">Let feedback correct the flow. Citizens can complain, complaints are processed, processing improves policy. Goal: let value flow be corrected.</div>
+            </div>
+            <div class="tool">
+                <div class="num">Tool 3</div>
+                <div class="title">Localisation</div>
+                <div class="desc">Keep value local. Resource revenues stay local, taxes fund local services, decision‑making is devolved. Goal: prevent value from being extracted elsewhere.</div>
+            </div>
+        </div>
+
+        <p><strong>These three tools do not depend on any system. Any system can use them.</strong></p>
+
+        <p>Democracies can use them. Authoritarian systems can use them. Capitalist systems can use them. Socialist systems can use them. They do not require changing the system — only changing the flow.</p>
+
+        <h2>IV. Final Conclusion</h2>
+
+        <div class="conclusion-box">
+            <h2>No Matter the System — Just Correct the Value Flow</h2>
+
+            <p class="big">The system does not matter. Value flow matters.</p>
+
+            <p>Democracy can transfer costs (United States, Philippines, India).</p>
+            <p>Authoritarianism can return value (China).</p>
+            <p>Democracy can also return value (Nordics, Costa Rica, Uruguay).</p>
+            <p>Authoritarianism can also transfer costs (Afghanistan, Iraq).</p>
+
+            <p><strong>The system is not the determining factor. Value flow is.</strong></p>
+
+            <p>Therefore, no matter the system — just correct the value flow. Let value flow from the few to the many, from elites to the people, from the centre to the periphery — and the system becomes legitimate.</p>
+
+            <p>This means: <strong>GL Framework does not export a system. It only exports a standard.</strong></p>
+
+            <p>Any system that meets the standard of "value return vs cost transfer" is legitimate.</p>
+            <p>Any system that does not meet this standard is illegitimate.</p>
+
+            <p><strong>The system is a tool, not the goal. Value return is the goal.</strong></p>
+        </div>
+
+        <div class="footnote">— GL Framework · Final Conclusion</div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const btns = document.querySelectorAll('.lang-btn');
+        const contents = { zh: document.getElementById('zh'), en: document.getElementById('en') };
+        function switchLang(lang) {
+            for (let key in contents) {
+                contents[key].classList.remove('active');
+            }
+            if (contents[lang]) contents[lang].classList.add('active');
+            btns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
+            if (history.pushState) history.pushState(null, '', '#' + lang);
+        }
+        btns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const lang = this.dataset.lang;
+                if (lang) switchLang(lang);
+            });
+        });
+        const hash = window.location.hash.replace('#', '');
+        if (hash === 'zh') {
+            switchLang('zh');
+        } else {
+            switchLang('en');
+        }
+        window.addEventListener('hashchange', function() {
+            const newHash = window.location.hash.replace('#', '');
+            if (newHash === 'zh' || newHash === 'en') {
+                switchLang(newHash);
+            } else {
+                switchLang('en');
+            }
+        });
+    })();
+</script>
+</body>
+</html>
