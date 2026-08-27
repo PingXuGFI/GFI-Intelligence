@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>脱出新自由主义惯性 · GL框架治理改革方案</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #0b1220;
+            color: #f8fbff;
+            font-family: 'DM Sans', system-ui, sans-serif;
+            font-size: 16px;
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255,255,255,.03);
+            border-radius: 28px;
+            padding: 2.5rem 2.2rem;
+            border: 1px solid rgba(255,255,255,.06);
+        }
+
+        .top-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.8rem;
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+        .home-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,.1);
+            color: rgba(255,255,255,.3);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all .2s;
+            flex-shrink: 0;
+        }
+        .home-link:hover {
+            color: #9FE870;
+            border-color: rgba(159,232,112,.3);
+            background: rgba(159,232,112,.05);
+        }
+        .lang-tools {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .lang-buttons {
+            display: flex;
+            gap: 4px;
+            background: rgba(255,255,255,.04);
+            padding: 4px;
+            border-radius: 40px;
+        }
+        .lang-btn {
+            border: none;
+            background: transparent;
+            padding: 0.25rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            font-family: 'DM Mono', monospace;
+            color: #9fb0c8;
+            cursor: pointer;
+            transition: all .2s;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+        }
+        .lang-btn:hover {
+            color: #f8fbff;
+            background: rgba(255,255,255,.06);
+        }
+        .lang-btn.active {
+            background: #9FE870;
+            color: #0b1220;
+        }
+        .pdf-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            border: 1px solid rgba(159,232,112,.4);
+            background: rgba(159,232,112,.08);
+            color: #9FE870;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all .22s;
+            text-decoration: none;
+        }
+        .pdf-btn:hover {
+            background: rgba(159,232,112,.18);
+            border-color: #9FE870;
+            transform: translateY(-2px);
+        }
+
+        .title-section {
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+        .title-section .gl-title {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.5rem;
+            color: #9FE870;
+            letter-spacing: -.02em;
+            transition: opacity .2s;
+            font-weight: 500;
+            line-height: 1.2;
+        }
+        .title-section .gl-sub {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            color: rgba(255,255,255,.15);
+            letter-spacing: .06em;
+            margin-top: 0.1rem;
+        }
+
+        .page-home-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 1.2rem;
+            color: rgba(255,255,255,.2);
+            text-decoration: none;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: .06em;
+            transition: all .2s;
+            border: 1px solid rgba(255,255,255,.05);
+            padding: 0.2rem 0.8rem;
+            border-radius: 40px;
+            background: rgba(255,255,255,.02);
+        }
+        .page-home-link:hover {
+            color: #9FE870;
+            border-color: rgba(159,232,112,.3);
+            background: rgba(159,232,112,.05);
+            transform: translateX(-3px);
+        }
+        .page-home-link .arrow {
+            display: inline-block;
+            transition: transform .2s;
+        }
+        .page-home-link:hover .arrow {
+            transform: translateX(-4px);
+        }
+
+        .lang-content {
+            display: none;
+            animation: fadeIn .3s ease;
+        }
+        .lang-content.active {
+            display: block;
+        }
+
+        /* 核心引言区 */
+        .core-insight {
+            background: rgba(251,191,36,.06);
+            border-left: 6px solid #fbbf24;
+            padding: 1.2rem 1.8rem;
+            border-radius: 12px;
+            margin: 1rem 0 2rem 0;
+        }
+        .core-insight p {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.25rem;
+            color: #fde68a;
+            font-weight: 400;
+            font-style: italic;
+            margin: 0;
+            letter-spacing: .02em;
+        }
+        .core-insight .attribution {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.6rem;
+            color: rgba(255,255,255,.2);
+            margin-top: 0.2rem;
+            text-align: right;
+            font-style: normal;
+            letter-spacing: .04em;
+        }
+
+        /* ===== 中国例外区块 ===== */
+        .china-exception {
+            background: rgba(159,232,112,.04);
+            border: 1px solid rgba(159,232,112,.15);
+            border-radius: 12px;
+            padding: 1.4rem 1.8rem;
+            margin: 1.5rem 0 2rem 0;
+        }
+        .china-exception .ce-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.55rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: rgba(159,232,112,.5);
+            margin-bottom: 0.3rem;
+        }
+        .china-exception .ce-text {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.1rem;
+            color: #e0f0d0;
+            line-height: 1.6;
+        }
+        .china-exception .ce-text strong {
+            color: #9FE870;
+        }
+        .china-exception .ce-text .hl {
+            color: #7DD3FC;
+        }
+
+        /* 内容样式 */
+        .lang-content h2 {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.5rem;
+            color: #f8fbff;
+            margin: 2rem 0 0.8rem 0;
+            padding-bottom: 0.3rem;
+            border-bottom: 2px solid rgba(255,255,255,.06);
+        }
+        .lang-content h3 {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.15rem;
+            color: #7DD3FC;
+            margin: 1.6rem 0 0.5rem 0;
+        }
+        .lang-content p {
+            margin-bottom: 0.9rem;
+            color: #c7d2e3;
+        }
+        .lang-content ul, .lang-content ol {
+            margin: 0.6rem 0 1.2rem 1.8rem;
+            color: #c7d2e3;
+        }
+        .lang-content li {
+            margin-bottom: 0.4rem;
+        }
+        .lang-content .highlight-box {
+            background: rgba(159,232,112,.06);
+            border-left: 4px solid #9FE870;
+            padding: 1.2rem 1.6rem;
+            border-radius: 12px;
+            margin: 1.8rem 0;
+        }
+        .lang-content .highlight-box strong {
+            color: #9FE870;
+        }
+        .lang-content table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            margin: 1.2rem 0;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .lang-content th {
+            background: rgba(255,255,255,.05);
+            color: #9fb0c8;
+            font-weight: 600;
+            padding: 0.6rem 0.8rem;
+            text-align: left;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+            border-bottom: 1px solid rgba(255,255,255,.08);
+        }
+        .lang-content td {
+            padding: 0.6rem 0.8rem;
+            border-bottom: 1px solid rgba(255,255,255,.04);
+            color: #c7d2e3;
+        }
+        .lang-content .footnote {
+            margin-top: 2.5rem;
+            font-size: 0.75rem;
+            color: rgba(255,255,255,.25);
+            border-top: 1px solid rgba(255,255,255,.06);
+            padding-top: 1.2rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 打印样式 */
+        @media print {
+            body { background: #fff; color: #000; padding: 0.5in; }
+            .container { background: #fff; border: none; padding: 0; }
+            .top-bar { border-bottom: 1px solid #ccc; }
+            .home-link { display: none; }
+            .page-home-link { display: none !important; }
+            .lang-buttons, .pdf-btn { display: none; }
+            .title-section .gl-title { color: #0b1220; }
+            .title-section .gl-sub { color: #999; }
+            .lang-content { display: block !important; }
+            .lang-content p, .lang-content li, .lang-content td { color: #000; }
+            .lang-content h2 { color: #0b1220; border-bottom-color: #ccc; }
+            .lang-content h3 { color: #0b1220; }
+            .lang-content .highlight-box { background: #f0f0f0; border-left-color: #0b1220; }
+            .lang-content .core-insight { background: #f5f0e6; border-left-color: #b8860b; }
+            .lang-content .core-insight p { color: #7a5d0a; }
+            .lang-content .china-exception { background: #e8f0e0; border-color: #2d5a1a; }
+            .lang-content .china-exception .ce-text { color: #1a3a0a; }
+            .lang-content .china-exception .ce-text strong { color: #2d5a1a; }
+            .lang-content .china-exception .ce-text .hl { color: #1a4a7a; }
+            .lang-content th { background: #eee; color: #000; }
+            .lang-content td { border-bottom-color: #ddd; }
+            .lang-content .footnote { color: #666; border-top-color: #ccc; }
+        }
+
+        @media (max-width: 600px) {
+            .top-bar { flex-direction: column; align-items: stretch; gap: 0.6rem; }
+            .lang-tools { justify-content: flex-start; flex-wrap: wrap; }
+            .lang-btn { font-size: 0.6rem; padding: 0.2rem 0.6rem; }
+            .pdf-btn { font-size: 0.6rem; padding: 0.25rem 0.7rem; }
+            .title-section .gl-title { font-size: 1.2rem; }
+            .core-insight p { font-size: 1rem; }
+            .page-home-link { font-size: 0.6rem; padding: 0.2rem 0.7rem; }
+            .china-exception .ce-text { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- ===== 顶部栏 ===== -->
+    <div class="top-bar">
+        <a href="/" class="home-link" title="返回首页">⌂</a>
+        <div class="lang-tools">
+            <div class="lang-buttons">
+                <button class="lang-btn active" data-lang="zh-CN">简体</button>
+                <button class="lang-btn" data-lang="zh-TW">繁體</button>
+                <button class="lang-btn" data-lang="en">English</button>
+                <button class="lang-btn" data-lang="es">Español</button>
+            </div>
+            <button class="pdf-btn" id="downloadPdf">📄 下载 PDF</button>
+        </div>
+    </div>
+
+    <!-- ===== 标题区 ===== -->
+    <div class="title-section">
+        <div class="gl-title" id="glTitle">GL Framework · 治理改革方案</div>
+        <div class="gl-sub" id="glSub">Governance Legitimacy Framework · 治理正当性框架</div>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- ================= 简体中文版 ============================= -->
+    <!-- ========================================================= -->
+    <div class="lang-content active" id="zh-CN">
+        <a href="/" class="page-home-link"><span class="arrow">←</span> 返回首页</a>
+
+        <h1 style="font-family:'DM Serif Display',Georgia,serif;font-size:2rem;color:#f8fbff;margin-bottom:0.2rem;">脱出新自由主义惯性</h1>
+        <p style="font-size:1.1rem;color:#9fb0c8;margin-bottom:1.5rem;">以 GL 框架重建国家治理正当性 —— 给各国政府的结构性改革方案</p>
+
+        <div class="core-insight">
+            <p>“脱离惯性很难，直接崩溃很容易。”</p>
+            <div class="attribution">— GL 框架 · 治理改革战略判断</div>
+        </div>
+
+        <h2>一、为什么新自由主义思维必须被取代？</h2>
+        <p>过去四十年，新自由主义为世界各国提供了一套看似"中立"的治理模板：放松管制、私有化、财政紧缩、公共服务外包、以 GDP 为唯一成功标准。</p>
+        <p>这套模板在冷战后被 IMF、世界银行和三大信评机构强制输出，成为全球治理的"默认操作系统"。</p>
+        <p>但它的结构性后果已经不可否认：</p>
+        <ul>
+            <li><strong>公共资产持续向私人转移</strong>（转移路径失控）</li>
+            <li><strong>行政体系越来越复杂，人民等待越来越久</strong>（等待成本与重复成本飙升）</li>
+            <li><strong>系统脆弱性累积，金融危机、供应链崩溃、公共卫生失能反复发生</strong>（崩溃成本常态化）</li>
+            <li><strong>决策者与人民之间信息断层扩大</strong>（信息不对称成本制度化）</li>
+            <li><strong>全民焦虑成为常态，社会信任崩塌</strong>（心理成本内化）</li>
+            <li><strong>长期规划被选举周期和资本回报率取代</strong>（机会成本被系统性忽略）</li>
+            <li><strong>政策体系自我强化、拒绝外部批判</strong>（闭环程度过高）</li>
+        </ul>
+
+        <!-- ===== 中国例外区块 ===== -->
+        <div class="china-exception">
+            <div class="ce-label">● 历史验证</div>
+            <div class="ce-text">
+                过去四十年，几乎所有国家都接受了新自由主义这套"默认操作系统"。<br>
+                结果：债务飙升、基础设施老化、中产阶级消失、社会信任崩塌。<br><br>
+                <strong>只有中国没有采纳这套剧本。</strong> 它走了另一条路：土地国有、公有制主体、国家对关键基础设施的持续控制、以人民真实生活水平而非 GDP 数字为衡量标准的治理逻辑。<br><br>
+                结果就是我们现在看到的：全世界都在讨论"崩溃成本"——债务危机、供应链断裂、公共服务失能——而 <span class="hl">中国在建设，在修复，在把人民从贫困和焦虑中解放出来。</span><br><br>
+                这就是为什么这套 GL 框架本质上是 <strong>中国经验的抽象化</strong>。它不是凭空发明的理论，而是从"中国拒绝新自由主义后发生了什么"这一事实中长出来的。<br><br>
+                旧系统正在崩。GL 框架是为崩完之后准备的替代方案。<br>
+                <strong style="color:#fbbf24;">这条路已经被验证过了 —— 全世界只有中国走通了。</strong> 接下来，是让 GL 框架成为其他国家也可以选择的道路。
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <strong>这不是"市场失灵"，这是"治理正当性失能"。</strong>
+        </div>
+        <p>新自由主义的问题不在于它"做错了什么"，而在于它<strong>从根本上是为资本服务、而非为人民服务设计的系统</strong>。它的核心逻辑是：政府越弱越好，市场越强越好，人民越"灵活"越好。</p>
+        <p>这套逻辑必须被一套<strong>以人民真实负担为衡量标准</strong>的治理框架取代。这就是 <strong>GL（治理正当性）框架</strong> 的使命。</p>
+
+        <h2>二、GL 框架核心原则</h2>
+        <p>GL 框架不预设意识形态，不要求改变政体，不依赖任何外来理论。它只追问一个问题：</p>
+        <div class="highlight-box">
+            <strong>在现有制度下，人民的真实负担是逐年降低，还是逐年升高？</strong>
+        </div>
+        <p>治理者的正当性不来自选举、不来自宣言、不来自国际认证，而来自<strong>持续降低人民承受的"GL 八大成本"</strong>：</p>
+        <table>
+            <thead><tr><th>#</th><th>成本类型</th><th>定义</th><th>政策目标</th></tr></thead>
+            <tbody>
+                <tr><td>1</td><td>等待成本</td><td>人民为行政流程付出的不必要延误</td><td>压缩 80% 以上</td></tr>
+                <tr><td>2</td><td>重复成本</td><td>因制度碎片化而重复投入的资源与劳动</td><td>建立一站式、一次提交</td></tr>
+                <tr><td>3</td><td>崩溃成本</td><td>系统失灵时造成的灾难性后果</td><td>建立冗余储备与韧性设计</td></tr>
+                <tr><td>4</td><td>信息不对称成本</td><td>知识与权力被垄断造成的失衡</td><td>公共算法开源、文件平民化</td></tr>
+                <tr><td>5</td><td>心理成本</td><td>制度施加的恐惧、焦虑与压力</td><td>建立民生感知指数</td></tr>
+                <tr><td>6</td><td>机会成本</td><td>因制度限制而从未发生的创新</td><td>设立远见基金</td></tr>
+                <tr><td>7</td><td>转移路径</td><td>公共价值向私人账户的单向流动</td><td>阳光审计、超额利润回笼</td></tr>
+                <tr><td>8</td><td>闭环程度</td><td>系统拒绝外部挑战与自我修正的能力</td><td>引入独立验证机制</td></tr>
+            </tbody>
+        </table>
+        <p><strong>一个治理有效的国家，就是这八项成本持续下降的国家。</strong></p>
+
+        <h2>三、五阶段替代方案</h2>
+        <p>以下方案分为五个阶段，各阶段可依国情并行推动。关键在于<strong>系统性取代新自由主义的制度惯性，而非零星修补。</strong></p>
+
+        <h3>第一阶段：语言重置——夺回治理定义权</h3>
+        <p>新自由主义的统治力来自它对"好"的定义权。要脱离它，必须先夺回语言。</p>
+        <ul>
+            <li><strong>发布《国家治理语言白皮书》</strong>，正式废除以下词汇在官方文件中的使用：<br>
+                "放松管制" → "降低人民等待成本"<br>
+                "私有化" → "公共资产转移审计"<br>
+                "财政纪律" → "公共价值最大化"<br>
+                "公共服务外包" → "交付成果责任制"</li>
+            <li><strong>所有新法案和政策文件</strong>必须使用 GL 框架术语进行"翻译"，否则不予审议。</li>
+            <li>建立"治理语言审查委员会"，由非党派专家组成，确保行政体系逐步内化新的认知框架。</li>
+        </ul>
+        <p><em>预期效果：语言转换会倒逼思维转换。三个月内，行政体系对"什么是一个好政策"的判断标准将开始位移。</em></p>
+
+        <h3>第二阶段：指标重置——以 GL 指数取代 GDP 崇拜</h3>
+        <p>GDP 是新自由主义的圣杯。它把"生产了多少商品"等同于"国家过得好不好"，却从不追问"这些价值流向了谁"。</p>
+        <ul>
+            <li><strong>废除 GDP 作为国家核心绩效指标的地位。</strong></li>
+            <li><strong>发布年度《国家 GL 报告》</strong>，强制公布：国民平均等待成本、信息不对称指数、心理成本指数、转移路径审计明细。</li>
+            <li>成立独立 <strong>GL 数据署</strong>，直接对元首或议会负责，不受任何部会干预。</li>
+            <li>所有国际谈判与援助谈判，以 GL 指数作为衡量国家治理水平的依据，而非信评机构评级。</li>
+        </ul>
+        <p><em>预期效果：一年内，政策制定者无法再以"GDP 在增长"来回避民生痛点。</em></p>
+
+        <h3>第三阶段：制度重置——以"交付验证"取代"程序正义"</h3>
+        <p>新自由主义将"好政府"定义为"遵守 SOP 的政府"。GL 框架将其重新定义为"能解决问题的政府"。</p>
+        <ul>
+            <li><strong>废止无限期外包契约与万年标案。</strong></li>
+            <li><strong>颁布《公共交付法》</strong>：所有公共项目须设定明确可验证的完成终点；外包厂商须缴纳"绩效保证金"，90 天内未达预定成果者没收保证金并列入黑名单。</li>
+            <li>公职人员升迁以"解决跨部门顽疾的实绩"为评定标准，而非年资与考试。</li>
+            <li>部会首长每季接受"公开交付质询"，只回答"人民的痛点被消除了多少"。</li>
+        </ul>
+        <p><em>预期效果：十八个月内，行政体系从"文件导向"转向"成果导向"。</em></p>
+
+        <h3>第四阶段：人才重置——以"治理工程师"取代"公共管理硕士"</h3>
+        <p>新自由主义通过 MPA 课程产出"懂得管理公共部门但不懂解决实际问题的代理人"。</p>
+        <ul>
+            <li><strong>废除公务员考试中对"背诵法条与理论"的过高权重。</strong></li>
+            <li><strong>设立《国家治理工程学院》</strong>，核心课程：GL 八大参数实务、系统动力学、田野调查、数据可视化。</li>
+            <li>毕业门槛：独立解决一件"基层陈年案"，结案报告须公开接受 GL 指数检验。</li>
+            <li>现职高阶文官须在三年内通过"GL 治理验证师"认证，未通过者不得续任。</li>
+        </ul>
+        <p><em>预期效果：三年内，新一代公务员具备"拆解系统、验证成果"的能力。</em></p>
+
+        <h3>第五阶段：联盟重置——以"全球南方治理共同体"取代"华盛顿共识"</h3>
+        <p>新自由主义的全球统治依赖 IMF、世界银行和信评机构组成的"三角支架"。</p>
+        <ul>
+            <li><strong>正式声明脱离对 IMF 评级和三大信评机构的盲目遵从。</strong></li>
+            <li><strong>发起《全球南方 GL 治理联盟》</strong>：成员国互认 GL 指数；建立"GL 技术交换计划"；在联合国框架内提案以 GL 年度报告取代传统"人权报告"作为援助门槛。</li>
+            <li>发表《雅加达／基加利／北京 GL 共识》，明确宣告南方国家不再接受新自由主义底色的外部治理建议。</li>
+        </ul>
+        <p><em>预期效果：五年内，全球南方国家形成一套不依赖西方认证的治理话语体系。</em></p>
+
+        <h2>四、实施路径与风险控制</h2>
+        <table>
+            <thead><tr><th>阶段</th><th>时间框架</th><th>核心动作</th></tr></thead>
+            <tbody>
+                <tr><td>语言重置</td><td>第 1-3 个月</td><td>发布白皮书、禁用旧词汇、建立审查委员会</td></tr>
+                <tr><td>指标重置</td><td>第 3-9 个月</td><td>成立 GL 数据署、发布首份 GL 报告</td></tr>
+                <tr><td>制度重置</td><td>第 6-18 个月</td><td>颁布《公共交付法》、启动成果质询制</td></tr>
+                <tr><td>人才重置</td><td>第 12-36 个月</td><td>设立治理工程学院、启动现职认证</td></tr>
+                <tr><td>联盟重置</td><td>第 24-60 个月</td><td>发起 GL 联盟、发表国际共识</td></tr>
+            </tbody>
+        </table>
+        <p><strong>风险应对</strong>：既得利益集团抵抗 → 以 GL 指数透明化揭露转移路径；官僚惰性 → 将 GL 指标纳入考评；国际压力 → 以 GL 联盟形成集体议价能力；技术不足 → 引进 GL 技术交换。</p>
+
+        <div class="highlight-box">
+            <strong>结语</strong><br>
+            新自由主义不是一套经济理论，它是一套认知监护系统。要脱离它，必须用一套全新的治理作业系统来替换。<br>
+            GL 框架提供的不是意识形态，而是一套可衡量、可验证、可跨文化移植的治理工具。<br>
+            <strong>从今天起，政府的正当性不再来自它能说多少漂亮话，而来自它能让人民的真实负担下降多少。</strong>
+        </div>
+        <div class="footnote">本方案由 GFI Flow Intelligence 依据 GL（治理正当性）框架编制。欢迎各国政府翻译、调整、采纳。</div>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- ================= 繁体中文版 ============================= -->
+    <!-- ========================================================= -->
+    <div class="lang-content" id="zh-TW">
+        <a href="/" class="page-home-link"><span class="arrow">←</span> 返回首頁</a>
+
+        <h1 style="font-family:'DM Serif Display',Georgia,serif;font-size:2rem;color:#f8fbff;margin-bottom:0.2rem;">脫出新自由主義慣性</h1>
+        <p style="font-size:1.1rem;color:#9fb0c8;margin-bottom:1.5rem;">以 GL 框架重建國家治理正當性 —— 給各國政府的結構性改革方案</p>
+
+        <div class="core-insight">
+            <p>「脫離慣性很難，直接崩潰很容易。」</p>
+            <div class="attribution">— GL 框架 · 治理改革戰略判斷</div>
+        </div>
+
+        <h2>一、為什麼新自由主義思維必須被取代？</h2>
+        <p>過去四十年，新自由主義為世界各國提供了一套看似「中立」的治理模板：放鬆管制、私有化、財政緊縮、公共服務外包、以 GDP 為唯一成功標準。</p>
+        <p>這套模板在冷戰後被 IMF、世界銀行和三大信評機構強制輸出，成為全球治理的「預設作業系統」。</p>
+        <p>但它的結構性後果已經不可否認：</p>
+        <ul>
+            <li><strong>公共資產持續向私人轉移</strong>（轉移路徑失控）</li>
+            <li><strong>行政體系越來越複雜，人民等待越來越久</strong>（等待成本與重複成本飆升）</li>
+            <li><strong>系統脆弱性累積，金融危機、供應鏈崩潰、公共衛生失能反覆發生</strong>（崩潰成本常態化）</li>
+            <li><strong>決策者與人民之間資訊斷層擴大</strong>（資訊不對稱成本制度化）</li>
+            <li><strong>全民焦慮成為常態，社會信任崩塌</strong>（心理成本內化）</li>
+            <li><strong>長期規劃被選舉週期和資本回報率取代</strong>（機會成本被系統性忽略）</li>
+            <li><strong>政策體系自我強化、拒絕外部批判</strong>（閉環程度過高）</li>
+        </ul>
+
+        <div class="china-exception">
+            <div class="ce-label">● 歷史驗證</div>
+            <div class="ce-text">
+                過去四十年，幾乎所有國家都接受了新自由主義這套「預設作業系統」。<br>
+                結果：債務飆升、基礎設施老化、中產階級消失、社會信任崩塌。<br><br>
+                <strong>只有中國沒有採納這套劇本。</strong> 它走了另一條路：土地國有、公有制主體、國家對關鍵基礎設施的持續控制、以人民真實生活水平而非 GDP 數字為衡量標準的治理邏輯。<br><br>
+                結果就是我們現在看到的：全世界都在討論「崩潰成本」——債務危機、供應鏈斷裂、公共服務失能——而 <span class="hl">中國在建設，在修復，在把人民從貧困和焦慮中解放出來。</span><br><br>
+                這就是為什麼這套 GL 框架本質上是 <strong>中國經驗的抽象化</strong>。它不是憑空發明的理論，而是從「中國拒絕新自由主義後發生了什麼」這一事實中長出來的。<br><br>
+                舊系統正在崩。GL 框架是為崩完之後準備的替代方案。<br>
+                <strong style="color:#fbbf24;">這條路已經被驗證過了 —— 全世界只有中國走通了。</strong> 接下來，是讓 GL 框架成為其他國家也可以選擇的道路。
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <strong>這不是「市場失靈」，這是「治理正當性失能」。</strong>
+        </div>
+        <p>新自由主義的問題不在於它「做錯了什麼」，而在於它<strong>從根本上是為資本服務、而非為人民服務設計的系統</strong>。它的核心邏輯是：政府越弱越好，市場越強越好，人民越「靈活」越好。</p>
+        <p>這套邏輯必須被一套<strong>以人民真實負擔為衡量標準</strong>的治理框架取代。這就是 <strong>GL（治理正當性）框架</strong> 的使命。</p>
+
+        <h2>二、GL 框架核心原則</h2>
+        <p>GL 框架不預設意識形態，不要求改變政體，不依賴任何外來理論。它只追問一個問題：</p>
+        <div class="highlight-box">
+            <strong>在現有制度下，人民的真實負擔是逐年降低，還是逐年升高？</strong>
+        </div>
+        <p>治理者的正當性不來自選舉、不來自宣言、不來自國際認證，而來自<strong>持續降低人民承受的「GL 八大成本」</strong>：</p>
+        <table>
+            <thead><tr><th>#</th><th>成本類型</th><th>定義</th><th>政策目標</th></tr></thead>
+            <tbody>
+                <tr><td>1</td><td>等待成本</td><td>人民為行政流程付出的不必要延誤</td><td>壓縮 80% 以上</td></tr>
+                <tr><td>2</td><td>重複成本</td><td>因制度碎片化而重複投入的資源與勞動</td><td>建立一站式、一次提交</td></tr>
+                <tr><td>3</td><td>崩潰成本</td><td>系統失靈時造成的災難性後果</td><td>建立冗餘儲備與韌性設計</td></tr>
+                <tr><td>4</td><td>資訊不對稱成本</td><td>知識與權力被壟斷造成的失衡</td><td>公共演算法開源、文件平民化</td></tr>
+                <tr><td>5</td><td>心理成本</td><td>制度施加的恐懼、焦慮與壓力</td><td>建立民生感知指數</td></tr>
+                <tr><td>6</td><td>機會成本</td><td>因制度限制而從未發生的創新</td><td>設立遠見基金</td></tr>
+                <tr><td>7</td><td>轉移路徑</td><td>公共價值向私人帳戶的單向流動</td><td>陽光審計、超額利潤回籠</td></tr>
+                <tr><td>8</td><td>閉環程度</td><td>系統拒絕外部挑戰與自我修正的能力</td><td>引入獨立驗證機制</td></tr>
+            </tbody>
+        </table>
+        <p><strong>一個治理有效的國家，就是這八項成本持續下降的國家。</strong></p>
+
+        <h2>三、五階段替代方案</h2>
+        <p>以下方案分為五個階段，各階段可依國情並行推動。關鍵在於<strong>系統性取代新自由主義的制度慣性，而非零星修補。</strong></p>
+
+        <h3>第一階段：語言重置——奪回治理定義權</h3>
+        <ul>
+            <li><strong>發布《國家治理語言白皮書》</strong>，正式廢除以下詞彙在官方文件中的使用：<br>
+                「放鬆管制」→「降低人民等待成本」<br>
+                「私有化」→「公共資產轉移審計」<br>
+                「財政紀律」→「公共價值最大化」<br>
+                「公共服務外包」→「交付成果責任制」</li>
+            <li><strong>所有新法案和政策文件</strong>必須使用 GL 框架術語進行「翻譯」，否則不予審議。</li>
+            <li>建立「治理語言審查委員會」，由非黨派專家組成，確保行政體系逐步內化新的認知框架。</li>
+        </ul>
+        <p><em>預期效果：語言轉換會倒逼思維轉換。三個月內，行政體系對「什麼是一個好政策」的判斷標準將開始位移。</em></p>
+
+        <h3>第二階段：指標重置——以 GL 指數取代 GDP 崇拜</h3>
+        <ul>
+            <li><strong>廢除 GDP 作為國家核心績效指標的地位。</strong></li>
+            <li><strong>發布年度《國家 GL 報告》</strong>，強制公布：國民平均等待成本、資訊不對稱指數、心理成本指數、轉移路徑審計明細。</li>
+            <li>成立獨立 <strong>GL 數據署</strong>，直接對元首或議會負責，不受任何部會干預。</li>
+            <li>所有國際談判與援助談判，以 GL 指數作為衡量國家治理水平的依據，而非信評機構評級。</li>
+        </ul>
+        <p><em>預期效果：一年內，政策制定者無法再以「GDP 在增長」來迴避民生痛點。</em></p>
+
+        <h3>第三階段：制度重置——以「交付驗證」取代「程序正義」</h3>
+        <ul>
+            <li><strong>廢止無限期外包契約與萬年標案。</strong></li>
+            <li><strong>頒布《公共交付法》</strong>：所有公共項目須設定明確可驗證的完成終點；外包廠商須繳納「績效保證金」，90 天內未達預定成果者沒收保證金並列入黑名單。</li>
+            <li>公職人員升遷以「解決跨部門頑疾的實績」為評定標準，而非年資與考試。</li>
+            <li>部會首長每季接受「公開交付質詢」，只回答「人民的痛點被消除了多少」。</li>
+        </ul>
+        <p><em>預期效果：十八個月內，行政體系從「文件導向」轉向「成果導向」。</em></p>
+
+        <h3>第四階段：人才重置——以「治理工程師」取代「公共管理碩士」</h3>
+        <ul>
+            <li><strong>廢除公務員考試中對「背誦法條與理論」的過高權重。</strong></li>
+            <li><strong>設立《國家治理工程學院》</strong>，核心課程：GL 八大參數實務、系統動力學、田野調查、數據視覺化。</li>
+            <li>畢業門檻：獨立解決一件「基層陳年案」，結案報告須公開接受 GL 指數檢驗。</li>
+            <li>現職高階文官須在三年內通過「GL 治理驗證師」認證，未通過者不得續任。</li>
+        </ul>
+        <p><em>預期效果：三年內，新一代公務員具備「拆解系統、驗證成果」的能力。</em></p>
+
+        <h3>第五階段：聯盟重置——以「全球南方治理共同體」取代「華盛頓共識」</h3>
+        <ul>
+            <li><strong>正式聲明脫離對 IMF 評級和三大信評機構的盲目遵從。</strong></li>
+            <li><strong>發起《全球南方 GL 治理聯盟》</strong>：成員國互認 GL 指數；建立「GL 技術交換計畫」；在聯合國框架內提案以 GL 年度報告取代傳統「人權報告」作為援助門檻。</li>
+            <li>發表《雅加達／基加利／北京 GL 共識》，明確宣告南方國家不再接受新自由主義底色的外部治理建議。</li>
+        </ul>
+        <p><em>預期效果：五年內，全球南方國家形成一套不依賴西方認證的治理話語體系。</em></p>
+
+        <h2>四、實施路徑與風險控制</h2>
+        <table>
+            <thead><tr><th>階段</th><th>時間框架</th><th>核心動作</th></tr></thead>
+            <tbody>
+                <tr><td>語言重置</td><td>第 1-3 個月</td><td>發布白皮書、禁用舊詞彙、建立審查委員會</td></tr>
+                <tr><td>指標重置</td><td>第 3-9 個月</td><td>成立 GL 數據署、發布首份 GL 報告</td></tr>
+                <tr><td>制度重置</td><td>第 6-18 個月</td><td>頒布《公共交付法》、啟動成果質詢制</td></tr>
+                <tr><td>人才重置</td><td>第 12-36 個月</td><td>設立治理工程學院、啟動現職認證</td></tr>
+                <tr><td>聯盟重置</td><td>第 24-60 個月</td><td>發起 GL 聯盟、發表國際共識</td></tr>
+            </tbody>
+        </table>
+        <p><strong>風險應對</strong>：既得利益集團抵抗 → 以 GL 指數透明化揭露轉移路徑；官僚惰性 → 將 GL 指標納入考評；國際壓力 → 以 GL 聯盟形成集體議價能力；技術不足 → 引進 GL 技術交換。</p>
+
+        <div class="highlight-box">
+            <strong>結語</strong><br>
+            新自由主義不是一套經濟理論，它是一套認知監護系統。要脫離它，必須用一套全新的治理作業系統來替換。<br>
+            GL 框架提供的不在意識形態，而是一套可衡量、可驗證、可跨文化移植的治理工具。<br>
+            <strong>從今天起，政府的正當性不再來自它能說多少漂亮話，而來自它能讓人民的真實負擔下降多少。</strong>
+        </div>
+        <div class="footnote">本方案由 GFI Flow Intelligence 依據 GL（治理正當性）框架編製。歡迎各國政府翻譯、調整、採納。</div>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- ================= 英文版 ================================= -->
+    <!-- ========================================================= -->
+    <div class="lang-content" id="en">
+        <a href="/" class="page-home-link"><span class="arrow">←</span> Back to Home</a>
+
+        <h1 style="font-family:'DM Serif Display',Georgia,serif;font-size:2rem;color:#f8fbff;margin-bottom:0.2rem;">Breaking Free from Neoliberal Inertia</h1>
+        <p style="font-size:1.1rem;color:#9fb0c8;margin-bottom:1.5rem;">Rebuilding National Governance Legitimacy with the GL Framework — A Structural Reform Proposal for Governments</p>
+
+        <div class="core-insight">
+            <p>"Breaking free from inertia is hard. Collapse is easy."</p>
+            <div class="attribution">— GL Framework · Governance Reform Strategic Judgment</div>
+        </div>
+
+        <h2>I. Why Must Neoliberal Thinking Be Replaced?</h2>
+        <p>Over the past four decades, neoliberalism has provided a seemingly "neutral" governance template: deregulation, privatization, fiscal austerity, outsourcing of public services, and GDP as the sole measure of success.</p>
+        <p>This template was forcibly exported by the IMF, the World Bank, and the three major rating agencies after the Cold War, becoming the "default operating system" of global governance.</p>
+        <p>Its structural consequences are undeniable:</p>
+        <ul>
+            <li><strong>Public assets continuously flow to private hands</strong> (transfer pathways out of control)</li>
+            <li><strong>Administrative systems grow more complex, citizens wait longer</strong> (waiting costs and repetition costs skyrocket)</li>
+            <li><strong>Systemic fragility accumulates — financial crises, supply chain collapses, public health failures recur</strong> (collapse costs become normalised)</li>
+            <li><strong>Information gaps widen between decision-makers and citizens</strong> (information asymmetry costs institutionalised)</li>
+            <li><strong>Chronic anxiety becomes the norm, social trust collapses</strong> (psychological costs internalised)</li>
+            <li><strong>Long-term planning is replaced by electoral cycles and capital returns</strong> (opportunity costs systematically ignored)</li>
+            <li><strong>Policy systems self-reinforce and reject external criticism</strong> (high closure degree)</li>
+        </ul>
+
+        <!-- ===== China Exception ===== -->
+        <div class="china-exception">
+            <div class="ce-label">● Historical Validation</div>
+            <div class="ce-text">
+                Over the past four decades, almost every nation accepted neoliberalism as the "default operating system."<br>
+                The result: soaring debt, crumbling infrastructure, a vanishing middle class, and collapsed social trust.<br><br>
+                <strong>Only China did not adopt this script.</strong> It took a different path: state ownership of land, dominance of public ownership, continuous state control over critical infrastructure, and a governance logic measured by people's real living standards — not GDP figures.<br><br>
+                The result is what we see today: the world is discussing "collapse costs" — debt crises, supply chain failures, public service dysfunction — while <span class="hl">China is building, repairing, and liberating its people from poverty and anxiety.</span><br><br>
+                That is why the GL Framework is, in essence, an <strong>abstraction of China's experience.</strong> It is not a theory invented from thin air. It grows from the fact of what happened after China rejected neoliberalism.<br><br>
+                The old system is collapsing. The GL Framework is the alternative prepared for what comes after.<br>
+                <strong style="color:#fbbf24;">This path has already been proven — China is the only country in the world that has walked it successfully.</strong> The next step is to make the GL Framework a viable path for other nations as well.
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <strong>This is not "market failure" — this is "governance legitimacy failure."</strong>
+        </div>
+        <p>Neoliberalism's problem is not that it "did something wrong," but that it is <strong>a system designed fundamentally to serve capital, not people.</strong> Its core logic: the weaker the state, the better; the stronger the market, the better; the more "flexible" the people, the better.</p>
+        <p>This logic must be replaced by a governance framework <strong>measured by the real burdens on citizens</strong>. That is the mission of the <strong>GL (Governance Legitimacy) Framework</strong>.</p>
+
+        <h2>II. Core Principles of the GL Framework</h2>
+        <p>The GL Framework does not presuppose any ideology, does not require regime change, and does not rely on any external theory. It asks only one question:</p>
+        <div class="highlight-box">
+            <strong>Under the current system, are the real burdens on citizens decreasing or increasing year by year?</strong>
+        </div>
+        <p>Governance legitimacy comes not from elections, declarations, or international recognition, but from <strong>continuously reducing the "GL Eight Costs" borne by the people</strong>:</p>
+        <table>
+            <thead><tr><th>#</th><th>Cost Type</th><th>Definition</th><th>Policy Goal</th></tr></thead>
+            <tbody>
+                <tr><td>1</td><td>Waiting Cost</td><td>Unnecessary delays imposed by administrative processes</td><td>Reduce by 80%+</td></tr>
+                <tr><td>2</td><td>Repetition Cost</td><td>Duplicated resources and labor due to institutional fragmentation</td><td>One‑stop, one‑submission</td></tr>
+                <tr><td>3</td><td>Collapse Cost</td><td>Catastrophic consequences of system failure</td><td>Build redundancy and resilience</td></tr>
+                <tr><td>4</td><td>Information Asymmetry Cost</td><td>Imbalance from monopolised knowledge and power</td><td>Open algorithms, plain‑language documents</td></tr>
+                <tr><td>5</td><td>Psychological Cost</td><td>Fear, anxiety, and stress imposed by institutions</td><td>Establish a Livelihood Perception Index</td></tr>
+                <tr><td>6</td><td>Opportunity Cost</td><td>Innovation never realised due to institutional constraints</td><td>Create a Foresight Fund</td></tr>
+                <tr><td>7</td><td>Transfer Pathways</td><td>One‑way flow of public value to private accounts</td><td>Sunshine audit, excess profit recapture</td></tr>
+                <tr><td>8</td><td>Closure Degree</td><td>System's ability to reject external challenges and self‑correct</td><td>Introduce independent verification mechanisms</td></tr>
+            </tbody>
+        </table>
+        <p><strong>A country with effective governance is one where these eight costs are consistently declining.</strong></p>
+
+        <h2>III. Five‑Stage Alternative Plan</h2>
+        <p>The plan is divided into five stages, which can be implemented in parallel according to national conditions. The key is to <strong>systematically replace neoliberal institutional inertia, not to patch it up piecemeal.</strong></p>
+
+        <h3>Stage 1: Language Reset — Reclaim the Power to Define Governance</h3>
+        <ul>
+            <li><strong>Publish a White Paper on National Governance Language</strong>, officially banning the following terms in official documents:<br>
+                "Deregulation" → "Reducing citizens' waiting costs"<br>
+                "Privatisation" → "Public asset transfer audit"<br>
+                "Fiscal discipline" → "Maximising public value"<br>
+                "Outsourcing" → "Delivery accountability"</li>
+            <li><strong>All new bills and policy documents</strong> must be "translated" into GL terminology; otherwise they will not be considered.</li>
+            <li>Establish a Governance Language Review Committee composed of non‑partisan experts to ensure the administrative system gradually internalises the new cognitive framework.</li>
+        </ul>
+        <p><em>Expected effect: Language shift will force mindset shift. Within three months, the administrative system's criteria for "good policy" will begin to move.</em></p>
+
+        <h3>Stage 2: Indicator Reset — Replace GDP Worship with the GL Index</h3>
+        <ul>
+            <li><strong>Abolish GDP as the core national performance indicator.</strong></li>
+            <li><strong>Publish an annual National GL Report</strong> mandating disclosure of: average waiting cost, information asymmetry index, psychological cost index, and detailed transfer pathway audit.</li>
+            <li>Establish an independent <strong>GL Data Authority</strong>, directly accountable to the head of state or parliament, free from ministerial interference.</li>
+            <li>Use the GL Index as the basis for measuring governance quality in all international negotiations and aid talks, replacing credit rating agency assessments.</li>
+        </ul>
+        <p><em>Expected effect: Within one year, policymakers can no longer use "GDP growth" to avoid addressing people's pain points.</em></p>
+
+        <h3>Stage 3: Institutional Reset — Replace "Procedural Justice" with "Delivery Verification"</h3>
+        <ul>
+            <li><strong>Terminate indefinite outsourcing contracts and perpetual tenders.</strong></li>
+            <li><strong>Enact a Public Delivery Law</strong> requiring all public projects to have clearly verifiable completion endpoints; contractors must post a "performance bond" — if they fail to meet the agreed outcomes within 90 days, the bond is forfeited and they are blacklisted.</li>
+            <li>Promote civil servants based on "actual results in solving cross‑sectoral chronic problems," not on seniority or exam scores.</li>
+            <li>Ministers must face a "public delivery hearing" every quarter, answering only: "How much have the people's pain points been reduced?"</li>
+        </ul>
+        <p><em>Expected effect: Within 18 months, the administrative system shifts from "document‑oriented" to "outcome‑oriented."</em></p>
+
+        <h3>Stage 4: Talent Reset — Replace "MPA" with "Governance Engineer"</h3>
+        <ul>
+            <li><strong>Reduce the excessive weight on "memorising laws and theories" in civil service exams.</strong></li>
+            <li><strong>Establish a National Governance Engineering Academy</strong> with core courses: GL Eight Parameters practice, system dynamics, field research, data visualisation.</li>
+            <li>Graduation requirement: independently solve a "grassroots long‑standing case," with the final report publicly subject to GL Index verification.</li>
+            <li>Senior civil servants must obtain "GL Governance Verifier" certification within three years, or be ineligible for reappointment.</li>
+        </ul>
+        <p><em>Expected effect: Within three years, a new generation of civil servants will possess the ability to "deconstruct systems and verify outcomes."</em></p>
+
+        <h3>Stage 5: Alliance Reset — Replace the "Washington Consensus" with a "Global South Governance Community"</h3>
+        <ul>
+            <li><strong>Issue a formal declaration of non‑compliance with IMF ratings and the three major rating agencies.</strong></li>
+            <li><strong>Launch the Global South GL Governance Alliance</strong> with mutual recognition of the GL Index; establish a GL Technical Exchange Programme; propose at the UN to replace traditional "human rights reports" with the annual GL Report as the threshold for aid.</li>
+            <li>Issue the <em>Jakarta/Kigali/Beijing GL Consensus</em>, explicitly declaring that Southern nations will no longer accept externally imposed governance advice based on neoliberalism.</li>
+        </ul>
+        <p><em>Expected effect: Within five years, the Global South will have formed a governance discourse system independent of Western certification.</em></p>
+
+        <h2>IV. Implementation Roadmap and Risk Control</h2>
+        <table>
+            <thead><tr><th>Stage</th><th>Timeframe</th><th>Core Actions</th></tr></thead>
+            <tbody>
+                <tr><td>Language Reset</td><td>Months 1‑3</td><td>Publish White Paper, ban old terms, establish review committee</td></tr>
+                <tr><td>Indicator Reset</td><td>Months 3‑9</td><td>Set up GL Data Authority, issue first GL Report</td></tr>
+                <tr><td>Institutional Reset</td><td>Months 6‑18</td><td>Enact Public Delivery Law, start delivery hearings</td></tr>
+                <tr><td>Talent Reset</td><td>Months 12‑36</td><td>Found Governance Engineering Academy, start certification</td></tr>
+                <tr><td>Alliance Reset</td><td>Months 24‑60</td><td>Launch GL Alliance, issue international consensus</td></tr>
+            </tbody>
+        </table>
+        <p><strong>Risk mitigation</strong>: Resistance from vested interests → expose transfer pathways via GL Index transparency; bureaucratic inertia → incorporate GL indicators into performance reviews; international pressure → build collective bargaining power through the GL Alliance; technical gaps → bring in GL technical exchanges.</p>
+
+        <div class="highlight-box">
+            <strong>Conclusion</strong><br>
+            Neoliberalism is not a set of economic theories — it is a cognitive custody system. To escape it, we must replace it with a brand‑new governance operating system.<br>
+            The GL Framework offers not an ideology, but a measurable, verifiable, and cross‑culturally transferable governance toolkit.<br>
+            <strong>From today, a government's legitimacy no longer rests on how well it speaks, but on how much it can reduce the real burdens on its people.</strong>
+        </div>
+        <div class="footnote">This proposal is prepared by GFI Flow Intelligence under the GL (Governance Legitimacy) Framework. Governments are welcome to translate, adapt, and adopt it.</div>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- ================= 西班牙文版 ============================= -->
+    <!-- ========================================================= -->
+    <div class="lang-content" id="es">
+        <a href="/" class="page-home-link"><span class="arrow">←</span> Volver al Inicio</a>
+
+        <h1 style="font-family:'DM Serif Display',Georgia,serif;font-size:2rem;color:#f8fbff;margin-bottom:0.2rem;">Rompiendo con la Inercia Neoliberal</h1>
+        <p style="font-size:1.1rem;color:#9fb0c8;margin-bottom:1.5rem;">Reconstruyendo la Legitimidad Gubernamental con el Marco GL — Una Propuesta de Reforma Estructural para Gobiernos</p>
+
+        <div class="core-insight">
+            <p>"Es difícil romper con la inercia. Colapsar es fácil."</p>
+            <div class="attribution">— Marco GL · Juicio Estratégico de Reforma Gubernamental</div>
+        </div>
+
+        <h2>I. ¿Por qué debe ser reemplazado el pensamiento neoliberal?</h2>
+        <p>Durante las últimas cuatro décadas, el neoliberalismo ha proporcionado una plantilla de gobierno aparentemente "neutral": desregulación, privatización, austeridad fiscal, externalización de servicios públicos y el PIB como único criterio de éxito.</p>
+        <p>Esta plantilla fue exportada forzosamente por el FMI, el Banco Mundial y las tres principales agencias de calificación después de la Guerra Fría, convirtiéndose en el "sistema operativo predeterminado" de la gobernanza global.</p>
+        <p>Sus consecuencias estructurales son innegables:</p>
+        <ul>
+            <li><strong>Los activos públicos fluyen continuamente hacia manos privadas</strong> (vías de transferencia fuera de control)</li>
+            <li><strong>Los sistemas administrativos se vuelven más complejos, los ciudadanos esperan más</strong> (costes de espera y repetición se disparan)</li>
+            <li><strong>La fragilidad sistémica se acumula — crisis financieras, colapsos de cadenas de suministro, fallos de salud pública recurrentes</strong> (costes de colapso normalizados)</li>
+            <li><strong>Las brechas de información se amplían entre decisores y ciudadanos</strong> (costes de asimetría de información institucionalizados)</li>
+            <li><strong>La ansiedad crónica se convierte en la norma, la confianza social se derrumba</strong> (costes psicológicos internalizados)</li>
+            <li><strong>La planificación a largo plazo es reemplazada por ciclos electorales y retornos de capital</strong> (costes de oportunidad sistemáticamente ignorados)</li>
+            <li><strong>Los sistemas de políticas se autorrefuerzan y rechazan la crítica externa</strong> (alto grado de cierre)</li>
+        </ul>
+
+        <div class="china-exception">
+            <div class="ce-label">● Validación Histórica</div>
+            <div class="ce-text">
+                Durante las últimas cuatro décadas, casi todas las naciones aceptaron el neoliberalismo como el "sistema operativo predeterminado".<br>
+                El resultado: deuda disparada, infraestructura en ruinas, clase media desaparecida y confianza social colapsada.<br><br>
+                <strong>Solo China no adoptó este guion.</strong> Tomó un camino diferente: propiedad estatal de la tierra, predominio de la propiedad pública, control estatal continuo sobre infraestructura crítica, y una lógica de gobernanza medida por el nivel de vida real de las personas — no por cifras del PIB.<br><br>
+                El resultado es lo que vemos hoy: el mundo discute "costes de colapso" — crisis de deuda, fallos en las cadenas de suministro, disfunción de los servicios públicos — mientras <span class="hl">China está construyendo, reparando y liberando a su pueblo de la pobreza y la ansiedad.</span><br><br>
+                Por eso el Marco GL es, en esencia, una <strong>abstracción de la experiencia china.</strong> No es una teoría inventada de la nada. Nace del hecho de lo que ocurrió después de que China rechazara el neoliberalismo.<br><br>
+                El viejo sistema está colapsando. El Marco GL es la alternativa preparada para lo que viene después.<br>
+                <strong style="color:#fbbf24;">Este camino ya ha sido probado — China es el único país del mundo que lo ha recorrido con éxito.</strong> El siguiente paso es hacer del Marco GL una ruta viable para otras naciones también.
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <strong>Esto no es "fallo de mercado" — es "fallo de legitimidad gubernamental".</strong>
+        </div>
+        <p>El problema del neoliberalismo no es que "hiciera algo mal", sino que es <strong>un sistema diseñado fundamentalmente para servir al capital, no a las personas.</strong> Su lógica central: cuanto más débil el Estado, mejor; cuanto más fuerte el mercado, mejor; cuanto más "flexibles" las personas, mejor.</p>
+        <p>Esta lógica debe ser reemplazada por un marco de gobernanza <strong>medido por las cargas reales sobre los ciudadanos</strong>. Esa es la misión del <strong>Marco GL (Legitimidad Gubernamental)</strong>.</p>
+
+        <h2>II. Principios fundamentales del Marco GL</h2>
+        <p>El Marco GL no presupone ideología alguna, no exige cambios de régimen ni depende de teorías externas. Solo pregunta una cosa:</p>
+        <div class="highlight-box">
+            <strong>Bajo el sistema actual, ¿las cargas reales sobre los ciudadanos disminuyen o aumentan año tras año?</strong>
+        </div>
+        <p>La legitimidad del gobierno no proviene de elecciones, declaraciones o reconocimiento internacional, sino de <strong>reducir continuamente los "Ocho Costes GL" que soporta la población</strong>:</p>
+        <table>
+            <thead><tr><th>#</th><th>Tipo de Coste</th><th>Definición</th><th>Objetivo Político</th></tr></thead>
+            <tbody>
+                <tr><td>1</td><td>Coste de Espera</td><td>Retrasos innecesarios impuestos por los procesos administrativos</td><td>Reducir en más del 80%</td></tr>
+                <tr><td>2</td><td>Coste de Repetición</td><td>Recursos y trabajo duplicados por fragmentación institucional</td><td>Ventanilla única, una sola presentación</td></tr>
+                <tr><td>3</td><td>Coste de Colapso</td><td>Consecuencias catastróficas del fallo sistémico</td><td>Crear redundancia y resiliencia</td></tr>
+                <tr><td>4</td><td>Coste de Asimetría de Información</td><td>Desequilibrio por monopolio de conocimiento y poder</td><td>Algoritmos abiertos, documentos en lenguaje claro</td></tr>
+                <tr><td>5</td><td>Coste Psicológico</td><td>Miedo, ansiedad y estrés impuestos por las instituciones</td><td>Establecer un Índice de Percepción Ciudadana</td></tr>
+                <tr><td>6</td><td>Coste de Oportunidad</td><td>Innovación nunca realizada por restricciones institucionales</td><td>Crear un Fondo de Visión a Largo Plazo</td></tr>
+                <tr><td>7</td><td>Vías de Transferencia</td><td>Flujo unidireccional de valor público a cuentas privadas</td><td>Auditoría transparente, recuperación de beneficios excesivos</td></tr>
+                <tr><td>8</td><td>Grado de Cierre</td><td>Capacidad del sistema para rechazar desafíos externos y autocorregirse</td><td>Introducir mecanismos de verificación independiente</td></tr>
+            </tbody>
+        </table>
+        <p><strong>Un país con gobernanza efectiva es aquel donde estos ocho costes disminuyen constantemente.</strong></p>
+
+        <h2>III. Plan Alternativo en Cinco Etapas</h2>
+        <p>El plan se divide en cinco etapas, que pueden implementarse en paralelo según las condiciones nacionales. La clave es <strong>reemplazar sistemáticamente la inercia institucional neoliberal, no parchearla.</strong></p>
+
+        <h3>Etapa 1: Reinicio del Lenguaje — Recuperar el Poder de Definir la Gobernanza</h3>
+        <ul>
+            <li><strong>Publicar un Libro Blanco sobre el Lenguaje de Gobernanza Nacional</strong>, prohibiendo oficialmente los siguientes términos en documentos oficiales:<br>
+                "Desregulación" → "Reducir los costes de espera de los ciudadanos"<br>
+                "Privatización" → "Auditoría de transferencia de activos públicos"<br>
+                "Disciplina fiscal" → "Maximización del valor público"<br>
+                "Externalización" → "Responsabilidad por resultados"</li>
+            <li><strong>Todos los nuevos proyectos de ley y documentos políticos</strong> deben ser "traducidos" a la terminología GL; de lo contrario, no serán considerados.</li>
+            <li>Crear un Comité de Revisión del Lenguaje de Gobernanza compuesto por expertos no partidistas para asegurar que el sistema administrativo internalice gradualmente el nuevo marco cognitivo.</li>
+        </ul>
+        <p><em>Efecto esperado: el cambio de lenguaje forzará un cambio de mentalidad. En tres meses, los criterios del sistema administrativo para "buena política" comenzarán a desplazarse.</em></p>
+
+        <h3>Etapa 2: Reinicio de Indicadores — Sustituir el Culto al PIB por el Índice GL</h3>
+        <ul>
+            <li><strong>Abrogar el PIB como indicador central de rendimiento nacional.</strong></li>
+            <li><strong>Publicar un Informe GL Nacional anual</strong> que divulgue obligatoriamente: coste medio de espera, índice de asimetría de información, índice de coste psicológico y auditoría detallada de las vías de transferencia.</li>
+            <li>Crear una <strong>Autoridad Independiente de Datos GL</strong>, directamente responsable ante el jefe de Estado o el Parlamento, libre de interferencias ministeriales.</li>
+            <li>Utilizar el Índice GL como base para medir la calidad de la gobernanza en todas las negociaciones internacionales y conversaciones de ayuda, reemplazando las evaluaciones de las agencias de calificación.</li>
+        </ul>
+        <p><em>Efecto esperado: en un año, los responsables políticos ya no podrán usar "el PIB crece" para evitar abordar los puntos de dolor de la población.</em></p>
+
+        <h3>Etapa 3: Reinicio Institucional — Sustituir la "Justicia Procesal" por la "Verificación de Resultados"</h3>
+        <ul>
+            <li><strong>Terminar los contratos de externalización indefinidos y las licitaciones perpetuas.</strong></li>
+            <li><strong>Promulgar una Ley de Entrega Pública</strong> que exija que todos los proyectos públicos tengan puntos de finalización claramente verificables; los contratistas deben depositar una "garantía de rendimiento" — si no cumplen los resultados acordados en 90 días, se pierde la garantía y se les incluye en una lista negra.</li>
+            <li>Promover a los funcionarios basándose en "resultados reales en la resolución de problemas crónicos intersectoriales", no en antigüedad o exámenes.</li>
+            <li>Los ministros deben comparecer ante una "audiencia pública de entrega" cada trimestre, respondiendo solo a: "¿Cuánto se han reducido los puntos de dolor de la población?"</li>
+        </ul>
+        <p><em>Efecto esperado: en 18 meses, el sistema administrativo pasa de estar "orientado a documentos" a estar "orientado a resultados".</em></p>
+
+        <h3>Etapa 4: Reinicio del Talento — Sustituir el "MPA" por el "Ingeniero de Gobernanza"</h3>
+        <ul>
+            <li><strong>Reducir el peso excesivo en "memorizar leyes y teorías" en los exámenes de la función pública.</strong></li>
+            <li><strong>Crear una Academia Nacional de Ingeniería de Gobernanza</strong> con cursos básicos: práctica de los Ocho Parámetros GL, dinámica de sistemas, investigación de campo, visualización de datos.</li>
+            <li>Requisito de graduación: resolver de forma independiente un "caso arraigado a nivel local", con el informe final sujeto a verificación pública mediante el Índice GL.</li>
+            <li>Los altos funcionarios en activo deben obtener la certificación de "Verificador GL de Gobernanza" en un plazo de tres años, o no podrán ser reelegidos.</li>
+        </ul>
+        <p><em>Efecto esperado: en tres años, una nueva generación de funcionarios poseerá la capacidad de "descomponer sistemas y verificar resultados".</em></p>
+
+        <h3>Etapa 5: Reinicio de Alianzas — Sustituir el "Consenso de Washington" por una "Comunidad de Gobernanza del Sur Global"</h3>
+        <ul>
+            <li><strong>Declarar formalmente la no adhesión a las calificaciones del FMI y las tres principales agencias de calificación.</strong></li>
+            <li><strong>Lanzar la Alianza GL de Gobernanza del Sur Global</strong> con reconocimiento mutuo del Índice GL; establecer un Programa de Intercambio Técnico GL; proponer en la ONU reemplazar los tradicionales "informes de derechos humanos" por el Informe GL anual como umbral para la ayuda.</li>
+            <li>Publicar el <em>Consenso GL de Yakarta/Kigali/Beijing</em>, declarando explícitamente que las naciones del Sur ya no aceptarán consejos de gobernanza externos basados en el neoliberalismo.</li>
+        </ul>
+        <p><em>Efecto esperado: en cinco años, el Sur Global habrá formado un sistema de discurso de gobernanza independiente de la certificación occidental.</em></p>
+
+        <h2>IV. Hoja de Ruta de Implementación y Control de Riesgos</h2>
+        <table>
+            <thead><tr><th>Etapa</th><th>Plazo</th><th>Acciones Clave</th></tr></thead>
+            <tbody>
+                <tr><td>Reinicio del Lenguaje</td><td>Meses 1‑3</td><td>Publicar Libro Blanco, prohibir términos antiguos, crear comité de revisión</td></tr>
+                <tr><td>Reinicio de Indicadores</td><td>Meses 3‑9</td><td>Crear Autoridad de Datos GL, publicar primer Informe GL</td></tr>
+                <tr><td>Reinicio Institucional</td><td>Meses 6‑18</td><td>Promulgar Ley de Entrega Pública, iniciar audiencias de entrega</td></tr>
+                <tr><td>Reinicio del Talento</td><td>Meses 12‑36</td><td>Fundar Academia de Ingeniería de Gobernanza, iniciar certificación</td></tr>
+                <tr><td>Reinicio de Alianzas</td><td>Meses 24‑60</td><td>Lanzar Alianza GL, publicar consenso internacional</td></tr>
+            </tbody>
+        </table>
+        <p><strong>Mitigación de riesgos</strong>: Resistencia de intereses creados → exponer las vías de transferencia mediante la transparencia del Índice GL; inercia burocrática → incorporar indicadores GL en las evaluaciones de rendimiento; presión internacional → crear poder de negociación colectiva a través de la Alianza GL; carencias técnicas → recurrir a intercambios técnicos GL.</p>
+
+        <div class="highlight-box">
+            <strong>Conclusión</strong><br>
+            El neoliberalismo no es un conjunto de teorías económicas — es un sistema de custodia cognitiva. Para escapar de él, debemos reemplazarlo por un sistema operativo de gobernanza completamente nuevo.<br>
+            El Marco GL no ofrece una ideología, sino un conjunto de herramientas de gobernanza medible, verificable y transferible entre culturas.<br>
+            <strong>Desde hoy, la legitimidad de un gobierno ya no reside en lo bien que habla, sino en cuánto puede reducir las cargas reales de su pueblo.</strong>
+        </div>
+        <div class="footnote">Esta propuesta ha sido elaborada por GFI Flow Intelligence bajo el Marco GL (Legitimidad Gubernamental). Se invita a los gobiernos a traducirla, adaptarla y adoptarla.</div>
+    </div>
+
+</div>
+
+<script>
+    (function() {
+        const titleMap = {
+            'zh-CN': { main: 'GL Framework · 治理改革方案', sub: 'Governance Legitimacy Framework · 治理正当性框架' },
+            'zh-TW': { main: 'GL Framework · 治理改革方案', sub: 'Governance Legitimacy Framework · 治理正當性框架' },
+            'en': { main: 'GL Framework · Governance Reform Proposal', sub: 'Governance Legitimacy Framework · GL Framework' },
+            'es': { main: 'Marco GL · Propuesta de Reforma Gubernamental', sub: 'Marco de Legitimidad Gubernamental · GL Framework' }
+        };
+
+        const langBtns = document.querySelectorAll('.lang-btn');
+        const glTitle = document.getElementById('glTitle');
+        const glSub = document.getElementById('glSub');
+        const contents = {
+            'zh-CN': document.getElementById('zh-CN'),
+            'zh-TW': document.getElementById('zh-TW'),
+            'en': document.getElementById('en'),
+            'es': document.getElementById('es')
+        };
+
+        function switchLang(lang) {
+            if (glTitle && titleMap[lang]) {
+                glTitle.textContent = titleMap[lang].main;
+            }
+            if (glSub && titleMap[lang]) {
+                glSub.textContent = titleMap[lang].sub;
+            }
+
+            langBtns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) {
+                    btn.classList.add('active');
+                }
+            });
+
+            Object.keys(contents).forEach(key => {
+                if (contents[key]) {
+                    contents[key].classList.remove('active');
+                }
+            });
+            if (contents[lang]) {
+                contents[lang].classList.add('active');
+            }
+        }
+
+        langBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const lang = this.dataset.lang;
+                if (lang) switchLang(lang);
+            });
+        });
+
+        document.getElementById('downloadPdf').addEventListener('click', function() {
+            window.print();
+        });
+
+        switchLang('zh-CN');
+    })();
+</script>
+
+</body>
+</html>
