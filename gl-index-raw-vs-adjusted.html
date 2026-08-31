@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GL Index — Raw vs. Adjusted | Scale-Weighted Model</title>
+    <title>GL Index — 原始 vs 校正後 | 規模加權模型</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
@@ -54,11 +54,13 @@
         .weight-grid .w-item .w-title.start{color:#fbbf24}
         .weight-grid .w-item .w-title.outcome{color:#9FE870}
         .weight-formula{font-size:.65rem;color:rgba(255,255,255,.2);margin-top:.6rem;text-align:center;font-family:'DM Mono',monospace}
+
         .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:10px;margin-bottom:1.5rem}
         .stat-card{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:.6rem .8rem;text-align:center}
         .stat-card .lbl{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.3)}
         .stat-card .val{font-family:'DM Mono',monospace;font-size:1.2rem;font-weight:700;line-height:1.2}
         .stat-card .dsc{font-size:.5rem;color:rgba(255,255,255,.2);margin-top:2px}
+
         .top-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:1.5rem;max-width:780px;margin-left:auto;margin-right:auto}
         .top-card{background:rgba(255,255,255,.02);border-radius:12px;padding:.8rem 1rem;text-align:center;border:1px solid rgba(255,255,255,.06)}
         .top-card .rank-label{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.08em;text-transform:uppercase;color:#9fb0c8}
@@ -71,6 +73,7 @@
         .top-card.silver .big-score{color:#7DD3FC}
         .top-card.bronze{border-color:rgba(251,191,36,.2)}
         .top-card.bronze .big-score{color:#fbbf24}
+
         .table-wrap{overflow-x:auto;border-radius:12px;border:1px solid rgba(255,255,255,.06);margin-bottom:1.2rem}
         table{width:100%;border-collapse:collapse;font-family:'DM Mono',monospace;font-size:.65rem;min-width:820px}
         th{text-align:left;padding:7px 8px;font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.2);border-bottom:1px solid rgba(255,255,255,.06);font-weight:400;background:rgba(0,0,0,.2);white-space:nowrap}
@@ -93,11 +96,6 @@
         .delta-up{color:#9FE870;background:rgba(159,232,112,.08)}
         .delta-down{color:#f87171;background:rgba(248,113,113,.08)}
         .delta-same{color:rgba(255,255,255,.2);background:rgba(255,255,255,.04)}
-        .legend{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:1rem 0;font-size:.55rem;font-family:'DM Mono',monospace}
-        .legend-item{display:flex;align-items:center;gap:4px;color:rgba(255,255,255,.3)}
-        .legend-item .dot{width:9px;height:9px;border-radius:3px}
-        .footnote{font-size:.55rem;color:rgba(255,255,255,.2);text-align:center;font-family:'DM Mono',monospace;border-top:1px solid rgba(255,255,255,.05);padding-top:1rem;margin-top:.8rem}
-        .footnote a{color:#7DD3FC;text-decoration:none}
 
         .gl100-toggle{display:flex;justify-content:center;margin:1rem auto}
         .gl100-toggle-btn{background:rgba(159,232,112,.08);border:1px solid rgba(159,232,112,.3);padding:12px 32px;border-radius:40px;font-family:'DM Mono',monospace;font-size:13px;letter-spacing:.08em;cursor:pointer;transition:all .25s;display:inline-flex;align-items:center;gap:12px;color:#9FE870}
@@ -107,8 +105,105 @@
         .gl100-content{display:none}
         .gl100-content.open{display:block;animation:fadeIn .4s ease}
 
+        .legend{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:1rem 0;font-size:.55rem;font-family:'DM Mono',monospace}
+        .legend-item{display:flex;align-items:center;gap:4px;color:rgba(255,255,255,.3)}
+        .legend-item .dot{width:9px;height:9px;border-radius:3px}
+
+        .footnote{font-size:.55rem;color:rgba(255,255,255,.2);text-align:center;font-family:'DM Mono',monospace;border-top:1px solid rgba(255,255,255,.05);padding-top:1rem;margin-top:.8rem}
+        .footnote a{color:#7DD3FC;text-decoration:none}
+
+        /* ===== 頁面底部 — 數據來源與方法論連結區塊 ===== */
+        .sources-footer {
+            margin-top: 2.5rem;
+            padding: 1.8rem 2rem;
+            border-radius: 16px;
+            background: rgba(255,255,255,.015);
+            border: 1px solid rgba(255,255,255,.06);
+            text-align: center;
+        }
+        .sources-footer .sources-inner {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 16px 24px;
+        }
+        .sources-footer .sources-text {
+            text-align: left;
+            max-width: 520px;
+        }
+        .sources-footer .sources-text .sources-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,.2);
+            margin-bottom: 4px;
+        }
+        .sources-footer .sources-text .sources-desc {
+            font-size: 0.75rem;
+            color: #9fb0c8;
+            line-height: 1.7;
+        }
+        .sources-footer .sources-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .sources-footer .sources-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 28px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-family: 'DM Mono', monospace;
+            font-size: 12px;
+            letter-spacing: .08em;
+            transition: all .22s;
+        }
+        .sources-footer .sources-btn.primary {
+            border: 1px solid rgba(159,232,112,.4);
+            background: rgba(159,232,112,.1);
+            color: #9FE870;
+        }
+        .sources-footer .sources-btn.primary:hover {
+            background: rgba(159,232,112,.2);
+            border-color: #9FE870;
+            transform: translateY(-2px);
+        }
+        .sources-footer .sources-btn.primary .arrow {
+            display: inline-block;
+            transition: transform .2s;
+        }
+        .sources-footer .sources-btn.primary:hover .arrow {
+            transform: translateX(4px);
+        }
+        .sources-footer .sources-btn.secondary {
+            border: 1px solid rgba(125,211,252,.3);
+            background: rgba(125,211,252,.06);
+            color: #7DD3FC;
+        }
+        .sources-footer .sources-btn.secondary:hover {
+            background: rgba(125,211,252,.12);
+            border-color: #7DD3FC;
+            transform: translateY(-2px);
+        }
+        .sources-footer .sources-tag-list {
+            margin-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px 16px;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.5rem;
+            letter-spacing: 0.04em;
+            color: rgba(255,255,255,.15);
+        }
+        .sources-footer .sources-tag-list span { color: rgba(255,255,255,.15); }
+
         @media(max-width:820px){.rationale-box{padding:1.2rem 1rem}.rationale-box .comparison-grid{grid-template-columns:1fr}.weight-grid{grid-template-columns:1fr}.top-grid{grid-template-columns:1fr 1fr}}
-        @media(max-width:600px){h1{font-size:1.4rem}.top-grid{grid-template-columns:1fr}.stats-grid{grid-template-columns:repeat(3,1fr)}table{font-size:.5rem;min-width:520px}.rationale-box h2{font-size:1.1rem}}
+        @media(max-width:600px){h1{font-size:1.4rem}.top-grid{grid-template-columns:1fr}.stats-grid{grid-template-columns:repeat(3,1fr)}table{font-size:.5rem;min-width:520px}.rationale-box h2{font-size:1.1rem}.sources-footer{padding:1.2rem 1rem}.sources-footer .sources-text{text-align:center}}
     </style>
 </head>
 <body>
@@ -116,15 +211,178 @@
 
     <!-- 語言切換 -->
     <div class="lang-switch">
-        <button class="lang-btn" data-lang="zh">中文</button>
-        <button class="lang-btn active" data-lang="en">English</button>
+        <button class="lang-btn active" data-lang="zh">中文</button>
+        <button class="lang-btn" data-lang="en">English</button>
         <button class="lang-btn" data-lang="es">Español</button>
     </div>
 
     <!-- ============================================================ -->
-    <!-- 英文版 (默認) -->
+    <!-- 中文版 -->
     <!-- ============================================================ -->
-    <div class="lang-block active" id="en">
+    <div class="lang-block active" id="zh">
+        <h1>GL Index — 原始 vs 校正後對照</h1>
+        <div class="subhead">規模加權模型 · 校正後 GL = 原始 GL × 規模 × 起始 × 成果</div>
+        <div class="meta">v5.4 · 2026年8月31日 · 12 項參數 · 100 經濟體</div>
+
+        <!-- 合理性解釋 -->
+        <div class="rationale-box">
+            <h2>為什麼規模加權模型更接近現實？</h2>
+            <p><span class="highlight">原始 GL 指數的缺陷：</span>它計算的是「人均治理品質」，但這無法反映治理的<span class="highlight">絕對影響力</span>。</p>
+
+            <div class="comparison-grid">
+                <div class="comp-item">
+                    <div class="label">🇩🇰 丹麥</div>
+                    <div class="big" style="color:#7DD3FC;">0.83</div>
+                    <div class="desc">原始 GL · 人口 590 萬</div>
+                    <div class="sub-detail">人均品質極高，但影響 590 萬人</div>
+                </div>
+                <div class="comp-item">
+                    <div class="label">🇨🇳 中國</div>
+                    <div class="big" style="color:#9FE870;">0.59</div>
+                    <div class="desc">原始 GL · 人口 14.1 億</div>
+                    <div class="sub-detail">人均品質中等，但影響 14.1 億人</div>
+                </div>
+            </div>
+
+            <div class="insight-block">
+                <p><strong>這就像說「一家精品店的服務品質優於沃爾瑪，所以精品店是更好的零售系統」——但沃爾瑪每天服務數百萬人，解決的是數百萬人的生存問題。</strong></p>
+            </div>
+
+            <h3>原始模型的三大缺陷</h3>
+            <div class="table-wrap-inline">
+                <table>
+                    <thead><tr><th>缺陷</th><th>說明</th><th>中國 vs 丹麥</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="highlight-blue">無視規模</span></td><td>治理14億人 vs 590萬人，難度指數級增加</td><td>中國複雜度是丹麥數百倍</td></tr>
+                        <tr><td><span class="highlight-gold">無視起點</span></td><td>從更低起點起步，需要更大努力</td><td>中國從識字率20%→97%（+77%），丹麥從95%→99%（+4%）</td></tr>
+                        <tr><td><span class="highlight">無視絕對成果</span></td><td>絕對受益人數決定治理的真實影響力</td><td>中國8億人脫貧，丹麥無大規模貧困問題</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>三個校正維度</h3>
+            <div class="comparison-grid">
+                <div class="comp-item" style="border-left:3px solid #7DD3FC;">
+                    <div class="label" style="color:#7DD3FC;">📐 規模係數</div>
+                    <div class="desc">人口 × 地理 × 行政層級 × 民族多樣性</div>
+                    <div class="sub-detail">治理14億人 vs 590萬人 — 難度指數級增加</div>
+                </div>
+                <div class="comp-item" style="border-left:3px solid #fbbf24;">
+                    <div class="label" style="color:#fbbf24;">📈 起始條件係數</div>
+                    <div class="desc">基礎設施 × 識字率 × 預期壽命 × 人均GDP起點</div>
+                    <div class="sub-detail">從零建設 vs 繼承基礎設施 — 進步難度完全不同</div>
+                </div>
+                <div class="comp-item" style="border-left:3px solid #9FE870;">
+                    <div class="label" style="color:#9FE870;">🏆 成果規模係數</div>
+                    <div class="desc">脫貧人數 × 基建覆蓋 × 公共服務受益規模</div>
+                    <div class="sub-detail">8億人受益 vs 590萬人受益 — 影響力完全不同</div>
+                </div>
+            </div>
+
+            <h3>現實檢驗：校正前後誰更接近真實世界？</h3>
+            <div class="table-wrap-inline">
+                <table>
+                    <thead><tr><th>國家</th><th>原始排名</th><th>校正後排名</th><th>變化</th><th>現實中的影響力</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="highlight">中國</span></td><td>44</td><td><span class="highlight">1</span></td><td><span class="delta-up">↑ 43</span></td><td>全球第二大經濟體、聯合國安理會常任理事國</td></tr>
+                        <tr><td><span class="highlight-blue">印度</span></td><td>76</td><td><span class="highlight-blue">2</span></td><td><span class="delta-up">↑ 74</span></td><td>14億人口、全球第五大經濟體</td></tr>
+                        <tr><td><span class="highlight-gold">丹麥</span></td><td>1</td><td>58</td><td><span class="delta-down">↓ 57</span></td><td>小國、區域影響力有限</td></tr>
+                        <tr><td><span class="highlight-red">台灣</span></td><td>33</td><td>68</td><td><span class="delta-down">↓ 35</span></td><td>地區經濟體、影響力有限</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="insight-block">
+                <p><strong>校正後的排名，與這些國家在現實世界中的實際影響力、問題解決能力和歷史進步幅度高度一致。</strong></p>
+            </div>
+
+            <div class="conclusion-box">
+                <p><strong>治理的真正價值，不在於「平均品質有多高」，而在於「在多大規模上、從多低的起點、讓多少人受益」。</strong></p>
+                <p style="font-size:.75rem;color:#9fb0c8;margin-top:.3rem;">原始模型問：「這個國家的平均值有多高？」<br>規模加權模型問：「這個國家在它的規模和條件下，實際交付了多少？」</p>
+            </div>
+        </div>
+
+        <!-- 權重公式 -->
+        <div class="weight-box">
+            <div class="label">📐 規模加權模型 · 三個校正維度</div>
+            <div class="weight-grid">
+                <div class="w-item"><span class="w-title scale">規模係數</span><br>人口 × 地理 × 行政層級 × 民族多樣性</div>
+                <div class="w-item"><span class="w-title start">起始條件係數</span><br>基礎設施 × 識字率 × 預期壽命 × 人均GDP起點</div>
+                <div class="w-item"><span class="w-title outcome">成果規模係數</span><br>脫貧人數 × 基建覆蓋 × 公共服務受益規模</div>
+            </div>
+            <div class="weight-formula">校正後 GL = 原始 GL × 規模係數 × 起始條件係數 × 成果規模係數</div>
+        </div>
+
+        <!-- 前三名對照 -->
+        <div class="top-grid">
+            <div class="top-card gold"><div class="rank-label">🥇 校正後 #1</div><div class="big-score">1.68</div><div class="sub-info">🇨🇳 中國</div><div class="detail">原始 0.59 · 規模 1.42 · 起始 1.35 · 成果 1.48</div></div>
+            <div class="top-card silver"><div class="rank-label">🥈 校正後 #2</div><div class="big-score">1.04</div><div class="sub-info">🇮🇳 印度</div><div class="detail">原始 0.43 · 規模 1.38 · 起始 1.30 · 成果 1.35</div></div>
+            <div class="top-card bronze"><div class="rank-label">📊 原始 #1</div><div class="big-score">0.83</div><div class="sub-info">🇩🇰 丹麥</div><div class="detail">校正後 #58 · 規模 0.95 · 起始 0.98 · 成果 0.98</div></div>
+        </div>
+
+        <!-- 統計卡片 -->
+        <div class="stats-grid" id="stats-zh"></div>
+
+        <!-- 展開/收合按鈕 -->
+        <div class="gl100-toggle">
+            <button class="gl100-toggle-btn" onclick="toggleGL100('zh')">
+                <span>📊</span>
+                <span id="gl100ToggleLabel-zh">展開 100 國排名</span>
+                <span class="arrow" id="gl100ToggleArrow-zh">▼</span>
+            </button>
+        </div>
+
+        <!-- 排名表格 -->
+        <div class="gl100-content" id="gl100Content-zh">
+            <div class="table-wrap" id="table-zh"></div>
+        </div>
+
+        <!-- 圖例 -->
+        <div class="legend">
+            <span class="legend-item"><span class="dot" style="background:#9FE870;"></span>A+ (≥1.00)</span>
+            <span class="legend-item"><span class="dot" style="background:#7DD3FC;"></span>A (0.80–0.99)</span>
+            <span class="legend-item"><span class="dot" style="background:#fbbf24;"></span>B (0.70–0.79)</span>
+            <span class="legend-item"><span class="dot" style="background:#fb923c;"></span>C (0.60–0.69)</span>
+            <span class="legend-item"><span class="dot" style="background:#f87171;"></span>D (0.50–0.59)</span>
+            <span class="legend-item"><span class="dot" style="background:#ef4444;"></span>F (&lt;0.50)</span>
+        </div>
+
+        <!-- ===== 頁面底部 — 數據來源與方法論連結區塊（中文） ===== -->
+        <div class="sources-footer">
+            <div class="sources-inner">
+                <div class="sources-text">
+                    <div class="sources-label">📊 數據來源與方法論</div>
+                    <div class="sources-desc">12 項參數 · 三維校正模型 · V-Dem · 世界銀行 · IMF · WVS · OECD · 聯合國人口司 · 麥迪森項目</div>
+                </div>
+                <div class="sources-buttons">
+                    <a href="/gl-index-data-sources.html" class="sources-btn primary">
+                        <span>📊</span> 數據來源與方法論 <span class="arrow">→</span>
+                    </a>
+                    <a href="/gl-methodology.html" class="sources-btn secondary">
+                        <span>📖</span> 完整方法論 →
+                    </a>
+                </div>
+            </div>
+            <div class="sources-tag-list">
+                <span>V-Dem v15</span><span>·</span>
+                <span>世界銀行 WGI</span><span>·</span>
+                <span>IMF 政府財政統計</span><span>·</span>
+                <span>世界價值觀調查</span><span>·</span>
+                <span>OECD</span><span>·</span>
+                <span>聯合國人口司</span><span>·</span>
+                <span>麥迪森項目</span><span>·</span>
+                <span>透明國際</span><span>·</span>
+                <span>ILO · FAO · WEF · LAI 2.0</span>
+            </div>
+        </div>
+
+        <div class="footnote">📊 校正後 GL = 原始 GL × 規模係數 × 起始條件係數 × 成果規模係數 · <a href="/gl-methodology.html">方法論 →</a></div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 英文版 -->
+    <!-- ============================================================ -->
+    <div class="lang-block" id="en">
         <h1>GL Index — Raw vs. Adjusted</h1>
         <div class="subhead">Scale-Weighted Model · Adjusted GL = Raw GL × Scale × Start × Outcome</div>
         <div class="meta">v5.4 · August 31, 2026 · 12 Parameters · 100 Economies</div>
@@ -244,133 +502,37 @@
             <span class="legend-item"><span class="dot" style="background:#f87171;"></span>D (0.50–0.59)</span>
             <span class="legend-item"><span class="dot" style="background:#ef4444;"></span>F (&lt;0.50)</span>
         </div>
+
+        <!-- ===== 頁面底部 — 數據來源與方法論連結區塊（英文） ===== -->
+        <div class="sources-footer">
+            <div class="sources-inner">
+                <div class="sources-text">
+                    <div class="sources-label">📊 Data Sources &amp; Methodology</div>
+                    <div class="sources-desc">12 Parameters · Three-Factor Adjustment · V-Dem · World Bank · IMF · WVS · OECD · UN Population · Maddison Project</div>
+                </div>
+                <div class="sources-buttons">
+                    <a href="/gl-index-data-sources.html" class="sources-btn primary">
+                        <span>📊</span> Data Sources &amp; Methodology <span class="arrow">→</span>
+                    </a>
+                    <a href="/gl-methodology.html" class="sources-btn secondary">
+                        <span>📖</span> Full Methodology →
+                    </a>
+                </div>
+            </div>
+            <div class="sources-tag-list">
+                <span>V-Dem v15</span><span>·</span>
+                <span>World Bank WGI</span><span>·</span>
+                <span>IMF GFS</span><span>·</span>
+                <span>WVS</span><span>·</span>
+                <span>OECD</span><span>·</span>
+                <span>UN Population</span><span>·</span>
+                <span>Maddison Project</span><span>·</span>
+                <span>Transparency International</span><span>·</span>
+                <span>ILO · FAO · WEF · LAI 2.0</span>
+            </div>
+        </div>
+
         <div class="footnote">📊 Adjusted GL = Raw GL × Scale × Start × Outcome · <a href="/gl-methodology.html">Methodology →</a></div>
-    </div>
-
-    <!-- ============================================================ -->
-    <!-- 中文版 -->
-    <!-- ============================================================ -->
-    <div class="lang-block" id="zh">
-        <h1>GL Index 原始 vs 校正後對照</h1>
-        <div class="subhead">規模加權模型 · 校正後 GL = 原始 GL × 規模 × 起始 × 成果</div>
-        <div class="meta">v5.4 · 2026年8月31日 · 12 項參數 · 100 經濟體</div>
-
-        <div class="rationale-box">
-            <h2>為什麼規模加權模型更接近現實？</h2>
-            <p><span class="highlight">原始 GL 指數的缺陷：</span>它計算的是「人均治理品質」，但這無法反映治理的<span class="highlight">絕對影響力</span>。</p>
-
-            <div class="comparison-grid">
-                <div class="comp-item">
-                    <div class="label">🇩🇰 丹麥</div>
-                    <div class="big" style="color:#7DD3FC;">0.83</div>
-                    <div class="desc">原始 GL · 人口 590 萬</div>
-                    <div class="sub-detail">人均品質極高，但影響 590 萬人</div>
-                </div>
-                <div class="comp-item">
-                    <div class="label">🇨🇳 中國</div>
-                    <div class="big" style="color:#9FE870;">0.59</div>
-                    <div class="desc">原始 GL · 人口 14.1 億</div>
-                    <div class="sub-detail">人均品質中等，但影響 14.1 億人</div>
-                </div>
-            </div>
-
-            <div class="insight-block">
-                <p><strong>這就像說「一家精品店的服務品質優於沃爾瑪，所以精品店是更好的零售系統」——但沃爾瑪每天服務數百萬人，解決的是數百萬人的生存問題。</strong></p>
-            </div>
-
-            <h3>原始模型的三大缺陷</h3>
-            <div class="table-wrap-inline">
-                <table>
-                    <thead><tr><th>缺陷</th><th>說明</th><th>中國 vs 丹麥</th></tr></thead>
-                    <tbody>
-                        <tr><td><span class="highlight-blue">無視規模</span></td><td>治理14億人 vs 590萬人，難度指數級增加</td><td>中國複雜度是丹麥數百倍</td></tr>
-                        <tr><td><span class="highlight-gold">無視起點</span></td><td>從更低起點起步，需要更大努力</td><td>中國從識字率20%→97%（+77%），丹麥從95%→99%（+4%）</td></tr>
-                        <tr><td><span class="highlight">無視絕對成果</span></td><td>絕對受益人數決定治理的真實影響力</td><td>中國8億人脫貧，丹麥無大規模貧困問題</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <h3>三個校正維度</h3>
-            <div class="comparison-grid">
-                <div class="comp-item" style="border-left:3px solid #7DD3FC;">
-                    <div class="label" style="color:#7DD3FC;">📐 規模係數</div>
-                    <div class="desc">人口 × 地理 × 行政層級 × 民族多樣性</div>
-                    <div class="sub-detail">治理14億人 vs 590萬人 — 難度指數級增加</div>
-                </div>
-                <div class="comp-item" style="border-left:3px solid #fbbf24;">
-                    <div class="label" style="color:#fbbf24;">📈 起始條件係數</div>
-                    <div class="desc">基礎設施 × 識字率 × 預期壽命 × 人均GDP起點</div>
-                    <div class="sub-detail">從零建設 vs 繼承基礎設施 — 進步難度完全不同</div>
-                </div>
-                <div class="comp-item" style="border-left:3px solid #9FE870;">
-                    <div class="label" style="color:#9FE870;">🏆 成果規模係數</div>
-                    <div class="desc">脫貧人數 × 基建覆蓋 × 公共服務受益規模</div>
-                    <div class="sub-detail">8億人受益 vs 590萬人受益 — 影響力完全不同</div>
-                </div>
-            </div>
-
-            <h3>現實檢驗：校正前後誰更接近真實世界？</h3>
-            <div class="table-wrap-inline">
-                <table>
-                    <thead><tr><th>國家</th><th>原始排名</th><th>校正後排名</th><th>變化</th><th>現實中的影響力</th></tr></thead>
-                    <tbody>
-                        <tr><td><span class="highlight">中國</span></td><td>44</td><td><span class="highlight">1</span></td><td><span class="delta-up">↑ 43</span></td><td>全球第二大經濟體、聯合國安理會常任理事國</td></tr>
-                        <tr><td><span class="highlight-blue">印度</span></td><td>76</td><td><span class="highlight-blue">2</span></td><td><span class="delta-up">↑ 74</span></td><td>14億人口、全球第五大經濟體</td></tr>
-                        <tr><td><span class="highlight-gold">丹麥</span></td><td>1</td><td>58</td><td><span class="delta-down">↓ 57</span></td><td>小國、區域影響力有限</td></tr>
-                        <tr><td><span class="highlight-red">台灣</span></td><td>33</td><td>68</td><td><span class="delta-down">↓ 35</span></td><td>地區經濟體、影響力有限</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="insight-block">
-                <p><strong>校正後的排名，與這些國家在現實世界中的實際影響力、問題解決能力和歷史進步幅度高度一致。</strong></p>
-            </div>
-
-            <div class="conclusion-box">
-                <p><strong>治理的真正價值，不在於「平均品質有多高」，而在於「在多大規模上、從多低的起點、讓多少人受益」。</strong></p>
-                <p style="font-size:.75rem;color:#9fb0c8;margin-top:.3rem;">原始模型問：「這個國家的平均值有多高？」<br>規模加權模型問：「這個國家在它的規模和條件下，實際交付了多少？」</p>
-            </div>
-        </div>
-
-        <div class="weight-box">
-            <div class="label">📐 規模加權模型 · 三個校正維度</div>
-            <div class="weight-grid">
-                <div class="w-item"><span class="w-title scale">規模係數</span><br>人口 × 地理 × 行政層級 × 民族多樣性</div>
-                <div class="w-item"><span class="w-title start">起始條件係數</span><br>基礎設施 × 識字率 × 預期壽命 × 人均GDP起點</div>
-                <div class="w-item"><span class="w-title outcome">成果規模係數</span><br>脫貧人數 × 基建覆蓋 × 公共服務受益規模</div>
-            </div>
-            <div class="weight-formula">校正後 GL = 原始 GL × 規模係數 × 起始條件係數 × 成果規模係數</div>
-        </div>
-
-        <div class="top-grid">
-            <div class="top-card gold"><div class="rank-label">🥇 校正後 #1</div><div class="big-score">1.68</div><div class="sub-info">🇨🇳 中國</div><div class="detail">原始 0.59 · 規模 1.42 · 起始 1.35 · 成果 1.48</div></div>
-            <div class="top-card silver"><div class="rank-label">🥈 校正後 #2</div><div class="big-score">1.04</div><div class="sub-info">🇮🇳 印度</div><div class="detail">原始 0.43 · 規模 1.38 · 起始 1.30 · 成果 1.35</div></div>
-            <div class="top-card bronze"><div class="rank-label">📊 原始 #1</div><div class="big-score">0.83</div><div class="sub-info">🇩🇰 丹麥</div><div class="detail">校正後 #58 · 規模 0.95 · 起始 0.98 · 成果 0.98</div></div>
-        </div>
-
-        <div class="stats-grid" id="stats-zh"></div>
-
-        <div class="gl100-toggle">
-            <button class="gl100-toggle-btn" onclick="toggleGL100('zh')">
-                <span>📊</span>
-                <span id="gl100ToggleLabel-zh">展開 100 國排名</span>
-                <span class="arrow" id="gl100ToggleArrow-zh">▼</span>
-            </button>
-        </div>
-
-        <div class="gl100-content" id="gl100Content-zh">
-            <div class="table-wrap" id="table-zh"></div>
-        </div>
-
-        <div class="legend">
-            <span class="legend-item"><span class="dot" style="background:#9FE870;"></span>A+ (≥1.00)</span>
-            <span class="legend-item"><span class="dot" style="background:#7DD3FC;"></span>A (0.80–0.99)</span>
-            <span class="legend-item"><span class="dot" style="background:#fbbf24;"></span>B (0.70–0.79)</span>
-            <span class="legend-item"><span class="dot" style="background:#fb923c;"></span>C (0.60–0.69)</span>
-            <span class="legend-item"><span class="dot" style="background:#f87171;"></span>D (0.50–0.59)</span>
-            <span class="legend-item"><span class="dot" style="background:#ef4444;"></span>F (&lt;0.50)</span>
-        </div>
-        <div class="footnote">📊 校正後 GL = 原始 GL × 規模係數 × 起始條件係數 × 成果規模係數 · <a href="/gl-methodology.html">方法論 →</a></div>
     </div>
 
     <!-- ============================================================ -->
@@ -496,6 +658,36 @@
             <span class="legend-item"><span class="dot" style="background:#f87171;"></span>D (0.50–0.59)</span>
             <span class="legend-item"><span class="dot" style="background:#ef4444;"></span>F (&lt;0.50)</span>
         </div>
+
+        <!-- ===== 頁面底部 — 數據來源與方法論連結區塊（西班牙文） ===== -->
+        <div class="sources-footer">
+            <div class="sources-inner">
+                <div class="sources-text">
+                    <div class="sources-label">📊 Fuentes de Datos y Metodología</div>
+                    <div class="sources-desc">12 Parámetros · Ajuste Tri‑dimensional · V-Dem · Banco Mundial · FMI · WVS · OECD · Población ONU · Proyecto Maddison</div>
+                </div>
+                <div class="sources-buttons">
+                    <a href="/gl-index-data-sources.html" class="sources-btn primary">
+                        <span>📊</span> Fuentes y Metodología <span class="arrow">→</span>
+                    </a>
+                    <a href="/gl-methodology.html" class="sources-btn secondary">
+                        <span>📖</span> Metodología Completa →
+                    </a>
+                </div>
+            </div>
+            <div class="sources-tag-list">
+                <span>V-Dem v15</span><span>·</span>
+                <span>Banco Mundial WGI</span><span>·</span>
+                <span>FMI GFS</span><span>·</span>
+                <span>WVS</span><span>·</span>
+                <span>OECD</span><span>·</span>
+                <span>Población ONU</span><span>·</span>
+                <span>Proyecto Maddison</span><span>·</span>
+                <span>Transparencia Internacional</span><span>·</span>
+                <span>OIT · FAO · WEF · LAI 2.0</span>
+            </div>
+        </div>
+
         <div class="footnote">📊 GL ajustado = GL bruto × Escala × Inicio × Resultado · <a href="/gl-methodology.html">Metodología →</a></div>
     </div>
 
@@ -723,6 +915,7 @@
             var target = document.getElementById(lang);
             if (target) {
                 target.classList.add('active');
+                // 如果該語言已經展開，重新渲染表格
                 var content = document.getElementById('gl100Content-' + lang);
                 if (content && content.classList.contains('open')) {
                     renderTable(lang);
@@ -732,13 +925,12 @@
     });
 
     // ================================================================
-    //  初始化：英語默認，表格不展開
+    //  初始化
     // ================================================================
     document.addEventListener('DOMContentLoaded', function(){
-        // 預設英文已激活 (active class 在 HTML 中)
-        // 但統計卡片需要先渲染（無論展開與否）
-        renderTable('en');
+        // 預設中文版不展開表格，但統計卡片要先渲染
         renderTable('zh');
+        renderTable('en');
         renderTable('es');
     });
 </script>
