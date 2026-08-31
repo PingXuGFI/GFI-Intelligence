@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GL Index 原始 vs 校正後 — 規模加權模型</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:#0b1220;color:#f8fbff;font-family:'DM Sans',system-ui,sans-serif;font-size:15px;line-height:1.7;padding:1.5rem 1rem}
+        .container{max-width:1180px;margin:0 auto}
+        .lang-switch{display:flex;gap:10px;margin-bottom:1.5rem;flex-wrap:wrap;justify-content:flex-end}
+        .lang-btn{font-family:'DM Mono',monospace;font-size:.7rem;padding:.3rem 1.2rem;border:1px solid rgba(255,255,255,.1);border-radius:20px;background:0 0;color:#9fb0c8;cursor:pointer;transition:all .2s}
+        .lang-btn:hover{border-color:rgba(255,255,255,.3);color:#fff}
+        .lang-btn.active{color:#9FE870;border-color:rgba(159,232,112,.4);background:rgba(159,232,112,.08)}
+        .lang-block{display:none;animation:fadeIn .3s ease}
+        .lang-block.active{display:block}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+        h1{font-family:'DM Serif Display',Georgia,serif;font-size:2.2rem;letter-spacing:.02em;color:#f0f8f0;margin-bottom:.1rem}
+        .subhead{font-family:'DM Mono',monospace;font-size:.75rem;color:#9fb0c8;letter-spacing:.06em}
+        .meta{font-family:'DM Mono',monospace;font-size:.65rem;color:rgba(255,255,255,.2);border-bottom:1px solid rgba(255,255,255,.06);padding-bottom:1rem;margin-bottom:1.5rem}
+
+        /* 合理性解釋區塊 */
+        .rationale-box{background:rgba(255,255,255,.015);border:1px solid rgba(159,232,112,.12);border-radius:16px;padding:1.8rem 2rem;margin-bottom:1.8rem}
+        .rationale-box h2{font-family:'DM Serif Display',Georgia,serif;font-size:1.3rem;color:#e0f0e0;margin-bottom:.6rem}
+        .rationale-box h3{font-family:'DM Serif Display',Georgia,serif;font-size:1rem;color:#c0d8c0;margin:1.2rem 0 .4rem}
+        .rationale-box p{font-size:.8rem;color:#c7d2e3;line-height:1.8;margin-bottom:.8rem}
+        .rationale-box .highlight{color:#9FE870;font-weight:500}
+        .rationale-box .highlight-blue{color:#7DD3FC;font-weight:500}
+        .rationale-box .highlight-gold{color:#fbbf24;font-weight:500}
+        .rationale-box .highlight-red{color:#f87171;font-weight:500}
+        .rationale-box ul{margin:.5rem 0 1rem 1.5rem;color:#c7d2e3;font-size:.8rem;line-height:1.8}
+        .rationale-box ul li{margin-bottom:.3rem}
+        .rationale-box .comparison-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:1rem 0}
+        .rationale-box .comp-item{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:.8rem 1rem}
+        .rationale-box .comp-item .label{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.2)}
+        .rationale-box .comp-item .big{font-family:'DM Mono',monospace;font-size:1.2rem;font-weight:700}
+        .rationale-box .comp-item .desc{font-size:.7rem;color:rgba(255,255,255,.4)}
+        .rationale-box .comp-item .sub-detail{font-size:.6rem;color:rgba(255,255,255,.15);margin-top:2px}
+        .rationale-box .insight-block{background:rgba(159,232,112,.06);border-left:4px solid #9FE870;padding:.8rem 1.2rem;border-radius:0 8px 8px 0;margin:1rem 0}
+        .rationale-box .insight-block p{color:#d8e8d8;margin-bottom:0;font-weight:450}
+        .rationale-box .table-wrap-inline{overflow-x:auto;margin:.8rem 0;border-radius:8px;border:1px solid rgba(255,255,255,.06)}
+        .rationale-box .table-wrap-inline table{width:100%;border-collapse:collapse;font-family:'DM Mono',monospace;font-size:.6rem;min-width:400px}
+        .rationale-box .table-wrap-inline th{padding:5px 8px;font-size:.5rem;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.2);border-bottom:1px solid rgba(255,255,255,.06);background:rgba(0,0,0,.2);text-align:left}
+        .rationale-box .table-wrap-inline td{padding:4px 8px;border-bottom:1px solid rgba(255,255,255,.03);color:#c7d2e3;font-size:.6rem}
+        .rationale-box .table-wrap-inline tr:hover td{background:rgba(255,255,255,.02)}
+        .conclusion-box{background:rgba(159,232,112,.04);border:1px solid rgba(159,232,112,.15);border-radius:12px;padding:1rem 1.5rem;margin-top:1.2rem}
+        .conclusion-box p{color:#d0e8d0;margin-bottom:0;font-weight:450;font-size:.85rem}
+
+        .weight-box{background:rgba(255,255,255,.02);border:1px solid rgba(159,232,112,.15);border-radius:16px;padding:1.2rem 1.8rem;margin-bottom:1.5rem}
+        .weight-box .label{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(159,232,112,.5);margin-bottom:.4rem}
+        .weight-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;font-size:.75rem;color:#9fb0c8}
+        .weight-grid .w-item .w-title{font-weight:600}
+        .weight-grid .w-item .w-title.scale{color:#7DD3FC}
+        .weight-grid .w-item .w-title.start{color:#fbbf24}
+        .weight-grid .w-item .w-title.outcome{color:#9FE870}
+        .weight-formula{font-size:.65rem;color:rgba(255,255,255,.2);margin-top:.6rem;text-align:center;font-family:'DM Mono',monospace}
+        .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:10px;margin-bottom:1.5rem}
+        .stat-card{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:.6rem .8rem;text-align:center}
+        .stat-card .lbl{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.3)}
+        .stat-card .val{font-family:'DM Mono',monospace;font-size:1.2rem;font-weight:700;line-height:1.2}
+        .stat-card .dsc{font-size:.5rem;color:rgba(255,255,255,.2);margin-top:2px}
+        .top-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:1.5rem;max-width:780px;margin-left:auto;margin-right:auto}
+        .top-card{background:rgba(255,255,255,.02);border-radius:12px;padding:.8rem 1rem;text-align:center;border:1px solid rgba(255,255,255,.06)}
+        .top-card .rank-label{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.08em;text-transform:uppercase;color:#9fb0c8}
+        .top-card .big-score{font-family:'DM Mono',monospace;font-size:1.6rem;font-weight:700}
+        .top-card .sub-info{font-size:.7rem;color:#c7d2e3}
+        .top-card .detail{font-size:.5rem;color:rgba(255,255,255,.15);margin-top:3px}
+        .top-card.gold{border-color:rgba(159,232,112,.3)}
+        .top-card.gold .big-score{color:#9FE870}
+        .top-card.silver{border-color:rgba(125,211,252,.2)}
+        .top-card.silver .big-score{color:#7DD3FC}
+        .top-card.bronze{border-color:rgba(251,191,36,.2)}
+        .top-card.bronze .big-score{color:#fbbf24}
+        .table-wrap{overflow-x:auto;border-radius:12px;border:1px solid rgba(255,255,255,.06);margin-bottom:1.2rem}
+        table{width:100%;border-collapse:collapse;font-family:'DM Mono',monospace;font-size:.65rem;min-width:820px}
+        th{text-align:left;padding:7px 8px;font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.2);border-bottom:1px solid rgba(255,255,255,.06);font-weight:400;background:rgba(0,0,0,.2);white-space:nowrap}
+        td{padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.03);color:#c7d2e3;vertical-align:middle}
+        tr:hover td{background:rgba(255,255,255,.025)}
+        .rank{color:rgba(255,255,255,.2);font-size:.5rem;text-align:center;width:30px}
+        .country{font-weight:500;color:#eaf6ff;font-size:.7rem;white-space:nowrap}
+        .gl-adj{font-weight:600;text-align:center;font-size:.7rem}
+        .gl-raw{color:rgba(255,255,255,.25);font-size:.55rem;text-align:center}
+        .grade-badge{display:inline-block;padding:1px 7px;border-radius:20px;font-size:.5rem;font-weight:600;min-width:22px;text-align:center}
+        .grade-aplus{background:rgba(159,232,112,.25);color:#9FE870}
+        .grade-a{background:rgba(159,232,112,.18);color:#9FE870}
+        .grade-b{background:rgba(125,211,252,.18);color:#7DD3FC}
+        .grade-c{background:rgba(251,191,36,.18);color:#fbbf24}
+        .grade-d{background:rgba(251,146,60,.18);color:#fb923c}
+        .grade-f{background:rgba(248,113,113,.18);color:#f87171}
+        .gdp{color:rgba(255,255,255,.2);font-size:.5rem;text-align:right;white-space:nowrap}
+        .region{font-size:.5rem;color:rgba(255,255,255,.12);white-space:nowrap}
+        .delta{font-size:.5rem;padding:1px 5px;border-radius:8px;display:inline-block;white-space:nowrap}
+        .delta-up{color:#9FE870;background:rgba(159,232,112,.08)}
+        .delta-down{color:#f87171;background:rgba(248,113,113,.08)}
+        .delta-same{color:rgba(255,255,255,.2);background:rgba(255,255,255,.04)}
+        .legend{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:1rem 0;font-size:.55rem;font-family:'DM Mono',monospace}
+        .legend-item{display:flex;align-items:center;gap:4px;color:rgba(255,255,255,.3)}
+        .legend-item .dot{width:9px;height:9px;border-radius:3px}
+        .footnote{font-size:.55rem;color:rgba(255,255,255,.2);text-align:center;font-family:'DM Mono',monospace;border-top:1px solid rgba(255,255,255,.05);padding-top:1rem;margin-top:.8rem}
+        .footnote a{color:#7DD3FC;text-decoration:none}
+        @media(max-width:820px){.rationale-box{padding:1.2rem 1rem}.rationale-box .comparison-grid{grid-template-columns:1fr}.weight-grid{grid-template-columns:1fr}.top-grid{grid-template-columns:1fr 1fr}}
+        @media(max-width:600px){h1{font-size:1.4rem}.top-grid{grid-template-columns:1fr}.stats-grid{grid-template-columns:repeat(3,1fr)}table{font-size:.5rem;min-width:520px}.rationale-box h2{font-size:1.1rem}}
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- 語言切換 -->
+    <div class="lang-switch">
+        <button class="lang-btn active" data-lang="zh">中文</button>
+        <button class="lang-btn" data-lang="en">English</button>
+        <button class="lang-btn" data-lang="es">Español</button>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 中文版 -->
+    <!-- ============================================================ -->
+    <div class="lang-block active" id="zh">
+        <h1>GL Index 原始 vs 校正後對照</h1>
+        <div class="subhead">規模加權模型 · 校正後 GL = 原始 GL × 規模 × 起始 × 成果</div>
+        <div class="meta">v5.4 · 2026年8月31日 · 12 項參數 · 100 經濟體</div>
+
+        <!-- ========== 合理性解釋（中文） ========== -->
+        <div class="rationale-box">
+            <h2>為什麼規模加權模型更接近現實？</h2>
+            <p><span class="highlight">原始 GL 指數的缺陷：</span>它計算的是「人均治理品質」，但這無法反映治理的<span class="highlight">絕對影響力</span>。</p>
+
+            <div class="comparison-grid">
+                <div class="comp-item">
+                    <div class="label">🇩🇰 丹麥</div>
+                    <div class="big" style="color:#7DD3FC;">0.83</div>
+                    <div class="desc">原始 GL · 人口 590 萬</div>
+                    <div class="sub-detail">人均品質極高，但影響 590 萬人</div>
+                </div>
+                <div class="comp-item">
+                    <div class="label">🇨🇳 中國</div>
+                    <div class="big" style="color:#9FE870;">0.59</div>
+                    <div class="desc">原始 GL · 人口 14.1 億</div>
+                    <div class="sub-detail">人均品質中等，但影響 14.1 億人</div>
+                </div>
+            </div>
+
+            <div class="insight-block">
+                <p><strong>這就像說「一家精品店的服務品質優於沃爾瑪，所以精品店是更好的零售系統」——但沃爾瑪每天服務數百萬人，解決的是數百萬人的生存問題。</strong></p>
+            </div>
+
+            <h3>原始模型的三大缺陷</h3>
+            <div class="table-wrap-inline">
+                <table>
+                    <thead><tr><th>缺陷</th><th>說明</th><th>中國 vs 丹麥</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="highlight-blue">無視規模</span></td><td>治理14億人 vs 590萬人，難度指數級增加</td><td>中國複雜度是丹麥數百倍</td></tr>
+                        <tr><td><span class="highlight-gold">無視起點</span></td><td>從更低起點起步，需要更大努力</td><td>中國從識字率20%→97%（+77%），丹麥從95%→99%（+4%）</td></tr>
+                        <tr><td><span class="highlight">無視絕對成果</span></td><td>絕對受益人數決定治理的真實影響力</td><td>中國8億人脫貧，丹麥無大規模貧困問題</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>三個校正維度</h3>
+            <div class="comparison-grid">
+                <div class="comp-item" style="border-left:3px solid #7DD3FC;">
+                    <div class="label" style="color:#7DD3FC;">📐 規模係數</div>
+                    <div class="desc">人口 × 地理 × 行政層級 × 民族多樣性</div>
+                    <div class="sub-detail">治理14億人 vs 590萬人 — 難度指數級增加</div>
+                </div>
+                <div class="comp-item" style="border-left:3px solid #fbbf24;">
+                    <div class="label" style="color:#fbbf24;">📈 起始條件係數</div>
+                    <div class="desc">基礎設施 × 識字率 × 預期壽命 × 人均GDP起點</div>
+                    <div class="sub-detail">從零建設 vs 繼承基礎設施 — 進步難度完全不同</div>
+                </div>
+                <div class="comp-item" style="border-left:3px solid #9FE870;">
+                    <div class="label" style="color:#9FE870;">🏆 成果規模係數</div>
+                    <div class="desc">脫貧人數 × 基建覆蓋 × 公共服務受益規模</div>
+                    <div class="sub-detail">8億人受益 vs 590萬人受益 — 影響力完全不同</div>
+                </div>
+            </div>
+
+            <h3>現實檢驗：校正前後誰更接近真實世界？</h3>
+            <div class="table-wrap-inline">
+                <table>
+                    <thead><tr><th>國家</th><th>原始排名</th><th>校正後排名</th><th>變化</th><th>現實中的影響力</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="highlight">中國</span></td><td>44</td><td><span class="highlight">1</span></td><td><span class="delta-up">↑ 43</span></td><td>全球第二大經濟體、聯合國安理會常任理事國</td></tr>
+                        <tr><td><span class="highlight-blue">印度</span></td><td>76</td><td><span class="highlight-blue">2</span></td><td><span class="delta-up">↑ 74</span></td><td>14億人口、全球第五大經濟體</td></tr>
+                        <tr><td><span class="highlight-gold">丹麥</span></td><td>1</td><td>58</td><td><span class="delta-down">↓ 57</span></td><td>小國、區域影響力有限</td></tr>
+                        <tr><td><span class="highlight-red">台灣</span></td><td>33</td><td>68</td><td><span class="delta-down">↓ 35</span></td><td>地區經濟體、影響力有限</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="insight-block">
+                <p><strong>校正後的排名，與這些國家在現實世界中的實際影響力、問題解決能力和歷史進步幅度高度一致。</strong></p>
+            </div>
+
+            <div class="conclusion-box">
+                <p><strong>治理的真正價值，不在於「平均品質有多高」，而在於「在多大規模上、從多低的起點、讓多少人受益」。</strong></p>
+                <p style="font-size:.75rem;color:#9fb0c8;margin-top:.3rem;">原始模型問：「這個國家的平均值有多高？」<br>規模加權模型問：「這個國家在它的規模和條件下，實際交付了多少？」</p>
+            </div>
+        </div>
+
+        <!-- 權重公式 -->
+        <div class="weight-box">
+            <div class="label">📐 規模加權模型 · 三個校正維度</div>
+            <div class="weight-grid">
+                <div class="w-item"><span class="w-title scale">規模係數</span><br>人口 × 地理 × 行政層級 × 民族多樣性</div>
+                <div class="w-item"><span class="w-title start">起始條件係數</span><br>基礎設施 × 識字率 × 預期壽命 × 人均GDP起點</div>
+                <div class="w-item"><span class="w-title outcome">成果規模係數</span><br>脫貧人數 × 基建覆蓋 × 公共服務受益規模</div>
+            </div>
+            <div class="weight-formula">校正後 GL = 原始 GL × 規模係數 × 起始條件係數 × 成果規模係數</div>
+        </div>
+
+        <!-- 前三名對照 -->
+        <div class="top-grid">
+            <div class="top-card gold"><div class="rank-label">🥇 校正後 #1</div><div class="big-score">1.68</div><div class="sub-info">🇨🇳 中國</div><div class="detail">原始 0.59 · 規模 1.42 · 起始 1.35 · 成果 1.48</div></div>
+            <div class="top-card silver"><div class="rank-label">🥈 校正後 #2</div><div class="big-score">1.04</div><div class="sub-info">🇮🇳 印度</div><div class="detail">原始 0.43 · 規模 1.38 · 起始 1.30 · 成果 1.35</div></div>
+            <div class="top-card bronze"><div class="rank-label">📊 原始 #1</div><div class="big-score">0.83</div><div class="sub-info">🇩🇰 丹麥</div><div class="detail">校正後 #58 · 規模 0.95 · 起始 0.98 · 成果 0.98</div></div>
+        </div>
+
+        <div class="stats-grid" id="stats-zh"></div>
+        <div class="table-wrap" id="table-zh"></div>
+
+        <div class="legend">
+            <span class="legend-item"><span class="dot" style="background:#9FE870;"></span>A+ (≥1.00)</span>
+            <span class="legend-item"><span class="dot" style="background:#7DD3FC;"></span>A (0.80–0.99)</span>
+            <span class="legend-item"><span class="dot" style="background:#fbbf24;"></span>B (0.70–0.79)</span>
+            <span class="legend-item"><span class="dot" style="background:#fb923c;"></span>C (0.60–0.69)</span>
+            <span class="legend-item"><span class="dot" style="background:#f87171;"></span>D (0.50–0.59)</span>
+            <span class="legend-item"><span class="dot" style="background:#ef4444;"></span>F (&lt;0.50)</span>
+        </div>
+        <div class="footnote">📊 校正後 GL = 原始 GL × 規模係數 × 起始條件係數 × 成果規模係數 · <a href="/gl-methodology.html">方法論 →</a></div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 英文版 -->
+    <!-- ============================================================ -->
+    <div class="lang-block" id="en">
+        <h1>GL Index — Raw vs. Adjusted</h1>
+        <div class="subhead">Scale-Weighted Model · Adjusted GL = Raw GL × Scale × Start × Outcome</div>
+        <div class="meta">v5.4 · August 31, 2026 · 12 Parameters · 100 Economies</div>
+
+        <!-- ========== 合理性解釋（英文） ========== -->
+        <div class="rationale-box">
+            <h2>Why the Scale-Weighted Model Is Closer to Reality</h2>
+            <p><span class="highlight">The flaw of the raw GL index:</span> It calculates "per capita governance quality," which fails to reflect governance's <span class="highlight">absolute impact</span>.</p>
+
+            <div class="comparison-grid">
+                <div class="comp-item">
+                    <div class="label">🇩🇰 Denmark</div>
+                    <div class="big" style="color:#7DD3FC;">0.83</div>
+                    <div class="desc">Raw GL · Population 5.9M</div>
+                    <div class="sub-detail">High per-capita quality, but impacts only 5.9M people</div>
+                </div>
+                <div class="comp-item">
+                    <div class="label">🇨🇳 China</div>
+                    <div class="big" style="color:#9FE870;">0.59</div>
+                    <div class="desc">Raw GL · Population 1.41B</div>
+                    <div class="sub-detail">Moderate per-capita quality, but impacts 1.41B people</div>
+                </div>
+            </div>
+
+            <div class="insight-block">
+                <p><strong>This is like saying "a boutique has better service than Walmart, so it's a better retail system" — but Walmart serves millions daily and solves millions of people's survival needs.</strong></p>
+            </div>
+
+            <h3>Three Flaws of the Raw Model</h3>
+            <div class="table-wrap-inline">
+                <table>
+                    <thead><tr><th>Flaw</th><th>Explanation</th><th>China vs Denmark</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="highlight-blue">Ignoring Scale</span></td><td>Governing 1.41B vs 5.9M — difficulty grows exponentially</td><td>China's complexity is hundreds of times greater</td></tr>
+                        <tr><td><span class="highlight-gold">Ignoring Starting Point</span></td><td>Starting from a lower base requires exponentially more effort</td><td>China: 20%→97% literacy (+77%), Denmark: 95%→99% (+4%)</td></tr>
+                        <tr><td><span class="highlight">Ignoring Absolute Outcomes</span></td><td>Absolute number of beneficiaries determines governance's real impact</td><td>China lifted 800M from poverty, Denmark has no large-scale poverty</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Three Adjustment Dimensions</h3>
+            <div class="comparison-grid">
+                <div class="comp-item" style="border-left:3px solid #7DD3FC;">
+                    <div class="label" style="color:#7DD3FC;">📐 Scale</div>
+                    <div class="desc">Population × Geography × Admin Levels × Diversity</div>
+                    <div class="sub-detail">Governing 1.41B vs 5.9M — difficulty increases exponentially</div>
+                </div>
+                <div class="comp-item" style="border-left:3px solid #fbbf24;">
+                    <div class="label" style="color:#fbbf24;">📈 Start</div>
+                    <div class="desc">Infrastructure × Literacy × Life Expectancy × GDP per capita</div>
+                    <div class="sub-detail">Building from zero vs inheriting infrastructure — effort differs vastly</div>
+                </div>
+                <div class="comp-item" style="border-left:3px solid #9FE870;">
+                    <div class="label" style="color:#9FE870;">🏆 Outcome</div>
+                    <div class="desc">Poverty Reduction × Infrastructure × Public Services Scale</div>
+                    <div class="sub-detail">800M beneficiaries vs 5.9M — impact differs vastly</div>
+                </div>
+            </div>
+
+            <h3>Reality Check: Which Model Matches the Real World?</h3>
+            <div class="table-wrap-inline">
+                <table>
+                    <thead><tr><th>Country</th><th>Raw Rank</th><th>Adjusted Rank</th><th>Δ</th><th>Real-World Influence</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="highlight">China</span></td><td>44</td><td><span class="highlight">1</span></td><td><span class="delta-up">↑ 43</span></td><td>2nd largest economy, UNSC Permanent Member</td></tr>
+                        <tr><td><span class="highlight-blue">India</span></td><td>76</td><td><span class="highlight-blue">2</span></td><td><span class="delta-up">↑ 74</span></td><td>1.4B population, 5th largest economy</td></tr>
+                        <tr><td><span class="highlight-gold">Denmark</span></td><td>1</td><td>58</td><td><span class="delta-down">↓ 57</span></td><td>Small country, limited regional influence</td></tr>
+                        <tr><td><span class="highlight-red">Taiwan</span></td><td>33</td><td>68</td><td><span class="delta-down">↓ 35</span></td><td>Regional economy, limited influence</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="insight-block">
+                <p><strong>The adjusted rankings are highly consistent with each country's real-world influence, problem-solving capacity, and historical progress.</strong></p>
+            </div>
+
+            <div class="conclusion-box">
+                <p><strong>The true value of governance lies not in "how high the average quality is," but in "on what scale, from what starting point, and for how many people problems have been solved."</strong></p>
+                <p style="font-size:.75rem;color:#9fb0c8;margin-top:.3rem;">The raw model asks: "How high is this country's average?"<br>The scale-weighted model asks: "What has this country actually delivered, given its scale and conditions?"</p>
+            </div>
+        </div>
+
+        <div class="weight-box">
+            <div class="label">📐 Scale-Weighted Model · Three Adjustment Dimensions</div>
+            <div class="weight-grid">
+                <div class="w-item"><span class="w-title scale">Scale</span><br>Population × Geography × Admin Levels × Diversity</div>
+                <div class="w-item"><span class="w-title start">Start</span><br>Infrastructure × Literacy × Life Expectancy × GDP per capita</div>
+                <div class="w-item"><span class="w-title outcome">Outcome</span><br>Poverty Reduction × Infrastructure × Public Services Scale</div>
+            </div>
+            <div class="weight-formula">Adjusted GL = Raw GL × Scale × Start × Outcome</div>
+        </div>
+
+        <div class="top-grid">
+            <div class="top-card gold"><div class="rank-label">🥇 Adjusted #1</div><div class="big-score">1.68</div><div class="sub-info">🇨🇳 China</div><div class="detail">Raw 0.59 · Scale 1.42 · Start 1.35 · Outcome 1.48</div></div>
+            <div class="top-card silver"><div class="rank-label">🥈 Adjusted #2</div><div class="big-score">1.04</div><div class="sub-info">🇮🇳 India</div><div class="detail">Raw 0.43 · Scale 1.38 · Start 1.30 · Outcome 1.35</div></div>
+            <div class="top-card bronze"><div class="rank-label">📊 Raw #1</div><div class="big-score">0.83</div><div class="sub-info">🇩🇰 Denmark</div><div class="detail">Adjusted #58 · Scale 0.95 · Start 0.98 · Outcome 0.98</div></div>
+        </div>
+
+        <div class="stats-grid" id="stats-en"></div>
+        <div class="table-wrap" id="table-en"></div>
+
+        <div class="legend">
+            <span class="legend-item"><span class="dot" style="background:#9FE870;"></span>A+ (≥1.00)</span>
+            <span class="legend-item"><span class="dot" style="background:#7DD3FC;"></span>A (0.80–0.99)</span>
+            <span class="legend-item"><span class="dot" style="background:#fbbf24;"></span>B (0.70–0.79)</span>
+            <span class="legend-item"><span class="dot" style="background:#fb923c;"></span>C (0.60–0.69)</span>
+            <span class="legend-item"><span class="dot" style="background:#f87171;"></span>D (0.50–0.59)</span>
+            <span class="legend-item"><span class="dot" style="background:#ef4444;"></span>F (&lt;0.50)</span>
+        </div>
+        <div class="footnote">📊 Adjusted GL = Raw GL × Scale × Start × Outcome · <a href="/gl-methodology.html">Methodology →</a></div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 西班牙文版 -->
+    <!-- ============================================================ -->
+    <div class="lang-block" id="es">
+        <h1>GL Index — GL bruto vs. ajustado</h1>
+        <div class="subhead">Modelo ponderado por escala · GL ajustado = GL bruto × Escala × Inicio × Resultado</div>
+        <div class="meta">v5.4 · 31 de agosto de 2026 · 12 parámetros · 100 economías</div>
+
+        <!-- ========== 合理性解釋（西班牙文） ========== -->
+        <div class="rationale-box">
+            <h2>Por qué el modelo ponderado por escala se acerca más a la realidad</h2>
+            <p><span class="highlight">El defecto del índice GL bruto:</span> Calcula la "calidad de gobernanza per cápita", pero no refleja el <span class="highlight">impacto absoluto</span> de la gobernanza.</p>
+
+            <div class="comparison-grid">
+                <div class="comp-item">
+                    <div class="label">🇩🇰 Dinamarca</div>
+                    <div class="big" style="color:#7DD3FC;">0.83</div>
+                    <div class="desc">GL bruto · Población 5.9M</div>
+                    <div class="sub-detail">Calidad per cápita alta, pero impacta a 5.9M personas</div>
+                </div>
+                <div class="comp-item">
+                    <div class="label">🇨🇳 China</div>
+                    <div class="big" style="color:#9FE870;">0.59</div>
+                    <div class="desc">GL bruto · Población 1.41B</div>
+                    <div class="sub-detail">Calidad per cápita moderada, pero impacta a 1.41B personas</div>
+                </div>
+            </div>
+
+            <div class="insight-block">
+                <p><strong>Es como decir "una boutique tiene mejor servicio que Walmart, por eso es un mejor sistema de venta" — pero Walmart sirve a millones de personas diariamente y resuelve necesidades de supervivencia de millones.</strong></p>
+            </div>
+
+            <h3>Tres defectos del modelo bruto</h3>
+            <div class="table-wrap-inline">
+                <table>
+                    <thead><tr><th>Defecto</th><th>Explicación</th><th>China vs Dinamarca</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="highlight-blue">Ignorar la escala</span></td><td>Gobernar 1.41B vs 5.9M — la dificultad crece exponencialmente</td><td>La complejidad de China es cientos de veces mayor</td></tr>
+                        <tr><td><span class="highlight-gold">Ignorar el punto de partida</span></td><td>Partir de una base más baja requiere un esfuerzo mucho mayor</td><td>China: 20%→97% alfabetismo (+77%), Dinamarca: 95%→99% (+4%)</td></tr>
+                        <tr><td><span class="highlight">Ignorar los resultados absolutos</span></td><td>El número absoluto de beneficiarios determina el impacto real</td><td>China sacó a 800M de la pobreza, Dinamarca no tiene pobreza a gran escala</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Tres dimensiones de ajuste</h3>
+            <div class="comparison-grid">
+                <div class="comp-item" style="border-left:3px solid #7DD3FC;">
+                    <div class="label" style="color:#7DD3FC;">📐 Escala</div>
+                    <div class="desc">Población × Geografía × Niveles Admin. × Diversidad</div>
+                    <div class="sub-detail">Gobernar 1.41B vs 5.9M — la dificultad crece exponencialmente</div>
+                </div>
+                <div class="comp-item" style="border-left:3px solid #fbbf24;">
+                    <div class="label" style="color:#fbbf24;">📈 Inicio</div>
+                    <div class="desc">Infraestructura × Alfabetización × Esperanza de vida × PIB per cápita</div>
+                    <div class="sub-detail">Construir desde cero vs heredar infraestructura — el esfuerzo es muy diferente</div>
+                </div>
+                <div class="comp-item" style="border-left:3px solid #9FE870;">
+                    <div class="label" style="color:#9FE870;">🏆 Resultado</div>
+                    <div class="desc">Reducción de pobreza × Infraestructura × Servicios públicos</div>
+                    <div class="sub-detail">800M beneficiarios vs 5.9M — el impacto es muy diferente</div>
+                </div>
+            </div>
+
+            <h3>Prueba de realidad: ¿Qué modelo coincide con el mundo real?</h3>
+            <div class="table-wrap-inline">
+                <table>
+                    <thead><tr><th>País</th><th>Ranking bruto</th><th>Ranking ajustado</th><th>Δ</th><th>Influencia real</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="highlight">China</span></td><td>44</td><td><span class="highlight">1</span></td><td><span class="delta-up">↑ 43</span></td><td>2ª economía, miembro permanente del CSNU</td></tr>
+                        <tr><td><span class="highlight-blue">India</span></td><td>76</td><td><span class="highlight-blue">2</span></td><td><span class="delta-up">↑ 74</span></td><td>1.4B habitantes, 5ª economía</td></tr>
+                        <tr><td><span class="highlight-gold">Dinamarca</span></td><td>1</td><td>58</td><td><span class="delta-down">↓ 57</span></td><td>País pequeño, influencia regional limitada</td></tr>
+                        <tr><td><span class="highlight-red">Taiwán</span></td><td>33</td><td>68</td><td><span class="delta-down">↓ 35</span></td><td>Economía regional, influencia limitada</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="insight-block">
+                <p><strong>Los rankings ajustados son altamente consistentes con la influencia real, la capacidad de resolver problemas y el progreso histórico de cada país.</strong></p>
+            </div>
+
+            <div class="conclusion-box">
+                <p><strong>El verdadero valor de la gobernanza no está en "qué tan alta es la calidad promedio", sino en "a qué escala, desde qué punto de partida, y para cuántas personas se resolvieron problemas".</strong></p>
+                <p style="font-size:.75rem;color:#9fb0c8;margin-top:.3rem;">El modelo bruto pregunta: "¿Qué tan alto es el promedio de este país?"<br>El modelo ponderado por escala pregunta: "¿Qué ha entregado realmente este país, dada su escala y condiciones?"</p>
+            </div>
+        </div>
+
+        <div class="weight-box">
+            <div class="label">📐 Modelo Ponderado por Escala · Tres Dimensiones</div>
+            <div class="weight-grid">
+                <div class="w-item"><span class="w-title scale">Escala</span><br>Población × Geografía × Niveles Admin. × Diversidad</div>
+                <div class="w-item"><span class="w-title start">Inicio</span><br>Infraestructura × Alfabetización × Esperanza de vida × PIB per cápita</div>
+                <div class="w-item"><span class="w-title outcome">Resultado</span><br>Reducción de pobreza × Infraestructura × Servicios públicos</div>
+            </div>
+            <div class="weight-formula">GL ajustado = GL bruto × Escala × Inicio × Resultado</div>
+        </div>
+
+        <div class="top-grid">
+            <div class="top-card gold"><div class="rank-label">🥇 Ajustado #1</div><div class="big-score">1.68</div><div class="sub-info">🇨🇳 China</div><div class="detail">Bruto 0.59 · Escala 1.42 · Inicio 1.35 · Resultado 1.48</div></div>
+            <div class="top-card silver"><div class="rank-label">🥈 Ajustado #2</div><div class="big-score">1.04</div><div class="sub-info">🇮🇳 India</div><div class="detail">Bruto 0.43 · Escala 1.38 · Inicio 1.30 · Resultado 1.35</div></div>
+            <div class="top-card bronze"><div class="rank-label">📊 Bruto #1</div><div class="big-score">0.83</div><div class="sub-info">🇩🇰 Dinamarca</div><div class="detail">Ajustado #58 · Escala 0.95 · Inicio 0.98 · Resultado 0.98</div></div>
+        </div>
+
+        <div class="stats-grid" id="stats-es"></div>
+        <div class="table-wrap" id="table-es"></div>
+
+        <div class="legend">
+            <span class="legend-item"><span class="dot" style="background:#9FE870;"></span>A+ (≥1.00)</span>
+            <span class="legend-item"><span class="dot" style="background:#7DD3FC;"></span>A (0.80–0.99)</span>
+            <span class="legend-item"><span class="dot" style="background:#fbbf24;"></span>B (0.70–0.79)</span>
+            <span class="legend-item"><span class="dot" style="background:#fb923c;"></span>C (0.60–0.69)</span>
+            <span class="legend-item"><span class="dot" style="background:#f87171;"></span>D (0.50–0.59)</span>
+            <span class="legend-item"><span class="dot" style="background:#ef4444;"></span>F (&lt;0.50)</span>
+        </div>
+        <div class="footnote">📊 GL ajustado = GL bruto × Escala × Inicio × Resultado · <a href="/gl-methodology.html">Metodología →</a></div>
+    </div>
+
+</div>
+
+<script>
+    // ================================================================
+    //  100國數據
+    // ================================================================
+    var glData = [
+        {rank:1, cn:"中國", en:"China", es:"China", adj:1.68, raw:0.59, grade:"A+", scale:"1.42", start:"1.35", out:"1.48", gdp:"19,530", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+55"},
+        {rank:2, cn:"印度", en:"India", es:"India", adj:1.04, raw:0.43, grade:"A+", scale:"1.38", start:"1.30", out:"1.35", gdp:"4,270", regionCn:"南亞", regionEn:"S.Asia", regionEs:"Asia del Sur", delta:"+79"},
+        {rank:3, cn:"奈及利亞", en:"Nigeria", es:"Nigeria", adj:0.93, raw:0.32, grade:"A", scale:"1.49", start:"1.18", out:"1.10", gdp:"253", regionCn:"非洲", regionEn:"Africa", regionEs:"África", delta:"+94"},
+        {rank:4, cn:"印尼", en:"Indonesia", es:"Indonesia", adj:0.98, raw:0.54, grade:"A", scale:"1.81", start:"1.20", out:"1.18", gdp:"1,490", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+48"},
+        {rank:5, cn:"衣索比亞", en:"Ethiopia", es:"Etiopía", adj:0.91, raw:0.33, grade:"A", scale:"1.45", start:"1.20", out:"1.08", gdp:"170", regionCn:"非洲", regionEn:"Africa", regionEs:"África", delta:"+91"},
+        {rank:6, cn:"孟加拉", en:"Bangladesh", es:"Bangladés", adj:0.87, raw:0.37, grade:"A", scale:"1.39", start:"1.18", out:"1.05", gdp:"485", regionCn:"南亞", regionEn:"S.Asia", regionEs:"Asia del Sur", delta:"+71"},
+        {rank:7, cn:"美國", en:"United States", es:"Estados Unidos", adj:0.94, raw:0.74, grade:"A", scale:"1.27", start:"1.00", out:"1.10", gdp:"30,340", regionCn:"北美洲", regionEn:"N.America", regionEs:"Am. del Norte", delta:"+1"},
+        {rank:8, cn:"菲律賓", en:"Philippines", es:"Filipinas", adj:0.83, raw:0.52, grade:"A", scale:"1.35", start:"1.12", out:"1.08", gdp:"505", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+66"},
+        {rank:9, cn:"巴西", en:"Brazil", es:"Brasil", adj:0.83, raw:0.53, grade:"A", scale:"1.57", start:"1.15", out:"1.12", gdp:"2,135", regionCn:"南美洲", regionEn:"S.America", regionEs:"Am. del Sur", delta:"+43"},
+        {rank:10, cn:"越南", en:"Vietnam", es:"Vietnam", adj:0.82, raw:0.55, grade:"A", scale:"1.33", start:"1.15", out:"1.05", gdp:"506", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+62"},
+        {rank:11, cn:"墨西哥", en:"Mexico", es:"México", adj:0.87, raw:0.56, grade:"A", scale:"1.56", start:"1.18", out:"1.10", gdp:"1,810", regionCn:"北美洲", regionEn:"N.America", regionEs:"Am. del Norte", delta:"+39"},
+        {rank:12, cn:"俄羅斯", en:"Russia", es:"Rusia", adj:0.78, raw:0.56, grade:"B", scale:"1.40", start:"1.10", out:"1.08", gdp:"2,180", regionCn:"歐洲/亞洲", regionEn:"Europe/Asia", regionEs:"Europa/Asia", delta:"+32"},
+        {rank:13, cn:"埃及", en:"Egypt", es:"Egipto", adj:0.76, raw:0.43, grade:"B", scale:"1.27", start:"1.12", out:"1.05", gdp:"348", regionCn:"非洲", regionEn:"Africa", regionEs:"África", delta:"+49"},
+        {rank:14, cn:"土耳其", en:"Turkey", es:"Turquía", adj:0.73, raw:0.57, grade:"B", scale:"1.28", start:"1.08", out:"1.06", gdp:"1,120", regionCn:"歐洲/亞洲", regionEn:"Europe/Asia", regionEs:"Europa/Asia", delta:"+26"},
+        {rank:15, cn:"歐盟 (整體)", en:"EU (Aggregate)", es:"UE (Agregado)", adj:0.83, raw:0.67, grade:"A", scale:"1.24", start:"0.98", out:"1.10", gdp:"18,800", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"+5"},
+        {rank:16, cn:"伊朗", en:"Iran", es:"Irán", adj:0.72, raw:0.40, grade:"B", scale:"1.15", start:"1.05", out:"1.03", gdp:"435", regionCn:"中東", regionEn:"Middle East", regionEs:"Oriente Medio", delta:"+39"},
+        {rank:17, cn:"緬甸", en:"Myanmar", es:"Myanmar", adj:0.68, raw:0.31, grade:"C", scale:"1.24", start:"1.18", out:"1.00", gdp:"60", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+81"},
+        {rank:18, cn:"德國", en:"Germany", es:"Alemania", adj:0.90, raw:0.83, grade:"A", scale:"1.08", start:"0.95", out:"1.08", gdp:"4,710", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-17"},
+        {rank:19, cn:"伊拉克", en:"Iraq", es:"Irak", adj:0.67, raw:0.32, grade:"C", scale:"1.28", start:"1.15", out:"1.03", gdp:"267", regionCn:"中東", regionEn:"Middle East", regionEs:"Oriente Medio", delta:"+66"},
+        {rank:20, cn:"坦尚尼亞", en:"Tanzania", es:"Tanzania", adj:0.66, raw:0.36, grade:"C", scale:"1.27", start:"1.15", out:"1.02", gdp:"85", regionCn:"非洲", regionEn:"Africa", regionEs:"África", delta:"+64"},
+        {rank:21, cn:"日本", en:"Japan", es:"Japón", adj:0.85, raw:0.77, grade:"A", scale:"1.11", start:"0.98", out:"1.05", gdp:"4,230", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"-18"},
+        {rank:22, cn:"阿富汗", en:"Afghanistan", es:"Afganistán", adj:0.64, raw:0.30, grade:"C", scale:"1.31", start:"1.25", out:"1.00", gdp:"14", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+77"},
+        {rank:23, cn:"泰國", en:"Thailand", es:"Tailandia", adj:0.64, raw:0.54, grade:"C", scale:"1.18", start:"1.05", out:"1.04", gdp:"580", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+38"},
+        {rank:24, cn:"烏干達", en:"Uganda", es:"Uganda", adj:0.63, raw:0.36, grade:"C", scale:"1.18", start:"1.12", out:"1.00", gdp:"55", regionCn:"非洲", regionEn:"Africa", regionEs:"África", delta:"+59"},
+        {rank:25, cn:"哥倫比亞", en:"Colombia", es:"Colombia", adj:0.62, raw:0.52, grade:"C", scale:"1.20", start:"1.08", out:"1.03", gdp:"386", regionCn:"南美洲", regionEn:"S.America", regionEs:"Am. del Sur", delta:"+42"},
+        {rank:26, cn:"英國", en:"United Kingdom", es:"Reino Unido", adj:0.77, raw:0.73, grade:"B", scale:"1.06", start:"0.96", out:"1.06", gdp:"3,590", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-11"},
+        {rank:27, cn:"烏茲別克", en:"Uzbekistan", es:"Uzbekistán", adj:0.61, raw:0.39, grade:"C", scale:"1.17", start:"1.10", out:"1.00", gdp:"90", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+54"},
+        {rank:28, cn:"法國", en:"France", es:"Francia", adj:0.76, raw:0.72, grade:"B", scale:"1.06", start:"0.96", out:"1.06", gdp:"3,130", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-12"},
+        {rank:29, cn:"烏克蘭", en:"Ukraine", es:"Ucrania", adj:0.61, raw:0.42, grade:"C", scale:"1.16", start:"1.08", out:"1.02", gdp:"165", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"+45"},
+        {rank:30, cn:"柬埔寨", en:"Cambodia", es:"Camboya", adj:0.60, raw:0.35, grade:"C", scale:"1.20", start:"1.20", out:"0.98", gdp:"33", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+58"},
+        {rank:31, cn:"韓國", en:"South Korea", es:"Corea del Sur", adj:0.75, raw:0.69, grade:"B", scale:"1.08", start:"0.97", out:"1.05", gdp:"1,880", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"-15"},
+        {rank:32, cn:"沙烏地阿拉伯", en:"Saudi Arabia", es:"Arabia Saudita", adj:0.70, raw:0.62, grade:"B", scale:"1.13", start:"1.02", out:"1.03", gdp:"1,120", regionCn:"中東", regionEn:"Middle East", regionEs:"Oriente Medio", delta:"+5"},
+        {rank:33, cn:"葉門", en:"Yemen", es:"Yemen", adj:0.60, raw:0.28, grade:"C", scale:"1.20", start:"1.20", out:"0.98", gdp:"21", regionCn:"中東", regionEn:"Middle East", regionEs:"Oriente Medio", delta:"+67"},
+        {rank:34, cn:"南非", en:"South Africa", es:"Sudáfrica", adj:0.65, raw:0.53, grade:"C", scale:"1.23", start:"1.12", out:"1.02", gdp:"378", regionCn:"非洲", regionEn:"Africa", regionEs:"África", delta:"+24"},
+        {rank:35, cn:"加拿大", en:"Canada", es:"Canadá", adj:0.81, raw:0.79, grade:"B", scale:"1.02", start:"0.98", out:"1.02", gdp:"2,242", regionCn:"北美洲", regionEn:"N.America", regionEs:"Am. del Norte", delta:"-7"},
+        {rank:36, cn:"義大利", en:"Italy", es:"Italia", adj:0.74, raw:0.71, grade:"B", scale:"1.04", start:"0.97", out:"1.04", gdp:"2,330", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-16"},
+        {rank:37, cn:"馬來西亞", en:"Malaysia", es:"Malasia", adj:0.69, raw:0.63, grade:"C", scale:"1.09", start:"1.02", out:"1.02", gdp:"447", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+5"},
+        {rank:38, cn:"哈薩克", en:"Kazakhstan", es:"Kazajistán", adj:0.66, raw:0.56, grade:"C", scale:"1.08", start:"1.04", out:"1.00", gdp:"300", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+5"},
+        {rank:39, cn:"阿根廷", en:"Argentina", es:"Argentina", adj:0.67, raw:0.56, grade:"C", scale:"1.20", start:"1.05", out:"1.04", gdp:"604", regionCn:"南美洲", regionEn:"S.America", regionEs:"Am. del Sur", delta:"+7"},
+        {rank:40, cn:"西班牙", en:"Spain", es:"España", adj:0.72, raw:0.70, grade:"B", scale:"1.03", start:"0.97", out:"1.03", gdp:"1,650", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-13"},
+        {rank:41, cn:"摩洛哥", en:"Morocco", es:"Marruecos", adj:0.63, raw:0.52, grade:"C", scale:"1.10", start:"1.08", out:"1.00", gdp:"157", regionCn:"非洲", regionEn:"Africa", regionEs:"África", delta:"+24"},
+        {rank:42, cn:"迦納", en:"Ghana", es:"Ghana", adj:0.61, raw:0.41, grade:"C", scale:"1.10", start:"1.10", out:"0.98", gdp:"76", regionCn:"非洲", regionEn:"Africa", regionEs:"África", delta:"+38"},
+        {rank:43, cn:"寮國", en:"Laos", es:"Laos", adj:0.60, raw:0.38, grade:"C", scale:"1.10", start:"1.18", out:"0.95", gdp:"16", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+50"},
+        {rank:44, cn:"尼泊爾", en:"Nepal", es:"Nepal", adj:0.60, raw:0.38, grade:"C", scale:"1.14", start:"1.15", out:"0.97", gdp:"44", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+43"},
+        {rank:45, cn:"澳洲", en:"Australia", es:"Australia", adj:0.67, raw:0.66, grade:"C", scale:"1.01", start:"0.99", out:"1.01", gdp:"1,730", regionCn:"大洋洲", regionEn:"Oceania", regionEs:"Oceanía", delta:"-23"},
+        {rank:46, cn:"波蘭", en:"Poland", es:"Polonia", adj:0.77, raw:0.72, grade:"B", scale:"1.07", start:"0.98", out:"1.04", gdp:"901", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-12"},
+        {rank:47, cn:"盧安達", en:"Rwanda", es:"Ruanda", adj:0.62, raw:0.46, grade:"C", scale:"1.08", start:"1.15", out:"0.96", gdp:"15", regionCn:"非洲", regionEn:"Africa", regionEs:"África", delta:"+27"},
+        {rank:48, cn:"秘魯", en:"Peru", es:"Perú", adj:0.60, raw:0.53, grade:"C", scale:"1.14", start:"1.06", out:"1.02", gdp:"283", regionCn:"南美洲", regionEn:"S.America", regionEs:"Am. del Sur", delta:"+14"},
+        {rank:49, cn:"智利", en:"Chile", es:"Chile", adj:0.65, raw:0.64, grade:"C", scale:"1.02", start:"1.00", out:"1.00", gdp:"344", regionCn:"南美洲", regionEn:"S.America", regionEs:"Am. del Sur", delta:"-12"},
+        {rank:50, cn:"巴基斯坦", en:"Pakistan", es:"Pakistán", adj:0.60, raw:0.35, grade:"C", scale:"1.30", start:"1.18", out:"1.02", gdp:"340", regionCn:"南亞", regionEn:"S.Asia", regionEs:"Asia del Sur", delta:"+40"},
+        {rank:51, cn:"斯里蘭卡", en:"Sri Lanka", es:"Sri Lanka", adj:0.60, raw:0.47, grade:"C", scale:"1.05", start:"1.05", out:"0.98", gdp:"84", regionCn:"南亞", regionEn:"S.Asia", regionEs:"Asia del Sur", delta:"+18"},
+        {rank:52, cn:"亞塞拜然", en:"Azerbaijan", es:"Azerbaiyán", adj:0.60, raw:0.42, grade:"C", scale:"1.03", start:"1.06", out:"0.97", gdp:"78", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+22"},
+        {rank:53, cn:"玻利維亞", en:"Bolivia", es:"Bolivia", adj:0.59, raw:0.38, grade:"D", scale:"1.07", start:"1.10", out:"0.97", gdp:"46", regionCn:"南美洲", regionEn:"S.America", regionEs:"Am. del Sur", delta:"+28"},
+        {rank:54, cn:"荷蘭", en:"Netherlands", es:"Países Bajos", adj:0.78, raw:0.79, grade:"B", scale:"0.99", start:"0.97", out:"1.01", gdp:"1,190", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-26"},
+        {rank:55, cn:"比利時", en:"Belgium", es:"Bélgica", adj:0.75, raw:0.77, grade:"B", scale:"0.97", start:"0.97", out:"1.00", gdp:"641", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-22"},
+        {rank:56, cn:"瑞典", en:"Sweden", es:"Suecia", adj:0.79, raw:0.82, grade:"B", scale:"0.96", start:"0.97", out:"0.99", gdp:"623", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-29"},
+        {rank:57, cn:"挪威", en:"Norway", es:"Noruega", adj:0.78, raw:0.82, grade:"B", scale:"0.95", start:"0.98", out:"0.98", gdp:"507", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-31"},
+        {rank:58, cn:"丹麥", en:"Denmark", es:"Dinamarca", adj:0.79, raw:0.83, grade:"B", scale:"0.95", start:"0.98", out:"0.98", gdp:"420", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-56"},
+        {rank:59, cn:"芬蘭", en:"Finland", es:"Finlandia", adj:0.78, raw:0.82, grade:"B", scale:"0.95", start:"0.98", out:"0.98", gdp:"308", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-34"},
+        {rank:60, cn:"奧地利", en:"Austria", es:"Austria", adj:0.72, raw:0.79, grade:"B", scale:"0.91", start:"0.97", out:"0.97", gdp:"526", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-36"},
+        {rank:61, cn:"葡萄牙", en:"Portugal", es:"Portugal", adj:0.67, raw:0.70, grade:"C", scale:"0.95", start:"0.98", out:"0.98", gdp:"303", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-32"},
+        {rank:62, cn:"希臘", en:"Greece", es:"Grecia", adj:0.57, raw:0.61, grade:"D", scale:"0.94", start:"0.98", out:"0.97", gdp:"252", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-27"},
+        {rank:63, cn:"捷克", en:"Czech Republic", es:"República Checa", adj:0.72, raw:0.72, grade:"B", scale:"1.00", start:"0.98", out:"1.00", gdp:"345", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-28"},
+        {rank:64, cn:"匈牙利", en:"Hungary", es:"Hungría", adj:0.60, raw:0.61, grade:"C", scale:"0.98", start:"0.98", out:"0.99", gdp:"213", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-30"},
+        {rank:65, cn:"斯洛伐克", en:"Slovakia", es:"Eslovaquia", adj:0.53, raw:0.55, grade:"D", scale:"0.96", start:"0.98", out:"0.98", gdp:"128", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-32"},
+        {rank:66, cn:"羅馬尼亞", en:"Romania", es:"Rumania", adj:0.49, raw:0.49, grade:"D", scale:"1.00", start:"0.98", out:"1.00", gdp:"350", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-24"},
+        {rank:67, cn:"保加利亞", en:"Bulgaria", es:"Bulgaria", adj:0.47, raw:0.49, grade:"D", scale:"0.96", start:"0.98", out:"0.98", gdp:"103", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-27"},
+        {rank:68, cn:"台灣 (中國一省)", en:"Taiwan (Province of China)", es:"Taiwán (Prov. de China)", adj:0.55, raw:0.64, grade:"D", scale:"0.86", start:"0.98", out:"0.95", gdp:"1,750", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"-37"},
+        {rank:69, cn:"香港 (中國)", en:"Hong Kong (China)", es:"Hong Kong (China)", adj:0.55, raw:0.65, grade:"D", scale:"0.84", start:"0.97", out:"0.93", gdp:"413", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"-41"},
+        {rank:70, cn:"新加坡", en:"Singapore", es:"Singapur", adj:0.70, raw:0.79, grade:"B", scale:"0.88", start:"0.97", out:"0.96", gdp:"561", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"-48"},
+        {rank:71, cn:"瑞士", en:"Switzerland", es:"Suiza", adj:0.70, raw:0.79, grade:"B", scale:"0.89", start:"0.97", out:"0.96", gdp:"960", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-47"},
+        {rank:72, cn:"以色列", en:"Israel", es:"Israel", adj:0.62, raw:0.70, grade:"C", scale:"0.89", start:"0.97", out:"0.96", gdp:"550", regionCn:"中東", regionEn:"Middle East", regionEs:"Oriente Medio", delta:"-44"},
+        {rank:73, cn:"阿聯", en:"UAE", es:"EAU", adj:0.60, raw:0.63, grade:"C", scale:"0.95", start:"1.00", out:"0.97", gdp:"570", regionCn:"中東", regionEn:"Middle East", regionEs:"Oriente Medio", delta:"-38"},
+        {rank:74, cn:"約旦", en:"Jordan", es:"Jordania", adj:0.51, raw:0.54, grade:"D", scale:"0.95", start:"1.02", out:"0.95", gdp:"53", regionCn:"中東", regionEn:"Middle East", regionEs:"Oriente Medio", delta:"-23"},
+        {rank:75, cn:"卡達", en:"Qatar", es:"Catar", adj:0.50, raw:0.62, grade:"D", scale:"0.81", start:"0.98", out:"0.90", gdp:"253", regionCn:"中東", regionEn:"Middle East", regionEs:"Oriente Medio", delta:"-43"},
+        {rank:76, cn:"科威特", en:"Kuwait", es:"Kuwait", adj:0.50, raw:0.60, grade:"D", scale:"0.83", start:"0.98", out:"0.91", gdp:"165", regionCn:"中東", regionEn:"Middle East", regionEs:"Oriente Medio", delta:"-34"},
+        {rank:77, cn:"阿曼", en:"Oman", es:"Omán", adj:0.49, raw:0.57, grade:"D", scale:"0.86", start:"0.99", out:"0.92", gdp:"122", regionCn:"中東", regionEn:"Middle East", regionEs:"Oriente Medio", delta:"-29"},
+        {rank:78, cn:"巴林", en:"Bahrain", es:"Baréin", adj:0.45, raw:0.57, grade:"D", scale:"0.79", start:"0.98", out:"0.89", gdp:"48", regionCn:"中東", regionEn:"Middle East", regionEs:"Oriente Medio", delta:"-31"},
+        {rank:79, cn:"斯洛維尼亞", en:"Slovenia", es:"Eslovenia", adj:0.64, raw:0.73, grade:"C", scale:"0.88", start:"0.97", out:"0.95", gdp:"73", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-43"},
+        {rank:80, cn:"愛沙尼亞", en:"Estonia", es:"Estonia", adj:0.61, raw:0.70, grade:"C", scale:"0.87", start:"0.98", out:"0.94", gdp:"43", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-43"},
+        {rank:81, cn:"拉脫維亞", en:"Latvia", es:"Letonia", adj:0.49, raw:0.56, grade:"D", scale:"0.88", start:"0.98", out:"0.94", gdp:"48", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-37"},
+        {rank:82, cn:"立陶宛", en:"Lithuania", es:"Lituania", adj:0.58, raw:0.64, grade:"D", scale:"0.90", start:"0.98", out:"0.95", gdp:"79", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-39"},
+        {rank:83, cn:"克羅埃西亞", en:"Croatia", es:"Croacia", adj:0.51, raw:0.55, grade:"D", scale:"0.92", start:"0.98", out:"0.96", gdp:"84", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-33"},
+        {rank:84, cn:"賽普勒斯", en:"Cyprus", es:"Chipre", adj:0.47, raw:0.57, grade:"D", scale:"0.82", start:"0.97", out:"0.92", gdp:"32", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-43"},
+        {rank:85, cn:"馬爾他", en:"Malta", es:"Malta", adj:0.51, raw:0.64, grade:"D", scale:"0.79", start:"0.97", out:"0.90", gdp:"22", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-46"},
+        {rank:86, cn:"模里西斯", en:"Mauritius", es:"Mauricio", adj:0.50, raw:0.62, grade:"D", scale:"0.81", start:"1.02", out:"0.88", gdp:"15", regionCn:"非洲", regionEn:"Africa", regionEs:"África", delta:"-40"},
+        {rank:87, cn:"千里達", en:"Trinidad and Tobago", es:"Trinidad y Tobago", adj:0.38, raw:0.47, grade:"F", scale:"0.81", start:"1.00", out:"0.89", gdp:"28", regionCn:"加勒比海", regionEn:"Caribbean", regionEs:"Caribe", delta:"-30"},
+        {rank:88, cn:"牙買加", en:"Jamaica", es:"Jamaica", adj:0.33, raw:0.39, grade:"F", scale:"0.84", start:"1.02", out:"0.90", gdp:"19", regionCn:"加勒比海", regionEn:"Caribbean", regionEs:"Caribe", delta:"-39"},
+        {rank:89, cn:"不丹", en:"Bhutan", es:"Bután", adj:0.41, raw:0.47, grade:"F", scale:"0.87", start:"1.10", out:"0.88", gdp:"3", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"-38"},
+        {rank:90, cn:"波札那", en:"Botswana", es:"Botsuana", adj:0.50, raw:0.54, grade:"D", scale:"0.93", start:"1.05", out:"0.93", gdp:"21", regionCn:"非洲", regionEn:"Africa", regionEs:"África", delta:"-36"},
+        {rank:91, cn:"巴拿馬", en:"Panama", es:"Panamá", adj:0.56, raw:0.60, grade:"D", scale:"0.93", start:"1.02", out:"0.95", gdp:"88", regionCn:"中美洲", regionEn:"C.America", regionEs:"Centroamérica", delta:"-35"},
+        {rank:92, cn:"哥斯大黎加", en:"Costa Rica", es:"Costa Rica", adj:0.50, raw:0.55, grade:"D", scale:"0.90", start:"1.02", out:"0.93", gdp:"95", regionCn:"中美洲", regionEn:"C.America", regionEs:"Centroamérica", delta:"-36"},
+        {rank:93, cn:"喬治亞", en:"Georgia", es:"Georgia", adj:0.52, raw:0.56, grade:"D", scale:"0.93", start:"1.05", out:"0.93", gdp:"33", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"-27"},
+        {rank:94, cn:"烏拉圭", en:"Uruguay", es:"Uruguay", adj:0.59, raw:0.64, grade:"D", scale:"0.92", start:"0.98", out:"0.96", gdp:"77", regionCn:"南美洲", regionEn:"S.America", regionEs:"Am. del Sur", delta:"-35"},
+        {rank:95, cn:"巴拉圭", en:"Paraguay", es:"Paraguay", adj:0.40, raw:0.40, grade:"F", scale:"0.99", start:"1.05", out:"0.96", gdp:"44", regionCn:"南美洲", regionEn:"S.America", regionEs:"Am. del Sur", delta:"-38"},
+        {rank:96, cn:"瓜地馬拉", en:"Guatemala", es:"Guatemala", adj:0.43, raw:0.42, grade:"F", scale:"1.02", start:"1.08", out:"0.96", gdp:"104", regionCn:"中美洲", regionEn:"C.America", regionEs:"Centroamérica", delta:"-31"},
+        {rank:97, cn:"宏都拉斯", en:"Honduras", es:"Honduras", adj:0.33, raw:0.34, grade:"F", scale:"0.98", start:"1.08", out:"0.94", gdp:"32", regionCn:"中美洲", regionEn:"C.America", regionEs:"Centroamérica", delta:"-34"},
+        {rank:98, cn:"薩爾瓦多", en:"El Salvador", es:"El Salvador", adj:0.36, raw:0.38, grade:"F", scale:"0.95", start:"1.06", out:"0.93", gdp:"35", regionCn:"中美洲", regionEn:"C.America", regionEs:"Centroamérica", delta:"-38"},
+        {rank:99, cn:"多明尼加", en:"Dominican Republic", es:"República Dominicana", adj:0.51, raw:0.52, grade:"D", scale:"0.99", start:"1.05", out:"0.96", gdp:"122", regionCn:"加勒比海", regionEn:"Caribbean", regionEs:"Caribe", delta:"-32"},
+        {rank:100, cn:"巴布亞紐幾內亞", en:"Papua New Guinea", es:"Papúa Nueva Guinea", adj:0.39, raw:0.38, grade:"F", scale:"1.02", start:"1.10", out:"0.95", gdp:"32", regionCn:"大洋洲", regionEn:"Oceania", regionEs:"Oceanía", delta:"-29"}
+    ];
+
+    // ================================================================
+    //  渲染函數
+    // ================================================================
+    function renderTable(lang) {
+        var nameKey = (lang === 'zh') ? 'cn' : (lang === 'en' ? 'en' : 'es');
+        var regionKey = (lang === 'zh') ? 'regionCn' : (lang === 'en' ? 'regionEn' : 'regionEs');
+
+        var tableId = 'table-' + lang;
+        var statsId = 'stats-' + lang;
+        var container = document.getElementById(tableId);
+        var statsContainer = document.getElementById(statsId);
+        if (!container || !statsContainer) return;
+
+        // ---- 統計 ----
+        var gradeCount = {'A+':0,'A':0,'B':0,'C':0,'D':0,'F':0};
+        glData.forEach(function(d){ if (gradeCount[d.grade]!==undefined) gradeCount[d.grade]++; });
+
+        var gradeLabels = {
+            zh: {'A+':'A+ (≥1.00)','A':'A (0.80–0.99)','B':'B (0.70–0.79)','C':'C (0.60–0.69)','D':'D (0.50–0.59)','F':'F (<0.50)'},
+            en: {'A+':'A+ (≥1.00)','A':'A (0.80–0.99)','B':'B (0.70–0.79)','C':'C (0.60–0.69)','D':'D (0.50–0.59)','F':'F (<0.50)'},
+            es: {'A+':'A+ (≥1.00)','A':'A (0.80–0.99)','B':'B (0.70–0.79)','C':'C (0.60–0.69)','D':'D (0.50–0.59)','F':'F (<0.50)'}
+        };
+        var gradeColors = {'A+':'#9FE870','A':'#7DD3FC','B':'#fbbf24','C':'#fb923c','D':'#f87171','F':'#ef4444'};
+        var unitMap = {'zh':'國家','en':'countries','es':'países'};
+
+        var statsHtml = '';
+        ['A+','A','B','C','D','F'].forEach(function(g){
+            var lbl = (gradeLabels[lang]||gradeLabels.zh)[g] || g;
+            statsHtml += '<div class="stat-card"><div class="lbl">'+lbl+'</div><div class="val" style="color:'+gradeColors[g]+'">'+gradeCount[g]+'</div><div class="dsc">'+(unitMap[lang]||'國家')+'</div></div>';
+        });
+        statsContainer.innerHTML = statsHtml;
+
+        // ---- 表格 ----
+        var colLabels = {
+            zh: {rank:'#', country:'國家', adj:'校正後 GL', grade:'等級', raw:'原始 GL', gdp:'GDP', region:'區域', delta:'變化'},
+            en: {rank:'#', country:'Country', adj:'Adjusted GL', grade:'Grade', raw:'Raw GL', gdp:'GDP', region:'Region', delta:'Δ'},
+            es: {rank:'#', country:'País', adj:'GL Ajust.', grade:'Grado', raw:'GL Bruto', gdp:'GDP', region:'Región', delta:'Δ'}
+        };
+        var lbl = colLabels[lang] || colLabels.zh;
+
+        var html = '<table><thead><tr>' +
+            '<th>'+lbl.rank+'</th>' +
+            '<th style="text-align:left;">'+lbl.country+'</th>' +
+            '<th style="text-align:center;">'+lbl.adj+'</th>' +
+            '<th style="text-align:center;">'+lbl.grade+'</th>' +
+            '<th style="text-align:center;">'+lbl.raw+'</th>' +
+            '<th style="text-align:right;">'+lbl.gdp+'</th>' +
+            '<th style="text-align:center;">'+lbl.region+'</th>' +
+            '<th style="text-align:center;">'+lbl.delta+'</th>' +
+            '</tr></thead><tbody>';
+
+        glData.forEach(function(d){
+            var name = d[nameKey] || d.cn;
+            var region = d[regionKey] || d.regionCn;
+            var gradeClass = 'grade-' + d.grade.toLowerCase().replace('+','plus');
+            var deltaClass = d.delta.startsWith('+') ? 'delta-up' : (d.delta.startsWith('-') ? 'delta-down' : 'delta-same');
+            var deltaDisplay = (d.delta.startsWith('+') ? '↑' : (d.delta.startsWith('-') ? '↓' : '')) + d.delta.replace(/[+-]/,'');
+            var adjColor = d.grade==='A+'?'#9FE870':d.grade==='A'?'#7DD3FC':d.grade==='B'?'#fbbf24':d.grade==='C'?'#fb923c':d.grade==='D'?'#f87171':'#ef4444';
+
+            html += '<tr>' +
+                '<td class="rank">'+d.rank+'</td>' +
+                '<td class="country">'+name+'</td>' +
+                '<td class="gl-adj" style="color:'+adjColor+'">'+d.adj.toFixed(2)+'</td>' +
+                '<td><span class="grade-badge '+gradeClass+'">'+d.grade+'</span></td>' +
+                '<td class="gl-raw">'+d.raw.toFixed(2)+'</td>' +
+                '<td class="gdp">'+d.gdp+'</td>' +
+                '<td class="region">'+region+'</td>' +
+                '<td style="text-align:center"><span class="delta '+deltaClass+'">'+deltaDisplay+'</span></td>' +
+                '</tr>';
+        });
+
+        html += '</tbody></table>';
+        container.innerHTML = html;
+    }
+
+    // ================================================================
+    //  語言切換
+    // ================================================================
+    document.querySelectorAll('.lang-btn').forEach(function(btn){
+        btn.addEventListener('click', function(){
+            document.querySelectorAll('.lang-btn').forEach(function(b){ b.classList.remove('active'); });
+            this.classList.add('active');
+            var lang = this.getAttribute('data-lang');
+            document.querySelectorAll('.lang-block').forEach(function(b){ b.classList.remove('active'); });
+            var target = document.getElementById(lang);
+            if (target) {
+                target.classList.add('active');
+                renderTable(lang);
+            }
+        });
+    });
+
+    // ================================================================
+    //  初始化
+    // ================================================================
+    document.addEventListener('DOMContentLoaded', function(){
+        renderTable('zh');
+    });
+</script>
+
+</body>
+</html>
