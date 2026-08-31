@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="為什麼西方不敢教社會主義？——一篇關於治理焦慮與資訊控制的結構性分析" />
+    <title>為什麼西方不敢教社會主義？</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:#0b1220;color:#f8fbff;font-family:'DM Sans',system-ui,sans-serif;font-size:15px;line-height:1.7;padding:1.5rem 1rem}
+        .container{max-width:1100px;margin:0 auto}
+        .lang-switch{display:flex;gap:10px;margin-bottom:1.5rem;flex-wrap:wrap;justify-content:flex-end}
+        .lang-btn{font-family:'DM Mono',monospace;font-size:.7rem;padding:.3rem 1.2rem;border:1px solid rgba(255,255,255,.1);border-radius:20px;background:0 0;color:#9fb0c8;cursor:pointer;transition:all .2s}
+        .lang-btn:hover{border-color:rgba(255,255,255,.3);color:#fff}
+        .lang-btn.active{color:#9FE870;border-color:rgba(159,232,112,.4);background:rgba(159,232,112,.08)}
+        .lang-block{display:none;animation:fadeIn .3s ease}
+        .lang-block.active{display:block}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+        h1{font-family:'DM Serif Display',Georgia,serif;font-size:2.4rem;letter-spacing:.02em;color:#f0f8f0;margin-bottom:.3rem;line-height:1.2}
+        .subhead{font-family:'DM Mono',monospace;font-size:.8rem;color:#9fb0c8;letter-spacing:.06em;margin-bottom:.2rem}
+        .meta{font-family:'DM Mono',monospace;font-size:.65rem;color:rgba(255,255,255,.2);border-bottom:1px solid rgba(255,255,255,.06);padding-bottom:1rem;margin-bottom:1.8rem}
+        h2{font-family:'DM Serif Display',Georgia,serif;font-size:1.5rem;color:#e0f0e0;margin:2.2rem 0 .8rem;border-left:4px solid #9FE870;padding-left:1rem}
+        h3{font-family:'DM Serif Display',Georgia,serif;font-size:1.1rem;color:#c0d8c0;margin:1.4rem 0 .4rem}
+        p{color:#c7d2e3;margin-bottom:.9rem;line-height:1.9}
+        .highlight{color:#9FE870;font-weight:500}
+        .highlight-blue{color:#7DD3FC;font-weight:500}
+        .highlight-gold{color:#fbbf24;font-weight:500}
+        .highlight-red{color:#f87171;font-weight:500}
+        .insight-block{background:rgba(159,232,112,.06);border-left:4px solid #9FE870;padding:1rem 1.5rem;border-radius:0 8px 8px 0;margin:1.2rem 0}
+        .insight-block p{color:#d8e8d8;margin-bottom:0;font-weight:450;font-size:.95rem}
+        .comparison-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:1rem 0}
+        .comp-item{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:1rem 1.2rem}
+        .comp-item .label{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.2)}
+        .comp-item .big{font-family:'DM Mono',monospace;font-size:1.1rem;font-weight:700}
+        .comp-item .desc{font-size:.8rem;color:#9fb0c8;margin-top:4px}
+        .comp-item .sub-detail{font-size:.65rem;color:rgba(255,255,255,.15);margin-top:2px}
+        .comp-item.good{border-left:3px solid #9FE870}
+        .comp-item.bad{border-left:3px solid #f87171}
+        .comp-item.neutral{border-left:3px solid #fbbf24}
+        .table-wrap{overflow-x:auto;border-radius:12px;border:1px solid rgba(255,255,255,.06);margin:1.2rem 0}
+        table{width:100%;border-collapse:collapse;font-family:'DM Mono',monospace;font-size:.65rem;min-width:600px}
+        th{text-align:left;padding:8px 10px;font-size:.5rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.2);border-bottom:1px solid rgba(255,255,255,.06);font-weight:400;background:rgba(0,0,0,.2)}
+        td{padding:6px 10px;border-bottom:1px solid rgba(255,255,255,.03);color:#c7d2e3}
+        tr:hover td{background:rgba(255,255,255,.02)}
+        .yes{color:#9FE870}
+        .no{color:#f87171}
+        .conclusion-box{background:rgba(159,232,112,.04);border:1px solid rgba(159,232,112,.15);border-radius:12px;padding:1.2rem 1.8rem;margin-top:1.5rem}
+        .conclusion-box p{color:#d0e8d0;font-weight:450;font-size:.95rem;margin-bottom:.4rem}
+        .conclusion-box p:last-child{margin-bottom:0}
+        .footnote{font-size:.6rem;color:rgba(255,255,255,.2);text-align:center;font-family:'DM Mono',monospace;border-top:1px solid rgba(255,255,255,.05);padding-top:1.2rem;margin-top:2rem}
+        .footnote a{color:#7DD3FC;text-decoration:none}
+        .gl-diagnosis-table .gl-score{font-weight:600}
+        .gl-diagnosis-table .gl-high{color:#9FE870}
+        .gl-diagnosis-table .gl-low{color:#f87171}
+        @media(max-width:720px){h1{font-size:1.6rem}.comparison-grid{grid-template-columns:1fr}.table-wrap table{font-size:.55rem;min-width:480px}}
+        @media(max-width:480px){h1{font-size:1.3rem}}
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- 語言切換 -->
+    <div class="lang-switch">
+        <button class="lang-btn active" data-lang="zh">中文</button>
+        <button class="lang-btn" data-lang="en">English</button>
+        <button class="lang-btn" data-lang="es">Español</button>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 中文版 -->
+    <!-- ============================================================ -->
+    <div class="lang-block active" id="zh">
+        <h1>為什麼西方不敢教社會主義？</h1>
+        <div class="subhead">一篇關於治理焦慮與資訊控制的結構性分析</div>
+        <div class="meta">GFI Flow Intelligence · 2026年8月31日</div>
+
+        <h2>一、一個無法回答的問題</h2>
+        <p>在西方教育體系中，有一個被刻意忽略的問題：</p>
+        <div class="insight-block">
+            <p><strong>「為什麼我們學了所有關於資本主義的理論，卻從未被完整教授過社會主義？」</strong></p>
+        </div>
+        <p>這個問題的答案，揭示了西方治理系統最深層的焦慮。</p>
+
+        <h2>二、現象：兩個世界，兩種教育</h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>教育體系</th><th>對資本主義／市場經濟的態度</th><th>對社會主義／共產主義的態度</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight">中國教育</span></td><td>✅ <strong>完整教授</strong> — 作為歷史階段、理論體系、批判對象、現實經濟運作機制</td><td>✅ <strong>完整教授</strong> — 作為官方意識形態、理論基礎、治理實踐</td></tr>
+                    <tr><td><span class="highlight-blue">美國與西方教育</span></td><td>✅ <strong>完整教授</strong> — 作為「自然秩序」、經濟學核心、歷史「終點」</td><td>❌ <strong>幾乎不教</strong> — 或僅作為「極權主義的同義詞」，缺乏理論內涵</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="insight-block">
+            <p><span class="highlight">中國教育教資本主義，因為它不怕學生比較。</span><br>
+            <span class="highlight-blue">西方教育不教社會主義，因為它怕學生比較。</span></p>
+        </div>
+
+        <h2>三、為什麼西方「不敢」教社會主義？</h2>
+
+        <h3>3.1 社會主義是資本主義的「鏡子」</h3>
+        <p>社會主義對西方資本主義體系構成了<span class="highlight">根本性的理論挑戰</span>：</p>
+        <ul style="color:#c7d2e3;padding-left:1.5rem;margin-bottom:.8rem;line-height:1.9">
+            <li>它揭示了資本主義的<span class="highlight-blue">結構性矛盾</span>（貧富差距、週期性危機、異化勞動）</li>
+            <li>它提供了<span class="highlight-gold">另一種可能性</span>（公有制、計畫經濟、勞工權益優先）</li>
+            <li>它證明了<span class="highlight">資本主義不是歷史的「終點」</span></li>
+        </ul>
+        <p>如果西方教育讓學生完整了解社會主義，學生就會開始提問——而這些問題，西方治理系統無法回答。</p>
+
+        <h3>3.2 「不教」的五種手法</h3>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>手法</th><th>說明</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-red">標籤化</span></td><td>將社會主義等同於「極權主義」、「專制」、「失敗」</td></tr>
+                    <tr><td><span class="highlight-red">省略理論</span></td><td>不介紹馬克思、恩格斯、列寧的理論，只講「蘇聯解體」、「柏林圍牆」</td></tr>
+                    <tr><td><span class="highlight-red">歷史斷裂</span></td><td>不教社會主義對勞工權益、社會福利、女性解放的歷史貢獻</td></tr>
+                    <tr><td><span class="highlight-red">妖魔化實踐</span></td><td>只報導中國的「負面新聞」，不報導脫貧成就、基礎建設、科技發展</td></tr>
+                    <tr><td><span class="highlight-red">拒絕比較</span></td><td>不讓學生將資本主義與社會主義的實際治理成果進行比較</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p><strong>這不是「教育中立」，這是「系統性的資訊過濾」。</strong></p>
+
+        <!-- ===== 新章節：三層控制 ===== -->
+        <h2>四、三層控制：不提供、只禁止、妖魔化</h2>
+        <p>上述五種手法，可以歸納為一個更精簡、更結構性的控制模型——<span class="highlight-red">三層控制</span>：</p>
+
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>層級</th><th>手法</th><th>效果</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-red">第一層</span></td><td><strong>不提供</strong> — 教育體系中完全省略社會主義的理論與實踐</td><td>學生根本不知道「有另一種可能」</td></tr>
+                    <tr><td><span class="highlight-red">第二層</span></td><td><strong>只禁止</strong> — 禁止接觸相關書籍、言論、學術研究</td><td>任何試圖了解的人都被阻止</td></tr>
+                    <tr><td><span class="highlight-red">第三層</span></td><td><strong>妖魔化</strong> — 將社會主義等同於「極權」「獨裁」「邪惡」</td><td>即使偶然接觸，也被預先設定的標籤所抵消</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="insight-block">
+            <p><strong>這不是「教育」，這是「思想控制」——不提供知識、只禁止接觸、同時妖魔化對方。</strong></p>
+        </div>
+
+        <p>這種三層控制的精妙之處在於：</p>
+        <ul style="color:#c7d2e3;padding-left:1.5rem;margin-bottom:.8rem;line-height:1.9">
+            <li>如果學生從未聽過社會主義，他們不會追問 — <span class="highlight-red">「不提供」</span> 解決了這個問題</li>
+            <li>如果學生想了解，他們會被阻止 — <span class="highlight-red">「只禁止」</span> 解決了這個問題</li>
+            <li>如果學生偶然接觸到，他們已被預先設定的標籤所汙染 — <span class="highlight-red">「妖魔化」</span> 解決了這個問題</li>
+        </ul>
+
+        <div class="comparison-grid">
+            <div class="comp-item bad">
+                <div class="label">❌ 不提供</div>
+                <div class="desc">社會主義在教材中完全缺席，學生不知道它存在</div>
+            </div>
+            <div class="comp-item bad">
+                <div class="label">❌ 只禁止</div>
+                <div class="desc">任何試圖了解社會主義的行為都被阻止或汙名化</div>
+            </div>
+            <div class="comp-item bad">
+                <div class="label">❌ 妖魔化</div>
+                <div class="desc">社會主義被預先設定為「邪惡」的標籤，無法被理性討論</div>
+            </div>
+        </div>
+
+        <p>相比於「提供反面論述然後讓學生判斷」，<span class="highlight-red">三層控制</span>更有效、風險更低：</p>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>策略</th><th>效果</th><th>風險</th></tr></thead>
+                <tbody>
+                    <tr><td>提供反面論述</td><td>讓學生接觸後自行判斷</td><td>學生可能反而認同對方</td></tr>
+                    <tr><td><span class="highlight-red">不提供 + 只禁止 + 妖魔化</span></td><td>學生根本不知道對方存在；即使知道，也已被預先設定的標籤所汙染</td><td><span class="highlight">幾乎為零</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>五、恐懼的根源：治理焦慮</h2>
+        <p>西方教育不敢教社會主義，不是因為「不值得教」，而是因為：</p>
+
+        <div class="comparison-grid">
+            <div class="comp-item bad">
+                <div class="label">❌ 害怕比較</div>
+                <div class="desc">一旦學生將資本主義與社會主義的實際治理成果進行比較，西方制度的缺陷將無所遁形</div>
+            </div>
+            <div class="comp-item bad">
+                <div class="label">❌ 害怕真相</div>
+                <div class="desc">中國的脫貧成就、基礎建設、科技發展，會讓學生質疑「資本主義是唯一選擇」的敘事</div>
+            </div>
+            <div class="comp-item bad">
+                <div class="label">❌ 害怕替代方案</div>
+                <div class="desc">如果學生知道「另一種制度是可能的」，他們就會開始質疑現有制度的正當性</div>
+            </div>
+            <div class="comp-item bad">
+                <div class="label">❌ 害怕失去控制</div>
+                <div class="desc">資訊控制是西方治理系統維持正當性的最後防線</div>
+            </div>
+        </div>
+
+        <div class="insight-block">
+            <p><strong>西方教育的「不教」，不是知識的缺失，而是治理的防衛。</strong></p>
+        </div>
+
+        <h2>六、為什麼中國「敢」教資本主義？</h2>
+
+        <div class="comparison-grid">
+            <div class="comp-item good">
+                <div class="label">✅ 治理自信</div>
+                <div class="desc">相信社會主義的實踐成果經得起比較，不怕學生接觸不同思想</div>
+            </div>
+            <div class="comp-item good">
+                <div class="label">✅ 理論基礎</div>
+                <div class="desc">馬克思主義本身就是對資本主義最深刻的批判體系，教資本主義是為了讓學生理解「批判的對象」</div>
+            </div>
+            <div class="comp-item good">
+                <div class="label">✅ 務實需要</div>
+                <div class="desc">中國是全球第二大經濟體，與資本主義國家有密切經貿往來，理解資本主義是務實的生存需要</div>
+            </div>
+            <div class="comp-item good">
+                <div class="label">✅ 相信真相</div>
+                <div class="desc">相信學生知道真相後會做出正確的選擇</div>
+            </div>
+        </div>
+
+        <h2>七、GL Framework 診斷</h2>
+        <div class="table-wrap">
+            <table class="gl-diagnosis-table">
+                <thead><tr><th>GL 診斷維度</th><th><span class="highlight">中國教育</span>（教資本主義）</th><th><span class="highlight-blue">西方教育</span>（不教社會主義）</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>資訊透明度</strong></td><td><span class="gl-high">✅ 高</span> — 讓學生接觸不同制度</td><td><span class="gl-low">❌ 低</span> — 系統性過濾社會主義資訊</td></tr>
+                    <tr><td><strong>比較機會</strong></td><td><span class="gl-high">✅ 提供比較基礎</span></td><td><span class="gl-low">❌ 拒絕比較</span></td></tr>
+                    <tr><td><strong>學術自由</strong></td><td><span class="gl-high">✅ 可以研究資本主義理論</span></td><td><span class="gl-low">❌ 研究社會主義會被質疑</span></td></tr>
+                    <tr><td><strong>治理自信</strong></td><td><span class="gl-high">✅ 相信自己的制度經得起比較</span></td><td><span class="gl-low">❌ 害怕自己的制度經不起比較</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ===== 三層控制 + 三種教育體系對照 ===== -->
+        <h2>八、三種教育體系的對照</h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>教育體系</th><th>對社會主義的態度</th><th>對資本主義的態度</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">西方教育</span></td><td><span class="no">❌ 不提供 + 只禁止 + 妖魔化</span></td><td><span class="yes">✅ 完整教授、視為正統</span></td></tr>
+                    <tr><td><span class="highlight">中國教育</span></td><td><span class="yes">✅ 完整教授、視為正統</span></td><td><span class="yes">✅ 完整教授、批判性理解</span></td></tr>
+                    <tr><td><span class="highlight-red">台灣（台獨教育）</span></td><td><span class="no">❌ 不提供 + 只禁止 + 妖魔化</span></td><td><span class="no">❌ 不教授（因為與「中國」連結）</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>九、結論</h2>
+        <div class="conclusion-box">
+            <p><span class="highlight">中國教育教資本主義，因為它不怕學生知道真相。</span></p>
+            <p><span class="highlight-blue">西方教育不教社會主義，因為它怕學生知道真相。</span></p>
+        </div>
+
+        <p style="margin-top:1rem;">這不是一個「誰教得多」的問題，而是一個 <strong>「治理是否敢於面對真相」</strong> 的問題。</p>
+        <ul style="color:#c7d2e3;padding-left:1.5rem;margin:.8rem 0;line-height:1.9">
+            <li>當一個教育體系不敢讓學生了解另一種制度的理論與實踐時，它就不是在「教育」，而是在 <strong>「灌輸」</strong>。</li>
+            <li>當一個治理系統不敢讓人民接觸完整資訊時，它就不是在「治理」，而是在 <strong>「控制」</strong>。</li>
+        </ul>
+        <p><strong>西方教育的「不教」，不是知識的缺失，而是治理的焦慮。它暴露了西方治理系統最深層的不安全感——一種害怕比較、害怕真相、害怕替代方案的結構性恐懼。</strong></p>
+
+        <h2>十、延伸思考：台灣的「去中國化」教育</h2>
+        <p>台灣的教育體系，不僅不教社會主義，還刻意「切斷」與中國的歷史、文化、血緣連結。這與西方不教社會主義的邏輯完全一致：</p>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>維度</th><th>西方教育</th><th>台灣教育</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>不教的對象</strong></td><td>社會主義</td><td>中國歷史、文化、血緣連結</td></tr>
+                    <tr><td><strong>目的</strong></td><td>維護資本主義的正當性</td><td>維護台獨的正當性</td></tr>
+                    <tr><td><strong>手法</strong></td><td>標籤化、省略理論、妖魔化實踐</td><td>去中國化、省略歷史連結、妖魔化大陸</td></tr>
+                    <tr><td><strong>本質</strong></td><td>透過資訊控制維護特定意識形態</td><td>透過資訊控制維護特定意識形態</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="insight-block">
+            <p><span class="highlight-red">台獨教育，就是西方不教社會主義的「台灣版本」。</span></p>
+        </div>
+
+        <div class="footnote">📊 本文以 GL Framework（治理正當性框架）為分析工具 · <a href="/gl-framework.html">了解 GL Framework →</a></div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 英文版 -->
+    <!-- ============================================================ -->
+    <div class="lang-block" id="en">
+        <h1>Why Does the West Fear to Teach Socialism?</h1>
+        <div class="subhead">A Structural Analysis of Governance Anxiety and Information Control</div>
+        <div class="meta">GFI Flow Intelligence · August 31, 2026</div>
+
+        <h2>I. A Question That Cannot Be Answered</h2>
+        <p>In Western education systems, there is a question deliberately ignored:</p>
+        <div class="insight-block">
+            <p><strong>"Why have we learned all about capitalism, but never been taught socialism in any depth?"</strong></p>
+        </div>
+        <p>The answer to this question reveals the deepest anxiety of the Western governance system.</p>
+
+        <h2>II. Two Worlds, Two Educations</h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Education System</th><th>Attitude toward Capitalism / Market Economy</th><th>Attitude toward Socialism / Communism</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight">China</span></td><td>✅ <strong>Taught comprehensively</strong> — as a historical stage, theoretical system, object of critique, and real economic mechanism</td><td>✅ <strong>Taught comprehensively</strong> — as official ideology, theoretical foundation, and governance practice</td></tr>
+                    <tr><td><span class="highlight-blue">U.S. &amp; Western Education</span></td><td>✅ <strong>Taught comprehensively</strong> — as the "natural order," core of economics, "end of history"</td><td>❌ <strong>Virtually absent</strong> — or reduced to a synonym for "totalitarianism," lacking theoretical depth</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="insight-block">
+            <p><span class="highlight">China teaches capitalism because it is unafraid of students making comparisons.</span><br>
+            <span class="highlight-blue">The West does not teach socialism because it is afraid of students making comparisons.</span></p>
+        </div>
+
+        <h2>III. Why Does the West "Fear" to Teach Socialism?</h2>
+
+        <h3>3.1 Socialism Is Capitalism's "Mirror"</h3>
+        <p>Socialism poses a <span class="highlight">fundamental theoretical challenge</span> to Western capitalism:</p>
+        <ul style="color:#c7d2e3;padding-left:1.5rem;margin-bottom:.8rem;line-height:1.9">
+            <li>It reveals capitalism's <span class="highlight-blue">structural contradictions</span> (inequality, cyclical crises, alienation of labor)</li>
+            <li>It offers <span class="highlight-gold">another possibility</span> (public ownership, planned economy, prioritizing labor rights)</li>
+            <li>It proves that capitalism is <span class="highlight">not the "end of history"</span></li>
+        </ul>
+        <p>If Western education allowed students to fully understand socialism, they would start asking questions — questions the Western governance system cannot answer.</p>
+
+        <h3>3.2 Five Methods of "Not Teaching"</h3>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Method</th><th>Description</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-red">Labeling</span></td><td>Equating socialism with "totalitarianism," "authoritarianism," "failure"</td></tr>
+                    <tr><td><span class="highlight-red">Omitting Theory</span></td><td>Not introducing Marx, Engels, or Lenin — only mentioning "Soviet collapse" or "Berlin Wall"</td></tr>
+                    <tr><td><span class="highlight-red">Historical Rupture</span></td><td>Ignoring socialism's contributions to labor rights, welfare, and women's liberation</td></tr>
+                    <tr><td><span class="highlight-red">Demonizing Practice</span></td><td>Reporting only negative stories about China, ignoring poverty alleviation, infrastructure, and technology</td></tr>
+                    <tr><td><span class="highlight-red">Refusing Comparison</span></td><td>Not allowing students to compare actual governance outcomes between capitalism and socialism</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p><strong>This is not "educational neutrality." This is "systematic information filtering."</strong></p>
+
+        <!-- ===== New Section: Three Layers of Control ===== -->
+        <h2>IV. Three Layers of Control: Withhold, Prohibit, Demonize</h2>
+        <p>The five methods above can be distilled into a more streamlined, structural model — <span class="highlight-red">Three Layers of Control</span>:</p>
+
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Layer</th><th>Method</th><th>Effect</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-red">Layer 1</span></td><td><strong>Withhold</strong> — Completely omit socialist theory and practice from the curriculum</td><td>Students don't even know "another possibility exists"</td></tr>
+                    <tr><td><span class="highlight-red">Layer 2</span></td><td><strong>Prohibit</strong> — Ban access to relevant books, discourse, and academic research</td><td>Anyone who tries to learn is stopped</td></tr>
+                    <tr><td><span class="highlight-red">Layer 3</span></td><td><strong>Demonize</strong> — Equate socialism with "totalitarianism," "dictatorship," "evil"</td><td>Even if encountered, it is neutralized by pre-assigned labels</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="insight-block">
+            <p><strong>This is not "education" — this is "thought control": withholding knowledge, prohibiting access, and demonizing the target.</strong></p>
+        </div>
+
+        <p>The brilliance of this three-layer control lies in its redundancy:</p>
+        <ul style="color:#c7d2e3;padding-left:1.5rem;margin-bottom:.8rem;line-height:1.9">
+            <li>If students never hear of socialism, they won't ask — <span class="highlight-red">"Withhold"</span> solves this</li>
+            <li>If students want to learn, they are blocked — <span class="highlight-red">"Prohibit"</span> solves this</li>
+            <li>If students accidentally encounter it, they are already contaminated by pre-assigned labels — <span class="highlight-red">"Demonize"</span> solves this</li>
+        </ul>
+
+        <div class="comparison-grid">
+            <div class="comp-item bad">
+                <div class="label">❌ Withhold</div>
+                <div class="desc">Socialism is completely absent from textbooks — students don't know it exists</div>
+            </div>
+            <div class="comp-item bad">
+                <div class="label">❌ Prohibit</div>
+                <div class="desc">Any attempt to learn about socialism is blocked or stigmatized</div>
+            </div>
+            <div class="comp-item bad">
+                <div class="label">❌ Demonize</div>
+                <div class="desc">Socialism is pre-labeled as "evil" — rational discussion becomes impossible</div>
+            </div>
+        </div>
+
+        <p>Compared to "presenting counterarguments and letting students judge," <span class="highlight-red">Three Layers of Control</span> is more effective and lower-risk:</p>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Strategy</th><th>Effect</th><th>Risk</th></tr></thead>
+                <tbody>
+                    <tr><td>Present counterarguments</td><td>Students encounter and judge for themselves</td><td>Students might actually agree with the other side</td></tr>
+                    <tr><td><span class="highlight-red">Withhold + Prohibit + Demonize</span></td><td>Students don't know the other side exists; even if they do, they are already contaminated by labels</td><td><span class="highlight">Nearly zero</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>V. The Root of Fear: Governance Anxiety</h2>
+        <p>Western education does not teach socialism not because it is "not worth teaching," but because:</p>
+
+        <div class="comparison-grid">
+            <div class="comp-item bad">
+                <div class="label">❌ Fear of Comparison</div>
+                <div class="desc">If students compare capitalism with socialism's actual governance outcomes, the flaws of the Western system will become impossible to hide</div>
+            </div>
+            <div class="comp-item bad">
+                <div class="label">❌ Fear of Truth</div>
+                <div class="desc">China's achievements in poverty alleviation, infrastructure, and technology would make students question the narrative that "capitalism is the only choice"</div>
+            </div>
+            <div class="comp-item bad">
+                <div class="label">❌ Fear of Alternatives</div>
+                <div class="desc">If students learn that "another system is possible," they will begin to question the legitimacy of the existing system</div>
+            </div>
+            <div class="comp-item bad">
+                <div class="label">❌ Fear of Losing Control</div>
+                <div class="desc">Information control is the last line of defense for the Western governance system's legitimacy</div>
+            </div>
+        </div>
+
+        <div class="insight-block">
+            <p><strong>The West's "not teaching" is not a lack of knowledge — it is governance defense.</strong></p>
+        </div>
+
+        <h2>VI. Why Does China "Dare" to Teach Capitalism?</h2>
+
+        <div class="comparison-grid">
+            <div class="comp-item good">
+                <div class="label">✅ Governance Confidence</div>
+                <div class="desc">Believes socialism's practical achievements can withstand comparison; not afraid of students encountering different ideas</div>
+            </div>
+            <div class="comp-item good">
+                <div class="label">✅ Theoretical Foundation</div>
+                <div class="desc">Marxism is itself the most profound critique of capitalism — teaching capitalism helps students understand the "object of critique"</div>
+            </div>
+            <div class="comp-item good">
+                <div class="label">✅ Practical Necessity</div>
+                <div class="desc">China is the world's second-largest economy with close economic ties to capitalist nations — understanding capitalism is a practical necessity</div>
+            </div>
+            <div class="comp-item good">
+                <div class="label">✅ Trust in Truth</div>
+                <div class="desc">Believes students will make the right choice after knowing the truth</div>
+            </div>
+        </div>
+
+        <h2>VII. GL Framework Diagnosis</h2>
+        <div class="table-wrap">
+            <table class="gl-diagnosis-table">
+                <thead><tr><th>GL Dimension</th><th><span class="highlight">China</span> (Teaches Capitalism)</th><th><span class="highlight-blue">Western Education</span> (Does Not Teach Socialism)</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Information Transparency</strong></td><td><span class="gl-high">✅ High</span> — Students encounter different systems</td><td><span class="gl-low">❌ Low</span> — Systematic filtering of socialist information</td></tr>
+                    <tr><td><strong>Opportunity for Comparison</strong></td><td><span class="gl-high">✅ Provides basis for comparison</span></td><td><span class="gl-low">❌ Refuses comparison</span></td></tr>
+                    <tr><td><strong>Academic Freedom</strong></td><td><span class="gl-high">✅ Research on capitalism is allowed</span></td><td><span class="gl-low">❌ Research on socialism is stigmatized</span></td></tr>
+                    <tr><td><strong>Governance Confidence</strong></td><td><span class="gl-high">✅ Confident its system withstands scrutiny</span></td><td><span class="gl-low">❌ Fears its system cannot withstand scrutiny</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ===== Three Systems Comparison ===== -->
+        <h2>VIII. Three Education Systems Compared</h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Education System</th><th>Attitude toward Socialism</th><th>Attitude toward Capitalism</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">Western Education</span></td><td><span class="no">❌ Withhold + Prohibit + Demonize</span></td><td><span class="yes">✅ Taught comprehensively, treated as orthodox</span></td></tr>
+                    <tr><td><span class="highlight">Chinese Education</span></td><td><span class="yes">✅ Taught comprehensively, treated as orthodox</span></td><td><span class="yes">✅ Taught comprehensively, critically understood</span></td></tr>
+                    <tr><td><span class="highlight-red">Taiwan (Taiwan Independence Education)</span></td><td><span class="no">❌ Withhold + Prohibit + Demonize</span></td><td><span class="no">❌ Not taught (because of association with "China")</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>IX. Conclusion</h2>
+        <div class="conclusion-box">
+            <p><span class="highlight">China teaches capitalism because it is not afraid of students knowing the truth.</span></p>
+            <p><span class="highlight-blue">Western education does not teach socialism because it is afraid of students knowing the truth.</span></p>
+        </div>
+
+        <p style="margin-top:1rem;">This is not a question of "who teaches more." It is a question of <strong>"whether governance dares to confront truth."</strong></p>
+        <ul style="color:#c7d2e3;padding-left:1.5rem;margin:.8rem 0;line-height:1.9">
+            <li>When an education system refuses to expose students to alternative systems, it is not "educating" — it is <strong>"indoctrinating."</strong></li>
+            <li>When a governance system refuses to let people access complete information, it is not "governing" — it is <strong>"controlling."</strong></li>
+        </ul>
+        <p><strong>The West's "not teaching" is not a lack of knowledge — it is governance anxiety. It exposes the deepest insecurity of the Western governance system: a structural fear of comparison, of truth, and of alternatives.</strong></p>
+
+        <h2>X. Extension: Taiwan's "De-Sinicization" Education</h2>
+        <p>Taiwan's education system not only avoids teaching socialism but actively severs historical, cultural, and blood ties with China — mirroring the West's logic regarding socialism:</p>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Dimension</th><th>Western Education</th><th>Taiwanese Education</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>What is excluded</strong></td><td>Socialism</td><td>Chinese history, culture, and blood ties</td></tr>
+                    <tr><td><strong>Purpose</strong></td><td>Maintain capitalism's legitimacy</td><td>Maintain Taiwanese independence's legitimacy</td></tr>
+                    <tr><td><strong>Method</strong></td><td>Labeling, omitting theory, demonizing practice</td><td>De-Sinicization, omitting historical links, demonizing the mainland</td></tr>
+                    <tr><td><strong>Essence</strong></td><td>Information control to uphold a specific ideology</td><td>Information control to uphold a specific ideology</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="insight-block">
+            <p><span class="highlight-red">Taiwan's independence education is the "Taiwanese version" of the West's refusal to teach socialism.</span></p>
+        </div>
+
+        <div class="footnote">📊 This article uses the GL Framework (Governance Legitimacy Framework) as an analytical tool · <a href="/gl-framework.html">Learn about GL Framework →</a></div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 西班牙文版 -->
+    <!-- ============================================================ -->
+    <div class="lang-block" id="es">
+        <h1>¿Por qué Occidente teme enseñar socialismo?</h1>
+        <div class="subhead">Un análisis estructural sobre la ansiedad gubernamental y el control de la información</div>
+        <div class="meta">GFI Flow Intelligence · 31 de agosto de 2026</div>
+
+        <h2>I. Una pregunta que no puede ser respondida</h2>
+        <p>En los sistemas educativos occidentales, hay una pregunta deliberadamente ignorada:</p>
+        <div class="insight-block">
+            <p><strong>"¿Por qué hemos aprendido todo sobre el capitalismo, pero nunca se nos ha enseñado el socialismo en profundidad?"</strong></p>
+        </div>
+        <p>La respuesta a esta pregunta revela la ansiedad más profunda del sistema de gobernanza occidental.</p>
+
+        <h2>II. Dos mundos, dos educaciones</h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Sistema educativo</th><th>Actitud hacia el capitalismo / economía de mercado</th><th>Actitud hacia el socialismo / comunismo</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight">China</span></td><td>✅ <strong>Enseñado integralmente</strong> — como etapa histórica, sistema teórico, objeto de crítica y mecanismo económico real</td><td>✅ <strong>Enseñado integralmente</strong> — como ideología oficial, fundamento teórico y práctica de gobernanza</td></tr>
+                    <tr><td><span class="highlight-blue">Educación occidental</span></td><td>✅ <strong>Enseñado integralmente</strong> — como el "orden natural", núcleo de la economía, "fin de la historia"</td><td>❌ <strong>Prácticamente ausente</strong> — o reducido a sinónimo de "totalitarismo", sin profundidad teórica</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="insight-block">
+            <p><span class="highlight">China enseña capitalismo porque no teme que los estudiantes comparen.</span><br>
+            <span class="highlight-blue">Occidente no enseña socialismo porque teme que los estudiantes comparen.</span></p>
+        </div>
+
+        <h2>III. ¿Por qué Occidente "teme" enseñar socialismo?</h2>
+
+        <h3>3.1 El socialismo es el "espejo" del capitalismo</h3>
+        <p>El socialismo plantea un <span class="highlight">desafío teórico fundamental</span> al capitalismo occidental:</p>
+        <ul style="color:#c7d2e3;padding-left:1.5rem;margin-bottom:.8rem;line-height:1.9">
+            <li>Revela las <span class="highlight-blue">contradicciones estructurales</span> del capitalismo (desigualdad, crisis cíclicas, alienación del trabajo)</li>
+            <li>Ofrece <span class="highlight-gold">otra posibilidad</span> (propiedad pública, economía planificada, priorización de los derechos laborales)</li>
+            <li>Demuestra que el capitalismo <span class="highlight">no es el "fin de la historia"</span></li>
+        </ul>
+        <p>Si Occidente permitiera a los estudiantes conocer plenamente el socialismo, empezarían a hacer preguntas — preguntas que el sistema de gobernanza occidental no puede responder.</p>
+
+        <h3>3.2 Cinco métodos de "no enseñar"</h3>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Método</th><th>Descripción</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-red">Etiquetado</span></td><td>Equiparar socialismo con "totalitarismo", "autoritarismo", "fracaso"</td></tr>
+                    <tr><td><span class="highlight-red">Omisión teórica</span></td><td>No presentar a Marx, Engels o Lenin — solo mencionar el "colapso soviético" o el "Muro de Berlín"</td></tr>
+                    <tr><td><span class="highlight-red">Ruptura histórica</span></td><td>Ignorar las contribuciones del socialismo a los derechos laborales, el bienestar y la liberación femenina</td></tr>
+                    <tr><td><span class="highlight-red">Demonización de la práctica</span></td><td>Reportar solo noticias negativas de China, ignorando la reducción de pobreza, infraestructura y tecnología</td></tr>
+                    <tr><td><span class="highlight-red">Rechazo a la comparación</span></td><td>No permitir que los estudiantes comparen los resultados reales de gobernanza entre capitalismo y socialismo</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p><strong>Esto no es "neutralidad educativa". Es "filtración sistemática de información".</strong></p>
+
+        <!-- ===== Nueva Sección: Tres Capas de Control ===== -->
+        <h2>IV. Tres Capas de Control: Ocultar, Prohibir, Demonizar</h2>
+        <p>Los cinco métodos anteriores pueden sintetizarse en un modelo más estructural — <span class="highlight-red">Tres Capas de Control</span>:</p>
+
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Capa</th><th>Método</th><th>Efecto</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-red">Capa 1</span></td><td><strong>Ocultar</strong> — Omitir completamente la teoría y práctica socialista del currículo</td><td>Los estudiantes ni siquiera saben que "existe otra posibilidad"</td></tr>
+                    <tr><td><span class="highlight-red">Capa 2</span></td><td><strong>Prohibir</strong> — Bloquear el acceso a libros, discursos e investigaciones académicas relevantes</td><td>Cualquiera que intente aprender es detenido</td></tr>
+                    <tr><td><span class="highlight-red">Capa 3</span></td><td><strong>Demonizar</strong> — Equiparar el socialismo con "totalitarismo", "dictadura", "mal"</td><td>Incluso si se encuentra, es neutralizado por etiquetas preasignadas</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="insight-block">
+            <p><strong>Esto no es "educación" — esto es "control del pensamiento": ocultar conocimiento, prohibir el acceso y demonizar al objetivo.</strong></p>
+        </div>
+
+        <p>La eficacia de estas tres capas radica en su redundancia:</p>
+        <ul style="color:#c7d2e3;padding-left:1.5rem;margin-bottom:.8rem;line-height:1.9">
+            <li>Si los estudiantes nunca oyen hablar del socialismo, no preguntarán — <span class="highlight-red">"Ocultar"</span> resuelve esto</li>
+            <li>Si los estudiantes quieren aprender, son bloqueados — <span class="highlight-red">"Prohibir"</span> resuelve esto</li>
+            <li>Si los estudiantes lo encuentran accidentalmente, ya están contaminados por etiquetas preasignadas — <span class="highlight-red">"Demonizar"</span> resuelve esto</li>
+        </ul>
+
+        <div class="comparison-grid">
+            <div class="comp-item bad">
+                <div class="label">❌ Ocultar</div>
+                <div class="desc">El socialismo está completamente ausente de los libros de texto — los estudiantes no saben que existe</div>
+            </div>
+            <div class="comp-item bad">
+                <div class="label">❌ Prohibir</div>
+                <div class="desc">Cualquier intento de aprender sobre socialismo es bloqueado o estigmatizado</div>
+            </div>
+            <div class="comp-item bad">
+                <div class="label">❌ Demonizar</div>
+                <div class="desc">El socialismo es preetiquetado como "malvado" — la discusión racional se vuelve imposible</div>
+            </div>
+        </div>
+
+        <p>En comparación con "presentar contraargumentos y dejar que los estudiantes juzguen", <span class="highlight-red">Tres Capas de Control</span> es más efectivo y de menor riesgo:</p>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Estrategia</th><th>Efecto</th><th>Riesgo</th></tr></thead>
+                <tbody>
+                    <tr><td>Presentar contraargumentos</td><td>Los estudiantes encuentran y juzgan por sí mismos</td><td>Los estudiantes podrían estar de acuerdo con la otra parte</td></tr>
+                    <tr><td><span class="highlight-red">Ocultar + Prohibir + Demonizar</span></td><td>Los estudiantes no saben que existe la otra parte; incluso si lo saben, ya están contaminados por etiquetas</td><td><span class="highlight">Casi nulo</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>V. La raíz del miedo: ansiedad gubernamental</h2>
+        <p>Occidente no enseña socialismo no porque "no valga la pena enseñarlo", sino porque:</p>
+
+        <div class="comparison-grid">
+            <div class="comp-item bad">
+                <div class="label">❌ Miedo a la comparación</div>
+                <div class="desc">Si los estudiantes comparan el capitalismo con los resultados reales del socialismo, los defectos del sistema occidental se volverán imposibles de ocultar</div>
+            </div>
+            <div class="comp-item bad">
+                <div class="label">❌ Miedo a la verdad</div>
+                <div class="desc">Los logros de China en reducción de pobreza, infraestructura y tecnología harían que los estudiantes cuestionen la narrativa de que "el capitalismo es la única opción"</div>
+            </div>
+            <div class="comp-item bad">
+                <div class="label">❌ Miedo a las alternativas</div>
+                <div class="desc">Si los estudiantes aprenden que "otro sistema es posible", comenzarán a cuestionar la legitimidad del sistema existente</div>
+            </div>
+            <div class="comp-item bad">
+                <div class="label">❌ Miedo a perder el control</div>
+                <div class="desc">El control de la información es la última línea de defensa de la legitimidad del sistema de gobernanza occidental</div>
+            </div>
+        </div>
+
+        <div class="insight-block">
+            <p><strong>El "no enseñar" de Occidente no es falta de conocimiento — es defensa de la gobernanza.</strong></p>
+        </div>
+
+        <h2>VI. ¿Por qué China "se atreve" a enseñar capitalismo?</h2>
+
+        <div class="comparison-grid">
+            <div class="comp-item good">
+                <div class="label">✅ Confianza gubernamental</div>
+                <div class="desc">Cree que los logros prácticos del socialismo resisten la comparación; no teme que los estudiantes encuentren ideas diferentes</div>
+            </div>
+            <div class="comp-item good">
+                <div class="label">✅ Fundamento teórico</div>
+                <div class="desc">El marxismo es en sí mismo la crítica más profunda del capitalismo — enseñar capitalismo ayuda a los estudiantes a comprender el "objeto de la crítica"</div>
+            </div>
+            <div class="comp-item good">
+                <div class="label">✅ Necesidad práctica</div>
+                <div class="desc">China es la segunda economía mundial con estrechos vínculos económicos con países capitalistas — comprender el capitalismo es una necesidad práctica</div>
+            </div>
+            <div class="comp-item good">
+                <div class="label">✅ Confianza en la verdad</div>
+                <div class="desc">Cree que los estudiantes tomarán la decisión correcta después de conocer la verdad</div>
+            </div>
+        </div>
+
+        <h2>VII. Diagnóstico del GL Framework</h2>
+        <div class="table-wrap">
+            <table class="gl-diagnosis-table">
+                <thead><tr><th>Dimensión GL</th><th><span class="highlight">China</span> (Enseña capitalismo)</th><th><span class="highlight-blue">Educación occidental</span> (No enseña socialismo)</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Transparencia informativa</strong></td><td><span class="gl-high">✅ Alta</span> — estudiantes conocen diferentes sistemas</td><td><span class="gl-low">❌ Baja</span> — filtración sistemática de información socialista</td></tr>
+                    <tr><td><strong>Oportunidad de comparación</strong></td><td><span class="gl-high">✅ Proporciona base para comparar</span></td><td><span class="gl-low">❌ Rechaza la comparación</span></td></tr>
+                    <tr><td><strong>Libertad académica</strong></td><td><span class="gl-high">✅ Investigación sobre capitalismo permitida</span></td><td><span class="gl-low">❌ Investigación sobre socialismo estigmatizada</span></td></tr>
+                    <tr><td><strong>Confianza gubernamental</strong></td><td><span class="gl-high">✅ Confía en que su sistema resiste el escrutinio</span></td><td><span class="gl-low">❌ Teme que su sistema no resista el escrutinio</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ===== Tres Sistemas Comparados ===== -->
+        <h2>VIII. Tres sistemas educativos comparados</h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Sistema educativo</th><th>Actitud hacia el socialismo</th><th>Actitud hacia el capitalismo</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">Educación occidental</span></td><td><span class="no">❌ Ocultar + Prohibir + Demonizar</span></td><td><span class="yes">✅ Enseñado integralmente, tratado como ortodoxo</span></td></tr>
+                    <tr><td><span class="highlight">Educación china</span></td><td><span class="yes">✅ Enseñado integralmente, tratado como ortodoxo</span></td><td><span class="yes">✅ Enseñado integralmente, comprendido críticamente</span></td></tr>
+                    <tr><td><span class="highlight-red">Taiwán (educación independentista)</span></td><td><span class="no">❌ Ocultar + Prohibir + Demonizar</span></td><td><span class="no">❌ No se enseña (por asociación con "China")</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>IX. Conclusión</h2>
+        <div class="conclusion-box">
+            <p><span class="highlight">China enseña capitalismo porque no teme que los estudiantes conozcan la verdad.</span></p>
+            <p><span class="highlight-blue">Occidente no enseña socialismo porque teme que los estudiantes conozcan la verdad.</span></p>
+        </div>
+
+        <p style="margin-top:1rem;">No es una cuestión de "quién enseña más". Es una cuestión de <strong>"si la gobernanza se atreve a enfrentar la verdad".</strong></p>
+        <ul style="color:#c7d2e3;padding-left:1.5rem;margin:.8rem 0;line-height:1.9">
+            <li>Cuando un sistema educativo se niega a exponer a los estudiantes a sistemas alternativos, no está "educando" — está <strong>"adoctrinando".</strong></li>
+            <li>Cuando un sistema de gobernanza se niega a permitir el acceso a información completa, no está "gobernando" — está <strong>"controlando".</strong></li>
+        </ul>
+        <p><strong>El "no enseñar" de Occidente no es falta de conocimiento — es ansiedad gubernamental. Expone la inseguridad más profunda del sistema de gobernanza occidental: un miedo estructural a la comparación, a la verdad y a las alternativas.</strong></p>
+
+        <h2>X. Extensión: la educación "desinizadora" de Taiwán</h2>
+        <p>El sistema educativo de Taiwán no solo evita enseñar socialismo, sino que también corta activamente los vínculos históricos, culturales y de sangre con China — reflejando la lógica de Occidente respecto al socialismo:</p>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Dimensión</th><th>Educación occidental</th><th>Educación taiwanesa</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Lo que se excluye</strong></td><td>Socialismo</td><td>Historia, cultura y lazos de sangre con China</td></tr>
+                    <tr><td><strong>Propósito</strong></td><td>Mantener la legitimidad del capitalismo</td><td>Mantener la legitimidad de la independencia taiwanesa</td></tr>
+                    <tr><td><strong>Método</strong></td><td>Etiquetado, omisión teórica, demonización de la práctica</td><td>Desinización, omisión de vínculos históricos, demonización del continente</td></tr>
+                    <tr><td><strong>Esencia</strong></td><td>Control de información para sostener una ideología específica</td><td>Control de información para sostener una ideología específica</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="insight-block">
+            <p><span class="highlight-red">La educación independentista taiwanesa es la "versión taiwanesa" del rechazo occidental a enseñar socialismo.</span></p>
+        </div>
+
+        <div class="footnote">📊 Este artículo utiliza el GL Framework como herramienta analítica · <a href="/gl-framework.html">Conocer el GL Framework →</a></div>
+    </div>
+
+</div>
+
+<script>
+    document.querySelectorAll('.lang-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.remove('active'); });
+            this.classList.add('active');
+            var lang = this.dataset.lang;
+            document.querySelectorAll('.lang-block').forEach(function(b) { b.classList.remove('active'); });
+            var target = document.getElementById(lang);
+            if (target) target.classList.add('active');
+        });
+    });
+</script>
+
+</body>
+</html>
