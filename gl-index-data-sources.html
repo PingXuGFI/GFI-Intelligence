@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GL Index 數據來源與參數定義</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:#0b1220;color:#f8fbff;font-family:'DM Sans',system-ui,sans-serif;font-size:15px;line-height:1.7;padding:1.5rem 1rem}
+        .container{max-width:1120px;margin:0 auto}
+        .lang-switch{display:flex;gap:10px;margin-bottom:1.5rem;flex-wrap:wrap;justify-content:flex-end}
+        .lang-btn{font-family:'DM Mono',monospace;font-size:.7rem;padding:.3rem 1.2rem;border:1px solid rgba(255,255,255,.1);border-radius:20px;background:0 0;color:#9fb0c8;cursor:pointer;transition:all .2s}
+        .lang-btn:hover{border-color:rgba(255,255,255,.3);color:#fff}
+        .lang-btn.active{color:#9FE870;border-color:rgba(159,232,112,.4);background:rgba(159,232,112,.08)}
+        .lang-block{display:none;animation:fadeIn .3s ease}
+        .lang-block.active{display:block}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+        h1{font-family:'DM Serif Display',Georgia,serif;font-size:2rem;letter-spacing:.02em;color:#f0f8f0;margin-bottom:.1rem}
+        .subhead{font-family:'DM Mono',monospace;font-size:.75rem;color:#9fb0c8;letter-spacing:.06em}
+        .meta{font-family:'DM Mono',monospace;font-size:.65rem;color:rgba(255,255,255,.2);border-bottom:1px solid rgba(255,255,255,.06);padding-bottom:1rem;margin-bottom:1.5rem}
+        h2{font-family:'DM Serif Display',Georgia,serif;font-size:1.3rem;color:#e0f0e0;margin:2rem 0 .8rem;border-left:4px solid #9FE870;padding-left:1rem}
+        h3{font-family:'DM Serif Display',Georgia,serif;font-size:1rem;color:#c0d8c0;margin:1.2rem 0 .4rem}
+        p{color:#c7d2e3;margin-bottom:.8rem;line-height:1.8}
+        .source-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin:1rem 0}
+        .src-card{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:1rem 1.2rem}
+        .src-card .label{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.2)}
+        .src-card .title{font-weight:600;color:#eaf6ff;margin:.2rem 0 .1rem}
+        .src-card .desc{font-size:.7rem;color:#9fb0c8}
+        .src-card .link{font-size:.6rem;color:#7DD3FC;text-decoration:none;word-break:break-all}
+        .src-card .link:hover{text-decoration:underline}
+        .param-table{overflow-x:auto;border-radius:12px;border:1px solid rgba(255,255,255,.06);margin:1rem 0}
+        table{width:100%;border-collapse:collapse;font-family:'DM Mono',monospace;font-size:.65rem;min-width:700px}
+        th{text-align:left;padding:8px 10px;font-size:.5rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.2);border-bottom:1px solid rgba(255,255,255,.06);font-weight:400;background:rgba(0,0,0,.2)}
+        td{padding:6px 10px;border-bottom:1px solid rgba(255,255,255,.03);color:#c7d2e3}
+        tr:hover td{background:rgba(255,255,255,.02)}
+        .param-name{font-weight:500;color:#eaf6ff}
+        .param-source{font-size:.6rem;color:#7DD3FC}
+        .param-method{font-size:.6rem;color:rgba(255,255,255,.25)}
+        .academic-box{background:rgba(125,211,252,.04);border:1px solid rgba(125,211,252,.12);border-radius:12px;padding:1rem 1.5rem;margin:1.2rem 0}
+        .academic-box .ref{font-size:.7rem;color:#9fb0c8;padding:.3rem 0;border-bottom:1px solid rgba(255,255,255,.03)}
+        .academic-box .ref:last-child{border-bottom:0}
+        .academic-box .ref .cite{color:#7DD3FC;font-weight:500}
+        .link-grid{display:flex;flex-wrap:wrap;gap:12px;margin:1.2rem 0}
+        .link-grid a{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:20px;border:1px solid rgba(125,211,252,.2);background:rgba(125,211,252,.05);color:#7DD3FC;text-decoration:none;font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.04em;transition:all .2s}
+        .link-grid a:hover{background:rgba(125,211,252,.12);border-color:#7DD3FC;transform:translateY(-2px)}
+        .footnote{font-size:.6rem;color:rgba(255,255,255,.2);text-align:center;font-family:'DM Mono',monospace;border-top:1px solid rgba(255,255,255,.05);padding-top:1.2rem;margin-top:2rem}
+        .footnote a{color:#7DD3FC;text-decoration:none}
+        @media(max-width:600px){h1{font-size:1.5rem}table{font-size:.55rem;min-width:480px}.source-grid{grid-template-columns:1fr}}
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- 語言切換 -->
+    <div class="lang-switch">
+        <button class="lang-btn active" data-lang="zh">中文</button>
+        <button class="lang-btn" data-lang="en">English</button>
+        <button class="lang-btn" data-lang="es">Español</button>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 中文版 -->
+    <!-- ============================================================ -->
+    <div class="lang-block active" id="lang-zh">
+        <h1>GL Index 數據來源與參數定義</h1>
+        <div class="subhead">12 項參數 · 三維校正模型 · 學術依據</div>
+        <div class="meta">v5.4 · 2026年8月31日 · 基於 V-Dem · 世界銀行 · IMF · WVS 等公開數據</div>
+
+        <h2>一、核心數據來源總覽</h2>
+        <p>GL Index 的建構依託三大類數據源，分別對應 <strong>治理輸入、治理過程與治理產出</strong> 三個維度。</p>
+        <div class="source-grid">
+            <div class="src-card"><div class="label">📊 機構治理數據</div><div class="title">V-Dem · 世界銀行 WGI · IDEA</div><div class="desc">全球 180+ 國家 · 1900 年至今 · 年度更新</div></div>
+            <div class="src-card"><div class="label">💰 經濟與土地數據</div><div class="title">IMF · 世界銀行 · LAI 2.0</div><div class="desc">全球 190+ 國家 · 1990 年至今 · 年度/季度更新</div></div>
+            <div class="src-card"><div class="label">🗳️ 公民感知數據</div><div class="title">WVS · 蓋洛普 · 世界幸福報告</div><div class="desc">全球 160+ 國家 · 多波次調查 · 不定期更新</div></div>
+        </div>
+
+        <h2>二、12 項參數定義與來源</h2>
+        <div class="param-table">
+            <table>
+                <thead><tr><th>參數</th><th>定義</th><th>數據來源</th><th>計算方法</th></tr></thead>
+                <tbody>
+                    <tr><td class="param-name">住房壓力</td><td>住房支出佔可支配收入比例</td><td class="param-source">世界銀行 · OECD · 各國統計</td><td class="param-method">房價收入比 · 租金收入比 · 自有率</td></tr>
+                    <tr><td class="param-name">土地增值閉環</td><td>公共投資增值是否被回收</td><td class="param-source">IMF · 各國財政部</td><td class="param-method">土地稅佔比 · 增值回收工具評分</td></tr>
+                    <tr><td class="param-name">轉嫁路徑</td><td>治理成本是否轉嫁弱勢</td><td class="param-source">OECD · ILO · 各國消費物價</td><td class="param-method">累退稅負比 · 基礎設施融資機制</td></tr>
+                    <tr><td class="param-name">基礎設施</td><td>基建質量、覆蓋與公平性</td><td class="param-source">WEF · 世界銀行 · IEA</td><td class="param-method">品質指數 · 城鄉覆蓋差距 · 公共投資比</td></tr>
+                    <tr><td class="param-name">物價生活品質</td><td>基本生活必需品的可負擔性</td><td class="param-source">IMF · FAO · Numbeo</td><td class="param-method">CPI · 生活成本指數 · 食品價格指數</td></tr>
+                    <tr><td class="param-name">資訊透明度</td><td>政府資訊公開與可近性</td><td class="param-source">V-Dem · 世界銀行 · 各國統計</td><td class="param-method">開放數據指數 · 資訊請求權評分</td></tr>
+                    <tr><td class="param-name">成果可驗證性</td><td>政策成果是否可獨立檢驗</td><td class="param-source">V-Dem · 各國審計報告</td><td class="param-method">績效審計覆蓋率 · 數據開放度</td></tr>
+                    <tr><td class="param-name">反饋機制</td><td>公民意見能否影響決策</td><td class="param-source">WVS · V-Dem</td><td class="param-method">公民參與指數 · 陳情回應率</td></tr>
+                    <tr><td class="param-name">結構完整性</td><td>治理體系跨部門整合程度</td><td class="param-source">各國憲法 · 行政組織法</td><td class="param-method">行政層級整合評分 · 政策協調指數</td></tr>
+                    <tr><td class="param-name">民意發聲權</td><td>公民表達與集會自由</td><td class="param-source">V-Dem · WVS</td><td class="param-method">言論自由指數 · 集會自由評分</td></tr>
+                    <tr><td class="param-name">問責制</td><td>官員對公民的責任機制</td><td class="param-source">世界銀行 WGI · V-Dem</td><td class="param-method">問責指數 · 選舉公正性評分</td></tr>
+                    <tr><td class="param-name">反腐指數</td><td>貪腐程度與控制效能</td><td class="param-source">透明國際 · 世界銀行</td><td class="param-method">CPI · 腐敗控制指數</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>三、校正模型三係數</h2>
+        <div class="param-table">
+            <table>
+                <thead><tr><th>係數</th><th>子參數</th><th>數據來源</th><th>歷史基準</th></tr></thead>
+                <tbody>
+                    <tr><td class="param-name">規模係數</td><td>人口 · 面積 · 行政層級 · 民族多樣性</td><td class="param-source">聯合國人口司 · CIA 世界概況</td><td class="param-method">對數轉換 · 標準化</td></tr>
+                    <tr><td class="param-name">起始條件係數</td><td>基建 · 識字率 · 預期壽命 · 人均GDP起點</td><td class="param-source">麥迪森歷史數據庫 · UNESCO · WHO</td><td class="param-method">建國/獨立時數據</td></tr>
+                    <tr><td class="param-name">成果規模係數</td><td>脫貧人數 · 基建覆蓋 · 公共服務受益規模</td><td class="param-source">世界銀行 · 各國統計年鑑</td><td class="param-method">絕對規模測量</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>四、學術依據</h2>
+        <div class="academic-box">
+            <div class="ref"><span class="cite">Scharpf (1999)</span> — 治理合法性三分架構：輸入合法性、產出合法性、過程合法性</div>
+            <div class="ref"><span class="cite">Gilley (2006, 2012)</span> — 合法性量化方法：合法性認知、正當性判斷、服從行為</div>
+            <div class="ref"><span class="cite">Gilley (2012)</span> — 合法性指數構成：WVS 對法治與人權的認知、治理正當性判斷、IMF/IDEA 服從與參與行為</div>
+            <div class="ref"><span class="cite">V-Dem v15</span> — 民主品質與合法性指標（全球 183+ 國家，1900–2024）</div>
+        </div>
+
+        <h2>五、數據源快速索引</h2>
+        <div class="link-grid">
+            <a href="https://www.v-dem.net" target="_blank">📊 V-Dem</a>
+            <a href="https://govdata360.worldbank.org" target="_blank">📊 世界銀行 WGI</a>
+            <a href="https://www.imf.org/en/Data" target="_blank">📊 IMF 數據</a>
+            <a href="https://www.worldvaluessurvey.org" target="_blank">📊 世界價值觀調查</a>
+            <a href="https://stats.oecd.org" target="_blank">📊 OECD 統計</a>
+            <a href="https://population.un.org" target="_blank">📊 聯合國人口司</a>
+            <a href="https://www.rug.nl/ggdc/historicaldevelopment/maddison" target="_blank">📊 麥迪森項目</a>
+        </div>
+
+        <div class="footnote">📊 資料來源：V-Dem v15 · 世界銀行 WGI · IMF 財政統計 · WVS · OECD · 聯合國人口司 · 麥迪森歷史數據庫 · 透明國際 · ILO · FAO · WEF · LAI 2.0 · <a href="/gl-methodology.html">完整方法論 →</a></div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 英文版 -->
+    <!-- ============================================================ -->
+    <div class="lang-block" id="lang-en">
+        <h1>GL Index — Data Sources &amp; Parameter Definitions</h1>
+        <div class="subhead">12 Parameters · Three‑Factor Adjustment Model · Academic Foundations</div>
+        <div class="meta">v5.4 · August 31, 2026 · Based on V‑Dem · World Bank · IMF · WVS and other public data</div>
+
+        <h2>I. Core Data Sources Overview</h2>
+        <p>GL Index is built upon three major data categories, corresponding to <strong>governance inputs, processes, and outputs</strong>.</p>
+        <div class="source-grid">
+            <div class="src-card"><div class="label">📊 Institutional Governance</div><div class="title">V‑Dem · World Bank WGI · IDEA</div><div class="desc">180+ countries · 1900–present · Annual</div></div>
+            <div class="src-card"><div class="label">💰 Economic &amp; Land</div><div class="title">IMF · World Bank · LAI 2.0</div><div class="desc">190+ countries · 1990–present · Annual/Quarterly</div></div>
+            <div class="src-card"><div class="label">🗳️ Citizen Perception</div><div class="title">WVS · Gallup · World Happiness Report</div><div class="desc">160+ countries · Multiple waves · Irregular</div></div>
+        </div>
+
+        <h2>II. 12 Parameters — Definitions &amp; Sources</h2>
+        <div class="param-table">
+            <table>
+                <thead><tr><th>Parameter</th><th>Definition</th><th>Data Sources</th><th>Calculation Method</th></tr></thead>
+                <tbody>
+                    <tr><td class="param-name">Housing Burden</td><td>Housing expenditure as % of disposable income</td><td class="param-source">World Bank · OECD · National stats</td><td class="param-method">Price-to-income · Rent-to-income · Homeownership</td></tr>
+                    <tr><td class="param-name">Land Value Capture</td><td>Public investment value recovery</td><td class="param-source">IMF · National Treasuries</td><td class="param-method">Land tax share · Capture tool score</td></tr>
+                    <tr><td class="param-name">Cost Shifting</td><td>Governance costs shifted to vulnerable groups</td><td class="param-source">OECD · ILO · CPI data</td><td class="param-method">Regressive tax ratio · Infrastructure financing</td></tr>
+                    <tr><td class="param-name">Infrastructure</td><td>Quality, coverage, and equity</td><td class="param-source">WEF · World Bank · IEA</td><td class="param-method">Quality index · Urban-rural gap · Public investment ratio</td></tr>
+                    <tr><td class="param-name">Cost of Living</td><td>Affordability of basic necessities</td><td class="param-source">IMF · FAO · Numbeo</td><td class="param-method">CPI · Living cost index · Food price index</td></tr>
+                    <tr><td class="param-name">Information Transparency</td><td>Government openness and accessibility</td><td class="param-source">V‑Dem · World Bank</td><td class="param-method">Open data index · FOI score</td></tr>
+                    <tr><td class="param-name">Outcome Verifiability</td><td>Policy outcomes independently verifiable</td><td class="param-source">V‑Dem · Audit reports</td><td class="param-method">Performance audit coverage · Data openness</td></tr>
+                    <tr><td class="param-name">Feedback Mechanism</td><td>Citizen input influences decisions</td><td class="param-source">WVS · V‑Dem</td><td class="param-method">Citizen participation index · Petition response</td></tr>
+                    <tr><td class="param-name">Structural Integrity</td><td>Cross‑sector governance integration</td><td class="param-source">Constitutions · Administrative law</td><td class="param-method">Admin integration score · Policy coordination</td></tr>
+                    <tr><td class="param-name">Voice &amp; Assembly</td><td>Freedom of expression and assembly</td><td class="param-source">V‑Dem · WVS</td><td class="param-method">Free speech index · Assembly freedom</td></tr>
+                    <tr><td class="param-name">Accountability</td><td>Officials' responsibility to citizens</td><td class="param-source">World Bank WGI · V‑Dem</td><td class="param-method">Accountability index · Electoral integrity</td></tr>
+                    <tr><td class="param-name">Anti‑Corruption</td><td>Corruption level and control</td><td class="param-source">Transparency Int. · World Bank</td><td class="param-method">CPI · Corruption control index</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>III. Three Adjustment Coefficients</h2>
+        <div class="param-table">
+            <table>
+                <thead><tr><th>Coefficient</th><th>Sub‑parameters</th><th>Data Sources</th><th>Historical Baseline</th></tr></thead>
+                <tbody>
+                    <tr><td class="param-name">Scale</td><td>Population · Area · Admin levels · Diversity</td><td class="param-source">UN Population · CIA World Factbook</td><td class="param-method">Log transform · Standardization</td></tr>
+                    <tr><td class="param-name">Start</td><td>Infrastructure · Literacy · Life expectancy · GDP per capita</td><td class="param-source">Maddison Project · UNESCO · WHO</td><td class="param-method">Foundation year data</td></tr>
+                    <tr><td class="param-name">Outcome</td><td>Poverty reduction · Infrastructure coverage · Public service scale</td><td class="param-source">World Bank · National yearbooks</td><td class="param-method">Absolute scale measurement</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>IV. Academic Foundations</h2>
+        <div class="academic-box">
+            <div class="ref"><span class="cite">Scharpf (1999)</span> — Three‑fold legitimacy: input, output, throughput</div>
+            <div class="ref"><span class="cite">Gilley (2006, 2012)</span> — Legitimacy quantification methodology: legitimacy perceptions, justification, and consent</div>
+            <div class="ref"><span class="cite">Gilley (2012)</span> — Legitimacy index: WVS perceptions of rule of law &amp; human rights, governance justification, IMF/IDEA obedience &amp; participation</div>
+            <div class="ref"><span class="cite">V‑Dem v15</span> — Democracy quality &amp; legitimacy indicators (183+ countries, 1900–2024)</div>
+        </div>
+
+        <h2>V. Quick Data Source Links</h2>
+        <div class="link-grid">
+            <a href="https://www.v-dem.net" target="_blank">📊 V‑Dem</a>
+            <a href="https://govdata360.worldbank.org" target="_blank">📊 World Bank WGI</a>
+            <a href="https://www.imf.org/en/Data" target="_blank">📊 IMF Data</a>
+            <a href="https://www.worldvaluessurvey.org" target="_blank">📊 WVS</a>
+            <a href="https://stats.oecd.org" target="_blank">📊 OECD Statistics</a>
+            <a href="https://population.un.org" target="_blank">📊 UN Population</a>
+            <a href="https://www.rug.nl/ggdc/historicaldevelopment/maddison" target="_blank">📊 Maddison Project</a>
+        </div>
+
+        <div class="footnote">📊 Sources: V‑Dem v15 · World Bank WGI · IMF GFS · WVS · OECD · UN Population · Maddison Project · Transparency International · ILO · FAO · WEF · LAI 2.0 · <a href="/gl-methodology.html">Full methodology →</a></div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 西班牙文版 -->
+    <!-- ============================================================ -->
+    <div class="lang-block" id="lang-es">
+        <h1>GL Index — Fuentes de Datos y Definiciones de Parámetros</h1>
+        <div class="subhead">12 Parámetros · Modelo de Ajuste Tri‑dimensional · Fundamentos Académicos</div>
+        <div class="meta">v5.4 · 31 de agosto de 2026 · Basado en V‑Dem · Banco Mundial · FMI · WVS y otros datos públicos</div>
+
+        <h2>I. Resumen de Fuentes de Datos</h2>
+        <p>EL GL Index se construye sobre tres categorías principales de datos, correspondientes a <strong>entradas, procesos y resultados</strong> de la gobernanza.</p>
+        <div class="source-grid">
+            <div class="src-card"><div class="label">📊 Gobernanza Institucional</div><div class="title">V‑Dem · Banco Mundial WGI · IDEA</div><div class="desc">180+ países · 1900–presente · Anual</div></div>
+            <div class="src-card"><div class="label">💰 Económico y Territorial</div><div class="title">FMI · Banco Mundial · LAI 2.0</div><div class="desc">190+ países · 1990–presente · Anual/Trimestral</div></div>
+            <div class="src-card"><div class="label">🗳️ Percepción Ciudadana</div><div class="title">WVS · Gallup · World Happiness Report</div><div class="desc">160+ países · Múltiples olas · Irregular</div></div>
+        </div>
+
+        <h2>II. 12 Parámetros — Definiciones y Fuentes</h2>
+        <div class="param-table">
+            <table>
+                <thead><tr><th>Parámetro</th><th>Definición</th><th>Fuentes</th><th>Método de Cálculo</th></tr></thead>
+                <tbody>
+                    <tr><td class="param-name">Carga de Vivienda</td><td>Gasto en vivienda como % del ingreso disponible</td><td class="param-source">Banco Mundial · OECD · Estadísticas nacionales</td><td class="param-method">Precio/ingreso · Alquiler/ingreso · Tasa de propiedad</td></tr>
+                    <tr><td class="param-name">Captura de Plusvalía</td><td>Recuperación de valor de inversión pública</td><td class="param-source">FMI · Ministerios de Hacienda</td><td class="param-method">Participación del impuesto a la tierra · Puntaje de herramientas</td></tr>
+                    <tr><td class="param-name">Transferencia de Costos</td><td>Costos trasladados a grupos vulnerables</td><td class="param-source">OECD · OIT · IPC</td><td class="param-method">Ratio tributario regresivo · Financiamiento de infraestructura</td></tr>
+                    <tr><td class="param-name">Infraestructura</td><td>Calidad, cobertura y equidad</td><td class="param-source">WEF · Banco Mundial · AIE</td><td class="param-method">Índice de calidad · Brecha urbano-rural · Inversión pública</td></tr>
+                    <tr><td class="param-name">Costo de Vida</td><td>Asequibilidad de necesidades básicas</td><td class="param-source">FMI · FAO · Numbeo</td><td class="param-method">IPC · Índice de costo de vida · Índice de precios de alimentos</td></tr>
+                    <tr><td class="param-name">Transparencia</td><td>Apertura y accesibilidad gubernamental</td><td class="param-source">V‑Dem · Banco Mundial</td><td class="param-method">Índice de datos abiertos · Puntaje de acceso a información</td></tr>
+                    <tr><td class="param-name">Verificabilidad</td><td>Resultados políticos verificables</td><td class="param-source">V‑Dem · Informes de auditoría</td><td class="param-method">Cobertura de auditoría de desempeño · Apertura de datos</td></tr>
+                    <tr><td class="param-name">Mecanismo de Retroalimentación</td><td>Influencia ciudadana en decisiones</td><td class="param-source">WVS · V‑Dem</td><td class="param-method">Índice de participación · Respuesta a peticiones</td></tr>
+                    <tr><td class="param-name">Integridad Estructural</td><td>Integración intersectorial</td><td class="param-source">Constituciones · Ley administrativa</td><td class="param-method">Puntaje de integración · Coordinación de políticas</td></tr>
+                    <tr><td class="param-name">Voz y Reunión</td><td>Libertad de expresión y reunión</td><td class="param-source">V‑Dem · WVS</td><td class="param-method">Índice de libertad de expresión · Libertad de reunión</td></tr>
+                    <tr><td class="param-name">Rendición de Cuentas</td><td>Responsabilidad de funcionarios</td><td class="param-source">Banco Mundial WGI · V‑Dem</td><td class="param-method">Índice de rendición de cuentas · Integridad electoral</td></tr>
+                    <tr><td class="param-name">Anticorrupción</td><td>Nivel de corrupción y control</td><td class="param-source">Transparencia Int. · Banco Mundial</td><td class="param-method">IPC · Índice de control de corrupción</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>III. Tres Coeficientes de Ajuste</h2>
+        <div class="param-table">
+            <table>
+                <thead><tr><th>Coeficiente</th><th>Sub‑parámetros</th><th>Fuentes</th><th>Línea Base Histórica</th></tr></thead>
+                <tbody>
+                    <tr><td class="param-name">Escala</td><td>Población · Área · Niveles administrativos · Diversidad</td><td class="param-source">UN Population · CIA World Factbook</td><td class="param-method">Transformación log · Estandarización</td></tr>
+                    <tr><td class="param-name">Inicio</td><td>Infraestructura · Alfabetización · Esperanza de vida · PIB per cápita</td><td class="param-source">Proyecto Maddison · UNESCO · OMS</td><td class="param-method">Datos del año de fundación</td></tr>
+                    <tr><td class="param-name">Resultado</td><td>Reducción de pobreza · Cobertura de infraestructura · Servicios públicos</td><td class="param-source">Banco Mundial · Anuarios nacionales</td><td class="param-method">Medición de escala absoluta</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>IV. Fundamentos Académicos</h2>
+        <div class="academic-box">
+            <div class="ref"><span class="cite">Scharpf (1999)</span> — Legitimidad tripartita: input, output y throughput</div>
+            <div class="ref"><span class="cite">Gilley (2006, 2012)</span> — Metodología de cuantificación de legitimidad: percepciones, justificación y consentimiento</div>
+            <div class="ref"><span class="cite">Gilley (2012)</span> — Índice de legitimidad: percepciones de estado de derecho y DDHH (WVS), justificación de gobernanza, obediencia y participación (FMI/IDEA)</div>
+            <div class="ref"><span class="cite">V‑Dem v15</span> — Indicadores de calidad democrática y legitimidad (183+ países, 1900–2024)</div>
+        </div>
+
+        <h2>V. Enlaces Rápidos a Fuentes</h2>
+        <div class="link-grid">
+            <a href="https://www.v-dem.net" target="_blank">📊 V‑Dem</a>
+            <a href="https://govdata360.worldbank.org" target="_blank">📊 Banco Mundial WGI</a>
+            <a href="https://www.imf.org/en/Data" target="_blank">📊 Datos FMI</a>
+            <a href="https://www.worldvaluessurvey.org" target="_blank">📊 WVS</a>
+            <a href="https://stats.oecd.org" target="_blank">📊 Estadísticas OECD</a>
+            <a href="https://population.un.org" target="_blank">📊 Población ONU</a>
+            <a href="https://www.rug.nl/ggdc/historicaldevelopment/maddison" target="_blank">📊 Proyecto Maddison</a>
+        </div>
+
+        <div class="footnote">📊 Fuentes: V‑Dem v15 · Banco Mundial WGI · FMI GFS · WVS · OECD · Población ONU · Proyecto Maddison · Transparencia Internacional · OIT · FAO · WEF · LAI 2.0 · <a href="/gl-methodology.html">Metodología completa →</a></div>
+    </div>
+
+</div>
+
+<script>
+    document.querySelectorAll('.lang-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.remove('active'); });
+            this.classList.add('active');
+            var lang = this.dataset.lang;
+            document.querySelectorAll('.lang-block').forEach(function(b) { b.classList.remove('active'); });
+            var target = document.getElementById('lang-' + lang);
+            if (target) target.classList.add('active');
+        });
+    });
+</script>
+
+</body>
+</html>
