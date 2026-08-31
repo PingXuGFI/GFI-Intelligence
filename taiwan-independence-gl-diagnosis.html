@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="台獨可以從此得到什麼？—— GL Framework 的結構性診斷 / What Does Taiwan Independence Actually Deliver? — A Structural Diagnosis Using the GL Framework" />
+    <title>台獨可以從此得到什麼？— GL Framework 診斷</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:#0b1220;color:#f8fbff;font-family:'DM Sans',system-ui,sans-serif;font-size:15px;line-height:1.7;padding:1.5rem 1rem}
+        .container{max-width:1020px;margin:0 auto}
+        .lang-switch{display:flex;gap:10px;margin-bottom:1.5rem;flex-wrap:wrap;justify-content:flex-end}
+        .lang-btn{font-family:'DM Mono',monospace;font-size:.7rem;padding:.3rem 1.2rem;border:1px solid rgba(255,255,255,.1);border-radius:20px;background:0 0;color:#9fb0c8;cursor:pointer;transition:all .2s}
+        .lang-btn:hover{border-color:rgba(255,255,255,.3);color:#fff}
+        .lang-btn.active{color:#9FE870;border-color:rgba(159,232,112,.4);background:rgba(159,232,112,.08)}
+        .lang-block{display:none;animation:fadeIn .3s ease}
+        .lang-block.active{display:block}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+        h1{font-family:'DM Serif Display',Georgia,serif;font-size:2.2rem;letter-spacing:.02em;color:#f0f8f0;margin-bottom:.2rem;line-height:1.2}
+        .subhead{font-family:'DM Mono',monospace;font-size:.75rem;color:#9fb0c8;letter-spacing:.06em;margin-bottom:.2rem}
+        .meta{font-family:'DM Mono',monospace;font-size:.65rem;color:rgba(255,255,255,.2);border-bottom:1px solid rgba(255,255,255,.06);padding-bottom:1rem;margin-bottom:2rem}
+        h2{font-family:'DM Serif Display',Georgia,serif;font-size:1.4rem;color:#e0f0e0;margin:2.2rem 0 .8rem;border-left:4px solid #9FE870;padding-left:1rem}
+        h3{font-family:'DM Serif Display',Georgia,serif;font-size:1.1rem;color:#c0d8c0;margin:1.4rem 0 .4rem}
+        p{color:#c7d2e3;margin-bottom:.9rem;line-height:1.9}
+        .highlight{color:#9FE870;font-weight:500}
+        .highlight-blue{color:#7DD3FC;font-weight:500}
+        .highlight-gold{color:#fbbf24;font-weight:500}
+        .highlight-red{color:#f87171;font-weight:500}
+        .insight-block{background:rgba(159,232,112,.06);border-left:4px solid #9FE870;padding:1rem 1.5rem;border-radius:0 8px 8px 0;margin:1.2rem 0}
+        .insight-block p{color:#d8e8d8;margin-bottom:0;font-weight:450;font-size:.95rem}
+        .table-wrap{overflow-x:auto;border-radius:12px;border:1px solid rgba(255,255,255,.06);margin:1.2rem 0}
+        table{width:100%;border-collapse:collapse;font-family:'DM Mono',monospace;font-size:.65rem;min-width:500px}
+        th{text-align:left;padding:8px 10px;font-size:.5rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.2);border-bottom:1px solid rgba(255,255,255,.06);font-weight:400;background:rgba(0,0,0,.2)}
+        td{padding:6px 10px;border-bottom:1px solid rgba(255,255,255,.03);color:#c7d2e3}
+        tr:hover td{background:rgba(255,255,255,.02)}
+        .cost{color:#f87171}
+        .gain{color:#9FE870}
+        .conclusion-box{background:rgba(159,232,112,.04);border:1px solid rgba(159,232,112,.15);border-radius:12px;padding:1.2rem 1.8rem;margin-top:1.5rem}
+        .conclusion-box p{color:#d0e8d0;font-weight:450;font-size:.95rem;margin-bottom:.4rem}
+        .conclusion-box p:last-child{margin-bottom:0}
+        .footnote{font-size:.6rem;color:rgba(255,255,255,.2);text-align:center;font-family:'DM Mono',monospace;border-top:1px solid rgba(255,255,255,.05);padding-top:1.2rem;margin-top:2rem}
+        .footnote a{color:#7DD3FC;text-decoration:none}
+        .mechanism-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:1rem 0}
+        .mech-item{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:.8rem 1rem;text-align:center}
+        .mech-item .step{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.06em;color:rgba(255,255,255,.15)}
+        .mech-item .title{font-weight:600;color:#f0f8f0;margin:.2rem 0 .1rem}
+        .mech-item .desc{font-size:.7rem;color:#9fb0c8}
+        @media(max-width:720px){h1{font-size:1.6rem}.mechanism-grid{grid-template-columns:1fr}}
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- 語言切換 -->
+    <div class="lang-switch">
+        <button class="lang-btn active" data-lang="zh">中文</button>
+        <button class="lang-btn" data-lang="en">English</button>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 中文版 -->
+    <!-- ============================================================ -->
+    <div class="lang-block active" id="zh">
+        <h1>台獨可以從此得到什麼？</h1>
+        <div class="subhead">—— GL Framework 的結構性診斷</div>
+        <div class="meta">GFI Flow Intelligence · 2026年9月1日</div>
+
+        <p>這是一個關鍵問題。如果我們不迴避、不情緒化，而是用 GL Framework 的結構性診斷工具來回答，答案會很清楚。</p>
+
+        <h2>一、GL Framework 診斷：台獨的實際「收益」</h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>維度</th><th>台獨能得到的</th><th>備註</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-gold">政治權力</span></td><td>少數政治人物的短期利益</td><td>權力集中於一小群人，而非人民</td></tr>
+                    <tr><td><span class="highlight-gold">意識形態滿足</span></td><td>「自主」的心理慰藉</td><td>建立在虛構歷史上的自我安慰</td></tr>
+                    <tr><td><span class="highlight-gold">國際關注</span></td><td>被大國當作棋子的「關注」</td><td>不是尊重，是利用</td></tr>
+                    <tr><td><span class="highlight-gold">軍售</span></td><td>買到昂貴的防衛武器</td><td>花人民的錢，買美國的二手武器</td></tr>
+                    <tr><td><span class="highlight-gold">短期選舉利益</span></td><td>操作仇恨動員的選票</td><td>無法解決實際民生問題</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="insight-block"><p><span class="highlight-red">這些「收益」，沒有一項是屬於普通人民的。</span></p></div>
+
+        <h2>二、台獨的真正成本（由人民承擔）</h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>維度</th><th>台獨的代價</th><th>誰承擔？</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-red">軍事衝突風險</span></td><td>戰爭威脅、生命財產損失</td><td><span class="highlight-red">全體台灣人民</span></td></tr>
+                    <tr><td><span class="highlight-red">經濟制裁</span></td><td>失去大陸市場、ECFA終止、產業鏈斷裂</td><td><span class="highlight-red">台灣企業與勞工</span></td></tr>
+                    <tr><td><span class="highlight-red">國際空間萎縮</span></td><td>邦交國持續減少、國際組織排除</td><td><span class="highlight-red">台灣人民的國際權利</span></td></tr>
+                    <tr><td><span class="highlight-red">社會撕裂</span></td><td>族群對立、仇恨動員、世代矛盾</td><td><span class="highlight-red">全體社會</span></td></tr>
+                    <tr><td><span class="highlight-red">資源錯置</span></td><td>大量資源投入軍購而非民生建設</td><td><span class="highlight-red">弱勢群體</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>三、台獨運動的結構性矛盾</h2>
+
+        <h3>3.1 「民主」包裝下的少數壟斷</h3>
+        <p>台獨運動宣稱代表「台灣人民的意志」，但：</p>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>事實</th><th>說明</th></tr></thead>
+                <tbody>
+                    <tr><td>從未經人民公投確認</td><td>沒有任何一次公投明確通過「台灣獨立建國」</td></tr>
+                    <tr><td>民意波動</td><td>支持率隨兩岸關係起伏，從未形成穩定多數</td></tr>
+                    <tr><td>權力集中</td><td>決策由少數政治精英主導，而非人民</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>3.2 「本土化」包裝下的歷史虛構</h3>
+        <p>台獨運動的核心論述建立在對歷史的選擇性遺忘上：</p>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>被省略的事實</th><th>為什麼被省略？</th></tr></thead>
+                <tbody>
+                    <tr><td>台灣人民抗日犧牲60餘萬人</td><td>因為這證明了台灣人認同中國</td></tr>
+                    <tr><td>羅福星遺書「台灣是中國領土」</td><td>因為這直接否定了台獨核心論述</td></tr>
+                    <tr><td>開羅宣言、波茨坦公告</td><td>因為這證明了台灣歸還中國的國際法基礎</td></tr>
+                    <tr><td>兩岸數百年血緣文化聯繫</td><td>因為這證明了台灣與中國不可分割</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>四、台獨運動的真正本質</h2>
+
+        <h3>4.1 GL 框架診斷</h3>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>診斷維度</th><th>台獨運動的表現</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">輸入正當性</span></td><td>缺乏人民公投授權，少數精英主導</td></tr>
+                    <tr><td><span class="highlight-blue">過程正當性</span></td><td>系統性過濾資訊，選擇性呈現歷史</td></tr>
+                    <tr><td><span class="highlight-blue">產出正當性</span></td><td>無法改善民生，無法保障安全，無法擴大國際空間</td></tr>
+                    <tr><td><span class="highlight-blue">成本轉嫁</span></td><td>將戰爭風險、經濟損失轉嫁給全體人民</td></tr>
+                    <tr><td><span class="highlight-blue">資訊透明度</span></td><td>刻意隱瞞國際法事實與歷史真相</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>4.2 本質：一種「轉嫁成本」的政治工程</h3>
+        <p>台獨運動的運作機制是：</p>
+        <div class="mechanism-grid">
+            <div class="mech-item"><div class="step">STEP 1</div><div class="title">製造恐懼</div><div class="desc">塑造「中共威脅」的集體焦慮</div></div>
+            <div class="mech-item"><div class="step">STEP 2</div><div class="title">壟斷話語</div><div class="desc">控制教育、媒體，過濾資訊</div></div>
+            <div class="mech-item"><div class="step">STEP 3</div><div class="title">轉嫁成本</div><div class="desc">用人民的錢買武器、承擔風險</div></div>
+            <div class="mech-item"><div class="step">STEP 4</div><div class="title">獲取權力</div><div class="desc">少數人享受政治利益</div></div>
+        </div>
+        <div class="insight-block"><p><span class="highlight-red">這不是「民主運動」，這是「權力寡占」的典型運作模式。</span></p></div>
+
+        <h2>五、結論</h2>
+
+        <h3>台獨可以得到什麼？</h3>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>誰</th><th>得到什麼？</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-gold">少數政治精英</span></td><td>權力、資源、國際關注</td></tr>
+                    <tr><td><span class="highlight-gold">軍火商</span></td><td>巨大的訂單與利潤</td></tr>
+                    <tr><td><span class="highlight-red">一般人民</span></td><td>戰爭風險、經濟損失、社會撕裂、國際孤立</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>GL Framework 的最終診斷</h3>
+        <div class="conclusion-box">
+            <p><span class="highlight">台獨是一場「成本轉嫁」的政治工程——由少數人獲得利益，由多數人承擔代價。它的正當性建立在意識形態口號之上，而非人民的實際福祉。</span></p>
+        </div>
+
+        <p style="margin-top:1rem;">如果一個政治運動無法回答「人民能得到什麼」，而只能回答「少數人能從中得到什麼」，那麼這個運動的正當性就是虛構的。</p>
+
+        <div class="insight-block"><p><span class="highlight-red">這就是台獨運動的結構性真相。</span></p></div>
+
+        <div class="footnote">📊 本文以 GL Framework（治理正當性框架）為分析工具 · <a href="/gl-framework.html">了解 GL Framework →</a></div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 英文版 -->
+    <!-- ============================================================ -->
+    <div class="lang-block" id="en">
+        <h1>What Does Taiwan Independence Actually Deliver?</h1>
+        <div class="subhead">— A Structural Diagnosis Using the GL Framework</div>
+        <div class="meta">GFI Flow Intelligence · September 1, 2026</div>
+
+        <p>This is a critical question. If we do not evade it, do not let emotions cloud judgment, and instead use the GL Framework's structural diagnostic tools to answer, the answer becomes clear.</p>
+
+        <h2>I. GL Framework Diagnosis: The Actual "Benefits" of Taiwan Independence</h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Dimension</th><th>What Taiwan Independence Delivers</th><th>Note</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-gold">Political Power</span></td><td>Short-term gains for a minority of politicians</td><td>Power concentrated in a small group, not the people</td></tr>
+                    <tr><td><span class="highlight-gold">Ideological Satisfaction</span></td><td>Psychological comfort of "autonomy"</td><td>Self-consolation built on fictional history</td></tr>
+                    <tr><td><span class="highlight-gold">International Attention</span></td><td>"Attention" as a pawn of great powers</td><td>Not respect, but exploitation</td></tr>
+                    <tr><td><span class="highlight-gold">Arms Sales</span></td><td>Purchasing expensive defensive weapons</td><td>Spending people's money on second-hand American weapons</td></tr>
+                    <tr><td><span class="highlight-gold">Short-Term Electoral Gains</span></td><td>Mobilizing votes through hate politics</td><td>Unable to solve real livelihood problems</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="insight-block"><p><span class="highlight-red">Not a single one of these "benefits" belongs to ordinary people.</span></p></div>
+
+        <h2>II. The True Costs of Taiwan Independence (Borne by the People)</h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Dimension</th><th>The Price of Taiwan Independence</th><th>Who Bears It?</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-red">Risk of Military Conflict</span></td><td>War threat, loss of life and property</td><td><span class="highlight-red">All Taiwanese people</span></td></tr>
+                    <tr><td><span class="highlight-red">Economic Sanctions</span></td><td>Loss of mainland market, ECFA termination, supply chain disruption</td><td><span class="highlight-red">Taiwanese businesses and workers</span></td></tr>
+                    <tr><td><span class="highlight-red">Shrinking International Space</span></td><td>Continued loss of diplomatic allies, exclusion from international organizations</td><td><span class="highlight-red">Taiwanese people's international rights</span></td></tr>
+                    <tr><td><span class="highlight-red">Social Division</span></td><td>Ethnic confrontation, hate mobilization, generational conflict</td><td><span class="highlight-red">The entire society</span></td></tr>
+                    <tr><td><span class="highlight-red">Misallocation of Resources</span></td><td>Massive resources diverted to arms purchases instead of livelihood construction</td><td><span class="highlight-red">Vulnerable groups</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>III. Structural Contradictions of the Taiwan Independence Movement</h2>
+
+        <h3>3.1 Minority Monopoly Under the Guise of "Democracy"</h3>
+        <p>The Taiwan independence movement claims to represent the "will of the Taiwanese people," but:</p>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Fact</th><th>Explanation</th></tr></thead>
+                <tbody>
+                    <tr><td>Never confirmed by popular referendum</td><td>No referendum has ever clearly passed "Taiwan independence"</td></tr>
+                    <tr><td>Fluctuating public opinion</td><td>Support rises and falls with cross-strait relations, never forming a stable majority</td></tr>
+                    <tr><td>Concentrated power</td><td>Decisions are dominated by a minority of political elites, not the people</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>3.2 Historical Fabrication Under the Guise of "Localization"</h3>
+        <p>The core narrative of the Taiwan independence movement is built on the selective forgetting of history:</p>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Omitted Facts</th><th>Why Are They Omitted?</th></tr></thead>
+                <tbody>
+                    <tr><td>Over 600,000 Taiwanese sacrificed in resistance against Japan</td><td>Because it proves Taiwanese identity with China</td></tr>
+                    <tr><td>Luo Fuxing's will: "Taiwan is Chinese territory"</td><td>Because it directly negates the core narrative of Taiwan independence</td></tr>
+                    <tr><td>Cairo Declaration, Potsdam Proclamation</td><td>Because they prove the international legal basis for Taiwan's return to China</td></tr>
+                    <tr><td>Centuries of blood and cultural ties across the strait</td><td>Because they prove Taiwan and China are inseparable</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>IV. The True Nature of the Taiwan Independence Movement</h2>
+
+        <h3>4.1 GL Framework Diagnosis</h3>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Diagnostic Dimension</th><th>Manifestation of the Taiwan Independence Movement</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">Input Legitimacy</span></td><td>Lack of popular referendum mandate, dominated by a minority elite</td></tr>
+                    <tr><td><span class="highlight-blue">Throughput Legitimacy</span></td><td>Systematic filtering of information, selective presentation of history</td></tr>
+                    <tr><td><span class="highlight-blue">Output Legitimacy</span></td><td>Unable to improve livelihoods, ensure security, or expand international space</td></tr>
+                    <tr><td><span class="highlight-blue">Cost Shifting</span></td><td>Shifting war risks and economic losses onto all people</td></tr>
+                    <tr><td><span class="highlight-blue">Information Transparency</span></td><td>Deliberately concealing international legal facts and historical truths</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>4.2 Essence: A Political Project of "Cost Shifting"</h3>
+        <p>The operating mechanism of the Taiwan independence movement is:</p>
+        <div class="mechanism-grid">
+            <div class="mech-item"><div class="step">STEP 1</div><div class="title">Manufacture Fear</div><div class="desc">Create collective anxiety about the "China threat"</div></div>
+            <div class="mech-item"><div class="step">STEP 2</div><div class="title">Monopolize Discourse</div><div class="desc">Control education and media, filter information</div></div>
+            <div class="mech-item"><div class="step">STEP 3</div><div class="title">Shift Costs</div><div class="desc">Use people's money to buy weapons, take on risks</div></div>
+            <div class="mech-item"><div class="step">STEP 4</div><div class="title">Seize Power</div><div class="desc">A minority enjoys political benefits</div></div>
+        </div>
+        <div class="insight-block"><p><span class="highlight-red">This is not a "democracy movement" — this is the classic operating model of "oligarchic monopoly."</span></p></div>
+
+        <h2>V. Conclusion</h2>
+
+        <h3>What Does Taiwan Independence Actually Deliver?</h3>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Who</th><th>What Do They Get?</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-gold">A Minority of Political Elites</span></td><td>Power, resources, international attention</td></tr>
+                    <tr><td><span class="highlight-gold">Arms Dealers</span></td><td>Huge orders and profits</td></tr>
+                    <tr><td><span class="highlight-red">Ordinary People</span></td><td>War risks, economic losses, social division, international isolation</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>GL Framework's Final Diagnosis</h3>
+        <div class="conclusion-box">
+            <p><span class="highlight">Taiwan independence is a "cost-shifting" political project — where a minority gains benefits while the majority bears the costs. Its legitimacy rests on ideological slogans, not on the actual well-being of the people.</span></p>
+        </div>
+
+        <p style="margin-top:1rem;">If a political movement cannot answer "what the people get," but can only answer "what a minority gets from it," then that movement's legitimacy is fabricated.</p>
+
+        <div class="insight-block"><p><span class="highlight-red">This is the structural truth of the Taiwan independence movement.</span></p></div>
+
+        <div class="footnote">📊 This article uses the GL Framework (Governance Legitimacy Framework) as an analytical tool · <a href="/gl-framework.html">Learn about GL Framework →</a></div>
+    </div>
+
+</div>
+
+<script>
+    document.querySelectorAll('.lang-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.remove('active'); });
+            this.classList.add('active');
+            var lang = this.dataset.lang;
+            document.querySelectorAll('.lang-block').forEach(function(b) { b.classList.remove('active'); });
+            var target = document.getElementById(lang);
+            if (target) target.classList.add('active');
+        });
+    });
+</script>
+
+</body>
+</html>
