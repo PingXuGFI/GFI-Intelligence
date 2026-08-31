@@ -11,10 +11,50 @@
         *{margin:0;padding:0;box-sizing:border-box}
         body{background:#0b1220;color:#f8fbff;font-family:'DM Sans',system-ui,sans-serif;font-size:15px;line-height:1.7;padding:1.5rem 1rem}
         .container{max-width:1180px;margin:0 auto}
-        .lang-switch{display:flex;gap:10px;margin-bottom:1.5rem;flex-wrap:wrap;justify-content:flex-end}
+        
+        /* ===== 頂部欄位（語言切換 + 返回首頁） ===== */
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+        .lang-switch{display:flex;gap:10px;flex-wrap:wrap}
         .lang-btn{font-family:'DM Mono',monospace;font-size:.7rem;padding:.3rem 1.2rem;border:1px solid rgba(255,255,255,.1);border-radius:20px;background:0 0;color:#9fb0c8;cursor:pointer;transition:all .2s}
         .lang-btn:hover{border-color:rgba(255,255,255,.3);color:#fff}
         .lang-btn.active{color:#9FE870;border-color:rgba(159,232,112,.4);background:rgba(159,232,112,.08)}
+        
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.06em;
+            color: rgba(255,255,255,.35);
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 20px;
+            padding: 0.3rem 1.2rem;
+            transition: all .2s;
+        }
+        .back-home:hover {
+            color: #fff;
+            border-color: rgba(255,255,255,.2);
+            background: rgba(255,255,255,.04);
+        }
+        .back-home .arrow {
+            display: inline-block;
+            transition: transform .2s;
+        }
+        .back-home:hover .arrow {
+            transform: translateX(-3px);
+        }
+
         .lang-block{display:none;animation:fadeIn .3s ease}
         .lang-block.active{display:block}
         @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
@@ -97,7 +137,6 @@
         .delta-down{color:#f87171;background:rgba(248,113,113,.08)}
         .delta-same{color:rgba(255,255,255,.2);background:rgba(255,255,255,.04)}
 
-        /* 等級分隔標題 */
         .grade-section-title {
             font-family: 'DM Serif Display', Georgia, serif;
             font-size: 1.1rem;
@@ -144,10 +183,6 @@
         .legend-item{display:flex;align-items:center;gap:4px;color:rgba(255,255,255,.3)}
         .legend-item .dot{width:9px;height:9px;border-radius:3px}
 
-        .footnote{font-size:.55rem;color:rgba(255,255,255,.2);text-align:center;font-family:'DM Mono',monospace;border-top:1px solid rgba(255,255,255,.05);padding-top:1rem;margin-top:.8rem}
-        .footnote a{color:#7DD3FC;text-decoration:none}
-
-        /* 頁面底部 — 數據來源與方法論連結區塊 */
         .sources-footer {
             margin-top: 2.5rem;
             padding: 1.8rem 2rem;
@@ -237,18 +272,59 @@
         }
         .sources-footer .sources-tag-list span { color: rgba(255,255,255,.15); }
 
+        .footnote{font-size:.55rem;color:rgba(255,255,255,.2);text-align:center;font-family:'DM Mono',monospace;border-top:1px solid rgba(255,255,255,.05);padding-top:1rem;margin-top:.8rem}
+        .footnote a{color:#7DD3FC;text-decoration:none}
+
+        .footer-bottom {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,.05);
+        }
+        .footer-bottom .back-home-bottom {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.06em;
+            color: rgba(255,255,255,.3);
+            text-decoration: none;
+            transition: color .2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .footer-bottom .back-home-bottom:hover {
+            color: #fff;
+        }
+        .footer-bottom .back-home-bottom .arrow {
+            display: inline-block;
+            transition: transform .2s;
+        }
+        .footer-bottom .back-home-bottom:hover .arrow {
+            transform: translateX(-3px);
+        }
+
         @media(max-width:820px){.rationale-box{padding:1.2rem 1rem}.rationale-box .comparison-grid{grid-template-columns:1fr}.weight-grid{grid-template-columns:1fr}.top-grid{grid-template-columns:1fr 1fr}}
-        @media(max-width:600px){h1{font-size:1.4rem}.top-grid{grid-template-columns:1fr}.stats-grid{grid-template-columns:repeat(3,1fr)}table{font-size:.5rem;min-width:520px}.rationale-box h2{font-size:1.1rem}.sources-footer{padding:1.2rem 1rem}.sources-footer .sources-text{text-align:center}}
+        @media(max-width:600px){h1{font-size:1.4rem}.top-grid{grid-template-columns:1fr}.stats-grid{grid-template-columns:repeat(3,1fr)}table{font-size:.5rem;min-width:520px}.rationale-box h2{font-size:1.1rem}.sources-footer{padding:1.2rem 1rem}.sources-footer .sources-text{text-align:center}.top-bar{flex-direction:column;align-items:stretch}.lang-switch{justify-content:center}.back-home{justify-content:center}}
     </style>
 </head>
 <body>
 <div class="container">
 
-    <!-- 語言切換 -->
-    <div class="lang-switch">
-        <button class="lang-btn active" data-lang="zh">中文</button>
-        <button class="lang-btn" data-lang="en">English</button>
-        <button class="lang-btn" data-lang="es">Español</button>
+    <!-- ===== 頂部欄位（語言切換 + 返回首頁） ===== -->
+    <div class="top-bar">
+        <div class="lang-switch">
+            <button class="lang-btn active" data-lang="zh">中文</button>
+            <button class="lang-btn" data-lang="en">English</button>
+            <button class="lang-btn" data-lang="es">Español</button>
+        </div>
+        <!-- ===== 返回首頁 — 文字隨語言切換 ===== -->
+        <a href="/" class="back-home" id="backHomeLink">
+            <span class="arrow">←</span>
+            <span class="back-text" data-zh="返回首頁" data-en="Back to Home" data-es="Volver al Inicio">返回首頁</span>
+        </a>
     </div>
 
     <!-- ============================================================ -->
@@ -412,6 +488,14 @@
         </div>
 
         <div class="footnote">📊 校正後 GL = 原始 GL × 規模係數 × 起始條件係數 × 成果規模係數 · <a href="/gl-methodology.html">方法論 →</a></div>
+
+        <!-- 頁面底部返回首頁 -->
+        <div class="footer-bottom">
+            <a href="/" class="back-home-bottom">
+                <span class="arrow">←</span>
+                <span class="back-text" data-zh="返回首頁" data-en="Back to Home" data-es="Volver al Inicio">返回首頁</span>
+            </a>
+        </div>
     </div>
 
     <!-- ============================================================ -->
@@ -567,6 +651,13 @@
         </div>
 
         <div class="footnote">📊 Adjusted GL = Raw GL × Scale × Start × Outcome · <a href="/gl-methodology.html">Methodology →</a></div>
+
+        <div class="footer-bottom">
+            <a href="/" class="back-home-bottom">
+                <span class="arrow">←</span>
+                <span class="back-text" data-zh="返回首頁" data-en="Back to Home" data-es="Volver al Inicio">Back to Home</span>
+            </a>
+        </div>
     </div>
 
     <!-- ============================================================ -->
@@ -722,6 +813,13 @@
         </div>
 
         <div class="footnote">📊 GL ajustado = GL bruto × Escala × Inicio × Resultado · <a href="/gl-methodology.html">Metodología →</a></div>
+
+        <div class="footer-bottom">
+            <a href="/" class="back-home-bottom">
+                <span class="arrow">←</span>
+                <span class="back-text" data-zh="返回首頁" data-en="Back to Home" data-es="Volver al Inicio">Volver al Inicio</span>
+            </a>
+        </div>
     </div>
 
 </div>
@@ -883,7 +981,6 @@
         };
         var lbl = colLabels[lang] || colLabels.zh;
 
-        // 等級標題文字
         var gradeTitleMap = {
             zh: {'A+':'A+ 等級 (≥1.00)','A':'A 等級 (0.80–0.99)','B':'B 等級 (0.70–0.79)','C':'C 等級 (0.60–0.69)','D':'D 等級 (0.50–0.59)','F':'F 等級 (<0.50)'},
             en: {'A+':'Grade A+ (≥1.00)','A':'Grade A (0.80–0.99)','B':'Grade B (0.70–0.79)','C':'Grade C (0.60–0.69)','D':'Grade D (0.50–0.59)','F':'Grade F (<0.50)'},
@@ -974,7 +1071,7 @@
     }
 
     // ================================================================
-    //  語言切換
+    //  語言切換（包含「返回首頁」文字同步）
     // ================================================================
     document.querySelectorAll('.lang-btn').forEach(function(btn){
         btn.addEventListener('click', function(){
@@ -990,6 +1087,11 @@
                     renderTable(lang);
                 }
             }
+            // 更新所有「返回首頁」文字
+            document.querySelectorAll('.back-text').forEach(function(el){
+                var text = el.getAttribute('data-' + lang);
+                if (text) el.textContent = text;
+            });
         });
     });
 
