@@ -97,6 +97,41 @@
         .delta-down{color:#f87171;background:rgba(248,113,113,.08)}
         .delta-same{color:rgba(255,255,255,.2);background:rgba(255,255,255,.04)}
 
+        /* 等級分隔標題 */
+        .grade-section-title {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.1rem;
+            padding: 0.6rem 0.8rem;
+            margin-top: 0.8rem;
+            margin-bottom: 0.3rem;
+            border-radius: 8px;
+            background: rgba(255,255,255,.03);
+            border-left: 4px solid #9FE870;
+            color: #e0f0e0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .grade-section-title .badge {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            padding: 0.1rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        .grade-section-title .count {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.55rem;
+            color: rgba(255,255,255,.25);
+            margin-left: auto;
+        }
+        .grade-section-title .badge.aplus { background: rgba(159,232,112,.25); color: #9FE870; }
+        .grade-section-title .badge.a { background: rgba(159,232,112,.18); color: #9FE870; }
+        .grade-section-title .badge.b { background: rgba(125,211,252,.18); color: #7DD3FC; }
+        .grade-section-title .badge.c { background: rgba(251,191,36,.18); color: #fbbf24; }
+        .grade-section-title .badge.d { background: rgba(251,146,60,.18); color: #fb923c; }
+        .grade-section-title .badge.f { background: rgba(248,113,113,.18); color: #f87171; }
+
         .gl100-toggle{display:flex;justify-content:center;margin:1rem auto}
         .gl100-toggle-btn{background:rgba(159,232,112,.08);border:1px solid rgba(159,232,112,.3);padding:12px 32px;border-radius:40px;font-family:'DM Mono',monospace;font-size:13px;letter-spacing:.08em;cursor:pointer;transition:all .25s;display:inline-flex;align-items:center;gap:12px;color:#9FE870}
         .gl100-toggle-btn:hover{background:rgba(159,232,112,.18);border-color:#9FE870;transform:translateY(-2px)}
@@ -112,7 +147,7 @@
         .footnote{font-size:.55rem;color:rgba(255,255,255,.2);text-align:center;font-family:'DM Mono',monospace;border-top:1px solid rgba(255,255,255,.05);padding-top:1rem;margin-top:.8rem}
         .footnote a{color:#7DD3FC;text-decoration:none}
 
-        /* ===== 頁面底部 — 數據來源與方法論連結區塊 ===== */
+        /* 頁面底部 — 數據來源與方法論連結區塊 */
         .sources-footer {
             margin-top: 2.5rem;
             padding: 1.8rem 2rem;
@@ -332,7 +367,7 @@
             </button>
         </div>
 
-        <!-- 排名表格 -->
+        <!-- 排名表格（按等級分組） -->
         <div class="gl100-content" id="gl100Content-zh">
             <div class="table-wrap" id="table-zh"></div>
         </div>
@@ -347,7 +382,7 @@
             <span class="legend-item"><span class="dot" style="background:#ef4444;"></span>F (&lt;0.50)</span>
         </div>
 
-        <!-- ===== 頁面底部 — 數據來源與方法論連結區塊（中文） ===== -->
+        <!-- 頁面底部 — 數據來源與方法論連結區塊 -->
         <div class="sources-footer">
             <div class="sources-inner">
                 <div class="sources-text">
@@ -503,7 +538,6 @@
             <span class="legend-item"><span class="dot" style="background:#ef4444;"></span>F (&lt;0.50)</span>
         </div>
 
-        <!-- ===== 頁面底部 — 數據來源與方法論連結區塊（英文） ===== -->
         <div class="sources-footer">
             <div class="sources-inner">
                 <div class="sources-text">
@@ -659,7 +693,6 @@
             <span class="legend-item"><span class="dot" style="background:#ef4444;"></span>F (&lt;0.50)</span>
         </div>
 
-        <!-- ===== 頁面底部 — 數據來源與方法論連結區塊（西班牙文） ===== -->
         <div class="sources-footer">
             <div class="sources-inner">
                 <div class="sources-text">
@@ -695,113 +728,123 @@
 
 <script>
     // ================================================================
-    //  100國數據
+    //  100國數據 — 按等級分組 (A+ → A → B → C → D → F)
     // ================================================================
     var glData = [
+        // ===== A+ 等級 (≥1.00) =====
         {rank:1, cn:"中國", en:"China", es:"China", adj:1.68, raw:0.59, grade:"A+", scale:"1.42", start:"1.35", out:"1.48", gdp:"19,530", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+55"},
         {rank:2, cn:"印度", en:"India", es:"India", adj:1.04, raw:0.43, grade:"A+", scale:"1.38", start:"1.30", out:"1.35", gdp:"4,270", regionCn:"南亞", regionEn:"S.Asia", regionEs:"Asia del Sur", delta:"+79"},
-        {rank:3, cn:"奈及利亞", en:"Nigeria", es:"Nigeria", adj:0.93, raw:0.32, grade:"A", scale:"1.49", start:"1.18", out:"1.10", gdp:"253", regionCn:"非洲", regionEn:"Africa", regionEs:"África", delta:"+94"},
+
+        // ===== A 等級 (0.80–0.99) =====
+        {rank:3, cn:"美國", en:"United States", es:"Estados Unidos", adj:0.94, raw:0.74, grade:"A", scale:"1.27", start:"1.00", out:"1.10", gdp:"30,340", regionCn:"北美洲", regionEn:"N.America", regionEs:"Am. del Norte", delta:"+1"},
         {rank:4, cn:"印尼", en:"Indonesia", es:"Indonesia", adj:0.98, raw:0.54, grade:"A", scale:"1.81", start:"1.20", out:"1.18", gdp:"1,490", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+48"},
-        {rank:5, cn:"衣索比亞", en:"Ethiopia", es:"Etiopía", adj:0.91, raw:0.33, grade:"A", scale:"1.45", start:"1.20", out:"1.08", gdp:"170", regionCn:"非洲", regionEn:"Africa", regionEs:"África", delta:"+91"},
-        {rank:6, cn:"孟加拉", en:"Bangladesh", es:"Bangladés", adj:0.87, raw:0.37, grade:"A", scale:"1.39", start:"1.18", out:"1.05", gdp:"485", regionCn:"南亞", regionEn:"S.Asia", regionEs:"Asia del Sur", delta:"+71"},
-        {rank:7, cn:"美國", en:"United States", es:"Estados Unidos", adj:0.94, raw:0.74, grade:"A", scale:"1.27", start:"1.00", out:"1.10", gdp:"30,340", regionCn:"北美洲", regionEn:"N.America", regionEs:"Am. del Norte", delta:"+1"},
-        {rank:8, cn:"菲律賓", en:"Philippines", es:"Filipinas", adj:0.83, raw:0.52, grade:"A", scale:"1.35", start:"1.12", out:"1.08", gdp:"505", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+66"},
-        {rank:9, cn:"巴西", en:"Brazil", es:"Brasil", adj:0.83, raw:0.53, grade:"A", scale:"1.57", start:"1.15", out:"1.12", gdp:"2,135", regionCn:"南美洲", regionEn:"S.America", regionEs:"Am. del Sur", delta:"+43"},
-        {rank:10, cn:"越南", en:"Vietnam", es:"Vietnam", adj:0.82, raw:0.55, grade:"A", scale:"1.33", start:"1.15", out:"1.05", gdp:"506", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+62"},
-        {rank:11, cn:"墨西哥", en:"Mexico", es:"México", adj:0.87, raw:0.56, grade:"A", scale:"1.56", start:"1.18", out:"1.10", gdp:"1,810", regionCn:"北美洲", regionEn:"N.America", regionEs:"Am. del Norte", delta:"+39"},
-        {rank:12, cn:"俄羅斯", en:"Russia", es:"Rusia", adj:0.78, raw:0.56, grade:"B", scale:"1.40", start:"1.10", out:"1.08", gdp:"2,180", regionCn:"歐洲/亞洲", regionEn:"Europe/Asia", regionEs:"Europa/Asia", delta:"+32"},
-        {rank:13, cn:"埃及", en:"Egypt", es:"Egipto", adj:0.76, raw:0.43, grade:"B", scale:"1.27", start:"1.12", out:"1.05", gdp:"348", regionCn:"非洲", regionEn:"Africa", regionEs:"África", delta:"+49"},
-        {rank:14, cn:"土耳其", en:"Turkey", es:"Turquía", adj:0.73, raw:0.57, grade:"B", scale:"1.28", start:"1.08", out:"1.06", gdp:"1,120", regionCn:"歐洲/亞洲", regionEn:"Europe/Asia", regionEs:"Europa/Asia", delta:"+26"},
-        {rank:15, cn:"歐盟 (整體)", en:"EU (Aggregate)", es:"UE (Agregado)", adj:0.83, raw:0.67, grade:"A", scale:"1.24", start:"0.98", out:"1.10", gdp:"18,800", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"+5"},
-        {rank:16, cn:"伊朗", en:"Iran", es:"Irán", adj:0.72, raw:0.40, grade:"B", scale:"1.15", start:"1.05", out:"1.03", gdp:"435", regionCn:"中東", regionEn:"Middle East", regionEs:"Oriente Medio", delta:"+39"},
-        {rank:17, cn:"緬甸", en:"Myanmar", es:"Myanmar", adj:0.68, raw:0.31, grade:"C", scale:"1.24", start:"1.18", out:"1.00", gdp:"60", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+81"},
-        {rank:18, cn:"德國", en:"Germany", es:"Alemania", adj:0.90, raw:0.83, grade:"A", scale:"1.08", start:"0.95", out:"1.08", gdp:"4,710", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-17"},
-        {rank:19, cn:"伊拉克", en:"Iraq", es:"Irak", adj:0.67, raw:0.32, grade:"C", scale:"1.28", start:"1.15", out:"1.03", gdp:"267", regionCn:"中東", regionEn:"Middle East", regionEs:"Oriente Medio", delta:"+66"},
-        {rank:20, cn:"坦尚尼亞", en:"Tanzania", es:"Tanzania", adj:0.66, raw:0.36, grade:"C", scale:"1.27", start:"1.15", out:"1.02", gdp:"85", regionCn:"非洲", regionEn:"Africa", regionEs:"África", delta:"+64"},
-        {rank:21, cn:"日本", en:"Japan", es:"Japón", adj:0.85, raw:0.77, grade:"A", scale:"1.11", start:"0.98", out:"1.05", gdp:"4,230", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"-18"},
-        {rank:22, cn:"阿富汗", en:"Afghanistan", es:"Afganistán", adj:0.64, raw:0.30, grade:"C", scale:"1.31", start:"1.25", out:"1.00", gdp:"14", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+77"},
-        {rank:23, cn:"泰國", en:"Thailand", es:"Tailandia", adj:0.64, raw:0.54, grade:"C", scale:"1.18", start:"1.05", out:"1.04", gdp:"580", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+38"},
-        {rank:24, cn:"烏干達", en:"Uganda", es:"Uganda", adj:0.63, raw:0.36, grade:"C", scale:"1.18", start:"1.12", out:"1.00", gdp:"55", regionCn:"非洲", regionEn:"Africa", regionEs:"África", delta:"+59"},
-        {rank:25, cn:"哥倫比亞", en:"Colombia", es:"Colombia", adj:0.62, raw:0.52, grade:"C", scale:"1.20", start:"1.08", out:"1.03", gdp:"386", regionCn:"南美洲", regionEn:"S.America", regionEs:"Am. del Sur", delta:"+42"},
-        {rank:26, cn:"英國", en:"United Kingdom", es:"Reino Unido", adj:0.77, raw:0.73, grade:"B", scale:"1.06", start:"0.96", out:"1.06", gdp:"3,590", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-11"},
-        {rank:27, cn:"烏茲別克", en:"Uzbekistan", es:"Uzbekistán", adj:0.61, raw:0.39, grade:"C", scale:"1.17", start:"1.10", out:"1.00", gdp:"90", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+54"},
-        {rank:28, cn:"法國", en:"France", es:"Francia", adj:0.76, raw:0.72, grade:"B", scale:"1.06", start:"0.96", out:"1.06", gdp:"3,130", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-12"},
-        {rank:29, cn:"烏克蘭", en:"Ukraine", es:"Ucrania", adj:0.61, raw:0.42, grade:"C", scale:"1.16", start:"1.08", out:"1.02", gdp:"165", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"+45"},
-        {rank:30, cn:"柬埔寨", en:"Cambodia", es:"Camboya", adj:0.60, raw:0.35, grade:"C", scale:"1.20", start:"1.20", out:"0.98", gdp:"33", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+58"},
-        {rank:31, cn:"韓國", en:"South Korea", es:"Corea del Sur", adj:0.75, raw:0.69, grade:"B", scale:"1.08", start:"0.97", out:"1.05", gdp:"1,880", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"-15"},
-        {rank:32, cn:"沙烏地阿拉伯", en:"Saudi Arabia", es:"Arabia Saudita", adj:0.70, raw:0.62, grade:"B", scale:"1.13", start:"1.02", out:"1.03", gdp:"1,120", regionCn:"中東", regionEn:"Middle East", regionEs:"Oriente Medio", delta:"+5"},
-        {rank:33, cn:"葉門", en:"Yemen", es:"Yemen", adj:0.60, raw:0.28, grade:"C", scale:"1.20", start:"1.20", out:"0.98", gdp:"21", regionCn:"中東", regionEn:"Middle East", regionEs:"Oriente Medio", delta:"+67"},
-        {rank:34, cn:"南非", en:"South Africa", es:"Sudáfrica", adj:0.65, raw:0.53, grade:"C", scale:"1.23", start:"1.12", out:"1.02", gdp:"378", regionCn:"非洲", regionEn:"Africa", regionEs:"África", delta:"+24"},
-        {rank:35, cn:"加拿大", en:"Canada", es:"Canadá", adj:0.81, raw:0.79, grade:"B", scale:"1.02", start:"0.98", out:"1.02", gdp:"2,242", regionCn:"北美洲", regionEn:"N.America", regionEs:"Am. del Norte", delta:"-7"},
-        {rank:36, cn:"義大利", en:"Italy", es:"Italia", adj:0.74, raw:0.71, grade:"B", scale:"1.04", start:"0.97", out:"1.04", gdp:"2,330", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-16"},
-        {rank:37, cn:"馬來西亞", en:"Malaysia", es:"Malasia", adj:0.69, raw:0.63, grade:"C", scale:"1.09", start:"1.02", out:"1.02", gdp:"447", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+5"},
-        {rank:38, cn:"哈薩克", en:"Kazakhstan", es:"Kazajistán", adj:0.66, raw:0.56, grade:"C", scale:"1.08", start:"1.04", out:"1.00", gdp:"300", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+5"},
-        {rank:39, cn:"阿根廷", en:"Argentina", es:"Argentina", adj:0.67, raw:0.56, grade:"C", scale:"1.20", start:"1.05", out:"1.04", gdp:"604", regionCn:"南美洲", regionEn:"S.America", regionEs:"Am. del Sur", delta:"+7"},
-        {rank:40, cn:"西班牙", en:"Spain", es:"España", adj:0.72, raw:0.70, grade:"B", scale:"1.03", start:"0.97", out:"1.03", gdp:"1,650", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-13"},
-        {rank:41, cn:"摩洛哥", en:"Morocco", es:"Marruecos", adj:0.63, raw:0.52, grade:"C", scale:"1.10", start:"1.08", out:"1.00", gdp:"157", regionCn:"非洲", regionEn:"Africa", regionEs:"África", delta:"+24"},
-        {rank:42, cn:"迦納", en:"Ghana", es:"Ghana", adj:0.61, raw:0.41, grade:"C", scale:"1.10", start:"1.10", out:"0.98", gdp:"76", regionCn:"非洲", regionEn:"Africa", regionEs:"África", delta:"+38"},
-        {rank:43, cn:"寮國", en:"Laos", es:"Laos", adj:0.60, raw:0.38, grade:"C", scale:"1.10", start:"1.18", out:"0.95", gdp:"16", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+50"},
-        {rank:44, cn:"尼泊爾", en:"Nepal", es:"Nepal", adj:0.60, raw:0.38, grade:"C", scale:"1.14", start:"1.15", out:"0.97", gdp:"44", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+43"},
-        {rank:45, cn:"澳洲", en:"Australia", es:"Australia", adj:0.67, raw:0.66, grade:"C", scale:"1.01", start:"0.99", out:"1.01", gdp:"1,730", regionCn:"大洋洲", regionEn:"Oceania", regionEs:"Oceanía", delta:"-23"},
-        {rank:46, cn:"波蘭", en:"Poland", es:"Polonia", adj:0.77, raw:0.72, grade:"B", scale:"1.07", start:"0.98", out:"1.04", gdp:"901", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-12"},
-        {rank:47, cn:"盧安達", en:"Rwanda", es:"Ruanda", adj:0.62, raw:0.46, grade:"C", scale:"1.08", start:"1.15", out:"0.96", gdp:"15", regionCn:"非洲", regionEn:"Africa", regionEs:"África", delta:"+27"},
-        {rank:48, cn:"秘魯", en:"Peru", es:"Perú", adj:0.60, raw:0.53, grade:"C", scale:"1.14", start:"1.06", out:"1.02", gdp:"283", regionCn:"南美洲", regionEn:"S.America", regionEs:"Am. del Sur", delta:"+14"},
-        {rank:49, cn:"智利", en:"Chile", es:"Chile", adj:0.65, raw:0.64, grade:"C", scale:"1.02", start:"1.00", out:"1.00", gdp:"344", regionCn:"南美洲", regionEn:"S.America", regionEs:"Am. del Sur", delta:"-12"},
-        {rank:50, cn:"巴基斯坦", en:"Pakistan", es:"Pakistán", adj:0.60, raw:0.35, grade:"C", scale:"1.30", start:"1.18", out:"1.02", gdp:"340", regionCn:"南亞", regionEn:"S.Asia", regionEs:"Asia del Sur", delta:"+40"},
-        {rank:51, cn:"斯里蘭卡", en:"Sri Lanka", es:"Sri Lanka", adj:0.60, raw:0.47, grade:"C", scale:"1.05", start:"1.05", out:"0.98", gdp:"84", regionCn:"南亞", regionEn:"S.Asia", regionEs:"Asia del Sur", delta:"+18"},
-        {rank:52, cn:"亞塞拜然", en:"Azerbaijan", es:"Azerbaiyán", adj:0.60, raw:0.42, grade:"C", scale:"1.03", start:"1.06", out:"0.97", gdp:"78", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+22"},
-        {rank:53, cn:"玻利維亞", en:"Bolivia", es:"Bolivia", adj:0.59, raw:0.38, grade:"D", scale:"1.07", start:"1.10", out:"0.97", gdp:"46", regionCn:"南美洲", regionEn:"S.America", regionEs:"Am. del Sur", delta:"+28"},
-        {rank:54, cn:"荷蘭", en:"Netherlands", es:"Países Bajos", adj:0.78, raw:0.79, grade:"B", scale:"0.99", start:"0.97", out:"1.01", gdp:"1,190", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-26"},
-        {rank:55, cn:"比利時", en:"Belgium", es:"Bélgica", adj:0.75, raw:0.77, grade:"B", scale:"0.97", start:"0.97", out:"1.00", gdp:"641", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-22"},
-        {rank:56, cn:"瑞典", en:"Sweden", es:"Suecia", adj:0.79, raw:0.82, grade:"B", scale:"0.96", start:"0.97", out:"0.99", gdp:"623", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-29"},
-        {rank:57, cn:"挪威", en:"Norway", es:"Noruega", adj:0.78, raw:0.82, grade:"B", scale:"0.95", start:"0.98", out:"0.98", gdp:"507", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-31"},
-        {rank:58, cn:"丹麥", en:"Denmark", es:"Dinamarca", adj:0.79, raw:0.83, grade:"B", scale:"0.95", start:"0.98", out:"0.98", gdp:"420", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-56"},
-        {rank:59, cn:"芬蘭", en:"Finland", es:"Finlandia", adj:0.78, raw:0.82, grade:"B", scale:"0.95", start:"0.98", out:"0.98", gdp:"308", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-34"},
-        {rank:60, cn:"奧地利", en:"Austria", es:"Austria", adj:0.72, raw:0.79, grade:"B", scale:"0.91", start:"0.97", out:"0.97", gdp:"526", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-36"},
-        {rank:61, cn:"葡萄牙", en:"Portugal", es:"Portugal", adj:0.67, raw:0.70, grade:"C", scale:"0.95", start:"0.98", out:"0.98", gdp:"303", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-32"},
-        {rank:62, cn:"希臘", en:"Greece", es:"Grecia", adj:0.57, raw:0.61, grade:"D", scale:"0.94", start:"0.98", out:"0.97", gdp:"252", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-27"},
-        {rank:63, cn:"捷克", en:"Czech Republic", es:"República Checa", adj:0.72, raw:0.72, grade:"B", scale:"1.00", start:"0.98", out:"1.00", gdp:"345", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-28"},
-        {rank:64, cn:"匈牙利", en:"Hungary", es:"Hungría", adj:0.60, raw:0.61, grade:"C", scale:"0.98", start:"0.98", out:"0.99", gdp:"213", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-30"},
-        {rank:65, cn:"斯洛伐克", en:"Slovakia", es:"Eslovaquia", adj:0.53, raw:0.55, grade:"D", scale:"0.96", start:"0.98", out:"0.98", gdp:"128", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-32"},
-        {rank:66, cn:"羅馬尼亞", en:"Romania", es:"Rumania", adj:0.49, raw:0.49, grade:"D", scale:"1.00", start:"0.98", out:"1.00", gdp:"350", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-24"},
-        {rank:67, cn:"保加利亞", en:"Bulgaria", es:"Bulgaria", adj:0.47, raw:0.49, grade:"D", scale:"0.96", start:"0.98", out:"0.98", gdp:"103", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-27"},
-        {rank:68, cn:"台灣 (中國一省)", en:"Taiwan (Province of China)", es:"Taiwán (Prov. de China)", adj:0.55, raw:0.64, grade:"D", scale:"0.86", start:"0.98", out:"0.95", gdp:"1,750", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"-37"},
-        {rank:69, cn:"香港 (中國)", en:"Hong Kong (China)", es:"Hong Kong (China)", adj:0.55, raw:0.65, grade:"D", scale:"0.84", start:"0.97", out:"0.93", gdp:"413", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"-41"},
-        {rank:70, cn:"新加坡", en:"Singapore", es:"Singapur", adj:0.70, raw:0.79, grade:"B", scale:"0.88", start:"0.97", out:"0.96", gdp:"561", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"-48"},
-        {rank:71, cn:"瑞士", en:"Switzerland", es:"Suiza", adj:0.70, raw:0.79, grade:"B", scale:"0.89", start:"0.97", out:"0.96", gdp:"960", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-47"},
-        {rank:72, cn:"以色列", en:"Israel", es:"Israel", adj:0.62, raw:0.70, grade:"C", scale:"0.89", start:"0.97", out:"0.96", gdp:"550", regionCn:"中東", regionEn:"Middle East", regionEs:"Oriente Medio", delta:"-44"},
-        {rank:73, cn:"阿聯", en:"UAE", es:"EAU", adj:0.60, raw:0.63, grade:"C", scale:"0.95", start:"1.00", out:"0.97", gdp:"570", regionCn:"中東", regionEn:"Middle East", regionEs:"Oriente Medio", delta:"-38"},
-        {rank:74, cn:"約旦", en:"Jordan", es:"Jordania", adj:0.51, raw:0.54, grade:"D", scale:"0.95", start:"1.02", out:"0.95", gdp:"53", regionCn:"中東", regionEn:"Middle East", regionEs:"Oriente Medio", delta:"-23"},
-        {rank:75, cn:"卡達", en:"Qatar", es:"Catar", adj:0.50, raw:0.62, grade:"D", scale:"0.81", start:"0.98", out:"0.90", gdp:"253", regionCn:"中東", regionEn:"Middle East", regionEs:"Oriente Medio", delta:"-43"},
-        {rank:76, cn:"科威特", en:"Kuwait", es:"Kuwait", adj:0.50, raw:0.60, grade:"D", scale:"0.83", start:"0.98", out:"0.91", gdp:"165", regionCn:"中東", regionEn:"Middle East", regionEs:"Oriente Medio", delta:"-34"},
-        {rank:77, cn:"阿曼", en:"Oman", es:"Omán", adj:0.49, raw:0.57, grade:"D", scale:"0.86", start:"0.99", out:"0.92", gdp:"122", regionCn:"中東", regionEn:"Middle East", regionEs:"Oriente Medio", delta:"-29"},
-        {rank:78, cn:"巴林", en:"Bahrain", es:"Baréin", adj:0.45, raw:0.57, grade:"D", scale:"0.79", start:"0.98", out:"0.89", gdp:"48", regionCn:"中東", regionEn:"Middle East", regionEs:"Oriente Medio", delta:"-31"},
-        {rank:79, cn:"斯洛維尼亞", en:"Slovenia", es:"Eslovenia", adj:0.64, raw:0.73, grade:"C", scale:"0.88", start:"0.97", out:"0.95", gdp:"73", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-43"},
-        {rank:80, cn:"愛沙尼亞", en:"Estonia", es:"Estonia", adj:0.61, raw:0.70, grade:"C", scale:"0.87", start:"0.98", out:"0.94", gdp:"43", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-43"},
-        {rank:81, cn:"拉脫維亞", en:"Latvia", es:"Letonia", adj:0.49, raw:0.56, grade:"D", scale:"0.88", start:"0.98", out:"0.94", gdp:"48", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-37"},
-        {rank:82, cn:"立陶宛", en:"Lithuania", es:"Lituania", adj:0.58, raw:0.64, grade:"D", scale:"0.90", start:"0.98", out:"0.95", gdp:"79", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-39"},
-        {rank:83, cn:"克羅埃西亞", en:"Croatia", es:"Croacia", adj:0.51, raw:0.55, grade:"D", scale:"0.92", start:"0.98", out:"0.96", gdp:"84", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-33"},
-        {rank:84, cn:"賽普勒斯", en:"Cyprus", es:"Chipre", adj:0.47, raw:0.57, grade:"D", scale:"0.82", start:"0.97", out:"0.92", gdp:"32", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-43"},
-        {rank:85, cn:"馬爾他", en:"Malta", es:"Malta", adj:0.51, raw:0.64, grade:"D", scale:"0.79", start:"0.97", out:"0.90", gdp:"22", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-46"},
-        {rank:86, cn:"模里西斯", en:"Mauritius", es:"Mauricio", adj:0.50, raw:0.62, grade:"D", scale:"0.81", start:"1.02", out:"0.88", gdp:"15", regionCn:"非洲", regionEn:"Africa", regionEs:"África", delta:"-40"},
-        {rank:87, cn:"千里達", en:"Trinidad and Tobago", es:"Trinidad y Tobago", adj:0.38, raw:0.47, grade:"F", scale:"0.81", start:"1.00", out:"0.89", gdp:"28", regionCn:"加勒比海", regionEn:"Caribbean", regionEs:"Caribe", delta:"-30"},
-        {rank:88, cn:"牙買加", en:"Jamaica", es:"Jamaica", adj:0.33, raw:0.39, grade:"F", scale:"0.84", start:"1.02", out:"0.90", gdp:"19", regionCn:"加勒比海", regionEn:"Caribbean", regionEs:"Caribe", delta:"-39"},
-        {rank:89, cn:"不丹", en:"Bhutan", es:"Bután", adj:0.41, raw:0.47, grade:"F", scale:"0.87", start:"1.10", out:"0.88", gdp:"3", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"-38"},
-        {rank:90, cn:"波札那", en:"Botswana", es:"Botsuana", adj:0.50, raw:0.54, grade:"D", scale:"0.93", start:"1.05", out:"0.93", gdp:"21", regionCn:"非洲", regionEn:"Africa", regionEs:"África", delta:"-36"},
-        {rank:91, cn:"巴拿馬", en:"Panama", es:"Panamá", adj:0.56, raw:0.60, grade:"D", scale:"0.93", start:"1.02", out:"0.95", gdp:"88", regionCn:"中美洲", regionEn:"C.America", regionEs:"Centroamérica", delta:"-35"},
-        {rank:92, cn:"哥斯大黎加", en:"Costa Rica", es:"Costa Rica", adj:0.50, raw:0.55, grade:"D", scale:"0.90", start:"1.02", out:"0.93", gdp:"95", regionCn:"中美洲", regionEn:"C.America", regionEs:"Centroamérica", delta:"-36"},
-        {rank:93, cn:"喬治亞", en:"Georgia", es:"Georgia", adj:0.52, raw:0.56, grade:"D", scale:"0.93", start:"1.05", out:"0.93", gdp:"33", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"-27"},
-        {rank:94, cn:"烏拉圭", en:"Uruguay", es:"Uruguay", adj:0.59, raw:0.64, grade:"D", scale:"0.92", start:"0.98", out:"0.96", gdp:"77", regionCn:"南美洲", regionEn:"S.America", regionEs:"Am. del Sur", delta:"-35"},
-        {rank:95, cn:"巴拉圭", en:"Paraguay", es:"Paraguay", adj:0.40, raw:0.40, grade:"F", scale:"0.99", start:"1.05", out:"0.96", gdp:"44", regionCn:"南美洲", regionEn:"S.America", regionEs:"Am. del Sur", delta:"-38"},
-        {rank:96, cn:"瓜地馬拉", en:"Guatemala", es:"Guatemala", adj:0.43, raw:0.42, grade:"F", scale:"1.02", start:"1.08", out:"0.96", gdp:"104", regionCn:"中美洲", regionEn:"C.America", regionEs:"Centroamérica", delta:"-31"},
-        {rank:97, cn:"宏都拉斯", en:"Honduras", es:"Honduras", adj:0.33, raw:0.34, grade:"F", scale:"0.98", start:"1.08", out:"0.94", gdp:"32", regionCn:"中美洲", regionEn:"C.America", regionEs:"Centroamérica", delta:"-34"},
-        {rank:98, cn:"薩爾瓦多", en:"El Salvador", es:"El Salvador", adj:0.36, raw:0.38, grade:"F", scale:"0.95", start:"1.06", out:"0.93", gdp:"35", regionCn:"中美洲", regionEn:"C.America", regionEs:"Centroamérica", delta:"-38"},
-        {rank:99, cn:"多明尼加", en:"Dominican Republic", es:"República Dominicana", adj:0.51, raw:0.52, grade:"D", scale:"0.99", start:"1.05", out:"0.96", gdp:"122", regionCn:"加勒比海", regionEn:"Caribbean", regionEs:"Caribe", delta:"-32"},
-        {rank:100, cn:"巴布亞紐幾內亞", en:"Papua New Guinea", es:"Papúa Nueva Guinea", adj:0.39, raw:0.38, grade:"F", scale:"1.02", start:"1.10", out:"0.95", gdp:"32", regionCn:"大洋洲", regionEn:"Oceania", regionEs:"Oceanía", delta:"-29"}
+        {rank:5, cn:"奈及利亞", en:"Nigeria", es:"Nigeria", adj:0.93, raw:0.32, grade:"A", scale:"1.49", start:"1.18", out:"1.10", gdp:"253", regionCn:"非洲", regionEn:"Africa", regionEs:"África", delta:"+94"},
+        {rank:6, cn:"衣索比亞", en:"Ethiopia", es:"Etiopía", adj:0.91, raw:0.33, grade:"A", scale:"1.45", start:"1.20", out:"1.08", gdp:"170", regionCn:"非洲", regionEn:"Africa", regionEs:"África", delta:"+91"},
+        {rank:7, cn:"德國", en:"Germany", es:"Alemania", adj:0.90, raw:0.83, grade:"A", scale:"1.08", start:"0.95", out:"1.08", gdp:"4,710", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-17"},
+        {rank:8, cn:"孟加拉", en:"Bangladesh", es:"Bangladés", adj:0.87, raw:0.37, grade:"A", scale:"1.39", start:"1.18", out:"1.05", gdp:"485", regionCn:"南亞", regionEn:"S.Asia", regionEs:"Asia del Sur", delta:"+71"},
+        {rank:9, cn:"墨西哥", en:"Mexico", es:"México", adj:0.87, raw:0.56, grade:"A", scale:"1.56", start:"1.18", out:"1.10", gdp:"1,810", regionCn:"北美洲", regionEn:"N.America", regionEs:"Am. del Norte", delta:"+39"},
+        {rank:10, cn:"日本", en:"Japan", es:"Japón", adj:0.85, raw:0.77, grade:"A", scale:"1.11", start:"0.98", out:"1.05", gdp:"4,230", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"-18"},
+        {rank:11, cn:"歐盟 (整體)", en:"EU (Aggregate)", es:"UE (Agregado)", adj:0.83, raw:0.67, grade:"A", scale:"1.24", start:"0.98", out:"1.10", gdp:"18,800", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"+5"},
+        {rank:12, cn:"巴西", en:"Brazil", es:"Brasil", adj:0.83, raw:0.53, grade:"A", scale:"1.57", start:"1.15", out:"1.12", gdp:"2,135", regionCn:"南美洲", regionEn:"S.America", regionEs:"Am. del Sur", delta:"+43"},
+        {rank:13, cn:"菲律賓", en:"Philippines", es:"Filipinas", adj:0.83, raw:0.52, grade:"A", scale:"1.35", start:"1.12", out:"1.08", gdp:"505", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+66"},
+        {rank:14, cn:"越南", en:"Vietnam", es:"Vietnam", adj:0.82, raw:0.55, grade:"A", scale:"1.33", start:"1.15", out:"1.05", gdp:"506", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+62"},
+
+        // ===== B 等級 (0.70–0.79) =====
+        {rank:15, cn:"瑞典", en:"Sweden", es:"Suecia", adj:0.79, raw:0.82, grade:"B", scale:"0.96", start:"0.97", out:"0.99", gdp:"623", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-29"},
+        {rank:16, cn:"丹麥", en:"Denmark", es:"Dinamarca", adj:0.79, raw:0.83, grade:"B", scale:"0.95", start:"0.98", out:"0.98", gdp:"420", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-56"},
+        {rank:17, cn:"俄羅斯", en:"Russia", es:"Rusia", adj:0.78, raw:0.56, grade:"B", scale:"1.40", start:"1.10", out:"1.08", gdp:"2,180", regionCn:"歐洲/亞洲", regionEn:"Europe/Asia", regionEs:"Europa/Asia", delta:"+32"},
+        {rank:18, cn:"荷蘭", en:"Netherlands", es:"Países Bajos", adj:0.78, raw:0.79, grade:"B", scale:"0.99", start:"0.97", out:"1.01", gdp:"1,190", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-26"},
+        {rank:19, cn:"挪威", en:"Norway", es:"Noruega", adj:0.78, raw:0.82, grade:"B", scale:"0.95", start:"0.98", out:"0.98", gdp:"507", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-31"},
+        {rank:20, cn:"芬蘭", en:"Finland", es:"Finlandia", adj:0.78, raw:0.82, grade:"B", scale:"0.95", start:"0.98", out:"0.98", gdp:"308", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-34"},
+        {rank:21, cn:"英國", en:"United Kingdom", es:"Reino Unido", adj:0.77, raw:0.73, grade:"B", scale:"1.06", start:"0.96", out:"1.06", gdp:"3,590", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-11"},
+        {rank:22, cn:"波蘭", en:"Poland", es:"Polonia", adj:0.77, raw:0.72, grade:"B", scale:"1.07", start:"0.98", out:"1.04", gdp:"901", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-12"},
+        {rank:23, cn:"埃及", en:"Egypt", es:"Egipto", adj:0.76, raw:0.43, grade:"B", scale:"1.27", start:"1.12", out:"1.05", gdp:"348", regionCn:"非洲", regionEn:"Africa", regionEs:"África", delta:"+49"},
+        {rank:24, cn:"法國", en:"France", es:"Francia", adj:0.76, raw:0.72, grade:"B", scale:"1.06", start:"0.96", out:"1.06", gdp:"3,130", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-12"},
+        {rank:25, cn:"比利時", en:"Belgium", es:"Bélgica", adj:0.75, raw:0.77, grade:"B", scale:"0.97", start:"0.97", out:"1.00", gdp:"641", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-22"},
+        {rank:26, cn:"韓國", en:"South Korea", es:"Corea del Sur", adj:0.75, raw:0.69, grade:"B", scale:"1.08", start:"0.97", out:"1.05", gdp:"1,880", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"-15"},
+        {rank:27, cn:"義大利", en:"Italy", es:"Italia", adj:0.74, raw:0.71, grade:"B", scale:"1.04", start:"0.97", out:"1.04", gdp:"2,330", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-16"},
+        {rank:28, cn:"土耳其", en:"Turkey", es:"Turquía", adj:0.73, raw:0.57, grade:"B", scale:"1.28", start:"1.08", out:"1.06", gdp:"1,120", regionCn:"歐洲/亞洲", regionEn:"Europe/Asia", regionEs:"Europa/Asia", delta:"+26"},
+        {rank:29, cn:"奧地利", en:"Austria", es:"Austria", adj:0.72, raw:0.79, grade:"B", scale:"0.91", start:"0.97", out:"0.97", gdp:"526", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-36"},
+        {rank:30, cn:"西班牙", en:"Spain", es:"España", adj:0.72, raw:0.70, grade:"B", scale:"1.03", start:"0.97", out:"1.03", gdp:"1,650", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-13"},
+        {rank:31, cn:"捷克", en:"Czech Republic", es:"República Checa", adj:0.72, raw:0.72, grade:"B", scale:"1.00", start:"0.98", out:"1.00", gdp:"345", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-28"},
+        {rank:32, cn:"伊朗", en:"Iran", es:"Irán", adj:0.72, raw:0.40, grade:"B", scale:"1.15", start:"1.05", out:"1.03", gdp:"435", regionCn:"中東", regionEn:"Middle East", regionEs:"Oriente Medio", delta:"+39"},
+        {rank:33, cn:"新加坡", en:"Singapore", es:"Singapur", adj:0.70, raw:0.79, grade:"B", scale:"0.88", start:"0.97", out:"0.96", gdp:"561", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"-48"},
+        {rank:34, cn:"沙烏地阿拉伯", en:"Saudi Arabia", es:"Arabia Saudita", adj:0.70, raw:0.62, grade:"B", scale:"1.13", start:"1.02", out:"1.03", gdp:"1,120", regionCn:"中東", regionEn:"Middle East", regionEs:"Oriente Medio", delta:"+5"},
+        {rank:35, cn:"瑞士", en:"Switzerland", es:"Suiza", adj:0.70, raw:0.79, grade:"B", scale:"0.89", start:"0.97", out:"0.96", gdp:"960", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-47"},
+
+        // ===== C 等級 (0.60–0.69) =====
+        {rank:36, cn:"馬來西亞", en:"Malaysia", es:"Malasia", adj:0.69, raw:0.63, grade:"C", scale:"1.09", start:"1.02", out:"1.02", gdp:"447", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+5"},
+        {rank:37, cn:"緬甸", en:"Myanmar", es:"Myanmar", adj:0.68, raw:0.31, grade:"C", scale:"1.24", start:"1.18", out:"1.00", gdp:"60", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+81"},
+        {rank:38, cn:"阿根廷", en:"Argentina", es:"Argentina", adj:0.67, raw:0.56, grade:"C", scale:"1.20", start:"1.05", out:"1.04", gdp:"604", regionCn:"南美洲", regionEn:"S.America", regionEs:"Am. del Sur", delta:"+7"},
+        {rank:39, cn:"澳洲", en:"Australia", es:"Australia", adj:0.67, raw:0.66, grade:"C", scale:"1.01", start:"0.99", out:"1.01", gdp:"1,730", regionCn:"大洋洲", regionEn:"Oceania", regionEs:"Oceanía", delta:"-23"},
+        {rank:40, cn:"葡萄牙", en:"Portugal", es:"Portugal", adj:0.67, raw:0.70, grade:"C", scale:"0.95", start:"0.98", out:"0.98", gdp:"303", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-32"},
+        {rank:41, cn:"伊拉克", en:"Iraq", es:"Irak", adj:0.67, raw:0.32, grade:"C", scale:"1.28", start:"1.15", out:"1.03", gdp:"267", regionCn:"中東", regionEn:"Middle East", regionEs:"Oriente Medio", delta:"+66"},
+        {rank:42, cn:"坦尚尼亞", en:"Tanzania", es:"Tanzania", adj:0.66, raw:0.36, grade:"C", scale:"1.27", start:"1.15", out:"1.02", gdp:"85", regionCn:"非洲", regionEn:"Africa", regionEs:"África", delta:"+64"},
+        {rank:43, cn:"哈薩克", en:"Kazakhstan", es:"Kazajistán", adj:0.66, raw:0.56, grade:"C", scale:"1.08", start:"1.04", out:"1.00", gdp:"300", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+5"},
+        {rank:44, cn:"南非", en:"South Africa", es:"Sudáfrica", adj:0.65, raw:0.53, grade:"C", scale:"1.23", start:"1.12", out:"1.02", gdp:"378", regionCn:"非洲", regionEn:"Africa", regionEs:"África", delta:"+24"},
+        {rank:45, cn:"智利", en:"Chile", es:"Chile", adj:0.65, raw:0.64, grade:"C", scale:"1.02", start:"1.00", out:"1.00", gdp:"344", regionCn:"南美洲", regionEn:"S.America", regionEs:"Am. del Sur", delta:"-12"},
+        {rank:46, cn:"斯洛維尼亞", en:"Slovenia", es:"Eslovenia", adj:0.64, raw:0.73, grade:"C", scale:"0.88", start:"0.97", out:"0.95", gdp:"73", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-43"},
+        {rank:47, cn:"阿富汗", en:"Afghanistan", es:"Afganistán", adj:0.64, raw:0.30, grade:"C", scale:"1.31", start:"1.25", out:"1.00", gdp:"14", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+77"},
+        {rank:48, cn:"泰國", en:"Thailand", es:"Tailandia", adj:0.64, raw:0.54, grade:"C", scale:"1.18", start:"1.05", out:"1.04", gdp:"580", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+38"},
+        {rank:49, cn:"摩洛哥", en:"Morocco", es:"Marruecos", adj:0.63, raw:0.52, grade:"C", scale:"1.10", start:"1.08", out:"1.00", gdp:"157", regionCn:"非洲", regionEn:"Africa", regionEs:"África", delta:"+24"},
+        {rank:50, cn:"烏干達", en:"Uganda", es:"Uganda", adj:0.63, raw:0.36, grade:"C", scale:"1.18", start:"1.12", out:"1.00", gdp:"55", regionCn:"非洲", regionEn:"Africa", regionEs:"África", delta:"+59"},
+        {rank:51, cn:"以色列", en:"Israel", es:"Israel", adj:0.62, raw:0.70, grade:"C", scale:"0.89", start:"0.97", out:"0.96", gdp:"550", regionCn:"中東", regionEn:"Middle East", regionEs:"Oriente Medio", delta:"-44"},
+        {rank:52, cn:"哥倫比亞", en:"Colombia", es:"Colombia", adj:0.62, raw:0.52, grade:"C", scale:"1.20", start:"1.08", out:"1.03", gdp:"386", regionCn:"南美洲", regionEn:"S.America", regionEs:"Am. del Sur", delta:"+42"},
+        {rank:53, cn:"盧安達", en:"Rwanda", es:"Ruanda", adj:0.62, raw:0.46, grade:"C", scale:"1.08", start:"1.15", out:"0.96", gdp:"15", regionCn:"非洲", regionEn:"Africa", regionEs:"África", delta:"+27"},
+        {rank:54, cn:"愛沙尼亞", en:"Estonia", es:"Estonia", adj:0.61, raw:0.70, grade:"C", scale:"0.87", start:"0.98", out:"0.94", gdp:"43", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-43"},
+        {rank:55, cn:"烏茲別克", en:"Uzbekistan", es:"Uzbekistán", adj:0.61, raw:0.39, grade:"C", scale:"1.17", start:"1.10", out:"1.00", gdp:"90", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+54"},
+        {rank:56, cn:"烏克蘭", en:"Ukraine", es:"Ucrania", adj:0.61, raw:0.42, grade:"C", scale:"1.16", start:"1.08", out:"1.02", gdp:"165", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"+45"},
+        {rank:57, cn:"迦納", en:"Ghana", es:"Ghana", adj:0.61, raw:0.41, grade:"C", scale:"1.10", start:"1.10", out:"0.98", gdp:"76", regionCn:"非洲", regionEn:"Africa", regionEs:"África", delta:"+38"},
+        {rank:58, cn:"秘魯", en:"Peru", es:"Perú", adj:0.60, raw:0.53, grade:"C", scale:"1.14", start:"1.06", out:"1.02", gdp:"283", regionCn:"南美洲", regionEn:"S.America", regionEs:"Am. del Sur", delta:"+14"},
+        {rank:59, cn:"柬埔寨", en:"Cambodia", es:"Camboya", adj:0.60, raw:0.35, grade:"C", scale:"1.20", start:"1.20", out:"0.98", gdp:"33", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+58"},
+        {rank:60, cn:"葉門", en:"Yemen", es:"Yemen", adj:0.60, raw:0.28, grade:"C", scale:"1.20", start:"1.20", out:"0.98", gdp:"21", regionCn:"中東", regionEn:"Middle East", regionEs:"Oriente Medio", delta:"+67"},
+        {rank:61, cn:"寮國", en:"Laos", es:"Laos", adj:0.60, raw:0.38, grade:"C", scale:"1.10", start:"1.18", out:"0.95", gdp:"16", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+50"},
+        {rank:62, cn:"尼泊爾", en:"Nepal", es:"Nepal", adj:0.60, raw:0.38, grade:"C", scale:"1.14", start:"1.15", out:"0.97", gdp:"44", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+43"},
+        {rank:63, cn:"巴基斯坦", en:"Pakistan", es:"Pakistán", adj:0.60, raw:0.35, grade:"C", scale:"1.30", start:"1.18", out:"1.02", gdp:"340", regionCn:"南亞", regionEn:"S.Asia", regionEs:"Asia del Sur", delta:"+40"},
+        {rank:64, cn:"斯里蘭卡", en:"Sri Lanka", es:"Sri Lanka", adj:0.60, raw:0.47, grade:"C", scale:"1.05", start:"1.05", out:"0.98", gdp:"84", regionCn:"南亞", regionEn:"S.Asia", regionEs:"Asia del Sur", delta:"+18"},
+        {rank:65, cn:"匈牙利", en:"Hungary", es:"Hungría", adj:0.60, raw:0.61, grade:"C", scale:"0.98", start:"0.98", out:"0.99", gdp:"213", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-30"},
+        {rank:66, cn:"亞塞拜然", en:"Azerbaijan", es:"Azerbaiyán", adj:0.60, raw:0.42, grade:"C", scale:"1.03", start:"1.06", out:"0.97", gdp:"78", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"+22"},
+        {rank:67, cn:"阿聯", en:"UAE", es:"EAU", adj:0.60, raw:0.63, grade:"C", scale:"0.95", start:"1.00", out:"0.97", gdp:"570", regionCn:"中東", regionEn:"Middle East", regionEs:"Oriente Medio", delta:"-38"},
+
+        // ===== D 等級 (0.50–0.59) =====
+        {rank:68, cn:"玻利維亞", en:"Bolivia", es:"Bolivia", adj:0.59, raw:0.38, grade:"D", scale:"1.07", start:"1.10", out:"0.97", gdp:"46", regionCn:"南美洲", regionEn:"S.America", regionEs:"Am. del Sur", delta:"+28"},
+        {rank:69, cn:"烏拉圭", en:"Uruguay", es:"Uruguay", adj:0.59, raw:0.64, grade:"D", scale:"0.92", start:"0.98", out:"0.96", gdp:"77", regionCn:"南美洲", regionEn:"S.America", regionEs:"Am. del Sur", delta:"-35"},
+        {rank:70, cn:"立陶宛", en:"Lithuania", es:"Lituania", adj:0.58, raw:0.64, grade:"D", scale:"0.90", start:"0.98", out:"0.95", gdp:"79", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-39"},
+        {rank:71, cn:"希臘", en:"Greece", es:"Grecia", adj:0.57, raw:0.61, grade:"D", scale:"0.94", start:"0.98", out:"0.97", gdp:"252", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-27"},
+        {rank:72, cn:"巴拿馬", en:"Panama", es:"Panamá", adj:0.56, raw:0.60, grade:"D", scale:"0.93", start:"1.02", out:"0.95", gdp:"88", regionCn:"中美洲", regionEn:"C.America", regionEs:"Centroamérica", delta:"-35"},
+        {rank:73, cn:"台灣 (中國一省)", en:"Taiwan (Province of China)", es:"Taiwán (Prov. de China)", adj:0.55, raw:0.64, grade:"D", scale:"0.86", start:"0.98", out:"0.95", gdp:"1,750", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"-37"},
+        {rank:74, cn:"香港 (中國)", en:"Hong Kong (China)", es:"Hong Kong (China)", adj:0.55, raw:0.65, grade:"D", scale:"0.84", start:"0.97", out:"0.93", gdp:"413", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"-41"},
+        {rank:75, cn:"斯洛伐克", en:"Slovakia", es:"Eslovaquia", adj:0.53, raw:0.55, grade:"D", scale:"0.96", start:"0.98", out:"0.98", gdp:"128", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-32"},
+        {rank:76, cn:"喬治亞", en:"Georgia", es:"Georgia", adj:0.52, raw:0.56, grade:"D", scale:"0.93", start:"1.05", out:"0.93", gdp:"33", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"-27"},
+        {rank:77, cn:"約旦", en:"Jordan", es:"Jordania", adj:0.51, raw:0.54, grade:"D", scale:"0.95", start:"1.02", out:"0.95", gdp:"53", regionCn:"中東", regionEn:"Middle East", regionEs:"Oriente Medio", delta:"-23"},
+        {rank:78, cn:"克羅埃西亞", en:"Croatia", es:"Croacia", adj:0.51, raw:0.55, grade:"D", scale:"0.92", start:"0.98", out:"0.96", gdp:"84", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-33"},
+        {rank:79, cn:"馬爾他", en:"Malta", es:"Malta", adj:0.51, raw:0.64, grade:"D", scale:"0.79", start:"0.97", out:"0.90", gdp:"22", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-46"},
+        {rank:80, cn:"多明尼加", en:"Dominican Republic", es:"República Dominicana", adj:0.51, raw:0.52, grade:"D", scale:"0.99", start:"1.05", out:"0.96", gdp:"122", regionCn:"加勒比海", regionEn:"Caribbean", regionEs:"Caribe", delta:"-32"},
+        {rank:81, cn:"卡達", en:"Qatar", es:"Catar", adj:0.50, raw:0.62, grade:"D", scale:"0.81", start:"0.98", out:"0.90", gdp:"253", regionCn:"中東", regionEn:"Middle East", regionEs:"Oriente Medio", delta:"-43"},
+        {rank:82, cn:"科威特", en:"Kuwait", es:"Kuwait", adj:0.50, raw:0.60, grade:"D", scale:"0.83", start:"0.98", out:"0.91", gdp:"165", regionCn:"中東", regionEn:"Middle East", regionEs:"Oriente Medio", delta:"-34"},
+        {rank:83, cn:"波札那", en:"Botswana", es:"Botsuana", adj:0.50, raw:0.54, grade:"D", scale:"0.93", start:"1.05", out:"0.93", gdp:"21", regionCn:"非洲", regionEn:"Africa", regionEs:"África", delta:"-36"},
+        {rank:84, cn:"哥斯大黎加", en:"Costa Rica", es:"Costa Rica", adj:0.50, raw:0.55, grade:"D", scale:"0.90", start:"1.02", out:"0.93", gdp:"95", regionCn:"中美洲", regionEn:"C.America", regionEs:"Centroamérica", delta:"-36"},
+        {rank:85, cn:"模里西斯", en:"Mauritius", es:"Mauricio", adj:0.50, raw:0.62, grade:"D", scale:"0.81", start:"1.02", out:"0.88", gdp:"15", regionCn:"非洲", regionEn:"Africa", regionEs:"África", delta:"-40"},
+
+        // ===== F 等級 (<0.50) =====
+        {rank:86, cn:"羅馬尼亞", en:"Romania", es:"Rumania", adj:0.49, raw:0.49, grade:"F", scale:"1.00", start:"0.98", out:"1.00", gdp:"350", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-24"},
+        {rank:87, cn:"阿曼", en:"Oman", es:"Omán", adj:0.49, raw:0.57, grade:"F", scale:"0.86", start:"0.99", out:"0.92", gdp:"122", regionCn:"中東", regionEn:"Middle East", regionEs:"Oriente Medio", delta:"-29"},
+        {rank:88, cn:"拉脫維亞", en:"Latvia", es:"Letonia", adj:0.49, raw:0.56, grade:"F", scale:"0.88", start:"0.98", out:"0.94", gdp:"48", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-37"},
+        {rank:89, cn:"保加利亞", en:"Bulgaria", es:"Bulgaria", adj:0.47, raw:0.49, grade:"F", scale:"0.96", start:"0.98", out:"0.98", gdp:"103", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-27"},
+        {rank:90, cn:"賽普勒斯", en:"Cyprus", es:"Chipre", adj:0.47, raw:0.57, grade:"F", scale:"0.82", start:"0.97", out:"0.92", gdp:"32", regionCn:"歐洲", regionEn:"Europe", regionEs:"Europa", delta:"-43"},
+        {rank:91, cn:"巴林", en:"Bahrain", es:"Baréin", adj:0.45, raw:0.57, grade:"F", scale:"0.79", start:"0.98", out:"0.89", gdp:"48", regionCn:"中東", regionEn:"Middle East", regionEs:"Oriente Medio", delta:"-31"},
+        {rank:92, cn:"瓜地馬拉", en:"Guatemala", es:"Guatemala", adj:0.43, raw:0.42, grade:"F", scale:"1.02", start:"1.08", out:"0.96", gdp:"104", regionCn:"中美洲", regionEn:"C.America", regionEs:"Centroamérica", delta:"-31"},
+        {rank:93, cn:"不丹", en:"Bhutan", es:"Bután", adj:0.41, raw:0.47, grade:"F", scale:"0.87", start:"1.10", out:"0.88", gdp:"3", regionCn:"亞洲", regionEn:"Asia", regionEs:"Asia", delta:"-38"},
+        {rank:94, cn:"巴拉圭", en:"Paraguay", es:"Paraguay", adj:0.40, raw:0.40, grade:"F", scale:"0.99", start:"1.05", out:"0.96", gdp:"44", regionCn:"南美洲", regionEn:"S.America", regionEs:"Am. del Sur", delta:"-38"},
+        {rank:95, cn:"巴布亞紐幾內亞", en:"Papua New Guinea", es:"Papúa Nueva Guinea", adj:0.39, raw:0.38, grade:"F", scale:"1.02", start:"1.10", out:"0.95", gdp:"32", regionCn:"大洋洲", regionEn:"Oceania", regionEs:"Oceanía", delta:"-29"},
+        {rank:96, cn:"千里達", en:"Trinidad and Tobago", es:"Trinidad y Tobago", adj:0.38, raw:0.47, grade:"F", scale:"0.81", start:"1.00", out:"0.89", gdp:"28", regionCn:"加勒比海", regionEn:"Caribbean", regionEs:"Caribe", delta:"-30"},
+        {rank:97, cn:"薩爾瓦多", en:"El Salvador", es:"El Salvador", adj:0.36, raw:0.38, grade:"F", scale:"0.95", start:"1.06", out:"0.93", gdp:"35", regionCn:"中美洲", regionEn:"C.America", regionEs:"Centroamérica", delta:"-38"},
+        {rank:98, cn:"宏都拉斯", en:"Honduras", es:"Honduras", adj:0.33, raw:0.34, grade:"F", scale:"0.98", start:"1.08", out:"0.94", gdp:"32", regionCn:"中美洲", regionEn:"C.America", regionEs:"Centroamérica", delta:"-34"},
+        {rank:99, cn:"牙買加", en:"Jamaica", es:"Jamaica", adj:0.33, raw:0.39, grade:"F", scale:"0.84", start:"1.02", out:"0.90", gdp:"19", regionCn:"加勒比海", regionEn:"Caribbean", regionEs:"Caribe", delta:"-39"}
     ];
 
     // ================================================================
-    //  渲染表格
+    //  渲染表格（按等級分組）
     // ================================================================
     function renderTable(lang) {
         var nameKey = (lang === 'zh') ? 'cn' : (lang === 'en' ? 'en' : 'es');
@@ -832,7 +875,7 @@
         });
         statsContainer.innerHTML = statsHtml;
 
-        // 表格
+        // 表格 — 按等級分組
         var colLabels = {
             zh: {rank:'#', country:'國家', adj:'校正後 GL', grade:'等級', raw:'原始 GL', gdp:'GDP', region:'區域', delta:'變化'},
             en: {rank:'#', country:'Country', adj:'Adjusted GL', grade:'Grade', raw:'Raw GL', gdp:'GDP', region:'Region', delta:'Δ'},
@@ -840,38 +883,65 @@
         };
         var lbl = colLabels[lang] || colLabels.zh;
 
-        var html = '<table><thead><tr>' +
-            '<th>'+lbl.rank+'</th>' +
-            '<th style="text-align:left;">'+lbl.country+'</th>' +
-            '<th style="text-align:center;">'+lbl.adj+'</th>' +
-            '<th style="text-align:center;">'+lbl.grade+'</th>' +
-            '<th style="text-align:center;">'+lbl.raw+'</th>' +
-            '<th style="text-align:right;">'+lbl.gdp+'</th>' +
-            '<th style="text-align:center;">'+lbl.region+'</th>' +
-            '<th style="text-align:center;">'+lbl.delta+'</th>' +
-            '</tr></thead><tbody>';
+        // 等級標題文字
+        var gradeTitleMap = {
+            zh: {'A+':'A+ 等級 (≥1.00)','A':'A 等級 (0.80–0.99)','B':'B 等級 (0.70–0.79)','C':'C 等級 (0.60–0.69)','D':'D 等級 (0.50–0.59)','F':'F 等級 (<0.50)'},
+            en: {'A+':'Grade A+ (≥1.00)','A':'Grade A (0.80–0.99)','B':'Grade B (0.70–0.79)','C':'Grade C (0.60–0.69)','D':'Grade D (0.50–0.59)','F':'Grade F (<0.50)'},
+            es: {'A+':'Grado A+ (≥1.00)','A':'Grado A (0.80–0.99)','B':'Grado B (0.70–0.79)','C':'Grado C (0.60–0.69)','D':'Grado D (0.50–0.59)','F':'Grado F (<0.50)'}
+        };
+        var gradeBadgeMap = {
+            'A+':'aplus','A':'a','B':'b','C':'c','D':'d','F':'f'
+        };
+        var gradeOrder = ['A+','A','B','C','D','F'];
 
-        glData.forEach(function(d){
-            var name = d[nameKey] || d.cn;
-            var region = d[regionKey] || d.regionCn;
-            var gradeClass = 'grade-' + d.grade.toLowerCase().replace('+','plus');
-            var deltaClass = d.delta.startsWith('+') ? 'delta-up' : (d.delta.startsWith('-') ? 'delta-down' : 'delta-same');
-            var deltaDisplay = (d.delta.startsWith('+') ? '↑' : (d.delta.startsWith('-') ? '↓' : '')) + d.delta.replace(/[+-]/,'');
-            var adjColor = d.grade==='A+'?'#9FE870':d.grade==='A'?'#7DD3FC':d.grade==='B'?'#fbbf24':d.grade==='C'?'#fb923c':d.grade==='D'?'#f87171':'#ef4444';
+        var html = '';
+        gradeOrder.forEach(function(g) {
+            var items = glData.filter(function(d) { return d.grade === g; });
+            if (items.length === 0) return;
 
-            html += '<tr>' +
-                '<td class="rank">'+d.rank+'</td>' +
-                '<td class="country">'+name+'</td>' +
-                '<td class="gl-adj" style="color:'+adjColor+'">'+d.adj.toFixed(2)+'</td>' +
-                '<td><span class="grade-badge '+gradeClass+'">'+d.grade+'</span></td>' +
-                '<td class="gl-raw">'+d.raw.toFixed(2)+'</td>' +
-                '<td class="gdp">'+d.gdp+'</td>' +
-                '<td class="region">'+region+'</td>' +
-                '<td style="text-align:center"><span class="delta '+deltaClass+'">'+deltaDisplay+'</span></td>' +
-                '</tr>';
+            var title = (gradeTitleMap[lang]||gradeTitleMap.zh)[g] || g;
+            var badgeClass = gradeBadgeMap[g] || 'a';
+
+            html += '<div class="grade-section-title">';
+            html += '<span class="badge '+badgeClass+'">'+g+'</span>';
+            html += '<span>'+title+'</span>';
+            html += '<span class="count">'+items.length+' 個'+(lang==='en'?' countries':lang==='es'?' países':'國家')+'</span>';
+            html += '</div>';
+
+            html += '<table><thead><tr>' +
+                '<th>'+lbl.rank+'</th>' +
+                '<th style="text-align:left;">'+lbl.country+'</th>' +
+                '<th style="text-align:center;">'+lbl.adj+'</th>' +
+                '<th style="text-align:center;">'+lbl.grade+'</th>' +
+                '<th style="text-align:center;">'+lbl.raw+'</th>' +
+                '<th style="text-align:right;">'+lbl.gdp+'</th>' +
+                '<th style="text-align:center;">'+lbl.region+'</th>' +
+                '<th style="text-align:center;">'+lbl.delta+'</th>' +
+                '</tr></thead><tbody>';
+
+            items.forEach(function(d){
+                var name = d[nameKey] || d.cn;
+                var region = d[regionKey] || d.regionCn;
+                var gradeClass = 'grade-' + d.grade.toLowerCase().replace('+','plus');
+                var deltaClass = d.delta.startsWith('+') ? 'delta-up' : (d.delta.startsWith('-') ? 'delta-down' : 'delta-same');
+                var deltaDisplay = (d.delta.startsWith('+') ? '↑' : (d.delta.startsWith('-') ? '↓' : '')) + d.delta.replace(/[+-]/,'');
+                var adjColor = d.grade==='A+'?'#9FE870':d.grade==='A'?'#7DD3FC':d.grade==='B'?'#fbbf24':d.grade==='C'?'#fb923c':d.grade==='D'?'#f87171':'#ef4444';
+
+                html += '<tr>' +
+                    '<td class="rank">'+d.rank+'</td>' +
+                    '<td class="country">'+name+'</td>' +
+                    '<td class="gl-adj" style="color:'+adjColor+'">'+d.adj.toFixed(2)+'</td>' +
+                    '<td><span class="grade-badge '+gradeClass+'">'+d.grade+'</span></td>' +
+                    '<td class="gl-raw">'+d.raw.toFixed(2)+'</td>' +
+                    '<td class="gdp">'+d.gdp+'</td>' +
+                    '<td class="region">'+region+'</td>' +
+                    '<td style="text-align:center"><span class="delta '+deltaClass+'">'+deltaDisplay+'</span></td>' +
+                    '</tr>';
+            });
+
+            html += '</tbody></table>';
         });
 
-        html += '</tbody></table>';
         container.innerHTML = html;
     }
 
@@ -915,7 +985,6 @@
             var target = document.getElementById(lang);
             if (target) {
                 target.classList.add('active');
-                // 如果該語言已經展開，重新渲染表格
                 var content = document.getElementById('gl100Content-' + lang);
                 if (content && content.classList.contains('open')) {
                     renderTable(lang);
@@ -928,7 +997,6 @@
     //  初始化
     // ================================================================
     document.addEventListener('DOMContentLoaded', function(){
-        // 預設中文版不展開表格，但統計卡片要先渲染
         renderTable('zh');
         renderTable('en');
         renderTable('es');
