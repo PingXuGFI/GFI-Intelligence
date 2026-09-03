@@ -1,315 +1,354 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dismantling Drawer Civilization · Ping Xu</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg:#0b1220; --bg2:#0d1526; --text:#f8fbff; --muted:#c7d2e3;
-      --sub:#9fb0c8; --dim:rgba(255,255,255,.06); --green:#9FE870;
-      --blue:#7DD3FC; --red:#f87171;
-      --serif:'DM Serif Display',Georgia,serif;
-      --mono:'DM Mono',monospace; --sans:'DM Sans',system-ui,sans-serif;
-    }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { background:var(--bg); color:var(--text); font-family:var(--sans); font-size:16px; line-height:1.7; }
-    .nav { position:fixed; inset:0 0 auto 0; z-index:100; height:62px; padding:0 clamp(18px,5vw,52px); display:flex; align-items:center; justify-content:space-between; background:rgba(11,18,32,0.92); backdrop-filter:blur(14px); border-bottom:1px solid var(--dim); }
-    .logo { color:#fff; text-decoration:none; font-family:var(--mono); font-size:13px; letter-spacing:.16em; text-transform:uppercase; }
-    .lang-grp { display:flex; gap:6px; }
-    .lb-btn { font-family:var(--mono); font-size:11px; letter-spacing:.08em; padding:5px 10px; border:1px solid rgba(255,255,255,0.1); border-radius:5px; background:none; color:var(--sub); cursor:pointer; transition:all .2s; }
-    .lb-btn:hover { color:var(--text); border-color:rgba(255,255,255,0.2); }
-    .lb-btn.on { color:var(--green); border-color:rgba(159,232,112,0.35); background:rgba(159,232,112,0.07); }
-    .lb { display:none; }
-    .lb.active { display:block; }
-    .page { padding-top:62px; }
-    .article-container { max-width:820px; margin:0 auto; padding:clamp(40px,6vw,80px) clamp(20px,5vw,40px); }
-    .article-eyebrow { font-family:var(--mono); font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:var(--green); margin-bottom:16px; }
-    .article-title { font-family:var(--serif); font-size:clamp(28px,4vw,48px); line-height:1.15; color:#fff; margin-bottom:12px; }
-    .article-subtitle { font-family:var(--sans); font-size:1.1rem; color:var(--sub); margin-bottom:8px; font-weight:300; }
-    .article-meta { font-family:var(--mono); font-size:12px; color:var(--sub); margin-bottom:16px; padding-bottom:16px; border-bottom:1px solid var(--dim); }
-    .pdf-download-btn { display:inline-flex; align-items:center; gap:10px; padding:12px 24px; border-radius:40px; background:rgba(159,232,112,0.12); border:1px solid rgba(159,232,112,0.3); color:var(--green); text-decoration:none; font-family:var(--mono); font-size:12px; letter-spacing:.06em; transition:all .25s; margin:0 0 20px 0; }
-    .pdf-download-btn:hover { background:rgba(159,232,112,0.2); border-color:var(--green); transform:translateY(-2px); }
-    .pdf-download-btn .icon { font-size:18px; }
-    .article-body p { margin-bottom:1.5rem; color:var(--muted); }
-    .article-body strong { color:#fff; font-weight:600; }
-    .article-body h3 { color:#fff; font-family:var(--serif); margin:2rem 0 1rem 0; font-size:1.4rem; }
-    .article-body h4 { color:var(--green); font-family:var(--mono); font-size:0.8rem; letter-spacing:.06em; text-transform:uppercase; margin:1.5rem 0 0.5rem 0; }
-    .article-body ul { margin:1rem 0 1.5rem 2rem; color:var(--muted); }
-    .article-body ul li { margin-bottom:0.6rem; }
-    blockquote { border-left:4px solid var(--green); padding:1rem 1.5rem; background:rgba(159,232,112,0.05); border-radius:0 12px 12px 0; margin:1.5rem 0; color:var(--muted); font-style:italic; }
-    blockquote strong { color:var(--green); font-style:normal; }
-    .divider { height:1px; background:var(--dim); margin:2.5rem 0; }
-    .conclusion { background:rgba(159,232,112,0.05); border:1px solid rgba(159,232,112,0.2); border-radius:16px; padding:1.5rem 2rem; margin-top:2rem; }
-    .conclusion p { color:var(--muted); margin-bottom:0; }
-    .conclusion strong { color:var(--green); }
-    .footer { text-align:center; padding:20px 20px 28px; font-family:var(--mono); font-size:10px; color:rgba(255,255,255,0.2); border-top:1px solid rgba(255,255,255,0.05); }
-    .footer a { color:rgba(255,255,255,0.3); text-decoration:none; }
-    .footer a:hover { color:#fff; }
-    .back-link { display:inline-flex; align-items:center; gap:8px; font-family:var(--mono); font-size:11px; color:var(--sub); text-decoration:none; margin-bottom:24px; transition:color .2s; }
-    .back-link:hover { color:var(--green); }
-    .book-badge { display:inline-block; font-family:var(--mono); font-size:0.6rem; letter-spacing:.08em; color:var(--green); background:rgba(159,232,112,0.12); padding:2px 12px; border-radius:20px; border:1px solid rgba(159,232,112,0.2); margin-left:12px; vertical-align:middle; }
-    .principle-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:1.5rem 0; }
-    .principle-card { background:rgba(255,255,255,0.02); border:1px solid var(--dim); border-radius:12px; padding:1.2rem 1.5rem; }
-    .principle-card .num { font-family:var(--mono); font-size:0.7rem; color:var(--green); }
-    .principle-card h4 { color:#fff; font-family:var(--serif); font-size:1.05rem; margin:0.3rem 0 0.4rem 0; }
-    .principle-card p { font-size:0.85rem; color:var(--sub); margin:0; }
-    @media(max-width:700px){ .principle-grid { grid-template-columns:1fr; } .article-body ul { margin-left:1rem; } }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Dismantling Drawer Civilization — A structural critique of how modern systems fragment responsibility." />
+    <meta name="keywords" content="drawer civilization, fragmentation, responsibility, GL Framework, structural critique, modern systems" />
+    <meta property="og:title" content="Dismantling Drawer Civilization | GFI Flow Intelligence" />
+    <meta property="og:description" content="A structural critique of how modern systems fragment responsibility." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Dismantling Drawer Civilization" />
+    <meta name="twitter:description" content="Responsibility is fragmented into drawers — and no one is accountable." />
+    <link rel="alternate" hreflang="en" href="https://gfiintel.com/dismantling-drawer-civilization.html" />
+    <link rel="alternate" hreflang="zh-TW" href="https://gfiintel.com/dismantling-drawer-civilization.html?lang=tw" />
+    <link rel="alternate" hreflang="zh-CN" href="https://gfiintel.com/dismantling-drawer-civilization.html?lang=cn" />
+    <link rel="alternate" hreflang="es" href="https://gfiintel.com/dismantling-drawer-civilization.html?lang=es" />
+    <link rel="alternate" hreflang="x-default" href="https://gfiintel.com/dismantling-drawer-civilization.html" />
+    <title>Dismantling Drawer Civilization | GFI Flow Intelligence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:#f5f2eb;color:#1a1a24;font-family:'Georgia','Times New Roman',serif;line-height:1.8;padding:2rem 1rem}
+        .container{max-width:960px;margin:0 auto;background:#fff;padding:2.5rem 2.8rem;box-shadow:0 8px 24px rgba(0,0,0,0.06);border-radius:8px}
+        .lang-switch{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:2rem;border-bottom:1px solid #e0dcd5;padding-bottom:.8rem}
+        .lang-switch button{background:none;border:1px solid #ccc;padding:.3rem 1rem;border-radius:30px;font-size:.8rem;font-weight:600;color:#2a2a3a;cursor:pointer;transition:.2s}
+        .lang-switch button.active{background:#0b1a2e;color:#fff;border-color:#0b1a2e}
+        .lang-switch button:hover{background:#e0dcd5}
+        .lang-section{display:none}.lang-section.active{display:block}
+        h1{font-size:2.4rem;font-weight:700;letter-spacing:-0.02em;line-height:1.2;margin-bottom:.25rem;color:#0b1a2e}
+        .subhead{font-size:1.1rem;color:#4a4a5a;border-left:4px solid #b31b1b;padding-left:1.2rem;margin:.8rem 0 1.8rem 0;font-style:italic}
+        h2{font-size:1.6rem;margin:2.2rem 0 .8rem 0;color:#0b1a2e;border-bottom:2px solid #eae5dc;padding-bottom:.3rem}
+        h3{font-size:1.2rem;margin:1.6rem 0 .6rem 0;color:#1f2c3f}
+        p{margin-bottom:1.1rem;color:#2a2a3a}
+        ul,ol{margin:.5rem 0 1.2rem 2rem;color:#2a2a3a}
+        li{margin-bottom:.3rem}
+        .highlight-box{background:#f3f1ec;padding:1.4rem 1.8rem;border-radius:6px;margin:1.8rem 0;border-left:6px solid #b31b1b}
+        .highlight-box p{margin-bottom:0;font-weight:500;color:#0b1a2e}
+        .highlight-green{background:#ecf3ed;padding:1.4rem 1.8rem;border-radius:6px;margin:1.8rem 0;border-left:6px solid #1a6b3c}
+        .highlight-green p{margin-bottom:0;font-weight:500;color:#0b1a2e}
+        .comparison-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:1.2rem 0}
+        .cmp-item{background:#f9f8f5;padding:1rem 1.2rem;border-radius:4px;border-top:3px solid #b31b1b}
+        .cmp-item.green{border-top-color:#1a6b3c}
+        .cmp-item strong{display:block;font-size:.8rem;text-transform:uppercase;letter-spacing:.5px;color:#4a4a5a;margin-bottom:.3rem}
+        .cmp-item.wrong strong{color:#b31b1b}
+        .cmp-item.right strong{color:#1a6b3c}
+        .nav-series{margin-top:2.8rem;padding-top:1.8rem;border-top:2px solid #e0dcd5;display:flex;flex-wrap:wrap;justify-content:space-between;gap:.8rem}
+        .nav-series a{color:#0b1a2e;text-decoration:none;font-weight:600;border:1px solid #ccc;padding:.4rem 1.2rem;border-radius:30px;font-size:.85rem;transition:.2s;background:#fff}
+        .nav-series a:hover{background:#0b1a2e;color:#fff;border-color:#0b1a2e}
+        .nav-series .lang-zh,.nav-series .lang-en,.nav-series .lang-es{display:none;width:100%;justify-content:space-between;gap:.8rem;flex-wrap:wrap}
+        .nav-series .lang-zh.active,.nav-series .lang-en.active,.nav-series .lang-es.active{display:flex}
+        .back-home{display:inline-block;margin-top:1.5rem;font-weight:600;color:#0b1a2e;text-decoration:none;border-bottom:2px solid #b31b1b;padding-bottom:.1rem}
+        .back-home:hover{color:#b31b1b}
+        .footer-note{margin-top:2.5rem;font-size:.85rem;color:#6a6a7a;border-top:1px solid #e0dcd5;padding-top:1.5rem;text-align:center}
+        .tag{display:inline-block;background:#eae5dc;padding:.2rem .9rem;border-radius:30px;font-size:.75rem;font-weight:600;color:#1f2c3f;letter-spacing:.3px;margin-right:.4rem}
+        .series-badge{display:inline-block;background:#eae5dc;padding:.2rem .9rem;border-radius:30px;font-size:.7rem;font-weight:600;color:#1f2c3f;letter-spacing:.3px;margin-bottom:.5rem}
+        @media(max-width:700px){.container{padding:1.5rem}h1{font-size:1.8rem}.comparison-grid{grid-template-columns:1fr}.nav-series .lang-zh.active,.nav-series .lang-en.active,.nav-series .lang-es.active{flex-direction:column;align-items:center}}
+    </style>
 </head>
 <body>
+<div class="container">
 
-<div class="nav">
-  <a href="index.html" class="logo">GFI Flow Intelligence</a>
-  <div class="lang-grp">
-    <button class="lb-btn on" data-lang="en">EN</button>
-    <button class="lb-btn" data-lang="tw">繁</button>
-    <button class="lb-btn" data-lang="cn">简</button>
-    <button class="lb-btn" data-lang="es">ES</button>
-  </div>
-</div>
-
-<!-- ===== ENGLISH ===== -->
-<div class="lb active page" data-lang="en">
-  <div class="article-container">
-    <a href="index.html" class="back-link">← Back to all articles</a>
-    <div class="article-eyebrow">📚 Book Excerpt · Structural Critique</div>
-    <h1 class="article-title">Dismantling Drawer Civilization</h1>
-    <div class="article-subtitle">From Classification Traps to Human Networks</div>
-    <div class="article-meta">Ping Xu · 2025 · ~15 min read <span class="book-badge">📖 NEW BOOK</span></div>
-
-    <!-- ★★★ PDF 下載按鈕 — 直接連結，確保下載 ★★★ -->
-    <a href="dismantling-drawer-civilization.pdf" class="pdf-download-btn" target="_blank" download>
-      <span class="icon">📥</span> Download Full Book PDF
-    </a>
-
-    <div class="article-body">
-      <p>We live in a world structured to manage complexity, yet in doing so, it has sacrificed humanity itself. The systems around us—welfare, health, education, bureaucracy, international institutions—appear neutral and rational, but they operate according to a single logic: <strong>the drawer</strong>.</p>
-      <p><strong>Drawer civilization</strong> is not a conspiracy. No shadowy elite sits in a control room deciding your fate. It is a self-protecting mechanism of an outdated structure. It emerged to increase efficiency, to make complex societies manageable — but in the 21st century, it has become <strong>lethal</strong>.</p>
-      <blockquote>「The more refined the drawers, the easier people fall through them.」</blockquote>
-      <h3>📦 The Birth of Drawers — How Classification Became a Tool of Rule</h3>
-      <p>Classification was originally a tool, but gradually became the purpose. When the world was broken into components, people were also broken into components: Which class do you belong to? Which department? Which qualification? Which drawer?</p>
-      <p>The three operating principles of drawer civilization were thus formed:</p>
-      <ul>
-        <li><strong>Classification first:</strong> Before listening to the problem, first ask which category you belong to.</li>
-        <li><strong>Formatting processing:</strong> Place in the corresponding drawer, system declares "processed."</li>
-        <li><strong>Responsibility shifting:</strong> After the drawer is closed, no one is responsible for what happens inside.</li>
-      </ul>
-      <h3>🌍 Global Samples of Drawer Civilization</h3>
-      <p><strong>European Model — Welfare States:</strong> Precise eligibility, automated payments. Non-standard families or migrants often excluded.</p>
-      <p><strong>U.S. Model — Fragmented Systems:</strong> Federal-state-county layering, inconsistent rules. Families lose support when moving or switching programs.</p>
-      <p><strong>Asian Model — High-Density Cities:</strong> Efficiency, automation, digital ID. Lonely deaths, overwork collapse; payments handled, connections ignored.</p>
-      <p><strong>UN Model — International Institutions:</strong> Member classification, project eligibility, donation tiers. Slow response to crises; survival delayed.</p>
-      <h3>🎭 Illusion One — "Classification Complete Means Problem Solved"</h3>
-      <p>Drawer civilization thrives on processing: if a person is put into the correct drawer, the system declares "handled." But being "handled" rarely equals being "helped."</p>
-      <h3>⚖️ Illusion Two — "Systems Are Neutral"</h3>
-      <p>No system is neutral. Every system protects, ignores, or avoids responsibility based on structural incentives, historical hierarchies, and resource allocations.</p>
-      <h3>🧠 Illusion Three — "Individual Failure Explains Everything"</h3>
-      <p>This illusion shifts responsibility from systems to individuals. It allows society to avoid accountability while maintaining the appearance of order.</p>
-      <h3>💀 Chronic Murder — Economic Despair and Psychological Collapse</h3>
-      <p>Drawer civilization does not kill with a single blow. It kills slowly, invisibly, systematically.</p>
-      <h3>🧱 Physical and Social Collapse</h3>
-      <p>Constant stress and systemic neglect manifest physically. Financial instability, lack of healthcare access, and bureaucratic delays increase hypertension, heart disease, and stroke risk.</p>
-      <h3>🔧 From Drawers to Networks — Design Principles</h3>
-      <div class="principle-grid">
-        <div class="principle-card"><div class="num">PRINCIPLE 1</div><h4>Connection Over Classification</h4><p>Move from "Which drawer do you belong to?" to "How are you connected to resources and people?"</p></div>
-        <div class="principle-card"><div class="num">PRINCIPLE 2</div><h4>Responsibility Over Avoidance</h4><p>Without responsibility, systemic failure hides behind rules. Assign accountable nodes instead of anonymous drawers.</p></div>
-        <div class="principle-card"><div class="num">PRINCIPLE 3</div><h4>Immediate Support Over Eligibility Delays</h4><p>Survival is primary; bureaucracy secondary. Provide instant access to shelter, food, and medical attention.</p></div>
-        <div class="principle-card"><div class="num">PRINCIPLE 4</div><h4>Contribution Over Compliance</h4><p>Recognition, reward, and survival must be tied to real actions, not certificates, status, or arbitrary classifications.</p></div>
-        <div class="principle-card" style="grid-column: 1 / -1;"><div class="num">PRINCIPLE 5</div><h4>Financial Sovereignty</h4><p>Establish community-controlled funds. Encourage universal basic resources. Reduce reliance on hierarchical approvals for life-critical needs.</p></div>
-      </div>
-      <h3>🗺️ Implementation Roadmap — Three Phases to Smash Drawers</h3>
-      <p><strong>Phase 1 — Emergency Survival Floor:</strong> Immediate access to shelter, food, water, and basic medical aid without eligibility checks.</p>
-      <p><strong>Phase 2 — Contribution System:</strong> Replace rigid eligibility with verifiable contribution metrics.</p>
-      <p><strong>Phase 3 — Global Commons Governance:</strong> Replace hierarchical, donor-dependent structures with collaborative global governance.</p>
-      <h3>🔄 Psychological and Cultural Transformation</h3>
-      <p>Smashing drawers is not only structural — it is also psychological. Drawer civilization trains fear: fear of stepping out, fear of responsibility, fear of failure.</p>
-      <div class="divider"></div>
-      <div class="conclusion">
-        <p style="font-weight:600; color:#fff; font-size:1.1rem;">🔥 Conclusion: Burn the Drawers, Fly Up</p>
-        <p>Drawer civilization is ending. Not with a bang, not with a moral sermon, but quietly, through the cumulative failure to safeguard life, opportunity, and dignity.</p>
-        <p style="margin-top:0.8rem;">To survive — and to thrive — we must <strong>burn the drawers</strong>. The choice is simple: continue to fall into drawers, or rise above them.</p>
-        <p style="margin-top:0.8rem;"><strong>Burn the drawers. Fly up.</strong></p>
-      </div>
-      <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid var(--dim);">
-        <p style="font-size:0.75rem; color:var(--sub); font-family:var(--mono);">© 2025 Ping Xu · Dismantling Drawer Civilization · All rights reserved.</p>
-      </div>
+    <div class="lang-switch">
+        <button class="active" data-lang="en">English</button>
+        <button data-lang="tw">繁體中文</button>
+        <button data-lang="cn">简体中文</button>
+        <button data-lang="es">Español</button>
     </div>
-  </div>
-</div>
 
-<!-- ===== 繁體中文 ===== -->
-<div class="lb page" data-lang="tw">
-  <div class="article-container">
-    <a href="index.html" class="back-link">← 返回所有文章</a>
-    <div class="article-eyebrow">📚 書籍摘錄 · 結構性批判</div>
-    <h1 class="article-title">拆掉抽屜文明</h1>
-    <div class="article-subtitle">從分類陷阱到人類網絡</div>
-    <div class="article-meta">徐萍 · 2025 · 閱讀時間約 15 分鐘 <span class="book-badge">📖 新書</span></div>
+    <!-- ============================================================ -->
+    <!-- 英文版 -->
+    <!-- ============================================================ -->
+    <div id="lang-en" class="lang-section active">
+        <span class="series-badge">Methodology & Policy Series · Part 6 of 7</span>
+        <h1>Dismantling Drawer Civilization</h1>
+        <div class="subhead">A Structural Critique of How Modern Systems Fragment Responsibility</div>
 
-    <!-- ★★★ PDF 下載按鈕 — 直接連結，確保下載 ★★★ -->
-    <a href="dismantling-drawer-civilization.pdf" class="pdf-download-btn" target="_blank" download>
-      <span class="icon">📥</span> 下載全書 PDF
-    </a>
+        <div class="highlight-box">
+            <p>📐 <strong>Structural fact:</strong> Modern systems fragment responsibility into drawers. Each drawer is someone else's problem. The result is a system in which <strong>everyone is responsible — and no one is accountable</strong>.</p>
+        </div>
 
-    <div class="article-body">
-      <p>我們生活在一個為管理複雜性而設計的世界，但正因如此，它犧牲了人性。圍繞我們的系統——社福、醫療、教育、官僚體系、國際機構——看似中立且理性，實則遵循同一種邏輯：<strong>抽屜</strong>。</p>
-      <p><strong>抽屜文明</strong>不是陰謀。沒有神秘精英坐在控制室決定你的命運。它是一個過時結構的自我保護機制。它的誕生是為了提高效率，讓複雜社會可管理——但到了21世紀，它變得<strong>致命</strong>。</p>
-      <blockquote>「抽屜越精緻，人越容易掉進縫隙。」</blockquote>
-      <h3>📦 抽屜的誕生——分類如何成為統治工具</h3>
-      <p>分類原本是工具，但逐漸變成了目的。當世界被拆解成零件時，人也被拆解成零件。</p>
-      <ul>
-        <li><strong>分類優先：</strong>問題還沒聽完，先問你屬於哪一類。</li>
-        <li><strong>格式化處理：</strong>放進對應抽屜，系統宣告「已處理」。</li>
-        <li><strong>責任推卸：</strong>抽屜關上後，裡面發生什麼，沒人負責。</li>
-      </ul>
-      <h3>🌍 抽屜文明的全球樣本</h3>
-      <p><strong>歐洲模式——福利國家：</strong>精確資格、自動給付。非標準家庭或移民易被排除。</p>
-      <p><strong>美國模式——碎片系統：</strong>聯邦-州-郡分層，規則不一。</p>
-      <p><strong>亞洲模式——高密度都市：</strong>高效率、自動化、數位身分。孤獨死、過勞死。</p>
-      <p><strong>聯合國模式——國際機構：</strong>成員分類、專案資格、捐款等級。危機反應慢。</p>
-      <h3>🎭 幻覺一——「分類完成等於問題解決」</h3>
-      <h3>⚖️ 幻覺二——「制度是中立的」</h3>
-      <h3>🧠 幻覺三——「個人失敗解釋一切」</h3>
-      <h3>💀 慢性謀殺——經濟絕境與心理崩壞</h3>
-      <h3>🧱 身體與社會的崩壞</h3>
-      <div class="principle-grid">
-        <div class="principle-card"><div class="num">原則一</div><h4>連結優先，超越分類</h4><p>從「你屬於哪個抽屜？」轉變為「你如何與資源和他人連結？」</p></div>
-        <div class="principle-card"><div class="num">原則二</div><h4>承擔責任，拒絕推卸</h4><p>沒有責任，制度失靈隱藏在規則背後。</p></div>
-        <div class="principle-card"><div class="num">原則三</div><h4>即時支援，超越資格審核</h4><p>生存優先；官僚次之。</p></div>
-        <div class="principle-card"><div class="num">原則四</div><h4>貢獻驗證，取代資格壟斷</h4><p>認可與生存應與實際行動掛鉤。</p></div>
-        <div class="principle-card" style="grid-column: 1 / -1;"><div class="num">原則五</div><h4>財務主權</h4><p>建立社群掌控的資金。推動普惠基本資源。</p></div>
-      </div>
-      <h3>🗺️ 實施路線圖——三階段拆解抽屜</h3>
-      <p><strong>第一階段——緊急生存底線</strong></p>
-      <p><strong>第二階段——貢獻系統</strong></p>
-      <p><strong>第三階段——全球公域治理</strong></p>
-      <div class="divider"></div>
-      <div class="conclusion">
-        <p style="font-weight:600; color:#fff; font-size:1.1rem;">🔥 結語：燒掉抽屜，飛起來</p>
-        <p>抽屜文明正在結束。不是轟然一聲，也不是道德說教，而是因為它無法保障生命、機會與尊嚴的累積失敗，悄然瓦解。</p>
-        <p style="margin-top:0.8rem;">要生存——甚至蓬勃生長——我們必須<strong>燒掉抽屜</strong>。選擇很簡單：繼續掉進抽屜，或者超越抽屜。</p>
-        <p style="margin-top:0.8rem;"><strong>燒掉抽屜。飛起來。</strong></p>
-      </div>
-      <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid var(--dim);">
-        <p style="font-size:0.75rem; color:var(--sub); font-family:var(--mono);">© 2025 徐萍 · 《拆掉抽屜文明》 · 版權所有</p>
-      </div>
+        <h2>I. What Is Drawer Civilization?</h2>
+        <p>Drawer civilization is the organization of governance into silos. Each silo — department, agency, ministry — operates independently. Problems are passed from drawer to drawer. No one owns the problem. No one is accountable for the outcome.</p>
+
+        <h2>II. The Fragmentation Mechanism</h2>
+        <ul>
+            <li><strong>Departmental silos:</strong> Each department has its own budget, mandate, and leadership</li>
+            <li><strong>Contracting out:</strong> Problems are outsourced to consultants</li>
+            <li><strong>Blame avoidance:</strong> Responsibility is diffused to avoid blame</li>
+            <li><strong>Complexity:</strong> The system is so complex that no one understands it</li>
+        </ul>
+
+        <h2>III. The Consequences</h2>
+        <ul>
+            <li><strong>No accountability:</strong> When something fails, no one is responsible</li>
+            <li><strong>No learning:</strong> Failures are repeated because no one owns them</li>
+            <li><strong>No delivery:</strong> Problems are passed, not solved</li>
+            <li><strong>No trust:</strong> Citizens see a system that cannot deliver</li>
+        </ul>
+
+        <h2>IV. The GL Framework Diagnosis</h2>
+        <p>The GL Framework measures governance legitimacy: <strong style="font-family:monospace;">GL = (Fs × Vn) / (Pd × Cf)</strong>. Drawer civilization produces low GL because:</p>
+        <ul>
+            <li><strong>Fs (Flow Success):</strong> Problems are never solved</li>
+            <li><strong>Vn (Strategic Value):</strong> The system optimizes for fragmentation — not outcomes</li>
+            <li><strong>Pd (Pain Duration):</strong> Citizens wait while drawers pass responsibility</li>
+            <li><strong>Cf (Cognitive Friction):</strong> The system is designed to be incomprehensible</li>
+        </ul>
+
+        <div class="highlight-box">
+            <p><strong>Drawer civilization is not a failure of implementation. It is a structural design — designed to prevent accountability. To govern, we must dismantle the drawers.</strong></p>
+        </div>
+
+        <a class="back-home" href="index.html">&larr; Back to Home</a>
+
+        <!-- ===== 英文導航 ===== -->
+        <div class="nav-series">
+            <div class="lang-en active">
+                <a href="infrastructure-democracy-lies.html#en">← Infrastructure and the Lies of Democracy</a>
+                <a href="who-walked-away-with-the-value.html#en">Who Walked Away with the Value? →</a>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            <span>◆</span> GL Framework · Methodology & Policy Series · Dismantling Drawer Civilization <span>◆</span>
+        </div>
     </div>
-  </div>
-</div>
 
-<!-- ===== 简体中文 ===== -->
-<div class="lb page" data-lang="cn">
-  <div class="article-container">
-    <a href="index.html" class="back-link">← 返回所有文章</a>
-    <div class="article-eyebrow">📚 书籍摘录 · 结构性批判</div>
-    <h1 class="article-title">拆掉抽屉文明</h1>
-    <div class="article-subtitle">从分类陷阱到人类网络</div>
-    <div class="article-meta">徐萍 · 2025 · 阅读时间约 15 分钟 <span class="book-badge">📖 新书</span></div>
+    <!-- ============================================================ -->
+    <!-- 繁體中文 -->
+    <!-- ============================================================ -->
+    <div id="lang-tw" class="lang-section">
+        <span class="series-badge">方法論與政策系列 · 第 6 篇，共 7 篇</span>
+        <h1>拆解抽屜文明</h1>
+        <div class="subhead">對現代系統如何碎片化責任的結構性批判</div>
 
-    <!-- ★★★ PDF 下载按钮 — 直接连结，确保下载 ★★★ -->
-    <a href="dismantling-drawer-civilization.pdf" class="pdf-download-btn" target="_blank" download>
-      <span class="icon">📥</span> 下载全书 PDF
-    </a>
+        <div class="highlight-box">
+            <p>📐 <strong>結構性事實：</strong> 現代系統將責任碎片化為抽屜。每個抽屜都是別人的問題。結果是一個<strong>每個人都有責任——卻沒有人真正負責</strong>的系統。</p>
+        </div>
 
-    <div class="article-body">
-      <p>我们生活在一个为管理复杂性而设计的世界，但正因如此，它牺牲了人性。围绕我们的系统——社福、医疗、教育、官僚体系、国际机构——看似中立且理性，实则遵循同一种逻辑：<strong>抽屉</strong>。</p>
-      <p><strong>抽屉文明</strong>不是阴谋。没有神秘精英坐在控制室决定你的命运。</p>
-      <blockquote>「抽屉越精致，人越容易掉进缝隙。」</blockquote>
-      <h3>📦 抽屉的诞生——分类如何成为统治工具</h3>
-      <ul>
-        <li><strong>分类优先</strong></li>
-        <li><strong>格式化处理</strong></li>
-        <li><strong>责任推卸</strong></li>
-      </ul>
-      <h3>🌍 抽屉文明的全球样本</h3>
-      <h3>🎭 幻觉一——「分类完成等于问题解决」</h3>
-      <h3>⚖️ 幻觉二——「制度是中立的」</h3>
-      <h3>🧠 幻觉三——「个人失败解释一切」</h3>
-      <h3>💀 慢性谋杀——经济绝境与心理崩坏</h3>
-      <h3>🧱 身体与社会的崩坏</h3>
-      <div class="principle-grid">
-        <div class="principle-card"><div class="num">原则一</div><h4>连结优先，超越分类</h4></div>
-        <div class="principle-card"><div class="num">原则二</div><h4>承担责任，拒绝推卸</h4></div>
-        <div class="principle-card"><div class="num">原则三</div><h4>即时支援，超越资格审核</h4></div>
-        <div class="principle-card"><div class="num">原则四</div><h4>贡献验证，取代资格垄断</h4></div>
-        <div class="principle-card" style="grid-column: 1 / -1;"><div class="num">原则五</div><h4>财务主权</h4></div>
-      </div>
-      <h3>🗺️ 实施路线图——三阶段拆解抽屉</h3>
-      <div class="divider"></div>
-      <div class="conclusion">
-        <p style="font-weight:600; color:#fff; font-size:1.1rem;">🔥 结语：烧掉抽屉，飞起来</p>
-        <p>抽屉文明正在结束。不是轰然一声，也不是道德说教，而是因为它无法保障生命、机会与尊严的累积失败，悄然瓦解。</p>
-        <p style="margin-top:0.8rem;"><strong>烧掉抽屉。飞起来。</strong></p>
-      </div>
-      <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid var(--dim);">
-        <p style="font-size:0.75rem; color:var(--sub); font-family:var(--mono);">© 2025 徐萍 · 《拆掉抽屉文明》 · 版权所有</p>
-      </div>
+        <h2>一、什麼是抽屜文明？</h2>
+        <p>抽屜文明是將治理組織成孤島。每個孤島——部門、機構、部會——獨立運作。問題被從一個抽屜傳遞到另一個抽屜。沒有人擁有問題。沒有人對結果負責。</p>
+
+        <h2>二、碎片化機制</h2>
+        <ul>
+            <li><strong>部門孤島：</strong> 每個部門都有自己的預算、職權和領導層</li>
+            <li><strong>外包：</strong> 問題被外包給顧問</li>
+            <li><strong>逃避責任：</strong> 責任被分散以避免承擔</li>
+            <li><strong>複雜性：</strong> 系統如此複雜，以至於沒有人理解它</li>
+        </ul>
+
+        <h2>三、後果</h2>
+        <ul>
+            <li><strong>沒有問責：</strong> 當事情失敗時，沒有人負責</li>
+            <li><strong>沒有學習：</strong> 失敗被重複，因為沒有人擁有它們</li>
+            <li><strong>沒有交付：</strong> 問題被傳遞，而非解決</li>
+            <li><strong>沒有信任：</strong> 公民看到一個無法交付的系統</li>
+        </ul>
+
+        <h2>四、GL 框架診斷</h2>
+        <p>GL 框架衡量治理正當性：<strong style="font-family:monospace;">GL = (Fs × Vn) / (Pd × Cf)</strong>。抽屜文明產生低 GL，因為：</p>
+        <ul>
+            <li><strong>Fs（流程成功率）：</strong> 問題從未被解決</li>
+            <li><strong>Vn（戰略價值）：</strong> 系統為碎片化而非成果優化</li>
+            <li><strong>Pd（痛苦持續時間）：</strong> 公民在抽屜傳遞責任時等待</li>
+            <li><strong>Cf（認知摩擦）：</strong> 系統被設計為無法理解</li>
+        </ul>
+
+        <div class="highlight-box">
+            <p><strong>抽屜文明不是實施的失敗。它是結構性設計——設計來防止問責。要治理，我們必須拆解抽屜。</strong></p>
+        </div>
+
+        <a class="back-home" href="index.html">&larr; 回到首頁</a>
+
+        <!-- ===== 繁體中文導航 ===== -->
+        <div class="nav-series">
+            <div class="lang-zh active">
+                <a href="infrastructure-democracy-lies.html#tw">← 基礎建設與民主的謊言</a>
+                <a href="who-walked-away-with-the-value.html#tw">誰拿走了價值？ →</a>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            <span>◆</span> GL 框架 · 方法論與政策系列 · 拆解抽屜文明 <span>◆</span>
+        </div>
     </div>
-  </div>
-</div>
 
-<!-- ===== SPANISH ===== -->
-<div class="lb page" data-lang="es">
-  <div class="article-container">
-    <a href="index.html" class="back-link">← Volver a todos los artículos</a>
-    <div class="article-eyebrow">📚 Extracto del Libro · Crítica Estructural</div>
-    <h1 class="article-title">Desmantelando la Civilización del Cajón</h1>
-    <div class="article-subtitle">De las Trampas de Clasificación a las Redes Humanas</div>
-    <div class="article-meta">Ping Xu · 2025 · Lectura de ~15 min <span class="book-badge">📖 NUEVO LIBRO</span></div>
+    <!-- ============================================================ -->
+    <!-- 简体中文 -->
+    <!-- ============================================================ -->
+    <div id="lang-cn" class="lang-section">
+        <span class="series-badge">方法论与政策系列 · 第 6 篇，共 7 篇</span>
+        <h1>拆解抽屉文明</h1>
+        <div class="subhead">对现代系统如何碎片化责任的结构性批判</div>
 
-    <!-- ★★★ PDF descarga — enlace directo ★★★ -->
-    <a href="dismantling-drawer-civilization.pdf" class="pdf-download-btn" target="_blank" download>
-      <span class="icon">📥</span> Descargar PDF del Libro Completo
-    </a>
+        <div class="highlight-box">
+            <p>📐 <strong>结构性事实：</strong> 现代系统将责任碎片化为抽屉。每个抽屉都是别人的问题。结果是一个<strong>每个人都有责任——却没有人真正负责</strong>的系统。</p>
+        </div>
 
-    <div class="article-body">
-      <p>Vivimos en un mundo estructurado para gestionar la complejidad, pero al hacerlo, ha sacrificado la humanidad misma.</p>
-      <blockquote>«Cuanto más refinados son los cajones, más fácilmente caen las personas a través de ellos.」</blockquote>
-      <h3>📦 El Nacimiento de los Cajones</h3>
-      <h3>🌍 Muestras Globales</h3>
-      <h3>🎭 Ilusión Uno</h3>
-      <h3>⚖️ Ilusión Dos</h3>
-      <h3>🧠 Ilusión Tres</h3>
-      <h3>💀 Asesinato Crónico</h3>
-      <h3>🧱 Colapso Físico y Social</h3>
-      <div class="principle-grid">
-        <div class="principle-card"><div class="num">PRINCIPIO 1</div><h4>Conexión sobre Clasificación</h4></div>
-        <div class="principle-card"><div class="num">PRINCIPIO 2</div><h4>Responsabilidad sobre Evasión</h4></div>
-        <div class="principle-card"><div class="num">PRINCIPIO 3</div><h4>Apoyo Inmediato sobre Demoras</h4></div>
-        <div class="principle-card"><div class="num">PRINCIPIO 4</div><h4>Contribución sobre Cumplimiento</h4></div>
-        <div class="principle-card" style="grid-column: 1 / -1;"><div class="num">PRINCIPIO 5</div><h4>Soberanía Financiera</h4></div>
-      </div>
-      <h3>🗺️ Hoja de Ruta</h3>
-      <div class="divider"></div>
-      <div class="conclusion">
-        <p style="font-weight:600; color:#fff; font-size:1.1rem;">🔥 Conclusión: Quemar los Cajones, Volar</p>
-        <p>La civilización del cajón está terminando. No con un estruendo, sino silenciosamente, a través del fracaso acumulativo para salvaguardar la vida, la oportunidad y la dignidad.</p>
-        <p style="margin-top:0.8rem;"><strong>Quema los cajones. Vuela.</strong></p>
-      </div>
-      <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid var(--dim);">
-        <p style="font-size:0.75rem; color:var(--sub); font-family:var(--mono);">© 2025 Ping Xu · Desmantelando la Civilización del Cajón · Todos los derechos reservados.</p>
-      </div>
+        <h2>一、什么是抽屉文明？</h2>
+        <p>抽屉文明是将治理组织成孤岛。每个孤岛——部门、机构、部会——独立运作。问题被从一个抽屉传递到另一个抽屉。没有人拥有问题。没有人对结果负责。</p>
+
+        <h2>二、碎片化机制</h2>
+        <ul>
+            <li><strong>部门孤岛：</strong> 每个部门都有自己的预算、职权和领导层</li>
+            <li><strong>外包：</strong> 问题被外包给顾问</li>
+            <li><strong>逃避责任：</strong> 责任被分散以避免承担</li>
+            <li><strong>复杂性：</strong> 系统如此复杂，以至于没有人理解它</li>
+        </ul>
+
+        <h2>三、后果</h2>
+        <ul>
+            <li><strong>没有问责：</strong> 当事情失败时，没有人负责</li>
+            <li><strong>没有学习：</strong> 失败被重复，因为没有人拥有它们</li>
+            <li><strong>没有交付：</strong> 问题被传递，而非解决</li>
+            <li><strong>没有信任：</strong> 公民看到一个无法交付的系统</li>
+        </ul>
+
+        <h2>四、GL 框架诊断</h2>
+        <p>GL 框架衡量治理正当性：<strong style="font-family:monospace;">GL = (Fs × Vn) / (Pd × Cf)</strong>。抽屉文明产生低 GL，因为：</p>
+        <ul>
+            <li><strong>Fs（流程成功率）：</strong> 问题从未被解决</li>
+            <li><strong>Vn（战略价值）：</strong> 系统为碎片化而非成果优化</li>
+            <li><strong>Pd（痛苦持续时间）：</strong> 公民在抽屉传递责任时等待</li>
+            <li><strong>Cf（认知摩擦）：</strong> 系统被设计为无法理解</li>
+        </ul>
+
+        <div class="highlight-box">
+            <p><strong>抽屉文明不是实施的失败。它是结构性设计——设计来防止问责。要治理，我们必须拆解抽屉。</strong></p>
+        </div>
+
+        <a class="back-home" href="index.html">&larr; 回到首页</a>
+
+        <!-- ===== 简体中文导航 ===== -->
+        <div class="nav-series">
+            <div class="lang-zh active">
+                <a href="infrastructure-democracy-lies.html#cn">← 基础设施建设与民主的谎言</a>
+                <a href="who-walked-away-with-the-value.html#cn">谁拿走了价值？ →</a>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            <span>◆</span> GL 框架 · 方法论与政策系列 · 拆解抽屉文明 <span>◆</span>
+        </div>
     </div>
-  </div>
-</div>
 
-<!-- ===== FOOTER ===== -->
-<div class="footer">
-  <span>© 2026 GFI Flow Intelligence · <a href="index.html">Home</a> · <a href="#">GL Framework</a></span>
-  <div class="wechat-id" style="margin-top:6px;">WeChat: <span style="color:rgba(159,232,112,0.3);">GFI_Flow</span></div>
+    <!-- ============================================================ -->
+    <!-- 西班牙文 -->
+    <!-- ============================================================ -->
+    <div id="lang-es" class="lang-section">
+        <span class="series-badge">Serie de Metodología y Políticas · Parte 6 de 7</span>
+        <h1>Desmantelando la Civilización del Cajón</h1>
+        <div class="subhead">Una Crítica Estructural de Cómo los Sistemas Modernos Fragmentan la Responsabilidad</div>
+
+        <div class="highlight-box">
+            <p>📐 <strong>Hecho estructural:</strong> Los sistemas modernos fragmentan la responsabilidad en cajones. Cada cajón es problema de otro. El resultado es un sistema en el que <strong>todos son responsables — y nadie rinde cuentas</strong>.</p>
+        </div>
+
+        <h2>I. ¿Qué es la Civilización del Cajón?</h2>
+        <p>La civilización del cajón es la organización de la gobernanza en silos. Cada silo — departamento, agencia, ministerio — opera de forma independiente. Los problemas se pasan de un cajón a otro. Nadie es dueño del problema. Nadie rinde cuentas por el resultado.</p>
+
+        <h2>II. El Mecanismo de Fragmentación</h2>
+        <ul>
+            <li><strong>Silos departamentales:</strong> Cada departamento tiene su propio presupuesto, mandato y liderazgo</li>
+            <li><strong>Subcontratación:</strong> Los problemas se externalizan a consultores</li>
+            <li><strong>Evasión de culpas:</strong> La responsabilidad se difunde para evitar culpas</li>
+            <li><strong>Complejidad:</strong> El sistema es tan complejo que nadie lo entiende</li>
+        </ul>
+
+        <h2>III. Las Consecuencias</h2>
+        <ul>
+            <li><strong>Sin rendición de cuentas:</strong> Cuando algo falla, nadie es responsable</li>
+            <li><strong>Sin aprendizaje:</strong> Los fracasos se repiten porque nadie los posee</li>
+            <li><strong>Sin entrega:</strong> Los problemas se pasan, no se resuelven</li>
+            <li><strong>Sin confianza:</strong> Los ciudadanos ven un sistema que no puede entregar</li>
+        </ul>
+
+        <h2>IV. El Diagnóstico del GL Framework</h2>
+        <p>El GL Framework mide la legitimidad gubernamental: <strong style="font-family:monospace;">GL = (Fs × Vn) / (Pd × Cf)</strong>. La civilización del cajón produce un GL bajo porque:</p>
+        <ul>
+            <li><strong>Fs (Éxito del Flujo):</strong> Los problemas nunca se resuelven</li>
+            <li><strong>Vn (Valor Estratégico):</strong> El sistema optimiza para la fragmentación — no para los resultados</li>
+            <li><strong>Pd (Duración del Dolor):</strong> Los ciudadanos esperan mientras los cajones pasan la responsabilidad</li>
+            <li><strong>Cf (Fricción Cognitiva):</strong> El sistema está diseñado para ser incomprensible</li>
+        </ul>
+
+        <div class="highlight-box">
+            <p><strong>La civilización del cajón no es un fracaso de implementación. Es un diseño estructural — diseñado para prevenir la rendición de cuentas. Para gobernar, debemos desmantelar los cajones.</strong></p>
+        </div>
+
+        <a class="back-home" href="index.html">&larr; Volver al Inicio</a>
+
+        <!-- ===== Navegación en español ===== -->
+        <div class="nav-series">
+            <div class="lang-es active">
+                <a href="infrastructure-democracy-lies.html#es">← Infraestructura y las Mentiras de la Democracia</a>
+                <a href="who-walked-away-with-the-value.html#es">¿Quién se Llevó el Valor? →</a>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            <span>◆</span> GL Framework · Serie de Metodología y Políticas · Desmantelando la Civilización del Cajón <span>◆</span>
+        </div>
+    </div>
+
 </div>
 
 <script>
-  document.querySelectorAll('.lb-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-      document.querySelectorAll('.lb-btn').forEach(b => b.classList.remove('on'));
-      this.classList.add('on');
-      document.querySelectorAll('.lb').forEach(p => p.classList.remove('active'));
-      document.querySelector('.lb[data-lang="' + this.dataset.lang + '"]').classList.add('active');
+    document.addEventListener('DOMContentLoaded', function() {
+        const buttons = document.querySelectorAll('.lang-switch button');
+        const sections = {
+            en: document.getElementById('lang-en'),
+            tw: document.getElementById('lang-tw'),
+            cn: document.getElementById('lang-cn'),
+            es: document.getElementById('lang-es')
+        };
+
+        function switchLang(lang) {
+            Object.keys(sections).forEach(key => {
+                if (sections[key]) sections[key].classList.remove('active');
+            });
+            if (sections[lang]) sections[lang].classList.add('active');
+
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
+
+            document.querySelectorAll('.nav-series .lang-zh, .nav-series .lang-en, .nav-series .lang-es').forEach(el => el.classList.remove('active'));
+            const navMap = { en: 'lang-en', tw: 'lang-zh', cn: 'lang-zh', es: 'lang-es' };
+            const navTarget = document.querySelector('.nav-series .' + navMap[lang]);
+            if (navTarget) navTarget.classList.add('active');
+        }
+
+        buttons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const lang = this.dataset.lang;
+                if (lang) switchLang(lang);
+            });
+        });
+
+        const params = new URLSearchParams(window.location.search);
+        const langParam = params.get('lang');
+        if (langParam === 'tw' || langParam === 'cn' || langParam === 'es') {
+            switchLang(langParam);
+        } else {
+            switchLang('en');
+        }
     });
-  });
 </script>
 
 </body>
