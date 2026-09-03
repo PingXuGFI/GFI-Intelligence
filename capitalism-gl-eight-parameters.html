@@ -3,491 +3,221 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>資本主義會讓人變蠢嗎？——GL框架八大參數結構診斷</title>
+    <title>資本主義會讓人變蠢嗎？｜GFI Flow Intelligence</title>
     <style>
-        /* 簡潔、乾淨、可讀性優先 */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            background: #f4f6f9;
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'PingFang SC', 'Microsoft YaHei', sans-serif;
-            padding: 2rem 1rem;
-            color: #0b1a2e;
-            line-height: 1.7;
-        }
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: #ffffff;
-            border-radius: 28px;
-            padding: 2.5rem 2.2rem;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.05);
-        }
-        .header {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.5rem;
-            gap: 1rem;
-        }
-        h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            border-left: 6px solid #b22234;
-            padding-left: 1.2rem;
-            color: #0b1a2e;
-        }
-        .lang-toggle {
-            display: flex;
-            gap: 0.5rem;
-            background: #eef2f6;
-            padding: 0.3rem;
-            border-radius: 60px;
-        }
-        .lang-btn {
-            border: none;
-            background: transparent;
-            padding: 0.4rem 1.2rem;
-            border-radius: 40px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-            color: #334155;
-        }
-        .lang-btn.active {
-            background: #0b1a2e;
-            color: white;
-        }
-        .lang-btn:hover:not(.active) {
-            background: #dce2ea;
-        }
-        .abstract-box {
-            background: #f5f8fc;
-            padding: 1.2rem 1.8rem;
-            border-radius: 18px;
-            margin: 1rem 0 2rem 0;
-            border-left: 5px solid #2563eb;
-        }
-        .lang-section {
-            display: none;
-        }
-        .lang-section.active {
-            display: block;
-        }
-        h2 {
-            font-size: 1.6rem;
-            font-weight: 600;
-            margin: 2rem 0 0.8rem 0;
-            padding-bottom: 0.3rem;
-            border-bottom: 2px solid #e8edf3;
-        }
-        h3 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin: 1.5rem 0 0.4rem 0;
-            color: #1a2a44;
-        }
-        p {
-            margin-bottom: 0.9rem;
-        }
-        ul {
-            margin: 0.6rem 0 1.2rem 1.8rem;
-        }
-        li {
-            margin-bottom: 0.4rem;
-        }
-
-        /* GL 參數表格 */
-        .gl-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.2rem 0 1.8rem 0;
-            font-size: 0.95rem;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-        }
-        .gl-table th {
-            background: #0b1a2e;
-            color: white;
-            font-weight: 600;
-            padding: 0.8rem 1rem;
-            text-align: left;
-        }
-        .gl-table td {
-            background: #fafbfc;
-            padding: 0.8rem 1rem;
-            border-bottom: 1px solid #e9edf2;
-            vertical-align: top;
-        }
-        .gl-table tr:last-child td {
-            border-bottom: none;
-        }
-        .gl-table .param-name {
-            font-weight: 700;
-            color: #0b1a2e;
-            white-space: nowrap;
-            width: 12%;
-        }
-        .gl-table .param-desc {
-            color: #334155;
-            width: 22%;
-        }
-        .gl-table .param-diagnosis {
-            color: #1a2a44;
-            width: 66%;
-        }
-        .gl-table .param-diagnosis strong {
-            color: #b22234;
-        }
-
-        .highlight-box {
-            background: #f8fafc;
-            padding: 1.2rem 1.6rem;
-            border-radius: 16px;
-            margin: 1.8rem 0;
-            border: 1px solid #e9edf2;
-        }
-        .footnote {
-            margin-top: 2.5rem;
-            font-size: 0.85rem;
-            color: #64748b;
-            background: #f8fafc;
-            padding: 1.2rem 1.8rem;
-            border-radius: 16px;
-            border: 1px solid #e2e8f0;
-        }
-
-        @media (max-width: 640px) {
-            .container { padding: 1.5rem 1rem; }
-            h1 { font-size: 1.5rem; padding-left: 0.8rem; }
-            .header { flex-direction: column; align-items: stretch; }
-            .lang-toggle { align-self: flex-start; }
-            .gl-table, .gl-table tbody, .gl-table tr, .gl-table td, .gl-table th {
-                display: block;
-                width: 100%;
-            }
-            .gl-table tr {
-                margin-bottom: 0.8rem;
-                border-bottom: 2px solid #dce2ea;
-                padding-bottom: 0.6rem;
-            }
-            .gl-table th {
-                display: none;
-            }
-            .gl-table td {
-                border: none;
-                padding: 0.3rem 0.6rem;
-                background: transparent;
-            }
-            .gl-table .param-name {
-                font-weight: 700;
-                font-size: 1rem;
-                padding-top: 0.6rem;
-            }
-            .gl-table .param-desc {
-                font-size: 0.9rem;
-                color: #475569;
-            }
-            .gl-table .param-diagnosis {
-                font-size: 0.95rem;
-            }
-        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:#f7f5f0;color:#1e1e2a;font-family:'Georgia','Times New Roman',serif;line-height:1.7;padding:2rem 1rem}
+        .container{max-width:960px;margin:0 auto;background:#fff;padding:2.5rem 2.8rem;box-shadow:0 8px 24px rgba(0,0,0,0.06);border-radius:8px}
+        h1{font-size:2.4rem;font-weight:700;letter-spacing:-0.02em;line-height:1.2;margin-bottom:.25rem;color:#0b1a2e}
+        .subhead{font-size:1.1rem;color:#4a4a5a;border-left:4px solid #b31b1b;padding-left:1.2rem;margin:.8rem 0 1.8rem 0;font-style:italic}
+        .lang-switch{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:2rem;border-bottom:1px solid #e0dcd5;padding-bottom:.8rem}
+        .lang-switch button{background:none;border:1px solid #ccc;padding:.3rem 1rem;border-radius:30px;font-size:.8rem;font-weight:600;color:#2a2a3a;cursor:pointer;transition:.2s}
+        .lang-switch button.active{background:#0b1a2e;color:#fff;border-color:#0b1a2e}
+        .lang-switch button:hover{background:#e0dcd5}
+        .lang-section{display:none}.lang-section.active{display:block}
+        h2{font-size:1.8rem;margin:2.2rem 0 1rem 0;color:#0b1a2e;border-bottom:2px solid #eae5dc;padding-bottom:.3rem}
+        h3{font-size:1.3rem;margin:1.8rem 0 .8rem 0;color:#1f2c3f}
+        p{margin-bottom:1.1rem}
+        ul,ol{margin:.5rem 0 1.2rem 2rem}
+        li{margin-bottom:.3rem}
+        .gl-block{background:#f3f1ec;padding:1.4rem 1.8rem;border-radius:6px;margin:1.8rem 0;border-left:6px solid #b31b1b}
+        .gl-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:1.2rem 0}
+        .gl-item{background:#fff;padding:.8rem 1.2rem;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,0.04);border-top:3px solid #b31b1b}
+        .gl-item strong{display:block;font-size:.9rem;color:#b31b1b;text-transform:uppercase;letter-spacing:.5px}
+        .nav-series{margin-top:2.8rem;padding-top:1.8rem;border-top:2px solid #e0dcd5;display:flex;flex-wrap:wrap;justify-content:space-between;gap:.8rem}
+        .nav-series a{color:#0b1a2e;text-decoration:none;font-weight:600;border:1px solid #ccc;padding:.4rem 1.2rem;border-radius:30px;font-size:.85rem;transition:.2s;background:#fff}
+        .nav-series a:hover{background:#0b1a2e;color:#fff;border-color:#0b1a2e}
+        .nav-series .lang-zh,.nav-series .lang-en,.nav-series .lang-cn{display:none;width:100%;justify-content:space-between;gap:.8rem;flex-wrap:wrap}
+        .nav-series .lang-zh.active,.nav-series .lang-en.active,.nav-series .lang-cn.active{display:flex}
+        .back-home{display:inline-block;margin-top:1.5rem;font-weight:600;color:#0b1a2e;text-decoration:none;border-bottom:2px solid #b31b1b;padding-bottom:.1rem}
+        .back-home:hover{color:#b31b1b}
+        .footer-note{margin-top:2.5rem;font-size:.85rem;color:#6a6a7a;border-top:1px solid #e0dcd5;padding-top:1.5rem;text-align:center}
+        .footer-note .lang-zh,.footer-note .lang-en,.footer-note .lang-cn{display:none}
+        .footer-note .lang-zh.active,.footer-note .lang-en.active,.footer-note .lang-cn.active{display:block}
+        .tag{display:inline-block;background:#eae5dc;padding:.2rem .9rem;border-radius:30px;font-size:.75rem;font-weight:600;color:#1f2c3f;letter-spacing:.3px;margin-right:.4rem}
+        @media(max-width:700px){.container{padding:1.5rem}h1{font-size:1.8rem}.gl-grid{grid-template-columns:1fr}.nav-series .lang-zh.active,.nav-series .lang-en.active,.nav-series .lang-cn.active{flex-direction:column;align-items:center}}
     </style>
 </head>
 <body>
-<div class="container">
+<div class="container" id="top">
 
-    <!-- 標題＋語言切換 -->
-    <div class="header">
-        <h1>資本主義會讓人變蠢嗎？<br><span style="font-size:1.2rem; font-weight:400; color:#475569;">—— GL 框架八大參數結構診斷</span></h1>
-        <div class="lang-toggle">
-            <button class="lang-btn active" data-lang="zh">中文</button>
-            <button class="lang-btn" data-lang="en">English</button>
+    <div class="lang-switch">
+        <button class="active" data-lang="en">English</button>
+        <button data-lang="tw">繁體中文</button>
+        <button data-lang="cn">简体中文</button>
+    </div>
+
+    <!-- ============== ENGLISH ============== -->
+    <div id="lang-en" class="lang-section active">
+        <h1>Does Capitalism Make You Stupid?</h1>
+        <div class="subhead">A GL Framework Eight-Parameter Structural Diagnosis</div>
+        <p><span class="tag">GL Framework</span> <span class="tag">Structural Diagnosis</span> <span class="tag">8 Parameters</span></p>
+
+        <p>Capitalism claims to reward intelligence. But what if the system itself <strong>systematically degrades cognitive capacity</strong> — not at the individual level, but at the <strong>institutional</strong> level? What if the signals that drive decision-making are systematically misaligned with reality?</p>
+
+        <p>This is not a claim that capitalists are stupid. It is a claim that <strong>capitalism makes institutions stupid</strong> — by reallocating cognitive resources from public rationality to private signals, by destroying feedback loops, and by substituting profit for truth.</p>
+
+        <div class="gl-block"><p><strong>How capitalism systematically reallocates cognitive resources from 'public rationality' to 'capital signals' — parameter by parameter.</strong></p></div>
+        <div class="gl-grid">
+            <div class="gl-item"><strong>1. Waiting Cost</strong> Markets are told to wait for the "invisible hand" to self-correct. But the hand is slow, and the cost of waiting is borne by those who cannot afford to wait — the poor, the sick, the vulnerable.</div>
+            <div class="gl-item"><strong>2. Repetition Cost</strong> Competing firms duplicate R&D, marketing, and infrastructure. The system rewards the winner, but the losers' costs are socialized. The repetition is not efficient — it is wasteful.</div>
+            <div class="gl-item"><strong>3. Collapse Cost</strong> Financial crises, supply chain failures, climate disasters — capitalism has no built-in shock absorbers. Collapse is not a bug; it is a feature of the cycle.</div>
+            <div class="gl-item"><strong>4. Information Asymmetry</strong> Capitalists hoard information. Markets are opaque. The public is denied the data needed to make rational decisions. The asymmetry is structural — not accidental.</div>
+            <div class="gl-item"><strong>5. Psychological Cost</strong> Anxiety, precarity, and debt are not side effects. They are <strong>incentive mechanisms</strong> — designed to keep workers desperate and compliant.</div>
+            <div class="gl-item"><strong>6. Opportunity Cost</strong> The future that never happens — because the payback period is too long, the risk too high, the profit too low. Capitalism discounts the future at a rate that kills it.</div>
+            <div class="gl-item"><strong>7. Transfer Pathways</strong> Value flows upward. From workers to shareholders, from the public to the private, from the many to the few. The transfer is structural, not accidental.</div>
+            <div class="gl-item"><strong>8. Closure Intensity</strong> The capitalist class captures the state, the media, and the academy. The loop is closed. Dissent is marginalized. The system reproduces itself.</div>
+        </div>
+
+        <h2>The Chinese Countermodel: Cognitive Resilience</h2>
+        <p>China does not eliminate capitalism. It <strong>subordinates</strong> it. Markets exist, but they are not the source of truth. The state retains the capacity to override market signals when they conflict with long-term social welfare. This is not "state capitalism" — it is <strong>cognitive resilience</strong>.</p>
+
+        <h2>Conclusion: Stupidity Is Not Individual — It Is Institutional</h2>
+        <p>Capitalism does not make individuals stupid. It makes <strong>institutions</strong> stupid — by misaligning incentives, destroying feedback loops, and privileging short-term profit over long-term survival. The diagnosis is not moral. It is <strong>structural</strong>.</p>
+
+        <div style="margin-top:2rem;background:#f3f1ec;padding:1rem 1.5rem;border-radius:6px;"><p><strong>GL Framework Series</strong> · This article is part of the GFI structural diagnosis collection.</p></div>
+
+        <a class="back-home" href="index.html">&larr; Back to Home</a>
+
+        <div class="nav-series">
+            <div class="lang-en active">
+                <a href="abundance-fallacy.html">← The Abundance Fallacy</a>
+                <a href="iran-war-gl-framework.html">The Iran War →</a>
+            </div>
         </div>
     </div>
 
-    <!-- 摘要 -->
-    <div class="abstract-box lang-section active" id="abstract-zh">
-        <strong>摘要</strong><br>
-        資本主義制度在創造財富的同時，是否也在系統性地削弱人類的認知能力？本文以 <strong>GL（治理正當性）框架</strong> 的八大參數——等待成本、重複成本、崩潰成本、信息不對稱成本、心理成本、機會成本、轉移路徑、閉環程度——對資本主義進行結構性診斷。診斷結果顯示：資本主義並非讓人「變笨」，而是透過制度設計，將認知資源從「公共理性」轉移至「資本信號」，從而產生系統性的智力退化。
-    </div>
-    <div class="abstract-box lang-section" id="abstract-en">
-        <strong>Abstract</strong><br>
-        Does capitalism systematically undermine human cognitive capacity while creating wealth? This article conducts a structural diagnosis of capitalism using the <strong>GL (Governance Legitimacy) Framework</strong> and its eight parameters — Waiting Cost, Repetition Cost, Collapse Cost, Information Asymmetry Cost, Psychological Cost, Opportunity Cost, Transfer Pathways, and Closure Degree. The diagnosis reveals that capitalism does not simply “make people stupid,” but rather, through institutional design, reallocates cognitive resources from “public rationality” to “capital signals,” resulting in systematic intellectual regression.
-    </div>
+    <!-- ============== 繁體中文 ============== -->
+    <div id="lang-tw" class="lang-section">
+        <h1>資本主義會讓人變蠢嗎？</h1>
+        <div class="subhead">GL框架八大參數結構診斷</div>
+        <p><span class="tag">GL 框架</span> <span class="tag">結構性診斷</span> <span class="tag">八大參數</span></p>
 
-    <!-- =================== 中文內容 =================== -->
-    <div class="lang-section active" id="content-zh">
+        <p>資本主義聲稱獎勵智慧。但如果這個系統本身<strong>系統性地退化認知能力</strong>——不是個人層面，而是<strong>制度</strong>層面呢？如果驅動決策的信號系統性地與現實脫節呢？</p>
 
-        <h2>一、問題的提出</h2>
-        <p>「資本主義會讓人變蠢嗎？」這不是一個修辭問題，而是一個可被檢驗的結構性命題。</p>
-        <p>過去半個世紀，全球平均智商（IQ）在已開發國家出現 <strong>「弗林效應」逆轉</strong>（Flynn Effect reversal），同時，注意力持續時間縮短、批判性思維能力下降、陰謀論與認知偏誤盛行。這些現象與資本主義的擴張同步發生，但極少被歸因於「制度設計」本身。</p>
-        <p>本文放棄文化或道德批判，改用 <strong>GL 框架的八大參數</strong>，對資本主義進行一次解剖學級別的結構診斷。</p>
+        <p>這不是說資本家是愚蠢的。這是說<strong>資本主義使制度變蠢</strong>——透過將認知資源從公共理性重新分配給私人信號，透過破壞反饋迴路，以及用利潤取代真理。</p>
 
-        <h2>二、GL 框架八大參數結構診斷</h2>
-        <p>以下表格逐項診斷資本主義如何透過制度設計，系統性地影響人類認知能力：</p>
-
-        <table class="gl-table">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>參數名稱</th>
-                    <th>參數說明</th>
-                    <th>資本主義診斷</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td class="param-name">等待成本</td>
-                    <td class="param-desc">制度讓人民承受的不必要延誤</td>
-                    <td class="param-diagnosis">
-                        <strong>高度剝奪：</strong> 資本主義將「耐心」金融化——等待被轉化為利息、期權與違約風險。個人被迫將認知資源投入「最佳化等待策略」（如何時買房、何時換工作），而非長期思考。等待成本過高，導致大腦偏好短期獎勵，削弱前瞻性思維。
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td class="param-name">重複成本</td>
-                    <td class="param-desc">因制度設計而重複投入的資源與勞動</td>
-                    <td class="param-diagnosis">
-                        <strong>認知消耗：</strong> 現代職場中，大量工作屬於「低認知附加值的重複任務」——填表、回覆郵件、應付審計、重複會議。這些重複勞動不產生新知識，卻佔據了可用於深度思考的認知頻寬。重複成本越高，深度學習與創造性思維的空間就越小。
-                    </td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td class="param-name">崩潰成本</td>
-                    <td class="param-desc">制度失靈時造成的系統性災難</td>
-                    <td class="param-diagnosis">
-                        <strong>創傷記憶：</strong> 2008 年金融海嘯、2020 年供應鏈崩潰、2022–2023 年銀行倒閉潮——每一次資本主義的系統性崩潰，都對經歷者造成「認知創傷」。人們開始相信「任何系統都不可靠」，從而放棄長期規劃，轉向防禦性、低風險、低思考強度的生存策略。
-                    </td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td class="param-name">信息不對稱成本</td>
-                    <td class="param-desc">知識與資訊被壟斷造成的權力失衡</td>
-                    <td class="param-diagnosis">
-                        <strong>核心病灶：</strong> 資本主義的利潤核心來自信息不對稱——賣方比買方知道更多、雇主比雇員知道更多、平台比用戶知道更多。這導致普通人的「認知校準」失敗：他們無法根據真實訊息做決策，只能依賴「信號」（品牌、價格、排名），而信號本身是資本操控的結果。資訊不對稱成本直接削弱了公共判斷力。
-                    </td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td class="param-name">心理成本</td>
-                    <td class="param-desc">制度對人民施加的恐懼、焦慮與壓力</td>
-                    <td class="param-diagnosis">
-                        <strong>認知耗竭：</strong> 資本主義社會中，生存焦慮（失業、房貸、醫療）與比較焦慮（社會地位、消費競爭）持續消耗心理能量。根據「認知頻寬」理論（Mullainathan & Shafir），貧窮與焦慮會大幅降低有效智商。心理成本長期居高不下，等於對全民進行慢性的認知減損。
-                    </td>
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td class="param-name">機會成本</td>
-                    <td class="param-desc">因制度限制而從未發生的創新與可能性</td>
-                    <td class="param-diagnosis">
-                        <strong>看不見的智力：</strong> 資本主義將創新定義為「可獲利的創新」，因此大量無利可圖但具有公共價值的思考（如基礎科學、長期生態規劃、非商品化的藝術）被邊緣化。機會成本不是「浪費了金錢」，而是「浪費了人類的認知潛力」。這種浪費是隱性的，因此極少被納入制度批判。
-                    </td>
-                </tr>
-                <tr>
-                    <td>7</td>
-                    <td class="param-name">轉移路徑</td>
-                    <td class="param-desc">價值從公共領域向私人領域轉移的機制</td>
-                    <td class="param-diagnosis">
-                        <strong>知識私有化：</strong> 資本主義透過智慧財產權、專利、付費牆、演算法黑箱，將「公共知識」轉化為「私有資產」。這導致一般人接觸到的知識是被篩選、收費、甚至扭曲過的。當知識本身的流通被設限，公共認知能力自然下降——不是因為人們不想學，而是因為「值得學的東西被藏起來了」。
-                    </td>
-                </tr>
-                <tr>
-                    <td>8</td>
-                    <td class="param-name">閉環程度</td>
-                    <td class="param-desc">制度自我強化、排除外部挑戰的能力</td>
-                    <td class="param-diagnosis">
-                        <strong>認知封鎖：</strong> 資本主義形成了一個強大的閉環——資本決定媒體內容，媒體塑造公眾認知，公眾認知決定消費行為，消費行為反饋給資本。這個閉環將「批判性思考」排除在外，因為批判性思考不產生交易。閉環程度越高，系統就越難以自我修正，導致集體智力被鎖定在資本偏好的軌道上。
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        <h2>三、綜合診斷：不是「變笨」，而是「認知信號被資本接管」</h2>
-        <p>從上述八項診斷可以歸納出一個共同機制：</p>
-        <ul>
-            <li><strong>資本主義不直接降低智商，但它改變了「認知回報的結構」。</strong></li>
-            <li>在資本主義制度下，<strong>「能產生資本信號的思考」得到獎勵</strong>（如投資策略、消費決策、職場競爭），<strong>「不能產生資本信號的思考」被懲罰或忽略</strong>（如哲學思辨、生態倫理、歷史反思）。</li>
-            <li>長期下來，人們的大腦被訓練成「資本訊號接收器」，而非「真理探索器」。</li>
-            <li>這種轉變不是生物性的，而是<strong>制度性的認知重塑</strong>——這就是 GL 框架所診斷的「治理正當性失能」在認知層面的表現。</li>
-        </ul>
-
-        <div class="highlight-box">
-            <p style="margin:0;"><strong>🧠 結論</strong><br>
-            資本主義不會讓你「變笨」，但它會讓你「變得更擅長回應資本的信號，而非回應真理、正義或長期共善」。這不是個人的失敗，而是制度的設計結果。GL 框架的診斷價值就在於：<strong>把「個人愚蠢」重新歸因為「制度失能」</strong>，從而打開治理改革的可能空間。</p>
+        <div class="gl-block"><p><strong>資本主義如何系統性地將認知資源從「公共理性」轉移至「資本信號」——逐項參數檢視。</strong></p></div>
+        <div class="gl-grid">
+            <div class="gl-item"><strong>1. 等待成本</strong> 市場被教導等待「看不見的手」自動修正。但這隻手很慢，等待的成本由那些無法等待的人承擔——窮人、病人、弱勢者。</div>
+            <div class="gl-item"><strong>2. 重複成本</strong> 競爭企業重複研發、行銷與基礎設施。系統獎勵贏家，但輸家的成本被社會化。重複不是效率——它是浪費。</div>
+            <div class="gl-item"><strong>3. 崩潰成本</strong> 金融危機、供應鏈斷裂、氣候災難——資本主義沒有內建的緩衝機制。崩潰不是錯誤；它是循環的特徵。</div>
+            <div class="gl-item"><strong>4. 信息不對稱</strong> 資本家囤積資訊。市場是不透明的。公眾被剝奪了做出理性決策所需的數據。不對稱是結構性的——而非偶然的。</div>
+            <div class="gl-item"><strong>5. 心理成本</strong> 焦慮、不穩定與債務不是副作用。它們是<strong>誘因機制</strong>——設計來讓工人絕望且順從。</div>
+            <div class="gl-item"><strong>6. 機會成本</strong> 從未發生的未來——因為回收期太長、風險太高、利潤太低。資本主義以殺死未來的速度貼現未來。</div>
+            <div class="gl-item"><strong>7. 轉移路徑</strong> 價值向上流動。從勞工流向股東，從公共流向私人，從多數流向少數。轉移是結構性的，而非偶然的。</div>
+            <div class="gl-item"><strong>8. 閉環程度</strong> 資本階級捕獲了國家、媒體與學術界。迴路是封閉的。異議被邊緣化。系統自我複製。</div>
         </div>
 
-        <p style="font-size:0.9rem; color:#64748b;">* 本文為 GFI Flow Intelligence 的 GL 框架系列文章之一。未經授權不得商業使用，歡迎學術引用。</p>
+        <h2>中國的對照組：認知韌性</h2>
+        <p>中國並未消滅資本主義。它<strong>從屬化</strong>了它。市場存在，但它們不是真理的來源。國家保留了在市場信號與長期社會福利衝突時凌駕其上的能力。這不是「國家資本主義」——這是<strong>認知韌性</strong>。</p>
+
+        <h2>結論：愚蠢不是個人的——它是制度的</h2>
+        <p>資本主義不會讓個人變蠢。它讓<strong>制度</strong>變蠢——透過錯置誘因、破壞反饋迴路、以及將短期利潤置於長期生存之上。診斷不是道德的。它是<strong>結構性的</strong>。</p>
+
+        <div style="margin-top:2rem;background:#f3f1ec;padding:1rem 1.5rem;border-radius:6px;"><p><strong>GL框架系列</strong> · 本文為GFI結構性診斷文章之一。</p></div>
+
+        <a class="back-home" href="index.html">&larr; 返回首頁</a>
+
+        <div class="nav-series">
+            <div class="lang-zh active">
+                <a href="abundance-fallacy.html">← 豐盛的謬誤</a>
+                <a href="iran-war-gl-framework.html">伊朗戰爭 →</a>
+            </div>
+        </div>
     </div>
 
-    <!-- =================== 英文內容 =================== -->
-    <div class="lang-section" id="content-en">
+    <!-- ============== 简体中文 ============== -->
+    <div id="lang-cn" class="lang-section">
+        <h1>资本主义会让人变蠢吗？</h1>
+        <div class="subhead">GL框架八大参数结构诊断</div>
+        <p><span class="tag">GL 框架</span> <span class="tag">结构性诊断</span> <span class="tag">八大参数</span></p>
 
-        <h2>I. The Question</h2>
-        <p>“Does capitalism make people stupid?” This is not a rhetorical question, but a structural proposition that can be tested.</p>
-        <p>Over the past half-century, average IQ scores in developed countries have shown a <strong>reversal of the Flynn effect</strong>, while attention spans have shortened, critical thinking skills have declined, and conspiracy theories and cognitive biases have flourished. These trends have occurred in parallel with the expansion of capitalism, yet they are rarely attributed to “institutional design” itself.</p>
-        <p>This article abandons cultural or moral critiques, and instead applies the <strong>GL Framework's eight parameters</strong> to conduct an anatomical diagnosis of capitalism.</p>
+        <p>资本主义声称奖励智慧。但如果这个系统本身<strong>系统性地退化认知能力</strong>——不是个人层面，而是<strong>制度</strong>层面呢？如果驱动决策的信号系统性地与现实脱节呢？</p>
 
-        <h2>II. GL Eight-Parameter Structural Diagnosis</h2>
-        <p>The following table diagnoses, parameter by parameter, how capitalism systematically affects human cognitive capacity through institutional design:</p>
+        <p>这不是说资本家是愚蠢的。这是说<strong>资本主义使制度变蠢</strong>——透过将认知资源从公共理性重新分配给私人信号，透过破坏反馈回路，以及用利润取代真理。</p>
 
-        <table class="gl-table">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Parameter</th>
-                    <th>Description</th>
-                    <th>Diagnosis of Capitalism</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td class="param-name">Waiting Cost</td>
-                    <td class="param-desc">Unnecessary delays imposed by institutions</td>
-                    <td class="param-diagnosis">
-                        <strong>High deprivation:</strong> Capitalism financializes patience — waiting is converted into interest, options, and default risk. Individuals are forced to allocate cognitive resources to “optimizing waiting strategies” (e.g., when to buy a house, when to change jobs) rather than long-term thinking. High waiting costs bias the brain toward short-term rewards, weakening forward-looking cognition.
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td class="param-name">Repetition Cost</td>
-                    <td class="param-desc">Duplicated resources and labor due to institutional design</td>
-                    <td class="param-diagnosis">
-                        <strong>Cognitive drain:</strong> Much of modern work consists of “low-cognitive-added-value repetitive tasks” — form-filling, email replies, audit compliance, repetitive meetings. These tasks produce no new knowledge but consume cognitive bandwidth needed for deep thinking. The higher the repetition cost, the less room exists for deep learning and creative thinking.
-                    </td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td class="param-name">Collapse Cost</td>
-                    <td class="param-desc">Systemic catastrophe when institutions fail</td>
-                    <td class="param-diagnosis">
-                        <strong>Traumatic memory:</strong> The 2008 financial crisis, the 2020 supply chain collapse, the 2022–2023 banking failures — each systemic collapse of capitalism inflicts “cognitive trauma” on those who experience it. People come to believe that “no system is reliable,” abandoning long-term planning for defensive, low-risk, low-thinking-intensity survival strategies.
-                    </td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td class="param-name">Information Asymmetry Cost</td>
-                    <td class="param-desc">Power imbalance from monopolized knowledge and information</td>
-                    <td class="param-diagnosis">
-                        <strong>Core lesion:</strong> The profit engine of capitalism lies in information asymmetry — sellers know more than buyers, employers know more than employees, platforms know more than users. This causes “cognitive calibration” failure: ordinary people cannot make decisions based on real information, so they rely on “signals” (brands, prices, rankings), which are themselves manipulated by capital. Information asymmetry cost directly undermines public judgment.
-                    </td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td class="param-name">Psychological Cost</td>
-                    <td class="param-desc">Fear, anxiety, and stress imposed by institutions</td>
-                    <td class="param-diagnosis">
-                        <strong>Cognitive exhaustion:</strong> In capitalist societies, survival anxiety (unemployment, mortgage, healthcare) and comparison anxiety (status competition, consumerism) continuously drain psychological energy. According to cognitive bandwidth theory (Mullainathan & Shafir), poverty and anxiety significantly lower effective IQ. Sustained high psychological costs amount to chronic cognitive impairment for the entire population.
-                    </td>
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td class="param-name">Opportunity Cost</td>
-                    <td class="param-desc">Innovation and possibilities never realized due to institutional constraints</td>
-                    <td class="param-diagnosis">
-                        <strong>Invisible intelligence:</strong> Capitalism defines innovation as “profitable innovation,” thereby marginalizing unprofitable but publicly valuable thinking (e.g., basic science, long-term ecological planning, non-commodified art). The opportunity cost is not “wasted money,” but “wasted human cognitive potential.” This waste is invisible, and therefore seldom included in institutional critique.
-                    </td>
-                </tr>
-                <tr>
-                    <td>7</td>
-                    <td class="param-name">Transfer Pathways</td>
-                    <td class="param-desc">Mechanisms that shift value from public to private domains</td>
-                    <td class="param-diagnosis">
-                        <strong>Knowledge privatization:</strong> Capitalism transforms “public knowledge” into “private assets” through intellectual property, patents, paywalls, and algorithmic black boxes. As a result, the knowledge accessible to ordinary people is filtered, charged for, or even distorted. When knowledge circulation itself is constrained, public cognitive capacity naturally declines — not because people do not want to learn, but because “what is worth learning is hidden.”
-                    </td>
-                </tr>
-                <tr>
-                    <td>8</td>
-                    <td class="param-name">Closure Degree</td>
-                    <td class="param-desc">The system's ability to self-reinforce and exclude external challenges</td>
-                    <td class="param-diagnosis">
-                        <strong>Cognitive lock-in:</strong> Capitalism forms a powerful closed loop — capital determines media content, media shapes public perception, public perception determines consumption, consumption feeds back to capital. This loop excludes “critical thinking” because critical thinking does not generate transactions. The higher the closure degree, the harder it is for the system to self-correct, locking collective intelligence onto a trajectory preferred by capital.
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        <h2>III. Comprehensive Diagnosis: Not “Becoming Stupid,” but “Cognitive Signals Captured by Capital”</h2>
-        <p>From the eight diagnoses above, a common mechanism emerges:</p>
-        <ul>
-            <li><strong>Capitalism does not directly lower IQ, but it alters the “structure of cognitive returns.”</strong></li>
-            <li>Under capitalism, <strong>thinking that generates capital signals is rewarded</strong> (e.g., investment strategies, consumption decisions, workplace competition), while <strong>thinking that does not generate capital signals is punished or ignored</strong> (e.g., philosophical reasoning, ecological ethics, historical reflection).</li>
-            <li>Over time, brains are trained to become “capital-signal receivers” rather than “truth-seeking instruments.”</li>
-            <li>This transformation is not biological, but <strong>institutional cognitive reshaping</strong> — which is precisely the manifestation of “governance legitimacy failure” at the cognitive level, as diagnosed by the GL Framework.</li>
-        </ul>
-
-        <div class="highlight-box">
-            <p style="margin:0;"><strong>🧠 Conclusion</strong><br>
-            Capitalism does not “make you stupid,” but it does <strong>make you better at responding to capital signals than to truth, justice, or long-term common good</strong>. This is not a personal failure, but an institutional design outcome. The diagnostic value of the GL Framework lies in <strong>reclassifying “personal stupidity” as “institutional dysfunction,”</strong> thereby opening up possibilities for governance reform.</p>
+        <div class="gl-block"><p><strong>资本主义如何系统性地将认知资源从「公共理性」转移至「资本信号」——逐项参数检视。</strong></p></div>
+        <div class="gl-grid">
+            <div class="gl-item"><strong>1. 等待成本</strong> 市场被教导等待「看不见的手」自动修正。但这只手很慢，等待的成本由那些无法等待的人承担——穷人、病人、弱势者。</div>
+            <div class="gl-item"><strong>2. 重复成本</strong> 竞争企业重复研发、营销与基础设施。系统奖励赢家，但输家的成本被社会化。重复不是效率——它是浪费。</div>
+            <div class="gl-item"><strong>3. 崩溃成本</strong> 金融危机、供应链断裂、气候灾难——资本主义没有内建的缓冲机制。崩溃不是错误；它是循环的特征。</div>
+            <div class="gl-item"><strong>4. 信息不对称</strong> 资本家囤积信息。市场是不透明的。公众被剥夺了做出理性决策所需的数据。不对称是结构性的——而非偶然的。</div>
+            <div class="gl-item"><strong>5. 心理成本</strong> 焦虑、不稳定与债务不是副作用。它们是<strong>诱因机制</strong>——设计来让工人绝望且顺从。</div>
+            <div class="gl-item"><strong>6. 机会成本</strong> 从未发生的未来——因为回收期太长、风险太高、利润太低。资本主义以杀死未来的速度贴现未来。</div>
+            <div class="gl-item"><strong>7. 转移路径</strong> 价值向上流动。从劳工流向股东，从公共流向私人，从多数流向少数。转移是结构性的，而非偶然的。</div>
+            <div class="gl-item"><strong>8. 闭环程度</strong> 资本阶级捕获了国家、媒体与学术界。回路是封闭的。异议被边缘化。系统自我复制。</div>
         </div>
 
-        <p style="font-size:0.9rem; color:#64748b;">* This article is part of the GL Framework series by GFI Flow Intelligence. Not for commercial use without permission. Academic citation welcome.</p>
+        <h2>中国的对照组：认知韧性</h2>
+        <p>中国并未消灭资本主义。它<strong>从属化</strong>了它。市场存在，但它们不是真理的来源。国家保留了在市场信号与长期社会福利冲突时凌驾其上的能力。这不是「国家资本主义」——这是<strong>认知韧性</strong>。</p>
+
+        <h2>结论：愚蠢不是个人的——它是制度的</h2>
+        <p>资本主义不会让个人变蠢。它让<strong>制度</strong>变蠢——透过错置诱因、破坏反馈回路、以及将短期利润置于长期生存之上。诊断不是道德的。它是<strong>结构性的</strong>。</p>
+
+        <div style="margin-top:2rem;background:#f3f1ec;padding:1rem 1.5rem;border-radius:6px;"><p><strong>GL框架系列</strong> · 本文为GFI结构性诊断文章之一。</p></div>
+
+        <a class="back-home" href="index.html">&larr; 返回首页</a>
+
+        <div class="nav-series">
+            <div class="lang-cn active">
+                <a href="abundance-fallacy.html">← 丰盛的谬误</a>
+                <a href="iran-war-gl-framework.html">伊朗战争 →</a>
+            </div>
+        </div>
     </div>
 
-    <!-- 底部 -->
-    <div class="footnote">
-        <span style="font-weight:600;">📌 本文立場 · Position</span><br>
-        本分析採用 GL（治理正當性）框架，為 GFI Flow Intelligence 智庫平台的原創方法論。歡迎引用，轉載請註明出處。
-        <br><span style="font-size:0.85rem;">This analysis applies the GL (Governance Legitimacy) Framework, an original methodology of the GFI Flow Intelligence think tank. Please cite when referencing.</span>
+    <!-- ===== 頁尾（三語言） ===== -->
+    <div class="footer-note">
+        <div class="lang-en active">
+            GFI Flow Intelligence · Governance Legitimacy Framework · Structural Diagnosis Series<br/>
+            &copy; 2026 · Evidence, logic, and structural analysis of global governance
+        </div>
+        <div class="lang-zh">
+            GFI Flow Intelligence · 治理正當性框架 · 結構性診斷系列<br/>
+            &copy; 2026 · 本平台以證據、邏輯與結構性分析探討全球治理
+        </div>
+        <div class="lang-cn">
+            GFI Flow Intelligence · 治理正当性框架 · 结构性诊断系列<br/>
+            &copy; 2026 · 本平台以证据、逻辑与结构性分析探讨全球治理
+        </div>
     </div>
 
 </div>
 
 <script>
-    (function() {
-        const langBtns = document.querySelectorAll('.lang-btn');
-        const sections = {
-            zh: [
-                document.getElementById('abstract-zh'),
-                document.getElementById('content-zh')
-            ],
-            en: [
-                document.getElementById('abstract-en'),
-                document.getElementById('content-en')
-            ]
-        };
-
-        function switchLang(lang) {
-            langBtns.forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.dataset.lang === lang) {
-                    btn.classList.add('active');
-                }
-            });
-            document.querySelectorAll('.lang-section').forEach(el => {
-                el.classList.remove('active');
-            });
-            if (sections[lang]) {
-                sections[lang].forEach(el => {
-                    if (el) el.classList.add('active');
-                });
-            }
-        }
-
-        langBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                const lang = this.dataset.lang;
-                if (lang) switchLang(lang);
-            });
+    // 語言切換（含導航與頁尾同步）
+    document.querySelectorAll('.lang-switch button').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const lang = this.dataset.lang;
+            document.querySelectorAll('.lang-switch button').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            document.querySelectorAll('.lang-section').forEach(s => s.classList.remove('active'));
+            document.getElementById('lang-' + lang).classList.add('active');
+            // 導航同步
+            document.querySelectorAll('.nav-series .lang-zh, .nav-series .lang-en, .nav-series .lang-cn').forEach(el => el.classList.remove('active'));
+            const navTarget = document.querySelector('.nav-series .lang-' + lang);
+            if (navTarget) navTarget.classList.add('active');
+            // 頁尾同步
+            document.querySelectorAll('.footer-note .lang-zh, .footer-note .lang-en, .footer-note .lang-cn').forEach(el => el.classList.remove('active'));
+            const footerTarget = document.querySelector('.footer-note .lang-' + lang);
+            if (footerTarget) footerTarget.classList.add('active');
         });
+    });
 
-        const activeBtn = document.querySelector('.lang-btn.active');
-        if (activeBtn) {
-            const lang = activeBtn.dataset.lang;
-            if (lang) switchLang(lang);
-        } else {
-            switchLang('zh');
+    // 初始同步
+    document.addEventListener('DOMContentLoaded', function() {
+        const activeLang = document.querySelector('.lang-switch .active');
+        if (activeLang) {
+            const lang = activeLang.dataset.lang;
+            document.querySelectorAll('.nav-series .lang-zh, .nav-series .lang-en, .nav-series .lang-cn').forEach(el => el.classList.remove('active'));
+            const navTarget = document.querySelector('.nav-series .lang-' + lang);
+            if (navTarget) navTarget.classList.add('active');
+            document.querySelectorAll('.footer-note .lang-zh, .footer-note .lang-en, .footer-note .lang-cn').forEach(el => el.classList.remove('active'));
+            const footerTarget = document.querySelector('.footer-note .lang-' + lang);
+            if (footerTarget) footerTarget.classList.add('active');
         }
-    })();
+    });
 </script>
-
 </body>
 </html>
