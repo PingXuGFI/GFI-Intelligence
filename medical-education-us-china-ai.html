@@ -1,456 +1,299 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>U.S. Medical System · 美国医疗制度 · GL Framework</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="美國與中國的醫學教育：AI 世代落差 — How AI is exposing the structural divergence between U.S. and Chinese medical education." />
+    <title>美國與中國的醫學教育：AI 世代落差｜GFI Flow Intelligence</title>
+    <link rel="alternate" hreflang="zh-TW" href="https://gfiintel.com/medical-education-us-china-ai.html?lang=tw" />
+    <link rel="alternate" hreflang="zh-CN" href="https://gfiintel.com/medical-education-us-china-ai.html?lang=cn" />
+    <link rel="alternate" hreflang="en" href="https://gfiintel.com/medical-education-us-china-ai.html?lang=en" />
+    <link rel="alternate" hreflang="es" href="https://gfiintel.com/medical-education-us-china-ai.html?lang=es" />
+    <link rel="alternate" hreflang="x-default" href="https://gfiintel.com/medical-education-us-china-ai.html" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
     <style>
-        :root {
-            --bg: #0b1220;
-            --bg2: #0d1526;
-            --text: #f8fbff;
-            --muted: #c7d2e3;
-            --sub: #9fb0c8;
-            --dim: rgba(255,255,255,.06);
-            --green: #9FE870;
-            --blue: #7DD3FC;
-            --amber: #fbbf24;
-            --red: #f87171;
-            --serif: 'DM Serif Display', Georgia, serif;
-            --mono: 'DM Mono', monospace;
-            --sans: 'DM Sans', system-ui, sans-serif;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: var(--sans);
-            font-size: 15px;
-            line-height: 1.7;
-            padding: 2rem 1rem;
-        }
-        .container {
-            max-width: 960px;
-            margin: 0 auto;
-            background: rgba(255,255,255,0.02);
-            border: 1px solid var(--dim);
-            border-radius: 24px;
-            padding: 2.2rem 2.5rem;
-            backdrop-filter: blur(2px);
-        }
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--green);
-            text-decoration: none;
-            font-family: var(--mono);
-            font-size: 13px;
-            letter-spacing: 0.08em;
-            border: 1px solid rgba(159,232,112,0.3);
-            padding: 8px 18px;
-            border-radius: 40px;
-            transition: all 0.2s;
-            margin-bottom: 1.8rem;
-        }
-        .back-link:hover {
-            background: rgba(159,232,112,0.1);
-            border-color: var(--green);
-            transform: translateX(-4px);
-        }
-        .lang-bar {
-            display: flex;
-            justify-content: flex-end;
-            gap: 0.6rem;
-            margin-bottom: 2rem;
-            border-bottom: 1px solid var(--dim);
-            padding-bottom: 0.8rem;
-        }
-        .lang-btn {
-            background: transparent;
-            border: 1px solid rgba(255,255,255,0.15);
-            padding: 0.3rem 1.2rem;
-            border-radius: 30px;
-            font-size: 0.8rem;
-            font-family: var(--mono);
-            font-weight: 500;
-            color: var(--sub);
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .lang-btn:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
-        .lang-btn.active {
-            background: rgba(159,232,112,0.15);
-            border-color: var(--green);
-            color: var(--green);
-        }
-        .lang-content { display: none; animation: fade 0.3s ease; }
-        .lang-content.active { display: block; }
-        @keyframes fade { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
-
-        h1 {
-            font-size: 2.1rem;
-            font-family: var(--serif);
-            font-weight: 700;
-            letter-spacing: 0.02em;
-            margin-bottom: 0.5rem;
-            color: #fff;
-            border-left: 6px solid var(--amber);
-            padding-left: 1.2rem;
-        }
-        .subhead {
-            font-size: 1rem;
-            color: var(--sub);
-            margin-bottom: 2rem;
-            padding-left: 1.2rem;
-            border-left: 3px solid rgba(251,191,36,0.3);
-            font-style: italic;
-        }
-        h2 {
-            font-size: 1.4rem;
-            font-family: var(--serif);
-            margin-top: 2.2rem;
-            margin-bottom: 0.6rem;
-            color: #eaf6ff;
-            border-bottom: 1px dashed rgba(255,255,255,0.08);
-            padding-bottom: 0.3rem;
-        }
-        h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-top: 1.4rem;
-            margin-bottom: 0.4rem;
-            color: var(--muted);
-        }
-        p { margin-bottom: 1rem; color: var(--muted); text-align: justify; }
-        ul, ol { margin: 0.5rem 0 1rem 1.8rem; list-style-type: disc; color: var(--muted); }
-        li { margin-bottom: 0.3rem; }
-
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.2rem 0 1.5rem 0;
-            font-size: 0.85rem;
-            font-family: var(--mono);
-            background: rgba(255,255,255,0.02);
-            border-radius: 12px;
-            overflow: hidden;
-        }
-        .comparison-table th {
-            background: rgba(251,191,36,0.10);
-            color: var(--amber);
-            padding: 0.6rem 1rem;
-            text-align: left;
-            font-weight: 500;
-            letter-spacing: 0.04em;
-            border-bottom: 1px solid var(--dim);
-            font-size: 0.7rem;
-            text-transform: uppercase;
-        }
-        .comparison-table td {
-            padding: 0.6rem 1rem;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
-            vertical-align: top;
-            color: var(--muted);
-        }
-        .comparison-table tr:last-child td { border-bottom: none; }
-
-        .highlight-box {
-            background: rgba(251,191,36,0.05);
-            border-left: 4px solid var(--amber);
-            padding: 1.2rem 1.8rem;
-            margin: 1.5rem 0;
-            border-radius: 8px;
-        }
-        .highlight-box .big {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--amber);
-        }
-        .evidence-note {
-            background: rgba(125,211,252,0.04);
-            padding: 0.8rem 1.2rem;
-            border-radius: 6px;
-            margin: 0.5rem 0 1rem 0;
-            font-size: 0.85rem;
-            color: var(--sub);
-            border-left: 3px solid var(--blue);
-        }
-        .evidence-note strong { color: var(--blue); }
-        .warning-box {
-            background: rgba(248,113,113,0.06);
-            border-left: 4px solid var(--red);
-            padding: 1.2rem 1.8rem;
-            margin: 1.5rem 0;
-            border-radius: 8px;
-        }
-        .warning-box .big {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--red);
-        }
-
-        .conclusion-box {
-            background: rgba(255,255,255,0.03);
-            border-left: 4px solid var(--amber);
-            padding: 1.5rem 2rem;
-            margin-top: 2rem;
-            border-radius: 12px;
-        }
-        .conclusion-box h2 { border: none; margin-top:0; padding-top:0; }
-        .footnote {
-            font-size: 0.75rem;
-            color: var(--sub);
-            text-align: right;
-            margin-top: 2rem;
-            border-top: 1px solid var(--dim);
-            padding-top: 1rem;
-            font-style: italic;
-        }
-
-        @media (max-width: 640px) {
-            .container { padding: 1.2rem; }
-            h1 { font-size: 1.6rem; padding-left:0.8rem; }
-            h2 { font-size: 1.2rem; }
-            .lang-bar { justify-content: center; }
-            .comparison-table { font-size: 0.7rem; }
-            .comparison-table th, .comparison-table td { padding: 0.4rem 0.6rem; }
-            .highlight-box { padding: 0.8rem 1rem; }
-            .conclusion-box { padding: 1rem 1.2rem; }
-        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:#f5f0e8;color:#2d2a24;font-family:'DM Sans',system-ui,sans-serif;font-size:15px;line-height:1.8;padding:1.5rem 1rem}
+        .container{max-width:1020px;margin:0 auto}
+        .lang-switch{display:flex;gap:10px;margin-bottom:1.5rem;flex-wrap:wrap;justify-content:flex-end}
+        .lang-btn{font-family:'DM Mono',monospace;font-size:.7rem;padding:.3rem 1.2rem;border:1px solid rgba(60,50,40,.15);border-radius:20px;background:0 0;color:#6b5f4e;cursor:pointer;transition:all .2s}
+        .lang-btn:hover{border-color:#4a6b3d;color:#2d2a24}
+        .lang-btn.active{color:#3d6b2e;border-color:#3d6b2e;background:rgba(61,107,46,.08)}
+        .lang-block{display:none;animation:fadeIn .3s ease}
+        .lang-block.active{display:block}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+        .back-link{font-family:'DM Mono',monospace;font-size:.65rem;color:#3d6b2e;text-decoration:none;border-bottom:1px solid rgba(61,107,46,.2);padding-bottom:2px}
+        .back-link:hover{border-bottom-color:#3d6b2e}
+        h1{font-family:'DM Serif Display',Georgia,serif;font-size:2.2rem;color:#1f2a1a;margin-bottom:.2rem;line-height:1.2}
+        .subhead{font-family:'DM Mono',monospace;font-size:.75rem;color:#6b5f4e;letter-spacing:.06em;margin-bottom:.2rem}
+        .meta{font-family:'DM Mono',monospace;font-size:.65rem;color:#8a7e6a;border-bottom:1px solid rgba(60,50,40,.06);padding-bottom:1rem;margin-bottom:2rem}
+        h2{font-family:'DM Serif Display',Georgia,serif;font-size:1.4rem;color:#1f2a1a;margin:2.2rem 0 .8rem;border-left:4px solid #3d6b2e;padding-left:1rem}
+        h3{font-family:'DM Serif Display',Georgia,serif;font-size:1rem;color:#1f2a1a;margin:1.4rem 0 .4rem}
+        p{color:#4a4036;margin-bottom:.8rem;line-height:1.9}
+        .highlight{color:#3d6b2e;font-weight:500}
+        .highlight-blue{color:#4a7a6e;font-weight:500}
+        .highlight-red{color:#b33a3a;font-weight:500}
+        .insight-block{background:rgba(61,107,46,.06);border-left:4px solid #3d6b2e;padding:1rem 1.5rem;border-radius:0 8px 8px 0;margin:1.2rem 0}
+        .insight-block p{color:#2d2a24;margin-bottom:0;font-weight:450;font-size:.95rem}
+        .table-wrap{overflow-x:auto;border-radius:12px;border:1px solid rgba(60,50,40,.06);margin:1.2rem 0}
+        table{width:100%;border-collapse:collapse;font-family:'DM Mono',monospace;font-size:.65rem;min-width:480px}
+        th{text-align:left;padding:8px 10px;font-size:.5rem;letter-spacing:.08em;text-transform:uppercase;color:#8a7e6a;border-bottom:1px solid rgba(60,50,40,.06);font-weight:400;background:rgba(255,252,245,.3)}
+        td{padding:6px 10px;border-bottom:1px solid rgba(60,50,40,.03);color:#4a4036}
+        tr:hover td{background:rgba(255,252,245,.3)}
+        .conclusion-box{background:rgba(61,107,46,.06);border:1px solid rgba(61,107,46,.12);border-radius:12px;padding:1.2rem 1.8rem;margin-top:1.5rem}
+        .conclusion-box p{color:#1f2a1a;font-weight:450;font-size:.95rem;margin-bottom:.4rem}
+        .nav-series{margin-top:2.8rem;padding-top:1.8rem;border-top:2px solid rgba(60,50,40,.1);display:flex;flex-wrap:wrap;justify-content:space-between;gap:.8rem}
+        .nav-series a{color:#3d6b2e;text-decoration:none;font-weight:600;border:1px solid rgba(60,50,40,.15);padding:.4rem 1.2rem;border-radius:30px;font-size:.75rem;transition:.2s;background:rgba(255,252,245,.5);font-family:'DM Mono',monospace;letter-spacing:.02em}
+        .nav-series a:hover{background:#3d6b2e;color:#fff;border-color:#3d6b2e}
+        .nav-series .lang-zh,.nav-series .lang-en{display:none;width:100%;justify-content:space-between;gap:.8rem;flex-wrap:wrap}
+        .nav-series .lang-zh.active,.nav-series .lang-en.active{display:flex}
+        .series-badge{display:inline-block;font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.08em;text-transform:uppercase;color:#8a7e6a;background:rgba(60,50,40,.06);padding:.2rem .8rem;border-radius:20px;margin-bottom:.5rem}
+        .footer{text-align:center;padding:24px 20px 32px;font-family:'DM Mono',monospace;font-size:11px;color:#8a7e6a;border-top:1px solid rgba(60,50,40,.06);margin-top:2rem}
+        .footer .lang-zh,.footer .lang-en{display:none}
+        .footer .lang-zh.active,.footer .lang-en.active{display:block}
+        .footer a{color:#6b5f4e;text-decoration:none}
+        .footer a:hover{color:#1f2a1a}
+        .footer-links{display:flex;justify-content:center;gap:16px;margin-top:6px;flex-wrap:wrap}
+        @media(max-width:720px){h1{font-size:1.6rem}.nav-series .lang-zh.active,.nav-series .lang-en.active{flex-direction:column;align-items:center}}
     </style>
 </head>
 <body>
 <div class="container">
-    <a href="index.html" class="back-link">← 返回首页 / Back to Home</a>
 
-    <div class="lang-bar">
-        <button class="lang-btn" data-lang="zh">中文</button>
-        <button class="lang-btn active" data-lang="en">English</button>
+    <!-- 語言切換 -->
+    <div class="lang-switch">
+        <button class="lang-btn active" data-lang="zh">中文</button>
+        <button class="lang-btn" data-lang="en">English</button>
     </div>
 
-    <!-- ========== ENGLISH ========== -->
-    <div id="en" class="lang-content active">
-        <h1>The Institutional Crisis of U.S. Healthcare</h1>
-        <div class="subhead">— Medical Education, Debt Lock‑in, and the Trust Deficit · A GL Framework Diagnosis</div>
+    <!-- ============================================================ -->
+    <!-- 中文版 -->
+    <!-- ============================================================ -->
+    <div class="lang-block active" id="zh">
+        <a href="/index.html" class="back-link">← 返回首頁</a>
+        <span class="series-badge">健康與長壽系列 · 第 2 篇，共 3 篇</span>
+        <h1>美國與中國的醫學教育：AI 世代落差</h1>
+        <div class="subhead">How AI is exposing the structural divergence between U.S. and Chinese medical education</div>
+        <div class="meta">GFI · 2026年9月</div>
 
-        <p><strong>China has chosen a path of scale, aiming to cover more people at a lower cost. The United States insists on a path of elitism, using high investment and rigorous screening to ensure that a select few receive top‑tier medical resources.</strong> These are not two "different choices" — they are two entirely different institutional logics. One serves coverage; the other serves profit.</p>
+        <div class="insight-block"><p><span class="highlight">AI 不是醫療教育的替代品。它是揭示兩國醫學教育結構性落差的「顯影劑」。</span></p></div>
 
-        <h2>I. Education: Elite Filter vs. Scale Cultivation</h2>
+        <h2>一、美國醫學教育：成本高牆與專科化陷阱</h2>
+        <p>美國醫學教育正面臨兩大結構性問題：</p>
 
-        <p><strong>U.S.: Post‑graduate elite screening.</strong> American medical education follows the standard <strong>“4+4”</strong> model. Students must first complete a 4‑year undergraduate degree, then pass the exceptionally difficult MCAT (full score 528, with <strong>515+ considered competitive</strong>) before they can apply. In 2021, only about <strong>22,000</strong> new students were admitted nationwide, with an average class size of only <strong>158</strong> — a deliberate "few but excellent" approach.</p>
+        <h3>1. 成本高牆</h3>
+        <p>美國醫學生的平均畢業負債高達 <span class="highlight-red">$200,000–$250,000</span>。這道高牆產生了三個後果：</p>
+        <ul style="color:#4a4036;padding-left:1.5rem;margin:.6rem 0;line-height:1.9">
+            <li><strong>高薪專科吸引</strong>：畢業生傾向選擇高薪專科（如皮膚科、放射科），而非基層醫療</li>
+            <li><strong>城鄉失衡</strong>：鄉村地區醫師嚴重短缺，因為畢業生需要高收入來償還債務</li>
+            <li><strong>人才排除</strong>：低收入家庭學生被排除在醫學教育之外，階級再製</li>
+        </ul>
 
-        <p><strong>China: Undergraduate‑entry scale cultivation.</strong> China follows the <strong>“5+3”</strong> model, with students entering medical school directly from high school. With <strong>221</strong> medical schools and an annual enrollment of <strong>143,000</strong> students, the average class size is <strong>four times</strong> that of the U.S. (645 vs. 158). This ensures a massive physician workforce — approximately <strong>2.57 million</strong> doctors — though the number of physicians per 1,000 people (<strong>1.8</strong>) remains below that of the U.S. (<strong>3.0</strong>).</p>
+        <h3>2. 專科化陷阱</h3>
+        <p>美國醫學教育體系高度「專科化」，訓練學生深入特定領域，但缺乏系統性思維。表現在：</p>
+        <ul style="color:#4a4036;padding-left:1.5rem;margin:.6rem 0;line-height:1.9">
+            <li>患者被分割成「器官」與「症狀」</li>
+            <li>醫療決策缺乏全局視角</li>
+            <li>AI 可以複製專科化診斷，但無法複製系統性思維</li>
+        </ul>
 
-        <h2>II. U.S. Medical School Debt: The "Entry Tax"</h2>
+        <h2>二、中國醫學教育：規模、基層與技術導入</h2>
+        <p>中國醫學教育呈現不同結構：</p>
 
-        <p>According to a 2026 study in the <em>Annals of Internal Medicine</em>, <strong>70%</strong> of 2025 medical graduates carried educational debt, with a median of <strong>$220,000</strong>.</p>
+        <h3>1. 大規模人才培養</h3>
+        <ul style="color:#4a4036;padding-left:1.5rem;margin:.6rem 0;line-height:1.9">
+            <li>每年培養超過 <span class="highlight">60 萬</span> 名醫學畢業生</li>
+            <li>鄉村醫生計畫，覆蓋偏遠地區</li>
+            <li>學費相對低，政府補貼高</li>
+        </ul>
 
-        <table class="comparison-table">
-            <thead><tr><th>Indicator</th><th>Data</th></tr></thead>
-            <tbody>
-                <tr><td>Graduates with debt</td><td><strong>70%</strong></td></tr>
-                <tr><td>Average medical school debt</td><td><strong>$223,130</strong></td></tr>
-                <tr><td>Average total debt (including undergrad)</td><td><strong>$246,659</strong></td></tr>
-                <tr><td>4‑year public medical school cost</td><td><strong>$297,745</strong></td></tr>
-                <tr><td>4‑year private medical school cost</td><td><strong>&gt; $400,000</strong></td></tr>
-                <tr><td>28% of graduates carry debt</td><td><strong>&gt; $300,000</strong></td></tr>
-                <tr><td>Federal Grad PLUS interest rate</td><td><strong>8.94%</strong></td></tr>
-            </tbody>
-        </table>
+        <h3>2. 基層醫療優先</h3>
+        <ul style="color:#4a4036;padding-left:1.5rem;margin:.6rem 0;line-height:1.9">
+            <li>「分級診療」制度設計</li>
+            <li>基層醫療機構網絡覆蓋全國</li>
+            <li>全科醫生培養與基層服務掛鉤</li>
+        </ul>
 
-        <p>A <strong>$200,000</strong> debt results in total payments exceeding <strong>$303,000</strong> on a 10‑year repayment plan. A 2018 analysis found that <strong>24%</strong> of medical students came from the wealthiest <strong>5%</strong> of households. This is not just a filter of intelligence — it is a <strong>filter of wealth.</strong></p>
+        <h3>3. 技術快速導入</h3>
+        <ul style="color:#4a4036;padding-left:1.5rem;margin:.6rem 0;line-height:1.9">
+            <li>AI 輔助診斷廣泛推廣</li>
+            <li>遠程醫療在偏遠地區普及</li>
+            <li>醫療數據整合平台（全民健康信息平台）</li>
+        </ul>
 
-        <h2>III. Input and Output: Elite Cost vs. Scale Cost</h2>
+        <h2>三、AI 世代落差的結構性意涵</h2>
 
-        <table class="comparison-table">
-            <thead><tr><th>Dimension</th><th>United States</th><th>China</th></tr></thead>
-            <tbody>
-                <tr><td>Medical schools</td><td>155</td><td>221</td></tr>
-                <tr><td>Annual enrollment</td><td>22,000</td><td>143,000</td></tr>
-                <tr><td>Physicians per 1,000 people</td><td>3.0</td><td>1.8</td></tr>
-                <tr><td>Training cost per physician</td><td><strong>Very high (≥$200k debt)</strong></td><td><strong>Very low (state‑subsidized)</strong></td></tr>
-                <tr><td>Graduates with debt</td><td><strong>70%</strong></td><td><strong>≈0%</strong></td></tr>
-                <tr><td>Wealth filter</td><td><strong>24% from top 5%</strong></td><td>—</td></tr>
-                <tr><td>Cost transfer direction</td><td><strong>Downward/outward</strong> (individual + society)</td><td><strong>Inward/upward</strong> (state + system)</td></tr>
-                <tr><td>System logic</td><td>Manufacture scarcity, maintain price</td><td>Scale production, pursue coverage</td></tr>
-            </tbody>
-        </table>
-
-        <div class="highlight-box">
-            <p><span class="big">U.S. logic:</span> Individuals bear the cost of education; society bears the cost of scarcity.<br>
-            <span class="big">China's logic:</span> The state bears the cost of education; the system bears the cost of inefficiency.</p>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>維度</th><th>美國</th><th>中國</th><th>AI 世代意涵</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">醫師培養成本</span></td><td>極高（負債驅動）</td><td>中低（政府補貼）</td><td>AI 降低診斷成本，但無法降低醫師培養成本</td></tr>
+                    <tr><td><span class="highlight-blue">專科 vs 全科</span></td><td>專科化極度深化</td><td>全科+分級診療</td><td>AI 專科診斷能力強，全科診斷仍需人類</td></tr>
+                    <tr><td><span class="highlight-blue">技術導入</span></td><td>緩慢（法規障礙）</td><td>快速（政策驅動）</td><td>AI 導入速度決定競爭優勢</td></tr>
+                    <tr><td><span class="highlight-blue">城鄉可及性</span></td><td>極度不均</td><td>相對均等</td><td>遠程醫療+AI 可縮小差距</td></tr>
+                    <tr><td><span class="highlight-blue">數據整合</span></td><td>碎片化（醫院獨立）</td><td>全國整合</td><td>AI 需要大量數據訓練</td></tr>
+                </tbody>
+            </table>
         </div>
 
-        <h2>IV. Knowledge: Public Good or Paid Commodity?</h2>
+        <h2>四、GL Framework 診斷</h2>
 
-        <p><strong>China: Medical knowledge is a public good.</strong> Basic medical knowledge — disease prevention, first aid, hygiene — is treated as basic civic literacy. It is taught in schools, broadcast on public media, and disseminated through state‑run health campaigns. During COVID‑19, from "seven‑step handwashing" to proper mask use, all information was free, universal, and non‑exclusive. <strong>The underlying logic: medical knowledge is part of public health, and public health is the state's responsibility.</strong></p>
-
-        <p><strong>U.S.: Medical knowledge is a paid commodity.</strong> It belongs to "professional education," not "basic education." An ordinary person cannot easily determine when to seek care or how to communicate with a physician. This knowledge gap is institutional design. <strong>When medical knowledge is monopolized by "professionals," patients must pay intermediaries — doctors, insurers, hospital systems — to interpret their own health.</strong></p>
-
-        <h2>V. Food and Nutrition: Healthy Choice or Junk Food Trap?</h2>
-
-        <p>A McDonald's meal costs about <strong>$3–5</strong>. An equivalent healthy meal costs about <strong>$10–15</strong>. <strong>One healthy meal costs the same as three or four junk‑food meals.</strong></p>
-
-        <p>Junk food is <strong>subsidized</strong>. The U.S. provides approximately <strong>$20 billion</strong> annually in agricultural subsidies, most flowing to corn, soy, and wheat — the raw materials for junk food. Fruits and vegetables receive a tiny fraction. <strong>Taxpayer money subsidizes obesity and diabetes.</strong></p>
-
-        <table class="comparison-table">
-            <thead><tr><th>Dimension</th><th>U.S.</th><th>China</th></tr></thead>
-            <tbody>
-                <tr><td>Nutrition education</td><td>Fragmented, commercialized</td><td>State‑led, publicly disseminated</td></tr>
-                <tr><td>Healthy food accessibility</td><td>High price, uneven distribution</td><td>Staple prices stable, grassroots coverage</td></tr>
-                <tr><td>Institutional logic</td><td><strong>Health is a commodity — if you can't afford it, that's your problem</strong></td><td><strong>Health is a baseline — the state provides a floor</strong></td></tr>
-            </tbody>
-        </table>
-
-        <div class="warning-box">
-            <p><span class="big">The U.S. logic:</span> Cheap junk food "feeds" the poor, and then expensive medical bills "bill" them for the damage. <strong>The same population is extracted from twice — once for junk food profits, once for disease profits.</strong></p>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>GL 維度</th><th>美國</th><th>中國</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">等待成本 (Pd)</span></td><td>高（專科預約數月）</td><td>低（分級診療+遠程醫療）</td></tr>
+                    <tr><td><span class="highlight-blue">認知摩擦 (Cf)</span></td><td>高（醫療體系複雜）</td><td>中（體系相對統一）</td></tr>
+                    <tr><td><span class="highlight-blue">流程成功率 (Fs)</span></td><td>中（有保險者佳，無保險者差）</td><td>高（全民醫保覆蓋）</td></tr>
+                    <tr><td><span class="highlight-blue">戰略價值 (Vn)</span></td><td>利潤驅動 vs 健康驅動</td><td>健康驅動</td></tr>
+                </tbody>
+            </table>
         </div>
 
-        <h2>VI. The Trust Crisis: When Diagnosis Carries the Echo of Debt</h2>
+        <div class="insight-block"><p><span class="highlight">美國醫學教育體系在 AI 時代面臨「結構性不適應」——高昂成本與專科化模式與 AI 的互補性低。中國體系則因規模、基層網絡和數據整合，更易與 AI 形成互補。</span></p></div>
 
-        <p><strong>When a physician carries over $200,000 in debt, you cannot expect "medical ethics" to guarantee independent, patient‑centered decisions.</strong> Not because U.S. doctors are immoral, but because the system has made "moral choice" prohibitively expensive.</p>
-
-        <p><strong>Layer 1: Debt lock‑in.</strong> A $200,000 debt is a lifelong payment obligation. It determines that you must work in high‑paying specialties, accept high‑intensity practice, and remain open to "additional income." <strong>Debt is a behavioral filter.</strong></p>
-
-        <p><strong>Layer 2: Pharmaceutical marketing.</strong> U.S. pharmaceutical companies spend approximately <strong>$15 billion</strong> annually marketing to physicians. A 2019 <em>JAMA</em> study found that about one‑third of U.S. physicians (approximately 350,000) received at least one payment from a pharmaceutical or device company, totaling over <strong>$2.5 billion</strong>.</p>
-
-        <p><strong>Layer 3: The "compliance" path.</strong> Consulting fees, speaking fees, travel sponsorships, CME funding — all legally "compliant," yet they form a vast grey zone. When someone faces debt pressure, a compliant "extra income" channel is itself an inducement. <strong>It is not "corruption" happening — it is "normal human nature" being exploited.</strong></p>
-
-        <div class="warning-box">
-            <p><span class="big">The question you should ask:</span> "In this system, does this doctor's debt, compensation structure, CME funding, and career path allow him to say, <em>'This drug is too expensive — we can try a cheaper one'</em>?"</p>
-            <p>If the answer is no, the trust crisis is not an "individual moral failure" — it is a <strong>structural institutional failure.</strong></p>
-        </div>
-
-        <h2>VII. Why Trust Cannot Be Rebuilt</h2>
-
-        <p>In China, the national health insurance system is the largest payer. Centralized bulk purchasing has driven drug prices to extremely low levels. The state covers the cost of physician training; the national health insurance system holds negotiating power; public hospitals provide the safety net. This provides Chinese doctors with an institutional foundation to survive <strong>without being bought by "extra income."</strong></p>
-
-        <p>"Medical ethics" is not something that can be "demanded" — it is not a static moral standard, but <strong>the result of institutional design.</strong> When a system forces a person to carry crushing debt while simultaneously exposing them to the systematic marketing of pharmaceutical companies, "medical ethics" becomes an impossible standard.</p>
+        <h2>五、結論</h2>
 
         <div class="conclusion-box">
-            <h2>Scarcity Is Not Destiny — It Is Institutional Choice</h2>
-            <p><strong>Every institutional design inevitably involves the transfer and bearing of costs.</strong> The U.S. transfers its cost outward. China transfers its cost inward.</p>
-            <p><strong>A system that transfers costs to individuals and society, no matter how many Nobel Prizes or top hospitals it has, is institutionally illegitimate.</strong></p>
-            <p>"Scarcity" is never a resource problem — it is a distribution problem. And the answer to distribution always points back to the choices made by institutional designers.</p>
-            <p><strong>The U.S. chose elitism + control. China chose scale + public goods.</strong> These two choices are already reflected in the health outcomes of Americans and Chinese.</p>
+            <p><span class="highlight">AI 不會取代醫師，但會暴露醫療教育體系的結構性缺陷。美國醫學教育的成本高牆與專科化陷阱，在 AI 時代將成為競爭劣勢。中國醫學教育的規模優勢、基層網絡和數據整合能力，則可能在 AI 時代成為競爭優勢。</span></p>
+            <p style="margin-top:.5rem;font-size:.85rem;color:#6b5f4e;">真正的世代落差不是 AI 技術本身，而是「哪個國家的醫療教育體系能與 AI 形成互補」。</p>
         </div>
 
-        <div class="footnote">— A GL Framework diagnosis of U.S. healthcare institutions</div>
+        <!-- ===== 中文導航 ===== -->
+        <div class="nav-series">
+            <div class="lang-zh active">
+                <a href="blue-zones-land-policy.html">← 五大藍區多為離島</a>
+                <a href="obsolete-policies-killing-us.html">過時政策正在殺死我們 →</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="lang-zh active">
+                🏥 GFI · 醫學教育與 AI 世代落差<br/>
+                &copy; 2026 · 本平台以證據、邏輯與結構性分析探討全球治理
+            </div>
+            <div class="footer-links">
+                <a href="/index.html">首頁</a>
+                <a href="/wellness/index.html">Wellness</a>
+                <a href="/about.html">關於</a>
+            </div>
+        </div>
     </div>
 
-    <!-- ========== 中文 ========== -->
-    <div id="zh" class="lang-content">
-        <h1>美国医疗的制度性困境</h1>
-        <div class="subhead">——医学院培养、债务锁定与信任危机 · GL框架系统性诊断</div>
+    <!-- ============================================================ -->
+    <!-- 英文版 -->
+    <!-- ============================================================ -->
+    <div class="lang-block" id="en">
+        <a href="/index.html" class="back-link">← Back to Home</a>
+        <span class="series-badge">Health & Longevity Series · Part 2 of 3</span>
+        <h1>Medical Education in the U.S. and China</h1>
+        <div class="subhead">The AI Generation Gap — How AI Is Exposing the Structural Divergence</div>
+        <div class="meta">GFI · September 2026</div>
 
-        <p><strong>核心差异在于：中国选择了一条“规模化”的道路，试图用更低的成本覆盖更多的人口；美国则坚持“精英化”的路线，用高昂的投入和严苛的筛选，确保少数人获得顶尖的医疗资源。</strong>这不是两种“不同的选择”，而是两套完全不同的制度逻辑。一套服务于“覆盖”，一套服务于“利润”。</p>
+        <div class="insight-block"><p><span class="highlight">AI is not a replacement for medical education. It is a developer — revealing the structural divergence between U.S. and Chinese medical education systems.</span></p></div>
 
-        <h2>一、教育体系：精英筛选 vs. 规模化培养</h2>
+        <h2>I. U.S. Medical Education: The Cost Wall and Specialization Trap</h2>
+        <p>U.S. medical education faces two structural problems:</p>
 
-        <p><strong>美国：本科后的精英筛选。</strong>美国医学教育是标准的“4+4”模式。学生必须先完成4年本科，通过难度极高的医学院入学考试（MCAT，满分528，515分以上才比较保险），才有资格申请。2021年全国仅录取约2.2万名新生，院均招生规模仅158人——一个精确控制的数字，不是“没人想当医生”，而是“系统不想让太多人当医生”。</p>
+        <h3>1. The Cost Wall</h3>
+        <p>The average medical student graduates with <span class="highlight-red">$200,000–$250,000</span> in debt. This wall produces three consequences:</p>
+        <ul style="color:#4a4036;padding-left:1.5rem;margin:.6rem 0;line-height:1.9">
+            <li><strong>High-salary specialty attraction</strong>: Graduates gravitate toward high-paying specialties (dermatology, radiology) over primary care</li>
+            <li><strong>Urban-rural imbalance</strong>: Rural areas face severe physician shortages</li>
+            <li><strong>Class reproduction</strong>: Low-income students are excluded from medical education</li>
+        </ul>
 
-        <p><strong>中国：本科起的规模化培养。</strong>中国以“5+3”为主体，学生直接从高中毕业后进入医学院学习。拥有221所医学院，年招生规模高达14.3万人，院均招生规模是美国的4倍（645人 vs 158人）。这保证了庞大的医生储备，但每千人口医生数量（1.8人）仍低于美国（3.0人）。</p>
+        <h3>2. The Specialization Trap</h3>
+        <p>The U.S. system is highly specialized — training students in specific domains without systemic thinking. The result:</p>
+        <ul style="color:#4a4036;padding-left:1.5rem;margin:.6rem 0;line-height:1.9">
+            <li>Patients are treated as "organs" and "symptoms"</li>
+            <li>Medical decisions lack holistic perspective</li>
+            <li>AI can replicate specialist diagnosis, but cannot replicate systemic thinking</li>
+        </ul>
 
-        <h2>二、美国医学院债务：被精心计算的“入场税”</h2>
+        <h2>II. China's Medical Education: Scale, Primary Care, and Technology Integration</h2>
+        <p>China's medical education presents a different structure:</p>
 
-        <p>根据《内科学年鉴》2026年发表的研究，2025年毕业的医学生中，<strong>70%的人背负着教育债务，中位数为22万美元</strong>。</p>
+        <h3>1. Large-scale Training</h3>
+        <ul style="color:#4a4036;padding-left:1.5rem;margin:.6rem 0;line-height:1.9">
+            <li>Over <span class="highlight">600,000</span> medical graduates annually</li>
+            <li>Rural doctor programs covering remote areas</li>
+            <li>Relatively low tuition with high government subsidies</li>
+        </ul>
 
-        <table class="comparison-table">
-            <thead><tr><th>指标</th><th>数据</th></tr></thead>
-            <tbody>
-                <tr><td>背负债务的毕业生比例</td><td><strong>70%</strong></td></tr>
-                <tr><td>平均医疗债务（仅医学院）</td><td><strong>$223,130</strong></td></tr>
-                <tr><td>含本科学贷的总平均债务</td><td><strong>$246,659</strong></td></tr>
-                <tr><td>四年医学院总费用（公立）</td><td><strong>$297,745</strong></td></tr>
-                <tr><td>四年医学院总费用（私立）</td><td><strong>超 $400,000</strong></td></tr>
-                <tr><td>28%的毕业生负债</td><td><strong>超过 $300,000</strong></td></tr>
-                <tr><td>联邦Grad PLUS贷款利率</td><td><strong>8.94%</strong></td></tr>
-            </tbody>
-        </table>
+        <h3>2. Primary Care Priority</h3>
+        <ul style="color:#4a4036;padding-left:1.5rem;margin:.6rem 0;line-height:1.9">
+            <li>"Tiered diagnosis and treatment" system</li>
+            <li>Primary care network covers the entire country</li>
+            <li>General practitioner training linked to primary care service</li>
+        </ul>
 
-        <p>以20万美元的债务计算，10年标准还款计划的总还款额超过30.3万美元。2018年的一项分析显示，<strong>24%的医学生来自全美最富有的5%家庭</strong>。这套机制不仅是智力的筛选，更是财富的筛选。</p>
+        <h3>3. Rapid Technology Integration</h3>
+        <ul style="color:#4a4036;padding-left:1.5rem;margin:.6rem 0;line-height:1.9">
+            <li>AI-assisted diagnosis widely deployed</li>
+            <li>Telemedicine普及 in remote areas</li>
+            <li>Integrated health data platforms (National Health Information Platform)</li>
+        </ul>
 
-        <h2>三、投入与产出：精英的成本与规模的代价</h2>
+        <h2>III. The Structural Implications of the AI Generation Gap</h2>
 
-        <table class="comparison-table">
-            <thead><tr><th>维度</th><th>美国</th><th>中国</th></tr></thead>
-            <tbody>
-                <tr><td>医学院数量</td><td>155所</td><td>221所</td></tr>
-                <tr><td>年招生规模</td><td>2.2万人</td><td>14.3万人</td></tr>
-                <tr><td>每千人口医生数</td><td>3.0人</td><td>1.8人</td></tr>
-                <tr><td>人均培养成本</td><td><strong>极高（≥20万美元学贷）</strong></td><td><strong>极低（国家补贴）</strong></td></tr>
-                <tr><td>毕业负债比例</td><td><strong>70%</strong></td><td><strong>≈0%</strong></td></tr>
-                <tr><td>社会阶层来源</td><td><strong>24%来自最富有的5%家庭</strong></td><td>—</td></tr>
-                <tr><td>成本转移方向</td><td><strong>向下、向外转嫁</strong>（个人+社会）</td><td><strong>向内、向上集中</strong>（国家+体系）</td></tr>
-                <tr><td>系统逻辑</td><td>制造稀缺，维持高价</td><td>规模化生产，追求覆盖</td></tr>
-            </tbody>
-        </table>
-
-        <div class="highlight-box">
-            <p><span class="big">美国的逻辑是：</span>让个人承担教育成本，让社会承担服务短缺的代价。<br>
-            <span class="big">中国的逻辑是：</span>由国家承担教育成本，让体系承担效率不足的压力。</p>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Dimension</th><th>U.S.</th><th>China</th><th>AI Era Implication</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">Training Cost</span></td><td>Extremely high (debt-driven)</td><td>Medium-low (government-subsidized)</td><td>AI reduces diagnostic costs, but not training costs</td></tr>
+                    <tr><td><span class="highlight-blue">Specialist vs. Generalist</span></td><td>Extreme specialization</td><td>Generalist + tiered care</td><td>AI strong at specialist diagnosis; generalist diagnosis still needs humans</td></tr>
+                    <tr><td><span class="highlight-blue">Tech Integration</span></td><td>Slow (regulatory barriers)</td><td>Fast (policy-driven)</td><td>AI adoption speed determines competitive advantage</td></tr>
+                    <tr><td><span class="highlight-blue">Urban-Rural Access</span></td><td>Extremely unequal</td><td>Relatively equal</td><td>Telemedicine + AI can close the gap</td></tr>
+                    <tr><td><span class="highlight-blue">Data Integration</span></td><td>Fragmented (hospital-based)</td><td>Nationally integrated</td><td>AI needs large datasets for training</td></tr>
+                </tbody>
+            </table>
         </div>
 
-        <h2>四、知识的性质：公共品还是付费商品？</h2>
+        <h2>IV. GL Framework Diagnosis</h2>
 
-        <p><strong>中国：医疗常识是公共品。</strong>基础医疗常识——疾病预防、急救、卫生习惯——被当作每个公民的基本素养。它在学校教授、在公共媒体传播、通过政府主导的健康宣传活动推广。新冠疫情期间，从“七步洗手法”到口罩的正确佩戴，都是免费、无差别、面向所有人的。<strong>底层逻辑是：医疗常识是公共卫生的一部分，而公共卫生是国家的责任。</strong></p>
-
-        <p><strong>美国：医疗知识是付费商品。</strong>它不属于“基础教育”，而属于“专业教育”。一个普通人没有医学背景，就无法判断自己是否需要就医、何时需要就医、如何与医生有效沟通。知识隔离不是偶然的——它是制度设计的一部分。<strong>当医疗知识被垄断为“专业人士”的专属领域时，患者就必须依赖中介（医生、保险公司、医院系统）来解读自己的健康状况。每一次解读，都是一次付费。</strong></p>
-
-        <h2>五、食物营养：健康食品还是垃圾食品陷阱？</h2>
-
-        <p>一份麦当劳套餐约3-5美元。一份同等热量的健康餐约10-15美元。<strong>一顿健康餐的成本，等于三到四顿垃圾食品的成本。</strong></p>
-
-        <p>垃圾食品的“便宜”是<strong>被补贴的</strong>。美国联邦政府每年向农业提供约200亿美元的补贴，大部分流向玉米、大豆、小麦——垃圾食品的原材料。水果和蔬菜的补贴微乎其微。<strong>纳税人的钱在补贴肥胖和糖尿病。</strong></p>
-
-        <table class="comparison-table">
-            <thead><tr><th>维度</th><th>美国</th><th>中国</th></tr></thead>
-            <tbody>
-                <tr><td>营养教育</td><td>碎片化、商业化</td><td>国家主导、公共普及</td></tr>
-                <tr><td>健康食品可及性</td><td>价格高、分布不均</td><td>主粮价格稳定、基层覆盖</td></tr>
-                <tr><td>制度逻辑</td><td><strong>健康是商品，吃不起是你的事</strong></td><td><strong>健康是底线，国家要兜底</strong></td></tr>
-            </tbody>
-        </table>
-
-        <div class="warning-box">
-            <p><span class="big">美国的逻辑是：</span>用廉价垃圾食品“喂养”底层人口，然后在他们生病时用天价医疗账单“收割”他们。<strong>同一群人被同一套制度“收割”两次——一次是垃圾食品的利润，一次是疾病的利润。</strong></p>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>GL Dimension</th><th>U.S.</th><th>China</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">Pain Duration (Pd)</span></td><td>High (specialist wait times months)</td><td>Low (tiered care + telemedicine)</td></tr>
+                    <tr><td><span class="highlight-blue">Cognitive Friction (Cf)</span></td><td>High (complex system)</td><td>Medium (relatively unified system)</td></tr>
+                    <tr><td><span class="highlight-blue">Flow Success (Fs)</span></td><td>Medium (good for insured, poor for uninsured)</td><td>High (universal coverage)</td></tr>
+                    <tr><td><span class="highlight-blue">Strategic Value (Vn)</span></td><td>Profit-driven vs. Health-driven</td><td>Health-driven</td></tr>
+                </tbody>
+            </table>
         </div>
 
-        <h2>六、信任危机：当诊断背负着债务的回声</h2>
+        <div class="insight-block"><p><span class="highlight">The U.S. medical education system faces a "structural incompatibility" with the AI era — high costs and the specialization model have low complementarity with AI. China's system — due to scale, primary care networks, and data integration — is more complementary to AI.</span></p></div>
 
-        <p><strong>当一名医生背负着超过20万美元的债务时，你无法用“医德”来要求他做出独立的、以患者为中心的决定。</strong>不是因为美国医生“道德败坏”，而是因为制度已经把“道德选择”的成本变得太高了。</p>
-
-        <p><strong>第一层：债务锁定。</strong>20万美元的债务是一个持续一生的付款义务。它决定了你必须在高薪领域工作、必须接受高强度的诊疗节奏、必须对“额外收入”保持开放态度。<strong>债务本身就是一个“行为过滤器”。</strong></p>
-
-        <p><strong>第二层：制药公司的系统性营销。</strong>美国制药公司每年花费约150亿美元用于向医生推销药物。2019年《美国医学会杂志》研究发现，全美约三分之一的医生（约35万人）接受了至少一次制药公司或医疗设备制造商支付的服务费，总额超过25亿美元。</p>
-
-        <p><strong>第三层：“合规”的额外收入通道。</strong>咨询费、演讲费、差旅赞助、继续教育资助——这些在法律上都是“合规”的，却在现实中构成了一个巨大的灰色地带。当一个人面对债务压力时，一条合规的“额外收入”通道本身就是一种诱惑。<strong>不是“腐败”在发生，而是“正常的人性”在被利用。</strong></p>
-
-        <div class="warning-box">
-            <p><span class="big">你应该问的问题不是“这个药对不对”，而是：</span>“在这个系统里，这名医生的债务来源、薪酬结构、继续教育资金、职业晋升路径，是否允许他说出‘这个药太贵了，我们可以试试便宜的’？”</p>
-            <p>如果答案是否定的，那这个系统的信任危机，就不是“个别人的道德问题”，而是<strong>整个制度的结构性问题。</strong></p>
-        </div>
-
-        <h2>七、为什么信任无法重建？</h2>
-
-        <p>在中国，国家医保是最大的支付方，药品和耗材的集采制度已经把价格压到了极低的水平。国家财政承担了医生培养的成本，国家医保承担了医疗支付的谈判权，公立医院承担了社会医疗服务的底线。这为中国医生提供了一个<strong>不需要被“额外收入”收买也能体面生存的制度基础。</strong></p>
-
-        <p><strong>“医德”不是一个可以“要求”的东西——它不是一个静态的道德标准，而是制度设计的结果。</strong>当制度要求一个人在背负沉重债务的同时，还必须抵抗制药公司和保险公司的系统性营销攻势时，“医德”就变成了一种几乎不可能实现的标准。</p>
+        <h2>V. Conclusion</h2>
 
         <div class="conclusion-box">
-            <h2>稀缺不是命运，而是制度选择</h2>
-            <p><strong>任何制度设计，都必然伴随着成本的转移与承担。</strong>美国将成本向外转移。中国将成本向内转移。</p>
-            <p><strong>一个把成本转嫁给个体和社会的系统，无论它有多少诺贝尔奖、多少顶尖医院，在治理正当性的尺度上，都是失效的。</strong></p>
-            <p>“稀缺”从来不是资源问题——它是分配问题。而分配问题的答案，永远指向制度设计者的选择。</p>
-            <p><strong>美国选择了精英化+控制，中国选择了规模化+公共品。</strong>这两种选择的背后，是两种不同的治理哲学——一种相信“稀缺本身就是价值来源”，另一种相信“健康是底线，不是商品”。</p>
-            <p>两者的结果，已经在美国人的健康数据和中国人的健康数据中，逐步显现。</p>
+            <p><span class="highlight">AI will not replace physicians, but it will expose the structural weaknesses of medical education systems. The U.S. cost wall and specialization trap will become competitive disadvantages in the AI era. China's scale advantage, primary care networks, and data integration capacity may become competitive advantages.</span></p>
+            <p style="margin-top:.5rem;font-size:.85rem;color:#6b5f4e;">The real generation gap is not AI technology itself — it is "which country's medical education system can complement AI."</p>
         </div>
 
-        <div class="footnote">—— 基于GL框架的美国医疗制度系统性诊断</div>
+        <!-- ===== 英文導航 ===== -->
+        <div class="nav-series">
+            <div class="lang-en active">
+                <a href="blue-zones-land-policy.html">← Why Are Most Blue Zones Islands?</a>
+                <a href="obsolete-policies-killing-us.html">Obsolete Policies Are Killing Us →</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="lang-en active">
+                🏥 GFI · Medical Education &amp; the AI Generation Gap<br/>
+                &copy; 2026 · Evidence, logic, and structural analysis of global governance
+            </div>
+            <div class="footer-links">
+                <a href="/index.html">Home</a>
+                <a href="/wellness/index.html">Wellness</a>
+                <a href="/about.html">About</a>
+            </div>
+        </div>
     </div>
 
 </div>
@@ -458,39 +301,57 @@
 <script>
     (function() {
         const btns = document.querySelectorAll('.lang-btn');
-        const contents = { zh: document.getElementById('zh'), en: document.getElementById('en') };
-        function switchLang(lang) {
-            for (let key in contents) {
-                contents[key].classList.remove('active');
-            }
-            if (contents[lang]) contents[lang].classList.add('active');
+        const blocks = {
+            zh: document.getElementById('zh'),
+            en: document.getElementById('en')
+        };
+
+        function setLang(lang) {
+            Object.keys(blocks).forEach(key => {
+                if (blocks[key]) blocks[key].classList.remove('active');
+            });
+            if (blocks[lang]) blocks[lang].classList.add('active');
+
             btns.forEach(btn => {
                 btn.classList.remove('active');
                 if (btn.dataset.lang === lang) btn.classList.add('active');
             });
+
+            document.querySelectorAll('.nav-series .lang-zh, .nav-series .lang-en').forEach(el => el.classList.remove('active'));
+            const navTarget = document.querySelector('.nav-series .lang-' + lang);
+            if (navTarget) navTarget.classList.add('active');
+
+            document.querySelectorAll('.footer .lang-zh, .footer .lang-en').forEach(el => el.classList.remove('active'));
+            const footerTarget = document.querySelector('.footer .lang-' + lang);
+            if (footerTarget) footerTarget.classList.add('active');
+
             if (history.pushState) history.pushState(null, '', '#' + lang);
         }
+
         btns.forEach(btn => {
-            btn.addEventListener('click', function(e) {
+            btn.addEventListener('click', function() {
                 const lang = this.dataset.lang;
-                if (lang) switchLang(lang);
+                if (lang) setLang(lang);
             });
         });
+
         const hash = window.location.hash.replace('#', '');
-        if (hash === 'zh') {
-            switchLang('zh');
+        if (hash === 'en') {
+            setLang('en');
         } else {
-            switchLang('en');
+            setLang('zh');
         }
+
         window.addEventListener('hashchange', function() {
             const newHash = window.location.hash.replace('#', '');
-            if (newHash === 'zh' || newHash === 'en') {
-                switchLang(newHash);
+            if (newHash === 'en') {
+                setLang('en');
             } else {
-                switchLang('en');
+                setLang('zh');
             }
         });
     })();
 </script>
+
 </body>
 </html>
