@@ -1,335 +1,324 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>国家治理成熟度全球比较 · 中英双语</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #0b1220;
-      --bg2: #0d1526;
-      --text: #f8fbff;
-      --muted: #c7d2e3;
-      --sub: #9fb0c8;
-      --dim: rgba(255,255,255,.06);
-      --green: #9FE870;
-      --blue: #7DD3FC;
-      --serif: 'DM Serif Display', Georgia, serif;
-      --mono: 'DM Mono', monospace;
-      --sans: 'DM Sans', system-ui, sans-serif;
-    }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--sans);
-      font-size: 15px;
-      line-height: 1.7;
-      padding: 2rem 1rem;
-    }
-    .container {
-      max-width: 920px;
-      margin: 0 auto;
-      background: rgba(255,255,255,0.02);
-      border: 1px solid var(--dim);
-      border-radius: 24px;
-      padding: 2.2rem 2.5rem;
-      backdrop-filter: blur(2px);
-    }
-    /* 返回首页按钮 */
-    .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--green);
-      text-decoration: none;
-      font-family: var(--mono);
-      font-size: 13px;
-      letter-spacing: 0.08em;
-      border: 1px solid rgba(159,232,112,0.3);
-      padding: 8px 18px;
-      border-radius: 40px;
-      transition: all 0.2s;
-      margin-bottom: 1.8rem;
-    }
-    .back-link:hover {
-      background: rgba(159,232,112,0.1);
-      border-color: var(--green);
-      transform: translateX(-4px);
-    }
-    /* 语言切换栏 */
-    .lang-bar {
-      display: flex;
-      justify-content: flex-end;
-      gap: 0.6rem;
-      margin-bottom: 2rem;
-      border-bottom: 1px solid var(--dim);
-      padding-bottom: 0.8rem;
-    }
-    .lang-btn {
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.15);
-      padding: 0.3rem 1.2rem;
-      border-radius: 30px;
-      font-size: 0.8rem;
-      font-family: var(--mono);
-      font-weight: 500;
-      color: var(--sub);
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .lang-btn:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
-    .lang-btn.active {
-      background: rgba(159,232,112,0.15);
-      border-color: var(--green);
-      color: var(--green);
-    }
-    .lang-content { display: none; animation: fade 0.3s ease; }
-    .lang-content.active { display: block; }
-    @keyframes fade { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
-
-    h1 {
-      font-size: 2.1rem;
-      font-family: var(--serif);
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      margin-bottom: 0.5rem;
-      color: #fff;
-      border-left: 6px solid var(--green);
-      padding-left: 1.2rem;
-    }
-    .subhead {
-      font-size: 1rem;
-      color: var(--sub);
-      margin-bottom: 2rem;
-      padding-left: 1.2rem;
-      border-left: 3px solid rgba(159,232,112,0.3);
-      font-style: italic;
-    }
-    h2 {
-      font-size: 1.4rem;
-      font-family: var(--serif);
-      margin-top: 2.2rem;
-      margin-bottom: 0.6rem;
-      color: #eaf6ff;
-      border-bottom: 1px dashed rgba(255,255,255,0.08);
-      padding-bottom: 0.3rem;
-    }
-    h3 { font-size: 1.1rem; font-weight: 600; margin-top:1.2rem; margin-bottom:0.3rem; color: var(--muted); }
-    p { margin-bottom: 1rem; color: var(--muted); text-align: justify; }
-    ul { margin: 0.5rem 0 1rem 1.8rem; list-style-type: disc; color: var(--muted); }
-    li { margin-bottom: 0.3rem; }
-    .rating {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--dim);
-      border-radius: 30px;
-      padding: 0.3rem 1.2rem;
-      display: inline-block;
-      font-family: var(--mono);
-      font-size: 0.8rem;
-      color: var(--sub);
-      margin: 0.2rem 0 0.6rem 0;
-    }
-    .rating strong { color: var(--green); }
-    .conclusion-box {
-      background: rgba(255,255,255,0.03);
-      border-left: 4px solid var(--green);
-      padding: 1.5rem 2rem;
-      margin-top: 2rem;
-      border-radius: 12px;
-    }
-    .conclusion-box h2 { border: none; margin-top:0; padding-top:0; }
-    .footnote {
-      font-size: 0.75rem;
-      color: var(--sub);
-      text-align: right;
-      margin-top: 2rem;
-      border-top: 1px solid var(--dim);
-      padding-top: 1rem;
-      font-style: italic;
-    }
-    @media (max-width: 640px) {
-      .container { padding: 1.2rem; }
-      h1 { font-size: 1.6rem; padding-left:0.8rem; }
-      h2 { font-size: 1.2rem; }
-      .lang-bar { justify-content: center; }
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Governance Maturity: A Global Comparison｜GFI Flow Intelligence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:#f5f0e8;color:#2d2a24;font-family:'DM Sans',system-ui,sans-serif;font-size:15px;line-height:1.8;padding:1.5rem 1rem}
+        .container{max-width:1040px;margin:0 auto}
+        .lang-switch{display:flex;gap:10px;margin-bottom:1.5rem;flex-wrap:wrap;justify-content:flex-end}
+        .lang-btn{font-family:'DM Mono',monospace;font-size:.7rem;padding:.3rem 1.2rem;border:1px solid rgba(60,50,40,.15);border-radius:20px;background:0 0;color:#6b5f4e;cursor:pointer;transition:all .2s}
+        .lang-btn:hover{border-color:#4a6b3d;color:#2d2a24}
+        .lang-btn.active{color:#3d6b2e;border-color:#3d6b2e;background:rgba(61,107,46,.08)}
+        .lang-block{display:none;animation:fadeIn .3s ease}
+        .lang-block.active{display:block}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+        .back-link{font-family:'DM Mono',monospace;font-size:.65rem;color:#3d6b2e;text-decoration:none;border-bottom:1px solid rgba(61,107,46,.2);padding-bottom:2px}
+        .back-link:hover{border-bottom-color:#3d6b2e}
+        h1{font-family:'DM Serif Display',Georgia,serif;font-size:2.2rem;color:#1f2a1a;margin-bottom:.2rem;line-height:1.2}
+        .subhead{font-family:'DM Mono',monospace;font-size:.75rem;color:#6b5f4e;letter-spacing:.06em;margin-bottom:.2rem}
+        .meta{font-family:'DM Mono',monospace;font-size:.65rem;color:#8a7e6a;border-bottom:1px solid rgba(60,50,40,.06);padding-bottom:1rem;margin-bottom:2rem}
+        h2{font-family:'DM Serif Display',Georgia,serif;font-size:1.4rem;color:#1f2a1a;margin:2.2rem 0 .8rem;border-left:4px solid #3d6b2e;padding-left:1rem}
+        h3{font-family:'DM Serif Display',Georgia,serif;font-size:1rem;color:#1f2a1a;margin:1.4rem 0 .4rem}
+        p{color:#4a4036;margin-bottom:.8rem;line-height:1.9}
+        .highlight{color:#3d6b2e;font-weight:500}
+        .highlight-red{color:#b33a3a;font-weight:500}
+        .highlight-blue{color:#4a7a6e;font-weight:500}
+        .insight-block{background:rgba(61,107,46,.06);border-left:4px solid #3d6b2e;padding:1rem 1.5rem;border-radius:0 8px 8px 0;margin:1.2rem 0}
+        .insight-block p{color:#2d2a24;margin-bottom:0;font-weight:450;font-size:.95rem}
+        .table-wrap{overflow-x:auto;border-radius:12px;border:1px solid rgba(60,50,40,.06);margin:1.2rem 0}
+        table{width:100%;border-collapse:collapse;font-family:'DM Mono',monospace;font-size:.65rem;min-width:480px}
+        th{text-align:left;padding:8px 10px;font-size:.5rem;letter-spacing:.08em;text-transform:uppercase;color:#8a7e6a;border-bottom:1px solid rgba(60,50,40,.06);font-weight:400;background:rgba(255,252,245,.3)}
+        td{padding:6px 10px;border-bottom:1px solid rgba(60,50,40,.03);color:#4a4036}
+        tr:hover td{background:rgba(255,252,245,.3)}
+        .conclusion-box{background:rgba(61,107,46,.06);border:1px solid rgba(61,107,46,.12);border-radius:12px;padding:1.2rem 1.8rem;margin-top:1.5rem}
+        .conclusion-box p{color:#1f2a1a;font-weight:450;font-size:.95rem;margin-bottom:.4rem}
+        .nav-series{margin-top:2.8rem;padding-top:1.8rem;border-top:2px solid rgba(60,50,40,.1);display:flex;flex-wrap:wrap;justify-content:space-between;gap:.8rem}
+        .nav-series a{color:#3d6b2e;text-decoration:none;font-weight:600;border:1px solid rgba(60,50,40,.15);padding:.4rem 1.2rem;border-radius:30px;font-size:.75rem;transition:.2s;background:rgba(255,252,245,.5);font-family:'DM Mono',monospace;letter-spacing:.02em}
+        .nav-series a:hover{background:#3d6b2e;color:#fff;border-color:#3d6b2e}
+        .nav-series .lang-zh,.nav-series .lang-en{display:none;width:100%;justify-content:space-between;gap:.8rem;flex-wrap:wrap}
+        .nav-series .lang-zh.active,.nav-series .lang-en.active{display:flex}
+        .footer{text-align:center;padding:24px 20px 32px;font-family:'DM Mono',monospace;font-size:11px;color:#8a7e6a;border-top:1px solid rgba(60,50,40,.06);margin-top:2rem}
+        .footer .lang-zh,.footer .lang-en{display:none}
+        .footer .lang-zh.active,.footer .lang-en.active{display:block}
+        .footer a{color:#6b5f4e;text-decoration:none}
+        .footer a:hover{color:#1f2a1a}
+        .footer-links{display:flex;justify-content:center;gap:16px;margin-top:6px;flex-wrap:wrap}
+        @media(max-width:720px){h1{font-size:1.6rem}.nav-series .lang-zh.active,.nav-series .lang-en.active{flex-direction:column;align-items:center}}
+    </style>
 </head>
 <body>
-  <div class="container">
-    <!-- 返回首页按钮 -->
-    <a href="index.html" class="back-link">← 返回首页 / Back to Home</a>
+<div class="container">
 
-    <!-- 语言切换 -->
-    <div class="lang-bar">
-      <button class="lang-btn active" data-lang="zh">中文</button>
-      <button class="lang-btn" data-lang="en">English</button>
+    <!-- 語言切換 -->
+    <div class="lang-switch">
+        <button class="lang-btn" data-lang="zh">中文</button>
+        <button class="lang-btn active" data-lang="en">English</button>
     </div>
 
-    <!-- ========== 中文内容 ========== -->
-    <div id="zh" class="lang-content active">
-      <h1>国家治理成熟度的全球比较</h1>
-      <div class="subhead">——基于“第一性原理”的四大维度审视</div>
+    <!-- ============================================================ -->
+    <!-- 英文版 (默認) -->
+    <!-- ============================================================ -->
+    <div class="lang-block active" id="en">
+        <a href="/index.html" class="back-link">← Back to Home</a>
+        <h1>Governance Maturity: A Global Comparison</h1>
+        <div class="subhead">Applying the First Principles to Compare the U.S., Nordics, Singapore, and China</div>
+        <div class="meta">GFI · Governance Theory Series</div>
 
-      <p><strong>国家治理的“第一性原理”，是支撑一切治理活动最底层、不可再分的逻辑起点与价值基准。</strong>它包含四大核心维度：<strong>第一，政治秩序的构建</strong>——垄断暴力、保障安全是治理的元命题；<strong>第二，社会决定国家</strong>——国家的合法性根植于社会的健康发展；<strong>第三，以人民为中心的实质治理</strong>——治理的终极归宿是人民福祉，而非程序形式；<strong>第四，德法合治</strong>——以道德引领与法治刚性协同，实现系统善治。</p>
-      
-      <p>衡量一个国家治理的成熟度，本质上就是看其在多大程度上坚守并动态平衡这四条底层法则。这不能只看制度存续时长或GDP高低，更要看其在内外冲击下自我纠偏、持续进化的能力。如果把世界主要治理模式看作不同的“生命体”，其成熟度差异极其鲜明：</p>
+        <div class="insight-block"><p><span class="highlight">Not all governance systems are equal. Some are mature — they deliver results, maintain stability, and build trust. Others are immature — they produce crisis, inequality, and failure. Governance maturity is not about procedure. It is about <strong>capacity</strong>.</span></p></div>
 
-      <h2>一、美国模式：精密的“程序机器”，脆弱的“社会生态”</h2>
-      <ul>
-        <li><strong>成熟度体现</strong>：在“法治”和“权力制衡”的程序设计上堪称顶级，政权交接、法律诉讼、舆论监督的流程极其标准化。</li>
-        <li><strong>底层硬伤</strong>：严重违背“社会决定国家”原理。资本逻辑深度绑架政治，社会撕裂（贫富、种族、意识形态）已超出制度本身的调节能力。它的成熟在于“术”（程序），不成熟在于“道”（社会凝聚力的丧失）。当“秩序”底线（如国会山事件）被突破时，程序机器近乎失灵。</li>
-      </ul>
-      <div class="rating"><strong>成熟度评分</strong>：程序成熟度 ★★★★★  ｜  实质治理成熟度 ★★☆</div>
+        <h2>I. The Four Models Compared</h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Model</th><th>System Type</th><th>Key Features</th><th>Maturity Level</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">United States</span></td><td>Liberal democracy</td><td>Gridlock, money politics, declining infrastructure</td><td>❌ Immature (declining)</td></tr>
+                    <tr><td><span class="highlight-blue">Nordics</span></td><td>Social democracy</td><td>Strong welfare state, high trust, public ownership</td><td>✅ Mature</td></tr>
+                    <tr><td><span class="highlight-blue">Singapore</span></td><td>Meritocratic authoritarianism</td><td>Technocratic governance, long-term planning</td><td>✅ Mature</td></tr>
+                    <tr><td><span class="highlight-blue">China</span></td><td>Socialist market economy</td><td>State capacity, long-term planning, rapid development</td><td>✅ Mature (rising)</td></tr>
+                </tbody>
+            </table>
+        </div>
 
-      <h2>二、北欧模式（瑞/丹/芬）：高福利的“温室生态”，抗压的“脆弱性”</h2>
-      <ul>
-        <li><strong>成熟度体现</strong>：极度契合“以人民为中心”的实质福祉，社会信任度极高，德法合治的黏合性极好。腐败率极低，公共服务堪称人类标杆。</li>
-        <li><strong>底层硬伤</strong>：这种成熟高度依赖单一族群文化、高同质性和低外部风险。一旦遭遇大规模移民涌入、地缘冲突（如俄乌危机）或人口老龄化，其“高成本福利模型”便摇摇欲坠。它的成熟是“静态温室”的成熟，而非“直面疾风暴雨”的成熟。</li>
-      </ul>
-      <div class="rating"><strong>成熟度评分</strong>：社会福祉成熟度 ★★★★★ ｜  系统韧性成熟度 ★★★</div>
+        <div class="insight-block"><p><span class="highlight">The U.S. is the <strong>outlier</strong> among mature economies. It has the institutions of a mature system — but the outcomes of an immature one. The gap is structural: the U.S. system is captured by private interests.</span></p></div>
 
-      <h2>三、新加坡模式：务实的“精密仪器”，精英的“父爱主义”</h2>
-      <ul>
-        <li><strong>成熟度体现</strong>：在“秩序”与“发展”上做到了极致，法治严密、效率全球第一。极度务实，不被意识形态束缚，完美诠释了“德法合治”（高薪养廉+严苛刑罚）。</li>
-        <li><strong>底层硬伤</strong>：作为城邦国家，体量决定了其治理复杂度远低于大型文明体。它的成熟是“自上而下”的精英管控，缺乏“自下而上”的社会动员与参与辩证法。当一代精英出现决策偏差时，系统缺乏足够的社会缓冲层来纠错。</li>
-      </ul>
-      <div class="rating"><strong>成熟度评分</strong>：执行效率成熟度 ★★★★★ ｜  文明复杂应对成熟度 ★★★☆</div>
+        <h2>II. The First Principles of Governance Maturity</h2>
+        <ul>
+            <li><strong>State capacity</strong>: The ability to formulate and implement policy effectively.</li>
+            <li><strong>Long-term planning</strong>: The ability to think beyond the next election.</li>
+            <li><strong>Outcome accountability</strong>: The ability to measure and respond to results.</li>
+            <li><strong>Trust</strong>: The ability to maintain public confidence.</li>
+            <li><strong>Resilience</strong>: The ability to survive crises without collapse.</li>
+        </ul>
 
-      <h2>四、中国模式：文明型“巨系统”，主动进化的“战略定力”</h2>
-      <ul>
-        <li><strong>成熟度体现</strong>：中国是全球唯一将“第一性原理”作为明确顶层逻辑，并长期主义地、大规模地实践的国家。
-          <ul>
-            <li><strong>秩序</strong>：拥有超大规模社会中最顶级的“安全底座”；</li>
-            <li><strong>社会</strong>：主动用国家力量反哺社会（脱贫攻坚），践行“社会第一性”；</li>
-            <li><strong>民心</strong>：以“人民满不满意”作为终极KPI，而非选票；</li>
-            <li><strong>德法</strong>：将传统“民本”思想与现代化法治结合，形成独特的“叠加态”治理。</li>
-          </ul>
-        </li>
-        <li><strong>当前挑战（成熟度仍待进化之处）</strong>：
-          <ul>
-            <li><strong>执行温差</strong>：顶层设计的“道”极高，但在基层落实中，存在形式主义、官僚主义的“传导损耗”；</li>
-            <li><strong>反馈机制</strong>：在“程序民主”的工具性补充上，仍需更灵敏的民情响应通道，以缓冲系统内部因规模过大而产生的惯性延迟；</li>
-            <li><strong>国际适配</strong>：这套高度内生的治理逻辑，在国际话语体系中尚难被广泛“解码”，外部叙事成熟度弱于内部治理成熟度。</li>
-          </ul>
-        </li>
-      </ul>
-      <div class="rating"><strong>成熟度评分</strong>：战略定力成熟度 ★★★★★ ｜  基层弹性成熟度 ★★★★ ｜  全球叙事成熟度 ★★★</div>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Principle</th><th>US</th><th>Nordics</th><th>Singapore</th><th>China</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">State Capacity</span></td><td>❌ Weak</td><td>✅ Strong</td><td>✅ Strong</td><td>✅ Strong</td></tr>
+                    <tr><td><span class="highlight-blue">Long-Term Planning</span></td><td>❌ None</td><td>✅ Strong</td><td>✅ Strong</td><td>✅ Strong</td></tr>
+                    <tr><td><span class="highlight-blue">Outcome Accountability</span></td><td>❌ Weak</td><td>✅ Strong</td><td>✅ Strong</td><td>✅ Strong</td></tr>
+                    <tr><td><span class="highlight-blue">Trust</span></td><td>❌ Low</td><td>✅ High</td><td>✅ High</td><td>✅ High</td></tr>
+                    <tr><td><span class="highlight-blue">Resilience</span></td><td>❌ Low</td><td>✅ High</td><td>✅ High</td><td>✅ High</td></tr>
+                </tbody>
+            </table>
+        </div>
 
-      <h2>五、最终结论：何为“最高级”的治理成熟？</h2>
-      <p>如果成熟度分三个层次：</p>
-      <ul>
-        <li><strong>低阶成熟</strong>：会熟练操作治理工具（如选举、立法、税收）；</li>
-        <li><strong>中阶成熟</strong>：能维持社会长期稳定与经济增长；</li>
-        <li><strong>高阶成熟</strong>：在保持核心“道”不变的前提下，能不断吸收时代变量，进行自我革命，并平衡好“秩序”与“活力”、“效率”与“公平”的张力。</li>
-      </ul>
-      <p>按照这个标准，<strong>美国停在中阶，北欧停在静态高阶，新加坡停在精密中阶，而中国正在向“高阶动态成熟”冲刺</strong>——它的最大优势，是敢于承认“治理永远在路上”，并拥有强大的制度驱动力去主动修正航向。</p>
-      <p>但中国仍需补课：真正的大国成熟，不仅是“做得好”，更是“让每一个普通人无死角地感受到公平”，以及“把中国治理的底层逻辑，转化为人类共同的智识财富”。这条路，比单纯建高铁、发卫星更难，却正是“第一性原理”留给中国最深刻的修行课题。</p>
+        <h2>III. The U.S. Exception</h2>
+        <p>The U.S. is the only mature economy that is <strong>declining in governance maturity</strong>. Its institutions are intact — but they are captured. The state cannot act because the state is controlled by private interests. The result: infrastructure crumbles, healthcare fails, and trust collapses.</p>
+        <p><span class="highlight-red">The U.S. is not a failed state. It is a <strong>captured state</strong> — governed by private interests, not public purpose.</span></p>
 
-      <div class="footnote">—— 基于秩序、社会、民心与德法合治的底层逻辑</div>
+        <h2>IV. The Nordic Model: Mature Social Democracy</h2>
+        <p>The Nordics combine market economics with strong state capacity, high public trust, and extensive welfare systems. They are mature because they have not allowed private interests to capture the state.</p>
+
+        <h2>V. The Singapore Model: Technocratic Governance</h2>
+        <p>Singapore is a meritocratic authoritarian system with high state capacity, long-term planning, and outcome accountability. It is mature because it selects for competence and delivers results.</p>
+
+        <h2>VI. The Chinese Model: Socialist Market Economy</h2>
+        <p>China combines state ownership, market mechanisms, and long-term planning. It is mature because it has built state capacity, maintained trust, and delivered results — poverty reduction, infrastructure, and growth.</p>
+
+        <h2>VII. GL Framework Diagnosis</h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>GL Dimension</th><th>US (Captured State)</th><th>Nordics (Mature)</th><th>Singapore (Technocratic)</th><th>China (State-Led)</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">Structural Integrity</span></td><td>❌ Low</td><td>✅ High</td><td>✅ High</td><td>✅ High</td></tr>
+                    <tr><td><span class="highlight-blue">Cost Shifting</span></td><td>❌ Systematic</td><td>✅ Managed</td><td>✅ Managed</td><td>✅ Managed</td></tr>
+                    <tr><td><span class="highlight-blue">Outcome Verifiability</span></td><td>❌ Low</td><td>✅ High</td><td>✅ High</td><td>✅ High</td></tr>
+                    <tr><td><span class="highlight-blue">Psychological Cost</span></td><td>❌ High</td><td>✅ Low</td><td>✅ Low</td><td>✅ Low</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>VIII. Conclusion: Maturity Is Not Ideology</h2>
+        <div class="conclusion-box">
+            <p><span class="highlight">Governance maturity is not about ideology. It is about <strong>capacity</strong> — the ability to deliver results, maintain trust, and survive crises. The U.S. is declining because it has lost capacity. The Nordics, Singapore, and China are mature because they have maintained it. The lesson is simple: <strong>governance is not about who rules — it is about what they deliver.</strong></span></p>
+            <p style="margin-top:.5rem;font-size:.8rem;color:#6b5f4e;"><span class="highlight">The U.S. can learn from all three models. But it must first recognize that its own model is failing.</span></p>
+        </div>
+
+        <!-- ===== 文章導覽 ===== -->
+        <div class="nav-series">
+            <div class="lang-en active">
+                <a href="governance-of-essential-livelihood-needs.html">← Governance of Essential Livelihood Needs</a>
+                <a href="breaking-cognitive-block.html">Breaking the Cognitive Block →</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="lang-en active">
+                GFI · Governance Theory Series · Governance Maturity<br/>
+                &copy; 2026 · Evidence, logic, and structural analysis of global governance
+            </div>
+            <div class="footer-links">
+                <a href="/index.html">Home</a>
+                <a href="/wellness/index.html">Wellness</a>
+                <a href="/about.html">About</a>
+            </div>
+        </div>
     </div>
 
-    <!-- ========== 英文内容 ========== -->
-    <div id="en" class="lang-content">
-      <h1>A Global Comparison of State Governance Maturity</h1>
-      <div class="subhead">— Examined through the four dimensions of the “First Principles”</div>
+    <!-- ============================================================ -->
+    <!-- 中文版 -->
+    <!-- ============================================================ -->
+    <div class="lang-block" id="zh">
+        <a href="/index.html" class="back-link">← 返回首頁</a>
+        <h1>治理成熟度：全球比較</h1>
+        <div class="subhead">運用第一性原理比較美國、北歐、新加坡與中國</div>
+        <div class="meta">GFI · 治理理論系列</div>
 
-      <p><strong>The “First Principles” of state governance refer to the most fundamental, irreducible logical starting points and value foundations that underpin all governance activities.</strong> They encompass four core dimensions: <strong>First, the construction of political order</strong> — the monopoly of violence and guarantee of security are the meta-proposition of governance; <strong>Second, society determines the state</strong> — the legitimacy of the state is rooted in the healthy development of society; <strong>Third, people-centered substantive governance</strong> — the ultimate purpose of governance is the well-being of the people, not procedural formalities; <strong>Fourth, the synergy of virtue and law</strong> — the combination of moral guidance and the rigidity of the rule of law to achieve systemic good governance.</p>
-      
-      <p>To evaluate a country's governance maturity is essentially to examine the extent to which it adheres to and dynamically balances these four underlying principles. This cannot be measured merely by institutional longevity or GDP figures; rather, it depends on the system's capacity for self-correction and continuous evolution when facing internal and external shocks. If we view the world's major governance models as different “living organisms”, the differences in their maturity are striking:</p>
+        <div class="insight-block"><p><span class="highlight">並非所有治理系統都是平等的。有些是成熟的——它們交付結果、維持穩定、建立信任。其他則不成熟——它們產生危機、不平等和失敗。治理成熟度不是關於程序。它是關於<strong>能力</strong>。</span></p></div>
 
-      <h2>I. The U.S. Model: A sophisticated “procedural machine” with a fragile “social ecosystem”</h2>
-      <ul>
-        <li><strong>Maturity highlights</strong>: The U.S. excels in the procedural design of “rule of law” and “checks and balances”; the processes of power transition, litigation, and media supervision are highly standardised.</li>
-        <li><strong>Underlying flaw</strong>: It seriously violates the principle that “society determines the state”. Capital logic has deeply captured politics, and social fragmentation (wealth, race, ideology) has exceeded the system's self-regulating capacity. Its maturity lies in “technique” (procedures), while its immaturity lies in the “Way” (loss of social cohesion). When the baseline of “order” is breached (e.g., the Capitol riot), the procedural machine nearly breaks down.</li>
-      </ul>
-      <div class="rating"><strong>Maturity rating</strong>: Procedural maturity ★★★★★  ｜  Substantive governance maturity ★★☆</div>
+        <h2>一、四種模式比較</h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>模式</th><th>系統類型</th><th>關鍵特徵</th><th>成熟度</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">美國</span></td><td>自由民主</td><td>僵局、金錢政治、基礎設施衰退</td><td>❌ 不成熟（衰退中）</td></tr>
+                    <tr><td><span class="highlight-blue">北歐</span></td><td>社會民主</td><td>強福利國家、高信任、公有制</td><td>✅ 成熟</td></tr>
+                    <tr><td><span class="highlight-blue">新加坡</span></td><td>菁英威權主義</td><td>技術官僚治理、長期規劃</td><td>✅ 成熟</td></tr>
+                    <tr><td><span class="highlight-blue">中國</span></td><td>社會主義市場經濟</td><td>國家能力、長期規劃、快速發展</td><td>✅ 成熟（上升中）</td></tr>
+                </tbody>
+            </table>
+        </div>
 
-      <h2>II. The Nordic Model (Sweden/Denmark/Finland): A high‑welfare “greenhouse ecology” with vulnerable resilience</h2>
-      <ul>
-        <li><strong>Maturity highlights</strong>: It aligns perfectly with the people‑centered substantive welfare; social trust is extremely high, and the virtue‑law synergy works exceptionally well. Corruption is minimal, and public services are a global benchmark.</li>
-        <li><strong>Underlying flaw</strong>: This maturity heavily depends on a homogenous ethnic culture, high social cohesion, and low external risk. Once facing mass immigration, geopolitical conflicts (e.g., the Ukraine crisis), or an aging population, the “high‑cost welfare model” begins to wobble. Its maturity is that of a “static greenhouse”, not one that withstands storms.</li>
-      </ul>
-      <div class="rating"><strong>Maturity rating</strong>: Social welfare maturity ★★★★★  ｜  Systemic resilience maturity ★★★</div>
+        <div class="insight-block"><p><span class="highlight">美國是成熟經濟體中的<strong>異常值</strong>。它擁有成熟系統的制度——但卻有成熟系統的結果。差距是結構性的：美國系統被私人利益捕獲。</span></p></div>
 
-      <h2>III. The Singapore Model: Pragmatic “precision instrument” with elite “paternalism”</h2>
-      <ul>
-        <li><strong>Maturity highlights</strong>: It achieves excellence in both “order” and “development”, with rigorous rule of law and world‑leading efficiency. It is extremely pragmatic, unbound by ideology, and perfectly embodies “virtue‑law combination” (high salaries for integrity + strict penalties).</li>
-        <li><strong>Underlying flaw</strong>: As a city‑state, its size determines that its governance complexity is far lower than that of large civilisations. Its maturity is “top‑down” elite control, lacking the dialectic of “bottom‑up” social mobilisation and participation. When a generation of elites makes biased decisions, the system lacks sufficient social buffers to correct errors.</li>
-      </ul>
-      <div class="rating"><strong>Maturity rating</strong>: Execution efficiency maturity ★★★★★  ｜  Civilisational complexity maturity ★★★☆</div>
+        <h2>二、治理成熟度的第一性原理</h2>
+        <ul>
+            <li><strong>國家能力</strong>：有效制定和實施政策的能力。</li>
+            <li><strong>長期規劃</strong>：超越下次選舉思考的能力。</li>
+            <li><strong>成果問責</strong>：衡量和回應結果的能力。</li>
+            <li><strong>信任</strong>：維持公眾信心的能力。</li>
+            <li><strong>韌性</strong>：在沒有崩潰的情況下度過危機的能力。</li>
+        </ul>
 
-      <h2>IV. The China Model: A civilisational “mega‑system” with proactive evolution and strategic resolve</h2>
-      <ul>
-        <li><strong>Maturity highlights</strong>: China is the only country in the world that explicitly takes the “First Principles” as its top‑level logic and practices them consistently on a large scale.
-          <ul>
-            <li><strong>Order</strong>: Possesses the most advanced “security foundation” in a mega‑society;</li>
-            <li><strong>Society</strong>: Proactively uses state power to nourish society (poverty alleviation), practising “society as primary”;</li>
-            <li><strong>People's will</strong>: Uses “people's satisfaction” as the ultimate KPI, not votes;</li>
-            <li><strong>Virtue‑Law</strong>: Combines traditional “people‑oriented” thinking with modern rule of law, forming a unique “superimposed” governance.</li>
-          </ul>
-        </li>
-        <li><strong>Current challenges (areas for further evolution)</strong>:
-          <ul>
-            <li><strong>Implementation gap</strong>: The “Way” of top‑level design is lofty, but grassroots implementation suffers from “transmission losses” due to formalism and bureaucracy;</li>
-            <li><strong>Feedback mechanism</strong>: Needs more responsive channels for public opinion to supplement procedural democracy, so as to buffer the inertial delays caused by the system's enormous scale;</li>
-            <li><strong>Global narrative</strong>: This highly endogenous governance logic is still difficult to “decode” in international discourse; its external narrative maturity lags behind its internal governance maturity.</li>
-          </ul>
-        </li>
-      </ul>
-      <div class="rating"><strong>Maturity rating</strong>: Strategic resolve maturity ★★★★★  ｜  Grassroots resilience maturity ★★★★  ｜  Global narrative maturity ★★★</div>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>原則</th><th>美國</th><th>北歐</th><th>新加坡</th><th>中國</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">國家能力</span></td><td>❌ 弱</td><td>✅ 強</td><td>✅ 強</td><td>✅ 強</td></tr>
+                    <tr><td><span class="highlight-blue">長期規劃</span></td><td>❌ 無</td><td>✅ 強</td><td>✅ 強</td><td>✅ 強</td></tr>
+                    <tr><td><span class="highlight-blue">成果問責</span></td><td>❌ 弱</td><td>✅ 強</td><td>✅ 強</td><td>✅ 強</td></tr>
+                    <tr><td><span class="highlight-blue">信任</span></td><td>❌ 低</td><td>✅ 高</td><td>✅ 高</td><td>✅ 高</td></tr>
+                    <tr><td><span class="highlight-blue">韌性</span></td><td>❌ 低</td><td>✅ 高</td><td>✅ 高</td><td>✅ 高</td></tr>
+                </tbody>
+            </table>
+        </div>
 
-      <h2>V. Conclusion: What counts as the “highest” governance maturity?</h2>
-      <p>If we rank maturity into three levels:</p>
-      <ul>
-        <li><strong>Low‑level maturity</strong>: Skilful operation of governance tools (e.g., elections, legislation, taxation);</li>
-        <li><strong>Mid‑level maturity</strong>: Maintaining long‑term social stability and economic growth;</li>
-        <li><strong>High‑level maturity</strong>: While keeping the core “Way” unchanged, continuously absorbing new variables of the times, carrying out self‑renewal, and balancing the tensions between “order” and “vitality”, “efficiency” and “equity”.</li>
-      </ul>
-      <p>By this standard, <strong>the U.S. stays at the mid‑level, the Nordics remain at a static high‑level, Singapore stays at a refined mid‑level, while China is striving toward a dynamic high‑level maturity</strong>—its greatest strength is its willingness to admit that “governance is always a work in progress” and its strong institutional drive to proactively correct course.</p>
-      <p>Yet China still has homework to do: true great‑power maturity is not only about “doing well”, but also about “making every ordinary person feel fairness without blind spots”, and about “translating the underlying logic of Chinese governance into a shared intellectual asset for humanity”. This path is harder than building high‑speed railways or launching satellites, yet it is precisely the most profound cultivation task that the First Principles have left for China.</p>
+        <h2>三、美國的例外</h2>
+        <p>美國是唯一在治理成熟度上<strong>衰退</strong>的成熟經濟體。它的制度完好——但它們被捕獲。國家無法行動，因為國家被私人利益控制。結果：基礎設施崩潰、醫療保健失敗、信任瓦解。</p>
+        <p><span class="highlight-red">美國不是失敗國家。它是<strong>被捕獲的國家</strong>——由私人利益治理，而非公共目的。</span></p>
 
-      <div class="footnote">— Based on the underlying logic of order, society, people's will, and virtue‑law synergy</div>
+        <h2>四、北歐模式：成熟的社會民主</h2>
+        <p>北歐將市場經濟與強國家能力、高公眾信任和廣泛福利系統結合。它們成熟是因為它們不允許私人利益捕獲國家。</p>
+
+        <h2>五、新加坡模式：技術官僚治理</h2>
+        <p>新加坡是一個菁英威權主義系統，具有高國家能力、長期規劃和成果問責。它成熟是因為它選拔能力並交付結果。</p>
+
+        <h2>六、中國模式：社會主義市場經濟</h2>
+        <p>中國結合了國有制、市場機制和長期規劃。它成熟是因為它建立了國家能力、維持了信任並交付了結果——減貧、基礎設施和增長。</p>
+
+        <h2>七、GL框架診斷</h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>GL 維度</th><th>美國（被捕獲）</th><th>北歐（成熟）</th><th>新加坡（技術官僚）</th><th>中國（國家主導）</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">結構完整性</span></td><td>❌ 低</td><td>✅ 高</td><td>✅ 高</td><td>✅ 高</td></tr>
+                    <tr><td><span class="highlight-blue">成本轉嫁</span></td><td>❌ 系統性</td><td>✅ 可控</td><td>✅ 可控</td><td>✅ 可控</td></tr>
+                    <tr><td><span class="highlight-blue">成果可驗證性</span></td><td>❌ 低</td><td>✅ 高</td><td>✅ 高</td><td>✅ 高</td></tr>
+                    <tr><td><span class="highlight-blue">心理成本</span></td><td>❌ 高</td><td>✅ 低</td><td>✅ 低</td><td>✅ 低</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>八、結論：成熟不是意識形態</h2>
+        <div class="conclusion-box">
+            <p><span class="highlight">治理成熟度不是關於意識形態。它是關於<strong>能力</strong>——交付結果、維持信任和度過危機的能力。美國在衰退，因為它失去了能力。北歐、新加坡和中國成熟，因為它們保持了能力。教訓很簡單：<strong>治理不是關於誰統治——它是關於他們交付了什麼。</strong></span></p>
+            <p style="margin-top:.5rem;font-size:.8rem;color:#6b5f4e;"><span class="highlight">美國可以從所有三種模式中學習。但它必須首先承認自己的模式正在失敗。</span></p>
+        </div>
+
+        <!-- ===== 文章導覽 ===== -->
+        <div class="nav-series">
+            <div class="lang-zh active">
+                <a href="governance-of-essential-livelihood-needs.html">← 民生必需品的治理</a>
+                <a href="breaking-cognitive-block.html">打破認知障礙 →</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="lang-zh active">
+                GFI · 治理理論系列 · 治理成熟度<br/>
+                &copy; 2026 · 本平台以證據、邏輯與結構性分析探討全球治理
+            </div>
+            <div class="footer-links">
+                <a href="/index.html">首頁</a>
+                <a href="/wellness/index.html">Wellness</a>
+                <a href="/about.html">關於</a>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <script>
+</div>
+
+<script>
     (function() {
-      const btns = document.querySelectorAll('.lang-btn');
-      const contents = { zh: document.getElementById('zh'), en: document.getElementById('en') };
-      function switchLang(lang) {
-        for (let key in contents) {
-          contents[key].classList.remove('active');
+        const btns = document.querySelectorAll('.lang-btn');
+        const blocks = {
+            en: document.getElementById('en'),
+            zh: document.getElementById('zh')
+        };
+
+        function setLang(lang) {
+            Object.keys(blocks).forEach(key => {
+                if (blocks[key]) blocks[key].classList.remove('active');
+            });
+            if (blocks[lang]) blocks[lang].classList.add('active');
+
+            btns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
+
+            document.querySelectorAll('.nav-series .lang-zh, .nav-series .lang-en').forEach(el => el.classList.remove('active'));
+            const navTarget = document.querySelector('.nav-series .lang-' + lang);
+            if (navTarget) navTarget.classList.add('active');
+
+            document.querySelectorAll('.footer .lang-zh, .footer .lang-en').forEach(el => el.classList.remove('active'));
+            const footerTarget = document.querySelector('.footer .lang-' + lang);
+            if (footerTarget) footerTarget.classList.add('active');
+
+            if (history.pushState) history.pushState(null, '', '#' + lang);
         }
-        if (contents[lang]) contents[lang].classList.add('active');
+
         btns.forEach(btn => {
-          btn.classList.remove('active');
-          if (btn.dataset.lang === lang) btn.classList.add('active');
+            btn.addEventListener('click', function() {
+                const lang = this.dataset.lang;
+                if (lang) setLang(lang);
+            });
         });
-        if (history.pushState) history.pushState(null, '', '#' + lang);
-      }
-      btns.forEach(btn => {
-        btn.addEventListener('click', function(e) {
-          const lang = this.dataset.lang;
-          if (lang) switchLang(lang);
+
+        const hash = window.location.hash.replace('#', '');
+        if (hash === 'zh') {
+            setLang('zh');
+        } else {
+            setLang('en');
+        }
+
+        window.addEventListener('hashchange', function() {
+            const newHash = window.location.hash.replace('#', '');
+            if (newHash === 'zh') {
+                setLang('zh');
+            } else {
+                setLang('en');
+            }
         });
-      });
-      const hash = window.location.hash.replace('#', '');
-      if (hash === 'en' || hash === 'zh') {
-        switchLang(hash);
-      } else {
-        // 默认中文
-        if (!contents.zh.classList.contains('active')) switchLang('zh');
-      }
-      window.addEventListener('hashchange', function() {
-        const newHash = window.location.hash.replace('#', '');
-        if (newHash === 'en' || newHash === 'zh') switchLang(newHash);
-      });
     })();
-  </script>
+</script>
+
 </body>
 </html>
