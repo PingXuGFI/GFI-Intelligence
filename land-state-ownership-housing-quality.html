@@ -1,408 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Land State Ownership · 土地国有与住房品质</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Land Policy is the Foundation of Governance｜GFI Flow Intelligence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
     <style>
-        :root {
-            --bg: #0b1220;
-            --bg2: #0d1526;
-            --text: #f8fbff;
-            --muted: #c7d2e3;
-            --sub: #9fb0c8;
-            --dim: rgba(255,255,255,.06);
-            --green: #9FE870;
-            --blue: #7DD3FC;
-            --amber: #fbbf24;
-            --serif: 'DM Serif Display', Georgia, serif;
-            --mono: 'DM Mono', monospace;
-            --sans: 'DM Sans', system-ui, sans-serif;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: var(--sans);
-            font-size: 15px;
-            line-height: 1.7;
-            padding: 2rem 1rem;
-        }
-        .container {
-            max-width: 960px;
-            margin: 0 auto;
-            background: rgba(255,255,255,0.02);
-            border: 1px solid var(--dim);
-            border-radius: 24px;
-            padding: 2.2rem 2.5rem;
-            backdrop-filter: blur(2px);
-        }
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--green);
-            text-decoration: none;
-            font-family: var(--mono);
-            font-size: 13px;
-            letter-spacing: 0.08em;
-            border: 1px solid rgba(159,232,112,0.3);
-            padding: 8px 18px;
-            border-radius: 40px;
-            transition: all 0.2s;
-            margin-bottom: 1.8rem;
-        }
-        .back-link:hover {
-            background: rgba(159,232,112,0.1);
-            border-color: var(--green);
-            transform: translateX(-4px);
-        }
-        .lang-bar {
-            display: flex;
-            justify-content: flex-end;
-            gap: 0.6rem;
-            margin-bottom: 2rem;
-            border-bottom: 1px solid var(--dim);
-            padding-bottom: 0.8rem;
-        }
-        .lang-btn {
-            background: transparent;
-            border: 1px solid rgba(255,255,255,0.15);
-            padding: 0.3rem 1.2rem;
-            border-radius: 30px;
-            font-size: 0.8rem;
-            font-family: var(--mono);
-            font-weight: 500;
-            color: var(--sub);
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .lang-btn:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
-        .lang-btn.active {
-            background: rgba(159,232,112,0.15);
-            border-color: var(--green);
-            color: var(--green);
-        }
-        .lang-content { display: none; animation: fade 0.3s ease; }
-        .lang-content.active { display: block; }
-        @keyframes fade { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
-
-        h1 {
-            font-size: 2.1rem;
-            font-family: var(--serif);
-            font-weight: 700;
-            letter-spacing: 0.02em;
-            margin-bottom: 0.5rem;
-            color: #fff;
-            border-left: 6px solid var(--amber);
-            padding-left: 1.2rem;
-        }
-        .subhead {
-            font-size: 1rem;
-            color: var(--sub);
-            margin-bottom: 2rem;
-            padding-left: 1.2rem;
-            border-left: 3px solid rgba(251,191,36,0.3);
-            font-style: italic;
-        }
-        h2 {
-            font-size: 1.4rem;
-            font-family: var(--serif);
-            margin-top: 2.2rem;
-            margin-bottom: 0.6rem;
-            color: #eaf6ff;
-            border-bottom: 1px dashed rgba(255,255,255,0.08);
-            padding-bottom: 0.3rem;
-        }
-        h2 .badge {
-            font-family: var(--mono);
-            font-size: 0.6rem;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            background: rgba(251,191,36,0.15);
-            color: var(--amber);
-            padding: 0.05rem 0.8rem;
-            border-radius: 30px;
-            margin-left: 0.8rem;
-            font-weight: 400;
-        }
-        h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-top: 1.4rem;
-            margin-bottom: 0.4rem;
-            color: var(--muted);
-        }
-        p { margin-bottom: 1rem; color: var(--muted); text-align: justify; }
-        ul, ol { margin: 0.5rem 0 1rem 1.8rem; list-style-type: disc; color: var(--muted); }
-        li { margin-bottom: 0.3rem; }
-
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.2rem 0 1.5rem 0;
-            font-size: 0.85rem;
-            font-family: var(--mono);
-            background: rgba(255,255,255,0.02);
-            border-radius: 12px;
-            overflow: hidden;
-        }
-        .comparison-table th {
-            background: rgba(251,191,36,0.10);
-            color: var(--amber);
-            padding: 0.6rem 1rem;
-            text-align: left;
-            font-weight: 500;
-            letter-spacing: 0.04em;
-            border-bottom: 1px solid var(--dim);
-            font-size: 0.7rem;
-            text-transform: uppercase;
-        }
-        .comparison-table td {
-            padding: 0.6rem 1rem;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
-            vertical-align: top;
-            color: var(--muted);
-        }
-        .comparison-table tr:last-child td { border-bottom: none; }
-
-        .highlight-box {
-            background: rgba(251,191,36,0.05);
-            border-left: 4px solid var(--amber);
-            padding: 1.2rem 1.8rem;
-            margin: 1.5rem 0;
-            border-radius: 8px;
-        }
-        .highlight-box .big {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--amber);
-        }
-        .evidence-note {
-            background: rgba(125,211,252,0.04);
-            padding: 0.8rem 1.2rem;
-            border-radius: 6px;
-            margin: 0.5rem 0 1rem 0;
-            font-size: 0.85rem;
-            color: var(--sub);
-            border-left: 3px solid var(--blue);
-        }
-        .evidence-note strong { color: var(--blue); }
-
-        .conclusion-box {
-            background: rgba(255,255,255,0.03);
-            border-left: 4px solid var(--amber);
-            padding: 1.5rem 2rem;
-            margin-top: 2rem;
-            border-radius: 12px;
-        }
-        .conclusion-box h2 { border: none; margin-top:0; padding-top:0; }
-        .footnote {
-            font-size: 0.75rem;
-            color: var(--sub);
-            text-align: right;
-            margin-top: 2rem;
-            border-top: 1px solid var(--dim);
-            padding-top: 1rem;
-            font-style: italic;
-        }
-
-        @media (max-width: 640px) {
-            .container { padding: 1.2rem; }
-            h1 { font-size: 1.6rem; padding-left:0.8rem; }
-            h2 { font-size: 1.2rem; }
-            .lang-bar { justify-content: center; }
-            .comparison-table { font-size: 0.7rem; }
-            .comparison-table th, .comparison-table td { padding: 0.4rem 0.6rem; }
-            .highlight-box { padding: 0.8rem 1rem; }
-            .conclusion-box { padding: 1rem 1.2rem; }
-        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:#f5f0e8;color:#2d2a24;font-family:'DM Sans',system-ui,sans-serif;font-size:15px;line-height:1.8;padding:1.5rem 1rem}
+        .container{max-width:1040px;margin:0 auto}
+        .lang-switch{display:flex;gap:10px;margin-bottom:1.5rem;flex-wrap:wrap;justify-content:flex-end}
+        .lang-btn{font-family:'DM Mono',monospace;font-size:.7rem;padding:.3rem 1.2rem;border:1px solid rgba(60,50,40,.15);border-radius:20px;background:0 0;color:#6b5f4e;cursor:pointer;transition:all .2s}
+        .lang-btn:hover{border-color:#4a6b3d;color:#2d2a24}
+        .lang-btn.active{color:#3d6b2e;border-color:#3d6b2e;background:rgba(61,107,46,.08)}
+        .lang-block{display:none;animation:fadeIn .3s ease}
+        .lang-block.active{display:block}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+        .back-link{font-family:'DM Mono',monospace;font-size:.65rem;color:#3d6b2e;text-decoration:none;border-bottom:1px solid rgba(61,107,46,.2);padding-bottom:2px}
+        .back-link:hover{border-bottom-color:#3d6b2e}
+        h1{font-family:'DM Serif Display',Georgia,serif;font-size:2.2rem;color:#1f2a1a;margin-bottom:.2rem;line-height:1.2}
+        .subhead{font-family:'DM Mono',monospace;font-size:.75rem;color:#6b5f4e;letter-spacing:.06em;margin-bottom:.2rem}
+        .meta{font-family:'DM Mono',monospace;font-size:.65rem;color:#8a7e6a;border-bottom:1px solid rgba(60,50,40,.06);padding-bottom:1rem;margin-bottom:2rem}
+        h2{font-family:'DM Serif Display',Georgia,serif;font-size:1.4rem;color:#1f2a1a;margin:2.2rem 0 .8rem;border-left:4px solid #3d6b2e;padding-left:1rem}
+        h3{font-family:'DM Serif Display',Georgia,serif;font-size:1rem;color:#1f2a1a;margin:1.4rem 0 .4rem}
+        p{color:#4a4036;margin-bottom:.8rem;line-height:1.9}
+        .highlight{color:#3d6b2e;font-weight:500}
+        .highlight-red{color:#b33a3a;font-weight:500}
+        .highlight-blue{color:#4a7a6e;font-weight:500}
+        .insight-block{background:rgba(61,107,46,.06);border-left:4px solid #3d6b2e;padding:1rem 1.5rem;border-radius:0 8px 8px 0;margin:1.2rem 0}
+        .insight-block p{color:#2d2a24;margin-bottom:0;font-weight:450;font-size:.95rem}
+        .table-wrap{overflow-x:auto;border-radius:12px;border:1px solid rgba(60,50,40,.06);margin:1.2rem 0}
+        table{width:100%;border-collapse:collapse;font-family:'DM Mono',monospace;font-size:.65rem;min-width:480px}
+        th{text-align:left;padding:8px 10px;font-size:.5rem;letter-spacing:.08em;text-transform:uppercase;color:#8a7e6a;border-bottom:1px solid rgba(60,50,40,.06);font-weight:400;background:rgba(255,252,245,.3)}
+        td{padding:6px 10px;border-bottom:1px solid rgba(60,50,40,.03);color:#4a4036}
+        tr:hover td{background:rgba(255,252,245,.3)}
+        .conclusion-box{background:rgba(61,107,46,.06);border:1px solid rgba(61,107,46,.12);border-radius:12px;padding:1.2rem 1.8rem;margin-top:1.5rem}
+        .conclusion-box p{color:#1f2a1a;font-weight:450;font-size:.95rem;margin-bottom:.4rem}
+        .nav-series{margin-top:2.8rem;padding-top:1.8rem;border-top:2px solid rgba(60,50,40,.1);display:flex;flex-wrap:wrap;justify-content:space-between;gap:.8rem}
+        .nav-series a{color:#3d6b2e;text-decoration:none;font-weight:600;border:1px solid rgba(60,50,40,.15);padding:.4rem 1.2rem;border-radius:30px;font-size:.75rem;transition:.2s;background:rgba(255,252,245,.5);font-family:'DM Mono',monospace;letter-spacing:.02em}
+        .nav-series a:hover{background:#3d6b2e;color:#fff;border-color:#3d6b2e}
+        .nav-series .lang-zh,.nav-series .lang-en{display:none;width:100%;justify-content:space-between;gap:.8rem;flex-wrap:wrap}
+        .nav-series .lang-zh.active,.nav-series .lang-en.active{display:flex}
+        .footer{text-align:center;padding:24px 20px 32px;font-family:'DM Mono',monospace;font-size:11px;color:#8a7e6a;border-top:1px solid rgba(60,50,40,.06);margin-top:2rem}
+        .footer .lang-zh,.footer .lang-en{display:none}
+        .footer .lang-zh.active,.footer .lang-en.active{display:block}
+        .footer a{color:#6b5f4e;text-decoration:none}
+        .footer a:hover{color:#1f2a1a}
+        .footer-links{display:flex;justify-content:center;gap:16px;margin-top:6px;flex-wrap:wrap}
+        @media(max-width:720px){h1{font-size:1.6rem}.nav-series .lang-zh.active,.nav-series .lang-en.active{flex-direction:column;align-items:center}}
     </style>
 </head>
 <body>
 <div class="container">
-    <!-- 返回首页 -->
-    <a href="index.html" class="back-link">← 返回首页 / Back to Home</a>
 
-    <!-- 语言切换 -->
-    <div class="lang-bar">
+    <!-- 語言切換 -->
+    <div class="lang-switch">
         <button class="lang-btn" data-lang="zh">中文</button>
         <button class="lang-btn active" data-lang="en">English</button>
     </div>
 
-    <!-- ========== ENGLISH (default) ========== -->
-    <div id="en" class="lang-content active">
-        <h1>Land State Ownership Is the Fundamental Solution to Housing Quality</h1>
-        <div class="subhead">— A comparative institutional analysis of Hong Kong, Taiwan, and Mainland China</div>
+    <!-- ============================================================ -->
+    <!-- 英文版 (默認) -->
+    <!-- ============================================================ -->
+    <div class="lang-block active" id="en">
+        <a href="/index.html" class="back-link">← Back to Home</a>
+        <h1>Land Policy is the Foundation of Governance</h1>
+        <div class="subhead">The Root of All Governance Legitimacy</div>
+        <div class="meta">GFI · Land &amp; Housing Series</div>
 
-        <p><strong>The housing quality crisis in Hong Kong and Taiwan is not a failure of construction technology or urban planning — it is a failure of land institutions.</strong> This essay argues that only genuine state (or collective) ownership of land can break the structural cycle of housing commodification and restore housing to its proper purpose: serving the people, not capital.</p>
+        <div class="insight-block"><p><span class="highlight">All governance legitimacy ultimately rests on one question: <strong>who owns the land?</strong> The answer determines who has power, who pays the cost, and who benefits from the system.</span></p></div>
 
-        <h2>I. The Housing Quality Crisis Is a Land‑Institution Crisis</h2>
-        <p>When we speak of housing quality, we often refer to building standards, spatial design, construction quality, and property management. But these are <strong>symptoms, not causes.</strong></p>
-        <p>Hong Kong's "nano‑flats," subdivided units, rodent infestations, and exposed rebar; Taiwan's shrinking apartments, average building age of 34.1 years, leakage disputes, and seismic safety concerns — behind all these phenomena lies the same institutional root: <strong>land has been financialised and commodified, detached from its essential nature as a carrier of human habitation.</strong></p>
-        <p>Under private or “quasi‑private” land regimes (like Hong Kong's leasehold system), land is no longer a resource for providing living space, but an asset for speculation, monopoly, and financialisation. <strong>When land becomes an asset, housing inevitably becomes a commodity; when housing becomes a commodity, living quality must yield to the rate of return on capital.</strong></p>
-        <div class="evidence-note"><strong>The underlying logic:</strong> not poor construction, not flawed urban design, but a land system whose “roots” are rotten.</div>
+        <h2>I. Why Land?</h2>
+        <p>Land is not just another asset. It is the <strong>foundation of all wealth</strong>. Everything is built on land: housing, industry, agriculture, infrastructure. Without land, there is no economy. Without control of land, there is no control of power.</p>
+        <p>Throughout history, the ruling class has been the <strong>land-owning class</strong>. The feudal lords owned the land. The colonial empires owned the land. The modern oligarchs own the land.</p>
+        <p><span class="highlight">Whoever controls the land controls the society.</span></p>
 
-        <h2>II. Hong Kong: The “Sub‑Landlord” Parasitic Chain Under the Leasehold System</h2>
-        <p>Legally, Hong Kong's land is “state‑owned” (vested in the government). But its leasehold system — lump‑sum premium payments, long‑term leases, free transferability — is functionally indistinguishable from private ownership.</p>
-        <p>This system has created a powerful <strong>“sub‑landlord” class</strong>:</p>
-        <ul>
-            <li><strong>Early conglomerates</strong> acquired large land interests at low cost.</li>
-            <li><strong>The government</strong> facilitates development through land‑rezoning procedures.</li>
-            <li><strong>Enormous land‑value increments</strong> are captured by “rent‑seekers and developers.”</li>
-            <li><strong>The final cost is passed on to residents</strong> — in the form of exorbitant prices, ultra‑small spaces, and degraded quality.</li>
-        </ul>
-        <p>Hong Kong's housing quality crisis is the inevitable outcome of this sub‑landlord chain. <strong>When land serves capital appreciation rather than habitation, residents’ living experience is bound to be sacrificed.</strong></p>
-
-        <h2>III. Taiwan: The “Gentrification Trap” Under Private Land Ownership</h2>
-        <p>Taiwan practises private land ownership. Although the Constitution enshrines the ideal of “equal land rights,” in reality the logic of land as a commodity has been pushed to its extreme.</p>
-        <ul>
-            <li><strong>Land becomes the scarcest asset</strong>, driving prices ever higher.</li>
-            <li><strong>Developers hoard land</strong>, delaying construction to wait for price increases.</li>
-            <li><strong>Old buildings are not renewed</strong> because the cost of land consolidation exceeds the benefit of redevelopment.</li>
-            <li><strong>Living space shrinks relentlessly</strong> — as total prices remain high, unit prices rise, and floor areas are reduced.</li>
-        </ul>
-        <p>The deterioration of Taiwan's housing quality — miniaturisation, ultra‑aged stock, construction disputes — is essentially a by‑product of the collusion between “landlords” and “developers” under private ownership. Ordinary citizens face not only “unaffordability” but also “paying dearly yet living poorly.”</p>
-
-        <h2>IV. Mainland China: The Institutional Advantages of Genuine State Ownership</h2>
-        <p>Unlike Hong Kong's leasehold and Taiwan's private ownership, Mainland China operates <strong>genuine state ownership (and collective ownership)</strong> of land. This system delivers clear advantages in safeguarding housing quality:</p>
-
-        <h3>1. Land Is No Longer Held Hostage by Rent‑Seeking</h3>
-        <p>Although land conveyance in the mainland also involves marketised “auction, bidding, and listing” processes, <strong>land‑value increments do not all flow to private capital.</strong> Through mechanisms like designated land for affordable housing and directed land supply for rental housing, the government can extract land resources from the logic of capital and channel them directly toward habitation needs.</p>
-
-        <h3>2. Large‑Scale Social Housing Programmes Become Feasible</h3>
-        <p>State ownership means the government can <strong>plan and construct affordable housing, talent apartments, and shared‑ownership housing in prime locations</strong> without being constrained by market land prices. In Hong Kong and Taiwan, high land costs or difficulties in land assembly have persistently hindered large‑scale public housing construction.</p>
-
-        <h3>3. “Housing for Living, Not Speculation” Has an Institutional Foundation</h3>
-        <p>This principle is not just a slogan; it requires institutional support. Under state ownership, the government can use <strong>administrative tools—controlling the pace of land supply, adjusting transfer methods, capping land premium rates—to directly intervene in speculative behaviour in the land market.</strong> Such “visible hands” are almost impossible to deploy under private ownership, because land belongs to private parties and the government has no right to interfere in their transactions.</p>
-
-        <h3>4. A “Safety Net” for Housing Quality</h3>
-        <p>The mainland uses <strong>building codes, residential design standards, and green building evaluations</strong> to impose baseline constraints on housing quality. More importantly, as the de facto controller of land, the government has a stronger incentive and capacity to drive urban renewal and old‑district renovation — because the value uplift generated by such renewal ultimately returns to the public interest, not to individual landowners.</p>
-
-        <h2>V. Why Land Is the “Root”</h2>
-        <p>If we visualise the housing problem as a tree:</p>
-
-        <table class="comparison-table">
-            <thead>
-                <tr><th>Layer</th><th>Hong Kong</th><th>Taiwan</th><th>Mainland China</th></tr>
-            </thead>
-            <tbody>
-                <tr><td><strong>Fruit</strong> (prices)</td><td>World's most expensive</td><td>Among Asia's highest</td><td>City‑specific, broadly controlled</td></tr>
-                <tr><td><strong>Trunk</strong> (quality)</td><td>Nano‑flats, subdivided units</td><td>Miniaturisation, aged stock</td><td>Steadily improving, standards upgraded</td></tr>
-                <tr><td><strong>Roots</strong> (land institution)</td><td><strong>Leasehold (quasi‑private)</strong></td><td><strong>Private ownership</strong></td><td><strong>State / collective ownership</strong></td></tr>
-            </tbody>
-        </table>
-
-        <div class="highlight-box">
-            <p><span class="big">Different roots bear different trees.</span></p>
-            <p>Hong Kong and Taiwan's roots determine that the flow of land value is <strong>upward — toward capital</strong>; Mainland China's roots determine that the flow of land value is <strong>downward — toward people's livelihoods.</strong></p>
+        <h2>II. How Land Determines Governance</h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Land System</th><th>Who Benefits</th><th>Who Bears the Cost</th><th>Governance Outcome</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">Public Ownership</span></td><td>The people</td><td>The state (investment)</td><td>Stable, equitable, long-term</td></tr>
+                    <tr><td><span class="highlight-blue">Private Ownership (regulated)</span></td><td>Landowners and society</td><td>Consumers (renters, buyers)</td><td>Unstable but manageable</td></tr>
+                    <tr><td><span class="highlight-blue">Private Ownership (unregulated)</span></td><td>Landowners</td><td>Everyone else</td><td>Unstable, inequitable, crisis-prone</td></tr>
+                    <tr><td><span class="highlight-blue">Corporate Ownership</span></td><td>Shareholders</td><td>Workers, renters, taxpayers</td><td>Extractive, exploitative</td></tr>
+                </tbody>
+            </table>
         </div>
 
-        <p>This is not to say the mainland has no housing problems — price pressures, unfinished projects, and property disputes do exist. But the nature of these problems is <strong>imperfections in implementation</strong>, not <strong>insolubility at the institutional level.</strong> State ownership provides the possibility of solving problems — when issues arise, the government has the authority, capacity, and tools to intervene, correct, and reallocate resources.</p>
+        <h2>III. The GL Framework Perspective</h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>GL Dimension</th><th>How Land Policy Shapes Governance</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">Cost Shifting</span></td><td>Private land ownership shifts the cost of housing, infrastructure, and development onto the public</td></tr>
+                    <tr><td><span class="highlight-blue">Transfer Pathways</span></td><td>Land value flows upward to landowners, not back to the community</td></tr>
+                    <tr><td><span class="highlight-blue">Information Asymmetry</span></td><td>Land ownership is often hidden; the public does not know who holds power</td></tr>
+                    <tr><td><span class="highlight-blue">Closure Intensity</span></td><td>Landowners form a closed class that uses its power to protect land ownership</td></tr>
+                    <tr><td><span class="highlight-blue">Waiting Cost</span></td><td>Speculation leaves land vacant while people wait for housing; the cost of waiting is borne by the homeless and the young</td></tr>
+                </tbody>
+            </table>
+        </div>
 
-        <h2>VI. Conclusion: Whose Name Is on the Title Deed Determines Whom Housing Serves</h2>
-        <p>The housing quality predicaments in Hong Kong and Taiwan fundamentally prove:</p>
-        <div class="evidence-note"><strong>As long as land is controlled by “sub‑landlords” (capital/landlords), housing can never truly serve its occupants. When land is capitalised, housing is commodified; when housing is commodified, living quality is sacrificed.</strong></div>
-        <p>Mainland China's decades of practice demonstrate another path:</p>
-        <div class="evidence-note"><strong>When land belongs to the state or the collective, when land‑value increments serve the public interest rather than private pockets — housing quality can return to a “human” scale.</strong></div>
-        <p>This is not a perfect system, but it offers what Hong Kong and Taiwan lack: <strong>institutional possibility.</strong> A housing system that does not sacrifice quality or the dignity of ordinary people's living can grow from the foundation of state‑owned land.</p>
+        <h2>IV. China vs. The West: Two Models</h2>
+        <ul>
+            <li><strong>China</strong>: Land is a public asset. The state allocates land for development. Speculation is controlled. Housing is for living.</li>
+            <li><strong>The West</strong>: Land is a private commodity. Land is traded, speculated on, and hoarded. Housing is a profit center.</li>
+        </ul>
+        <p><span class="highlight">The difference is not economic. It is <strong>constitutional</strong> — it is written into the foundation of the system.</span></p>
 
+        <h2>V. Conclusion: Land Policy is the Core</h2>
         <div class="conclusion-box">
-            <h2>Whose Name Is on the Title Deed?</h2>
-            <p><strong>Whose name is on the title deed determines whom the country's housing serves.</strong></p>
-            <p style="margin-top:0.5rem; font-style:italic; color:var(--amber);">If the title deed bears the name of the people, houses are built for the people.<br>If the title deed bears the name of capital, houses are built for profit.</p>
+            <p><span class="highlight">Every governance question eventually leads back to land. Who owns it? Who controls it? Who benefits from it? Until these questions are answered, no other reform will be effective. Land policy is not one policy among many. It is <strong>the policy that makes all other policies possible.</strong></span></p>
+            <p style="margin-top:.5rem;font-size:.8rem;color:#6b5f4e;"><span class="highlight">If you want to understand a society, ask: <strong>who owns the land?</strong></span></p>
         </div>
 
-        <div class="footnote">— A structural analysis of land institutions and housing quality</div>
+        <!-- ===== 文章導覽 ===== -->
+        <div class="nav-series">
+            <div class="lang-en active">
+                <span style="color:#999;">— Series Start —</span>
+                <a href="land-state-ownership-housing-quality.html">Land State Ownership Is the Fundamental Solution →</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="lang-en active">
+                GFI · Land &amp; Housing Series · Foundation of Governance<br/>
+                &copy; 2026 · Evidence, logic, and structural analysis of global governance
+            </div>
+            <div class="footer-links">
+                <a href="/index.html">Home</a>
+                <a href="/wellness/index.html">Wellness</a>
+                <a href="/about.html">About</a>
+            </div>
+        </div>
     </div>
 
-    <!-- ========== 中文 ========== -->
-    <div id="zh" class="lang-content">
-        <h1>土地国有才是解决住房品质的根本途径</h1>
-        <div class="subhead">——从香港、台湾与内地的制度比较看居住正义</div>
+    <!-- ============================================================ -->
+    <!-- 中文版 -->
+    <!-- ============================================================ -->
+    <div class="lang-block" id="zh">
+        <a href="/index.html" class="back-link">← 返回首頁</a>
+        <h1>土地政策是治理的基礎</h1>
+        <div class="subhead">所有治理正當性的根源</div>
+        <div class="meta">GFI · 土地與住房系列</div>
 
-        <p><strong>香港和台湾的住房品质危机，不是建筑技术或城市规划的失败，而是土地制度的失败。</strong>本文认为，只有真正的土地国有（或集体所有），才能从根本上打破住房商品化的结构性循环，让住房回归“为人民服务”而非“为资本服务”的本质。</p>
+        <div class="insight-block"><p><span class="highlight">所有治理正當性最終都歸結於一個問題：<strong>誰擁有土地？</strong>答案決定了誰擁有權力、誰承擔成本、誰從系統中受益。</span></p></div>
 
-        <h2>一、住房品质危机的本质是土地制度危机</h2>
-        <p>当我们谈论住房品质时，表面上讨论的是建筑标准、空间设计、施工质量、物业管理——但这些都只是<strong>“症状”，而非“病因”。</strong></p>
-        <p>香港的“纳米楼”、劏房、鼠患与钢筋外露；台湾的“小宅化”、34.1年平均屋龄、漏水纠纷与耐震疑虑——这些现象的背后，是同一种制度根源：<strong>土地被资本化、金融化，脱离了其作为“人居载体”的本质属性。</strong></p>
-        <p>在土地私有或“准私有”（香港批租制）的制度框架下，土地不再是为人民提供居住空间的资源，而变成了一种可供投机、可被垄断、可被金融化的“资产”。当土地成为资产，住房就必然成为商品；当住房成为商品，居住品质就必须让位于资本回报率。</p>
-        <div class="evidence-note"><strong>这就是香港和台湾住房品质恶化的底层逻辑：</strong>不是建筑技术不行，不是城市规划不好，而是土地制度的“根”烂了。</div>
+        <h2>一、為什麼是土地？</h2>
+        <p>土地不只是另一種資產。它是<strong>所有財富的基礎</strong>。一切都在土地上建造：住房、工業、農業、基礎設施。沒有土地，就沒有經濟。沒有對土地的控制，就沒有對權力的控制。</p>
+        <p>縱觀歷史，統治階級一直是<strong>土地擁有階級</strong>。封建領主擁有土地。殖民帝國擁有土地。現代寡頭擁有土地。</p>
+        <p><span class="highlight">誰控制土地，誰就控制社會。</span></p>
 
-        <h2>二、香港：批租制下的“二房东”寄生链</h2>
-        <p>香港的土地在法律上属于“国有”（政府所有），但其批租制度——一次性收取巨额地价、长期租约、可自由转让——在功能上与私有制无异。</p>
-        <p>这套制度制造了一个强大的“二房东”阶层：</p>
-        <ul>
-            <li><strong>早期财团</strong>以低廉价格获得大面积土地权益；</li>
-            <li><strong>政府</strong>通过土地改划程序为开发铺路；</li>
-            <li><strong>土地增值的巨额利润</strong>被“寻租者和发展商侵蚀”；</li>
-            <li><strong>最终成本转嫁给市民</strong>——以超高房价、超小空间、超低品质的形式呈现。</li>
-        </ul>
-        <p>香港的住房品质困境，是这套“二房东”链条的必然产物。当土地不再服务于居住，而服务于资本增值时，居住者的体验就注定被牺牲。</p>
-
-        <h2>三、台湾：土地私有制下的“贵族化”陷阱</h2>
-        <p>台湾实行的是土地私有制。虽然法律上有“平均地权”的理想设计，但在现实中，土地作为商品的逻辑被推到了极致。</p>
-        <ul>
-            <li><strong>土地成为最稀缺的资产</strong>，房价被不断推高；</li>
-            <li><strong>开发商囤地居奇</strong>，延缓开发以等待涨价；</li>
-            <li><strong>老旧房屋无人更新</strong>，因为整合土地的成本远超重建收益；</li>
-            <li><strong>居住空间持续压缩</strong>，因为总价不变、单价上涨，只能缩小面积。</li>
-        </ul>
-        <p>台湾住房品质的恶化——“小宅化”、超高屋龄、施工争议——本质上是土地私有制下“地主”与“开发商”合谋的副产品。普通人面对的不仅是“买不起”，更是“花了大钱却住不好”。</p>
-
-        <h2>四、中国内地：土地国有的制度性优势</h2>
-        <p>与香港的“批租制”和台湾的“私有制”不同，中国内地实行的是<strong>真正的土地国有与集体所有</strong>制度。这套制度在住房品质保障上的优势，体现在多个层面：</p>
-
-        <h3>1. 土地不再被“寻租”绑架</h3>
-        <p>内地土地出让虽然也有“招拍挂”的市场化环节，但<strong>土地增值的收益并非全部流向私人资本</strong>。政府可以通过保障房用地划拨、租赁住房用地定向供应等方式，将土地资源从资本逻辑中抽离出来，直接服务于居住需求。</p>
-
-        <h3>2. 大规模保障房体系成为可能</h3>
-        <p>土地国有使得政府可以<strong>不以市场价格为门槛</strong>，直接在优质地段规划建设保障性住房、人才公寓、共有产权房。而香港和台湾，由于土地成本过高或土地整合困难，大规模公共住房建设始终步履维艰。</p>
-
-        <h3>3. “房住不炒”具有制度基础</h3>
-        <p>“房住不炒”不只是一句口号，它需要土地制度的支撑。在土地国有框架下，政府可以通过<strong>控制土地供应节奏、调整出让方式、限制地价溢价率</strong>等行政手段，直接干预土地市场的投机行为。这种“看得见的手”在土地私有制下几乎无法施展——因为土地属于私人，政府无权干预其交易。</p>
-
-        <h3>4. 住房品质的“兜底”能力</h3>
-        <p>内地通过<strong>建筑标准规范、住宅设计规范、绿色建筑评价</strong>等制度工具，对住房品质进行底线约束。更重要的是，政府作为土地的实际控制者，有更强的动力和能力去推动城市更新、老旧小区改造——因为这些改造带来的土地增值，最终会回馈给公共利益，而非个别地主。</p>
-
-        <h2>五、土地为何是“根”？</h2>
-        <p>如果我们把住房问题比作一棵树，那么：</p>
-
-        <table class="comparison-table">
-            <thead>
-                <tr><th>层级</th><th>香港</th><th>台湾</th><th>中国内地</th></tr>
-            </thead>
-            <tbody>
-                <tr><td><strong>果实（房价）</strong></td><td>全球最贵</td><td>亚洲前列</td><td>因城施策、总体可控</td></tr>
-                <tr><td><strong>树干（住房品质）</strong></td><td>纳米楼、劏房</td><td>小宅化、老屋</td><td>持续改善、标准升级</td></tr>
-                <tr><td><strong>根系（土地制度）</strong></td><td><strong>批租制（准私有）</strong></td><td><strong>私有制</strong></td><td><strong>国有/集体所有</strong></td></tr>
-            </tbody>
-        </table>
-
-        <div class="highlight-box">
-            <p><span class="big">根系不同，长出来的树就不同。</span></p>
-            <p>香港和台湾的“根系”决定了土地价值的流向是向上（流向资本），而内地的“根系”决定了土地价值的流向是向下（流向民生）。</p>
+        <h2>二、土地如何決定治理</h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>土地制度</th><th>誰受益</th><th>誰承擔成本</th><th>治理結果</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">公有制</span></td><td>人民</td><td>國家（投資）</td><td>穩定、公平、長期</td></tr>
+                    <tr><td><span class="highlight-blue">私有制（管制）</span></td><td>地主與社會</td><td>消費者（租戶、買家）</td><td>不穩定但可控</td></tr>
+                    <tr><td><span class="highlight-blue">私有制（無管制）</span></td><td>地主</td><td>所有人</td><td>不穩定、不公平、易危機</td></tr>
+                    <tr><td><span class="highlight-blue">企業所有權</span></td><td>股東</td><td>勞工、租戶、納稅人</td><td>掠奪性、剝削性</td></tr>
+                </tbody>
+            </table>
         </div>
 
-        <p>这不是说内地没有住房问题——房价压力、烂尾楼、物业纠纷依然存在。但内地问题的性质是<strong>“执行层面的不完善”</strong>，而非<strong>“制度层面的不可解”</strong>。土地国有制度提供了解决问题的可能性——当问题出现时，政府有权力、有能力、有工具去干预、去纠偏、去重新分配资源。</p>
+        <h2>三、GL框架視角</h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>GL 維度</th><th>土地政策如何塑造治理</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">成本轉嫁</span></td><td>私有土地所有制將住房、基礎設施和發展的成本轉嫁給公眾</td></tr>
+                    <tr><td><span class="highlight-blue">轉移路徑</span></td><td>土地價值向上流向地主，而非回到社區</td></tr>
+                    <tr><td><span class="highlight-blue">資訊不對稱</span></td><td>土地所有權常被隱藏；公眾不知道誰掌握權力</td></tr>
+                    <tr><td><span class="highlight-blue">閉環程度</span></td><td>地主形成一個封閉階級，利用其權力保護土地所有權</td></tr>
+                    <tr><td><span class="highlight-blue">等待成本</span></td><td>投機使土地空置，而人們等待住房；等待的成本由無家可歸者和年輕人承擔</td></tr>
+                </tbody>
+            </table>
+        </div>
 
-        <h2>六、结语：谁的房契，决定了为谁服务</h2>
-        <p>香港和台湾的住房品质困境，从根本上证明了：</p>
-        <div class="evidence-note"><strong>只要土地掌握在“二房东”（资本/地主）手中，住房就永远不可能真正服务于居住者。土地被资本化，住房就必然被商品化；住房被商品化，居住品质就必然被牺牲。</strong></div>
-        <p>而中国内地用几十年实践证明了另一条路的可能性：</p>
-        <div class="evidence-note"><strong>当土地属于国家、属于集体，当土地增值服务于公共利益而非私人腰包——住房品质才有可能回到“人”的尺度。</strong></div>
-        <p>这不是完美无缺的制度，但它提供了香港和台湾所不具备的<strong>制度性可能</strong>：一个不以居住品质为代价、不以普通人的居住尊严为牺牲品的住房体系，是可以在国有土地的基础上生长出来的。</p>
+        <h2>四、中國 vs. 西方：兩種模式</h2>
+        <ul>
+            <li><strong>中國</strong>：土地是公共資產。國家分配土地用於發展。投機被控制。住房是用來住的。</li>
+            <li><strong>西方</strong>：土地是私有商品。土地被交易、投機和囤積。住房是利潤中心。</li>
+        </ul>
+        <p><span class="highlight">差異不是經濟性的。它是<strong>根本性的</strong>——它被寫入系統的基礎。</span></p>
 
+        <h2>五、結論：土地政策是核心</h2>
         <div class="conclusion-box">
-            <h2>“房契”上写的是谁的名字？</h2>
-            <p><strong>“房契”上写的是谁的名字，决定了这个国家的住房为谁服务。</strong></p>
-            <p style="margin-top:0.5rem; font-style:italic; color:var(--amber);">如果房契上写的是人民的名字，房子就为人民而建。<br>如果房契上写的是资本的名字，房子就为利润而生。</p>
+            <p><span class="highlight">每個治理問題最終都會回到土地。誰擁有它？誰控制它？誰從中受益？在這些問題被回答之前，沒有其他改革會有效。土地政策不是眾多政策之一。它是<strong>使所有其他政策成為可能的政策。</strong></span></p>
+            <p style="margin-top:.5rem;font-size:.8rem;color:#6b5f4e;"><span class="highlight">如果你想了解一個社會，問：<strong>誰擁有土地？</strong></span></p>
         </div>
 
-        <div class="footnote">—— 基于土地制度与住房品质的结构性分析</div>
+        <!-- ===== 文章導覽 ===== -->
+        <div class="nav-series">
+            <div class="lang-zh active">
+                <span style="color:#999;">— 系列開始 —</span>
+                <a href="land-state-ownership-housing-quality.html">土地國有制是住房品質的根本解決方案 →</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="lang-zh active">
+                GFI · 土地與住房系列 · 治理的基礎<br/>
+                &copy; 2026 · 本平台以證據、邏輯與結構性分析探討全球治理
+            </div>
+            <div class="footer-links">
+                <a href="/index.html">首頁</a>
+                <a href="/wellness/index.html">Wellness</a>
+                <a href="/about.html">關於</a>
+            </div>
+        </div>
     </div>
 
 </div>
@@ -410,40 +220,57 @@
 <script>
     (function() {
         const btns = document.querySelectorAll('.lang-btn');
-        const contents = { zh: document.getElementById('zh'), en: document.getElementById('en') };
-        function switchLang(lang) {
-            for (let key in contents) {
-                contents[key].classList.remove('active');
-            }
-            if (contents[lang]) contents[lang].classList.add('active');
+        const blocks = {
+            en: document.getElementById('en'),
+            zh: document.getElementById('zh')
+        };
+
+        function setLang(lang) {
+            Object.keys(blocks).forEach(key => {
+                if (blocks[key]) blocks[key].classList.remove('active');
+            });
+            if (blocks[lang]) blocks[lang].classList.add('active');
+
             btns.forEach(btn => {
                 btn.classList.remove('active');
                 if (btn.dataset.lang === lang) btn.classList.add('active');
             });
+
+            document.querySelectorAll('.nav-series .lang-zh, .nav-series .lang-en').forEach(el => el.classList.remove('active'));
+            const navTarget = document.querySelector('.nav-series .lang-' + lang);
+            if (navTarget) navTarget.classList.add('active');
+
+            document.querySelectorAll('.footer .lang-zh, .footer .lang-en').forEach(el => el.classList.remove('active'));
+            const footerTarget = document.querySelector('.footer .lang-' + lang);
+            if (footerTarget) footerTarget.classList.add('active');
+
             if (history.pushState) history.pushState(null, '', '#' + lang);
         }
+
         btns.forEach(btn => {
-            btn.addEventListener('click', function(e) {
+            btn.addEventListener('click', function() {
                 const lang = this.dataset.lang;
-                if (lang) switchLang(lang);
+                if (lang) setLang(lang);
             });
         });
-        // 默认英文
+
         const hash = window.location.hash.replace('#', '');
         if (hash === 'zh') {
-            switchLang('zh');
+            setLang('zh');
         } else {
-            switchLang('en');
+            setLang('en');
         }
+
         window.addEventListener('hashchange', function() {
             const newHash = window.location.hash.replace('#', '');
-            if (newHash === 'zh' || newHash === 'en') {
-                switchLang(newHash);
+            if (newHash === 'zh') {
+                setLang('zh');
             } else {
-                switchLang('en');
+                setLang('en');
             }
         });
     })();
 </script>
+
 </body>
 </html>
