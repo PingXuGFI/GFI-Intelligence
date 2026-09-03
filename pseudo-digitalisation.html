@@ -1,560 +1,646 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <meta name="description" content="GL Pseudo-Digitalisation Diagnostic Module · GFI Flow Intelligence">
-  <title>Pseudo-Digitalisation · GL Diagnostic Module | GFI Flow Intelligence</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #0b1220;
-      --bg2: #0d1526;
-      --text: #f8fbff;
-      --muted: #c7d2e3;
-      --sub: #9fb0c8;
-      --dim: rgba(255,255,255,.06);
-      --green: #9FE870;
-      --blue: #7DD3FC;
-      --serif: 'DM Serif Display', Georgia, serif;
-      --mono: 'DM Mono', monospace;
-      --sans: 'DM Sans', system-ui, sans-serif;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 15px; line-height: 1.6; overflow-x: hidden; }
-    
-    /* navigation */
-    .nav { position: fixed; inset: 0 0 auto 0; z-index: 100; height: 62px; padding: 0 clamp(18px, 5vw, 52px); display: flex; align-items: center; justify-content: space-between; background: rgba(11,18,32,0.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--dim); }
-    .logo { color: #fff; text-decoration: none; font-family: var(--mono); font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; }
-    .logo:hover { opacity: 0.8; }
-    .lang-grp { display: flex; gap: 6px; }
-    .lb-btn { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; padding: 5px 10px; border: 1px solid rgba(255,255,255,0.1); border-radius: 5px; background: none; color: var(--sub); cursor: pointer; transition: all 0.2s; }
-    .lb-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
-    .lb-btn.active { color: var(--green); border-color: rgba(159,232,112,0.35); background: rgba(159,232,112,0.07); }
-    
-    /* main container */
-    .page-container { padding-top: 82px; max-width: 1300px; margin: 0 auto; padding-left: clamp(20px, 5vw, 40px); padding-right: clamp(20px, 5vw, 40px); padding-bottom: 60px; }
-    
-    /* header */
-    .hero { text-align: center; margin-bottom: 2rem; }
-    h1 { font-family: var(--serif); font-size: 2.2rem; font-weight: 500; color: #fff; letter-spacing: -0.01em; margin-bottom: 0.5rem; }
-    .sub { color: var(--sub); font-size: 0.9rem; border-bottom: 1px solid var(--dim); display: inline-block; padding-bottom: 0.5rem; margin-bottom: 1rem; }
-    
-    .definition-card { background: rgba(0,0,0,0.3); border-left: 4px solid var(--green); padding: 1.5rem; border-radius: 24px; margin-bottom: 2rem; backdrop-filter: blur(4px); text-align: center; max-width: 900px; margin-left: auto; margin-right: auto; }
-    .definition-text { font-size: 1.1rem; font-weight: 500; color: var(--muted); }
-    
-    /* two columns */
-    .two-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0; }
-    @media (max-width: 800px) { .two-columns { grid-template-columns: 1fr; gap: 2rem; } }
-    
-    .card { background: rgba(255,255,255,0.03); border: 1px solid var(--dim); border-radius: 28px; padding: 1.5rem; backdrop-filter: blur(2px); transition: 0.2s; }
-    .card h3 { font-family: var(--serif); font-size: 1.4rem; font-weight: 500; margin-bottom: 1rem; color: var(--green); border-left: 3px solid var(--green); padding-left: 12px; }
-    
-    /* questions */
-    .question-row { background: rgba(255,255,255,0.04); border-radius: 18px; padding: 1rem; margin-bottom: 1rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.8rem; border: 1px solid rgba(255,255,255,0.05); }
-    .question-text { font-weight: 500; flex: 2; min-width: 200px; font-size: 0.9rem; }
-    .btn-group { display: flex; gap: 0.6rem; }
-    .option-btn { border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.4); padding: 0.4rem 1rem; border-radius: 40px; font-size: 0.8rem; font-weight: 500; cursor: pointer; min-width: 70px; color: var(--muted); transition: all 0.15s; }
-    .option-btn.selected-yes { background: #b95f3a; border-color: #b95f3a; color: white; }
-    .option-btn.selected-no { background: #2f5b52; border-color: #2f5b52; color: white; }
-    .option-btn.selected-unknown { background: #8f7a66; border-color: #8f7a66; color: white; }
-    .option-btn:hover:not(.selected-yes):not(.selected-no):not(.selected-unknown) { border-color: rgba(159,232,112,0.5); color: var(--green); }
-    
-    .result-area { background: rgba(0,0,0,0.45); border: 1px solid rgba(159,232,112,0.25); border-radius: 28px; padding: 1.5rem; margin: 1.5rem 0; text-align: center; }
-    .diagnosis-badge { font-size: 1.3rem; font-weight: 700; font-family: var(--mono); letter-spacing: -0.3px; }
-    .risk-level { font-size: 1rem; margin-top: 0.5rem; opacity: 0.9; color: var(--blue); }
-    .flex-between { display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem; }
-    .reset-btn { background: transparent; border: 1px solid rgba(255,255,255,0.2); padding: 0.3rem 0.9rem; border-radius: 40px; cursor: pointer; font-size: 0.75rem; color: var(--sub); font-family: var(--mono); transition: 0.2s; }
-    .reset-btn:hover { border-color: var(--green); color: var(--green); }
-    
-    /* case table */
-    .case-table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
-    .case-table th, .case-table td { text-align: left; padding: 0.6rem 0.3rem; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 0.8rem; }
-    .case-table th { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em; color: var(--green); }
-    .badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 30px; font-size: 0.7rem; font-weight: 600; color: white; background: #b95f3a; }
-    .badge-border { background: #c9a43b; }
-    .badge-suspect { background: #6f4e3a; }
-    .badge-negative { background: #2f5b52; }
-    
-    /* template area */
-    .diagnostic-template { background: rgba(0,0,0,0.35); border-radius: 20px; padding: 1.25rem; margin-top: 1rem; font-family: var(--mono); font-size: 0.75rem; white-space: pre-wrap; border: 1px solid rgba(255,255,255,0.08); color: var(--muted); line-height: 1.5; }
-    .template-header { font-weight: 700; margin-bottom: 0.75rem; color: var(--green); border-bottom: 1px solid rgba(159,232,112,0.2); padding-bottom: 0.5rem; font-size: 0.8rem; }
-    .copy-btn { background: rgba(159,232,112,0.12); border: 1px solid rgba(159,232,112,0.3); color: var(--green); padding: 0.4rem 1rem; border-radius: 40px; font-size: 0.7rem; font-family: var(--mono); cursor: pointer; margin-top: 0.75rem; transition: 0.2s; }
-    .copy-btn:hover { background: rgba(159,232,112,0.25); border-color: var(--green); }
-    
-    .back-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 2rem; font-family: var(--mono); font-size: 0.7rem; color: var(--blue); text-decoration: none; border-bottom: 1px solid rgba(125,211,252,0.3); }
-    .back-link:hover { border-bottom-color: var(--blue); color: var(--green); }
-    
-    footer { text-align: center; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--dim); font-family: var(--mono); font-size: 0.65rem; color: rgba(255,255,255,0.25); }
-    footer a { color: rgba(255,255,255,0.35); text-decoration: none; }
-    footer a:hover { color: var(--green); }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Pseudo-Digitalisation Module — How organizations simulate digital transformation while preserving power structures. A GL Framework analysis of why digitalisation fails. GFI Flow Intelligence." />
+    <meta name="keywords" content="pseudo-digitalisation, digital transformation failure, GL framework, governance inertia, information asymmetry, power preservation, digital facade" />
+    <meta property="og:title" content="Pseudo-Digitalisation Module | GFI Flow Intelligence" />
+    <meta property="og:description" content="Pseudo-digitalisation is the art of simulating transformation while preserving power. It is the most expensive form of inertia." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Pseudo-Digitalisation Module" />
+    <meta name="twitter:description" content="The most expensive form of inertia is the simulation of change." />
+    <link rel="alternate" hreflang="en" href="https://gfiintel.com/pseudo-digitalisation.html" />
+    <link rel="alternate" hreflang="zh-TW" href="https://gfiintel.com/pseudo-digitalisation.html?lang=tw" />
+    <link rel="alternate" hreflang="zh-CN" href="https://gfiintel.com/pseudo-digitalisation.html?lang=cn" />
+    <link rel="alternate" hreflang="es" href="https://gfiintel.com/pseudo-digitalisation.html?lang=es" />
+    <link rel="alternate" hreflang="x-default" href="https://gfiintel.com/pseudo-digitalisation.html" />
+    <title>Pseudo-Digitalisation Module | GFI Flow Intelligence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:#f5f0e8;color:#2d2a24;font-family:'DM Sans',system-ui,sans-serif;font-size:15px;line-height:1.8;padding:1.5rem 1rem}
+        .container{max-width:1040px;margin:0 auto}
+        .lang-switch{display:flex;gap:10px;margin-bottom:1.5rem;flex-wrap:wrap;justify-content:flex-end}
+        .lang-btn{font-family:'DM Mono',monospace;font-size:.7rem;padding:.3rem 1.2rem;border:1px solid rgba(60,50,40,.15);border-radius:20px;background:0 0;color:#6b5f4e;cursor:pointer;transition:all .2s}
+        .lang-btn:hover{border-color:#4a6b3d;color:#2d2a24}
+        .lang-btn.active{color:#3d6b2e;border-color:#3d6b2e;background:rgba(61,107,46,.08)}
+        .lang-block{display:none;animation:fadeIn .3s ease}
+        .lang-block.active{display:block}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+        .back-link{font-family:'DM Mono',monospace;font-size:.65rem;color:#3d6b2e;text-decoration:none;border-bottom:1px solid rgba(61,107,46,.2);padding-bottom:2px}
+        .back-link:hover{border-bottom-color:#3d6b2e}
+        h1{font-family:'DM Serif Display',Georgia,serif;font-size:2.2rem;color:#1f2a1a;margin-bottom:.2rem;line-height:1.2}
+        .subhead{font-family:'DM Mono',monospace;font-size:.75rem;color:#6b5f4e;letter-spacing:.06em;margin-bottom:.2rem}
+        .meta{font-family:'DM Mono',monospace;font-size:.65rem;color:#8a7e6a;border-bottom:1px solid rgba(60,50,40,.06);padding-bottom:1rem;margin-bottom:2rem}
+        h2{font-family:'DM Serif Display',Georgia,serif;font-size:1.4rem;color:#1f2a1a;margin:2.2rem 0 .8rem;border-left:4px solid #3d6b2e;padding-left:1rem}
+        h3{font-family:'DM Serif Display',Georgia,serif;font-size:1rem;color:#1f2a1a;margin:1.4rem 0 .4rem}
+        p{color:#4a4036;margin-bottom:.8rem;line-height:1.9}
+        .highlight{color:#3d6b2e;font-weight:500}
+        .highlight-red{color:#b33a3a;font-weight:500}
+        .highlight-blue{color:#4a7a6e;font-weight:500}
+        .insight-block{background:rgba(61,107,46,.06);border-left:4px solid #3d6b2e;padding:1rem 1.5rem;border-radius:0 8px 8px 0;margin:1.2rem 0}
+        .insight-block p{color:#2d2a24;margin-bottom:0;font-weight:450;font-size:.95rem}
+        .insight-block-red{background:rgba(179,58,58,.06);border-left:4px solid #b33a3a;padding:1rem 1.5rem;border-radius:0 8px 8px 0;margin:1.2rem 0}
+        .insight-block-red p{color:#2d2a24;margin-bottom:0;font-weight:450;font-size:.95rem}
+        .table-wrap{overflow-x:auto;border-radius:12px;border:1px solid rgba(60,50,40,.06);margin:1.2rem 0}
+        table{width:100%;border-collapse:collapse;font-family:'DM Mono',monospace;font-size:.65rem;min-width:480px}
+        th{text-align:left;padding:8px 10px;font-size:.5rem;letter-spacing:.08em;text-transform:uppercase;color:#8a7e6a;border-bottom:1px solid rgba(60,50,40,.06);font-weight:400;background:rgba(255,252,245,.3)}
+        td{padding:6px 10px;border-bottom:1px solid rgba(60,50,40,.03);color:#4a4036}
+        tr:hover td{background:rgba(255,252,245,.3)}
+        .conclusion-box{background:rgba(61,107,46,.06);border:1px solid rgba(61,107,46,.12);border-radius:12px;padding:1.2rem 1.8rem;margin-top:1.5rem}
+        .conclusion-box p{color:#1f2a1a;font-weight:450;font-size:.95rem;margin-bottom:.4rem}
+        .nav-series{margin-top:2.8rem;padding-top:1.8rem;border-top:2px solid rgba(60,50,40,.1);display:flex;flex-wrap:wrap;justify-content:space-between;gap:.8rem}
+        .nav-series a{color:#3d6b2e;text-decoration:none;font-weight:600;border:1px solid rgba(60,50,40,.15);padding:.4rem 1.2rem;border-radius:30px;font-size:.75rem;transition:.2s;background:rgba(255,252,245,.5);font-family:'DM Mono',monospace;letter-spacing:.02em}
+        .nav-series a:hover{background:#3d6b2e;color:#fff;border-color:#3d6b2e}
+        .nav-series .lang-zh,.nav-series .lang-en,.nav-series .lang-es{display:none;width:100%;justify-content:space-between;gap:.8rem;flex-wrap:wrap}
+        .nav-series .lang-zh.active,.nav-series .lang-en.active,.nav-series .lang-es.active{display:flex}
+        .series-badge{display:inline-block;font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.08em;text-transform:uppercase;color:#8a7e6a;background:rgba(60,50,40,.06);padding:.2rem .8rem;border-radius:20px;margin-bottom:.5rem}
+        .series-end{display:inline-block;font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.08em;text-transform:uppercase;color:#3d6b2e;background:rgba(61,107,46,.08);padding:.2rem .8rem;border-radius:20px;margin-top:.5rem}
+        .footer{text-align:center;padding:24px 20px 32px;font-family:'DM Mono',monospace;font-size:11px;color:#8a7e6a;border-top:1px solid rgba(60,50,40,.06);margin-top:2rem}
+        .footer .lang-zh,.footer .lang-en,.footer .lang-es{display:none}
+        .footer .lang-zh.active,.footer .lang-en.active,.footer .lang-es.active{display:block}
+        .footer a{color:#6b5f4e;text-decoration:none}
+        .footer a:hover{color:#1f2a1a}
+        .footer-links{display:flex;justify-content:center;gap:16px;margin-top:6px;flex-wrap:wrap}
+        @media(max-width:720px){h1{font-size:1.6rem}.nav-series .lang-zh.active,.nav-series .lang-en.active,.nav-series .lang-es.active{flex-direction:column;align-items:center}}
+    </style>
 </head>
 <body>
-<div class="nav">
-  <a href="index.html" class="logo">GFI Flow Intelligence</a>
-  <div class="lang-grp">
-    <button class="lb-btn active" data-lang="en">EN</button>
-    <button class="lb-btn" data-lang="tw">繁</button>
-    <button class="lb-btn" data-lang="cn">简</button>
-    <button class="lb-btn" data-lang="es">ES</button>
-  </div>
-</div>
+<div class="container">
 
-<div class="page-container" id="app">
-  <div class="hero">
-    <h1 id="mainTitle">Pseudo-Digitalisation · GL Diagnostic Module</h1>
-    <div class="sub" id="subTitle">Quick scan: who bears the cost when the system fails?</div>
-  </div>
-
-  <div class="definition-card">
-    <div class="definition-text" id="defText">▸ A system that works smoothly under normal conditions but shifts all failure costs to users under pressure.</div>
-  </div>
-
-  <div class="two-columns">
-    <!-- LEFT: Quick Scan -->
-    <div class="card">
-      <h3 id="scanTitle">Quick Scan</h3>
-      <div id="questionsContainer"></div>
-      <div class="flex-between">
-        <button class="reset-btn" id="resetBtn">⟳ <span id="resetText">Reset</span></button>
-        <div style="font-size: 0.7rem; color: var(--sub);" id="statusText">0 / 5 unanswered</div>
-      </div>
-      <div class="result-area">
-        <div class="diagnosis-badge" id="diagnosisResult">—</div>
-        <div class="risk-level" id="riskResult">Awaiting answers</div>
-        <div style="font-size:0.7rem; margin-top: 0.75rem; color: var(--sub);" id="glHint">GL = (Fs×Vn)/(Pd×Cf) · detecting cost-shifting</div>
-      </div>
-      <div style="margin-top: 1rem;">
-        <div style="font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.08em; color: var(--green); margin-bottom: 0.5rem;" id="caseLabel">REFERENCE CASES</div>
-        <table class="case-table" id="caseTable">
-          <thead><tr id="caseHeader"><th>System</th><th>Verdict</th><th>Risk</th></tr></thead>
-          <tbody id="caseBody"></tbody>
-        </table>
-      </div>
+    <!-- 語言切換 -->
+    <div class="lang-switch">
+        <button class="lang-btn" data-lang="en">English</button>
+        <button class="lang-btn" data-lang="tw">繁</button>
+        <button class="lang-btn" data-lang="cn">简</button>
+        <button class="lang-btn" data-lang="es">Español</button>
     </div>
 
-    <!-- RIGHT: Diagnostic Template -->
-    <div class="card">
-      <h3 id="templateTitle">GL Diagnostic Template</h3>
-      <div class="diagnostic-template" id="diagnosticTemplate">
-        <div class="template-header" id="templateHeader">▸ GL Pseudo-Digitalisation Checklist</div>
-        <div id="templateContent">Loading...</div>
-      </div>
-      <button class="copy-btn" id="copyTemplateBtn">📋 <span id="copyText">Copy Template</span></button>
-      <p style="font-size: 0.6rem; margin-top: 0.75rem; color: var(--sub); text-align: center;" id="templateNote">Free · No registration · Use offline</p>
-      <a href="index.html" class="back-link" id="backLink">← Back to main page</a>
-    </div>
-  </div>
+    <!-- ============================================================ -->
+    <!-- 英文版 (默認) -->
+    <!-- ============================================================ -->
+    <div class="lang-block active" id="en">
+        <a href="index.html" class="back-link">← Back to Home</a>
+        <div class="series-badge">Digital &amp; AI Series · Part 4 of 4</div>
+        <h1>Pseudo-Digitalisation Module</h1>
+        <div class="subhead">The Most Expensive Form of Inertia — How Organizations Simulate Transformation While Preserving Power</div>
+        <div class="meta">GFI · Digital &amp; AI Series</div>
 
-  <footer>
-    <span id="footerText">GFI Flow Intelligence · The ruler stays. Do not shift cost to the voiceless.</span><br>
-    <span id="footerLink">gfiintel.com | Free to use, no authorization required</span>
-  </footer>
+        <div class="insight-block"><p><span class="highlight">Pseudo-digitalisation is the art of simulating transformation while preserving power. It is the most expensive form of inertia — and it is the default mode of most organizations. <strong>Change is simulated. Power is preserved. Dysfunction is automated.</strong></span></p></div>
+
+        <h2>I. What Is Pseudo-Digitalisation?</h2>
+        <p>Pseudo-digitalisation is the process of implementing digital systems without changing the underlying governance structure. It is the replacement of paper with screens, of files with databases, of manual workflows with automated ones — while leaving information asymmetry, power concentration, and unaccountable decision-making intact.</p>
+        <p>It looks like transformation. It sounds like transformation. It costs like transformation. <span class="highlight-red">But it is not transformation.</span></p>
+
+        <div class="insight-block-red"><p><span class="highlight-red">Pseudo-digitalisation is the simulation of change. It creates the appearance of progress while preserving the reality of power.</span></p></div>
+
+        <h2>II. The Six Features of Pseudo-Digitalisation</h2>
+
+        <h3>1. Technology First, Governance Never</h3>
+        <p>The organization buys technology before defining the governance change. The technology is the solution — not the enabler. Governance is never discussed. Power structures are never examined.</p>
+
+        <h3>2. Automation of Dysfunction</h3>
+        <p>Broken processes are digitized. The result is a broken digital process. Faster. More efficient. Harder to fix. The dysfunction is now embedded in code.</p>
+
+        <h3>3. Information Asymmetry Preserved</h3>
+        <p>Data flows upward. Those at the top have dashboards. Those at the bottom have data entry screens. Transparency is a concession, not a design principle.</p>
+
+        <h3>4. Power Concentrated at the Top</h3>
+        <p>Decision-making is centralized. The digital system gives top officials better information and faster analytics. It does not distribute power. It reinforces it.</p>
+
+        <h3>5. Accountability Disappears into the Algorithm</h3>
+        <p>Decisions are made by algorithms. No one is responsible. The system is opaque. The legal void is complete.</p>
+
+        <h3>6. The Language of Transformation</h3>
+        <p>The organization uses the language of transformation — "innovation," "agile," "digital-first" — while practicing preservation. The language changes. The reality does not.</p>
+
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Feature</th><th>Pseudo-Digitalisation</th><th>Real Digital Transformation</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">Technology</span></td><td>Technology is the solution</td><td>Technology is the enabler</td></tr>
+                    <tr><td><span class="highlight-blue">Process</span></td><td>Dysfunction is automated</td><td>Dysfunction is eliminated</td></tr>
+                    <tr><td><span class="highlight-blue">Information</span></td><td>Asymmetry is preserved</td><td>Asymmetry is flattened</td></tr>
+                    <tr><td><span class="highlight-blue">Power</span></td><td>Concentration is reinforced</td><td>Power is distributed</td></tr>
+                    <tr><td><span class="highlight-blue">Accountability</span></td><td>Disappears into the algorithm</td><td>Built into the system</td></tr>
+                    <tr><td><span class="highlight-blue">Language</span></td><td>Transformation vocabulary</td><td>Transformation reality</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>III. The GL Framework Diagnosis</h2>
+        <p>The GL Framework measures structural friction: <strong>GL = (Fs × Vn) / (Pd × Cf)</strong>. Pseudo-digitalisation appears to improve GL — but only on one side.</p>
+        <ul style="color:#4a4036;margin:.6rem 0 .8rem 1.5rem;line-height:1.9">
+            <li><span class="highlight-blue">•</span> <strong>Fs</strong> (Flow Success) may increase — but success is defined by the system, not by the citizen</li>
+            <li><span class="highlight-blue">•</span> <strong>Vn</strong> (Strategic Value) may be optimized — but optimized for whom?</li>
+            <li><span class="highlight-blue">•</span> <strong>Pd</strong> (Pain Duration) is reduced for the governor — and increased for the governed</li>
+            <li><span class="highlight-blue">•</span> <strong>Cf</strong> (Cognitive Friction) is reduced for the governor — and increased for the governed</li>
+        </ul>
+        <p><span class="highlight-red">The GL score improves on one side of the divide — and collapses on the other. The system is more efficient for those at the top. It is less legitimate for everyone else.</span></p>
+
+        <h2>IV. Why Pseudo-Digitalisation Is the Default</h2>
+        <p>Pseudo-digitalisation is not a failure of implementation. It is a <span class="highlight">strategy of preservation</span>. Those who hold power have no incentive to distribute it. Those who benefit from information asymmetry have no incentive to flatten it. Those who avoid accountability have no incentive to create it.</p>
+        <p>Pseudo-digitalisation is the rational response of a power system to the threat of change. It absorbs the language of transformation. It spends the money of transformation. It produces the reports of transformation. <span class="highlight-red">But it delivers the reality of preservation.</span></p>
+
+        <h2>V. The Cost of Pseudo-Digitalisation</h2>
+        <p>The cost of pseudo-digitalisation is not just financial. It is structural. It is the cost of:</p>
+        <ul style="color:#4a4036;margin:.6rem 0 .8rem 1.5rem;line-height:1.9">
+            <li><span class="highlight-blue">•</span> <strong>Lost legitimacy</strong> — citizens see through the simulation</li>
+            <li><span class="highlight-blue">•</span> <strong>Lost trust</strong> — the gap between rhetoric and reality is visible</li>
+            <li><span class="highlight-blue">•</span> <strong>Lost opportunity</strong> — resources are spent on preservation, not transformation</li>
+            <li><span class="highlight-blue">•</span> <strong>Lost capacity</strong> — the organization becomes dependent on vendors and consultants</li>
+        </ul>
+        <p>The financial cost is measured in billions. The structural cost is measured in the erosion of governance legitimacy.</p>
+
+        <h2>VI. How to Recognize Pseudo-Digitalisation</h2>
+        <p>If you see these signs, you are witnessing pseudo-digitalisation:</p>
+        <ul style="color:#4a4036;margin:.6rem 0 .8rem 1.5rem;line-height:1.9">
+            <li><span class="highlight-blue">•</span> The technology is expensive and visible — but the governance structure has not changed</li>
+            <li><span class="highlight-blue">•</span> The organization uses transformation language — but decisions are made the same way</li>
+            <li><span class="highlight-blue">•</span> Data is collected — but insights flow only upward</li>
+            <li><span class="highlight-blue">•</span> Citizens are users — not participants</li>
+            <li><span class="highlight-blue">•</span> The system is opaque — and accountability is absent</li>
+        </ul>
+
+        <h2>VII. How to Move from Pseudo to Real</h2>
+        <p>Moving from pseudo-digitalisation to real transformation requires three shifts:</p>
+        <ul style="color:#4a4036;margin:.6rem 0 .8rem 1.5rem;line-height:1.9">
+            <li><span class="highlight-blue">•</span> <strong>Shift 1: From Technology to Governance</strong> — start with governance change, not technology adoption</li>
+            <li><span class="highlight-blue">•</span> <strong>Shift 2: From Asymmetry to Symmetry</strong> — design systems that flatten information, not concentrate it</li>
+            <li><span class="highlight-blue">•</span> <strong>Shift 3: From Centralization to Distribution</strong> — move decision-making to the point of impact</li>
+        </ul>
+        <p>These shifts are not technical. They are political. They require those in power to give up power. <span class="highlight">That is why real transformation is rare — and pseudo-digitalisation is the norm.</span></p>
+
+        <div class="conclusion-box">
+            <p><span class="highlight">Pseudo-digitalisation is the most expensive form of inertia. It simulates change while preserving power. It spends billions to automate dysfunction. It uses the language of transformation to deliver the reality of preservation. The challenge of our time is not to digitize — it is to transform. And transformation requires power to be redistributed, information to be shared, and accountability to be built into the system. Without these, there is no transformation. There is only simulation.</span></p>
+            <p style="margin-top:.5rem;font-size:.8rem;color:#6b5f4e;"><span class="highlight">The question is not whether we can afford to transform. The question is whether we can afford not to.</span></p>
+        </div>
+
+        <div class="series-end">— Digital &amp; AI Series Complete —</div>
+
+        <!-- ===== 英文導航 ===== -->
+        <div class="nav-series">
+            <div class="lang-en active">
+                <a href="real-digital-transformation.html">← Real Digital Transformation</a>
+                <span style="color:#999;">— Series End —</span>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="lang-en active">
+                GFI · Digital &amp; AI Series · Pseudo-Digitalisation Module<br/>
+                &copy; 2026 · Evidence, logic, and structural analysis of global governance
+            </div>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="government.html">Public Sector</a>
+                <a href="enterprise.html">Private Sector</a>
+                <a href="about.html">About</a>
+                <a href="mailto:gfi@gfiintel.com">Contact</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 繁體中文 -->
+    <!-- ============================================================ -->
+    <div class="lang-block" id="tw">
+        <a href="index.html?lang=tw" class="back-link">← 返回首頁</a>
+        <div class="series-badge">數位與 AI 系列 · 第 4 篇，共 4 篇</div>
+        <h1>偽數位化模組</h1>
+        <div class="subhead">最昂貴的慣性形式——組織如何在保存權力的同時模擬轉型</div>
+        <div class="meta">GFI · 數位與 AI 系列</div>
+
+        <div class="insight-block"><p><span class="highlight">偽數位化是模擬轉型同時保存權力的藝術。它是最昂貴的慣性形式——也是大多數組織的預設模式。<strong>變革被模擬。權力被保存。失能被自動化。</strong></span></p></div>
+
+        <h2>一、什麼是偽數位化？</h2>
+        <p>偽數位化是在不改變底層治理結構的情況下實施數位系統的過程。它是用螢幕取代紙張、用資料庫取代檔案、用自動化工作流程取代手動工作流程——同時保持資訊不對稱、權力集中和無法問責的決策不變。</p>
+        <p>它看起來像轉型。聽起來像轉型。花費也像轉型。<span class="highlight-red">但它不是轉型。</span></p>
+
+        <div class="insight-block-red"><p><span class="highlight-red">偽數位化是變革的模擬。它創造進步的表象，同時保存權力的現實。</span></p></div>
+
+        <h2>二、偽數位化的六個特徵</h2>
+
+        <h3>1. 技術優先，治理從未</h3>
+        <p>組織在定義治理變革之前就購買技術。技術是解決方案——而非推動者。治理從未被討論。權力結構從未被檢視。</p>
+
+        <h3>2. 失能的自動化</h3>
+        <p>破碎的流程被數位化。結果是一個破碎的數位流程。更快。更有效率。更難修復。失能現在被嵌入程式碼中。</p>
+
+        <h3>3. 資訊不對稱被保存</h3>
+        <p>數據向上流動。頂層的人有儀表板。底層的人有數據輸入螢幕。透明度是一種讓步，而非設計原則。</p>
+
+        <h3>4. 權力集中在頂層</h3>
+        <p>決策被集中化。數位系統給高層官員更好的資訊和更快的分析。它不分散權力。它強化權力。</p>
+
+        <h3>5. 問責性消失在演算法中</h3>
+        <p>決策由演算法做出。沒有人負責。系統是不透明的。法律真空是完整的。</p>
+
+        <h3>6. 轉型的語言</h3>
+        <p>組織使用轉型的語言——「創新」、「敏捷」、「數位優先」——同時實行保存。語言改變了。現實沒有。</p>
+
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>特徵</th><th>偽數位化</th><th>真正數位轉型</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">技術</span></td><td>技術是解決方案</td><td>技術是推動者</td></tr>
+                    <tr><td><span class="highlight-blue">流程</span></td><td>失能被自動化</td><td>失能被消除</td></tr>
+                    <tr><td><span class="highlight-blue">資訊</span></td><td>不對稱被保存</td><td>不對稱被消除</td></tr>
+                    <tr><td><span class="highlight-blue">權力</span></td><td>集中被強化</td><td>權力被分散</td></tr>
+                    <tr><td><span class="highlight-blue">問責性</span></td><td>消失在演算法中</td><td>內建於系統中</td></tr>
+                    <tr><td><span class="highlight-blue">語言</span></td><td>轉型詞彙</td><td>轉型現實</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>三、GL 框架診斷</h2>
+        <p>GL 框架衡量結構摩擦：<strong>GL = (Fs × Vn) / (Pd × Cf)</strong>。偽數位化看似改善了 GL——但只在單側。</p>
+        <ul style="color:#4a4036;margin:.6rem 0 .8rem 1.5rem;line-height:1.9">
+            <li><span class="highlight-blue">•</span> <strong>Fs</strong>（流程成功率）可能增加——但成功是由系統定義的，而非公民</li>
+            <li><span class="highlight-blue">•</span> <strong>Vn</strong>（戰略價值）可能被優化——但為誰優化？</li>
+            <li><span class="highlight-blue">•</span> <strong>Pd</strong>（痛苦持續時間）對治理者減少——對被治理者增加</li>
+            <li><span class="highlight-blue">•</span> <strong>Cf</strong>（認知摩擦）對治理者減少——對被治理者增加</li>
+        </ul>
+        <p><span class="highlight-red">GL 分數在鴻溝的一側改善——在另一側崩潰。系統對頂層的人更有效率。對其他人則更不正當。</span></p>
+
+        <h2>四、為什麼偽數位化是預設模式</h2>
+        <p>偽數位化不是實施的失敗。它是 <span class="highlight">保存的策略</span>。掌握權力的人沒有動機去分散它。從資訊不對稱中受益的人沒有動機去消除它。逃避問責的人沒有動機去建立它。</p>
+        <p>偽數位化是權力系統對變革威脅的理性回應。它吸收轉型的語言。它花費轉型的金錢。它產出轉型的報告。<span class="highlight-red">但它交付的是保存的現實。</span></p>
+
+        <h2>五、偽數位化的成本</h2>
+        <p>偽數位化的成本不僅是財務的。它是結構性的。它是以下方面的成本：</p>
+        <ul style="color:#4a4036;margin:.6rem 0 .8rem 1.5rem;line-height:1.9">
+            <li><span class="highlight-blue">•</span> <strong>失去的正當性</strong>——公民看穿了模擬</li>
+            <li><span class="highlight-blue">•</span> <strong>失去的信任</strong>——修辭與現實之間的差距是可見的</li>
+            <li><span class="highlight-blue">•</span> <strong>失去的機會</strong>——資源花在保存上，而非轉型</li>
+            <li><span class="highlight-blue">•</span> <strong>失去的能力</strong>——組織變得依賴供應商和顧問</li>
+        </ul>
+        <p>財務成本以數十億計。結構成本以治理正當性的侵蝕來衡量。</p>
+
+        <h2>六、如何識別偽數位化</h2>
+        <p>如果你看到這些跡象，你正在目睹偽數位化：</p>
+        <ul style="color:#4a4036;margin:.6rem 0 .8rem 1.5rem;line-height:1.9">
+            <li><span class="highlight-blue">•</span> 技術昂貴且顯眼——但治理結構沒有改變</li>
+            <li><span class="highlight-blue">•</span> 組織使用轉型語言——但決策方式相同</li>
+            <li><span class="highlight-blue">•</span> 數據被收集——但洞察只向上流動</li>
+            <li><span class="highlight-blue">•</span> 公民是用戶——而非參與者</li>
+            <li><span class="highlight-blue">•</span> 系統不透明——且問責性缺席</li>
+        </ul>
+
+        <h2>七、如何從偽轉向真</h2>
+        <p>從偽數位化走向真正轉型需要三個轉變：</p>
+        <ul style="color:#4a4036;margin:.6rem 0 .8rem 1.5rem;line-height:1.9">
+            <li><span class="highlight-blue">•</span> <strong>轉變一：從技術到治理</strong>——從治理變革開始，而非技術採用</li>
+            <li><span class="highlight-blue">•</span> <strong>轉變二：從不對稱到對稱</strong>——設計消除資訊而非集中資訊的系統</li>
+            <li><span class="highlight-blue">•</span> <strong>轉變三：從集中到分散</strong>——將決策移向影響點</li>
+        </ul>
+        <p>這些轉變不是技術性的。它們是政治性的。它們要求當權者放棄權力。<span class="highlight">這就是為什麼真正的轉型很少見——而偽數位化是常態。</span></p>
+
+        <div class="conclusion-box">
+            <p><span class="highlight">偽數位化是最昂貴的慣性形式。它模擬變革同時保存權力。它花費數十億來自動化失能。它使用轉型的語言來交付保存的現實。我們這個時代的挑戰不是數位化——而是轉型。而轉型要求權力被重新分配、資訊被分享、問責性被內建於系統中。沒有這些，就沒有轉型。只有模擬。</span></p>
+            <p style="margin-top:.5rem;font-size:.8rem;color:#6b5f4e;"><span class="highlight">問題不是我們是否負擔得起轉型。問題是我們是否負擔不起。</span></p>
+        </div>
+
+        <div class="series-end">— 數位與 AI 系列完 —</div>
+
+        <!-- ===== 繁體中文導航 ===== -->
+        <div class="nav-series">
+            <div class="lang-zh active">
+                <a href="real-digital-transformation.html?lang=tw">← 真正的數位轉型</a>
+                <span style="color:#999;">— 系列完 —</span>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="lang-zh active">
+                GFI · 數位與 AI 系列 · 偽數位化模組<br/>
+                &copy; 2026 · 本平台以證據、邏輯與結構性分析探討全球治理
+            </div>
+            <div class="footer-links">
+                <a href="index.html?lang=tw">首頁</a>
+                <a href="government.html?lang=tw">公共部門</a>
+                <a href="enterprise.html?lang=tw">私營部門</a>
+                <a href="about.html?lang=tw">創辦人</a>
+                <a href="mailto:gfi@gfiintel.com">聯絡我們</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 简体中文 -->
+    <!-- ============================================================ -->
+    <div class="lang-block" id="cn">
+        <a href="index.html?lang=cn" class="back-link">← 返回首页</a>
+        <div class="series-badge">数字与 AI 系列 · 第 4 篇，共 4 篇</div>
+        <h1>伪数字化模块</h1>
+        <div class="subhead">最昂贵的惯性形式——组织如何在保存权力的同时模拟转型</div>
+        <div class="meta">GFI · 数字与 AI 系列</div>
+
+        <div class="insight-block"><p><span class="highlight">伪数字化是模拟转型同时保存权力的艺术。它是最昂贵的惯性形式——也是大多数组织的默认模式。<strong>变革被模拟。权力被保存。失能被自动化。</strong></span></p></div>
+
+        <h2>一、什么是伪数字化？</h2>
+        <p>伪数字化是在不改变底层治理结构的情况下实施数字系统的过程。它是用屏幕取代纸张、用数据库取代档案、用自动化工作流程取代手动工作流程——同时保持信息不对称、权力集中和无法问责的决策不变。</p>
+        <p>它看起来像转型。听起来像转型。花费也像转型。<span class="highlight-red">但它不是转型。</span></p>
+
+        <div class="insight-block-red"><p><span class="highlight-red">伪数字化是变革的模拟。它创造进步的表象，同时保存权力的现实。</span></p></div>
+
+        <h2>二、伪数字化的六个特征</h2>
+
+        <h3>1. 技术优先，治理从未</h3>
+        <p>组织在定义治理变革之前就购买技术。技术是解决方案——而非推动者。治理从未被讨论。权力结构从未被检视。</p>
+
+        <h3>2. 失能的自动化</h3>
+        <p>破碎的流程被数字化。结果是一个破碎的数字流程。更快。更有效率。更难修复。失能现在被嵌入代码中。</p>
+
+        <h3>3. 信息不对称被保存</h3>
+        <p>数据向上流动。顶层的人有仪表板。底层的人有数据输入屏幕。透明度是一种让步，而非设计原则。</p>
+
+        <h3>4. 权力集中在顶层</h3>
+        <p>决策被集中化。数字系统给高层官员更好的信息和更快的分析。它不分散权力。它强化权力。</p>
+
+        <h3>5. 问责性消失在算法中</h3>
+        <p>决策由算法做出。没有人负责。系统是不透明的。法律真空是完整的。</p>
+
+        <h3>6. 转型的语言</h3>
+        <p>组织使用转型的语言——「创新」、「敏捷」、「数字优先」——同时实行保存。语言改变了。现实没有。</p>
+
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>特征</th><th>伪数字化</th><th>真正数字转型</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">技术</span></td><td>技术是解决方案</td><td>技术是推动者</td></tr>
+                    <tr><td><span class="highlight-blue">流程</span></td><td>失能被自动化</td><td>失能被消除</td></tr>
+                    <tr><td><span class="highlight-blue">信息</span></td><td>不对称被保存</td><td>不对称被消除</td></tr>
+                    <tr><td><span class="highlight-blue">权力</span></td><td>集中被强化</td><td>权力被分散</td></tr>
+                    <tr><td><span class="highlight-blue">问责性</span></td><td>消失在算法中</td><td>内建于系统中</td></tr>
+                    <tr><td><span class="highlight-blue">语言</span></td><td>转型词汇</td><td>转型现实</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>三、GL 框架诊断</h2>
+        <p>GL 框架衡量结构摩擦：<strong>GL = (Fs × Vn) / (Pd × Cf)</strong>。伪数字化看似改善了 GL——但只在单侧。</p>
+        <ul style="color:#4a4036;margin:.6rem 0 .8rem 1.5rem;line-height:1.9">
+            <li><span class="highlight-blue">•</span> <strong>Fs</strong>（流程成功率）可能增加——但成功是由系统定义的，而非公民</li>
+            <li><span class="highlight-blue">•</span> <strong>Vn</strong>（战略价值）可能被优化——但为谁优化？</li>
+            <li><span class="highlight-blue">•</span> <strong>Pd</strong>（痛苦持续时间）对治理者减少——对被治理者增加</li>
+            <li><span class="highlight-blue">•</span> <strong>Cf</strong>（认知摩擦）对治理者减少——对被治理者增加</li>
+        </ul>
+        <p><span class="highlight-red">GL 分数在鸿沟的一侧改善——在另一侧崩溃。系统对顶层的人更有效率。对其他人则更不正当。</span></p>
+
+        <h2>四、为什么伪数字化是默认模式</h2>
+        <p>伪数字化不是实施的失败。它是 <span class="highlight">保存的策略</span>。掌握权力的人没有动机去分散它。从信息不对称中受益的人没有动机去消除它。逃避问责的人没有动机去建立它。</p>
+        <p>伪数字化是权力系统对变革威胁的理性回应。它吸收转型的语言。它花费转型的金钱。它产出转型的报告。<span class="highlight-red">但它交付的是保存的现实。</span></p>
+
+        <h2>五、伪数字化的成本</h2>
+        <p>伪数字化的成本不仅是财务的。它是结构性的。它是以下方面的成本：</p>
+        <ul style="color:#4a4036;margin:.6rem 0 .8rem 1.5rem;line-height:1.9">
+            <li><span class="highlight-blue">•</span> <strong>失去的正当性</strong>——公民看穿了模拟</li>
+            <li><span class="highlight-blue">•</span> <strong>失去的信任</strong>——修辞与现实之间的差距是可见的</li>
+            <li><span class="highlight-blue">•</span> <strong>失去的机会</strong>——资源花在保存上，而非转型</li>
+            <li><span class="highlight-blue">•</span> <strong>失去的能力</strong>——组织变得依赖供应商和顾问</li>
+        </ul>
+        <p>财务成本以数十亿计。结构成本以治理正当性的侵蚀来衡量。</p>
+
+        <h2>六、如何识别伪数字化</h2>
+        <p>如果你看到这些迹象，你正在目睹伪数字化：</p>
+        <ul style="color:#4a4036;margin:.6rem 0 .8rem 1.5rem;line-height:1.9">
+            <li><span class="highlight-blue">•</span> 技术昂贵且显眼——但治理结构没有改变</li>
+            <li><span class="highlight-blue">•</span> 组织使用转型语言——但决策方式相同</li>
+            <li><span class="highlight-blue">•</span> 数据被收集——但洞察只向上流动</li>
+            <li><span class="highlight-blue">•</span> 公民是用户——而非参与者</li>
+            <li><span class="highlight-blue">•</span> 系统不透明——且问责性缺席</li>
+        </ul>
+
+        <h2>七、如何从伪转向真</h2>
+        <p>从伪数字化走向真正转型需要三个转变：</p>
+        <ul style="color:#4a4036;margin:.6rem 0 .8rem 1.5rem;line-height:1.9">
+            <li><span class="highlight-blue">•</span> <strong>转变一：从技术到治理</strong>——从治理变革开始，而非技术采用</li>
+            <li><span class="highlight-blue">•</span> <strong>转变二：从不对称到对称</strong>——设计消除信息而非集中信息的系统</li>
+            <li><span class="highlight-blue">•</span> <strong>转变三：从集中到分散</strong>——将决策移向影响点</li>
+        </ul>
+        <p>这些转变不是技术性的。它们是政治性的。它们要求当权者放弃权力。<span class="highlight">这就是为什么真正的转型很少见——而伪数字化是常态。</span></p>
+
+        <div class="conclusion-box">
+            <p><span class="highlight">伪数字化是最昂贵的惯性形式。它模拟变革同时保存权力。它花费数十亿来自动化失能。它使用转型的语言来交付保存的现实。我们这个时代的挑战不是数字化——而是转型。而转型要求权力被重新分配、信息被分享、问责性被内建于系统中。没有这些，就没有转型。只有模拟。</span></p>
+            <p style="margin-top:.5rem;font-size:.8rem;color:#6b5f4e;"><span class="highlight">问题不是我们是否负担得起转型。问题是我们是否负担不起。</span></p>
+        </div>
+
+        <div class="series-end">— 数字与 AI 系列完 —</div>
+
+        <!-- ===== 简体中文导航 ===== -->
+        <div class="nav-series">
+            <div class="lang-zh active">
+                <a href="real-digital-transformation.html?lang=cn">← 真正的数字转型</a>
+                <span style="color:#999;">— 系列完 —</span>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="lang-zh active">
+                GFI · 数字与 AI 系列 · 伪数字化模块<br/>
+                &copy; 2026 · 本平台以证据、逻辑与结构性分析探讨全球治理
+            </div>
+            <div class="footer-links">
+                <a href="index.html?lang=cn">首页</a>
+                <a href="government.html?lang=cn">公共部门</a>
+                <a href="enterprise.html?lang=cn">私营部门</a>
+                <a href="about.html?lang=cn">创办人</a>
+                <a href="mailto:gfi@gfiintel.com">联系我们</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ESPAÑOL -->
+    <!-- ============================================================ -->
+    <div class="lang-block" id="es">
+        <a href="index.html?lang=es" class="back-link">← Volver al Inicio</a>
+        <div class="series-badge">Serie Digital &amp; IA · Parte 4 de 4</div>
+        <h1>Módulo de Pseudo-Digitalización</h1>
+        <div class="subhead">La Forma Más Cara de Inercia — Cómo las Organizaciones Simulan la Transformación Mientras Preservan el Poder</div>
+        <div class="meta">GFI · Serie Digital &amp; IA</div>
+
+        <div class="insight-block"><p><span class="highlight">La pseudo-digitalización es el arte de simular la transformación mientras se preserva el poder. Es la forma más cara de inercia — y es el modo predeterminado de la mayoría de las organizaciones. <strong>El cambio es simulado. El poder es preservado. La disfunción es automatizada.</strong></span></p></div>
+
+        <h2>I. ¿Qué es la Pseudo-Digitalización?</h2>
+        <p>La pseudo-digitalización es el proceso de implementar sistemas digitales sin cambiar la estructura de gobernanza subyacente. Es el reemplazo de papel por pantallas, de archivos por bases de datos, de flujos de trabajo manuales por automatizados — mientras se mantienen intactas la asimetría de información, la concentración de poder y la toma de decisiones sin rendición de cuentas.</p>
+        <p>Parece transformación. Suena como transformación. Cuesta como transformación. <span class="highlight-red">Pero no es transformación.</span></p>
+
+        <div class="insight-block-red"><p><span class="highlight-red">La pseudo-digitalización es la simulación del cambio. Crea la apariencia de progreso mientras preserva la realidad del poder.</span></p></div>
+
+        <h2>II. Las Seis Características de la Pseudo-Digitalización</h2>
+
+        <h3>1. Tecnología Primero, Gobernanza Nunca</h3>
+        <p>La organización compra tecnología antes de definir el cambio de gobernanza. La tecnología es la solución — no el facilitador. La gobernanza nunca se discute. Las estructuras de poder nunca se examinan.</p>
+
+        <h3>2. Automatización de la Disfunción</h3>
+        <p>Los procesos defectuosos son digitalizados. El resultado es un proceso digital defectuoso. Más rápido. Más eficiente. Más difícil de arreglar. La disfunción ahora está incrustada en el código.</p>
+
+        <h3>3. Asimetría de Información Preservada</h3>
+        <p>Los datos fluyen hacia arriba. Quienes están en la cima tienen paneles. Quienes están en la base tienen pantallas de entrada de datos. La transparencia es una concesión, no un principio de diseño.</p>
+
+        <h3>4. Poder Concentrado en la Cima</h3>
+        <p>La toma de decisiones está centralizada. El sistema digital da a los altos funcionarios mejor información y análisis más rápidos. No distribuye el poder. Lo refuerza.</p>
+
+        <h3>5. Rendición de Cuentas Desaparece en el Algoritmo</h3>
+        <p>Las decisiones son tomadas por algoritmos. Nadie es responsable. El sistema es opaco. El vacío legal está completo.</p>
+
+        <h3>6. El Lenguaje de la Transformación</h3>
+        <p>La organización usa el lenguaje de la transformación — "innovación", "ágil", "digital primero" — mientras practica la preservación. El lenguaje cambia. La realidad no.</p>
+
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Característica</th><th>Pseudo-Digitalización</th><th>Transformación Digital Real</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">Tecnología</span></td><td>La tecnología es la solución</td><td>La tecnología es el facilitador</td></tr>
+                    <tr><td><span class="highlight-blue">Proceso</span></td><td>La disfunción es automatizada</td><td>La disfunción es eliminada</td></tr>
+                    <tr><td><span class="highlight-blue">Información</span></td><td>La asimetría es preservada</td><td>La asimetría es aplanada</td></tr>
+                    <tr><td><span class="highlight-blue">Poder</span></td><td>La concentración es reforzada</td><td>El poder es distribuido</td></tr>
+                    <tr><td><span class="highlight-blue">Rendición de cuentas</span></td><td>Desaparece en el algoritmo</td><td>Integrada en el sistema</td></tr>
+                    <tr><td><span class="highlight-blue">Lenguaje</span></td><td>Vocabulario de transformación</td><td>Realidad de transformación</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>III. El Diagnóstico del GL Framework</h2>
+        <p>El GL Framework mide la fricción estructural: <strong>GL = (Fs × Vn) / (Pd × Cf)</strong>. La pseudo-digitalización parece mejorar GL — pero solo en un lado.</p>
+        <ul style="color:#4a4036;margin:.6rem 0 .8rem 1.5rem;line-height:1.9">
+            <li><span class="highlight-blue">•</span> <strong>Fs</strong> (Éxito del Flujo) puede aumentar — pero el éxito es definido por el sistema, no por el ciudadano</li>
+            <li><span class="highlight-blue">•</span> <strong>Vn</strong> (Valor Estratégico) puede ser optimizado — pero ¿optimizado para quién?</li>
+            <li><span class="highlight-blue">•</span> <strong>Pd</strong> (Duración del Dolor) se reduce para el gobernante — y aumenta para el gobernado</li>
+            <li><span class="highlight-blue">•</span> <strong>Cf</strong> (Fricción Cognitiva) se reduce para el gobernante — y aumenta para el gobernado</li>
+        </ul>
+        <p><span class="highlight-red">La puntuación GL mejora en un lado de la brecha — y colapsa en el otro. El sistema es más eficiente para quienes están en la cima. Es menos legítimo para todos los demás.</span></p>
+
+        <h2>IV. Por Qué la Pseudo-Digitalización es el Modo Predeterminado</h2>
+        <p>La pseudo-digitalización no es un fracaso de implementación. Es una <span class="highlight">estrategia de preservación</span>. Quienes tienen poder no tienen incentivo para distribuirlo. Quienes se benefician de la asimetría de información no tienen incentivo para aplanarla. Quienes evitan la rendición de cuentas no tienen incentivo para crearla.</p>
+        <p>La pseudo-digitalización es la respuesta racional de un sistema de poder a la amenaza del cambio. Absorbe el lenguaje de la transformación. Gasta el dinero de la transformación. Produce los informes de la transformación. <span class="highlight-red">Pero entrega la realidad de la preservación.</span></p>
+
+        <h2>V. El Costo de la Pseudo-Digitalización</h2>
+        <p>El costo de la pseudo-digitalización no es solo financiero. Es estructural. Es el costo de:</p>
+        <ul style="color:#4a4036;margin:.6rem 0 .8rem 1.5rem;line-height:1.9">
+            <li><span class="highlight-blue">•</span> <strong>Legitimidad perdida</strong> — los ciudadanos ven a través de la simulación</li>
+            <li><span class="highlight-blue">•</span> <strong>Confianza perdida</strong> — la brecha entre retórica y realidad es visible</li>
+            <li><span class="highlight-blue">•</span> <strong>Oportunidad perdida</strong> — los recursos se gastan en preservación, no en transformación</li>
+            <li><span class="highlight-blue">•</span> <strong>Capacidad perdida</strong> — la organización se vuelve dependiente de proveedores y consultores</li>
+        </ul>
+        <p>El costo financiero se mide en miles de millones. El costo estructural se mide en la erosión de la legitimidad de la gobernanza.</p>
+
+        <h2>VI. Cómo Reconocer la Pseudo-Digitalización</h2>
+        <p>Si ves estas señales, estás presenciando pseudo-digitalización:</p>
+        <ul style="color:#4a4036;margin:.6rem 0 .8rem 1.5rem;line-height:1.9">
+            <li><span class="highlight-blue">•</span> La tecnología es cara y visible — pero la estructura de gobernanza no ha cambiado</li>
+            <li><span class="highlight-blue">•</span> La organización usa lenguaje de transformación — pero las decisiones se toman de la misma manera</li>
+            <li><span class="highlight-blue">•</span> Los datos son recopilados — pero las ideas fluyen solo hacia arriba</li>
+            <li><span class="highlight-blue">•</span> Los ciudadanos son usuarios — no participantes</li>
+            <li><span class="highlight-blue">•</span> El sistema es opaco — y la rendición de cuentas está ausente</li>
+        </ul>
+
+        <h2>VII. Cómo Pasar de Pseudo a Real</h2>
+        <p>Pasar de la pseudo-digitalización a la transformación real requiere tres cambios:</p>
+        <ul style="color:#4a4036;margin:.6rem 0 .8rem 1.5rem;line-height:1.9">
+            <li><span class="highlight-blue">•</span> <strong>Cambio 1: De Tecnología a Gobernanza</strong> — comenzar con el cambio de gobernanza, no con la adopción de tecnología</li>
+            <li><span class="highlight-blue">•</span> <strong>Cambio 2: De Asimetría a Simetría</strong> — diseñar sistemas que aplanen la información, no que la concentren</li>
+            <li><span class="highlight-blue">•</span> <strong>Cambio 3: De Centralización a Distribución</strong> — mover la toma de decisiones al punto de impacto</li>
+        </ul>
+        <p>Estos cambios no son técnicos. Son políticos. Requieren que quienes tienen el poder renuncien a él. <span class="highlight">Por eso la transformación real es rara — y la pseudo-digitalización es la norma.</span></p>
+
+        <div class="conclusion-box">
+            <p><span class="highlight">La pseudo-digitalización es la forma más cara de inercia. Simula el cambio mientras preserva el poder. Gasta miles de millones para automatizar la disfunción. Usa el lenguaje de la transformación para entregar la realidad de la preservación. El desafío de nuestro tiempo no es digitalizar — es transformar. Y la transformación requiere que el poder sea redistribuido, la información compartida y la rendición de cuentas integrada en el sistema. Sin esto, no hay transformación. Solo hay simulación.</span></p>
+            <p style="margin-top:.5rem;font-size:.8rem;color:#6b5f4e;"><span class="highlight">La pregunta no es si podemos permitirnos transformar. La pregunta es si podemos permitirnos no hacerlo.</span></p>
+        </div>
+
+        <div class="series-end">— Serie Digital &amp; IA Completa —</div>
+
+        <!-- ===== Navegación en español ===== -->
+        <div class="nav-series">
+            <div class="lang-es active">
+                <a href="real-digital-transformation.html?lang=es">← Transformación Digital Real</a>
+                <span style="color:#999;">— Fin de la Serie —</span>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="lang-es active">
+                GFI · Serie Digital &amp; IA · Módulo de Pseudo-Digitalización<br/>
+                &copy; 2026 · Evidencia, lógica y análisis estructural de la gobernanza global
+            </div>
+            <div class="footer-links">
+                <a href="index.html?lang=es">Inicio</a>
+                <a href="government.html?lang=es">Sector Público</a>
+                <a href="enterprise.html?lang=es">Sector Privado</a>
+                <a href="about.html?lang=es">Fundador</a>
+                <a href="mailto:gfi@gfiintel.com">Contacto</a>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script>
-  // ======================= MULTI-LANGUAGE DATABASE =======================
-  const texts = {
-    en: {
-      mainTitle: "Pseudo-Digitalisation · GL Diagnostic Module",
-      subTitle: "Quick scan: who bears the cost when the system fails?",
-      defText: "▸ A system that works smoothly under normal conditions but shifts all failure costs to users under pressure.",
-      scanTitle: "Quick Scan",
-      reset: "Reset",
-      statusPending: "unanswered",
-      diagnosisPending: "—",
-      riskPending: "Awaiting answers",
-      glHint: "GL = (Fs×Vn)/(Pd×Cf) · detecting cost-shifting",
-      caseLabel: "REFERENCE CASES",
-      templateTitle: "GL Diagnostic Template",
-      templateHeader: "▸ GL Pseudo-Digitalisation Checklist",
-      copyText: "Copy Template",
-      templateNote: "Free · No registration · Use offline",
-      backLink: "← Back to main page",
-      footerText: "GFI Flow Intelligence · The ruler stays. Do not shift cost to the voiceless.",
-      footerLink: "gfiintel.com | Free to use, no authorization required",
-      questions: [
-        "1. Under traffic surge, does the system freeze or cause infinite queues?",
-        "2. Is there a manual/offline fallback when the system is down?",
-        "3. Does the user bear the loss when the system fails?",
-        "4. Do performance metrics only count 'processed items', not user outcomes?",
-        "5. Is there no official outage notice, forcing users to search online?"
-      ],
-      btnYes: "Yes",
-      btnNo: "No",
-      btnUnknown: "Unknown",
-      verdictPrefix: "Verdict: ",
-      confirmed: "Pseudo-Digitalisation CONFIRMED",
-      borderline: "Borderline · Medium Risk",
-      negative: "Negative · Low Risk",
-      riskHigh: "High Risk",
-      riskMedium: "Medium Risk",
-      riskLow: "Low Risk",
-      scoreHint: (score) => `Score ${score}/5 · Cost-shifting embedded.`,
-      scoreHint2: (score) => `Score ${score}/5 · Mixed signals. Fallback may be partial.`,
-      scoreHint3: (score) => `Score ${score}/5 · Resilient design. Cost not shifted to users.`,
-      cases: [
-        { sys: "UK ETA (June 2026)", verdict: "Confirmed", risk: "High", class: "" },
-        { sys: "US ESTA", verdict: "Borderline", risk: "Medium-High", class: "badge-border" },
-        { sys: "EU ETIAS (not live)", verdict: "Highly Suspected", risk: "High", class: "badge-suspect" },
-        { sys: "Estonia e-Government", verdict: "Negative", risk: "Low", class: "badge-negative" }
-      ]
-    },
-    tw: {
-      mainTitle: "偽數位化 · GL 診斷模組",
-      subTitle: "快速掃描：系統崩潰時，誰承擔成本？",
-      defText: "▸ 正常時順暢，壓力下把全部崩潰成本轉嫁給使用者的系統。",
-      scanTitle: "快速掃描",
-      reset: "重置",
-      statusPending: "未答",
-      diagnosisPending: "—",
-      riskPending: "等待作答",
-      glHint: "GL = (Fs×Vn)/(Pd×Cf) · 偵測成本轉嫁",
-      caseLabel: "參考案例",
-      templateTitle: "GL 診斷模板",
-      templateHeader: "▸ GL 偽數位化檢查清單",
-      copyText: "複製模板",
-      templateNote: "免費 · 免註冊 · 離線使用",
-      backLink: "← 返回首頁",
-      footerText: "GFI Flow Intelligence · 尺在。不轉嫁成本給無聲的弱勢。",
-      footerLink: "gfiintel.com | 免費使用，無需授權",
-      questions: [
-        "1. 流量暴增時系統會卡死或無限排隊？",
-        "2. 系統掛掉時有手動/離線替代方案？",
-        "3. 系統出錯導致的損失，使用者自己吞？",
-        "4. 績效只看「處理完幾件」，不看使用者結果？",
-        "5. 異常時沒有官方公告，使用者自行去網路找答案？"
-      ],
-      btnYes: "是",
-      btnNo: "否",
-      btnUnknown: "未知",
-      verdictPrefix: "診斷：",
-      confirmed: "偽數位化 確診",
-      borderline: "邊緣 · 中度風險",
-      negative: "陰性 · 低風險",
-      riskHigh: "高風險",
-      riskMedium: "中風險",
-      riskLow: "低風險",
-      scoreHint: (score) => `得分 ${score}/5 · 結構性成本轉嫁確立。`,
-      scoreHint2: (score) => `得分 ${score}/5 · 部分韌性缺失，需謹慎。`,
-      scoreHint3: (score) => `得分 ${score}/5 · 制度吸收成本，非轉嫁使用者。`,
-      cases: [
-        { sys: "英國 ETA (2026年6月)", verdict: "確診", risk: "高", class: "" },
-        { sys: "美國 ESTA", verdict: "邊緣", risk: "中高", class: "badge-border" },
-        { sys: "歐盟 ETIAS (未上線)", verdict: "高度疑似", risk: "高", class: "badge-suspect" },
-        { sys: "愛沙尼亞 e-政府", verdict: "陰性", risk: "低", class: "badge-negative" }
-      ]
-    },
-    cn: {
-      mainTitle: "伪数字化 · GL 诊断模块",
-      subTitle: "快速扫描：系统崩溃时，谁承担成本？",
-      defText: "▸ 正常时顺畅，压力下把全部崩溃成本转嫁给使用者的系统。",
-      scanTitle: "快速扫描",
-      reset: "重置",
-      statusPending: "未答",
-      diagnosisPending: "—",
-      riskPending: "等待作答",
-      glHint: "GL = (Fs×Vn)/(Pd×Cf) · 侦测成本转嫁",
-      caseLabel: "参考案例",
-      templateTitle: "GL 诊断模板",
-      templateHeader: "▸ GL 伪数字化检查清单",
-      copyText: "复制模板",
-      templateNote: "免费 · 免注册 · 离线使用",
-      backLink: "← 返回首页",
-      footerText: "GFI Flow Intelligence · 尺在。不转嫁成本给无声的弱势。",
-      footerLink: "gfiintel.com | 免费使用，无需授权",
-      questions: [
-        "1. 流量暴增时系统会卡死或无限排队？",
-        "2. 系统挂掉时有手动/离线替代方案？",
-        "3. 系统出错导致的损失，使用者自己承担？",
-        "4. 绩效只看「处理完几件」，不看使用者结果？",
-        "5. 异常时没有官方公告，使用者自行去网络找答案？"
-      ],
-      btnYes: "是",
-      btnNo: "否",
-      btnUnknown: "未知",
-      verdictPrefix: "诊断：",
-      confirmed: "伪数字化 确诊",
-      borderline: "边缘 · 中度风险",
-      negative: "阴性 · 低风险",
-      riskHigh: "高风险",
-      riskMedium: "中风险",
-      riskLow: "低风险",
-      scoreHint: (score) => `得分 ${score}/5 · 结构性成本转嫁确立。`,
-      scoreHint2: (score) => `得分 ${score}/5 · 部分韧性缺失，需谨慎。`,
-      scoreHint3: (score) => `得分 ${score}/5 · 制度吸收成本，非转嫁使用者。`,
-      cases: [
-        { sys: "英国 ETA (2026年6月)", verdict: "确诊", risk: "高", class: "" },
-        { sys: "美国 ESTA", verdict: "边缘", risk: "中高", class: "badge-border" },
-        { sys: "欧盟 ETIAS (未上线)", verdict: "高度疑似", risk: "高", class: "badge-suspect" },
-        { sys: "爱沙尼亚 e-政府", verdict: "阴性", risk: "低", class: "badge-negative" }
-      ]
-    },
-    es: {
-      mainTitle: "Pseudo-Digitalización · Módulo de Diagnóstico GL",
-      subTitle: "Escaneo rápido: ¿quién asume el costo cuando el sistema falla?",
-      defText: "▸ Un sistema que funciona bien en condiciones normales pero traslada todos los costos de falla al usuario bajo presión.",
-      scanTitle: "Escaneo rápido",
-      reset: "Reiniciar",
-      statusPending: "sin responder",
-      diagnosisPending: "—",
-      riskPending: "Esperando respuestas",
-      glHint: "GL = (Fs×Vn)/(Pd×Cf) · detectando traslado de costos",
-      caseLabel: "CASOS DE REFERENCIA",
-      templateTitle: "Plantilla de Diagnóstico GL",
-      templateHeader: "▸ Lista de verificación de pseudo-digitalización GL",
-      copyText: "Copiar plantilla",
-      templateNote: "Gratis · Sin registro · Usar sin conexión",
-      backLink: "← Volver a la página principal",
-      footerText: "GFI Flow Intelligence · La regla persiste. No traslade costos a los vulnerables.",
-      footerLink: "gfiintel.com | Uso libre, sin autorización",
-      questions: [
-        "1. ¿El sistema se congela o genera colas infinitas ante un aumento de tráfico?",
-        "2. ¿Hay una alternativa manual fuera de línea cuando el sistema falla?",
-        "3. ¿El usuario asume la pérdida cuando el sistema falla?",
-        "4. ¿Las métricas solo cuentan 'casos tramitados' sin medir resultados reales?",
-        "5. ¿No hay aviso oficial de interrupción y el usuario debe buscar en internet?"
-      ],
-      btnYes: "Sí",
-      btnNo: "No",
-      btnUnknown: "Descon.",
-      verdictPrefix: "Diagnóstico: ",
-      confirmed: "Pseudo-Digitalización CONFIRMADA",
-      borderline: "Marginal · Riesgo Medio",
-      negative: "Negativo · Riesgo Bajo",
-      riskHigh: "Riesgo Alto",
-      riskMedium: "Riesgo Medio",
-      riskLow: "Riesgo Bajo",
-      scoreHint: (score) => `Puntuación ${score}/5 · Traslado de costos establecido.`,
-      scoreHint2: (score) => `Puntuación ${score}/5 · Señales mixtas. Respaldo parcial.`,
-      scoreHint3: (score) => `Puntuación ${score}/5 · Diseño resiliente. El costo no se traslada.`,
-      cases: [
-        { sys: "UK ETA (junio 2026)", verdict: "Confirmado", risk: "Alto", class: "" },
-        { sys: "ESTA EE.UU.", verdict: "Marginal", risk: "Medio-Alto", class: "badge-border" },
-        { sys: "ETIAS UE (no activo)", verdict: "Altamente Sospechoso", risk: "Alto", class: "badge-suspect" },
-        { sys: "Estonia e-Gobierno", verdict: "Negativo", risk: "Bajo", class: "badge-negative" }
-      ]
-    }
-  };
-
-  let currentLang = "en";
-  let answers = [null, null, null, null, null];
-
-  // Helper: update entire UI language
-  function updateUILanguage() {
-    const t = texts[currentLang];
-    document.getElementById("mainTitle").innerText = t.mainTitle;
-    document.getElementById("subTitle").innerText = t.subTitle;
-    document.getElementById("defText").innerHTML = t.defText;
-    document.getElementById("scanTitle").innerText = t.scanTitle;
-    document.getElementById("resetText").innerText = t.reset;
-    document.getElementById("caseLabel").innerText = t.caseLabel;
-    document.getElementById("templateTitle").innerText = t.templateTitle;
-    document.getElementById("templateHeader").innerHTML = t.templateHeader;
-    document.getElementById("copyText").innerText = t.copyText;
-    document.getElementById("templateNote").innerText = t.templateNote;
-    document.getElementById("backLink").innerHTML = t.backLink;
-    document.getElementById("footerText").innerHTML = t.footerText;
-    document.getElementById("footerLink").innerHTML = t.footerLink;
-    renderQuestions();
-    updateCaseTable();
-    updateTemplateContent();
-    updateResultDisplay();
-  }
-
-  function renderQuestions() {
-    const t = texts[currentLang];
-    const container = document.getElementById("questionsContainer");
-    container.innerHTML = "";
-    for (let i = 0; i < t.questions.length; i++) {
-      const div = document.createElement("div");
-      div.className = "question-row";
-      div.innerHTML = `
-        <div class="question-text">${t.questions[i]}</div>
-        <div class="btn-group" data-qidx="${i}">
-          <button class="option-btn" data-val="yes">${t.btnYes}</button>
-          <button class="option-btn" data-val="no">${t.btnNo}</button>
-          <button class="option-btn" data-val="unknown">${t.btnUnknown}</button>
-        </div>
-      `;
-      container.appendChild(div);
-    }
-    attachEvents();
-    updateButtonsHighlight();
-  }
-
-  function attachEvents() {
-    for (let i = 0; i < texts[currentLang].questions.length; i++) {
-      const btnGroup = document.querySelector(`.btn-group[data-qidx="${i}"]`);
-      if (!btnGroup) continue;
-      const btns = btnGroup.querySelectorAll(".option-btn");
-      btns.forEach(btn => {
-        btn.removeEventListener("click", btn._listener);
-        const handler = () => {
-          let val = null;
-          if (btn.dataset.val === "yes") val = true;
-          else if (btn.dataset.val === "no") val = false;
-          else if (btn.dataset.val === "unknown") val = null;
-          answers[i] = val;
-          updateButtonsHighlight();
-          updateResultDisplay();
+    (function() {
+        const btns = document.querySelectorAll('.lang-btn');
+        const blocks = {
+            en: document.getElementById('en'),
+            tw: document.getElementById('tw'),
+            cn: document.getElementById('cn'),
+            es: document.getElementById('es')
         };
-        btn.addEventListener("click", handler);
-        btn._listener = handler;
-      });
-    }
-  }
 
-  function updateButtonsHighlight() {
-    for (let i = 0; i < texts[currentLang].questions.length; i++) {
-      const answer = answers[i];
-      const btnGroup = document.querySelector(`.btn-group[data-qidx="${i}"]`);
-      if (!btnGroup) continue;
-      const btns = btnGroup.querySelectorAll(".option-btn");
-      btns.forEach(btn => {
-        btn.classList.remove("selected-yes", "selected-no", "selected-unknown");
-        if (answer === true && btn.dataset.val === "yes") btn.classList.add("selected-yes");
-        else if (answer === false && btn.dataset.val === "no") btn.classList.add("selected-no");
-        else if (answer === null && btn.dataset.val === "unknown") btn.classList.add("selected-unknown");
-      });
-    }
-    const answeredCount = answers.filter(a => a !== null).length;
-    const t = texts[currentLang];
-    document.getElementById("statusText").innerHTML = `${answeredCount} / 5 ${t.statusPending}`;
-  }
+        function setLang(lang) {
+            Object.keys(blocks).forEach(key => {
+                if (blocks[key]) blocks[key].classList.remove('active');
+            });
+            if (blocks[lang]) blocks[lang].classList.add('active');
 
-  function computeScore() {
-    if (answers.some(a => a === null)) return null;
-    let score = 0;
-    if (answers[0] === true) score++;
-    if (answers[1] === false) score++;
-    if (answers[2] === true) score++;
-    if (answers[3] === true) score++;
-    if (answers[4] === true) score++;
-    return score;
-  }
+            btns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
 
-  function updateResultDisplay() {
-    const t = texts[currentLang];
-    const score = computeScore();
-    const answeredCount = answers.filter(a => a !== null).length;
-    let diagnosisText = t.diagnosisPending;
-    let riskText = t.riskPending;
-    let hintText = t.glHint;
+            document.querySelectorAll('.nav-series .lang-zh, .nav-series .lang-en, .nav-series .lang-es').forEach(el => el.classList.remove('active'));
+            const navMap = { en: 'lang-en', tw: 'lang-zh', cn: 'lang-zh', es: 'lang-es' };
+            const navTarget = document.querySelector('.nav-series .' + navMap[lang]);
+            if (navTarget) navTarget.classList.add('active');
 
-    if (answeredCount === 5 && score !== null) {
-      if (score >= 3) {
-        diagnosisText = t.confirmed;
-        riskText = t.riskHigh;
-        hintText = t.scoreHint(score);
-      } else if (score === 2) {
-        diagnosisText = t.borderline;
-        riskText = t.riskMedium;
-        hintText = t.scoreHint2(score);
-      } else {
-        diagnosisText = t.negative;
-        riskText = t.riskLow;
-        hintText = t.scoreHint3(score);
-      }
-    } else if (answeredCount < 5) {
-      diagnosisText = t.diagnosisPending;
-      riskText = `${answeredCount}/5 ${t.statusPending}`;
-    }
-    document.getElementById("diagnosisResult").innerHTML = `${t.verdictPrefix}${diagnosisText}`;
-    document.getElementById("riskResult").innerText = riskText;
-    document.getElementById("glHint").innerHTML = hintText;
-  }
+            document.querySelectorAll('.footer .lang-zh, .footer .lang-en, .footer .lang-es').forEach(el => el.classList.remove('active'));
+            const footerTarget = document.querySelector('.footer .' + navMap[lang]);
+            if (footerTarget) footerTarget.classList.add('active');
 
-  function resetDiagnostic() {
-    answers = [null, null, null, null, null];
-    renderQuestions();
-    updateResultDisplay();
-  }
+            if (history.pushState) history.pushState(null, '', '?lang=' + lang);
+        }
 
-  function updateCaseTable() {
-    const t = texts[currentLang];
-    const tbody = document.getElementById("caseBody");
-    tbody.innerHTML = "";
-    t.cases.forEach(c => {
-      const row = `<tr><td>${c.sys}</td><td><span class="badge ${c.class}">${c.verdict}</span></td><td>${c.risk}</td></tr>`;
-      tbody.innerHTML += row;
-    });
-  }
+        btns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const lang = this.dataset.lang;
+                if (lang) setLang(lang);
+            });
+        });
 
-  function getTemplateText(lang) {
-    const t = texts[lang];
-    if (!t) return "";
-    const lines = [];
-    lines.push(`GL PSEUDO-DIGITALISATION DIAGNOSTIC TEMPLATE`);
-    lines.push(`==============================================`);
-    lines.push(``);
-    lines.push(`DEFINITION:`);
-    lines.push(t.defText.replace("▸ ", "").trim());
-    lines.push(``);
-    lines.push(`FIVE INDICATORS (check if "yes" for pseudo-digital trait):`);
-    lines.push(``);
-    t.questions.forEach((q, idx) => {
-      lines.push(`[ ] ${q}`);
-    });
-    lines.push(``);
-    lines.push(`SCORING:`);
-    lines.push(`0-1 point  → Negative / Low Risk`);
-    lines.push(`2 points   → Borderline / Medium Risk`);
-    lines.push(`3-5 points → Pseudo-Digitalisation CONFIRMED / High Risk`);
-    lines.push(``);
-    lines.push(`GL FORMULA REFERENCE:`);
-    lines.push(`GL = (Fs × Vn) / (Pd × Cf)`);
-    lines.push(`- Fs: Flow success rate`);
-    lines.push(`- Vn: Strategic value (necessity)`);
-    lines.push(`- Pd: Pain duration (how long failure hurts)`);
-    lines.push(`- Cf: Cognitive friction (how hard to navigate failure)`);
-    lines.push(``);
-    lines.push(`CORE QUESTION:`);
-    lines.push(`"Who bears the cost when the system breaks?"`);
-    lines.push(``);
-    lines.push(`---`);
-    lines.push(`Generated by GFI Flow Intelligence · gfiintel.com`);
-    lines.push(`Free to use, copy, distribute. No registration required.`);
-    return lines.join('\n');
-  }
+        const params = new URLSearchParams(window.location.search);
+        const langParam = params.get('lang');
+        if (langParam === 'tw' || langParam === 'cn' || langParam === 'es') {
+            setLang(langParam);
+        } else {
+            setLang('en');
+        }
 
-  function updateTemplateContent() {
-    const content = getTemplateText(currentLang);
-    document.getElementById("templateContent").innerText = content;
-  }
-
-  function copyTemplate() {
-    const text = getTemplateText(currentLang);
-    navigator.clipboard.writeText(text).then(() => {
-      const btn = document.getElementById("copyTemplateBtn");
-      const originalHtml = btn.innerHTML;
-      btn.innerHTML = "✓ Copied!";
-      setTimeout(() => { btn.innerHTML = originalHtml; }, 2000);
-    }).catch(() => { alert("Manual copy: select the template text above."); });
-  }
-
-  // Language switch event
-  document.querySelectorAll(".lb-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll(".lb-btn").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      const lang = btn.getAttribute("data-lang");
-      if (lang === "en") currentLang = "en";
-      else if (lang === "tw") currentLang = "tw";
-      else if (lang === "cn") currentLang = "cn";
-      else if (lang === "es") currentLang = "es";
-      updateUILanguage();
-    });
-  });
-
-  document.getElementById("resetBtn").addEventListener("click", resetDiagnostic);
-  document.getElementById("copyTemplateBtn").addEventListener("click", copyTemplate);
-
-  // initial load
-  updateUILanguage();
+        window.addEventListener('popstate', function() {
+            const newParams = new URLSearchParams(window.location.search);
+            const newLang = newParams.get('lang');
+            if (newLang === 'tw' || newLang === 'cn' || newLang === 'es') {
+                setLang(newLang);
+            } else {
+                setLang('en');
+            }
+        });
+    })();
 </script>
+
 </body>
 </html>
