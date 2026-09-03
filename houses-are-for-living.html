@@ -1,921 +1,303 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Houses Are for Living · 房子是用來住的</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      background: #f7f4ef;
-      color: #1e1b18;
-      font-family: 'Georgia', 'Times New Roman', 'Songti SC', 'Noto Serif SC', serif;
-      line-height: 1.75;
-      padding: 2rem 1rem;
-    }
-
-    .container {
-      max-width: 920px;
-      margin: 0 auto;
-      background: #fffcf9;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-      padding: 3rem 2.8rem;
-      border-radius: 6px;
-      position: relative;
-    }
-
-    .lang-switcher {
-      position: absolute;
-      top: 1.2rem;
-      right: 2rem;
-      display: flex;
-      gap: 8px;
-      z-index: 10;
-    }
-
-    .lang-btn {
-      background: transparent;
-      border: 1.5px solid #d7cdc0;
-      padding: 0.2rem 1rem;
-      border-radius: 30px;
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: #5f554b;
-      cursor: pointer;
-      transition: all 0.2s;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      letter-spacing: 0.04em;
-    }
-
-    .lang-btn:hover {
-      background: #e8e0d8;
-      border-color: #b8a89a;
-    }
-
-    .lang-btn.active {
-      background: #2f2a24;
-      border-color: #2f2a24;
-      color: #fff;
-    }
-
-    h1 {
-      font-size: 2.2rem;
-      font-weight: 600;
-      text-align: center;
-      letter-spacing: 0.05em;
-      border-bottom: 2px solid #d7cdc0;
-      padding-bottom: 1rem;
-      margin-bottom: 0.4rem;
-      color: #1e1b18;
-      margin-top: 0.8rem;
-    }
-
-    .subhead {
-      text-align: center;
-      font-size: 1.1rem;
-      color: #6b625a;
-      font-style: italic;
-      margin-bottom: 2.2rem;
-      border-bottom: 1px solid #e4ddd6;
-      padding-bottom: 1.6rem;
-    }
-
-    h2 {
-      font-size: 1.7rem;
-      margin: 2.6rem 0 0.8rem;
-      padding-bottom: 0.2rem;
-      border-bottom: 2px solid #d7cdc0;
-      color: #2f2a24;
-    }
-
-    h3 {
-      font-size: 1.3rem;
-      margin: 1.8rem 0 0.6rem;
-      color: #3f3831;
-    }
-
-    h4 {
-      font-size: 1.1rem;
-      margin: 1.4rem 0 0.4rem;
-      color: #4e453d;
-      font-weight: 600;
-    }
-
-    p {
-      margin: 0 0 1rem 0;
-      text-align: justify;
-      word-break: break-word;
-    }
-
-    .pull-quote {
-      font-size: 1.2rem;
-      font-weight: 400;
-      padding: 1.2rem 2rem;
-      margin: 2rem 0;
-      background: #f2ece6;
-      border-top: 1px solid #dad0c6;
-      border-bottom: 1px solid #dad0c6;
-      text-align: center;
-      line-height: 1.7;
-      color: #1f1b17;
-    }
-
-    .comparison-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 1.6rem 0 2rem;
-      font-size: 0.9rem;
-      background: #faf7f3;
-      border-radius: 8px;
-      overflow: hidden;
-    }
-
-    .comparison-table th {
-      background: #2f2a24;
-      color: #f0ebe3;
-      padding: 0.7rem 1rem;
-      text-align: left;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-    }
-
-    .comparison-table td {
-      padding: 0.7rem 1rem;
-      border-bottom: 1px solid #e4ddd6;
-      vertical-align: top;
-    }
-
-    .comparison-table tr:last-child td {
-      border-bottom: none;
-    }
-
-    .comparison-table .col-china {
-      background: rgba(159, 232, 112, 0.05);
-    }
-
-    .comparison-table .col-west {
-      background: rgba(125, 211, 252, 0.05);
-    }
-
-    .comparison-table .label-cell {
-      font-weight: 600;
-      color: #3f3831;
-      white-space: nowrap;
-    }
-
-    .section-divider {
-      border: none;
-      border-top: 1px solid #e0d7ce;
-      margin: 2.8rem 0;
-    }
-
-    .footer-note {
-      margin-top: 3rem;
-      padding-top: 2rem;
-      border-top: 1px solid #ddd3c9;
-      font-size: 0.85rem;
-      color: #6e655d;
-      text-align: center;
-      font-style: italic;
-    }
-
-    .media-layer-box {
-      background: #f6f1ec;
-      padding: 1.4rem 2rem;
-      border-radius: 6px;
-      border-left: 6px solid #b8a89a;
-      margin: 1.6rem 0;
-    }
-
-    .media-layer-box h4 {
-      margin-top: 0.2rem;
-      color: #3f3831;
-    }
-
-    .media-layer-box ul {
-      margin: 0.4rem 0 0.4rem 1.8rem;
-    }
-
-    .lang-content {
-      display: none;
-    }
-
-    .lang-content.active {
-      display: block;
-    }
-
-    /* 回到首頁按鈕 */
-    .back-home {
-      margin-top: 2.5rem;
-      text-align: center;
-      padding-top: 1.5rem;
-      border-top: 1px solid #ddd3c9;
-    }
-    .back-home a {
-      display: inline-block;
-      padding: 10px 28px;
-      background: #b31b1b;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 30px;
-      font-size: 0.9rem;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      transition: background 0.2s;
-    }
-    .back-home a:hover {
-      background: #8a1414;
-    }
-
-    @media (max-width: 650px) {
-      .container {
-        padding: 1.6rem 1.2rem;
-      }
-      .lang-switcher {
-        position: static;
-        justify-content: flex-end;
-        margin-bottom: 1rem;
-      }
-      h1 {
-        font-size: 1.7rem;
-        margin-top: 0;
-      }
-      h2 {
-        font-size: 1.4rem;
-      }
-      .comparison-table {
-        font-size: 0.8rem;
-      }
-      .comparison-table th,
-      .comparison-table td {
-        padding: 0.5rem 0.6rem;
-      }
-      .pull-quote {
-        font-size: 1rem;
-        padding: 1rem 1.2rem;
-      }
-      .media-layer-box {
-        padding: 1rem 1.2rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .comparison-table {
-        display: block;
-        overflow-x: auto;
-        white-space: nowrap;
-      }
-      .comparison-table th,
-      .comparison-table td {
-        white-space: normal;
-      }
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Truth of the Sub‑Landlord System｜GFI Flow Intelligence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:#f5f0e8;color:#2d2a24;font-family:'DM Sans',system-ui,sans-serif;font-size:15px;line-height:1.8;padding:1.5rem 1rem}
+        .container{max-width:1040px;margin:0 auto}
+        .lang-switch{display:flex;gap:10px;margin-bottom:1.5rem;flex-wrap:wrap;justify-content:flex-end}
+        .lang-btn{font-family:'DM Mono',monospace;font-size:.7rem;padding:.3rem 1.2rem;border:1px solid rgba(60,50,40,.15);border-radius:20px;background:0 0;color:#6b5f4e;cursor:pointer;transition:all .2s}
+        .lang-btn:hover{border-color:#4a6b3d;color:#2d2a24}
+        .lang-btn.active{color:#3d6b2e;border-color:#3d6b2e;background:rgba(61,107,46,.08)}
+        .lang-block{display:none;animation:fadeIn .3s ease}
+        .lang-block.active{display:block}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+        .back-link{font-family:'DM Mono',monospace;font-size:.65rem;color:#3d6b2e;text-decoration:none;border-bottom:1px solid rgba(61,107,46,.2);padding-bottom:2px}
+        .back-link:hover{border-bottom-color:#3d6b2e}
+        h1{font-family:'DM Serif Display',Georgia,serif;font-size:2.2rem;color:#1f2a1a;margin-bottom:.2rem;line-height:1.2}
+        .subhead{font-family:'DM Mono',monospace;font-size:.75rem;color:#6b5f4e;letter-spacing:.06em;margin-bottom:.2rem}
+        .meta{font-family:'DM Mono',monospace;font-size:.65rem;color:#8a7e6a;border-bottom:1px solid rgba(60,50,40,.06);padding-bottom:1rem;margin-bottom:2rem}
+        h2{font-family:'DM Serif Display',Georgia,serif;font-size:1.4rem;color:#1f2a1a;margin:2.2rem 0 .8rem;border-left:4px solid #3d6b2e;padding-left:1rem}
+        h3{font-family:'DM Serif Display',Georgia,serif;font-size:1rem;color:#1f2a1a;margin:1.4rem 0 .4rem}
+        p{color:#4a4036;margin-bottom:.8rem;line-height:1.9}
+        .highlight{color:#3d6b2e;font-weight:500}
+        .highlight-red{color:#b33a3a;font-weight:500}
+        .highlight-blue{color:#4a7a6e;font-weight:500}
+        .insight-block{background:rgba(61,107,46,.06);border-left:4px solid #3d6b2e;padding:1rem 1.5rem;border-radius:0 8px 8px 0;margin:1.2rem 0}
+        .insight-block p{color:#2d2a24;margin-bottom:0;font-weight:450;font-size:.95rem}
+        .table-wrap{overflow-x:auto;border-radius:12px;border:1px solid rgba(60,50,40,.06);margin:1.2rem 0}
+        table{width:100%;border-collapse:collapse;font-family:'DM Mono',monospace;font-size:.65rem;min-width:480px}
+        th{text-align:left;padding:8px 10px;font-size:.5rem;letter-spacing:.08em;text-transform:uppercase;color:#8a7e6a;border-bottom:1px solid rgba(60,50,40,.06);font-weight:400;background:rgba(255,252,245,.3)}
+        td{padding:6px 10px;border-bottom:1px solid rgba(60,50,40,.03);color:#4a4036}
+        tr:hover td{background:rgba(255,252,245,.3)}
+        .conclusion-box{background:rgba(61,107,46,.06);border:1px solid rgba(61,107,46,.12);border-radius:12px;padding:1.2rem 1.8rem;margin-top:1.5rem}
+        .conclusion-box p{color:#1f2a1a;font-weight:450;font-size:.95rem;margin-bottom:.4rem}
+        .nav-series{margin-top:2.8rem;padding-top:1.8rem;border-top:2px solid rgba(60,50,40,.1);display:flex;flex-wrap:wrap;justify-content:space-between;gap:.8rem}
+        .nav-series a{color:#3d6b2e;text-decoration:none;font-weight:600;border:1px solid rgba(60,50,40,.15);padding:.4rem 1.2rem;border-radius:30px;font-size:.75rem;transition:.2s;background:rgba(255,252,245,.5);font-family:'DM Mono',monospace;letter-spacing:.02em}
+        .nav-series a:hover{background:#3d6b2e;color:#fff;border-color:#3d6b2e}
+        .nav-series .lang-zh,.nav-series .lang-en{display:none;width:100%;justify-content:space-between;gap:.8rem;flex-wrap:wrap}
+        .nav-series .lang-zh.active,.nav-series .lang-en.active{display:flex}
+        .footer{text-align:center;padding:24px 20px 32px;font-family:'DM Mono',monospace;font-size:11px;color:#8a7e6a;border-top:1px solid rgba(60,50,40,.06);margin-top:2rem}
+        .footer .lang-zh,.footer .lang-en{display:none}
+        .footer .lang-zh.active,.footer .lang-en.active{display:block}
+        .footer a{color:#6b5f4e;text-decoration:none}
+        .footer a:hover{color:#1f2a1a}
+        .footer-links{display:flex;justify-content:center;gap:16px;margin-top:6px;flex-wrap:wrap}
+        @media(max-width:720px){h1{font-size:1.6rem}.nav-series .lang-zh.active,.nav-series .lang-en.active{flex-direction:column;align-items:center}}
+    </style>
 </head>
 <body>
-
 <div class="container">
 
-  <div class="lang-switcher">
-    <button class="lang-btn active" data-lang="zh">中文</button>
-    <button class="lang-btn" data-lang="en">English</button>
-  </div>
-
-  <!-- ============================================================ -->
-  <!-- 中文版 -->
-  <!-- ============================================================ -->
-  <div class="lang-content active" id="lang-zh">
-
-    <h1>房子是用來住的</h1>
-    <div class="subhead">中國如何馴服投機 — 以及西方為何無法複製</div>
-
-    <p><strong>2016年12月，中國中央經濟工作會議正式宣布：「房子是用來住的，不是用來炒的。」</strong></p>
-    <p>這不是口號。這是一次戰略性轉向——直接拒絕了西方將住房視為金融資產的模型，而將其重新定義為社會基礎設施。</p>
-    <p>在接下來的十年裡，中國實施了一套全面的政策框架，<strong>系統性地剝離了房地產的投機屬性</strong>，迫使市場回歸其基本功能：居住。</p>
-
-    <h2>一、中國做了什麼</h2>
-    <table class="comparison-table">
-      <thead><tr><th style="width:20%;">層面</th><th style="width:40%;">措施</th></tr></thead>
-      <tbody>
-        <tr><td class="label-cell">金融</td><td>限制信貸流向投機性購房；提高首付比例；嚴查消費貸、經營貸違規流入樓市</td></tr>
-        <tr><td class="label-cell">行政</td><td>在全國 137 個城市實施限購、限貸、限售、限價（截至 2019 年）</td></tr>
-        <tr><td class="label-cell">土地</td><td>壓力城市強制增加住宅用地供應；改革土拍規則，設置溢價率上限</td></tr>
-        <tr><td class="label-cell">長效機制</td><td>大力發展租賃住房；試點房地產稅，提高多套房持有成本</td></tr>
-        <tr><td class="label-cell">開發商監管</td><td>2020 年推出「三條紅線」，強制開發商降槓桿</td></tr>
-      </tbody>
-    </table>
-
-    <h2>二、顯著成效</h2>
-    <table class="comparison-table">
-      <thead><tr><th>指標</th><th>結果</th></tr></thead>
-      <tbody>
-        <tr><td class="label-cell">投機需求</td><td>明顯降溫；2022–2023 年多個城市出現投資客集中拋售</td></tr>
-        <tr><td class="label-cell">市場預期</td><td>從「房價只漲不跌」轉變為理性、謹慎的預期</td></tr>
-        <tr><td class="label-cell">開發商槓桿</td><td>過度槓桿的開發商重組或倒閉，行業整合</td></tr>
-        <tr><td class="label-cell">政策演進</td><td>2026 年住房正式被納入「大宗耐用消費品」—— 投資屬性進一步弱化</td></tr>
-      </tbody>
-    </table>
-
-    <h2>三、真正的分歧不在政策，在價值</h2>
-
-    <p>中國和西方的分歧，<strong>表面上是政策工具的不同，實際上是價值哲學的不同。</strong></p>
-
-    <div class="pull-quote">
-      <strong>西方相信：市場是終極仲裁者</strong><br>
-      <span style="display:block; margin-top:0.3rem;"><strong>中國相信：民生是終極仲裁者</strong></span>
+    <!-- 語言切換 -->
+    <div class="lang-switch">
+        <button class="lang-btn" data-lang="zh">中文</button>
+        <button class="lang-btn active" data-lang="en">English</button>
     </div>
 
-    <p>西方主流媒體並不是「客觀報導」房價，而是<strong>內化了一套預設的價值框架</strong>：</p>
+    <!-- ============================================================ -->
+    <!-- 英文版 (默認) -->
+    <!-- ============================================================ -->
+    <div class="lang-block active" id="en">
+        <a href="/index.html" class="back-link">← Back to Home</a>
+        <h1>The Truth of the Sub‑Landlord System</h1>
+        <div class="subhead">How Western Democracy Functions as a 'Sub‑Landlord' System</div>
+        <div class="meta">GFI · Land &amp; Housing Series</div>
 
-    <table class="comparison-table">
-      <thead><tr><th>被「教育」出來的資本主義信念</th><th>媒體表現形式</th></tr></thead>
-      <tbody>
-        <tr><td>房價上漲 = 經濟健康</td><td>媒體會說「房市回暖」、「信心復甦」</td></tr>
-        <tr><td>房價下跌 = 災難</td><td>媒體會說「崩盤」、「蕭條」、「危機」</td></tr>
-        <tr><td>購房是「最好的投資」</td><td>理財節目、房產廣告、個人財務建議反覆灌輸</td></tr>
-        <tr><td>房地產是「財富引擎」</td><td>央行、財政部、智庫的模型都以此為前提</td></tr>
-        <tr><td>擁有房產 = 成功人生</td><td>電影、影集、社交媒體都在強化這個敘事</td></tr>
-      </tbody>
-    </table>
+        <div class="insight-block"><p><span class="highlight">Western democracy does not challenge the landlord class. It <strong>reinforces</strong> it — by creating a layer of "sub‑landlords" who extract rent on behalf of the system. The sub‑landlord is not the ultimate owner — but they perform the same function: extracting value from the many and transferring it upward.</span></p></div>
 
-    <p><strong>這套價值觀不是「自然存在」的，是被生產出來的。</strong></p>
+        <h2>I. What Is the Sub‑Landlord System?</h2>
+        <p>The sub‑landlord system is a <strong>hierarchical extraction chain</strong>. At the top is the ultimate landowner — the state, the corporation, or the aristocracy. Below them are sub‑landlords — intermediaries who manage the extraction of rent. At the bottom are the tenants — the people who actually pay.</p>
+        <p>In Western democracies, the sub‑landlord system operates through:</p>
+        <ul>
+            <li><strong>Property management companies</strong> — extracting rent on behalf of absentee landlords</li>
+            <li><strong>Real estate investment trusts (REITs)</strong> — extracting value through financialized rental markets</li>
+            <li><strong>Government agencies</strong> — extracting value through property taxes and fees</li>
+            <li><strong>Financial institutions</strong> — extracting value through mortgage interest and fees</li>
+        </ul>
 
-    <h3>生產機制的四個層級</h3>
+        <h2>II. The Sub‑Landlord Function: Extraction Without Ownership</h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Role</th><th>What They Do</th><th>Who They Serve</th><th>Who They Exploit</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">Landlord</span></td><td>Owns land, extracts rent</td><td>Self / Shareholders</td><td>Tenants</td></tr>
+                    <tr><td><span class="highlight-blue">Sub-Landlord (Property Manager)</span></td><td>Manages extraction on behalf of owners</td><td>Landlords</td><td>Tenants</td></tr>
+                    <tr><td><span class="highlight-blue">Sub-Landlord (Financial Institution)</span></td><td>Extracts interest and fees</td><td>Investors</td><td>Homebuyers, renters</td></tr>
+                    <tr><td><span class="highlight-blue">Sub-Landlord (Government)</span></td><td>Extracts taxes and fees</td><td>State budget</td><td>Property owners, tenants</td></tr>
+                </tbody>
+            </table>
+        </div>
 
-    <div class="media-layer-box">
-      <h4>1. 新聞媒體的「議題設定」</h4>
-      <ul>
-        <li>房價下跌 → 頭條：「樓市寒冬來臨」、「業主哀嚎」</li>
-        <li>房價上漲 → 頭條：「經濟復甦信號」、「資產增值」</li>
-      </ul>
-      <p style="font-size:0.95rem; color:#5f554b; margin-top:0.4rem;"><strong>同樣一件事，被賦予完全不同的意義。</strong></p>
+        <h2>III. The Political Function: Disguising Ownership</h2>
+        <p>The sub‑landlord system serves a political purpose: it <strong>disguises</strong> who actually owns the land. The ultimate owners remain hidden behind layers of intermediaries. The tenant pays rent to a property manager, who pays a REIT, which pays dividends to anonymous shareholders.</p>
+        <p><span class="highlight">The system is opaque by design. If people knew who owned the land, they would demand change. The sub‑landlord system keeps the truth hidden.</span></p>
+
+        <h2>IV. The Sub‑Landlord System in Practice</h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Country</th><th>Sub-Landlord Actor</th><th>Extraction Method</th><th>Impact</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">UK</span></td><td>Property management companies</td><td>Rent extraction, fees</td><td>Renters pay 40%+ of income on housing</td></tr>
+                    <tr><td><span class="highlight-blue">US</span></td><td>REITs, financial institutions</td><td>Rent, mortgage interest, fees</td><td>Homeownership rate declining, rents rising</td></tr>
+                    <tr><td><span class="highlight-blue">Germany</span></td><td>Corporate landlords</td><td>Rent extraction</td><td>Renters pay 30%+ of income on housing</td></tr>
+                    <tr><td><span class="highlight-blue">China</span></td><td>State manages land allocation</td><td>Public ownership, controlled rents</td><td>Renters pay lower share of income</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>V. GL Framework Diagnosis</h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>GL Dimension</th><th>How the Sub-Landlord System Works</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">Information Asymmetry</span></td><td>The system hides who actually owns the land — layers of intermediaries obscure ownership</td></tr>
+                    <tr><td><span class="highlight-blue">Cost Shifting</span></td><td>Extraction costs are shifted to tenants and homebuyers, who pay without knowing who benefits</td></tr>
+                    <tr><td><span class="highlight-blue">Transfer Pathways</span></td><td>Value flows upward from tenants to sub-landlords to ultimate owners — the path is obscured</td></tr>
+                    <tr><td><span class="highlight-blue">Closure Intensity</span></td><td>The sub-landlord system is self-reinforcing — property managers, financiers, and owners protect the system</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>VI. Conclusion: Name the Extraction Chain</h2>
+        <div class="conclusion-box">
+            <p><span class="highlight">The sub‑landlord system is not an accident. It is a <strong>design</strong> — designed to extract value from the many while hiding who actually benefits. The first step to ending it is to <strong>name it</strong> — to trace the extraction chain from tenant to ultimate owner. Once the chain is visible, it can be broken.</span></p>
+            <p style="margin-top:.5rem;font-size:.8rem;color:#6b5f4e;"><span class="highlight">The sub‑landlord system is not governance. It is <strong>extraction with a smile.</strong></span></p>
+        </div>
+
+        <!-- ===== 文章導覽 ===== -->
+        <div class="nav-series">
+            <div class="lang-en active">
+                <a href="land-housing-realities.html">← The Physical and Economic Realities of Land and Housing</a>
+                <a href="houses-are-for-living.html">Houses Are for Living →</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="lang-en active">
+                GFI · Land &amp; Housing Series · The Sub-Landlord System<br/>
+                &copy; 2026 · Evidence, logic, and structural analysis of global governance
+            </div>
+            <div class="footer-links">
+                <a href="/index.html">Home</a>
+                <a href="/wellness/index.html">Wellness</a>
+                <a href="/about.html">About</a>
+            </div>
+        </div>
     </div>
 
-    <div class="media-layer-box">
-      <h4>2. 經濟學教科書的「預設框架」</h4>
-      <ul>
-        <li>把「市場效率」視為最高價值</li>
-        <li>把「價格發現」視為市場核心功能</li>
-        <li>把「政府干預」視為例外、暫時、甚至有害</li>
-      </ul>
-      <p style="font-size:0.95rem; color:#5f554b; margin-top:0.4rem;"><strong>學生從第一天就被教導：房價應該是「市場決定」的。</strong></p>
+    <!-- ============================================================ -->
+    <!-- 中文版 -->
+    <!-- ============================================================ -->
+    <div class="lang-block" id="zh">
+        <a href="/index.html" class="back-link">← 返回首頁</a>
+        <h1>二房東制度的真相</h1>
+        <div class="subhead">西方民主如何作為「二房東」系統運作</div>
+        <div class="meta">GFI · 土地與住房系列</div>
+
+        <div class="insight-block"><p><span class="highlight">西方民主並不挑戰地主階級。它<strong>強化</strong>它——通過創造一層「二房東」，代表系統提取租金。二房東不是最終所有者——但它們執行相同的功能：從多數人提取價值並向上轉移。</span></p></div>
+
+        <h2>一、什麼是二房東制度？</h2>
+        <p>二房東制度是一個<strong>層級化的提取鏈</strong>。頂端是終極地主——國家、公司或貴族。下面是二房東——管理租金提取的中介。最底層是租戶——實際支付的人。</p>
+        <p>在西方民主國家中，二房東制度通過以下方式運作：</p>
+        <ul>
+            <li><strong>物業管理公司</strong>——代表缺席地主提取租金</li>
+            <li><strong>房地產投資信託（REITs）</strong>——通過金融化的租賃市場提取價值</li>
+            <li><strong>政府機構</strong>——通過房產稅和費用提取價值</li>
+            <li><strong>金融機構</strong>——通過抵押貸款利息和費用提取價值</li>
+        </ul>
+
+        <h2>二、二房東功能：沒有所有權的提取</h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>角色</th><th>做什麼</th><th>服務誰</th><th>剝削誰</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">地主</span></td><td>擁有土地，提取租金</td><td>自己 / 股東</td><td>租戶</td></tr>
+                    <tr><td><span class="highlight-blue">二房東（物業管理）</span></td><td>代表所有者管理提取</td><td>地主</td><td>租戶</td></tr>
+                    <tr><td><span class="highlight-blue">二房東（金融機構）</span></td><td>提取利息和費用</td><td>投資者</td><td>購房者、租戶</td></tr>
+                    <tr><td><span class="highlight-blue">二房東（政府）</span></td><td>提取稅收和費用</td><td>國家預算</td><td>業主、租戶</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>三、政治功能：隱藏所有權</h2>
+        <p>二房東制度服務於一個政治目的：它<strong>掩飾</strong>誰真正擁有土地。最終所有者隱藏在多層中介後面。租戶向物業經理支付租金，物業經理付給REIT，REIT向匿名股東分紅。</p>
+        <p><span class="highlight">系統是故意不透明的。如果人們知道誰擁有土地，他們會要求改變。二房東制度將真相隱藏起來。</span></p>
+
+        <h2>四、二房東制度的實踐</h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>國家</th><th>二房東行動者</th><th>提取方式</th><th>影響</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">英國</span></td><td>物業管理公司</td><td>租金提取、費用</td><td>租戶將40%+收入用於住房</td></tr>
+                    <tr><td><span class="highlight-blue">美國</span></td><td>REITs、金融機構</td><td>租金、抵押貸款利息、費用</td><td>房屋擁有率下降、租金上升</td></tr>
+                    <tr><td><span class="highlight-blue">德國</span></td><td>企業地主</td><td>租金提取</td><td>租戶將30%+收入用於住房</td></tr>
+                    <tr><td><span class="highlight-blue">中國</span></td><td>國家管理土地分配</td><td>公有制、控制租金</td><td>租戶收入佔比較低</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>五、GL框架診斷</h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>GL 維度</th><th>二房東制度如何運作</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">資訊不對稱</span></td><td>系統隱藏誰真正擁有土地——多層中介掩蓋所有權</td></tr>
+                    <tr><td><span class="highlight-blue">成本轉嫁</span></td><td>提取成本轉嫁給租戶和購房者，他們支付卻不知道誰受益</td></tr>
+                    <tr><td><span class="highlight-blue">轉移路徑</span></td><td>價值從租戶向上流向二房東再到最終所有者——路徑被掩蓋</td></tr>
+                    <tr><td><span class="highlight-blue">閉環程度</span></td><td>二房東制度自我強化——物業經理、金融家和所有者保護系統</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>六、結論：命名提取鏈</h2>
+        <div class="conclusion-box">
+            <p><span class="highlight">二房東制度不是偶然的。它是一個<strong>設計</strong>——設計來從多數人提取價值，同時隱藏誰真正受益。終結它的第一步是<strong>命名它</strong>——追溯從租戶到最終所有者的提取鏈。一旦鏈條可視化，它就能被打破。</span></p>
+            <p style="margin-top:.5rem;font-size:.8rem;color:#6b5f4e;"><span class="highlight">二房東制度不是治理。它是<strong>帶著微笑的提取。</strong></span></p>
+        </div>
+
+        <!-- ===== 文章導覽 ===== -->
+        <div class="nav-series">
+            <div class="lang-zh active">
+                <a href="land-housing-realities.html">← 土地與住房的物理與經濟現實</a>
+                <a href="houses-are-for-living.html">房子是用來住的 →</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="lang-zh active">
+                GFI · 土地與住房系列 · 二房東制度<br/>
+                &copy; 2026 · 本平台以證據、邏輯與結構性分析探討全球治理
+            </div>
+            <div class="footer-links">
+                <a href="/index.html">首頁</a>
+                <a href="/wellness/index.html">Wellness</a>
+                <a href="/about.html">關於</a>
+            </div>
+        </div>
     </div>
-
-    <div class="media-layer-box">
-      <h4>3. 金融業的「利益導向」</h4>
-      <ul>
-        <li>銀行、基金、保險公司需要房價上漲來維持資產負債表</li>
-        <li>他們贊助研究、聘用經濟學家、發布報告</li>
-        <li>這些報告反過來被媒體引用，形成「客觀事實」</li>
-      </ul>
-      <p style="font-size:0.95rem; color:#5f554b; margin-top:0.4rem;"><strong>資本不僅影響政策，還影響了「什麼是事實」的定義。</strong></p>
-    </div>
-
-    <div class="media-layer-box">
-      <h4>4. 好萊塢與流行文化的「價值灌輸」</h4>
-      <ul>
-        <li>電影主角的成功指標：買房、換大房、投資房產</li>
-        <li>房地產節目：「翻修致富」、「買房賺千萬」</li>
-        <li>社交媒體：「26 歲擁有 5 套房」、「被動收入來自房產」</li>
-      </ul>
-      <p style="font-size:0.95rem; color:#5f554b; margin-top:0.4rem;"><strong>「擁有房產」被包裝成幸福人生的必要條件。</strong></p>
-    </div>
-
-    <h3>中國的「房住不炒」—— 對這套價值體系的直接拒絕</h3>
-
-    <table class="comparison-table">
-      <thead><tr><th>西方資本主義價值</th><th>中國「房住不炒」價值</th></tr></thead>
-      <tbody>
-        <tr><td>房價上漲 = 好</td><td>房價穩定 = 好</td></tr>
-        <tr><td>房產是投資工具</td><td>房產是居住工具</td></tr>
-        <tr><td>市場決定一切</td><td>政策引導市場</td></tr>
-        <tr><td>價格信號是核心</td><td>民生需求是核心</td></tr>
-        <tr><td>房產是財富來源</td><td>房產是生活成本</td></tr>
-        <tr><td>下跌是危機</td><td>下跌是回歸正常</td></tr>
-      </tbody>
-    </table>
-
-    <p><strong>這不是「調控手段不同」，這是「價值基準完全不同」。</strong></p>
-
-    <h2>四、主流媒體從來不是中立的 — 它是價值的生產線</h2>
-
-    <p>主流媒體自稱「客觀中立」，但這本身就是一種意識形態宣告。</p>
-
-    <div class="pull-quote">
-      <strong>媒體的中立性神話，是資本主義價值體系最成功的自我包裝。</strong>
-    </div>
-
-    <h3>1. 誰決定什麼是「新聞」？</h3>
-
-    <table class="comparison-table">
-      <thead><tr><th>決策層</th><th>實際運作</th></tr></thead>
-      <tbody>
-        <tr><td class="label-cell">編輯台</td><td>決定什麼值得報導、什麼不值得——這是<strong>議題設定權</strong></td></tr>
-        <tr><td class="label-cell">所有權結構</td><td>六大集團控制美國 90% 以上的媒體——他們的老闆是資本家</td></tr>
-        <tr><td class="label-cell">廣告主</td><td>廣告收入決定媒體生存——得罪廣告主等於自殺</td></tr>
-        <tr><td class="label-cell">受訪者選擇</td><td>誰有資格說話？通常是銀行家、官員、智庫——<strong>這些人本身就是體制的一部分</strong></td></tr>
-      </tbody>
-    </table>
-
-    <p><strong>新聞不是「事實的鏡子」，而是「權力的過濾器」。</strong></p>
-
-    <h3>2. 語言本身就是框架</h3>
-
-    <p>媒體報導房價時，使用的語言已經預設了價值判斷：</p>
-
-    <table class="comparison-table">
-      <thead><tr><th>媒體用詞</th><th>隱含價值</th></tr></thead>
-      <tbody>
-        <tr><td>「房市回暖」</td><td>房價上漲是好事</td></tr>
-        <tr><td>「樓市寒冬」</td><td>房價下跌是壞事</td></tr>
-        <tr><td>「信心復甦」</td><td>市場信心應該建立在價格上漲上</td></tr>
-        <tr><td>「恐慌性拋售」</td><td>賣房的人是「恐慌」而非「理性」</td></tr>
-      </tbody>
-    </table>
-
-    <p><strong>這些詞彙不是中性的——它們是帶著價值判斷的框架。</strong></p>
-
-    <h3>3. 什麼「不被報導」，本身就是立場</h3>
-
-    <p>主流媒體選擇<strong>忽略什麼</strong>，往往比報導什麼更有立場：</p>
-
-    <ul style="margin:0.8rem 0 1.2rem 2rem; list-style-type:square;">
-      <li>不報導中國房地產「去投機化」後的社會穩定</li>
-      <li>不報導西方年輕人購房絕望率的上升</li>
-      <li>不報導「房價下跌但系統依然穩定」的事實</li>
-      <li>不報導租客權益保障的進展</li>
-    </ul>
-
-    <p><strong>沉默，是最強大的立場。</strong></p>
-
-    <h3>4. 媒體從業者的「自我馴化」</h3>
-
-    <p>記者、編輯、主播不是「被強迫」這樣報導的——他們是<strong>被教育成這樣</strong>的：</p>
-
-    <ul style="margin:0.8rem 0 1.2rem 2rem; list-style-type:square;">
-      <li>新聞系教科書教他們「市場是效率的」</li>
-      <li>實習時被教導「平衡報導」——但「平衡」的兩端通常是「資本利益」和「另一種資本利益」</li>
-      <li>職場升遷取決於「不惹麻煩」——而麻煩通常來自挑戰權力結構</li>
-    </ul>
-
-    <p><strong>他們不需要被審查，因為他們已經學會了自我審查。</strong></p>
-
-    <h3>5. 結論：主流媒體是資本主義價值觀的再生產機器</h3>
-
-    <p>主流媒體不是中立的報導者，而是：</p>
-
-    <ul style="margin:0.8rem 0 1.2rem 2rem; list-style-type:square;">
-      <li><strong>資本主義價值觀的學校</strong></li>
-      <li><strong>房價「只漲不跌」信念的守護者</strong></li>
-      <li><strong>「市場是終極仲裁者」意識形態的傳教士</strong></li>
-      <li><strong>對「另一種可能」的系統性過濾器</strong></li>
-    </ul>
-
-    <div class="pull-quote" style="background:#e5dad1;">
-      <strong>他們不是「看不懂」中國 — 他們是被訓練成「不能看懂」中國。</strong>
-    </div>
-
-    <h2>五、西方批判的荒謬本質</h2>
-
-    <div class="pull-quote">
-      “你們的房價跌了 → 你們的經濟要崩了 → 你們的政策失敗了。”
-    </div>
-
-    <p>這是西方評論家的典型邏輯。但他們刻意忽略了一個事實：<strong>中國在房價下跌的同時，沒有發生西方意義上的金融危機。</strong></p>
-
-    <ul style="margin:0.8rem 0 1.2rem 2rem; list-style-type:square;">
-      <li>中國的銀行體系是 <strong>國有主導</strong> 的，不依賴抵押品市值變動來決定資本充足率</li>
-      <li>中國的購房者 <strong>首付比例極高</strong>（30%–70%），資產負債表對價格波動的敏感度遠低於西方</li>
-      <li>中國的貨幣政策 <strong>直接管控信貸流向</strong>，而不是用利率這種「一刀切」的鈍器</li>
-    </ul>
-
-    <p><strong>西方看到的是「價格下跌」，卻看不到「系統穩定」。</strong></p>
-
-    <p>更關鍵的是：<strong>為什麼西方媒體「看不懂」中國？</strong></p>
-
-    <p>因為他們的<strong>價值濾鏡</strong>是資本主義的。當中國房價下跌時，他們的濾鏡自動套用：</p>
-
-    <div class="pull-quote" style="background:#e5dad1; font-size:1rem;">
-      房價下跌 → 財富蒸發 → 消費萎縮 → 經濟衰退 → 政策失敗
-    </div>
-
-    <p><strong>他們無法想像一個「房價下跌不等於災難」的世界。</strong></p>
-
-    <p>就像一個只會說一種語言的人，聽不懂另一種語言的詩。</p>
-
-    <h2>六、到底誰在真正「失敗」？</h2>
-
-    <table class="comparison-table">
-      <thead><tr><th></th><th style="background:#2f2a24; color:#f0ebe3;">🇨🇳 中國（2022–2026）</th><th style="background:#2f2a24; color:#f0ebe3;">🌍 西方（2008、2023）</th></tr></thead>
-      <tbody>
-        <tr><td class="label-cell">房價調整</td><td class="col-china">主動去槓桿，政策主導</td><td class="col-west">被動崩盤，市場失控</td></tr>
-        <tr><td class="label-cell">金融系統</td><td class="col-china">穩定，未發生系統性危機</td><td class="col-west">銀行倒閉（Lehman、SVB、瑞信）</td></tr>
-        <tr><td class="label-cell">政府角色</td><td class="col-china">主動調控，有保有壓</td><td class="col-west">被動救援，納稅人買單</td></tr>
-        <tr><td class="label-cell">投機者</td><td class="col-china">被逐出市場</td><td class="col-west">被救助後重新進場</td></tr>
-        <tr><td class="label-cell">年輕人購房</td><td class="col-china">壓力減輕（價格收入比改善）</td><td class="col-west">壓力加重（利率上升、租金暴漲）</td></tr>
-      </tbody>
-    </table>
-
-    <h2>七、為什麼西方做不到 — 而且永遠做不到</h2>
-
-    <p>西方批評中國「蕭條」的人，其實是在用一種 <strong>他們自己都做不到的標準</strong> 來評判中國。</p>
-
-    <ul style="margin:0.8rem 0 1.2rem 2rem; list-style-type:square;">
-      <li><strong>土地是私有財產</strong> — 增值歸地主，政府無法回收</li>
-      <li><strong>選舉週期</strong> — 任何「房價下跌」都成為政治自殺</li>
-      <li><strong>金融資本掌握政策制定權</strong> — 不可能自我閹割</li>
-      <li><strong>住房已與養老金、保險、銀行資產負債表深度綁定</strong> — 無法脫鉤</li>
-    </ul>
-
-    <div class="pull-quote" style="background:#e5dad1;">
-      <strong>中國可以主動去槓桿，因為國家掌控土地、信貸和政策方向。</strong><br>
-      <span style="display:block; margin-top:0.4rem;"><strong>西方只能被動救市，因為資本掌控土地、信貸和政策方向。</strong></span>
-    </div>
-
-    <h2>八、他們嘲笑，是因為他們害怕</h2>
-
-    <p>西方媒體和投資機構嘲笑中國房地產「蕭條」，<strong>不是因為中國做錯了 — 而是因為中國證明了另一條路是可行的。</strong></p>
-
-    <p>如果中國能夠在不引發金融危機的情況下，讓房地產從「金融投機品」回歸「居住必需品」，那麼西方那套「房價永遠不能跌」的邏輯，就會被徹底推翻。</p>
-
-    <div class="pull-quote">
-      <strong>他們嘲笑中國，是因為他們害怕自己的制度經不起同樣的檢驗。</strong>
-    </div>
-
-    <p>中國不玩西方那套遊戲了。西方卻還在假裝那套遊戲是唯一的規則。</p>
-
-    <p><strong>誰可笑？答案很清楚。</strong></p>
-
-    <hr class="section-divider" />
-
-    <p style="font-size:1.05rem; text-align:center; color:#3f3831;">
-      <strong>中國把住房視為社會福祉。西方把它視為金融產品。</strong>
-    </p>
-    <p style="font-size:1rem; text-align:center; color:#5f554b; font-style:italic;">
-      媒體不是「中立」的 — 它是價值的生產線
-    </p>
-
-    <div style="margin:2rem 0; padding:1.2rem 1.8rem; background:#f6f1ec; border-radius:6px; border-left:6px solid #b8a89a;">
-      <p style="margin:0; font-size:0.95rem; text-align:center;">
-        <strong>GFI Flow Intelligence</strong> · 2026 年 8 月<br>
-        <span style="font-weight:300; font-size:0.85rem; color:#6b6057;">治理正當性框架 — 參數 10：住房負擔</span>
-      </p>
-      <p style="margin:0.6rem 0 0 0; font-size:0.85rem; text-align:center; color:#6b6057; font-style:italic;">
-        「他們嘲笑，是因為他們無法複製。他們嘲諷，是因為他們無法承認。」
-      </p>
-    </div>
-
-    <div class="footer-note">本文以中英雙語呈現 · 歡迎轉載並註明出處</div>
-
-    <!-- 回到首頁按鈕（中文版下方） -->
-    <div class="back-home">
-      <a href="/">← 回到首頁 / Back to Home</a>
-    </div>
-
-  </div>
-  <!-- ==================== 中文版結束 ============================== -->
-
-  <!-- ============================================================ -->
-  <!-- 英文版 -->
-  <!-- ============================================================ -->
-  <div class="lang-content" id="lang-en">
-
-    <h1>Houses Are for Living</h1>
-    <div class="subhead">How China Tamed Speculation — and Why the West Cannot Replicate It</div>
-
-    <p><strong>In December 2016, China’s Central Economic Conference declared: “Houses are for living, not for speculation.”</strong></p>
-    <p>This was not a slogan. It was a strategic reorientation — a direct rejection of the Western model where housing functions as a financial asset first, and a home second.</p>
-    <p>Over the following decade, China implemented a comprehensive policy framework that <strong>systematically stripped housing of its speculative attributes</strong>, forcing the market back toward its fundamental purpose: shelter.</p>
-
-    <h2>I. What China Did — The Policy Arsenal</h2>
-    <table class="comparison-table">
-      <thead><tr><th style="width:20%;">Dimension</th><th style="width:40%;">Measures</th></tr></thead>
-      <tbody>
-        <tr><td class="label-cell">Finance</td><td>Restricted credit flows to speculative purchases; raised down-payment ratios; banned consumer/business loans from entering property market</td></tr>
-        <tr><td class="label-cell">Administration</td><td>Implemented purchase limits, loan limits, sales lock-up periods, and price caps across 137 cities (as of 2019)</td></tr>
-        <tr><td class="label-cell">Land Supply</td><td>Mandated increased residential land supply in pressure cities; reformed auction rules with premium caps</td></tr>
-        <tr><td class="label-cell">Long-term Mechanism</td><td>Promoted rental housing; piloted property tax to raise holding costs for multiple-home owners</td></tr>
-        <tr><td class="label-cell">Developer Regulation</td><td>Introduced the “Three Red Lines” (2020) to curb developer debt — effectively forcing the industry to deleverage</td></tr>
-      </tbody>
-    </table>
-
-    <h2>II. Tangible Results</h2>
-    <table class="comparison-table">
-      <thead><tr><th>Indicator</th><th>Outcome</th></tr></thead>
-      <tbody>
-        <tr><td class="label-cell">Speculative demand</td><td>Significantly cooled; distressed selling emerged in multiple cities during 2022–2023</td></tr>
-        <tr><td class="label-cell">Market expectations</td><td>Shifted from “prices only go up” to rational, cautious outlook</td></tr>
-        <tr><td class="label-cell">Developer leverage</td><td>Over-leveraged developers restructured or failed; the sector consolidated</td></tr>
-        <tr><td class="label-cell">Policy evolution</td><td>Housing reclassified as a “durable consumer good” (2026) — investment attributes further de-emphasized</td></tr>
-      </tbody>
-    </table>
-
-    <h2>III. The Real Divide Is Not Policy — It Is Values</h2>
-
-    <p>The difference between China and the West is <strong>superficially about policy tools, but fundamentally about value philosophy.</strong></p>
-
-    <div class="pull-quote">
-      <strong>The West believes: the market is the ultimate arbiter</strong><br>
-      <span style="display:block; margin-top:0.3rem;"><strong>China believes: people’s livelihood is the ultimate arbiter</strong></span>
-    </div>
-
-    <p>Western mainstream media do not “objectively report” on housing prices — they have <strong>internalized a preset value framework</strong>:</p>
-
-    <table class="comparison-table">
-      <thead><tr><th>Capitalist Belief “Educated” into Society</th><th>Media Manifestation</th></tr></thead>
-      <tbody>
-        <tr><td>Price rise = economic health</td><td>“Market recovery,” “confidence returning”</td></tr>
-        <tr><td>Price fall = disaster</td><td>“Crash,” “slump,” “crisis”</td></tr>
-        <tr><td>Buying property is the “best investment”</td><td>Finance shows, property ads, personal finance advice</td></tr>
-        <tr><td>Real estate is the “wealth engine”</td><td>Central banks, treasuries, think tanks model on this premise</td></tr>
-        <tr><td>Owning property = successful life</td><td>Movies, series, social media reinforce this narrative</td></tr>
-      </tbody>
-    </table>
-
-    <p><strong>This value system is not “naturally occurring” — it is produced.</strong></p>
-
-    <h3>The Four Layers of the Production Mechanism</h3>
-
-    <div class="media-layer-box">
-      <h4>1. News Media — Agenda Setting</h4>
-      <ul>
-        <li>Price fall → headline: “Housing winter arrives,” “Owners wail”</li>
-        <li>Price rise → headline: “Economic recovery signal,” “Asset appreciation”</li>
-      </ul>
-      <p style="font-size:0.95rem; color:#5f554b; margin-top:0.4rem;"><strong>The same event is given entirely different meanings.</strong></p>
-    </div>
-
-    <div class="media-layer-box">
-      <h4>2. Economics Textbooks — The Default Framework</h4>
-      <ul>
-        <li>“Market efficiency” as the highest value</li>
-        <li>“Price discovery” as the core function of markets</li>
-        <li>“Government intervention” as exceptional, temporary, even harmful</li>
-      </ul>
-      <p style="font-size:0.95rem; color:#5f554b; margin-top:0.4rem;"><strong>Students are taught from day one: housing prices should be “market-determined.”</strong></p>
-    </div>
-
-    <div class="media-layer-box">
-      <h4>3. The Financial Sector — Interest-Driven</h4>
-      <ul>
-        <li>Banks, funds, and insurers need rising prices to maintain balance sheets</li>
-        <li>They sponsor research, hire economists, publish reports</li>
-        <li>These reports are then cited by media as “objective facts”</li>
-      </ul>
-      <p style="font-size:0.95rem; color:#5f554b; margin-top:0.4rem;"><strong>Capital does not just influence policy — it influences the definition of “fact.”</strong></p>
-    </div>
-
-    <div class="media-layer-box">
-      <h4>4. Hollywood and Pop Culture — Value Indoctrination</h4>
-      <ul>
-        <li>Movie protagonists’ success metrics: buying a house, upgrading, investing in property</li>
-        <li>Real estate shows: “Flip to riches,” “Make millions from property”</li>
-        <li>Social media: “26 years old with 5 properties,” “passive income from real estate”</li>
-      </ul>
-      <p style="font-size:0.95rem; color:#5f554b; margin-top:0.4rem;"><strong>“Owning property” is packaged as a necessary condition for a happy life.</strong></p>
-    </div>
-
-    <h3>China’s “Houses for Living” — A Direct Rejection of This Value System</h3>
-
-    <table class="comparison-table">
-      <thead><tr><th>Western Capitalist Value</th><th>China’s “Houses for Living” Value</th></tr></thead>
-      <tbody>
-        <tr><td>Price rise = good</td><td>Price stability = good</td></tr>
-        <tr><td>Property is an investment tool</td><td>Property is a living tool</td></tr>
-        <tr><td>The market decides everything</td><td>Policy guides the market</td></tr>
-        <tr><td>Price signals are core</td><td>People’s livelihood needs are core</td></tr>
-        <tr><td>Property is a source of wealth</td><td>Property is a cost of living</td></tr>
-        <tr><td>Decline is a crisis</td><td>Decline is a return to normalcy</td></tr>
-      </tbody>
-    </table>
-
-    <p><strong>This is not “different regulatory tools” — this is “fundamentally different value benchmarks.”</strong></p>
-
-    <h2>IV. Mainstream Media Is Never Neutral — It Is the Production Line of Values</h2>
-
-    <p>Mainstream media claims to be "objective and neutral" — but that claim itself is an ideological declaration.</p>
-
-    <div class="pull-quote">
-      <strong>The myth of media neutrality is the most successful self-packaging of the capitalist value system.</strong>
-    </div>
-
-    <h3>1. Who Decides What Is "News"?</h3>
-
-    <table class="comparison-table">
-      <thead><tr><th>Decision Layer</th><th>Actual Operation</th></tr></thead>
-      <tbody>
-        <tr><td class="label-cell">Editorial desk</td><td>Decides what is worth covering and what is not — this is <strong>agenda-setting power</strong></td></tr>
-        <tr><td class="label-cell">Ownership structure</td><td>Six conglomerates control over 90% of U.S. media — their owners are capitalists</td></tr>
-        <tr><td class="label-cell">Advertisers</td><td>Ad revenue determines media survival — offending advertisers is suicidal</td></tr>
-        <tr><td class="label-cell">Interviewee selection</td><td>Who gets to speak? Usually bankers, officials, think tanks — <strong>these people are part of the system themselves</strong></td></tr>
-      </tbody>
-    </table>
-
-    <p><strong>News is not a "mirror of facts" — it is a "filter of power."</strong></p>
-
-    <h3>2. Language Itself Is a Framework</h3>
-
-    <p>When media report on housing prices, the language they use already presupposes value judgments:</p>
-
-    <table class="comparison-table">
-      <thead><tr><th>Media Term</th><th>Implicit Value</th></tr></thead>
-      <tbody>
-        <tr><td>"Market recovery"</td><td>Rising prices are good</td></tr>
-        <tr><td>"Housing winter"</td><td>Falling prices are bad</td></tr>
-        <tr><td>"Confidence returning"</td><td>Market confidence should be built on rising prices</td></tr>
-        <tr><td>"Panic selling"</td><td>Sellers are "panicking" rather than "being rational"</td></tr>
-      </tbody>
-    </table>
-
-    <p><strong>These terms are not neutral — they are frameworks loaded with value judgments.</strong></p>
-
-    <h3>3. What Is "Not Reported" Is Itself a Stance</h3>
-
-    <p>What mainstream media chooses <strong>to ignore</strong> often carries more of a stance than what it reports:</p>
-
-    <ul style="margin:0.8rem 0 1.2rem 2rem; list-style-type:square;">
-      <li>Not reporting the social stability after China's "de-speculation" of real estate</li>
-      <li>Not reporting the rising rate of despair among young Western homebuyers</li>
-      <li>Not reporting the fact that "prices fell but the system remained stable"</li>
-      <li>Not reporting progress in tenant rights protection</li>
-    </ul>
-
-    <p><strong>Silence is the most powerful stance.</strong></p>
-
-    <h3>4. The "Self-Domestication" of Media Practitioners</h3>
-
-    <p>Journalists, editors, and anchors are not "forced" to report this way — they are <strong>educated to be this way</strong>:</p>
-
-    <ul style="margin:0.8rem 0 1.2rem 2rem; list-style-type:square;">
-      <li>Journalism textbooks teach them that "markets are efficient"</li>
-      <li>Internships teach them "balanced reporting" — but the two sides of "balance" are usually "capital interest" and "another capital interest"</li>
-      <li>Career advancement depends on "not making trouble" — and trouble usually comes from challenging power structures</li>
-    </ul>
-
-    <p><strong>They do not need to be censored — they have already learned to self-censor.</strong></p>
-
-    <h3>5. Conclusion: Mainstream Media Is the Reproduction Machine of Capitalist Values</h3>
-
-    <p>Mainstream media is not a neutral reporter — it is:</p>
-
-    <ul style="margin:0.8rem 0 1.2rem 2rem; list-style-type:square;">
-      <li><strong>A school for capitalist values</strong></li>
-      <li><strong>A guardian of the belief that prices "only go up"</strong></li>
-      <li><strong>A missionary for the ideology that "the market is the ultimate arbiter"</strong></li>
-      <li><strong>A systematic filter against "alternative possibilities"</strong></li>
-    </ul>
-
-    <div class="pull-quote" style="background:#e5dad1;">
-      <strong>They do not "fail to understand" China — they are trained to be "unable to understand" China.</strong>
-    </div>
-
-    <h2>V. The Absurdity of Western Criticism</h2>
-
-    <div class="pull-quote">
-      “Your prices are falling → your economy is collapsing → your policy has failed.”
-    </div>
-
-    <p>This is the typical Western critic's logic. But they deliberately ignore a fact: <strong>China has not experienced a financial crisis in the Western sense — even as prices declined.</strong></p>
-
-    <ul style="margin:0.8rem 0 1.2rem 2rem; list-style-type:square;">
-      <li>China’s banking system is <strong>state-dominated</strong> — it does not rely on collateral values to determine capital adequacy</li>
-      <li>Chinese homebuyers have <strong>extremely high down-payment ratios</strong> (30%–70%) — their balance sheets are far less sensitive to price swings than in the West</li>
-      <li>China’s monetary policy <strong>directly controls credit flows</strong> — it does not rely on interest rates as a blunt instrument</li>
-    </ul>
-
-    <p><strong>The West sees “falling prices” — but it does not see “systemic stability.”</strong></p>
-
-    <p>More crucially: <strong>Why does the Western media “fail to understand” China?</strong></p>
-
-    <p>Because their <strong>value filter</strong> is capitalist. When Chinese prices fall, their filter automatically applies:</p>
-
-    <div class="pull-quote" style="background:#e5dad1; font-size:1rem;">
-      Price fall → wealth evaporation → consumption contraction → economic recession → policy failure
-    </div>
-
-    <p><strong>They cannot imagine a world where “falling prices are not a disaster.”</strong></p>
-
-    <p>Like someone who speaks only one language, unable to understand poetry in another.</p>
-
-    <h2>VI. Who Is Really “Failing”?</h2>
-
-    <table class="comparison-table">
-      <thead><tr><th></th><th style="background:#2f2a24; color:#f0ebe3;">🇨🇳 China (2022–2026)</th><th style="background:#2f2a24; color:#f0ebe3;">🌍 The West (2008, 2023)</th></tr></thead>
-      <tbody>
-        <tr><td class="label-cell">Price adjustment</td><td class="col-china">Proactive deleveraging, policy-led</td><td class="col-west">Passive collapse, market unhinged</td></tr>
-        <tr><td class="label-cell">Financial system</td><td class="col-china">Stable, no systemic crisis</td><td class="col-west">Bank failures (Lehman, SVB, Credit Suisse)</td></tr>
-        <tr><td class="label-cell">Government role</td><td class="col-china">Active steering, selective support</td><td class="col-west">Passive bailouts, taxpayers pay</td></tr>
-        <tr><td class="label-cell">Speculators</td><td class="col-china">Forced out of the market</td><td class="col-west">Bailed out and re-entered</td></tr>
-        <tr><td class="label-cell">Youth affordability</td><td class="col-china">Pressure eased (price-to-income improving)</td><td class="col-west">Pressure worsened (rates up, rents soaring)</td></tr>
-      </tbody>
-    </table>
-
-    <h2>VII. Why the West Cannot — and Never Will — Replicate This</h2>
-
-    <p>Western critics who mock China’s “slump” are judging China by a standard <strong>they themselves cannot meet</strong>.</p>
-
-    <ul style="margin:0.8rem 0 1.2rem 2rem; list-style-type:square;">
-      <li><strong>Land is entrenched private property</strong> — appreciation is privately captured, the state cannot recapture it</li>
-      <li><strong>Election cycles</strong> — any “price decline” is political suicide</li>
-      <li><strong>Financial capital owns the policy process</strong> — it will not regulate itself</li>
-      <li><strong>Housing is deeply tied to pensions, insurance, and bank balance sheets</strong> — decoupling is structurally impossible</li>
-    </ul>
-
-    <div class="pull-quote" style="background:#e5dad1;">
-      <strong>China can proactively deleverage because the state controls land, credit, and policy direction.</strong><br>
-      <span style="display:block; margin-top:0.4rem;"><strong>The West can only reactively bail out because capital controls land, credit, and policy direction.</strong></span>
-    </div>
-
-    <h2>VIII. They Laugh Because They Fear</h2>
-
-    <p>Western media and investment houses mock China’s property “slump” — <strong>not because China has done something wrong, but because China has proven that another path is possible.</strong></p>
-
-    <p>If China can return housing from “financial speculative asset” to “shelter” without triggering a financial crisis, then the West’s logic — “prices can never fall” — is fundamentally broken.</p>
-
-    <div class="pull-quote">
-      <strong>They mock China because they fear their own system cannot withstand the same test.</strong>
-    </div>
-
-    <p>China has stopped playing the West’s game. The West still pretends that game is the only rule.</p>
-
-    <p><strong>Who is ridiculous? The answer is clear.</strong></p>
-
-    <hr class="section-divider" />
-
-    <p style="font-size:1.05rem; text-align:center; color:#3f3831;">
-      <strong>China treated housing as a social good. The West treats it as a financial product.</strong>
-    </p>
-    <p style="font-size:1rem; text-align:center; color:#5f554b; font-style:italic;">
-      Media is not “neutral” — it is the production line of values.
-    </p>
-
-    <div style="margin:2rem 0; padding:1.2rem 1.8rem; background:#f6f1ec; border-radius:6px; border-left:6px solid #b8a89a;">
-      <p style="margin:0; font-size:0.95rem; text-align:center;">
-        <strong>GFI Flow Intelligence</strong> · August 2026<br>
-        <span style="font-weight:300; font-size:0.85rem; color:#6b6057;">Governance Legitimacy Framework — Parameter 10: Housing Burden</span>
-      </p>
-      <p style="margin:0.6rem 0 0 0; font-size:0.85rem; text-align:center; color:#6b6057; font-style:italic;">
-        “They laugh because they cannot replicate. They mock because they cannot admit.”
-      </p>
-    </div>
-
-    <div class="footer-note">Presented in bilingual Chinese-English · Freely share with attribution</div>
-
-    <!-- 回到首頁按鈕（英文版下方） -->
-    <div class="back-home">
-      <a href="/">← 回到首頁 / Back to Home</a>
-    </div>
-
-  </div>
 
 </div>
 
 <script>
-  (function() {
-    const btns = document.querySelectorAll('.lang-btn');
-    const contents = {
-      zh: document.getElementById('lang-zh'),
-      en: document.getElementById('lang-en')
-    };
+    (function() {
+        const btns = document.querySelectorAll('.lang-btn');
+        const blocks = {
+            en: document.getElementById('en'),
+            zh: document.getElementById('zh')
+        };
 
-    function setLanguage(lang) {
-      btns.forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.dataset.lang === lang) {
-          btn.classList.add('active');
+        function setLang(lang) {
+            Object.keys(blocks).forEach(key => {
+                if (blocks[key]) blocks[key].classList.remove('active');
+            });
+            if (blocks[lang]) blocks[lang].classList.add('active');
+
+            btns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
+
+            document.querySelectorAll('.nav-series .lang-zh, .nav-series .lang-en').forEach(el => el.classList.remove('active'));
+            const navTarget = document.querySelector('.nav-series .lang-' + lang);
+            if (navTarget) navTarget.classList.add('active');
+
+            document.querySelectorAll('.footer .lang-zh, .footer .lang-en').forEach(el => el.classList.remove('active'));
+            const footerTarget = document.querySelector('.footer .lang-' + lang);
+            if (footerTarget) footerTarget.classList.add('active');
+
+            if (history.pushState) history.pushState(null, '', '#' + lang);
         }
-      });
 
-      Object.keys(contents).forEach(key => {
-        contents[key].classList.remove('active');
-        if (key === lang) {
-          contents[key].classList.add('active');
+        btns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const lang = this.dataset.lang;
+                if (lang) setLang(lang);
+            });
+        });
+
+        const hash = window.location.hash.replace('#', '');
+        if (hash === 'zh') {
+            setLang('zh');
+        } else {
+            setLang('en');
         }
-      });
 
-      try {
-        localStorage.setItem('preferred-lang', lang);
-      } catch (e) { /* ignore */ }
-    }
-
-    btns.forEach(btn => {
-      btn.addEventListener('click', function(e) {
-        const lang = this.dataset.lang;
-        setLanguage(lang);
-      });
-    });
-
-    try {
-      const saved = localStorage.getItem('preferred-lang');
-      if (saved && (saved === 'zh' || saved === 'en')) {
-        setLanguage(saved);
-      }
-    } catch (e) { /* ignore */ }
-  })();
+        window.addEventListener('hashchange', function() {
+            const newHash = window.location.hash.replace('#', '');
+            if (newHash === 'zh') {
+                setLang('zh');
+            } else {
+                setLang('en');
+            }
+        });
+    })();
 </script>
 
 </body>
