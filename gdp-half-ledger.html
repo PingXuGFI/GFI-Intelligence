@@ -1,947 +1,323 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GDP 是半套帳本 · GL Framework · Ping Xu · GFI Flow Intelligence</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="GDP Is a Half-Ledger — Why the world's most important metric is missing half the story." />
+    <meta name="keywords" content="GDP, half-ledger, economic measurement, GL Framework, structural analysis, missing metrics" />
+    <meta property="og:title" content="GDP Is a Half-Ledger | GFI Flow Intelligence" />
+    <meta property="og:description" content="Why the world's most important metric is missing half the story." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="GDP Is a Half-Ledger" />
+    <meta name="twitter:description" content="GDP measures what is produced — not what is destroyed. It is a half-ledger." />
+    <link rel="alternate" hreflang="en" href="https://gfiintel.com/gdp-half-ledger.html" />
+    <link rel="alternate" hreflang="zh-TW" href="https://gfiintel.com/gdp-half-ledger.html?lang=tw" />
+    <link rel="alternate" hreflang="zh-CN" href="https://gfiintel.com/gdp-half-ledger.html?lang=cn" />
+    <link rel="alternate" hreflang="es" href="https://gfiintel.com/gdp-half-ledger.html?lang=es" />
+    <link rel="alternate" hreflang="x-default" href="https://gfiintel.com/gdp-half-ledger.html" />
+    <title>GDP Is a Half-Ledger | GFI Flow Intelligence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            background: #0b1220;
-            color: #f8fbff;
-            font-family: 'DM Sans', system-ui, sans-serif;
-            line-height: 1.7;
-        }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            flex-wrap: wrap;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(255,255,255,.06);
-        }
-        .logo a {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.8rem;
-            letter-spacing: 0.12em;
-            color: #9FE870;
-            text-decoration: none;
-            text-transform: uppercase;
-        }
-        .lang-switch {
-            display: flex;
-            gap: 0.5rem;
-        }
-        .lang-btn {
-            background: none;
-            border: 1px solid rgba(255,255,255,.1);
-            font-family: 'DM Mono', monospace;
-            font-size: 0.7rem;
-            padding: 0.25rem 0.7rem;
-            border-radius: 2rem;
-            color: #9fb0c8;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .lang-btn:hover { border-color: rgba(255,255,255,.3); color: #fff; }
-        .lang-btn.active {
-            background: #9FE870;
-            color: #0b1220;
-            border-color: #9FE870;
-        }
-        .content-lang { display: none; }
-        .content-lang.active { display: block; }
-        .book-container {
-            background: #0d1526;
-            padding: 3rem 2.5rem;
-            border-radius: 4px;
-            border: 1px solid rgba(255,255,255,.06);
-        }
-        h1 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 0.5rem;
-            color: #9FE870;
-            letter-spacing: 0.02em;
-            font-family: 'DM Serif Display', Georgia, serif;
-        }
-        .subtitle {
-            text-align: center;
-            font-size: 1rem;
-            color: #9fb0c8;
-            margin-bottom: 2rem;
-            font-style: italic;
-        }
-        .author-line {
-            text-align: center;
-            font-size: 0.9rem;
-            color: #7DD3FC;
-            margin-bottom: 2rem;
-        }
-        h2 {
-            font-size: 1.4rem;
-            color: #9FE870;
-            margin: 2rem 0 1rem 0;
-            border-bottom: 1px solid rgba(255,255,255,.06);
-            padding-bottom: 0.3rem;
-            font-family: 'DM Serif Display', Georgia, serif;
-        }
-        h3 {
-            font-size: 1.1rem;
-            color: #7DD3FC;
-            margin: 1.5rem 0 0.75rem 0;
-            font-family: 'DM Serif Display', Georgia, serif;
-        }
-        p {
-            color: #c7d2e3;
-            margin-bottom: 1rem;
-            line-height: 1.8;
-        }
-        .quote-block {
-            border-left: 3px solid #9FE870;
-            padding-left: 1.2rem;
-            margin: 1.2rem 0;
-            color: #eaf6ff;
-            font-style: italic;
-        }
-        .highlight-box {
-            background: rgba(159, 232, 112, 0.06);
-            border: 1px solid rgba(159, 232, 112, 0.2);
-            border-radius: 8px;
-            padding: 1.5rem 2rem;
-            margin: 1.5rem 0;
-            text-align: center;
-        }
-        .highlight-box p {
-            color: #eaf6ff;
-            margin-bottom: 0.25rem;
-        }
-        .highlight-box strong {
-            color: #9FE870;
-        }
-        .disaster-box {
-            background: rgba(248, 113, 113, 0.04);
-            border-left: 3px solid #f87171;
-            padding: 1.2rem 1.5rem;
-            margin: 1.5rem 0;
-            border-radius: 0 8px 8px 0;
-        }
-        .disaster-box p {
-            color: #f0d0d0;
-            margin-bottom: 0.5rem;
-        }
-        .disaster-box strong {
-            color: #f87171;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.5rem 0;
-            font-size: 0.85rem;
-        }
-        th, td {
-            border: 1px solid rgba(255,255,255,.08);
-            padding: 0.6rem;
-            text-align: left;
-            vertical-align: top;
-            color: #c7d2e3;
-        }
-        th {
-            background: rgba(255,255,255,.03);
-            color: #9FE870;
-            font-weight: 600;
-        }
-        ul, ol {
-            margin: 1rem 0 1rem 1.5rem;
-            color: #c7d2e3;
-        }
-        li { margin-bottom: 0.25rem; }
-        .footer {
-            margin-top: 3rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(255,255,255,.06);
-            text-align: center;
-            font-size: 0.75rem;
-            color: #9fb0c8;
-        }
-        .back-link {
-            display: inline-block;
-            margin-top: 1.5rem;
-            font-family: 'DM Mono', monospace;
-            font-size: 0.7rem;
-            color: #9fb0c8;
-            text-decoration: none;
-            border: 1px solid rgba(255,255,255,.06);
-            padding: 0.4rem 1rem;
-            border-radius: 2rem;
-            transition: 0.2s;
-        }
-        .back-link:hover {
-            border-color: rgba(255,255,255,.2);
-            color: #fff;
-        }
-        .divider {
-            border: 0;
-            border-top: 1px solid rgba(255,255,255,.08);
-            margin: 2.5rem 0;
-        }
-        .formula {
-            font-family: 'DM Mono', monospace;
-            font-size: 1.1rem;
-            color: #9FE870;
-            text-align: center;
-            padding: 0.5rem 0;
-        }
-        .market-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 1rem;
-            margin: 1.5rem 0;
-        }
-        .market-card {
-            background: rgba(255,255,255,.03);
-            border: 1px solid rgba(255,255,255,.08);
-            border-radius: 12px;
-            padding: 1.2rem;
-            text-align: center;
-        }
-        .market-card .number {
-            font-family: 'DM Mono', monospace;
-            font-size: 1.4rem;
-            color: #9FE870;
-            font-weight: 700;
-        }
-        .market-card .label {
-            font-size: 0.75rem;
-            color: #9fb0c8;
-            margin-top: 0.2rem;
-        }
-        .source-note {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.65rem;
-            color: #6a7e96;
-            margin-top: 0.5rem;
-            text-align: center;
-        }
-        .case-box {
-            background: rgba(125, 211, 252, 0.04);
-            border-left: 3px solid #7DD3FC;
-            padding: 1.2rem 1.5rem;
-            margin: 1.5rem 0;
-            border-radius: 0 8px 8px 0;
-        }
-        .case-box p {
-            color: #eaf6ff;
-            margin-bottom: 0.5rem;
-        }
-        .case-box strong {
-            color: #7DD3FC;
-        }
-        .beyond-gdp-box {
-            background: rgba(159, 232, 112, 0.04);
-            border-left: 3px solid #9FE870;
-            padding: 1.2rem 1.5rem;
-            margin: 1.5rem 0;
-            border-radius: 0 8px 8px 0;
-        }
-        .beyond-gdp-box p {
-            color: #eaf6ff;
-            margin-bottom: 0.5rem;
-        }
-        .beyond-gdp-box strong {
-            color: #9FE870;
-        }
-        .comparison-box {
-            background: rgba(255,255,255,.02);
-            border: 1px solid rgba(255,255,255,.08);
-            border-radius: 12px;
-            padding: 1.2rem 1.5rem;
-            margin: 1.5rem 0;
-        }
-        .comparison-box p {
-            margin-bottom: 0.25rem;
-        }
-        .comparison-box strong {
-            color: #9FE870;
-        }
-        @media (max-width: 700px) {
-            .container { padding: 1rem; }
-            .book-container { padding: 1.5rem; }
-            h1 { font-size: 1.6rem; }
-            .highlight-box { padding: 1rem; }
-            .market-grid { grid-template-columns: 1fr; }
-        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:#f5f2eb;color:#1a1a24;font-family:'Georgia','Times New Roman',serif;line-height:1.8;padding:2rem 1rem}
+        .container{max-width:960px;margin:0 auto;background:#fff;padding:2.5rem 2.8rem;box-shadow:0 8px 24px rgba(0,0,0,0.06);border-radius:8px}
+        .lang-switch{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:2rem;border-bottom:1px solid #e0dcd5;padding-bottom:.8rem}
+        .lang-switch button{background:none;border:1px solid #ccc;padding:.3rem 1rem;border-radius:30px;font-size:.8rem;font-weight:600;color:#2a2a3a;cursor:pointer;transition:.2s}
+        .lang-switch button.active{background:#0b1a2e;color:#fff;border-color:#0b1a2e}
+        .lang-switch button:hover{background:#e0dcd5}
+        .lang-section{display:none}.lang-section.active{display:block}
+        h1{font-size:2.4rem;font-weight:700;letter-spacing:-0.02em;line-height:1.2;margin-bottom:.25rem;color:#0b1a2e}
+        .subhead{font-size:1.1rem;color:#4a4a5a;border-left:4px solid #b31b1b;padding-left:1.2rem;margin:.8rem 0 1.8rem 0;font-style:italic}
+        h2{font-size:1.6rem;margin:2.2rem 0 .8rem 0;color:#0b1a2e;border-bottom:2px solid #eae5dc;padding-bottom:.3rem}
+        h3{font-size:1.2rem;margin:1.6rem 0 .6rem 0;color:#1f2c3f}
+        p{margin-bottom:1.1rem;color:#2a2a3a}
+        ul,ol{margin:.5rem 0 1.2rem 2rem;color:#2a2a3a}
+        li{margin-bottom:.3rem}
+        .highlight-box{background:#f3f1ec;padding:1.4rem 1.8rem;border-radius:6px;margin:1.8rem 0;border-left:6px solid #b31b1b}
+        .highlight-box p{margin-bottom:0;font-weight:500;color:#0b1a2e}
+        .highlight-green{background:#ecf3ed;padding:1.4rem 1.8rem;border-radius:6px;margin:1.8rem 0;border-left:6px solid #1a6b3c}
+        .highlight-green p{margin-bottom:0;font-weight:500;color:#0b1a2e}
+        .comparison-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:1.2rem 0}
+        .cmp-item{background:#f9f8f5;padding:1rem 1.2rem;border-radius:4px;border-top:3px solid #b31b1b}
+        .cmp-item.green{border-top-color:#1a6b3c}
+        .cmp-item strong{display:block;font-size:.8rem;text-transform:uppercase;letter-spacing:.5px;color:#4a4a5a;margin-bottom:.3rem}
+        .cmp-item.wrong strong{color:#b31b1b}
+        .cmp-item.right strong{color:#1a6b3c}
+        .nav-series{margin-top:2.8rem;padding-top:1.8rem;border-top:2px solid #e0dcd5;display:flex;flex-wrap:wrap;justify-content:space-between;gap:.8rem}
+        .nav-series a{color:#0b1a2e;text-decoration:none;font-weight:600;border:1px solid #ccc;padding:.4rem 1.2rem;border-radius:30px;font-size:.85rem;transition:.2s;background:#fff}
+        .nav-series a:hover{background:#0b1a2e;color:#fff;border-color:#0b1a2e}
+        .nav-series .lang-zh,.nav-series .lang-en,.nav-series .lang-es{display:none;width:100%;justify-content:space-between;gap:.8rem;flex-wrap:wrap}
+        .nav-series .lang-zh.active,.nav-series .lang-en.active,.nav-series .lang-es.active{display:flex}
+        .back-home{display:inline-block;margin-top:1.5rem;font-weight:600;color:#0b1a2e;text-decoration:none;border-bottom:2px solid #b31b1b;padding-bottom:.1rem}
+        .back-home:hover{color:#b31b1b}
+        .footer-note{margin-top:2.5rem;font-size:.85rem;color:#6a6a7a;border-top:1px solid #e0dcd5;padding-top:1.5rem;text-align:center}
+        .tag{display:inline-block;background:#eae5dc;padding:.2rem .9rem;border-radius:30px;font-size:.75rem;font-weight:600;color:#1f2c3f;letter-spacing:.3px;margin-right:.4rem}
+        .series-badge{display:inline-block;background:#eae5dc;padding:.2rem .9rem;border-radius:30px;font-size:.7rem;font-weight:600;color:#1f2c3f;letter-spacing:.3px;margin-bottom:.5rem}
+        @media(max-width:700px){.container{padding:1.5rem}h1{font-size:1.8rem}.comparison-grid{grid-template-columns:1fr}.nav-series .lang-zh.active,.nav-series .lang-en.active,.nav-series .lang-es.active{flex-direction:column;align-items:center}}
     </style>
 </head>
 <body>
 <div class="container">
-    <div class="header">
-        <div class="logo"><a href="index.html">GFI Flow Intelligence</a></div>
-        <div class="lang-switch">
-            <button class="lang-btn active" data-lang="en">EN</button>
-            <button class="lang-btn" data-lang="tw">繁</button>
-            <button class="lang-btn" data-lang="cn">简</button>
-            <button class="lang-btn" data-lang="es">ES</button>
+
+    <div class="lang-switch">
+        <button class="active" data-lang="en">English</button>
+        <button data-lang="tw">繁體中文</button>
+        <button data-lang="cn">简体中文</button>
+        <button data-lang="es">Español</button>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 英文版 -->
+    <!-- ============================================================ -->
+    <div id="lang-en" class="lang-section active">
+        <span class="series-badge">Economy & Finance Series · Part 2 of 6</span>
+        <h1>GDP Is a Half-Ledger</h1>
+        <div class="subhead">Why the World's Most Important Metric Is Missing Half the Story</div>
+
+        <div class="highlight-box">
+            <p>📐 <strong>Structural fact:</strong> GDP measures what is produced — but it does not measure what is <strong>destroyed</strong>. It measures the credit side of the ledger — but not the debit side. This is not an oversight. It is a <strong>structural omission</strong>.</p>
+        </div>
+
+        <h2>I. The Missing Half</h2>
+        <p>GDP counts economic activity. It counts the production of goods and services. But it does not count:</p>
+        <ul>
+            <li>The destruction of ecosystems</li>
+            <li>The depletion of natural resources</li>
+            <li>The social costs of inequality</li>
+            <li>The erosion of public health</li>
+            <li>The loss of community and trust</li>
+        </ul>
+        <p>These are not "externalities." They are the <strong>other half of the ledger</strong>.</p>
+
+        <h2>II. The Accounting Illusion</h2>
+        <p>GDP creates an accounting illusion. It shows growth — but hides the cost of that growth. When a forest is cut down, GDP increases. When a community is displaced, GDP increases. When resources are depleted, GDP increases. <span style="color:#b31b1b;font-weight:600;">The growth is real — and so is the destruction. GDP only counts one side.</span></p>
+
+        <h2>III. The Structural Problem</h2>
+        <p>GDP was designed in the 1930s, during a time of scarcity. It was designed to measure productive capacity — not sustainability. The world has changed. The metric has not. The result is a system that treats destruction as production.</p>
+
+        <h2>IV. The GL Framework Diagnosis</h2>
+        <p>The GL Framework measures governance legitimacy: <strong style="font-family:monospace;">GL = (Fs × Vn) / (Pd × Cf)</strong>. GDP is a half-ledger because it does not measure the full flow of value. It measures what is created — but not what is destroyed. The result is a governance system that optimizes for the wrong metric.</p>
+
+        <div class="highlight-box">
+            <p><strong>GDP is not a measurement. It is an ideology — the ideology that what is produced is more important than what is sustained.</strong></p>
+        </div>
+
+        <a class="back-home" href="index.html">&larr; Back to Home</a>
+
+        <!-- ===== 英文導航 ===== -->
+        <div class="nav-series">
+            <div class="lang-en active">
+                <a href="dollar-scam-e-CNY.html#en">← Dollar Scam · Paper Game · e-CNY</a>
+                <a href="gdp-fig-leaf.html#en">GDP: Report Card or Fig Leaf? →</a>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            <span>◆</span> GL Framework · Economy & Finance Series · GDP Is a Half-Ledger <span>◆</span>
         </div>
     </div>
 
-    <!-- ================= ENGLISH ================= -->
-    <div id="lang-en" class="content-lang active">
-        <div class="book-container">
-            <h1>GDP Is a Half-Ledger</h1>
-            <div class="subtitle">What GL Framework Measures That GDP Cannot</div>
-            <div class="author-line">Ping Xu · GFI Flow Intelligence · June 2026</div>
+    <!-- ============================================================ -->
+    <!-- 繁體中文 -->
+    <!-- ============================================================ -->
+    <div id="lang-tw" class="lang-section">
+        <span class="series-badge">經濟與金融系列 · 第 2 篇，共 6 篇</span>
+        <h1>GDP 是半本帳</h1>
+        <div class="subhead">為什麼世界上最重要的指標遺漏了一半的故事</div>
 
-            <h2>GDP Records Money. GL Measures Health.</h2>
-            <p>GDP is the world's most important economic metric. But it only records one thing: <strong>what has been transacted at market price.</strong></p>
-            <p>It does not record whether the system delivering that value is healthy. It does not record friction, failure, or institutional decay — even though these are real costs.</p>
+        <div class="highlight-box">
+            <p>📐 <strong>結構性事實：</strong> GDP 衡量了什麼被生產——但沒有衡量什麼被<strong>破壞</strong>。它衡量了帳本的借方——但沒有衡量貸方。這不是疏忽。這是<strong>結構性遺漏</strong>。</p>
+        </div>
 
-            <div class="highlight-box">
-                <p><strong>GDP says "money is moving." GL asks: "Is this movement healthy? Or is it burning institutional capital?"</strong></p>
+        <h2>一、遺漏的一半</h2>
+        <p>GDP 計算經濟活動。它計算商品和服務的生產。但它不計算：</p>
+        <ul>
+            <li>生態系統的破壞</li>
+            <li>自然資源的枯竭</li>
+            <li>不平等的社會成本</li>
+            <li>公共衛生的侵蝕</li>
+            <li>社區和信任的喪失</li>
+        </ul>
+        <p>這些不是「外部性」。它們是<strong>帳本的另一半</strong>。</p>
+
+        <h2>二、會計幻覺</h2>
+        <p>GDP 製造了會計幻覺。它顯示成長——但隱藏了成長的成本。當森林被砍伐時，GDP 增加。當社區被遷移時，GDP 增加。當資源被耗盡時，GDP 增加。<span style="color:#b31b1b;font-weight:600;">成長是真實的——破壞也是真實的。GDP 只計算了一邊。</span></p>
+
+        <h2>三、結構性問題</h2>
+        <p>GDP 是在 1930 年代設計的，當時處於稀缺時代。它被設計來衡量生產能力——而非永續性。世界已經改變。指標沒有。結果是一個將破壞視為生產的系統。</p>
+
+        <h2>四、GL 框架診斷</h2>
+        <p>GL 框架衡量治理正當性：<strong style="font-family:monospace;">GL = (Fs × Vn) / (Pd × Cf)</strong>。GDP 是半本帳，因為它沒有衡量完整的價值流動。它衡量了什麼被創造——但沒有衡量什麼被破壞。結果是一個為錯誤指標優化的治理系統。</p>
+
+        <div class="highlight-box">
+            <p><strong>GDP 不是測量。它是意識形態——一種「被生產的比被維持的更重要」的意識形態。</strong></p>
+        </div>
+
+        <a class="back-home" href="index.html">&larr; 回到首頁</a>
+
+        <!-- ===== 繁體中文導航 ===== -->
+        <div class="nav-series">
+            <div class="lang-zh active">
+                <a href="dollar-scam-e-CNY.html#tw">← 美元詐騙 · 紙幣遊戲 · 數位人民幣</a>
+                <a href="gdp-fig-leaf.html#tw">GDP：成績單還是遮羞布？ →</a>
             </div>
+        </div>
 
-            <h2>What GDP Records</h2>
-            <div class="formula">GDP = C + I + G + (X − M)</div>
-            <ul>
-                <li>Consumption</li>
-                <li>Investment</li>
-                <li>Government spending</li>
-                <li>Net exports</li>
-            </ul>
-            <p style="margin-top:1rem;"><strong>GDP is a cash flow statement for the economy. It tells you how much money moved. It does not tell you if the system is healthy.</strong></p>
-
-            <h2>What GL Measures That GDP Cannot</h2>
-            <ul>
-                <li>Hidden losses from failed policies</li>
-                <li>Time consumed by administrative friction</li>
-                <li>Sunk costs from procurement failures</li>
-                <li>Citizens' lost trust</li>
-                <li>Organizations gaming KPIs</li>
-                <li>Land misallocation</li>
-                <li>Hollow compliance procedures — organizations spend time proving they follow rules, while actual risk does not decrease</li>
-            </ul>
-
-            <h2>The Absurdity of GDP Per Capita Rankings</h2>
-            <p>The world still ranks countries by GDP per capita. It is used to define "wealthy" and "poor" nations. But this ranking is increasingly detached from reality.</p>
-            <ul>
-                <li><strong>Ireland</strong> ranks among the highest in GDP per capita — largely because multinational corporations book their profits there. The actual income of Irish citizens is much lower.</li>
-                <li><strong>China</strong> ranks much lower in GDP per capita — yet it has built the world's largest high-speed rail network (covering 97% of cities with over 500,000 people), lifted over 800 million people out of poverty, and achieved near-universal mobile phone and primary school access. Life expectancy has increased by 20 years.</li>
-            </ul>
-            <p><strong>GDP per capita tells you what is booked. It does not tell you what is delivered.</strong></p>
-
-            <h2>The Market GL Captures</h2>
-            <p><strong>GDP applies everywhere. So does GL.</strong></p>
-            <div class="market-grid">
-                <div class="market-card">
-                    <div class="number">$105T</div>
-                    <div class="label">Global GDP — GL measures its hidden costs</div>
-                </div>
-                <div class="market-card">
-                    <div class="number">$30T</div>
-                    <div class="label">Public spending — GL measures delivery effectiveness</div>
-                </div>
-                <div class="market-card">
-                    <div class="number">$120T</div>
-                    <div class="label">Global assets — GL measures governance risk</div>
-                </div>
-            </div>
-            <div class="source-note">Sources: World Bank, IMF, BCG (2025 estimates). Global GDP ($105T), global public spending ($30T), global assets under management ($120T).</div>
-
-            <h2>The "Beyond GDP" Movement</h2>
-            <p>The United Nations has formally launched a "Beyond GDP" initiative. The IMF has warned that GDP alone is dangerous as a measure of economic performance because it ignores sustainability, inequality, and institutional health.</p>
-            <p>In May 2026, the UN High-Level Expert Group (HLEG) released its report — a 31-indicator dashboard called "Counting What Counts: A Compass of Progress for People and Planet."</p>
-            <p>But here is the problem: <strong>They defined what to measure. They did not build a tool to measure it.</strong></p>
-
-            <div class="comparison-box">
-                <h3 style="color:#9FE870; margin-top:0;">The UN HLEG "Beyond GDP" vs GL Framework</h3>
-                <table>
-                    <thead><tr><th>UN HLEG "Beyond GDP"</th><th>GL Framework</th></tr></thead>
-                    <tbody>
-                        <tr><td>31 indicators, mostly from SDGs</td><td>1 formula, 8 parameters</td></tr>
-                        <tr><td>Requires each country to collect its own data</td><td>Uses publicly available data only</td></tr>
-                        <tr><td>Requires intergovernmental negotiation to adopt</td><td>Already running in 65 countries</td></tr>
-                        <tr><td>Tells you "how things are right now"</td><td>Tells you "why the system is failing"</td></tr>
-                        <tr><td>A dashboard (displays data)</td><td>A diagnostic engine (outputs actionable scores)</td></tr>
-                        <tr><td>Experts sitting in conference rooms</td><td>One person built it, validated it, and made it work</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="beyond-gdp-box">
-                <p><strong>They defined the problem. GL Framework built the solution.</strong></p>
-                <p>The UN HLEG is still discussing. GL Framework is already running.</p>
-            </div>
-
-            <h2>The Tilted Disaster: Why Continuing with GDP Destroys Governance</h2>
-            <p>GDP was designed in the 1930s to solve a 1930s problem: measuring production during the Great Depression. It was never designed to measure system health, institutional effectiveness, or quality of life.</p>
-            <p><strong>But today, it is used as the core metric for national governance.</strong></p>
-            <div class="disaster-box">
-                <p><strong>Using GDP to govern is like using a compass to fly a plane — you will end up somewhere you never intended to go.</strong></p>
-            </div>
-            <h3>What happens when a country governs by GDP?</h3>
-            <ul>
-                <li><strong>Decision-makers chase what GDP records</strong> — spending, not outcomes. They don't care if the system delivers. They care if money was spent.</li>
-                <li><strong>Institutional decay is ignored until collapse</strong> — GDP does not record administrative friction, procurement failure, or welfare gaps. These problems don't appear in economic reports, so nobody fixes them.</li>
-                <li><strong>Resources flow to spending, not effectiveness</strong> — budgets go to departments that "spend money" (GDP) rather than departments that "deliver results" (GL).</li>
-                <li><strong>Trust between citizens and the state erodes</strong> — when GDP grows but lives do not improve, people conclude the system is lying to them.</li>
-            </ul>
-            <h3>The cost of continuing with GDP</h3>
-            <table>
-                <thead><tr><th>Time Frame</th><th>Cost</th></tr></thead>
-                <tbody>
-                    <tr><td>Short-term (1–5 years)</td><td>Budget misallocation, public service failure, rising dissatisfaction</td></tr>
-                    <tr><td>Medium-term (5–10 years)</td><td>Institutional erosion, trust collapse, skyrocketing reform costs</td></tr>
-                    <tr><td>Long-term (10–20 years)</td><td>Declining national competitiveness, systemic collapse (Tainter's "diminishing returns of complexity")</td></tr>
-                </tbody>
-            </table>
-            <div class="quote-block">
-                <p><strong>GDP is a 1930s tool for 1930s problems. But the problems of 2026 cannot be solved with the tools of 1930.</strong></p>
-            </div>
-
-            <h2>A Company Analogy</h2>
-            <p>If a company only prepared an income statement and no balance sheet, it might show high revenue and fast growth. But its accounts receivable could be rotting, liabilities exploding, and assets empty. Then it suddenly collapses.</p>
-            <p><strong>Countries are no different.</strong></p>
-
-            <h2>GDP vs GL</h2>
-            <table>
-                <thead><tr><th>GDP</th><th>GL Framework</th></tr></thead>
-                <tbody>
-                    <tr><td>Cash flow statement</td><td>Full accounting system</td></tr>
-                    <tr><td>Money is flowing</td><td>Is the flow healthy, or is it burning institutional capital?</td></tr>
-                    <tr><td>Transaction volume</td><td>Delivery effectiveness</td></tr>
-                    <tr><td>Market price</td><td>Friction cost</td></tr>
-                </tbody>
-            </table>
-
-            <h2>Ghost GDP</h2>
-            <p>Some GDP growth is actually:</p>
-            <ul>
-                <li>Future extraction</li>
-                <li>Institutional depletion</li>
-                <li>Hidden subsidy</li>
-                <li>Governance debt</li>
-            </ul>
-            <div class="quote-block">
-                <p><strong>"No. You are just pre-borrowing future governance costs."</strong></p>
-            </div>
-
-            <h2>Case Study: Rwanda — The Efficiency Paradox</h2>
-            <div class="case-box">
-                <p>Over the past two decades, Rwanda has achieved near-universal mobile phone and primary school access, doubled electricity coverage to over half the population, and brought clean water and sanitation to one in five citizens. Electricity consumption tripled. Life expectancy increased by 20 years.</p>
-                <p>These gains were achieved with public spending per capita rising from just $150 to $420 — still below the Sub-Saharan Africa average. GDP grew, but <strong>the real driver was efficiency, not money.</strong></p>
-                <p><strong>GDP records what Rwanda spent. GL would measure why it worked.</strong></p>
-            </div>
-
-            <h2>Conclusion</h2>
-            <p>GDP is not "incomplete." GDP is "half a ledger by design."</p>
-            <p><strong>GL Framework measures the other half — the half GDP was never designed to capture.</strong></p>
-
-            <hr class="divider">
-            <div class="footer">
-                <p><strong>Ping Xu</strong> · Creator of the GL Framework · June 2026</p>
-                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · Free download · Free distribution · Please retain author attribution</p>
-                <a href="index.html" class="back-link">← Back to Home</a>
-            </div>
+        <div class="footer-note">
+            <span>◆</span> GL 框架 · 經濟與金融系列 · GDP 是半本帳 <span>◆</span>
         </div>
     </div>
 
-    <!-- ================= 繁體中文 ================= -->
-    <div id="lang-tw" class="content-lang">
-        <div class="book-container">
-            <h1>GDP 是半套帳本</h1>
-            <div class="subtitle">GL 框架測量的是 GDP 永遠測量不到的東西</div>
-            <div class="author-line">Ping Xu · GFI Flow Intelligence · 2026年6月</div>
+    <!-- ============================================================ -->
+    <!-- 简体中文 -->
+    <!-- ============================================================ -->
+    <div id="lang-cn" class="lang-section">
+        <span class="series-badge">经济与金融系列 · 第 2 篇，共 6 篇</span>
+        <h1>GDP 是半本账</h1>
+        <div class="subhead">为什么世界上最重要的指标遗漏了一半的故事</div>
 
-            <h2>GDP 記錄錢。GL 測量健康。</h2>
-            <p>GDP 是全世界最重要的經濟指標。但它只記錄一件事：<strong>那些有被市場交易的價值。</strong></p>
-            <p>它不記錄那個系統是否健康。它不記錄摩擦、失敗、制度衰敗——即使這些都是真實的成本。</p>
+        <div class="highlight-box">
+            <p>📐 <strong>结构性事实：</strong> GDP 衡量了什么被生产——但没有衡量什么被<strong>破坏</strong>。它衡量了账本的借方——但没有衡量贷方。这不是疏忽。这是<strong>结构性遗漏</strong>。</p>
+        </div>
 
-            <div class="highlight-box">
-                <p><strong>GDP 說「錢在流動」。GL 問：「這個流動是健康的嗎？還是在燃燒制度資本？」</strong></p>
+        <h2>一、遗漏的一半</h2>
+        <p>GDP 计算经济活动。它计算商品和服务的生产。但它不计算：</p>
+        <ul>
+            <li>生态系统的破坏</li>
+            <li>自然资源的枯竭</li>
+            <li>不平等的社会成本</li>
+            <li>公共卫生的侵蚀</li>
+            <li>社区和信任的丧失</li>
+        </ul>
+        <p>这些不是「外部性」。它们是<strong>账本的另一半</strong>。</p>
+
+        <h2>二、会计幻觉</h2>
+        <p>GDP 制造了会计幻觉。它显示成长——但隐藏了成长的成本。当森林被砍伐时，GDP 增加。当社区被迁移时，GDP 增加。当资源被耗尽时，GDP 增加。<span style="color:#b31b1b;font-weight:600;">成长是真实的——破坏也是真实的。GDP 只计算了一边。</span></p>
+
+        <h2>三、结构性问题</h2>
+        <p>GDP 是在 1930 年代设计的，当时处于稀缺时代。它被设计来衡量生产能力——而非永续性。世界已经改变。指标没有。结果是一个将破坏视为生产的系统。</p>
+
+        <h2>四、GL 框架诊断</h2>
+        <p>GL 框架衡量治理正当性：<strong style="font-family:monospace;">GL = (Fs × Vn) / (Pd × Cf)</strong>。GDP 是半本账，因为它没有衡量完整的价值流动。它衡量了什么被创造——但没有衡量什么被破坏。结果是一个为错误指标优化的治理系统。</p>
+
+        <div class="highlight-box">
+            <p><strong>GDP 不是测量。它是意识形态——一种「被生产的比被维持的更重要」的意识形态。</strong></p>
+        </div>
+
+        <a class="back-home" href="index.html">&larr; 回到首页</a>
+
+        <!-- ===== 简体中文导航 ===== -->
+        <div class="nav-series">
+            <div class="lang-zh active">
+                <a href="dollar-scam-e-CNY.html#cn">← 美元诈骗 · 纸币游戏 · 数字人民币</a>
+                <a href="gdp-fig-leaf.html#cn">GDP：成绩单还是遮羞布？ →</a>
             </div>
+        </div>
 
-            <h2>GDP 記錄了什麼</h2>
-            <div class="formula">GDP = C + I + G + (X − M)</div>
-            <ul>
-                <li>消費</li>
-                <li>投資</li>
-                <li>政府支出</li>
-                <li>淨出口</li>
-            </ul>
-            <p style="margin-top:1rem;"><strong>GDP 是經濟體的現金流量表。它告訴你多少錢在流動。它不告訴你系統是否健康。</strong></p>
-
-            <h2>GL 測量什麼——GDP 測量不到的東西</h2>
-            <ul>
-                <li>錯誤政策造成的隱性損失</li>
-                <li>行政摩擦消耗的時間</li>
-                <li>採購失靈的沉沒成本</li>
-                <li>公民流失的信任</li>
-                <li>組織玩弄 KPI</li>
-                <li>土地錯配</li>
-                <li>空洞的合規程序 — 組織花時間證明自己在遵守規則，但實際風險沒有降低</li>
-            </ul>
-
-            <h2>人均 GDP 排名的荒謬性</h2>
-            <p>全球還在以「人均 GDP」排名國家富裕程度。但這個排名已經越來越脫離現實。</p>
-            <ul>
-                <li><strong>愛爾蘭</strong>人均 GDP 名列前茅，但這主要是跨國公司將帳面利潤登記在那裡，實際國民收入遠低於這個數字。</li>
-                <li><strong>中國</strong>人均 GDP 排名相對靠後，卻建成了全球最大的高鐵網絡（覆蓋 97% 的 50 萬以上人口城市），讓超過 8 億人脫貧，手機和基礎教育幾乎全民普及，平均餘命增加了 20 年。</li>
-            </ul>
-            <p><strong>人均 GDP 告訴你「帳面上記了什麼」。它不告訴你「系統實際上交付了什麼」。</strong></p>
-
-            <h2>GL 抓到的市場</h2>
-            <p><strong>GDP 適用的地方，GL 框架就適用。</strong></p>
-            <div class="market-grid">
-                <div class="market-card">
-                    <div class="number">$105T</div>
-                    <div class="label">全球 GDP — GL 測量它的隱性成本</div>
-                </div>
-                <div class="market-card">
-                    <div class="number">$30T</div>
-                    <div class="label">全球公共支出 — GL 測量交付效能</div>
-                </div>
-                <div class="market-card">
-                    <div class="number">$120T</div>
-                    <div class="label">全球資產 — GL 測量治理風險</div>
-                </div>
-            </div>
-            <div class="source-note">資料來源：世界銀行、IMF、BCG（2025年估算）。全球GDP（$105T）、全球公共支出（$30T）、全球資產管理規模（$120T）。</div>
-
-            <h2>「超越 GDP」運動</h2>
-            <p>聯合國已正式啟動「超越 GDP」倡議。IMF 也警告，單獨使用 GDP 來衡量經濟表現是危險的，因為它忽略永續性、不平等和制度健康。</p>
-            <p>2026年5月，聯合國高階專家組（HLEG）發布了報告 — 一個名為《Counting What Counts》的31項指標儀表板。</p>
-            <p>但問題來了：<strong>他們定義了「該測量什麼」，卻沒有做出「測量工具」。</strong></p>
-
-            <div class="comparison-box">
-                <h3 style="color:#9FE870; margin-top:0;">聯合國 HLEG「超越GDP」 vs GL 框架</h3>
-                <table>
-                    <thead><tr><th>聯合國 HLEG「超越GDP」</th><th>GL 框架</th></tr></thead>
-                    <tbody>
-                        <tr><td>31 項指標，大部分來自 SDGs</td><td>1 個公式，8 個參數</td></tr>
-                        <tr><td>需要各國自行收集數據</td><td>只使用公開數據</td></tr>
-                        <tr><td>需要政府間協商才能決定是否採用</td><td>已經在 65 國運轉</td></tr>
-                        <tr><td>告訴你「現在狀況如何」</td><td>告訴你「系統為什麼失靈」</td></tr>
-                        <tr><td>儀表板（顯示數據）</td><td>診斷引擎（輸出可執行分數）</td></tr>
-                        <tr><td>專家坐在會議室討論</td><td>一個人做出來、驗證、讓它運轉</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="beyond-gdp-box">
-                <p><strong>他們定義了問題。GL 框架做出了解決方案。</strong></p>
-                <p>聯合國 HLEG 還在討論。GL 框架已經在運轉。</p>
-            </div>
-
-            <h2>繼續用 GDP 治理 = 傾斜式災難</h2>
-            <p>GDP 是 1930 年代為了解決「大蕭條期間生產了多少東西」而設計的。它從來不是為了測量系統是否健康、制度是否有效、人民是否幸福、未來是否可持續而存在的。</p>
-            <p><strong>但它現在被當作國家治理的核心指標。</strong></p>
-            <div class="disaster-box">
-                <p><strong>繼續用 GDP 來治理，就像用指南針來開飛機 — 你會飛到完全不該去的地方。</strong></p>
-            </div>
-            <h3>當一個國家用 GDP 來做決策時，會發生什麼？</h3>
-            <ul>
-                <li><strong>決策者只追逐「能夠被 GDP 記錄的東西」</strong> — 他們不在乎系統是否真的在交付。他們在乎的是「花了多少錢」。</li>
-                <li><strong>制度衰敗被忽略，直到崩塌為止</strong> — GDP 不會記錄行政摩擦、採購失靈、社福漏洞。這些問題不會出現在經濟報告裡，所以沒有人去修它。</li>
-                <li><strong>資源流向「花錢」的部門，而不是「有效」的部門</strong> — 因為前者會被計入 GDP，後者不會。</li>
-                <li><strong>公民與國家之間的信任斷裂</strong> — 當 GDP 成長但人民生活沒有改善時，人民會認為「這個系統在欺騙我」。</li>
-            </ul>
-            <h3>繼續用 GDP 治理的代價</h3>
-            <table>
-                <thead><tr><th>時間範圍</th><th>代價</th></tr></thead>
-                <tbody>
-                    <tr><td>短期（1-5 年）</td><td>預算錯置，公共服務失效，人民不滿增加</td></tr>
-                    <tr><td>中期（5-10 年）</td><td>制度腐蝕，信任崩解，改革成本暴增</td></tr>
-                    <tr><td>長期（10-20 年）</td><td>國家競爭力下降，系統性崩潰</td></tr>
-                </tbody>
-            </table>
-            <div class="quote-block">
-                <p><strong>GDP 是 1930 年代的工具，用來解決 1930 年代的問題。但 2026 年的問題，不是 1930 年代的工具可以解決的。</strong></p>
-            </div>
-
-            <h2>企業的比喻</h2>
-            <p>一家公司如果只做收入表，不做資產負債表，會怎樣？收入很高、成長很快，但應收帳款爛掉、負債爆炸、資產是空的。最後突然崩潰。</p>
-            <p><strong>國家也是一樣。</strong></p>
-
-            <h2>GDP vs GL</h2>
-            <table>
-                <thead><tr><th>GDP</th><th>GL Framework</th></tr></thead>
-                <tbody>
-                    <tr><td>現金流量表</td><td>完整會計系統</td></tr>
-                    <tr><td>錢在流動</td><td>這個流動健康嗎？還是在燃燒制度資本？</td></tr>
-                    <tr><td>交易量</td><td>交付效能</td></tr>
-                    <tr><td>市場價格</td><td>摩擦成本</td></tr>
-                </tbody>
-            </table>
-
-            <h2>Ghost GDP</h2>
-            <p>有些 GDP 成長，本質上是：</p>
-            <ul>
-                <li>未來的被提前提取</li>
-                <li>制度資本的耗損</li>
-                <li>隱藏補貼</li>
-                <li>治理負債</li>
-            </ul>
-            <div class="quote-block">
-                <p><strong>「不。你只是把未來的治理成本提前透支了。」</strong></p>
-            </div>
-
-            <h2>案例：盧安達 — 效率的悖論</h2>
-            <div class="case-box">
-                <p>過去二十年，盧安達達成了接近全民的手機和基礎教育普及，電力覆蓋率翻倍，超過半數人口能用上電，五分之一的公民享有乾淨水和衛生設施。電力消耗成長了三倍，平均餘命增加了20年。</p>
-                <p>這些成就是在人均公共支出從僅150美元增加到420美元的背景下實現的——仍低於撒哈拉以南非洲的平均水準。GDP成長了，但<strong>真正的驅動力是效率，不是金錢。</strong></p>
-                <p><strong>GDP 記錄了盧安達花了多少錢。GL 會測量為什麼它有效。</strong></p>
-            </div>
-
-            <h2>結論</h2>
-            <p>GDP 不是「不完整」。GDP 是「從設計上就漏掉了半套帳」。</p>
-            <p><strong>GL 框架測量的是另一半——GDP 從設計上就無法捕捉的那一半。</strong></p>
-
-            <hr class="divider">
-            <div class="footer">
-                <p><strong>Ping Xu</strong> · GL Framework 創建者 · 2026年6月</p>
-                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · 免費下載 · 自由轉載 · 請保留作者署名</p>
-                <a href="index.html" class="back-link">← 返回首頁</a>
-            </div>
+        <div class="footer-note">
+            <span>◆</span> GL 框架 · 经济与金融系列 · GDP 是半本账 <span>◆</span>
         </div>
     </div>
 
-    <!-- ================= 简体中文 ================= -->
-    <div id="lang-cn" class="content-lang">
-        <div class="book-container">
-            <h1>GDP 是半套账本</h1>
-            <div class="subtitle">GL 框架测量的是 GDP 永远测量不到的东西</div>
-            <div class="author-line">Ping Xu · GFI Flow Intelligence · 2026年6月</div>
+    <!-- ============================================================ -->
+    <!-- 西班牙文 -->
+    <!-- ============================================================ -->
+    <div id="lang-es" class="lang-section">
+        <span class="series-badge">Serie de Economía y Finanzas · Parte 2 de 6</span>
+        <h1>El PIB es un Medio-Libro Mayor</h1>
+        <div class="subhead">Por qué la Métrica Más Importante del Mundo Está Perdiendo la Mitad de la Historia</div>
 
-            <h2>GDP 记录钱。GL 测量健康。</h2>
-            <p>GDP 是全世界最重要的经济指标。但它只记录一件事：<strong>那些有被市场交易的价值。</strong></p>
-            <p>它不记录那个系统是否健康。它不记录摩擦、失败、制度衰败——即使这些都是真实的成本。</p>
+        <div class="highlight-box">
+            <p>📐 <strong>Hecho estructural:</strong> El PIB mide lo que se produce — pero no mide lo que se <strong>destruye</strong>. Mide el lado del crédito del libro mayor — pero no el lado del débito. Esto no es un descuido. Es una <strong>omisión estructural</strong>.</p>
+        </div>
 
-            <div class="highlight-box">
-                <p><strong>GDP 说「钱在流动」。GL 问：「这个流动是健康的吗？还是在燃烧制度资本？」</strong></p>
+        <h2>I. La Mitad Perdida</h2>
+        <p>El PIB cuenta la actividad económica. Cuenta la producción de bienes y servicios. Pero no cuenta:</p>
+        <ul>
+            <li>La destrucción de ecosistemas</li>
+            <li>El agotamiento de los recursos naturales</li>
+            <li>Los costos sociales de la desigualdad</li>
+            <li>La erosión de la salud pública</li>
+            <li>La pérdida de comunidad y confianza</li>
+        </ul>
+        <p>Estos no son "externalidades". Son la <strong>otra mitad del libro mayor</strong>.</p>
+
+        <h2>II. La Ilusión Contable</h2>
+        <p>El PIB crea una ilusión contable. Muestra crecimiento — pero oculta el costo de ese crecimiento. Cuando se tala un bosque, el PIB aumenta. Cuando una comunidad es desplazada, el PIB aumenta. Cuando los recursos se agotan, el PIB aumenta. <span style="color:#b31b1b;font-weight:600;">El crecimiento es real — y la destrucción también. El PIB solo cuenta un lado.</span></p>
+
+        <h2>III. El Problema Estructural</h2>
+        <p>El PIB fue diseñado en la década de 1930, durante una época de escasez. Fue diseñado para medir la capacidad productiva — no la sostenibilidad. El mundo ha cambiado. La métrica no. El resultado es un sistema que trata la destrucción como producción.</p>
+
+        <h2>IV. El Diagnóstico del GL Framework</h2>
+        <p>El GL Framework mide la legitimidad gubernamental: <strong style="font-family:monospace;">GL = (Fs × Vn) / (Pd × Cf)</strong>. El PIB es un medio-libro mayor porque no mide el flujo completo de valor. Mide lo que se crea — pero no lo que se destruye. El resultado es un sistema de gobernanza que optimiza para la métrica equivocada.</p>
+
+        <div class="highlight-box">
+            <p><strong>El PIB no es una medición. Es una ideología — la ideología de que lo que se produce es más importante que lo que se sostiene.</strong></p>
+        </div>
+
+        <a class="back-home" href="index.html">&larr; Volver al Inicio</a>
+
+        <!-- ===== Navegación en español ===== -->
+        <div class="nav-series">
+            <div class="lang-es active">
+                <a href="dollar-scam-e-CNY.html#es">← Estafa del Dólar · Juego de Papel · e-CNY</a>
+                <a href="gdp-fig-leaf.html#es">PIB: ¿Boletín de Calificaciones o Hoja de Parra? →</a>
             </div>
+        </div>
 
-            <h2>GDP 记录了什幺</h2>
-            <div class="formula">GDP = C + I + G + (X − M)</div>
-            <ul>
-                <li>消费</li>
-                <li>投资</li>
-                <li>政府支出</li>
-                <li>净出口</li>
-            </ul>
-            <p style="margin-top:1rem;"><strong>GDP 是经济体的现金流量表。它告诉你多少钱在流动。它不告诉你系统是否健康。</strong></p>
-
-            <h2>GL 测量什么——GDP 测量不到的东西</h2>
-            <ul>
-                <li>错误政策造成的隐性损失</li>
-                <li>行政摩擦消耗的时间</li>
-                <li>采购失灵的沉没成本</li>
-                <li>公民流失的信任</li>
-                <li>组织玩弄 KPI</li>
-                <li>土地错配</li>
-                <li>空洞的合规程序 — 组织花时间证明自己在遵守规则，但实际风险没有降低</li>
-            </ul>
-
-            <h2>人均 GDP 排名的荒谬性</h2>
-            <p>全球还在以「人均 GDP」排名国家富裕程度。但这个排名已经越来越脱离现实。</p>
-            <ul>
-                <li><strong>爱尔兰</strong>人均 GDP 名列前茅，但这主要是跨国公司 将账面利润登记在那里，实际国民收入远低于这个数字。</li>
-                <li><strong>中国</strong>人均 GDP 排名相对靠后，却建成了全球最大的高铁网络（覆盖 97% 的 50 万以上人口城市），让超过 8 亿人脱贫，手机和基础教育几乎全民普及，平均余命增加了 20 年。</li>
-            </ul>
-            <p><strong>人均 GDP 告诉你「账面上记了什么」。它不告诉你「系统实际上交付了什么」。</strong></p>
-
-            <h2>GL 抓到的市场</h2>
-            <p><strong>GDP 适用的地方，GL 框架就适用。</strong></p>
-            <div class="market-grid">
-                <div class="market-card">
-                    <div class="number">$105T</div>
-                    <div class="label">全球 GDP — GL 测量它的隐性成本</div>
-                </div>
-                <div class="market-card">
-                    <div class="number">$30T</div>
-                    <div class="label">全球公共支出 — GL 测量交付效能</div>
-                </div>
-                <div class="market-card">
-                    <div class="number">$120T</div>
-                    <div class="label">全球资产 — GL 测量治理风险</div>
-                </div>
-            </div>
-            <div class="source-note">资料来源：世界银行、IMF、BCG（2025年估算）。全球GDP（$105T）、全球公共支出（$30T）、全球资产管理规模（$120T）。</div>
-
-            <h2>「超越 GDP」运动</h2>
-            <p>联合国已正式启动「超越 GDP」倡议。IMF 也警告，单独使用 GDP 来衡量经济表现是危险的，因为它忽略永续性、不平等和制度健康。</p>
-            <p>2026年5月，联合国高阶专家组（HLEG）发布了报告 — 一个名为《Counting What Counts》的31项指标仪表板。</p>
-            <p>但问题来了：<strong>他们定义了「该测量什么」，却没有做出「测量工具」。</strong></p>
-
-            <div class="comparison-box">
-                <h3 style="color:#9FE870; margin-top:0;">联合国 HLEG「超越GDP」 vs GL 框架</h3>
-                <table>
-                    <thead><tr><th>联合国 HLEG「超越GDP」</th><th>GL 框架</th></tr></thead>
-                    <tbody>
-                        <tr><td>31 项指标，大部分来自 SDGs</td><td>1 个公式，8 个参数</td></tr>
-                        <tr><td>需要各国自行收集数据</td><td>只使用公开数据</td></tr>
-                        <tr><td>需要政府间协商才能决定是否采用</td><td>已经在 65 国运转</td></tr>
-                        <tr><td>告诉你「现在状况如何」</td><td>告诉你「系统为什么失灵」</td></tr>
-                        <tr><td>仪表板（显示数据）</td><td>诊断引擎（输出可执行分数）</td></tr>
-                        <tr><td>专家坐在会议室讨论</td><td>一个人做出来、验证、让它运转</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="beyond-gdp-box">
-                <p><strong>他们定义了问题。GL 框架做出了解决方案。</strong></p>
-                <p>联合国 HLEG 还在讨论。GL 框架已经在运转。</p>
-            </div>
-
-            <h2>继续用 GDP 治理 = 倾斜式灾难</h2>
-            <p>GDP 是 1930 年代为了解决「大萧条期间生产了多少东西」而设计的。它从来不是为了测量系统是否健康、制度是否有效、人民是否幸福、未来是否可持续而存在的。</p>
-            <p><strong>但现在它被当作国家治理的核心指标。</strong></p>
-            <div class="disaster-box">
-                <p><strong>继续用 GDP 来治理，就像用指南针来开飞机 — 你会飞到完全不该去的地方。</strong></p>
-            </div>
-            <h3>当一个国家用 GDP 来做决策时，会发生什么？</h3>
-            <ul>
-                <li><strong>决策者只追逐「能够被 GDP 记录的东西」</strong> — 他们不在乎系统是否真的在交付。他们在乎的是「花了多少钱」。</li>
-                <li><strong>制度衰败被忽略，直到崩塌为止</strong> — GDP 不会记录行政摩擦、采购失灵、社福漏洞。这些问题不会出现在经济报告里，所以没有人去修它。</li>
-                <li><strong>资源流向「花钱」的部门，而不是「有效」的部门</strong> — 因为前者会被计入 GDP，后者不会。</li>
-                <li><strong>公民与国家之间的信任断裂</strong> — 当 GDP 成长但人民生活没有改善时，人民会认为「这个系统在欺骗我」。</li>
-            </ul>
-            <h3>继续用 GDP 治理的代价</h3>
-            <table>
-                <thead><tr><th>时间范围</th><th>代价</th></tr></thead>
-                <tbody>
-                    <tr><td>短期（1-5 年）</td><td>预算错置，公共服务失效，人民不满增加</td></tr>
-                    <tr><td>中期（5-10 年）</td><td>制度腐蚀，信任崩解，改革成本暴增</td></tr>
-                    <tr><td>长期（10-20 年）</td><td>国家竞争力下降，系统性崩溃</td></tr>
-                </tbody>
-            </table>
-            <div class="quote-block">
-                <p><strong>GDP 是 1930 年代的工具，用来解决 1930 年代的问题。但 2026 年的问题，不是 1930 年代的工具可以解决的。</strong></p>
-            </div>
-
-            <h2>企业的比喻</h2>
-            <p>一家公司如果只做收入表，不做资产负债表，会怎样？收入很高、成长很快，但应收帐款烂掉、负债爆炸、资产是空的。最后突然崩溃。</p>
-            <p><strong>国家也是一样。</strong></p>
-
-            <h2>GDP vs GL</h2>
-            <table>
-                <thead><tr><th>GDP</th><th>GL Framework</th></tr></thead>
-                <tbody>
-                    <tr><td>现金流量表</td><td>完整会计系统</td></tr>
-                    <tr><td>钱在流动</td><td>这个流动健康吗？还是在燃烧制度资本？</td></tr>
-                    <tr><td>交易量</td><td>交付效能</td></tr>
-                    <tr><td>市场价格</td><td>摩擦成本</td></tr>
-                </tbody>
-            </table>
-
-            <h2>Ghost GDP</h2>
-            <p>有些 GDP 成长，本质上是：</p>
-            <ul>
-                <li>未来的被提前提取</li>
-                <li>制度资本的耗损</li>
-                <li>隐藏补贴</li>
-                <li>治理负债</li>
-            </ul>
-            <div class="quote-block">
-                <p><strong>「不。你只是把未来的治理成本提前透支了。」</strong></p>
-            </div>
-
-            <h2>案例：卢安达 — 效率的悖论</h2>
-            <div class="case-box">
-                <p>过去二十年，卢安达成了接近全民的手机和基础教育普及，电力覆盖率翻倍，超过半数人口能用上电，五分之一的公民享有干净水和卫生设施。电力消耗成长了三倍，平均余命增加了20年。</p>
-                <p>这些成就是在人均公共支出从仅150美元增加到420美元的背景下实现的——仍低于撒哈拉以南非洲的平均水准。GDP成长了，但<strong>真正的驱动力是效率，不是金钱。</strong></p>
-                <p><strong>GDP 记录了卢安达花了多少钱。GL 会测量为什么它有效。</strong></p>
-            </div>
-
-            <h2>结论</h2>
-            <p>GDP 不是「不完整」。GDP 是「从设计上就漏掉了半套账」。</p>
-            <p><strong>GL 框架测量的是另一半——GDP 从设计上就无法捕捉的那一半。</strong></p>
-
-            <hr class="divider">
-            <div class="footer">
-                <p><strong>Ping Xu</strong> · GL Framework 创建者 · 2026年6月</p>
-                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · 免费下载 · 自由转载 · 请保留作者署名</p>
-                <a href="index.html" class="back-link">← 返回首页</a>
-            </div>
+        <div class="footer-note">
+            <span>◆</span> GL Framework · Serie de Economía y Finanzas · El PIB es un Medio-Libro Mayor <span>◆</span>
         </div>
     </div>
 
-    <!-- ================= ESPAÑOL ================= -->
-    <div id="lang-es" class="content-lang">
-        <div class="book-container">
-            <h1>El PIB es un Libro Mayor a Medias</h1>
-            <div class="subtitle">Lo que GL Framework mide que el PIB no puede</div>
-            <div class="author-line">Ping Xu · GFI Flow Intelligence · Junio 2026</div>
-
-            <h2>El PIB registra dinero. GL mide salud.</h2>
-            <p>El PIB es el indicador económico más importante del mundo. Pero solo registra una cosa: <strong>lo que ha sido transado a precio de mercado.</strong></p>
-            <p>No registra si el sistema que entrega ese valor es saludable. No registra fricción, fracaso o deterioro institucional — aunque estos son costos reales.</p>
-
-            <div class="highlight-box">
-                <p><strong>El PIB dice "el dinero se mueve". GL pregunta: "¿Es saludable este movimiento? ¿O está quemando capital institucional?"</strong></p>
-            </div>
-
-            <h2>Qué registra el PIB</h2>
-            <div class="formula">PIB = C + I + G + (X − M)</div>
-            <ul>
-                <li>Consumo</li>
-                <li>Inversión</li>
-                <li>Gasto público</li>
-                <li>Exportaciones netas</li>
-            </ul>
-            <p style="margin-top:1rem;"><strong>El PIB es un estado de flujo de efectivo de la economía. Te dice cuánto dinero se movió. No te dice si el sistema es saludable.</strong></p>
-
-            <h2>Qué mide GL que el PIB no puede</h2>
-            <ul>
-                <li>Pérdidas ocultas por políticas fallidas</li>
-                <li>Tiempo consumido por fricción administrativa</li>
-                <li>Costos hundidos por fallas en adquisiciones</li>
-                <li>Confianza perdida por los ciudadanos</li>
-                <li>Organizaciones que manipulan KPI</li>
-                <li>Mala asignación de tierras</li>
-                <li>Procedimientos de cumplimiento vacíos — las organizaciones dedican tiempo a demostrar que siguen las reglas, mientras el riesgo real no disminuye</li>
-            </ul>
-
-            <h2>Lo absurdo de los rankings del PIB per cápita</h2>
-            <p>El mundo aún clasifica a los países por PIB per cápita. Se usa para definir naciones "ricas" y "pobres". Pero esta clasificación está cada vez más alejada de la realidad.</p>
-            <ul>
-                <li><strong>Irlanda</strong> se encuentra entre los más altos en PIB per cápita, en gran parte porque las corporaciones multinacionales registran sus ganancias allí. El ingreso real de los ciudadanos irlandeses es mucho menor.</li>
-                <li><strong>China</strong> se ubica mucho más abajo en el PIB per cápita, sin embargo, ha construido la red de trenes de alta velocidad más grande del mundo (cubriendo el 97% de las ciudades con más de 500,000 habitantes), sacado a más de 800 millones de personas de la pobreza, y logrado un acceso casi universal a teléfonos móviles y educación primaria. La esperanza de vida ha aumentado en 20 años.</li>
-            </ul>
-            <p><strong>El PIB per cápita te dice lo que se ha contabilizado. No te dice lo que se ha entregado.</strong></p>
-
-            <h2>El mercado que GL captura</h2>
-            <p><strong>El PIB aplica en todas partes. GL también.</strong></p>
-            <div class="market-grid">
-                <div class="market-card">
-                    <div class="number">$105T</div>
-                    <div class="label">PIB global — GL mide sus costos ocultos</div>
-                </div>
-                <div class="market-card">
-                    <div class="number">$30T</div>
-                    <div class="label">Gasto público — GL mide eficacia de entrega</div>
-                </div>
-                <div class="market-card">
-                    <div class="number">$120T</div>
-                    <div class="label">Activos globales — GL mide riesgo de gobernanza</div>
-                </div>
-            </div>
-            <div class="source-note">Fuentes: Banco Mundial, FMI, BCG (estimaciones 2025). PIB global ($105T), gasto público global ($30T), activos globales bajo gestión ($120T).</div>
-
-            <h2>El movimiento "Más allá del PIB"</h2>
-            <p>Las Naciones Unidas han lanzado formalmente una iniciativa "Beyond GDP". El FMI ha advertido que el PIB por sí solo es peligroso como medida del desempeño económico porque ignora la sostenibilidad, la desigualdad y la salud institucional.</p>
-            <p>En mayo de 2026, el Grupo de Expertos de Alto Nivel (HLEG) de la ONU publicó su informe — un tablero de 31 indicadores llamado "Counting What Counts: A Compass of Progress for People and Planet."</p>
-            <p>Pero aquí está el problema: <strong>Definieron qué medir. No construyeron una herramienta para medirlo.</strong></p>
-
-            <div class="comparison-box">
-                <h3 style="color:#9FE870; margin-top:0;">ONU HLEG "Más allá del PIB" vs GL Framework</h3>
-                <table>
-                    <thead><tr><th>ONU HLEG "Más allá del PIB"</th><th>GL Framework</th></tr></thead>
-                    <tbody>
-                        <tr><td>31 indicadores, en su mayoría de los ODS</td><td>1 fórmula, 8 parámetros</td></tr>
-                        <tr><td>Requiere que cada país recoja sus propios datos</td><td>Utiliza solo datos públicos</td></tr>
-                        <tr><td>Requiere negociación intergubernamental para adoptar</td><td>Ya está funcionando en 65 países</td></tr>
-                        <tr><td>Te dice "cómo están las cosas ahora"</td><td>Te dice "por qué el sistema está fallando"</td></tr>
-                        <tr><td>Un tablero (muestra datos)</td><td>Un motor de diagnóstico (genera puntajes accionables)</td></tr>
-                        <tr><td>Expertos sentados en salas de conferencias</td><td>Una persona lo construyó, lo validó y lo hizo funcionar</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="beyond-gdp-box">
-                <p><strong>Ellos definieron el problema. GL Framework construyó la solución.</strong></p>
-                <p>El HLEG de la ONU sigue discutiendo. GL Framework ya está funcionando.</p>
-            </div>
-
-            <h2>Continuar usando el PIB = Desastre inclinado</h2>
-            <p>El PIB fue diseñado en la década de 1930 para resolver un problema de la década de 1930: medir la producción durante la Gran Depresión. Nunca fue diseñado para medir la salud del sistema, la efectividad institucional o la calidad de vida.</p>
-            <p><strong>Pero hoy se utiliza como el indicador central para la gobernanza nacional.</strong></p>
-            <div class="disaster-box">
-                <p><strong>Continuar usando el PIB para gobernar es como usar una brújula para pilotar un avión — terminarás en un lugar al que nunca quisiste ir.</strong></p>
-            </div>
-            <h3>¿Qué sucede cuando un país gobierna por PIB?</h3>
-            <ul>
-                <li><strong>Los tomadores de decisiones persiguen lo que el PIB registra</strong> — el gasto, no los resultados. No les importa si el sistema entrega. Les importa si se gastó dinero.</li>
-                <li><strong>El deterioro institucional se ignora hasta el colapso</strong> — el PIB no registra la fricción administrativa, el fracaso de las adquisiciones o las brechas de bienestar. Estos problemas no aparecen en los informes económicos, así que nadie los soluciona.</li>
-                <li><strong>Los recursos fluyen hacia el gasto, no hacia la efectividad</strong> — los presupuestos van a departamentos que "gastan dinero" (PIB) en lugar de departamentos que "entregan resultados" (GL).</li>
-                <li><strong>La confianza entre ciudadanos y el Estado se erosiona</strong> — cuando el PIB crece pero la vida de las personas no mejora, la gente concluye que el sistema les está mintiendo.</li>
-            </ul>
-            <h3>El costo de continuar con el PIB</h3>
-            <table>
-                <thead><tr><th>Plazo</th><th>Costo</th></tr></thead>
-                <tbody>
-                    <tr><td>Corto (1-5 años)</td><td>Mala asignación presupuestaria, fallas en servicios públicos, creciente insatisfacción</td></tr>
-                    <tr><td>Medio (5-10 años)</td><td>Erosión institucional, colapso de confianza, costos de reforma disparados</td></tr>
-                    <tr><td>Largo (10-20 años)</td><td>Caída de la competitividad nacional, colapso sistémico</td></tr>
-                </tbody>
-            </table>
-            <div class="quote-block">
-                <p><strong>El PIB es una herramienta de la década de 1930 para problemas de la década de 1930. Pero los problemas de 2026 no pueden resolverse con las herramientas de 1930.</strong></p>
-            </div>
-
-            <h2>Una analogía empresarial</h2>
-            <p>Si una empresa solo preparara una cuenta de resultados y ningún balance general, podría mostrar altos ingresos y rápido crecimiento. Pero sus cuentas por cobrar podrían estar pudriéndose, sus pasivos explotando y sus activos vacíos. Entonces colapsa repentinamente.</p>
-            <p><strong>Los países no son diferentes.</strong></p>
-
-            <h2>PIB vs GL</h2>
-            <table>
-                <thead><tr><th>PIB</th><th>GL Framework</th></tr></thead>
-                <tbody>
-                    <tr><td>Estado de flujo de efectivo</td><td>Sistema contable completo</td></tr>
-                    <tr><td>El dinero fluye</td><td>¿Es saludable ese flujo o está quemando capital institucional?</td></tr>
-                    <tr><td>Volumen de transacciones</td><td>Eficacia de entrega</td></tr>
-                    <tr><td>Precio de mercado</td><td>Costo de fricción</td></tr>
-                </tbody>
-            </table>
-
-            <h2>PIB Fantasma</h2>
-            <p>Algunos crecimientos del PIB son en realidad:</p>
-            <ul>
-                <li>Extracción futura</li>
-                <li>Agotamiento institucional</li>
-                <li>Subsidio oculto</li>
-                <li>Deuda de gobernanza</li>
-            </ul>
-            <div class="quote-block">
-                <p><strong>"No. Solo estás pre-endeudando los costos de gobernanza del futuro."</strong></p>
-            </div>
-
-            <h2>Caso de Estudio: Ruanda — La Paradoja de la Eficiencia</h2>
-            <div class="case-box">
-                <p>En las últimas dos décadas, Ruanda ha logrado un acceso casi universal a teléfonos móviles y educación primaria, duplicando la cobertura eléctrica a más de la mitad de la población, y llevando agua potable y saneamiento a uno de cada cinco ciudadanos. El consumo de electricidad se triplicó. La esperanza de vida aumentó en 20 años.</p>
-                <p>Estos logros se alcanzaron con un gasto público per cápita que pasó de apenas $150 a $420 — aún por debajo del promedio del África subsahariana. El PIB creció, pero <strong>el verdadero motor fue la eficiencia, no el dinero.</strong></p>
-                <p><strong>El PIB registra lo que Ruanda gastó. GL mediría por qué funcionó.</strong></p>
-            </div>
-
-            <h2>Conclusión</h2>
-            <p>El PIB no es "incompleto". El PIB es "medio libro mayor por diseño".</p>
-            <p><strong>GL Framework mide la otra mitad — la mitad que el PIB nunca fue diseñado para capturar.</strong></p>
-
-            <hr class="divider">
-            <div class="footer">
-                <p><strong>Ping Xu</strong> · Creadora del GL Framework · Junio 2026</p>
-                <p style="font-size:0.7rem; color:#9fb0c8; margin-top:0.5rem;">gfiintel.com · Descarga gratuita · Distribución libre · Por favor, mantenga la atribución del autor</p>
-                <a href="index.html" class="back-link">← Volver al Inicio</a>
-            </div>
-        </div>
-    </div>
 </div>
 
 <script>
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const lang = this.dataset.lang;
-            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            document.querySelectorAll('.content-lang').forEach(el => el.classList.remove('active'));
-            document.getElementById(`lang-${lang}`).classList.add('active');
+    document.addEventListener('DOMContentLoaded', function() {
+        const buttons = document.querySelectorAll('.lang-switch button');
+        const sections = {
+            en: document.getElementById('lang-en'),
+            tw: document.getElementById('lang-tw'),
+            cn: document.getElementById('lang-cn'),
+            es: document.getElementById('lang-es')
+        };
+
+        function switchLang(lang) {
+            Object.keys(sections).forEach(key => {
+                if (sections[key]) sections[key].classList.remove('active');
+            });
+            if (sections[lang]) sections[lang].classList.add('active');
+
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
+
+            document.querySelectorAll('.nav-series .lang-zh, .nav-series .lang-en, .nav-series .lang-es').forEach(el => el.classList.remove('active'));
+            const navMap = { en: 'lang-en', tw: 'lang-zh', cn: 'lang-zh', es: 'lang-es' };
+            const navTarget = document.querySelector('.nav-series .' + navMap[lang]);
+            if (navTarget) navTarget.classList.add('active');
+        }
+
+        buttons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const lang = this.dataset.lang;
+                if (lang) switchLang(lang);
+            });
         });
+
+        const params = new URLSearchParams(window.location.search);
+        const langParam = params.get('lang');
+        if (langParam === 'tw' || langParam === 'cn' || langParam === 'es') {
+            switchLang(langParam);
+        } else {
+            switchLang('en');
+        }
     });
 </script>
+
 </body>
 </html>
