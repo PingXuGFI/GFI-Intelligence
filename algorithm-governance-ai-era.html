@@ -1,549 +1,543 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="算法与治理 – Algorithm and Governance: How AI Ends Procedural Justice" />
-    <title>算法与治理 · GFI Flow Intelligence</title>
+    <meta name="description" content="Algorithm and Governance — How AI Ends Procedural Justice. Algorithms replace judgment with optimization, ending the foundation of procedural justice. GFI Flow Intelligence." />
+    <meta name="keywords" content="algorithm governance, procedural justice, AI governance, algorithmic fairness, GL framework, due process, AI decision-making, governance algorithms" />
+    <meta property="og:title" content="Algorithm and Governance — How AI Ends Procedural Justice | GFI Flow Intelligence" />
+    <meta property="og:description" content="Procedural justice is the foundation of legitimate governance. Algorithms replace judgment with optimization — and optimization is not justice." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Algorithm and Governance — How AI Ends Procedural Justice" />
+    <meta name="twitter:description" content="When algorithms govern, there is no due process. There is only optimization. And optimization is not justice." />
+    <link rel="alternate" hreflang="en" href="https://gfiintel.com/algorithm-governance-ai-era.html" />
+    <link rel="alternate" hreflang="zh-TW" href="https://gfiintel.com/algorithm-governance-ai-era.html?lang=tw" />
+    <link rel="alternate" hreflang="zh-CN" href="https://gfiintel.com/algorithm-governance-ai-era.html?lang=cn" />
+    <link rel="alternate" hreflang="es" href="https://gfiintel.com/algorithm-governance-ai-era.html?lang=es" />
+    <link rel="alternate" hreflang="x-default" href="https://gfiintel.com/algorithm-governance-ai-era.html" />
+    <title>Algorithm and Governance — How AI Ends Procedural Justice | GFI Flow Intelligence</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
     <style>
-        :root {
-            --bg: #0b1220;
-            --bg2: #0d1526;
-            --text: #f8fbff;
-            --muted: #c7d2e3;
-            --sub: #9fb0c8;
-            --dim: rgba(255, 255, 255, .06);
-            --green: #9FE870;
-            --blue: #7DD3FC;
-            --gold: #fbbf24;
-            --red: #f87171;
-            --serif: 'DM Serif Display', Georgia, serif;
-            --mono: 'DM Mono', monospace;
-            --sans: 'DM Sans', system-ui, sans-serif;
-        }
-        * { margin:0; padding:0; box-sizing:border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: var(--sans);
-            font-size: 16px;
-            line-height: 1.7;
-            overflow-x: hidden;
-            padding: 0 20px;
-        }
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 2rem 0 4rem;
-        }
-        .nav {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            height: 62px;
-            padding: 0 clamp(18px, 5vw, 52px);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: rgba(11, 18, 32, 0.92);
-            backdrop-filter: blur(14px);
-            border-bottom: 1px solid var(--dim);
-            margin: 0 -20px;
-            padding-left: 20px;
-            padding-right: 20px;
-        }
-        .logo {
-            color: #fff;
-            text-decoration: none;
-            font-family: var(--mono);
-            font-size: 13px;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-        }
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-        .back-link {
-            color: var(--sub);
-            font-family: var(--mono);
-            font-size: 12px;
-            text-decoration: none;
-            letter-spacing: 0.04em;
-            transition: color 0.2s;
-        }
-        .back-link:hover { color: var(--green); }
-        .lang-switch {
-            display: flex;
-            gap: 4px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 30px;
-            padding: 3px;
-            border: 1px solid var(--dim);
-        }
-        .lang-switch button {
-            background: none;
-            border: none;
-            padding: 4px 14px;
-            border-radius: 30px;
-            font-family: var(--mono);
-            font-size: 11px;
-            letter-spacing: 0.04em;
-            color: var(--sub);
-            cursor: pointer;
-            transition: all 0.2s;
-            font-weight: 500;
-        }
-        .lang-switch button.active {
-            background: var(--green);
-            color: var(--bg);
-        }
-        .lang-switch button:hover:not(.active) {
-            color: #fff;
-            background: rgba(255,255,255,0.08);
-        }
-
-        .article-header {
-            margin: 2rem 0 2.5rem;
-            border-bottom: 1px solid var(--dim);
-            padding-bottom: 1.5rem;
-        }
-        .article-header .badge {
-            font-family: var(--mono);
-            font-size: 0.6rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--green);
-            background: rgba(159, 232, 112, 0.1);
-            padding: 0.15rem 0.8rem;
-            border-radius: 30px;
-            display: inline-block;
-            border: 1px solid rgba(159, 232, 112, 0.15);
-            margin-bottom: 0.8rem;
-        }
-        .article-header h1 {
-            font-family: var(--serif);
-            font-size: 2.2rem;
-            font-weight: 700;
-            line-height: 1.2;
-            color: #fff;
-            margin-bottom: 0.2rem;
-        }
-        .article-header .subhead {
-            font-size: 1.05rem;
-            color: var(--sub);
-            font-style: italic;
-            margin-bottom: 0.4rem;
-        }
-        .article-header .meta {
-            font-family: var(--mono);
-            font-size: 0.7rem;
-            color: var(--muted);
-            opacity: 0.6;
-        }
-
-        .lang-content { display: none; }
-        .lang-content.active { display: block; }
-
-        .lang-content p {
-            color: var(--muted);
-            font-size: 0.95rem;
-            margin-bottom: 1rem;
-        }
-        .lang-content strong {
-            color: #fff;
-            font-weight: 600;
-        }
-        .lang-content .highlight { color: var(--gold); }
-        .lang-content .highlight-blue { color: var(--blue); }
-        .lang-content .highlight-red { color: var(--red); }
-        .lang-content .quote-block {
-            background: rgba(255, 255, 255, 0.02);
-            border-left: 4px solid var(--gold);
-            padding: 1.2rem 1.8rem;
-            margin: 1.5rem 0;
-            border-radius: 0 12px 12px 0;
-        }
-        .lang-content .quote-block p {
-            font-family: var(--serif);
-            font-size: 1.1rem;
-            color: #fff;
-            font-style: italic;
-            margin-bottom: 0.2rem;
-        }
-        .lang-content .quote-block .attribution {
-            font-family: var(--mono);
-            font-size: 0.7rem;
-            color: var(--sub);
-            text-align: right;
-        }
-        .lang-content h2 {
-            font-family: var(--serif);
-            font-size: 1.5rem;
-            color: #fff;
-            margin: 2rem 0 0.8rem 0;
-        }
-        .lang-content .table-wrap {
-            overflow-x: auto;
-            margin: 1.2rem 0;
-        }
-        .lang-content table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.8rem;
-            font-family: var(--mono);
-            border: 1px solid var(--dim);
-        }
-        .lang-content th, .lang-content td {
-            padding: 8px 12px;
-            border: 1px solid var(--dim);
-            text-align: left;
-            color: var(--muted);
-        }
-        .lang-content th {
-            background: rgba(255,255,255,0.04);
-            color: var(--sub);
-            font-weight: 500;
-            letter-spacing: 0.04em;
-        }
-        .lang-content ul {
-            list-style: none;
-            padding: 0;
-            margin: 0.4rem 0 1rem;
-        }
-        .lang-content ul li {
-            position: relative;
-            padding-left: 1.2rem;
-            margin-bottom: 0.3rem;
-            color: var(--muted);
-            font-size: 0.9rem;
-        }
-        .lang-content ul li::before {
-            content: "→";
-            position: absolute;
-            left: 0;
-            color: var(--green);
-            font-family: var(--mono);
-            font-size: 0.7rem;
-        }
-        .lang-content .footnote {
-            margin-top: 2rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--dim);
-            font-family: var(--mono);
-            font-size: 0.7rem;
-            color: rgba(255,255,255,0.2);
-            text-align: center;
-        }
-        .lang-content .footnote a {
-            color: var(--sub);
-            text-decoration: none;
-        }
-        .lang-content .footnote a:hover { color: #fff; }
-
-        @media (max-width: 720px) {
-            .article-header h1 { font-size: 1.6rem; }
-            body { padding: 0 12px; }
-            .nav { margin: 0 -12px; padding-left: 12px; padding-right: 12px; }
-            .lang-switch button { padding: 3px 10px; font-size: 10px; }
-            .lang-content table { font-size: 0.7rem; }
-        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:#f5f0e8;color:#2d2a24;font-family:'DM Sans',system-ui,sans-serif;font-size:15px;line-height:1.8;padding:1.5rem 1rem}
+        .container{max-width:1040px;margin:0 auto}
+        .lang-switch{display:flex;gap:10px;margin-bottom:1.5rem;flex-wrap:wrap;justify-content:flex-end}
+        .lang-btn{font-family:'DM Mono',monospace;font-size:.7rem;padding:.3rem 1.2rem;border:1px solid rgba(60,50,40,.15);border-radius:20px;background:0 0;color:#6b5f4e;cursor:pointer;transition:all .2s}
+        .lang-btn:hover{border-color:#4a6b3d;color:#2d2a24}
+        .lang-btn.active{color:#3d6b2e;border-color:#3d6b2e;background:rgba(61,107,46,.08)}
+        .lang-block{display:none;animation:fadeIn .3s ease}
+        .lang-block.active{display:block}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+        .back-link{font-family:'DM Mono',monospace;font-size:.65rem;color:#3d6b2e;text-decoration:none;border-bottom:1px solid rgba(61,107,46,.2);padding-bottom:2px}
+        .back-link:hover{border-bottom-color:#3d6b2e}
+        h1{font-family:'DM Serif Display',Georgia,serif;font-size:2.2rem;color:#1f2a1a;margin-bottom:.2rem;line-height:1.2}
+        .subhead{font-family:'DM Mono',monospace;font-size:.75rem;color:#6b5f4e;letter-spacing:.06em;margin-bottom:.2rem}
+        .meta{font-family:'DM Mono',monospace;font-size:.65rem;color:#8a7e6a;border-bottom:1px solid rgba(60,50,40,.06);padding-bottom:1rem;margin-bottom:2rem}
+        h2{font-family:'DM Serif Display',Georgia,serif;font-size:1.4rem;color:#1f2a1a;margin:2.2rem 0 .8rem;border-left:4px solid #3d6b2e;padding-left:1rem}
+        h3{font-family:'DM Serif Display',Georgia,serif;font-size:1rem;color:#1f2a1a;margin:1.4rem 0 .4rem}
+        p{color:#4a4036;margin-bottom:.8rem;line-height:1.9}
+        .highlight{color:#3d6b2e;font-weight:500}
+        .highlight-red{color:#b33a3a;font-weight:500}
+        .highlight-blue{color:#4a7a6e;font-weight:500}
+        .insight-block{background:rgba(61,107,46,.06);border-left:4px solid #3d6b2e;padding:1rem 1.5rem;border-radius:0 8px 8px 0;margin:1.2rem 0}
+        .insight-block p{color:#2d2a24;margin-bottom:0;font-weight:450;font-size:.95rem}
+        .insight-block-red{background:rgba(179,58,58,.06);border-left:4px solid #b33a3a;padding:1rem 1.5rem;border-radius:0 8px 8px 0;margin:1.2rem 0}
+        .insight-block-red p{color:#2d2a24;margin-bottom:0;font-weight:450;font-size:.95rem}
+        .table-wrap{overflow-x:auto;border-radius:12px;border:1px solid rgba(60,50,40,.06);margin:1.2rem 0}
+        table{width:100%;border-collapse:collapse;font-family:'DM Mono',monospace;font-size:.65rem;min-width:480px}
+        th{text-align:left;padding:8px 10px;font-size:.5rem;letter-spacing:.08em;text-transform:uppercase;color:#8a7e6a;border-bottom:1px solid rgba(60,50,40,.06);font-weight:400;background:rgba(255,252,245,.3)}
+        td{padding:6px 10px;border-bottom:1px solid rgba(60,50,40,.03);color:#4a4036}
+        tr:hover td{background:rgba(255,252,245,.3)}
+        .conclusion-box{background:rgba(61,107,46,.06);border:1px solid rgba(61,107,46,.12);border-radius:12px;padding:1.2rem 1.8rem;margin-top:1.5rem}
+        .conclusion-box p{color:#1f2a1a;font-weight:450;font-size:.95rem;margin-bottom:.4rem}
+        .nav-series{margin-top:2.8rem;padding-top:1.8rem;border-top:2px solid rgba(60,50,40,.1);display:flex;flex-wrap:wrap;justify-content:space-between;gap:.8rem}
+        .nav-series a{color:#3d6b2e;text-decoration:none;font-weight:600;border:1px solid rgba(60,50,40,.15);padding:.4rem 1.2rem;border-radius:30px;font-size:.75rem;transition:.2s;background:rgba(255,252,245,.5);font-family:'DM Mono',monospace;letter-spacing:.02em}
+        .nav-series a:hover{background:#3d6b2e;color:#fff;border-color:#3d6b2e}
+        .nav-series .lang-zh,.nav-series .lang-en,.nav-series .lang-es{display:none;width:100%;justify-content:space-between;gap:.8rem;flex-wrap:wrap}
+        .nav-series .lang-zh.active,.nav-series .lang-en.active,.nav-series .lang-es.active{display:flex}
+        .series-badge{display:inline-block;font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.08em;text-transform:uppercase;color:#8a7e6a;background:rgba(60,50,40,.06);padding:.2rem .8rem;border-radius:20px;margin-bottom:.5rem}
+        .footer{text-align:center;padding:24px 20px 32px;font-family:'DM Mono',monospace;font-size:11px;color:#8a7e6a;border-top:1px solid rgba(60,50,40,.06);margin-top:2rem}
+        .footer .lang-zh,.footer .lang-en,.footer .lang-es{display:none}
+        .footer .lang-zh.active,.footer .lang-en.active,.footer .lang-es.active{display:block}
+        .footer a{color:#6b5f4e;text-decoration:none}
+        .footer a:hover{color:#1f2a1a}
+        .footer-links{display:flex;justify-content:center;gap:16px;margin-top:6px;flex-wrap:wrap}
+        @media(max-width:720px){h1{font-size:1.6rem}.nav-series .lang-zh.active,.nav-series .lang-en.active,.nav-series .lang-es.active{flex-direction:column;align-items:center}}
     </style>
 </head>
 <body>
-
-<!-- ===== 顶栏 ===== -->
-<div class="nav">
-    <a href="index.html" class="logo">GFI Flow Intelligence</a>
-    <div class="nav-right">
-        <a href="index.html" class="back-link">← Back</a>
-        <div class="lang-switch">
-            <button class="active" data-lang="en">EN</button>
-            <button data-lang="zh">中文</button>
-        </div>
-    </div>
-</div>
-
-<!-- ===== 文章主体 ===== -->
 <div class="container">
 
-    <div class="article-header">
-        <div class="badge">GFI Flow Intelligence · Governance Legitimacy Framework</div>
-        <h1 id="mainTitle">Algorithm and Governance:<br />How AI Ends Procedural Justice</h1>
-        <div class="subhead" id="subTitle">算法与治理——AI如何终结程序正义</div>
-        <div class="meta">August 2026 · 2026年8月</div>
+    <!-- 語言切換 -->
+    <div class="lang-switch">
+        <button class="lang-btn" data-lang="en">English</button>
+        <button class="lang-btn" data-lang="tw">繁</button>
+        <button class="lang-btn" data-lang="cn">简</button>
+        <button class="lang-btn" data-lang="es">Español</button>
     </div>
 
-    <!-- ===== 英文版 ===== -->
-    <div class="lang-content active" id="en-content">
+    <!-- ============================================================ -->
+    <!-- 英文版 (默認) -->
+    <!-- ============================================================ -->
+    <div class="lang-block active" id="en">
+        <a href="index.html" class="back-link">← Back to Home</a>
+        <div class="series-badge">Digital &amp; AI Series · Part 2 of 4</div>
+        <h1>Algorithm and Governance</h1>
+        <div class="subhead">How AI Ends Procedural Justice</div>
+        <div class="meta">GFI · Digital &amp; AI Series</div>
 
-        <h2>I. The Algorithm Arrives</h2>
-        <p>In 2026, a quiet revolution occurred that most governance theorists missed.</p>
-        <p>China's revised Government Procurement Law added a new chapter: <span class="highlight-blue">“Digital Procurement.”</span> For the first time in any major legal system, algorithms were given a formal role in government decision‑making.</p>
-        <p>This is not a minor technical update. It is <span class="highlight-red">a fundamental challenge to the entire framework of procedural legitimacy.</span></p>
-        <p>When algorithms begin to assist — and eventually replace — human decision‑making, the old questions of procedural justice become obsolete. The new question is: <span class="highlight">“Does the algorithm deliver results?”</span></p>
+        <div class="insight-block"><p><span class="highlight">Procedural justice is the foundation of legitimate governance. It is the set of rules, processes, and safeguards that ensure decisions are made fairly, transparently, and with accountability. <strong>Algorithms replace judgment with optimization — and optimization is not justice.</strong></span></p></div>
 
-        <h2>II. The Old Logic: Procedure as Justification</h2>
-        <p>For centuries, governance legitimacy rested on procedure:</p>
-        <ul>
-            <li>Elections were held</li>
-            <li>Laws were passed</li>
-            <li>Hearings were conducted</li>
-            <li>Votes were counted</li>
+        <h2>I. What Is Procedural Justice?</h2>
+        <p>Procedural justice is not about outcomes. It is about <em>how</em> decisions are made. It requires four elements:</p>
+        <ul style="color:#4a4036;margin:.6rem 0 .8rem 1.5rem;line-height:1.9">
+            <li><span class="highlight-blue">•</span> <strong>Voice</strong> — the affected party has the opportunity to be heard</li>
+            <li><span class="highlight-blue">•</span> <strong>Neutrality</strong> — the decision-maker is impartial</li>
+            <li><span class="highlight-blue">•</span> <strong>Transparency</strong> — the process is visible and understandable</li>
+            <li><span class="highlight-blue">•</span> <strong>Accountability</strong> — there is a mechanism for review and correction</li>
         </ul>
-        <p>If these procedures were followed, the outcome was legitimate — regardless of its quality. <span class="highlight-blue">The process was the justification.</span></p>
-        <p>This logic worked when human judgment was the only available tool. But human judgment is being replaced.</p>
+        <p>These four elements are what make governance <em>legitimate</em>. When they are absent, decisions are experienced as arbitrary — even if the outcome is technically correct.</p>
 
-        <h2>III. The New Logic: Algorithm as Decision‑Maker</h2>
-        <p>Algorithms are fundamentally different from human procedures:</p>
-        <ul>
-            <li><strong>They are predictive, not deliberative.</strong> They do not debate. They calculate.</li>
-            <li><strong>They are optimized for outcomes, not processes.</strong> They are trained to maximize results, not to follow steps.</li>
-            <li><strong>They are continuous, not periodic.</strong> They do not wait for elections. They operate in real time.</li>
-        </ul>
-        <p>When an algorithm allocates resources, evaluates bids, or predicts demand, it is not “following a procedure” in the traditional sense. It is <span class="highlight-red">producing an outcome.</span></p>
-        <p>And if the outcome is good, who cares about the procedure?</p>
+        <h2>II. How Algorithms Work</h2>
+        <p>Algorithms are optimization engines. They take inputs, apply a function, and produce an output. They are designed to maximize or minimize a specific objective function. They do not deliberate. They do not listen. They do not explain. They <em>optimize</em>.</p>
+        <p>This is not a criticism. This is a description. The problem is not that algorithms are bad. The problem is that <span class="highlight-red">governance is being handed over to optimization engines — and optimization engines cannot do procedural justice.</span></p>
 
-        <h2>IV. The 2026 Turning Point: Digital Procurement</h2>
-        <p>China's 2026 Procurement Law reform is the first major legal framework to formally integrate algorithms into governance:</p>
-        <ul>
-            <li><strong>Algorithmic bid evaluation</strong> — AI systems assess vendor proposals based on performance data, not just compliance</li>
-            <li><strong>Real‑time price monitoring</strong> — algorithms track market prices and adjust procurement strategies dynamically</li>
-            <li><strong>Outcome‑based verification</strong> — algorithms measure actual delivery against contract terms</li>
-        </ul>
-        <p>This is not “digitalization” in the Western sense — adding computers to existing processes. This is <span class="highlight-blue">process replacement.</span> The algorithm does not assist the human. The algorithm <span class="highlight-red">subsumes the human.</span></p>
+        <div class="insight-block-red"><p><span class="highlight-red">When governance becomes optimization, procedural justice ends. There is no voice. There is no neutrality. There is no transparency. There is no accountability. There is only the algorithm.</span></p></div>
 
-        <h2>V. Why Algorithmic Governance Challenges Procedural Legitimacy</h2>
-        <p>Procedural legitimacy relies on transparency, participation, and accountability. Algorithms challenge all three:</p>
-        <ul>
-            <li><strong>Transparency</strong> — algorithms are black boxes. Even their creators cannot fully explain their decisions.</li>
-            <li><strong>Participation</strong> — algorithms do not hold hearings or accept public comments. They process data.</li>
-            <li><strong>Accountability</strong> — when an algorithm makes a mistake, who is responsible? The programmer? The user? The machine?</li>
-        </ul>
-        <p>The old framework has no answer to these questions. <span class="highlight-red">Procedural legitimacy is not equipped for the algorithmic age.</span></p>
+        <h2>III. The Algorithmic Substitution</h2>
+        <p>In traditional governance, each element of procedural justice was performed by a human — or by a human-mediated process. Algorithms substitute each element:</p>
 
-        <h2>VI. The New Source of Legitimacy: Algorithmic Performance</h2>
-        <p>If algorithms cannot provide procedural legitimacy, where does their legitimacy come from?</p>
-        <p>The answer is: <span class="highlight-blue">performance.</span></p>
-        <ul>
-            <li>Does the algorithm reduce costs?</li>
-            <li>Does the algorithm improve delivery?</li>
-            <li>Does the algorithm produce better outcomes than humans?</li>
-        </ul>
-        <p>If the answer is yes, the algorithm is legitimate — regardless of its opacity.</p>
-        <p>This is not a hypothetical. <span class="highlight">It is already happening.</span></p>
-
-        <h2>VII. The GFI Framework: Algorithmic Legitimacy</h2>
-        <p>Under the GFI Governance Legitimacy Framework, a new category must be added:</p>
         <div class="table-wrap">
             <table>
-                <thead><tr><th>Source of Legitimacy</th><th>Question</th><th>Example</th></tr></thead>
+                <thead><tr><th>Procedural Justice Element</th><th>Traditional Governance</th><th>Algorithmic Governance</th></tr></thead>
                 <tbody>
-                    <tr><td>Procedural</td><td>“Was it done correctly?”</td><td>Elections, hearings, votes</td></tr>
-                    <tr><td>Performance</td><td>“Was it done at all?”</td><td>Infrastructure, poverty reduction</td></tr>
-                    <tr><td>Algorithmic</td><td>“Did the algorithm produce the best outcome?”</td><td>AI procurement, predictive allocation</td></tr>
+                    <tr><td><span class="highlight-blue">Voice</span></td><td>Hearings, appeals, representations</td><td><span class="highlight-red">No voice — only data inputs</span></td></tr>
+                    <tr><td><span class="highlight-blue">Neutrality</span></td><td>Impartial judges, independent review</td><td><span class="highlight-red">Optimization bias — embedded in training data</span></td></tr>
+                    <tr><td><span class="highlight-blue">Transparency</span></td><td>Published reasoning, open hearings</td><td><span class="highlight-red">Black box — no reasoning is provided</span></td></tr>
+                    <tr><td><span class="highlight-blue">Accountability</span></td><td>Appeals, judicial review, oversight</td><td><span class="highlight-red">No one is accountable — the algorithm made the decision</span></td></tr>
                 </tbody>
             </table>
         </div>
-        <p><span class="highlight-red">The algorithm does not care about procedure. It only cares about results.</span></p>
-        <p>This is why algorithmic governance is so threatening to the Western elite. It bypasses the entire structure of procedural legitimacy that their power depends on.</p>
 
-        <h2>VIII. The Western Dilemma</h2>
-        <p>Western governments face an impossible choice:</p>
-        <ul>
-            <li><strong>Adopt algorithms</strong> — and abandon procedural legitimacy</li>
-            <li><strong>Reject algorithms</strong> — and fall further behind in governance performance</li>
+        <h2>IV. The GL Framework Perspective</h2>
+        <p>The GL Framework measures structural friction. Procedural justice creates friction — but it is <em>productive</em> friction. It slows down decision-making in order to make it fair. It imposes costs in order to ensure legitimacy.</p>
+        <p>Algorithms eliminate that friction. They reduce <strong>Pd</strong> (Pain Duration) and <strong>Cf</strong> (Cognitive Friction) for the governor — but they also eliminate the friction that makes governance legitimate. <span class="highlight">When GL increases because procedural justice is eliminated, the increase is illusory.</span></p>
+        <p>The governor experiences higher efficiency. The governed experience arbitrary power. The GL score goes up on one side — and collapses on the other.</p>
+
+        <h2>V. The Legal Void</h2>
+        <p>When an algorithm makes a decision, who is accountable? The current legal framework does not have an answer. In most jurisdictions:</p>
+        <ul style="color:#4a4036;margin:.6rem 0 .8rem 1.5rem;line-height:1.9">
+            <li><span class="highlight-blue">•</span> The software vendor is not accountable</li>
+            <li><span class="highlight-blue">•</span> The procurement official is not accountable</li>
+            <li><span class="highlight-blue">•</span> The agency head is not accountable</li>
+            <li><span class="highlight-blue">•</span> The algorithm itself cannot be accountable</li>
         </ul>
-        <p>Either way, the old framework loses.</p>
-        <p>This is why the West is both terrified of Chinese AI and unable to compete with it. It is not a technology gap. <span class="highlight-red">It is a legitimacy gap.</span></p>
+        <p><span class="highlight-red">This is the legal void: decisions are being made, but no one is responsible for them.</span></p>
 
-        <h2>IX. The Future: Governance Without Procedure</h2>
-        <p>What happens when algorithms become the primary decision‑makers in governance?</p>
-        <ul>
-            <li>Elections will become less important — algorithms do not need to be elected</li>
-            <li>Debate will become less relevant — algorithms do not deliberate</li>
-            <li>Procedure will become obsolete — algorithms only optimize for outcomes</li>
+        <h2>VI. The Case of Predictive Policing</h2>
+        <p>Predictive policing algorithms generate "risk scores" that determine where police resources are deployed. These scores are based on historical crime data. But historical crime data reflects historical policing patterns — which reflect historical bias.</p>
+        <p>The algorithm perpetuates the bias. It does not deliberate. It does not correct. It optimizes. The communities that were over-policed in the past are over-policed in the future. <span class="highlight-red">The algorithm does not discriminate. It simply optimizes on biased data. The result is the same.</span></p>
+
+        <h2>VII. What Procedural Justice Requires in the AI Era</h2>
+        <p>If governance is to remain legitimate in the AI era, procedural justice must be preserved. This requires:</p>
+        <ul style="color:#4a4036;margin:.6rem 0 .8rem 1.5rem;line-height:1.9">
+            <li><span class="highlight-blue">•</span> <strong>Human oversight</strong> — algorithms cannot be the final decision-maker</li>
+            <li><span class="highlight-blue">•</span> <strong>Right to explanation</strong> — affected parties must be able to understand why a decision was made</li>
+            <li><span class="highlight-blue">•</span> <strong>Right to appeal</strong> — there must be a mechanism to challenge algorithmic decisions</li>
+            <li><span class="highlight-blue">•</span> <strong>Algorithmic auditing</strong> — algorithms must be tested for bias and error</li>
         </ul>
-        <p>This is not a dystopia. This is <span class="highlight-blue">the logical conclusion of the performance‑based governance model.</span></p>
-        <p>When citizens demand results, and algorithms deliver them, the question “how was this decision made?” becomes irrelevant. Only one question matters: <span class="highlight">“Did it work?”</span></p>
+        <p>These are not technical requirements. They are <span class="highlight">governance requirements</span>. They are what separate legitimate governance from algorithmic rule.</p>
 
-        <h2>X. Conclusion: The Algorithmic Era</h2>
-        <p>The era of procedural justice is ending. The era of algorithmic justice is beginning.</p>
-        <p>This is not a prediction. It is already happening in China's procurement system, in predictive policing, in resource allocation, in public health management.</p>
-        <p>The West can continue to defend procedural legitimacy. But the algorithm does not care about procedures.</p>
-        <p><span class="highlight">The algorithm cares about results. And so do citizens.</span></p>
-        <p>This is the message of 2026. This is the message of GFI. This is the message that the Western elite refuses to hear.</p>
-        <div class="quote-block">
-            <p>“Procedural justice is a human invention. The algorithm was not consulted.”</p>
-            <div class="attribution">— GFI Governance Legitimacy Framework</div>
+        <div class="conclusion-box">
+            <p><span class="highlight">Algorithms cannot do procedural justice. They can only optimize. When we hand governance to algorithms, we are not making governance more efficient — we are making it less legitimate. The choice is not between speed and fairness. It is between legitimate governance and algorithmic rule.</span></p>
+            <p style="margin-top:.5rem;font-size:.8rem;color:#6b5f4e;"><span class="highlight">Procedural justice is not a bug. It is a feature. And it is the feature that makes governance legitimate.</span></p>
         </div>
 
-        <div class="footnote">
-            <span>GFI Flow Intelligence · Governance Legitimacy Framework</span><br />
-            <a href="index.html">← Back to Home</a> · <a href="lost-knowledge-governance.html">The Lost Knowledge of Governance</a> · <a href="legitimacy-migration-procedure-performance.html">Legitimacy Migration</a>
+        <!-- ===== 英文導航 ===== -->
+        <div class="nav-series">
+            <div class="lang-en active">
+                <a href="ai-governance-divide.html">← 2026, Year One of AI</a>
+                <a href="real-digital-transformation.html">Real Digital Transformation →</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="lang-en active">
+                GFI · Digital &amp; AI Series · Algorithm and Governance — How AI Ends Procedural Justice<br/>
+                &copy; 2026 · Evidence, logic, and structural analysis of global governance
+            </div>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="government.html">Public Sector</a>
+                <a href="enterprise.html">Private Sector</a>
+                <a href="about.html">About</a>
+                <a href="mailto:gfi@gfiintel.com">Contact</a>
+            </div>
         </div>
     </div>
 
-    <!-- ===== 中文版 ===== -->
-    <div class="lang-content" id="zh-content">
+    <!-- ============================================================ -->
+    <!-- 繁體中文 -->
+    <!-- ============================================================ -->
+    <div class="lang-block" id="tw">
+        <a href="index.html?lang=tw" class="back-link">← 返回首頁</a>
+        <div class="series-badge">數位與 AI 系列 · 第 2 篇，共 4 篇</div>
+        <h1>演算法與治理</h1>
+        <div class="subhead">AI 如何終結程序正義</div>
+        <div class="meta">GFI · 數位與 AI 系列</div>
 
-        <h2>一、算法的到来</h2>
-        <p>2026年，一场被大多数治理理论家忽视的静默革命发生了。</p>
-        <p>中国修订后的《政府采购法》增加了一个新章节：<span class="highlight-blue">“政府采购数字化专章”</span>。算法首次在任何主要法律体系中获得了在政府决策中的正式角色。</p>
-        <p>这不是一次微小的技术更新。这是 <span class="highlight-red">对整个程序正当性框架的根本性挑战</span>。</p>
-        <p>当算法开始辅助——并最终取代——人类决策时，程序正义的老问题就变得过时了。新的问题是：<span class="highlight">“算法是否交付了结果？”</span></p>
+        <div class="insight-block"><p><span class="highlight">程序正義是正當治理的基礎。它是一套規則、程序和保障措施，確保決策是公平、透明且可問責的。<strong>演算法用優化取代判斷——而優化不是正義。</strong></span></p></div>
 
-        <h2>二、旧逻辑：程序作为理由</h2>
-        <p>几个世纪以来，治理正当性建立在程序之上：</p>
-        <ul>
-            <li>举行了选举</li>
-            <li>通过了法律</li>
-            <li>召开了听证会</li>
-            <li>计算了选票</li>
+        <h2>一、什麼是程序正義？</h2>
+        <p>程序正義關心的不是結果，而是決策是如何做出的。它需要四個要素：</p>
+        <ul style="color:#4a4036;margin:.6rem 0 .8rem 1.5rem;line-height:1.9">
+            <li><span class="highlight-blue">•</span> <strong>發聲權</strong> — 受影響的一方有機會陳述意見</li>
+            <li><span class="highlight-blue">•</span> <strong>中立性</strong> — 決策者是公正的</li>
+            <li><span class="highlight-blue">•</span> <strong>透明度</strong> — 過程是可見且可理解的</li>
+            <li><span class="highlight-blue">•</span> <strong>問責性</strong> — 有審查和糾正的機制</li>
         </ul>
-        <p>如果这些程序被遵循，结果就是正当的——无论其质量如何。<span class="highlight-blue">程序本身就是理由。</span></p>
-        <p>当人类判断是唯一可用工具时，这个逻辑是有效的。但人类判断正在被取代。</p>
+        <p>這四個要素是使治理具有正當性的關鍵。當它們缺席時，決策就會被視為專斷的——即使結果在技術上是正確的。</p>
 
-        <h2>三、新逻辑：算法作为决策者</h2>
-        <p>算法在根本上不同于人类程序：</p>
-        <ul>
-            <li><strong>它们是预测性的，而非审议性的。</strong>它们不辩论。它们计算。</li>
-            <li><strong>它们为结果而非过程而优化。</strong>它们被训练来最大化结果，而不是遵循步骤。</li>
-            <li><strong>它们是连续的，而非周期性的。</strong>它们不等选举。它们实时运行。</li>
-        </ul>
-        <p>当一个算法分配资源、评估投标或预测需求时，它不是传统意义上的“遵循程序”。它是 <span class="highlight-red">产生一个结果。</span></p>
-        <p>如果结果是好的，谁在乎程序？</p>
+        <h2>二、演算法如何運作</h2>
+        <p>演算法是優化引擎。它們接收輸入、應用函數、產生輸出。它們被設計來最大化或最小化特定的目標函數。它們不會審議。它們不會傾聽。它們不會解釋。它們只會<em>優化</em>。</p>
+        <p>這不是批評，而是描述。問題不在於演算法不好。問題在於 <span class="highlight-red">治理正在被交給優化引擎——而優化引擎無法執行程序正義。</span></p>
 
-        <h2>四、2026年转折点：数字化采购</h2>
-        <p>中国2026年《政府采购法》修订是第一个将算法正式整合到治理中的主要法律框架：</p>
-        <ul>
-            <li><strong>算法化评标</strong>——AI系统基于绩效数据而非仅合规性评估供应商提案</li>
-            <li><strong>实时价格监控</strong>——算法跟踪市场价格并动态调整采购策略</li>
-            <li><strong>基于成果的验证</strong>——算法根据合同条款测量实际交付</li>
-        </ul>
-        <p>这不是西方意义上的“数字化”——将计算机添加到现有流程中。这是 <span class="highlight-blue">流程替代。</span> 算法不是辅助人类。算法 <span class="highlight-red">取代了人类。</span></p>
+        <div class="insight-block-red"><p><span class="highlight-red">當治理變成優化，程序正義就終結了。沒有發聲權。沒有中立性。沒有透明度。沒有問責性。只有演算法。</span></p></div>
 
-        <h2>五、为什么算法治理挑战程序正当性</h2>
-        <p>程序正当性依赖于透明度、参与和问责。算法挑战了所有三者：</p>
-        <ul>
-            <li><strong>透明度</strong>——算法是黑箱。即使是它们的创造者也无法完全解释它们的决策。</li>
-            <li><strong>参与</strong>——算法不举行听证会或不接受公众意见。它们处理数据。</li>
-            <li><strong>问责</strong>——当算法犯错时，谁负责？程序员？用户？机器？</li>
-        </ul>
-        <p>旧框架无法回答这些问题。<span class="highlight-red">程序正当性不具备应对算法时代的能力。</span></p>
+        <h2>三、演算法的取代</h2>
+        <p>在傳統治理中，程序正義的每個要素都由人——或由人中介的過程——執行。演算法取代了每個要素：</p>
 
-        <h2>六、正当性的新来源：算法绩效</h2>
-        <p>如果算法不能提供程序正当性，它们的正当性来自哪里？</p>
-        <p>答案是：<span class="highlight-blue">绩效。</span></p>
-        <ul>
-            <li>算法是否降低了成本？</li>
-            <li>算法是否改善了交付？</li>
-            <li>算法是否产生了比人类更好的结果？</li>
-        </ul>
-        <p>如果答案是肯定的，算法就是正当的——无论其不透明性如何。</p>
-        <p>这不是假设。<span class="highlight">它正在发生。</span></p>
-
-        <h2>七、GFI框架：算法正当性</h2>
-        <p>在GFI治理正当性框架下，必须增加一个新的类别：</p>
         <div class="table-wrap">
             <table>
-                <thead><tr><th>正当性来源</th><th>问题</th><th>示例</th></tr></thead>
+                <thead><tr><th>程序正義要素</th><th>傳統治理</th><th>演算法治理</th></tr></thead>
                 <tbody>
-                    <tr><td>程序</td><td>“它是否被正确执行？”</td><td>选举、听证会、投票</td></tr>
-                    <tr><td>绩效</td><td>“它是否被执行了？”</td><td>基础设施、减贫</td></tr>
-                    <tr><td>算法</td><td>“算法是否产生了最佳结果？”</td><td>AI采购、预测性分配</td></tr>
+                    <tr><td><span class="highlight-blue">發聲權</span></td><td>聽證、上訴、陳述</td><td><span class="highlight-red">沒有發聲權——只有數據輸入</span></td></tr>
+                    <tr><td><span class="highlight-blue">中立性</span></td><td>公正的法官、獨立審查</td><td><span class="highlight-red">優化偏見——嵌入訓練數據中</span></td></tr>
+                    <tr><td><span class="highlight-blue">透明度</span></td><td>公布的推理、公開聽證</td><td><span class="highlight-red">黑箱——不提供推理</span></td></tr>
+                    <tr><td><span class="highlight-blue">問責性</span></td><td>上訴、司法審查、監督</td><td><span class="highlight-red">沒有人負責——是演算法做的決定</span></td></tr>
                 </tbody>
             </table>
         </div>
-        <p><span class="highlight-red">算法不在乎程序。它只在乎结果。</span></p>
-        <p>这就是为什么算法治理对西方精英如此具有威胁性。它绕过了他们权力所依赖的整个程序正当性结构。</p>
 
-        <h2>八、西方的困境</h2>
-        <p>西方政府面临一个不可能的选择：</p>
-        <ul>
-            <li><strong>采用算法</strong>——然后放弃程序正当性</li>
-            <li><strong>拒绝算法</strong>——然后在治理绩效上进一步落后</li>
+        <h2>四、GL 框架的視角</h2>
+        <p>GL 框架衡量結構摩擦。程序正義會產生摩擦——但那是<em>有生產力的</em>摩擦。它減緩決策速度以確保公平。它為確保正當性而施加成本。</p>
+        <p>演算法消除那種摩擦。它們降低治理者的 <strong>Pd</strong>（痛苦持續時間）和 <strong>Cf</strong>（認知摩擦）——但它們也消除了使治理具有正當性的摩擦。<span class="highlight">當 GL 因為程序正義被消除而上升時，這種上升是虛幻的。</span></p>
+        <p>治理者體驗到更高的效率。被治理者體驗到專斷的權力。GL 分數在這一側上升——在另一側崩潰。</p>
+
+        <h2>五、法律真空</h2>
+        <p>當演算法做出決定時，誰來負責？現行法律框架沒有答案。在多數司法管轄區：</p>
+        <ul style="color:#4a4036;margin:.6rem 0 .8rem 1.5rem;line-height:1.9">
+            <li><span class="highlight-blue">•</span> 軟體供應商不負責</li>
+            <li><span class="highlight-blue">•</span> 採購官員不負責</li>
+            <li><span class="highlight-blue">•</span> 機構首長不負責</li>
+            <li><span class="highlight-blue">•</span> 演算法本身無法負責</li>
         </ul>
-        <p>无论哪种方式，旧框架都输了。</p>
-        <p>这就是为什么西方既恐惧中国AI又无法与之竞争的原因。这不是技术差距。<span class="highlight-red">这是正当性差距。</span></p>
+        <p><span class="highlight-red">這就是法律真空：決策正在被做出，但沒有人對它們負責。</span></p>
 
-        <h2>九、未来：没有程序的治理</h2>
-        <p>当算法成为治理中的主要决策者时会发生什么？</p>
-        <ul>
-            <li>选举将变得不那么重要——算法不需要被选举</li>
-            <li>辩论将变得不那么相关——算法不审议</li>
-            <li>程序将变得过时——算法只为结果优化</li>
+        <h2>六、預測警務案例</h2>
+        <p>預測警務演算法生成「風險分數」，決定警力資源部署何處。這些分數基於歷史犯罪數據。但歷史犯罪數據反映的是歷史警務模式——而歷史警務模式反映歷史偏見。</p>
+        <p>演算法延續了偏見。它不會審議。它不會糾正。它優化。過去被過度警務的社區，未來也會被過度警務。<span class="highlight-red">演算法不會歧視。它只是在有偏見的數據上優化。結果是一樣的。</span></p>
+
+        <h2>七、AI 時代程序正義的要求</h2>
+        <p>如果治理要在 AI 時代保持正當性，程序正義必須被保留。這需要：</p>
+        <ul style="color:#4a4036;margin:.6rem 0 .8rem 1.5rem;line-height:1.9">
+            <li><span class="highlight-blue">•</span> <strong>人類監督</strong> — 演算法不能是最終決策者</li>
+            <li><span class="highlight-blue">•</span> <strong>解釋權</strong> — 受影響方必須能夠理解決策原因</li>
+            <li><span class="highlight-blue">•</span> <strong>上訴權</strong> — 必須有質疑演算法決策的機制</li>
+            <li><span class="highlight-blue">•</span> <strong>演算法審計</strong> — 演算法必須接受偏見和錯誤測試</li>
         </ul>
-        <p>这不是反乌托邦。这是 <span class="highlight-blue">基于绩效的治理模型的逻辑结论。</span></p>
-        <p>当公民要求结果，而算法交付结果时，“这个决定是如何做出的？”这个问题变得无关紧要。只有一个问题重要：<span class="highlight">“它有效吗？”</span></p>
+        <p>這些不是技術要求。它們是 <span class="highlight">治理要求</span>。它們是區分正當治理與演算法統治的關鍵。</p>
 
-        <h2>十、结论：算法时代</h2>
-        <p>程序正义的时代正在结束。算法正义的时代正在开始。</p>
-        <p>这不是预测。它已经发生在中国采购系统、预测性警务、资源分配、公共卫生管理中。</p>
-        <p>西方可以继续捍卫程序正当性。但算法不在乎程序。</p>
-        <p><span class="highlight">算法在乎结果。公民也在乎结果。</span></p>
-        <p>这是2026年的信息。这是GFI的信息。这是西方精英拒绝听取的信息。</p>
-        <div class="quote-block">
-            <p>“程序正义是人类的发明。算法没有被征求意见。”</p>
-            <div class="attribution">— GFI 治理正当性框架</div>
+        <div class="conclusion-box">
+            <p><span class="highlight">演算法無法執行程序正義。它們只能優化。當我們把治理交給演算法，我們不是在讓治理更有效率——我們是在讓它更不正當。選擇不是速度與公平之間的選擇。而是正當治理與演算法統治之間的選擇。</span></p>
+            <p style="margin-top:.5rem;font-size:.8rem;color:#6b5f4e;"><span class="highlight">程序正義不是錯誤。它是功能。而正是這個功能使治理具有正當性。</span></p>
         </div>
 
-        <div class="footnote">
-            <span>GFI Flow Intelligence · 治理正当性框架</span><br />
-            <a href="index.html">← 返回首页</a> · <a href="lost-knowledge-governance.html">治理的术科本质</a> · <a href="legitimacy-migration-procedure-performance.html">合法性的转移</a>
+        <!-- ===== 繁體中文導航 ===== -->
+        <div class="nav-series">
+            <div class="lang-zh active">
+                <a href="ai-governance-divide.html?lang=tw">← 2026，AI 元年：治理鴻溝</a>
+                <a href="real-digital-transformation.html?lang=tw">真正的數位轉型 →</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="lang-zh active">
+                GFI · 數位與 AI 系列 · 演算法與治理 — AI 如何終結程序正義<br/>
+                &copy; 2026 · 本平台以證據、邏輯與結構性分析探討全球治理
+            </div>
+            <div class="footer-links">
+                <a href="index.html?lang=tw">首頁</a>
+                <a href="government.html?lang=tw">公共部門</a>
+                <a href="enterprise.html?lang=tw">私營部門</a>
+                <a href="about.html?lang=tw">創辦人</a>
+                <a href="mailto:gfi@gfiintel.com">聯絡我們</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 简体中文 -->
+    <!-- ============================================================ -->
+    <div class="lang-block" id="cn">
+        <a href="index.html?lang=cn" class="back-link">← 返回首页</a>
+        <div class="series-badge">数字与 AI 系列 · 第 2 篇，共 4 篇</div>
+        <h1>算法与治理</h1>
+        <div class="subhead">AI 如何终结程序正义</div>
+        <div class="meta">GFI · 数字与 AI 系列</div>
+
+        <div class="insight-block"><p><span class="highlight">程序正义是正当治理的基础。它是一套规则、程序和保障措施，确保决策是公平、透明且可问责的。<strong>算法用优化取代判断——而优化不是正义。</strong></span></p></div>
+
+        <h2>一、什么是程序正义？</h2>
+        <p>程序正义关心的不是结果，而是决策是如何做出的。它需要四个要素：</p>
+        <ul style="color:#4a4036;margin:.6rem 0 .8rem 1.5rem;line-height:1.9">
+            <li><span class="highlight-blue">•</span> <strong>发声权</strong> — 受影响的一方有机会陈述意见</li>
+            <li><span class="highlight-blue">•</span> <strong>中立性</strong> — 决策者是公正的</li>
+            <li><span class="highlight-blue">•</span> <strong>透明度</strong> — 过程是可见且可理解的</li>
+            <li><span class="highlight-blue">•</span> <strong>问责性</strong> — 有审查和纠正的机制</li>
+        </ul>
+        <p>这四个要素是使治理具有正当性的关键。当它们缺席时，决策就会被视为专断的——即使结果在技术上是正确的。</p>
+
+        <h2>二、算法如何运作</h2>
+        <p>算法是优化引擎。它们接收输入、应用函数、产生输出。它们被设计来最大化或最小化特定的目标函数。它们不会审议。它们不会倾听。它们不会解释。它们只会<em>优化</em>。</p>
+        <p>这不是批评，而是描述。问题不在于算法不好。问题在于 <span class="highlight-red">治理正在被交给优化引擎——而优化引擎无法执行程序正义。</span></p>
+
+        <div class="insight-block-red"><p><span class="highlight-red">当治理变成优化，程序正义就终结了。没有发声权。没有中立性。没有透明度。没有问责性。只有算法。</span></p></div>
+
+        <h2>三、算法的取代</h2>
+        <p>在传统治理中，程序正义的每个要素都由人——或由人中介的过程——执行。算法取代了每个要素：</p>
+
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>程序正义要素</th><th>传统治理</th><th>算法治理</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">发声权</span></td><td>听证、上诉、陈述</td><td><span class="highlight-red">没有发声权——只有数据输入</span></td></tr>
+                    <tr><td><span class="highlight-blue">中立性</span></td><td>公正的法官、独立审查</td><td><span class="highlight-red">优化偏见——嵌入训练数据中</span></td></tr>
+                    <tr><td><span class="highlight-blue">透明度</span></td><td>公布的推理、公开听证</td><td><span class="highlight-red">黑箱——不提供推理</span></td></tr>
+                    <tr><td><span class="highlight-blue">问责性</span></td><td>上诉、司法审查、监督</td><td><span class="highlight-red">没有人负责——是算法做的决定</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>四、GL 框架的视角</h2>
+        <p>GL 框架衡量结构摩擦。程序正义会产生摩擦——但那是<em>有生产力的</em>摩擦。它减缓决策速度以确保公平。它为确保正当性而施加成本。</p>
+        <p>算法消除那种摩擦。它们降低治理者的 <strong>Pd</strong>（痛苦持续时间）和 <strong>Cf</strong>（认知摩擦）——但它们也消除了使治理具有正当性的摩擦。<span class="highlight">当 GL 因为程序正义被消除而上升时，这种上升是虚幻的。</span></p>
+        <p>治理者体验到更高的效率。被治理者体验到专断的权力。GL 分数在这一侧上升——在另一侧崩溃。</p>
+
+        <h2>五、法律真空</h2>
+        <p>当算法做出决定时，谁来负责？现行法律框架没有答案。在多数司法管辖区：</p>
+        <ul style="color:#4a4036;margin:.6rem 0 .8rem 1.5rem;line-height:1.9">
+            <li><span class="highlight-blue">•</span> 软件供应商不负责</li>
+            <li><span class="highlight-blue">•</span> 采购官员不负责</li>
+            <li><span class="highlight-blue">•</span> 机构首长不负责</li>
+            <li><span class="highlight-blue">•</span> 算法本身无法负责</li>
+        </ul>
+        <p><span class="highlight-red">这就是法律真空：决策正在被做出，但没有人对它们负责。</span></p>
+
+        <h2>六、预测警务案例</h2>
+        <p>预测警务算法生成「风险分数」，决定警力资源部署何处。这些分数基于历史犯罪数据。但历史犯罪数据反映的是历史警务模式——而历史警务模式反映历史偏见。</p>
+        <p>算法延续了偏见。它不会审议。它不会纠正。它优化。过去被过度警务的社区，未来也会被过度警务。<span class="highlight-red">算法不会歧视。它只是在有偏见的数据上优化。结果是一样的。</span></p>
+
+        <h2>七、AI 时代程序正义的要求</h2>
+        <p>如果治理要在 AI 时代保持正当性，程序正义必须被保留。这需要：</p>
+        <ul style="color:#4a4036;margin:.6rem 0 .8rem 1.5rem;line-height:1.9">
+            <li><span class="highlight-blue">•</span> <strong>人类监督</strong> — 算法不能是最终决策者</li>
+            <li><span class="highlight-blue">•</span> <strong>解释权</strong> — 受影响方必须能够理解决策原因</li>
+            <li><span class="highlight-blue">•</span> <strong>上诉权</strong> — 必须有质疑算法决策的机制</li>
+            <li><span class="highlight-blue">•</span> <strong>算法审计</strong> — 算法必须接受偏见和错误测试</li>
+        </ul>
+        <p>这些不是技术要求。它们是 <span class="highlight">治理要求</span>。它们是区分正当治理与算法统治的关键。</p>
+
+        <div class="conclusion-box">
+            <p><span class="highlight">算法无法执行程序正义。它们只能优化。当我们把治理交给算法，我们不是在让治理更有效率——我们是在让它更不正当。选择不是速度与公平之间的选择。而是正当治理与算法统治之间的选择。</span></p>
+            <p style="margin-top:.5rem;font-size:.8rem;color:#6b5f4e;"><span class="highlight">程序正义不是错误。它是功能。而正是这个功能使治理具有正当性。</span></p>
+        </div>
+
+        <!-- ===== 简体中文导航 ===== -->
+        <div class="nav-series">
+            <div class="lang-zh active">
+                <a href="ai-governance-divide.html?lang=cn">← 2026，AI 元年：治理鸿沟</a>
+                <a href="real-digital-transformation.html?lang=cn">真正的数字转型 →</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="lang-zh active">
+                GFI · 数字与 AI 系列 · 算法与治理 — AI 如何终结程序正义<br/>
+                &copy; 2026 · 本平台以证据、逻辑与结构性分析探讨全球治理
+            </div>
+            <div class="footer-links">
+                <a href="index.html?lang=cn">首页</a>
+                <a href="government.html?lang=cn">公共部门</a>
+                <a href="enterprise.html?lang=cn">私营部门</a>
+                <a href="about.html?lang=cn">创办人</a>
+                <a href="mailto:gfi@gfiintel.com">联系我们</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ESPAÑOL -->
+    <!-- ============================================================ -->
+    <div class="lang-block" id="es">
+        <a href="index.html?lang=es" class="back-link">← Volver al Inicio</a>
+        <div class="series-badge">Serie Digital &amp; IA · Parte 2 de 4</div>
+        <h1>Algoritmo y Gobernanza</h1>
+        <div class="subhead">Cómo la IA Termina con la Justicia Procedimental</div>
+        <div class="meta">GFI · Serie Digital &amp; IA</div>
+
+        <div class="insight-block"><p><span class="highlight">La justicia procedimental es el fundamento de la gobernanza legítima. Es el conjunto de reglas, procesos y salvaguardas que aseguran que las decisiones se tomen de manera justa, transparente y con rendición de cuentas. <strong>Los algoritmos reemplazan el juicio con optimización — y la optimización no es justicia.</strong></span></p></div>
+
+        <h2>I. ¿Qué es la Justicia Procedimental?</h2>
+        <p>La justicia procedimental no trata sobre los resultados. Trata sobre <em>cómo</em> se toman las decisiones. Requiere cuatro elementos:</p>
+        <ul style="color:#4a4036;margin:.6rem 0 .8rem 1.5rem;line-height:1.9">
+            <li><span class="highlight-blue">•</span> <strong>Voz</strong> — la parte afectada tiene la oportunidad de ser escuchada</li>
+            <li><span class="highlight-blue">•</span> <strong>Neutralidad</strong> — el tomador de decisiones es imparcial</li>
+            <li><span class="highlight-blue">•</span> <strong>Transparencia</strong> — el proceso es visible y comprensible</li>
+            <li><span class="highlight-blue">•</span> <strong>Rendición de cuentas</strong> — existe un mecanismo de revisión y corrección</li>
+        </ul>
+        <p>Estos cuatro elementos son lo que hace que la gobernanza sea <em>legítima</em>. Cuando están ausentes, las decisiones se experimentan como arbitrarias — incluso si el resultado es técnicamente correcto.</p>
+
+        <h2>II. Cómo Funcionan los Algoritmos</h2>
+        <p>Los algoritmos son motores de optimización. Toman entradas, aplican una función y producen una salida. Están diseñados para maximizar o minimizar una función objetivo específica. No deliberan. No escuchan. No explican. <em>Optimizan</em>.</p>
+        <p>Esto no es una crítica. Es una descripción. El problema no es que los algoritmos sean malos. El problema es que <span class="highlight-red">la gobernanza está siendo entregada a motores de optimización — y los motores de optimización no pueden hacer justicia procedimental.</span></p>
+
+        <div class="insight-block-red"><p><span class="highlight-red">Cuando la gobernanza se convierte en optimización, la justicia procedimental termina. No hay voz. No hay neutralidad. No hay transparencia. No hay rendición de cuentas. Solo hay el algoritmo.</span></p></div>
+
+        <h2>III. La Sustitución Algorítmica</h2>
+        <p>En la gobernanza tradicional, cada elemento de la justicia procedimental era realizado por un humano — o por un proceso mediado por humanos. Los algoritmos sustituyen cada elemento:</p>
+
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Elemento de Justicia Procedimental</th><th>Gobernanza Tradicional</th><th>Gobernanza Algorítmica</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">Voz</span></td><td>Audiencias, apelaciones, representaciones</td><td><span class="highlight-red">Sin voz — solo entradas de datos</span></td></tr>
+                    <tr><td><span class="highlight-blue">Neutralidad</span></td><td>Jueces imparciales, revisión independiente</td><td><span class="highlight-red">Sesgo de optimización — incrustado en los datos de entrenamiento</span></td></tr>
+                    <tr><td><span class="highlight-blue">Transparencia</span></td><td>Razonamiento publicado, audiencias abiertas</td><td><span class="highlight-red">Caja negra — no se proporciona razonamiento</span></td></tr>
+                    <tr><td><span class="highlight-blue">Rendición de cuentas</span></td><td>Apelaciones, revisión judicial, supervisión</td><td><span class="highlight-red">Nadie es responsable — el algoritmo tomó la decisión</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>IV. La Perspectiva del GL Framework</h2>
+        <p>El GL Framework mide la fricción estructural. La justicia procedimental crea fricción — pero es fricción <em>productiva</em>. Ralentiza la toma de decisiones para hacerla justa. Impone costos para asegurar la legitimidad.</p>
+        <p>Los algoritmos eliminan esa fricción. Reducen <strong>Pd</strong> (Duración del Dolor) y <strong>Cf</strong> (Fricción Cognitiva) para el gobernante — pero también eliminan la fricción que hace legítima la gobernanza. <span class="highlight">Cuando GL aumenta porque se elimina la justicia procedimental, el aumento es ilusorio.</span></p>
+        <p>El gobernante experimenta mayor eficiencia. Los gobernados experimentan poder arbitrario. La puntuación GL sube en un lado — y colapsa en el otro.</p>
+
+        <h2>V. El Vacío Legal</h2>
+        <p>Cuando un algoritmo toma una decisión, ¿quién es responsable? El marco legal actual no tiene una respuesta. En la mayoría de las jurisdicciones:</p>
+        <ul style="color:#4a4036;margin:.6rem 0 .8rem 1.5rem;line-height:1.9">
+            <li><span class="highlight-blue">•</span> El proveedor de software no es responsable</li>
+            <li><span class="highlight-blue">•</span> El funcionario de contratación no es responsable</li>
+            <li><span class="highlight-blue">•</span> El jefe de la agencia no es responsable</li>
+            <li><span class="highlight-blue">•</span> El algoritmo mismo no puede ser responsable</li>
+        </ul>
+        <p><span class="highlight-red">Este es el vacío legal: se están tomando decisiones, pero nadie es responsable de ellas.</span></p>
+
+        <h2>VI. El Caso de la Vigilancia Predictiva</h2>
+        <p>Los algoritmos de vigilancia predictiva generan "puntuaciones de riesgo" que determinan dónde se despliegan los recursos policiales. Estas puntuaciones se basan en datos históricos de delincuencia. Pero los datos históricos de delincuencia reflejan patrones históricos de vigilancia — que reflejan sesgos históricos.</p>
+        <p>El algoritmo perpetúa el sesgo. No delibera. No corrige. Optimiza. Las comunidades que fueron sobrevigiladas en el pasado son sobrevigiladas en el futuro. <span class="highlight-red">El algoritmo no discrimina. Simplemente optimiza con datos sesgados. El resultado es el mismo.</span></p>
+
+        <h2>VII. Lo que la Justicia Procedimental Requiere en la Era de la IA</h2>
+        <p>Si la gobernanza debe seguir siendo legítima en la era de la IA, la justicia procedimental debe preservarse. Esto requiere:</p>
+        <ul style="color:#4a4036;margin:.6rem 0 .8rem 1.5rem;line-height:1.9">
+            <li><span class="highlight-blue">•</span> <strong>Supervisión humana</strong> — los algoritmos no pueden ser el tomador de decisiones final</li>
+            <li><span class="highlight-blue">•</span> <strong>Derecho a explicación</strong> — las partes afectadas deben poder entender por qué se tomó una decisión</li>
+            <li><span class="highlight-blue">•</span> <strong>Derecho a apelación</strong> — debe haber un mecanismo para impugnar decisiones algorítmicas</li>
+            <li><span class="highlight-blue">•</span> <strong>Auditoría algorítmica</strong> — los algoritmos deben ser evaluados por sesgos y errores</li>
+        </ul>
+        <p>Estos no son requisitos técnicos. Son <span class="highlight">requisitos de gobernanza</span>. Son lo que separa la gobernanza legítima del gobierno algorítmico.</p>
+
+        <div class="conclusion-box">
+            <p><span class="highlight">Los algoritmos no pueden hacer justicia procedimental. Solo pueden optimizar. Cuando entregamos la gobernanza a los algoritmos, no estamos haciendo la gobernanza más eficiente — la estamos haciendo menos legítima. La elección no es entre velocidad y equidad. Es entre gobernanza legítima y gobierno algorítmico.</span></p>
+            <p style="margin-top:.5rem;font-size:.8rem;color:#6b5f4e;"><span class="highlight">La justicia procedimental no es un error. Es una característica. Y es la característica que hace legítima la gobernanza.</span></p>
+        </div>
+
+        <!-- ===== Navegación en español ===== -->
+        <div class="nav-series">
+            <div class="lang-es active">
+                <a href="ai-governance-divide.html?lang=es">← 2026, Año Uno de la IA</a>
+                <a href="real-digital-transformation.html?lang=es">Transformación Digital Real →</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="lang-es active">
+                GFI · Serie Digital &amp; IA · Algoritmo y Gobernanza — Cómo la IA Termina con la Justicia Procedimental<br/>
+                &copy; 2026 · Evidencia, lógica y análisis estructural de la gobernanza global
+            </div>
+            <div class="footer-links">
+                <a href="index.html?lang=es">Inicio</a>
+                <a href="government.html?lang=es">Sector Público</a>
+                <a href="enterprise.html?lang=es">Sector Privado</a>
+                <a href="about.html?lang=es">Fundador</a>
+                <a href="mailto:gfi@gfiintel.com">Contacto</a>
+            </div>
         </div>
     </div>
 
 </div>
 
-<!-- ===== 脚本 ===== -->
 <script>
     (function() {
-        const btns = document.querySelectorAll('.lang-switch button');
-        const enContent = document.getElementById('en-content');
-        const zhContent = document.getElementById('zh-content');
-        const mainTitle = document.getElementById('mainTitle');
-        const subTitle = document.getElementById('subTitle');
-
-        const titles = {
-            en: {
-                main: 'Algorithm and Governance:<br />How AI Ends Procedural Justice',
-                sub: '算法与治理——AI如何终结程序正义'
-            },
-            zh: {
-                main: '算法与治理——<br />AI如何终结程序正义',
-                sub: 'Algorithm and Governance: How AI Ends Procedural Justice'
-            }
+        const btns = document.querySelectorAll('.lang-btn');
+        const blocks = {
+            en: document.getElementById('en'),
+            tw: document.getElementById('tw'),
+            cn: document.getElementById('cn'),
+            es: document.getElementById('es')
         };
 
-        function setLanguage(lang) {
-            btns.forEach(b => b.classList.remove('active'));
-            document.querySelector(`.lang-switch button[data-lang="${lang}"]`).classList.add('active');
+        function setLang(lang) {
+            Object.keys(blocks).forEach(key => {
+                if (blocks[key]) blocks[key].classList.remove('active');
+            });
+            if (blocks[lang]) blocks[lang].classList.add('active');
 
-            if (lang === 'en') {
-                enContent.classList.add('active');
-                zhContent.classList.remove('active');
-            } else {
-                zhContent.classList.add('active');
-                enContent.classList.remove('active');
-            }
+            btns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
 
-            mainTitle.innerHTML = titles[lang].main;
-            subTitle.textContent = titles[lang].sub;
+            document.querySelectorAll('.nav-series .lang-zh, .nav-series .lang-en, .nav-series .lang-es').forEach(el => el.classList.remove('active'));
+            const navMap = { en: 'lang-en', tw: 'lang-zh', cn: 'lang-zh', es: 'lang-es' };
+            const navTarget = document.querySelector('.nav-series .' + navMap[lang]);
+            if (navTarget) navTarget.classList.add('active');
+
+            document.querySelectorAll('.footer .lang-zh, .footer .lang-en, .footer .lang-es').forEach(el => el.classList.remove('active'));
+            const footerTarget = document.querySelector('.footer .' + navMap[lang]);
+            if (footerTarget) footerTarget.classList.add('active');
+
+            if (history.pushState) history.pushState(null, '', '?lang=' + lang);
         }
 
         btns.forEach(btn => {
             btn.addEventListener('click', function() {
-                setLanguage(this.dataset.lang);
+                const lang = this.dataset.lang;
+                if (lang) setLang(lang);
             });
         });
 
-        setLanguage('en');
+        const params = new URLSearchParams(window.location.search);
+        const langParam = params.get('lang');
+        if (langParam === 'tw' || langParam === 'cn' || langParam === 'es') {
+            setLang(langParam);
+        } else {
+            setLang('en');
+        }
+
+        window.addEventListener('popstate', function() {
+            const newParams = new URLSearchParams(window.location.search);
+            const newLang = newParams.get('lang');
+            if (newLang === 'tw' || newLang === 'cn' || newLang === 'es') {
+                setLang(newLang);
+            } else {
+                setLang('en');
+            }
+        });
     })();
 </script>
 
