@@ -58,38 +58,18 @@
         .cred-item.mid .score{color:#b8860b}
         .trend-down{color:#b33a3a;font-weight:600}
         .trend-up{color:#3d6b2e;font-weight:600}
+        .nav-series{margin-top:2.8rem;padding-top:1.8rem;border-top:2px solid rgba(60,50,40,.1);display:flex;flex-wrap:wrap;justify-content:space-between;gap:.8rem}
+        .nav-series a{color:#3d6b2e;text-decoration:none;font-weight:600;border:1px solid rgba(60,50,40,.15);padding:.4rem 1.2rem;border-radius:30px;font-size:.75rem;transition:.2s;background:rgba(255,252,245,.5);font-family:'DM Mono',monospace;letter-spacing:.02em}
+        .nav-series a:hover{background:#3d6b2e;color:#fff;border-color:#3d6b2e}
+        .nav-series .lang-zh,.nav-series .lang-en,.nav-series .lang-cn{display:none;width:100%;justify-content:space-between;gap:.8rem;flex-wrap:wrap}
+        .nav-series .lang-zh.active,.nav-series .lang-en.active,.nav-series .lang-cn.active{display:flex}
         .footer{text-align:center;padding:24px 20px 32px;font-family:'DM Mono',monospace;font-size:11px;color:#8a7e6a;border-top:1px solid rgba(60,50,40,.06);margin-top:2rem}
+        .footer .lang-zh,.footer .lang-en,.footer .lang-cn{display:none}
+        .footer .lang-zh.active,.footer .lang-en.active,.footer .lang-cn.active{display:block}
         .footer a{color:#6b5f4e;text-decoration:none}
         .footer a:hover{color:#1f2a1a}
         .footer-links{display:flex;justify-content:center;gap:16px;margin-top:6px;flex-wrap:wrap}
-        .nav-series {
-            margin-top: 2.8rem;
-            padding-top: 1.8rem;
-            border-top: 2px solid rgba(60,50,40,.1);
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 0.8rem;
-        }
-        .nav-series a {
-            color: #3d6b2e;
-            text-decoration: none;
-            font-weight: 600;
-            border: 1px solid rgba(60,50,40,.15);
-            padding: 0.4rem 1.2rem;
-            border-radius: 30px;
-            font-size: 0.75rem;
-            transition: 0.2s;
-            background: rgba(255,252,245,.5);
-            font-family: 'DM Mono', monospace;
-            letter-spacing: 0.02em;
-        }
-        .nav-series a:hover {
-            background: #3d6b2e;
-            color: white;
-            border-color: #3d6b2e;
-        }
-        @media(max-width:720px){h1{font-size:1.6rem}.comparison-grid{grid-template-columns:1fr}.credibility-grid{grid-template-columns:1fr 1fr}}
+        @media(max-width:720px){h1{font-size:1.6rem}.comparison-grid{grid-template-columns:1fr}.credibility-grid{grid-template-columns:1fr 1fr}.nav-series .lang-zh.active,.nav-series .lang-en.active,.nav-series .lang-cn.active{flex-direction:column;align-items:center}}
         @media(max-width:480px){.credibility-grid{grid-template-columns:1fr}}
     </style>
 </head>
@@ -362,12 +342,17 @@
 
         <!-- ===== 文章導覽 ===== -->
         <div class="nav-series">
-            <a href="/neoliberalism-final-diagnosis.html">&larr; Neoliberalism: The Final Diagnosis</a>
-            <a href="/blue-zones-land-policy.html">Blue Zones &amp; Land Policy &rarr;</a>
+            <div class="lang-en active">
+                <a href="neoliberalism-final-diagnosis.html">← Neoliberalism: The Final Diagnosis</a>
+                <a href="blue-zones-land-policy.html">Blue Zones &amp; Land Policy →</a>
+            </div>
         </div>
 
         <div class="footer">
-            <div>🌿 GFI · UK &amp; US Governance Diagnosis</div>
+            <div class="lang-en active">
+                🌿 GFI · UK &amp; US Governance Diagnosis<br/>
+                &copy; 2026 · Evidence, logic, and structural analysis of global governance
+            </div>
             <div class="footer-links">
                 <a href="/index.html">Home</a>
                 <a href="/wellness/index.html">Wellness</a>
@@ -635,12 +620,17 @@
 
         <!-- ===== 文章導覽 ===== -->
         <div class="nav-series">
-            <a href="/neoliberalism-final-diagnosis.html">&larr; 新自由主義：終極診斷</a>
-            <a href="/blue-zones-land-policy.html">藍區與土地政策 &rarr;</a>
+            <div class="lang-zh active">
+                <a href="neoliberalism-final-diagnosis.html">← 新自由主義：終極診斷</a>
+                <a href="blue-zones-land-policy.html">藍區與土地政策 →</a>
+            </div>
         </div>
 
         <div class="footer">
-            <div>🌿 GFI · 英國與美國治理診斷</div>
+            <div class="lang-zh active">
+                🌿 GFI · 英國與美國治理診斷<br/>
+                &copy; 2026 · 本平台以證據、邏輯與結構性分析探討全球治理
+            </div>
             <div class="footer-links">
                 <a href="/index.html">首頁</a>
                 <a href="/wellness/index.html">Wellness</a>
@@ -652,17 +642,62 @@
 </div>
 
 <script>
-    document.querySelectorAll('.lang-btn').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.remove('active'); });
-            this.classList.add('active');
-            var lang = this.dataset.lang;
-            document.querySelectorAll('.lang-block').forEach(function(b) { b.classList.remove('active'); });
-            var target = document.getElementById(lang);
-            if (target) target.classList.add('active');
+    (function() {
+        const btns = document.querySelectorAll('.lang-btn');
+        const blocks = {
+            en: document.getElementById('en'),
+            zh: document.getElementById('zh')
+        };
+
+        function setLang(lang) {
+            Object.keys(blocks).forEach(key => {
+                if (blocks[key]) blocks[key].classList.remove('active');
+            });
+            if (blocks[lang]) blocks[lang].classList.add('active');
+
+            btns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
+
+            // 導航同步
+            document.querySelectorAll('.nav-series .lang-zh, .nav-series .lang-en, .nav-series .lang-cn').forEach(el => el.classList.remove('active'));
+            const navTarget = document.querySelector('.nav-series .lang-' + lang);
+            if (navTarget) navTarget.classList.add('active');
+
+            // 頁尾同步
+            document.querySelectorAll('.footer .lang-zh, .footer .lang-en, .footer .lang-cn').forEach(el => el.classList.remove('active'));
+            const footerTarget = document.querySelector('.footer .lang-' + lang);
+            if (footerTarget) footerTarget.classList.add('active');
+
+            if (history.pushState) history.pushState(null, '', '#' + lang);
+        }
+
+        btns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const lang = this.dataset.lang;
+                if (lang) setLang(lang);
+            });
         });
-    });
+
+        const hash = window.location.hash.replace('#', '');
+        if (hash === 'zh') {
+            setLang('zh');
+        } else {
+            setLang('en');
+        }
+
+        window.addEventListener('hashchange', function() {
+            const newHash = window.location.hash.replace('#', '');
+            if (newHash === 'zh') {
+                setLang('zh');
+            } else {
+                setLang('en');
+            }
+        });
+    })();
 </script>
 
 </body>
 </html>
+      
