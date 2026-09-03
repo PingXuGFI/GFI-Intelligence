@@ -1,557 +1,302 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="合法性的转移 – Legitimacy Migration: From Procedure to Performance" />
-    <title>合法性的转移 · GFI Flow Intelligence</title>
+    <title>Legitimacy Migration — From Procedure to Performance｜GFI Flow Intelligence</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
     <style>
-        :root {
-            --bg: #0b1220;
-            --bg2: #0d1526;
-            --text: #f8fbff;
-            --muted: #c7d2e3;
-            --sub: #9fb0c8;
-            --dim: rgba(255, 255, 255, .06);
-            --green: #9FE870;
-            --blue: #7DD3FC;
-            --gold: #fbbf24;
-            --red: #f87171;
-            --serif: 'DM Serif Display', Georgia, serif;
-            --mono: 'DM Mono', monospace;
-            --sans: 'DM Sans', system-ui, sans-serif;
-        }
-        * { margin:0; padding:0; box-sizing:border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: var(--sans);
-            font-size: 16px;
-            line-height: 1.7;
-            overflow-x: hidden;
-            padding: 0 20px;
-        }
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 2rem 0 4rem;
-        }
-        .nav {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            height: 62px;
-            padding: 0 clamp(18px, 5vw, 52px);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: rgba(11, 18, 32, 0.92);
-            backdrop-filter: blur(14px);
-            border-bottom: 1px solid var(--dim);
-            margin: 0 -20px;
-            padding-left: 20px;
-            padding-right: 20px;
-        }
-        .logo {
-            color: #fff;
-            text-decoration: none;
-            font-family: var(--mono);
-            font-size: 13px;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-        }
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-        .back-link {
-            color: var(--sub);
-            font-family: var(--mono);
-            font-size: 12px;
-            text-decoration: none;
-            letter-spacing: 0.04em;
-            transition: color 0.2s;
-        }
-        .back-link:hover { color: var(--green); }
-        .lang-switch {
-            display: flex;
-            gap: 4px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 30px;
-            padding: 3px;
-            border: 1px solid var(--dim);
-        }
-        .lang-switch button {
-            background: none;
-            border: none;
-            padding: 4px 14px;
-            border-radius: 30px;
-            font-family: var(--mono);
-            font-size: 11px;
-            letter-spacing: 0.04em;
-            color: var(--sub);
-            cursor: pointer;
-            transition: all 0.2s;
-            font-weight: 500;
-        }
-        .lang-switch button.active {
-            background: var(--green);
-            color: var(--bg);
-        }
-        .lang-switch button:hover:not(.active) {
-            color: #fff;
-            background: rgba(255,255,255,0.08);
-        }
-
-        .article-header {
-            margin: 2rem 0 2.5rem;
-            border-bottom: 1px solid var(--dim);
-            padding-bottom: 1.5rem;
-        }
-        .article-header .badge {
-            font-family: var(--mono);
-            font-size: 0.6rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--green);
-            background: rgba(159, 232, 112, 0.1);
-            padding: 0.15rem 0.8rem;
-            border-radius: 30px;
-            display: inline-block;
-            border: 1px solid rgba(159, 232, 112, 0.15);
-            margin-bottom: 0.8rem;
-        }
-        .article-header h1 {
-            font-family: var(--serif);
-            font-size: 2.2rem;
-            font-weight: 700;
-            line-height: 1.2;
-            color: #fff;
-            margin-bottom: 0.2rem;
-        }
-        .article-header .subhead {
-            font-size: 1.05rem;
-            color: var(--sub);
-            font-style: italic;
-            margin-bottom: 0.4rem;
-        }
-        .article-header .meta {
-            font-family: var(--mono);
-            font-size: 0.7rem;
-            color: var(--muted);
-            opacity: 0.6;
-        }
-
-        .lang-content { display: none; }
-        .lang-content.active { display: block; }
-
-        .lang-content p {
-            color: var(--muted);
-            font-size: 0.95rem;
-            margin-bottom: 1rem;
-        }
-        .lang-content strong {
-            color: #fff;
-            font-weight: 600;
-        }
-        .lang-content .highlight { color: var(--gold); }
-        .lang-content .highlight-blue { color: var(--blue); }
-        .lang-content .highlight-red { color: var(--red); }
-        .lang-content .quote-block {
-            background: rgba(255, 255, 255, 0.02);
-            border-left: 4px solid var(--gold);
-            padding: 1.2rem 1.8rem;
-            margin: 1.5rem 0;
-            border-radius: 0 12px 12px 0;
-        }
-        .lang-content .quote-block p {
-            font-family: var(--serif);
-            font-size: 1.1rem;
-            color: #fff;
-            font-style: italic;
-            margin-bottom: 0.2rem;
-        }
-        .lang-content .quote-block .attribution {
-            font-family: var(--mono);
-            font-size: 0.7rem;
-            color: var(--sub);
-            text-align: right;
-        }
-        .lang-content h2 {
-            font-family: var(--serif);
-            font-size: 1.5rem;
-            color: #fff;
-            margin: 2rem 0 0.8rem 0;
-        }
-        .lang-content .table-wrap {
-            overflow-x: auto;
-            margin: 1.2rem 0;
-        }
-        .lang-content table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.8rem;
-            font-family: var(--mono);
-            border: 1px solid var(--dim);
-        }
-        .lang-content th, .lang-content td {
-            padding: 8px 12px;
-            border: 1px solid var(--dim);
-            text-align: left;
-            color: var(--muted);
-        }
-        .lang-content th {
-            background: rgba(255,255,255,0.04);
-            color: var(--sub);
-            font-weight: 500;
-            letter-spacing: 0.04em;
-        }
-        .lang-content ul {
-            list-style: none;
-            padding: 0;
-            margin: 0.4rem 0 1rem;
-        }
-        .lang-content ul li {
-            position: relative;
-            padding-left: 1.2rem;
-            margin-bottom: 0.3rem;
-            color: var(--muted);
-            font-size: 0.9rem;
-        }
-        .lang-content ul li::before {
-            content: "→";
-            position: absolute;
-            left: 0;
-            color: var(--green);
-            font-family: var(--mono);
-            font-size: 0.7rem;
-        }
-        .lang-content .footnote {
-            margin-top: 2rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--dim);
-            font-family: var(--mono);
-            font-size: 0.7rem;
-            color: rgba(255,255,255,0.2);
-            text-align: center;
-        }
-        .lang-content .footnote a {
-            color: var(--sub);
-            text-decoration: none;
-        }
-        .lang-content .footnote a:hover { color: #fff; }
-
-        @media (max-width: 720px) {
-            .article-header h1 { font-size: 1.6rem; }
-            body { padding: 0 12px; }
-            .nav { margin: 0 -12px; padding-left: 12px; padding-right: 12px; }
-            .lang-switch button { padding: 3px 10px; font-size: 10px; }
-            .lang-content table { font-size: 0.7rem; }
-        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:#f5f0e8;color:#2d2a24;font-family:'DM Sans',system-ui,sans-serif;font-size:15px;line-height:1.8;padding:1.5rem 1rem}
+        .container{max-width:1040px;margin:0 auto}
+        .lang-switch{display:flex;gap:10px;margin-bottom:1.5rem;flex-wrap:wrap;justify-content:flex-end}
+        .lang-btn{font-family:'DM Mono',monospace;font-size:.7rem;padding:.3rem 1.2rem;border:1px solid rgba(60,50,40,.15);border-radius:20px;background:0 0;color:#6b5f4e;cursor:pointer;transition:all .2s}
+        .lang-btn:hover{border-color:#4a6b3d;color:#2d2a24}
+        .lang-btn.active{color:#3d6b2e;border-color:#3d6b2e;background:rgba(61,107,46,.08)}
+        .lang-block{display:none;animation:fadeIn .3s ease}
+        .lang-block.active{display:block}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+        .back-link{font-family:'DM Mono',monospace;font-size:.65rem;color:#3d6b2e;text-decoration:none;border-bottom:1px solid rgba(61,107,46,.2);padding-bottom:2px}
+        .back-link:hover{border-bottom-color:#3d6b2e}
+        h1{font-family:'DM Serif Display',Georgia,serif;font-size:2.2rem;color:#1f2a1a;margin-bottom:.2rem;line-height:1.2}
+        .subhead{font-family:'DM Mono',monospace;font-size:.75rem;color:#6b5f4e;letter-spacing:.06em;margin-bottom:.2rem}
+        .meta{font-family:'DM Mono',monospace;font-size:.65rem;color:#8a7e6a;border-bottom:1px solid rgba(60,50,40,.06);padding-bottom:1rem;margin-bottom:2rem}
+        h2{font-family:'DM Serif Display',Georgia,serif;font-size:1.4rem;color:#1f2a1a;margin:2.2rem 0 .8rem;border-left:4px solid #3d6b2e;padding-left:1rem}
+        h3{font-family:'DM Serif Display',Georgia,serif;font-size:1rem;color:#1f2a1a;margin:1.4rem 0 .4rem}
+        p{color:#4a4036;margin-bottom:.8rem;line-height:1.9}
+        .highlight{color:#3d6b2e;font-weight:500}
+        .highlight-red{color:#b33a3a;font-weight:500}
+        .highlight-blue{color:#4a7a6e;font-weight:500}
+        .insight-block{background:rgba(61,107,46,.06);border-left:4px solid #3d6b2e;padding:1rem 1.5rem;border-radius:0 8px 8px 0;margin:1.2rem 0}
+        .insight-block p{color:#2d2a24;margin-bottom:0;font-weight:450;font-size:.95rem}
+        .table-wrap{overflow-x:auto;border-radius:12px;border:1px solid rgba(60,50,40,.06);margin:1.2rem 0}
+        table{width:100%;border-collapse:collapse;font-family:'DM Mono',monospace;font-size:.65rem;min-width:480px}
+        th{text-align:left;padding:8px 10px;font-size:.5rem;letter-spacing:.08em;text-transform:uppercase;color:#8a7e6a;border-bottom:1px solid rgba(60,50,40,.06);font-weight:400;background:rgba(255,252,245,.3)}
+        td{padding:6px 10px;border-bottom:1px solid rgba(60,50,40,.03);color:#4a4036}
+        tr:hover td{background:rgba(255,252,245,.3)}
+        .conclusion-box{background:rgba(61,107,46,.06);border:1px solid rgba(61,107,46,.12);border-radius:12px;padding:1.2rem 1.8rem;margin-top:1.5rem}
+        .conclusion-box p{color:#1f2a1a;font-weight:450;font-size:.95rem;margin-bottom:.4rem}
+        .nav-series{margin-top:2.8rem;padding-top:1.8rem;border-top:2px solid rgba(60,50,40,.1);display:flex;flex-wrap:wrap;justify-content:space-between;gap:.8rem}
+        .nav-series a{color:#3d6b2e;text-decoration:none;font-weight:600;border:1px solid rgba(60,50,40,.15);padding:.4rem 1.2rem;border-radius:30px;font-size:.75rem;transition:.2s;background:rgba(255,252,245,.5);font-family:'DM Mono',monospace;letter-spacing:.02em}
+        .nav-series a:hover{background:#3d6b2e;color:#fff;border-color:#3d6b2e}
+        .nav-series .lang-zh,.nav-series .lang-en{display:none;width:100%;justify-content:space-between;gap:.8rem;flex-wrap:wrap}
+        .nav-series .lang-zh.active,.nav-series .lang-en.active{display:flex}
+        .footer{text-align:center;padding:24px 20px 32px;font-family:'DM Mono',monospace;font-size:11px;color:#8a7e6a;border-top:1px solid rgba(60,50,40,.06);margin-top:2rem}
+        .footer .lang-zh,.footer .lang-en{display:none}
+        .footer .lang-zh.active,.footer .lang-en.active{display:block}
+        .footer a{color:#6b5f4e;text-decoration:none}
+        .footer a:hover{color:#1f2a1a}
+        .footer-links{display:flex;justify-content:center;gap:16px;margin-top:6px;flex-wrap:wrap}
+        @media(max-width:720px){h1{font-size:1.6rem}.nav-series .lang-zh.active,.nav-series .lang-en.active{flex-direction:column;align-items:center}}
     </style>
 </head>
 <body>
-
-<!-- ===== 顶栏 ===== -->
-<div class="nav">
-    <a href="index.html" class="logo">GFI Flow Intelligence</a>
-    <div class="nav-right">
-        <a href="index.html" class="back-link">← Back</a>
-        <div class="lang-switch">
-            <button class="active" data-lang="en">EN</button>
-            <button data-lang="zh">中文</button>
-        </div>
-    </div>
-</div>
-
-<!-- ===== 文章主体 ===== -->
 <div class="container">
 
-    <div class="article-header">
-        <div class="badge">GFI Flow Intelligence · Governance Legitimacy Framework</div>
-        <h1 id="mainTitle">Legitimacy Migration:<br />From Procedure to Performance</h1>
-        <div class="subhead" id="subTitle">合法性的转移——从“程序”到“绩效”</div>
-        <div class="meta">August 2026 · 2026年8月</div>
+    <!-- 語言切換 -->
+    <div class="lang-switch">
+        <button class="lang-btn" data-lang="zh">中文</button>
+        <button class="lang-btn active" data-lang="en">English</button>
     </div>
 
-    <!-- ===== 英文版 ===== -->
-    <div class="lang-content active" id="en-content">
+    <!-- ============================================================ -->
+    <!-- 英文版 (默認) -->
+    <!-- ============================================================ -->
+    <div class="lang-block active" id="en">
+        <a href="/index.html" class="back-link">← Back to Home</a>
+        <h1>Legitimacy Migration</h1>
+        <div class="subhead">From Procedure to Performance — The Global South Is Voting with Its Feet</div>
+        <div class="meta">GFI · Governance Theory Series</div>
 
-        <h2>I. The Source of Legitimacy Is Changing</h2>
-        <p>For centuries, the West has insisted on a single answer to the question <span class="highlight-blue">“What makes a government legitimate?”</span></p>
-        <p>The answer was: <span class="highlight-red">procedure.</span></p>
-        <p>Elections. Free speech. Multi‑party competition. An independent judiciary. These are the pillars of procedural legitimacy. If a government follows these procedures, it is legitimate — regardless of what it delivers.</p>
-        <p>This assumption is no longer holding.</p>
-        <p>A shift is underway — one that most Western elites refuse to acknowledge. <span class="highlight">Legitimacy is migrating from procedure to performance.</span></p>
+        <div class="insight-block"><p><span class="highlight">Governance legitimacy is migrating. It is moving from <strong>procedure</strong> — how a government was formed — to <strong>performance</strong> — what a government delivers. The Global South is voting with its feet, turning away from procedural democracies and toward performance-based systems.</span></p></div>
 
-        <h2>II. What Is Procedural Legitimacy?</h2>
-        <p>Procedural legitimacy is based on <span class="highlight-blue">how a government is formed.</span></p>
-        <ul>
-            <li>Did the leaders win an election?</li>
-            <li>Is there a free press?</li>
-            <li>Are there opposition parties?</li>
-            <li>Are there checks and balances?</li>
-        </ul>
-        <p>If the answer to these questions is “yes,” the government is considered legitimate — even if it fails to deliver basic services, maintain infrastructure, or keep its citizens safe.</p>
-        <p>This is the logic of the West's legitimacy framework: <span class="highlight-blue">“The process is the justification.”</span></p>
+        <h2>I. The Old Source of Legitimacy: Procedure</h2>
+        <p>For decades, legitimacy was defined by procedure: elections, constitutions, and the rule of law. If a government followed the right procedures, it was considered legitimate — regardless of its outcomes.</p>
+        <p>This allowed governments to fail while maintaining legitimacy. As long as they held elections, they could claim to be democratic. As long as they passed laws, they could claim to be lawful.</p>
 
-        <h2>III. What Is Performance Legitimacy?</h2>
-        <p>Performance legitimacy is based on <span class="highlight-blue">what a government delivers.</span></p>
-        <ul>
-            <li>Does it build infrastructure?</li>
-            <li>Does it reduce poverty?</li>
-            <li>Does it maintain public safety?</li>
-            <li>Does it provide essential services?</li>
-        </ul>
-        <p>If the answer to these questions is “yes,” the government is legitimate — regardless of how it was formed.</p>
-        <p>This is the logic emerging in China and across the Global South: <span class="highlight-red">“The outcome is the justification.”</span></p>
+        <h2>II. The New Source of Legitimacy: Performance</h2>
+        <p>Today, legitimacy is defined by <strong>performance</strong>. Does the government deliver? Does it build infrastructure? Does it reduce poverty? Does it provide healthcare?</p>
+        <p>The Global South has lost patience with procedural democracy. It has seen elections produce corruption, inequality, and crisis. It has seen performance-based systems — like China's — produce growth, stability, and prosperity.</p>
+        <p><span class="highlight">The shift is not ideological. It is <strong>empirical</strong> — based on what works, not what sounds good.</span></p>
 
-        <h2>IV. The Evidence: 2026 as a Turning Point</h2>
-        <p>2026 provides overwhelming evidence of this migration:</p>
-        <ul>
-            <li><strong>EO 14402 (U.S.)</strong> — mandates fixed‑price contracts. The message: <span class="highlight-blue">“We pay for results, not for costs.”</span> Even the U.S. government is beginning to demand delivery.</li>
-            <li><strong>China's Procurement Law Reform</strong> — adds “performance‑based procurement” as a core principle. The message: <span class="highlight-blue">“We verify outcomes, not just processes.”</span></li>
-            <li><strong>Global South</strong> — 17+ nations are systematically learning from China's governance model. The message: <span class="highlight-blue">“We follow what works, not what is preached.”</span></li>
-        </ul>
-        <div class="quote-block">
-            <p>“The world is no longer asking ‘was it done properly?’ It is asking ‘was it done at all?’”</p>
-        </div>
-
-        <h2>V. Why Procedural Legitimacy Is Failing</h2>
-        <p>Procedural legitimacy is failing for three structural reasons:</p>
-        <ul>
-            <li><strong>It has become disconnected from outcomes.</strong> Perfect procedures can produce catastrophic results. The California high‑speed rail is the most expensive symbol of this failure.</li>
-            <li><strong>It has been captured by elites.</strong> Elections are won by money, not ideas. Free speech amplifies the rich, not the truth. Multi‑party systems produce paralysis, not solutions.</li>
-            <li><strong>It offers no solution to real problems.</strong> When a country has no roads, no electricity, and no schools, elections are meaningless. People want results — not ballots.</li>
-        </ul>
-        <p><span class="highlight-red">Procedural legitimacy is not just failing. It is being abandoned by those who once believed in it.</span></p>
-
-        <h2>VI. The Rise of Performance Legitimacy</h2>
-        <p>Performance legitimacy is rising because it addresses the questions people actually ask:</p>
-        <ul>
-            <li><strong>Can you build?</strong> China has built 40,000 km of high‑speed rail. The U.S. has built zero.</li>
-            <li><strong>Can you lift people out of poverty?</strong> China lifted 800 million people out of poverty. The U.S. has 70,000 homeless in Los Angeles alone.</li>
-            <li><strong>Can you keep people safe?</strong> China has maintained public safety. The U.S. has 100,000 overdose deaths per year.</li>
-        </ul>
-        <p><span class="highlight">The numbers are not ambiguous. The data speaks for itself.</span></p>
-
-        <h2>VII. The GFI Framework: Legitimacy Migration</h2>
-        <p>Under the GFI Governance Legitimacy Framework, legitimacy has two sources:</p>
+        <h2>III. The Global South Migration</h2>
         <div class="table-wrap">
             <table>
-                <thead><tr><th>Source of Legitimacy</th><th>Question</th><th>Example</th></tr></thead>
+                <thead><tr><th>Country/Region</th><th>Shift Toward Performance</th><th>Reason</th></tr></thead>
                 <tbody>
-                    <tr><td>Procedural</td><td>“Was it done correctly?”</td><td>Elections, free speech, multi‑party systems</td></tr>
-                    <tr><td>Performance</td><td>“Was it done at all?”</td><td>Infrastructure, poverty reduction, safety</td></tr>
+                    <tr><td><span class="highlight-blue">Southeast Asia</span></td><td>Looking to China's model</td><td>Infrastructure development, poverty reduction</td></tr>
+                    <tr><td><span class="highlight-blue">Africa</span></td><td>Moving away from Western democracy</td><td>Western democracy failed to deliver development</td></tr>
+                    <tr><td><span class="highlight-blue">Latin America</span></td><td>Questioning US-led models</td><td>Inequality, debt crises, corruption</td></tr>
+                    <tr><td><span class="highlight-blue">Middle East</span></td><td>Turning to China</td><td>Economic opportunities, no regime change demands</td></tr>
                 </tbody>
             </table>
         </div>
-        <p><span class="highlight-red">The migration is from the first to the second.</span></p>
-        <p>This is not a theoretical claim. It is an empirical observation. The Global South is voting with its feet — and it is voting for performance.</p>
 
-        <h2>VIII. The Global South's Choice</h2>
-        <p>Why are 17+ nations turning to China for governance lessons? The answer is simple:</p>
+        <div class="insight-block"><p><span class="highlight">The Global South is voting with its feet. It is not abandoning democracy — it is abandoning <strong>procedure-based legitimacy</strong> in favor of <strong>performance-based legitimacy</strong>.</span></p></div>
+
+        <h2>IV. Why Procedure Failed</h2>
         <ul>
-            <li>They have tried the Western formula. It failed.</li>
-            <li>They have seen China's formula. It worked.</li>
-            <li>They are not choosing China's ideology. They are choosing China's <span class="highlight-blue">results.</span></li>
+            <li><strong>Elections ≠ Accountability</strong>: Politicians are elected, but they do not deliver. There is no consequence for failure.</li>
+            <li><strong>Free Speech ≠ Participation</strong>: Speech is free, but it is controlled by the wealthy. The people are not heard.</li>
+            <li><strong>Multi-Party Systems ≠ Choice</strong>: All parties serve the same interests. There is no real alternative.</li>
         </ul>
-        <p>This is the end of the “Washington Consensus” era. The age of ideological export is over. The age of practical learning has begun.</p>
+        <p><span class="highlight-red">Procedure-based legitimacy is a <strong>trap</strong>. It creates the illusion of democracy while maintaining the reality of elite control.</span></p>
 
-        <h2>IX. What This Means</h2>
-        <p>For Western policymakers, this is a moment of truth:</p>
+        <h2>V. Why Performance Works</h2>
         <ul>
-            <li>You can continue to defend procedural legitimacy — but you cannot force the world to believe in it.</li>
-            <li>You can point out China's lack of elections — but you cannot explain away its roads, hospitals, and schools.</li>
-            <li>You can maintain your ideological purity — but your citizens will continue to suffer from your delivery failures.</li>
+            <li><strong>Delivery is Verifiable</strong>: Roads, schools, and hospitals are visible. You cannot fake them.</li>
+            <li><strong>Accountability is Real</strong>: When governments fail, the people can see it. There is no hiding behind procedure.</li>
+            <li><strong>Trust is Earned</strong>: When governments deliver, they earn trust. Trust is not given — it is built.</li>
         </ul>
-        <p>For the Global South, this is a moment of liberation:</p>
-        <ul>
-            <li>You are no longer required to choose between Western models and nothing.</li>
-            <li>You can adopt what works — from anywhere, without permission.</li>
-            <li>You can measure governments by what they deliver, not by how they were formed.</li>
-        </ul>
-        <div class="quote-block">
-            <p>“Legitimacy is migrating. Those who do not see it will be left behind.”</p>
-            <div class="attribution">— GFI Governance Legitimacy Framework</div>
-        </div>
+        <p><span class="highlight">Performance-based legitimacy is <strong>empirical</strong>. It is based on what governments actually do, not on what they promise.</span></p>
 
-        <h2>X. Conclusion: The End of the Procedural Era</h2>
-        <p>The era of procedural legitimacy is ending. The era of performance legitimacy is beginning.</p>
-        <p>Elections will continue. Free speech will continue. Multi‑party competition will continue. But they will no longer be the <span class="highlight-red">exclusive source</span> of legitimacy.</p>
-        <p><span class="highlight">Legitimacy will increasingly be measured by what a system delivers — not by how it was formed.</span></p>
-        <p>This is the message of 2026. This is the message of GFI. This is the message that the Western elite refuses to hear.</p>
-
-        <div class="footnote">
-            <span>GFI Flow Intelligence · Governance Legitimacy Framework</span><br />
-            <a href="index.html">← Back to Home</a> · <a href="lost-knowledge-governance.html">The Lost Knowledge of Governance</a> · <a href="algorithm-governance-ai-era.html">Algorithm and Governance →</a>
-        </div>
-    </div>
-
-    <!-- ===== 中文版 ===== -->
-    <div class="lang-content" id="zh-content">
-
-        <h2>一、正当性的来源正在改变</h2>
-        <p>几个世纪以来，西方对一个问题的回答始终不变：<span class="highlight-blue">“什么使一个政府具有正当性？”</span></p>
-        <p>答案是：<span class="highlight-red">程序。</span></p>
-        <p>选举。言论自由。多党竞争。独立的司法。这些是程序正当性的支柱。如果一个政府遵循这些程序，它就是正当的——无论它交付了什么。</p>
-        <p>这个假设不再成立。</p>
-        <p>一场转变正在进行——大多数西方精英拒绝承认这一点。<span class="highlight">正当性正在从程序转移到绩效。</span></p>
-
-        <h2>二、什么是程序正当性？</h2>
-        <p>程序正当性基于 <span class="highlight-blue">政府是如何形成的</span>。</p>
-        <ul>
-            <li>领导人是否赢得了选举？</li>
-            <li>是否有新闻自由？</li>
-            <li>是否有反对党？</li>
-            <li>是否有制衡机制？</li>
-        </ul>
-        <p>如果这些问题的答案是“是”，政府就被认为是正当的——即使它未能提供基本服务、维护基础设施或保障公民安全。</p>
-        <p>这就是西方合法性框架的逻辑：<span class="highlight-blue">“程序本身就是理由。”</span></p>
-
-        <h2>三、什么是绩效正当性？</h2>
-        <p>绩效正当性基于 <span class="highlight-blue">政府交付了什么</span>。</p>
-        <ul>
-            <li>它是否建设了基础设施？</li>
-            <li>它是否减少了贫困？</li>
-            <li>它是否维护了公共安全？</li>
-            <li>它是否提供了基本服务？</li>
-        </ul>
-        <p>如果这些问题的答案是“是”，政府就是正当的——无论它是如何形成的。</p>
-        <p>这是在中国和全球南方正在浮现的逻辑：<span class="highlight-red">“结果本身就是理由。”</span></p>
-
-        <h2>四、证据：2026年作为转折点</h2>
-        <p>2026年提供了这场转移的压倒性证据：</p>
-        <ul>
-            <li><strong>EO 14402（美国）</strong>——强制采用固定价格合同。其信息是：<span class="highlight-blue">“我们为成果付费，不为成本买单。”</span>连美国政府都在开始要求交付。</li>
-            <li><strong>中国《政府采购法》修订</strong>——将“绩效型采购”列为核心原则。其信息是：<span class="highlight-blue">“我们验证成果，而不仅仅是流程。”</span></li>
-            <li><strong>全球南方</strong>——17+个国家正在系统性地学习中国的治理模式。其信息是：<span class="highlight-blue">“我们追随有效的方法，而不是被说教的方法。”</span></li>
-        </ul>
-        <div class="quote-block">
-            <p>“世界不再问‘它是否被正确执行？’它在问‘它是否被执行了？’”</p>
-        </div>
-
-        <h2>五、程序正当性为何失败</h2>
-        <p>程序正当性因三个结构性原因而失败：</p>
-        <ul>
-            <li><strong>它与结果脱节了。</strong>完美的程序可能产生灾难性的结果。加州高铁是这种失败最昂贵的象征。</li>
-            <li><strong>它被精英俘获了。</strong>选举靠金钱赢，而不是靠思想。言论自由放大了富人，而不是真相。多党制制造了瘫痪，而不是解决方案。</li>
-            <li><strong>它不能解决实际问题。</strong>当一个国家没有道路、没有电力、没有学校时，选举毫无意义。人们想要结果——而不是选票。</li>
-        </ul>
-        <p><span class="highlight-red">程序正当性不仅是在失败。它正在被曾经相信它的人抛弃。</span></p>
-
-        <h2>六、绩效正当性的崛起</h2>
-        <p>绩效正当性之所以崛起，是因为它回应了人们真正在问的问题：</p>
-        <ul>
-            <li><strong>你能建设吗？</strong>中国建成了4万公里高铁。美国建成了零公里。</li>
-            <li><strong>你能帮助人民摆脱贫困吗？</strong>中国使8亿人摆脱了贫困。仅洛杉矶就有7万人无家可归。</li>
-            <li><strong>你能保障人民安全吗？</strong>中国维护了公共安全。美国每年有10万人死于药物过量。</li>
-        </ul>
-        <p><span class="highlight">数字不模棱两可。数据自己会说话。</span></p>
-
-        <h2>七、GFI框架：合法性的转移</h2>
-        <p>在GFI治理正当性框架下，正当性有两个来源：</p>
+        <h2>VI. GL Framework Diagnosis</h2>
         <div class="table-wrap">
             <table>
-                <thead><tr><th>正当性来源</th><th>问题</th><th>示例</th></tr></thead>
+                <thead><tr><th>GL Dimension</th><th>Procedure-Based Legitimacy</th><th>Performance-Based Legitimacy</th></tr></thead>
                 <tbody>
-                    <tr><td>程序</td><td>“它是否被正确执行？”</td><td>选举、言论自由、多党制</td></tr>
-                    <tr><td>绩效</td><td>“它是否被执行了？”</td><td>基础设施、减贫、安全</td></tr>
+                    <tr><td><span class="highlight-blue">Outcome Verifiability</span></td><td>Low — outcomes are hidden</td><td>High — outcomes are visible</td></tr>
+                    <tr><td><span class="highlight-blue">Cost Shifting</span></td><td>Costs shifted to public</td><td>Costs borne by government</td></tr>
+                    <tr><td><span class="highlight-blue">Structural Integrity</span></td><td>Weak — failure hidden</td><td>Strong — failure visible</td></tr>
+                    <tr><td><span class="highlight-blue">Psychological Cost</span></td><td>High — public feels betrayed</td><td>Low — public sees results</td></tr>
                 </tbody>
             </table>
         </div>
-        <p><span class="highlight-red">转移正在从第一个来源向第二个来源发生。</span></p>
-        <p>这不是理论主张。这是经验观察。全球南方在用脚投票——它在为绩效投票。</p>
 
-        <h2>八、全球南方的选择</h2>
-        <p>为什么17+个国家转向中国学习治理经验？答案很简单：</p>
-        <ul>
-            <li>它们尝试了西方的配方。它失败了。</li>
-            <li>它们看到了中国的配方。它成功了。</li>
-            <li>它们不是在选择中国的意识形态。它们是在选择中国的 <span class="highlight-blue">成果</span>。</li>
-        </ul>
-        <p>这是“华盛顿共识”时代的终结。意识形态输出的时代结束了。实践学习的时代开始了。</p>
-
-        <h2>九、这意味着什么</h2>
-        <p>对西方政策制定者来说，这是一个真相时刻：</p>
-        <ul>
-            <li>你可以继续捍卫程序正当性——但你不能强迫世界相信它。</li>
-            <li>你可以指出中国没有选举——但你不能解释掉它的道路、医院和学校。</li>
-            <li>你可以维护你的意识形态纯洁性——但你的公民将继续因你的交付失败而受苦。</li>
-        </ul>
-        <p>对全球南方来说，这是一个解放时刻：</p>
-        <ul>
-            <li>你不再需要在西方模式与一无所有之间做选择。</li>
-            <li>你可以采纳任何有效的方法——来自任何地方，无需许可。</li>
-            <li>你可以用交付了什么来衡量政府，而不是用它是如何形成的。</li>
-        </ul>
-        <div class="quote-block">
-            <p>“正当性正在转移。那些看不到它的人将被抛在后面。”</p>
-            <div class="attribution">— GFI 治理正当性框架</div>
+        <h2>VII. Conclusion: The Migration Is Irreversible</h2>
+        <div class="conclusion-box">
+            <p><span class="highlight">The migration from procedure to performance is not temporary. It is <strong>structural</strong> and <strong>irreversible</strong>. The Global South has seen the evidence: procedure-based democracy delivers failure; performance-based governance delivers results. The old legitimacy is dying. The new legitimacy is being born.</span></p>
+            <p style="margin-top:.5rem;font-size:.8rem;color:#6b5f4e;"><span class="highlight">The Global South is voting with its feet. The question is: will the West listen?</span></p>
         </div>
 
-        <h2>十、结论：程序时代的终结</h2>
-        <p>程序正当性的时代正在结束。绩效正当性的时代正在开始。</p>
-        <p>选举将继续。言论自由将继续。多党竞争将继续。但它们将不再是正当性的 <span class="highlight-red">唯一来源</span>。</p>
-        <p><span class="highlight">正当性将越来越以系统交付了什么来衡量——而不是以它是如何形成的来衡量。</span></p>
-        <p>这是2026年的信息。这是GFI的信息。这是西方精英拒绝听取的信息。</p>
+        <!-- ===== 文章導覽 ===== -->
+        <div class="nav-series">
+            <div class="lang-en active">
+                <a href="from-procedure-to-delivery.html">← From Procedure to Delivery</a>
+                <a href="performance-governance.html">Performance Governance →</a>
+            </div>
+        </div>
 
-        <div class="footnote">
-            <span>GFI Flow Intelligence · 治理正当性框架</span><br />
-            <a href="index.html">← 返回首页</a> · <a href="lost-knowledge-governance.html">治理的术科本质</a> · <a href="algorithm-governance-ai-era.html">算法与治理 →</a>
+        <div class="footer">
+            <div class="lang-en active">
+                GFI · Governance Theory Series · Legitimacy Migration<br/>
+                &copy; 2026 · Evidence, logic, and structural analysis of global governance
+            </div>
+            <div class="footer-links">
+                <a href="/index.html">Home</a>
+                <a href="/wellness/index.html">Wellness</a>
+                <a href="/about.html">About</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- 中文版 -->
+    <!-- ============================================================ -->
+    <div class="lang-block" id="zh">
+        <a href="/index.html" class="back-link">← 返回首頁</a>
+        <h1>合法性的轉移</h1>
+        <div class="subhead">從「程序」到「績效」— 全球南方在用腳投票</div>
+        <div class="meta">GFI · 治理理論系列</div>
+
+        <div class="insight-block"><p><span class="highlight">治理正當性正在轉移。它從<strong>程序</strong>——政府是如何形成的——轉移到<strong>績效</strong>——政府交付了什麼。全球南方在用腳投票，遠離程序性民主，轉向基於績效的系統。</span></p></div>
+
+        <h2>一、正當性的舊來源：程序</h2>
+        <p>數十年來，正當性由程序定義：選舉、憲法和法治。如果一個政府遵循了正確的程序，它就被視為正當的——無論其結果如何。</p>
+        <p>這允許政府在維持正當性的同時失敗。只要他們舉行選舉，他們就可以聲稱是民主的。只要他們通過法律，他們就可以聲稱是合法的。</p>
+
+        <h2>二、正當性的新來源：績效</h2>
+        <p>今天，正當性由<strong>績效</strong>定義。政府有交付嗎？它建設基礎設施嗎？它減少貧困嗎？它提供醫療保健嗎？</p>
+        <p>全球南方已經對程序性民主失去耐心。它看到選舉產生了腐敗、不平等和危機。它看到基於績效的系統——如中國的——產生了增長、穩定和繁榮。</p>
+        <p><span class="highlight">轉變不是意識形態的。它是<strong>經驗性的</strong>——基於什麼有效，而非什麼聽起來好。</span></p>
+
+        <h2>三、全球南方的遷移</h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>國家／地區</th><th>轉向績效</th><th>原因</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">東南亞</span></td><td>看向中國模式</td><td>基礎設施發展、減貧</td></tr>
+                    <tr><td><span class="highlight-blue">非洲</span></td><td>遠離西方民主</td><td>西方民主未能帶來發展</td></tr>
+                    <tr><td><span class="highlight-blue">拉丁美洲</span></td><td>質疑美國主導的模式</td><td>不平等、債務危機、腐敗</td></tr>
+                    <tr><td><span class="highlight-blue">中東</span></td><td>轉向中國</td><td>經濟機會、無政權更迭要求</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="insight-block"><p><span class="highlight">全球南方在用腳投票。它沒有放棄民主——它放棄了<strong>基於程序的正當性</strong>，轉向<strong>基於績效的正當性</strong>。</span></p></div>
+
+        <h2>四、為什麼程序失敗了</h2>
+        <ul>
+            <li><strong>選舉 ≠ 問責</strong>：政治家被選舉，但他們不交付。失敗沒有後果。</li>
+            <li><strong>言論自由 ≠ 參與</strong>：言論是自由的，但它被富人控制。人民沒有被聽到。</li>
+            <li><strong>多黨制 ≠ 選擇</strong>：所有政黨服務相同的利益。沒有真正的替代方案。</li>
+        </ul>
+        <p><span class="highlight-red">基於程序的正當性是一個<strong>陷阱</strong>。它創造了民主的幻覺，同時維持了菁英控制的現實。</span></p>
+
+        <h2>五、為什麼績效有效</h2>
+        <ul>
+            <li><strong>交付是可驗證的</strong>：道路、學校和醫院是可見的。你無法偽造它們。</li>
+            <li><strong>問責是真實的</strong>：當政府失敗時，人民可以看到。沒有隱藏在程序背後。</li>
+            <li><strong>信任是贏得的</strong>：當政府交付時，他們贏得信任。信任不是給予的——它是建立的。</li>
+        </ul>
+        <p><span class="highlight">基於績效的正當性是<strong>經驗性的</strong>。它基於政府實際做了什麼，而非他們承諾了什麼。</span></p>
+
+        <h2>六、GL框架診斷</h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>GL 維度</th><th>基於程序的正當性</th><th>基於績效的正當性</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">成果可驗證性</span></td><td>低——成果被隱藏</td><td>高——成果可見</td></tr>
+                    <tr><td><span class="highlight-blue">成本轉嫁</span></td><td>成本轉嫁給公眾</td><td>成本由政府承擔</td></tr>
+                    <tr><td><span class="highlight-blue">結構完整性</span></td><td>弱——失敗被隱藏</td><td>強——失敗可見</td></tr>
+                    <tr><td><span class="highlight-blue">心理成本</span></td><td>高——公眾感到被背叛</td><td>低——公眾看到結果</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>七、結論：轉移是不可逆的</h2>
+        <div class="conclusion-box">
+            <p><span class="highlight">從程序到績效的轉移不是暫時的。它是<strong>結構性的</strong>和<strong>不可逆的</strong>。全球南方已經看到了證據：基於程序的民主帶來失敗；基於績效的治理帶來結果。舊的正當性正在消亡。新的正當性正在誕生。</span></p>
+            <p style="margin-top:.5rem;font-size:.8rem;color:#6b5f4e;"><span class="highlight">全球南方在用腳投票。問題是：西方會聽嗎？</span></p>
+        </div>
+
+        <!-- ===== 文章導覽 ===== -->
+        <div class="nav-series">
+            <div class="lang-zh active">
+                <a href="from-procedure-to-delivery.html">← 從程序到交付</a>
+                <a href="performance-governance.html">績效治理 →</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="lang-zh active">
+                GFI · 治理理論系列 · 合法性的轉移<br/>
+                &copy; 2026 · 本平台以證據、邏輯與結構性分析探討全球治理
+            </div>
+            <div class="footer-links">
+                <a href="/index.html">首頁</a>
+                <a href="/wellness/index.html">Wellness</a>
+                <a href="/about.html">關於</a>
+            </div>
         </div>
     </div>
 
 </div>
 
-<!-- ===== 脚本 ===== -->
 <script>
     (function() {
-        const btns = document.querySelectorAll('.lang-switch button');
-        const enContent = document.getElementById('en-content');
-        const zhContent = document.getElementById('zh-content');
-        const mainTitle = document.getElementById('mainTitle');
-        const subTitle = document.getElementById('subTitle');
-
-        const titles = {
-            en: {
-                main: 'Legitimacy Migration:<br />From Procedure to Performance',
-                sub: '合法性的转移——从“程序”到“绩效”'
-            },
-            zh: {
-                main: '合法性的转移——<br />从“程序”到“绩效”',
-                sub: 'Legitimacy Migration: From Procedure to Performance'
-            }
+        const btns = document.querySelectorAll('.lang-btn');
+        const blocks = {
+            en: document.getElementById('en'),
+            zh: document.getElementById('zh')
         };
 
-        function setLanguage(lang) {
-            btns.forEach(b => b.classList.remove('active'));
-            document.querySelector(`.lang-switch button[data-lang="${lang}"]`).classList.add('active');
+        function setLang(lang) {
+            Object.keys(blocks).forEach(key => {
+                if (blocks[key]) blocks[key].classList.remove('active');
+            });
+            if (blocks[lang]) blocks[lang].classList.add('active');
 
-            if (lang === 'en') {
-                enContent.classList.add('active');
-                zhContent.classList.remove('active');
-            } else {
-                zhContent.classList.add('active');
-                enContent.classList.remove('active');
-            }
+            btns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
 
-            mainTitle.innerHTML = titles[lang].main;
-            subTitle.textContent = titles[lang].sub;
+            document.querySelectorAll('.nav-series .lang-zh, .nav-series .lang-en').forEach(el => el.classList.remove('active'));
+            const navTarget = document.querySelector('.nav-series .lang-' + lang);
+            if (navTarget) navTarget.classList.add('active');
+
+            document.querySelectorAll('.footer .lang-zh, .footer .lang-en').forEach(el => el.classList.remove('active'));
+            const footerTarget = document.querySelector('.footer .lang-' + lang);
+            if (footerTarget) footerTarget.classList.add('active');
+
+            if (history.pushState) history.pushState(null, '', '#' + lang);
         }
 
         btns.forEach(btn => {
             btn.addEventListener('click', function() {
-                setLanguage(this.dataset.lang);
+                const lang = this.dataset.lang;
+                if (lang) setLang(lang);
             });
         });
 
-        setLanguage('en');
+        const hash = window.location.hash.replace('#', '');
+        if (hash === 'zh') {
+            setLang('zh');
+        } else {
+            setLang('en');
+        }
+
+        window.addEventListener('hashchange', function() {
+            const newHash = window.location.hash.replace('#', '');
+            if (newHash === 'zh') {
+                setLang('zh');
+            } else {
+                setLang('en');
+            }
+        });
     })();
 </script>
 
