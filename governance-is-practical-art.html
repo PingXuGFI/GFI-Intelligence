@@ -1,565 +1,288 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="治理是术科，不是学科 – Governance is a Practical Art, Not a Liberal Art" />
-    <title>治理是术科 · GFI Flow Intelligence</title>
+    <title>The Ruling Class of Paper Generals｜GFI Flow Intelligence</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
     <style>
-        :root {
-            --bg: #0b1220;
-            --bg2: #0d1526;
-            --text: #f8fbff;
-            --muted: #c7d2e3;
-            --sub: #9fb0c8;
-            --dim: rgba(255, 255, 255, .06);
-            --green: #9FE870;
-            --blue: #7DD3FC;
-            --gold: #fbbf24;
-            --red: #f87171;
-            --serif: 'DM Serif Display', Georgia, serif;
-            --mono: 'DM Mono', monospace;
-            --sans: 'DM Sans', system-ui, sans-serif;
-        }
-        * { margin:0; padding:0; box-sizing:border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: var(--sans);
-            font-size: 16px;
-            line-height: 1.7;
-            overflow-x: hidden;
-            padding: 0 20px;
-        }
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 2rem 0 4rem;
-        }
-        .nav {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            height: 62px;
-            padding: 0 clamp(18px, 5vw, 52px);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: rgba(11, 18, 32, 0.92);
-            backdrop-filter: blur(14px);
-            border-bottom: 1px solid var(--dim);
-            margin: 0 -20px;
-            padding-left: 20px;
-            padding-right: 20px;
-        }
-        .logo {
-            color: #fff;
-            text-decoration: none;
-            font-family: var(--mono);
-            font-size: 13px;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-        }
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-        .back-link {
-            color: var(--sub);
-            font-family: var(--mono);
-            font-size: 12px;
-            text-decoration: none;
-            letter-spacing: 0.04em;
-            transition: color 0.2s;
-        }
-        .back-link:hover { color: var(--green); }
-        .lang-switch {
-            display: flex;
-            gap: 4px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 30px;
-            padding: 3px;
-            border: 1px solid var(--dim);
-        }
-        .lang-switch button {
-            background: none;
-            border: none;
-            padding: 4px 14px;
-            border-radius: 30px;
-            font-family: var(--mono);
-            font-size: 11px;
-            letter-spacing: 0.04em;
-            color: var(--sub);
-            cursor: pointer;
-            transition: all 0.2s;
-            font-weight: 500;
-        }
-        .lang-switch button.active {
-            background: var(--green);
-            color: var(--bg);
-        }
-        .lang-switch button:hover:not(.active) {
-            color: #fff;
-            background: rgba(255,255,255,0.08);
-        }
-
-        .article-header {
-            margin: 2rem 0 2.5rem;
-            border-bottom: 1px solid var(--dim);
-            padding-bottom: 1.5rem;
-        }
-        .article-header .badge {
-            font-family: var(--mono);
-            font-size: 0.6rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--green);
-            background: rgba(159, 232, 112, 0.1);
-            padding: 0.15rem 0.8rem;
-            border-radius: 30px;
-            display: inline-block;
-            border: 1px solid rgba(159, 232, 112, 0.15);
-            margin-bottom: 0.8rem;
-        }
-        .article-header h1 {
-            font-family: var(--serif);
-            font-size: 2.2rem;
-            font-weight: 700;
-            line-height: 1.2;
-            color: #fff;
-            margin-bottom: 0.2rem;
-        }
-        .article-header .subhead {
-            font-size: 1.05rem;
-            color: var(--sub);
-            font-style: italic;
-            margin-bottom: 0.4rem;
-        }
-        .article-header .meta {
-            font-family: var(--mono);
-            font-size: 0.7rem;
-            color: var(--muted);
-            opacity: 0.6;
-        }
-
-        .lang-content { display: none; }
-        .lang-content.active { display: block; }
-
-        .lang-content p {
-            color: var(--muted);
-            font-size: 0.95rem;
-            margin-bottom: 1rem;
-        }
-        .lang-content strong {
-            color: #fff;
-            font-weight: 600;
-        }
-        .lang-content .highlight { color: var(--gold); }
-        .lang-content .highlight-blue { color: var(--blue); }
-        .lang-content .highlight-red { color: var(--red); }
-        .lang-content .quote-block {
-            background: rgba(255, 255, 255, 0.02);
-            border-left: 4px solid var(--gold);
-            padding: 1.2rem 1.8rem;
-            margin: 1.5rem 0;
-            border-radius: 0 12px 12px 0;
-        }
-        .lang-content .quote-block p {
-            font-family: var(--serif);
-            font-size: 1.1rem;
-            color: #fff;
-            font-style: italic;
-            margin-bottom: 0.2rem;
-        }
-        .lang-content .quote-block .attribution {
-            font-family: var(--mono);
-            font-size: 0.7rem;
-            color: var(--sub);
-            text-align: right;
-        }
-        .lang-content h2 {
-            font-family: var(--serif);
-            font-size: 1.5rem;
-            color: #fff;
-            margin: 2rem 0 0.8rem 0;
-        }
-        .lang-content h3 {
-            font-size: 1.1rem;
-            color: var(--green);
-            margin: 1.2rem 0 0.4rem 0;
-        }
-        .lang-content .table-wrap {
-            overflow-x: auto;
-            margin: 1.2rem 0;
-        }
-        .lang-content table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.8rem;
-            font-family: var(--mono);
-            border: 1px solid var(--dim);
-        }
-        .lang-content th, .lang-content td {
-            padding: 8px 12px;
-            border: 1px solid var(--dim);
-            text-align: left;
-            color: var(--muted);
-        }
-        .lang-content th {
-            background: rgba(255,255,255,0.04);
-            color: var(--sub);
-            font-weight: 500;
-            letter-spacing: 0.04em;
-        }
-        .lang-content ul {
-            list-style: none;
-            padding: 0;
-            margin: 0.4rem 0 1rem;
-        }
-        .lang-content ul li {
-            position: relative;
-            padding-left: 1.2rem;
-            margin-bottom: 0.3rem;
-            color: var(--muted);
-            font-size: 0.9rem;
-        }
-        .lang-content ul li::before {
-            content: "→";
-            position: absolute;
-            left: 0;
-            color: var(--green);
-            font-family: var(--mono);
-            font-size: 0.7rem;
-        }
-        .lang-content .footnote {
-            margin-top: 2rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--dim);
-            font-family: var(--mono);
-            font-size: 0.7rem;
-            color: rgba(255,255,255,0.2);
-            text-align: center;
-        }
-        .lang-content .footnote a {
-            color: var(--sub);
-            text-decoration: none;
-        }
-        .lang-content .footnote a:hover { color: #fff; }
-
-        @media (max-width: 720px) {
-            .article-header h1 { font-size: 1.6rem; }
-            body { padding: 0 12px; }
-            .nav { margin: 0 -12px; padding-left: 12px; padding-right: 12px; }
-            .lang-switch button { padding: 3px 10px; font-size: 10px; }
-            .lang-content table { font-size: 0.7rem; }
-        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:#f5f0e8;color:#2d2a24;font-family:'DM Sans',system-ui,sans-serif;font-size:15px;line-height:1.8;padding:1.5rem 1rem}
+        .container{max-width:1040px;margin:0 auto}
+        .lang-switch{display:flex;gap:10px;margin-bottom:1.5rem;flex-wrap:wrap;justify-content:flex-end}
+        .lang-btn{font-family:'DM Mono',monospace;font-size:.7rem;padding:.3rem 1.2rem;border:1px solid rgba(60,50,40,.15);border-radius:20px;background:0 0;color:#6b5f4e;cursor:pointer;transition:all .2s}
+        .lang-btn:hover{border-color:#4a6b3d;color:#2d2a24}
+        .lang-btn.active{color:#3d6b2e;border-color:#3d6b2e;background:rgba(61,107,46,.08)}
+        .lang-block{display:none;animation:fadeIn .3s ease}
+        .lang-block.active{display:block}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+        .back-link{font-family:'DM Mono',monospace;font-size:.65rem;color:#3d6b2e;text-decoration:none;border-bottom:1px solid rgba(61,107,46,.2);padding-bottom:2px}
+        .back-link:hover{border-bottom-color:#3d6b2e}
+        h1{font-family:'DM Serif Display',Georgia,serif;font-size:2.2rem;color:#1f2a1a;margin-bottom:.2rem;line-height:1.2}
+        .subhead{font-family:'DM Mono',monospace;font-size:.75rem;color:#6b5f4e;letter-spacing:.06em;margin-bottom:.2rem}
+        .meta{font-family:'DM Mono',monospace;font-size:.65rem;color:#8a7e6a;border-bottom:1px solid rgba(60,50,40,.06);padding-bottom:1rem;margin-bottom:2rem}
+        h2{font-family:'DM Serif Display',Georgia,serif;font-size:1.4rem;color:#1f2a1a;margin:2.2rem 0 .8rem;border-left:4px solid #3d6b2e;padding-left:1rem}
+        h3{font-family:'DM Serif Display',Georgia,serif;font-size:1rem;color:#1f2a1a;margin:1.4rem 0 .4rem}
+        p{color:#4a4036;margin-bottom:.8rem;line-height:1.9}
+        .highlight{color:#3d6b2e;font-weight:500}
+        .highlight-red{color:#b33a3a;font-weight:500}
+        .highlight-blue{color:#4a7a6e;font-weight:500}
+        .insight-block{background:rgba(61,107,46,.06);border-left:4px solid #3d6b2e;padding:1rem 1.5rem;border-radius:0 8px 8px 0;margin:1.2rem 0}
+        .insight-block p{color:#2d2a24;margin-bottom:0;font-weight:450;font-size:.95rem}
+        .table-wrap{overflow-x:auto;border-radius:12px;border:1px solid rgba(60,50,40,.06);margin:1.2rem 0}
+        table{width:100%;border-collapse:collapse;font-family:'DM Mono',monospace;font-size:.65rem;min-width:480px}
+        th{text-align:left;padding:8px 10px;font-size:.5rem;letter-spacing:.08em;text-transform:uppercase;color:#8a7e6a;border-bottom:1px solid rgba(60,50,40,.06);font-weight:400;background:rgba(255,252,245,.3)}
+        td{padding:6px 10px;border-bottom:1px solid rgba(60,50,40,.03);color:#4a4036}
+        tr:hover td{background:rgba(255,252,245,.3)}
+        .conclusion-box{background:rgba(61,107,46,.06);border:1px solid rgba(61,107,46,.12);border-radius:12px;padding:1.2rem 1.8rem;margin-top:1.5rem}
+        .conclusion-box p{color:#1f2a1a;font-weight:450;font-size:.95rem;margin-bottom:.4rem}
+        .nav-series{margin-top:2.8rem;padding-top:1.8rem;border-top:2px solid rgba(60,50,40,.1);display:flex;flex-wrap:wrap;justify-content:space-between;gap:.8rem}
+        .nav-series a{color:#3d6b2e;text-decoration:none;font-weight:600;border:1px solid rgba(60,50,40,.15);padding:.4rem 1.2rem;border-radius:30px;font-size:.75rem;transition:.2s;background:rgba(255,252,245,.5);font-family:'DM Mono',monospace;letter-spacing:.02em}
+        .nav-series a:hover{background:#3d6b2e;color:#fff;border-color:#3d6b2e}
+        .nav-series .lang-zh,.nav-series .lang-en{display:none;width:100%;justify-content:space-between;gap:.8rem;flex-wrap:wrap}
+        .nav-series .lang-zh.active,.nav-series .lang-en.active{display:flex}
+        .footer{text-align:center;padding:24px 20px 32px;font-family:'DM Mono',monospace;font-size:11px;color:#8a7e6a;border-top:1px solid rgba(60,50,40,.06);margin-top:2rem}
+        .footer .lang-zh,.footer .lang-en{display:none}
+        .footer .lang-zh.active,.footer .lang-en.active{display:block}
+        .footer a{color:#6b5f4e;text-decoration:none}
+        .footer a:hover{color:#1f2a1a}
+        .footer-links{display:flex;justify-content:center;gap:16px;margin-top:6px;flex-wrap:wrap}
+        @media(max-width:720px){h1{font-size:1.6rem}.nav-series .lang-zh.active,.nav-series .lang-en.active{flex-direction:column;align-items:center}}
     </style>
 </head>
 <body>
-
-<!-- ===== 顶栏 ===== -->
-<div class="nav">
-    <a href="index.html" class="logo">GFI Flow Intelligence</a>
-    <div class="nav-right">
-        <a href="index.html" class="back-link">← Back</a>
-        <div class="lang-switch">
-            <button class="active" data-lang="en">EN</button>
-            <button data-lang="zh">中文</button>
-        </div>
-    </div>
-</div>
-
-<!-- ===== 文章主体 ===== -->
 <div class="container">
 
-    <div class="article-header">
-        <div class="badge">GFI Flow Intelligence · Governance Legitimacy Framework</div>
-        <h1 id="mainTitle">Governance Is a Practical Art, Not a Liberal Art:<br />How Classical Piano Training Explains the East‑West Governance Divide</h1>
-        <div class="subhead" id="subTitle">治理是术科，不是学科：古典钢琴训练如何解释东西方的治理差异</div>
-        <div class="meta">August 2026 · 2026年8月</div>
+    <!-- 語言切換 -->
+    <div class="lang-switch">
+        <button class="lang-btn" data-lang="zh">中文</button>
+        <button class="lang-btn active" data-lang="en">English</button>
     </div>
 
-    <!-- ===== 英文版 ===== -->
-    <div class="lang-content active" id="en-content">
+    <!-- ============================================================ -->
+    <!-- 英文版 (默認) -->
+    <!-- ============================================================ -->
+    <div class="lang-block active" id="en">
+        <a href="/index.html" class="back-link">← Back to Home</a>
+        <h1>The Ruling Class of Paper Generals</h1>
+        <div class="subhead">Diplomas, Elite Schools, and the Gap in Execution</div>
+        <div class="meta">GFI · Critique of the West Series</div>
 
-        <h2>I. A Hidden Classification</h2>
-        <p>We are used to dividing knowledge into “humanities” and “sciences,” “theory” and “practice.” But within the context of classical piano training, there is a more fundamental distinction: <span class="highlight-blue">Practical Arts vs. Liberal Arts.</span></p>
-        <ul>
-            <li><strong>Liberal Arts (学科)</strong> — centered on reading, writing, and discussion. Knowledge is transmitted through texts, tested through debate, and completed through essays. The essence of liberal arts is <span class="highlight-blue">“knowing‑that.”</span></li>
-            <li><strong>Practical Arts (术科)</strong> — centered on practice, repetition, and physical memory. Knowledge is accumulated through time, solidified through muscle memory, and refined through countless failures. The essence of practical arts is <span class="highlight-blue">“knowing‑how.”</span></li>
-        </ul>
-        <p>This distinction may seem simple, but it reveals the deepest divergence between Eastern and Western governance logic.</p>
-        <p><span class="highlight">Western governance thinking is liberal‑arts‑style. Chinese governance thinking is practical‑arts‑style.</span></p>
-        <p>This is not a value judgment. It is a difference in underlying code.</p>
+        <div class="insight-block"><p><span class="highlight">The West is governed by people who can read, write, and debate — but cannot build, fix, or deliver. They are <strong>paper generals</strong> — rulers who have never been tested, never built anything, and never solved a real problem.</span></p></div>
 
-        <h2>II. Liberal‑Arts Governance: The Western Methodological Inertia</h2>
-        <p>The underlying logic of Western governance — from ancient Greek dialectics to modern parliamentary politics — is essentially <span class="highlight-blue">liberal‑arts‑style.</span></p>
-        <ul>
-            <li><strong>Text‑dependent</strong>: Constitutions, laws, contracts, policy documents — everything is written down. Governance is believed to be achieved through “correct writing” and “correct reading.”</li>
-            <li><strong>Debate‑dependent</strong>: Policies are discussed in parliament, argued in the media, and rehearsed in think‑tank reports. Governance is believed to be a discussion about “what is right.”</li>
-            <li><strong>Procedure‑dependent</strong>: Hearings, votes, compliance reviews. Governance is believed to be “following the correct steps.”</li>
-        </ul>
-        <p><strong>The implicit assumption of liberal‑arts governance is: if you write the correct rules and discuss them correctly, the results will automatically be correct.</strong></p>
-        <p>But this is precisely the problem.</p>
-        <p>Reading a book cannot teach you to play a Chopin étude. Writing a perfect policy document cannot build a bridge.</p>
+        <h2>I. The Education of a Paper General</h2>
+        <p>What does it take to become a ruler in the West? A degree from an elite university. A career in law, consulting, or finance. A talent for speaking in platitudes. A network of powerful friends.</p>
+        <p>What does it <strong>not</strong> require? Engineering. Construction. Agriculture. Medicine. Logistics. Any experience with the real world.</p>
+        <p>The paper general is trained to <strong>manage</strong> — not to <strong>create</strong>. To <strong>debate</strong> — not to <strong>solve</strong>. To <strong>speak</strong> — not to <strong>do</strong>.</p>
 
-        <h2>III. Practical‑Arts Governance: The Chinese Methodological Inertia</h2>
-        <p>The underlying logic of Chinese governance — from Yu the Great taming the floods to the Five‑Year Plans — is essentially <span class="highlight-blue">practical‑arts‑style.</span></p>
-        <ul>
-            <li><strong>Time‑dependent</strong>: China does not seek to “build Rome in a day.” It accepts that major projects take ten, twenty, fifty years. This sense of time is incomprehensible to liberal‑arts thinking.</li>
-            <li><strong>Blueprint‑dependent</strong>: Not “writing” a document, but “drawing” a blueprint — a complete, three‑dimensional, dynamic systemic vision. This is the same way a pianist “reads” a sonata: not by reading notes, but by seeing the entire structure.</li>
-            <li><strong>Repetition‑dependent</strong>: Policy pilots, adjustments, expansion, re‑adjustment. Like practicing a piece: slow practice, sectioning, finger adjustments, speeding up, until it becomes muscle memory.</li>
-        </ul>
-        <p><strong>The implicit assumption of practical‑arts governance is: real capability can only be built through time, repetition, and physical engagement.</strong></p>
-        <p>You cannot learn piano by reading sheet music. You cannot learn governance by reading policy documents.</p>
-
-        <h2>IV. Why Can’t the West Build High‑Speed Rail?</h2>
-        <p>This is the most intuitive failure of liberal‑arts governance.</p>
-        <p>High‑speed rail construction is a <span class="highlight-blue">practical‑arts task</span>: it requires geological surveying (physical sensing), engineering iteration (repetition), supply chain coordination (systemic collaboration), and long‑term investment (time accumulation).</p>
-        <p>But the Western governance system tries to accomplish it with <span class="highlight-red">liberal‑arts tools:</span></p>
-        <ul>
-            <li>Write an environmental impact assessment report (text)</li>
-            <li>Hold a series of public hearings (debate)</li>
-            <li>Pass an appropriations bill (procedure)</li>
-            <li>Then wait — wait for legal challenges, wait for political cycles, wait for the next election.</li>
-        </ul>
-        <p><strong>California High‑Speed Rail</strong>: approved in 2008, still unfinished in 2026. Eighteen years — enough time for a piano student to go from zero to performance level. But for liberal‑arts governance, eighteen years is only enough to finish “discussing” it.</p>
-        <p>China’s high‑speed rail: 40,000 kilometers. None of it was built through debate. It was built through <span class="highlight">practical‑arts logic</span>: draw the blueprint, adjust the plan, repeat construction, continuously correct, year after year.</p>
-
-        <h2>V. The Five Blind Spots of Liberal‑Arts Governance</h2>
+        <h2>II. The Gap Between Theory and Practice</h2>
         <div class="table-wrap">
             <table>
-                <thead><tr><th>Assumption</th><th>Reality</th></tr></thead>
+                <thead><tr><th>Domain</th><th>Paper General Training</th><th>What Is Actually Needed</th></tr></thead>
                 <tbody>
-                    <tr><td>Writing it correctly equals doing it correctly</td><td>A vast gap exists between text and execution</td></tr>
-                    <tr><td>Debate produces correct decisions</td><td>Debate produces compromise — not necessarily correct decisions</td></tr>
-                    <tr><td>Procedural justice guarantees outcome justice</td><td>Perfect procedures can produce disastrous results</td></tr>
-                    <tr><td>Election cycles are sufficient for major projects</td><td>Major projects require continuity across multiple election cycles</td></tr>
-                    <tr><td>Knowledge resides in books and documents</td><td>True governance knowledge resides in practice and physical memory</td></tr>
+                    <tr><td><span class="highlight-blue">Economics</span></td><td>Models, theories, equations</td><td>Understanding real production, supply chains, and people</td></tr>
+                    <tr><td><span class="highlight-blue">Public Health</span></td><td>Policy papers, committees</td><td>Hospital logistics, disease control, frontline care</td></tr>
+                    <tr><td><span class="highlight-blue">Infrastructure</span></td><td>Consulting reports, budgets</td><td>Engineering, construction, maintenance</td></tr>
+                    <tr><td><span class="highlight-blue">Military</span></td><td>Pentagon briefings, war games</td><td>Real logistics, real combat, real strategy</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p><span class="highlight-red">The gap is not accidental. It is structural. The system trains people to <strong>talk</strong> about problems, not to <strong>solve</strong> them.</span></p>
+
+        <h2>III. The Consequences of Paper Rule</h2>
+        <ul>
+            <li><strong>Infrastructure collapse</strong>: Bridges fall. Trains derail. Power grids fail. The paper generals never built them, so they cannot fix them.</li>
+            <li><strong>Public health failures</strong>: COVID exposed the gap. The paper generals talked about models; the nurses and doctors did the work.</li>
+            <li><strong>Military disasters</strong>: Afghanistan, Iraq, Libya — the paper generals planned; the soldiers died.</li>
+            <li><strong>Economic crises</strong>: 2008, 2020, 2023 — the paper generals managed; the people paid.</li>
+        </ul>
+        <p><span class="highlight">The paper general is not a leader. The paper general is a <strong>liability</strong>.</span></p>
+
+        <h2>IV. The Chinese Countermodel: Doers in Power</h2>
+        <p>China's elite are not paper generals. They are <strong>doers</strong>. They have served as engineers, factory managers, village leaders, and provincial governors. They have <strong>built</strong> things. They have <strong>solved</strong> problems. They have been <strong>tested</strong>.</p>
+        <p>When a Chinese official speaks, they speak from experience. When a Western official speaks, they speak from PowerPoint.</p>
+        <p>The difference is not cultural. It is <strong>institutional</strong>. China's system selects for <strong>execution</strong>. The West's system selects for <strong>presentation</strong>.</p>
+
+        <h2>V. GL Framework Diagnosis</h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>GL Dimension</th><th>Diagnosis</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">Information Asymmetry</span></td><td>The public is told that elite credentials equal competence — but the data shows otherwise</td></tr>
+                    <tr><td><span class="highlight-blue">Cost Shifting</span></td><td>The costs of paper rule are borne by the public — collapsed infrastructure, failed wars, economic crises</td></tr>
+                    <tr><td><span class="highlight-blue">Structural Integrity</span></td><td>The system selects for presentation skills, not execution skills</td></tr>
+                    <tr><td><span class="highlight-blue">Closure Intensity</span></td><td>The ruling class reproduces itself through elite schools, internships, and networks — excluding those with real-world experience</td></tr>
                 </tbody>
             </table>
         </div>
 
-        <h2>VI. Five Characteristics of Practical‑Arts Governance</h2>
-        <div class="table-wrap">
-            <table>
-                <thead><tr><th>Practice</th><th>Meaning</th></tr></thead>
-                <tbody>
-                    <tr><td>Long‑term planning</td><td>Accepting that governance requires time beyond political cycles</td></tr>
-                    <tr><td>Pilot first</td><td>Allowing trial and error before full rollout</td></tr>
-                    <tr><td>Systems thinking</td><td>Treating governance as an organic whole, not fragments</td></tr>
-                    <tr><td>Continuous iteration</td><td>Correcting every year, improving every year, accumulating every year</td></tr>
-                    <tr><td>Outcome‑oriented</td><td>Measuring by “what was built,” not “what was written”</td></tr>
-                </tbody>
-            </table>
+        <h2>VI. Conclusion: The Paper Generals Must Go</h2>
+        <div class="conclusion-box">
+            <p><span class="highlight">The West is ruled by paper generals — people who have never built anything, never solved a real problem, never been tested. They are not leaders. They are <strong>liabilities</strong>. Until they are replaced by doers — by people who can build, fix, and deliver — the crises will continue.</span></p>
+            <p style="margin-top:.5rem;font-size:.8rem;color:#6b5f4e;"><span class="highlight">Governance is not a debate society. It is a <strong>practical art</strong>. And the paper generals have forgotten how to practice it.</span></p>
         </div>
 
-        <h2>VII. Why Can China Learn the West’s Liberal Arts, But the West Cannot Learn China’s Practical Arts?</h2>
-        <p>This is an ironic reality.</p>
-        <p>China can read Western legal documents, learn Western economic theories, and imitate Western technical standards — <span class="highlight-blue">these are liberal arts, transmissible through reading and writing.</span></p>
-        <p>But the West cannot replicate China’s governance practice — <span class="highlight-red">because practical arts cannot be transmitted through text.</span></p>
-        <p>You cannot learn to build high‑speed rail by reading a “report on China’s high‑speed rail experience.” You need:</p>
-        <ul>
-            <li>Ten years on a construction site</li>
-            <li>Experience failure, correction, more failure, more correction</li>
-            <li>Develop physical sensing and judgment that cannot be written into any report</li>
-        </ul>
-        <p><span class="highlight">Liberal arts can be transmitted through translation. Practical arts can only be transmitted through time.</span></p>
-
-        <h2>VIII. The GFI Framework Conclusion</h2>
-        <p>Under the GFI Governance Legitimacy Framework:</p>
-        <ul>
-            <li><strong>Liberal‑arts governance</strong> pursues <span class="highlight-blue">“procedural legitimacy”</span> — Did I follow the correct steps? Did I write the correct documents?</li>
-            <li><strong>Practical‑arts governance</strong> pursues <span class="highlight">“outcome legitimacy”</span> — Did I build usable infrastructure? Did I solve real problems?</li>
-        </ul>
-        <p>The West’s legitimacy crisis is, at its core, a crisis of <span class="highlight-red">a liberal‑arts system attempting to solve practical‑arts problems.</span></p>
-        <p>You cannot build high‑speed rail through meetings. You cannot eliminate poverty through legislation. You cannot cure pandemics through hearings.</p>
-        <p><span class="highlight-blue">Governance is a practical art. It requires time, repetition, blueprints, and muscle memory.</span></p>
-        <p>Those who only know how to read, write, and debate will ultimately fail when faced with tasks that require “doing.”</p>
-
-        <h2>IX. A Letter to Western Colleagues</h2>
-        <p>You have the best law schools, business schools, and liberal arts colleges in the world. Your scholars can write the most sophisticated papers, and your think tanks can produce the most polished reports.</p>
-        <p>But you cannot build high‑speed rail.</p>
-        <p>Not because you are “stupid.” But because your entire governance system is <span class="highlight-red">liberal‑arts‑style</span> — it rewards reading, writing, debate, and procedural compliance — but it never rewards those who spend ten years on a construction site.</p>
-        <p>There is a Chinese saying:</p>
-        <div class="quote-block">
-            <p>“纸上得来终觉浅，绝知此事要躬行。”</p>
-            <p style="font-size:0.9rem; color:var(--sub);">“What is learned from books is ultimately shallow; only through practice can you truly understand a thing.”</p>
+        <!-- ===== 文章導覽 ===== -->
+        <div class="nav-series">
+            <div class="lang-en active">
+                <a href="harvard-heirs-not-geniuses.html">← Harvard Doesn't Select Geniuses</a>
+                <a href="governance-is-practical-art.html">Governance Is a Practical Art →</a>
+            </div>
         </div>
-        <p>You have read too much and done too little. You have debated too much and practiced too little.</p>
-        <p><span class="highlight">Governance is not a liberal art. It is a practical art. You have been using the wrong tool.</span></p>
 
-        <div class="footnote">
-            <span>GFI Flow Intelligence · Governance Legitimacy Framework</span><br />
-            <a href="index.html">← Back to Home</a> · <a href="global-south-turns-to-china.html">Global South Turns to China</a>
+        <div class="footer">
+            <div class="lang-en active">
+                GFI · Critique of the West Series · Paper Generals<br/>
+                &copy; 2026 · Evidence, logic, and structural analysis of global governance
+            </div>
+            <div class="footer-links">
+                <a href="/index.html">Home</a>
+                <a href="/wellness/index.html">Wellness</a>
+                <a href="/about.html">About</a>
+            </div>
         </div>
     </div>
 
-    <!-- ===== 中文版 ===== -->
-    <div class="lang-content" id="zh-content">
+    <!-- ============================================================ -->
+    <!-- 中文版 -->
+    <!-- ============================================================ -->
+    <div class="lang-block" id="zh">
+        <a href="/index.html" class="back-link">← 返回首頁</a>
+        <h1>紙上談兵的治理階級</h1>
+        <div class="subhead">文憑、名校與執行力的斷裂</div>
+        <div class="meta">GFI · 美國批判系列</div>
 
-        <h2>一、一个被忽略的底层分类</h2>
-        <p>我们习惯于将知识分为“文科”与“理科”、“理论”与“实践”。但在古典钢琴训练的语境中，有一个更本质的区分：<span class="highlight-blue">术科与学科。</span></p>
-        <ul>
-            <li><strong>学科（Liberal Arts）</strong>：以读、写、讨论为核心。知识通过文本传递，通过辩论检验，通过论文完成。<span class="highlight-blue">学科的本质是“关于什么”（knowing‑that）。</span></li>
-            <li><strong>术科（Practical Arts）</strong>：以练习、重复、身体记忆为核心。知识通过时间积累，通过肌肉记忆固化，通过无数次失败后的微调完成。<span class="highlight-blue">术科的本质是“如何做到”（knowing‑how）。</span></li>
-        </ul>
-        <p>这个区分看似简单，却揭示了东西方治理逻辑最深层的差异。</p>
-        <p><span class="highlight">西方的治理思维是学科式的。中国的治理思维是术科式的。</span></p>
-        <p>这不是价值判断，而是底层编码的差异。</p>
+        <div class="insight-block"><p><span class="highlight">西方被一群只會讀、寫、辯論，卻不會建、修、交付的人統治。他們是<strong>紙上將軍</strong>——從未被考驗、從未建造過任何東西、從未解決過真正問題的統治者。</span></p></div>
 
-        <h2>二、学科式治理：西方的方法论惯性</h2>
-        <p>西方治理的底层逻辑——从古希腊的辩论术到现代议会政治——本质上是 <span class="highlight-blue">学科式的</span>。</p>
-        <ul>
-            <li><strong>依赖文本</strong>：宪法、法律、合同、政策文件——一切都写在纸上。治理被认为是通过“正确书写”和“正确阅读”来实现的。</li>
-            <li><strong>依赖辩论</strong>：政策在议会中讨论，在媒体上争辩，在智库报告中推演。治理被认为是“关于什么是对的”的讨论。</li>
-            <li><strong>依赖程序</strong>：听证、投票、合规审查。治理被认为是“按照正确步骤行事”。</li>
-        </ul>
-        <p><strong>学科式治理的隐含假设是：如果你能写出正确的规则并正确地讨论它，结果会自动正确。</strong></p>
-        <p>但这正是问题所在。</p>
-        <p>读一本书不能让你弹好一首肖邦练习曲。写一份完美的政策文件也不能建成一座桥。</p>
+        <h2>一、紙上將軍的教育</h2>
+        <p>在西方成為統治者需要什麼？菁英大學的學位。法律、顧問或金融的職業生涯。說空話的天賦。有權勢的朋友網絡。</p>
+        <p>它<strong>不需要</strong>什麼？工程。建築。農業。醫學。物流。任何與真實世界相關的經驗。</p>
+        <p>紙上將軍被訓練來<strong>管理</strong>——而非<strong>創造</strong>。來<strong>辯論</strong>——而非<strong>解決</strong>。來<strong>說話</strong>——而非<strong>做事</strong>。</p>
 
-        <h2>三、术科式治理：中国的方法论惯性</h2>
-        <p>中国治理的底层逻辑——从大禹治水到五年规划——本质上是 <span class="highlight-blue">术科式的</span>。</p>
-        <ul>
-            <li><strong>依赖时间</strong>：中国不追求“一夜建成罗马”。它接受大型工程需要十年、二十年、五十年。这种时间感，是学科思维无法理解的。</li>
-            <li><strong>依赖蓝图</strong>：不是“写”一份文件，而是“画”一张蓝图——一个完整的、立体的、动态的系统图景。这与钢琴家“解读”一首奏鸣曲的方式相同：不是阅读音符，而是看见整个结构。</li>
-            <li><strong>依赖重复</strong>：政策试点、调整、推广、再调整。就像练习一首曲子：慢练、分段、调整指法、加速，直到它成为肌肉记忆。</li>
-        </ul>
-        <p><strong>术科式治理的隐含假设是：真正的能力只能通过时间、重复和身体参与来建立。</strong></p>
-        <p>你不能通过阅读乐谱来学习弹钢琴。你不能通过阅读政策文件来学习治理。</p>
-
-        <h2>四、为什么西方建不出高铁？</h2>
-        <p>这是学科式治理最直观的失败案例。</p>
-        <p>高铁建设是一项 <span class="highlight-blue">术科任务</span>：它需要地质勘探（身体感知）、工程迭代（重复练习）、供应链协调（系统协作）、长期投入（时间积累）。</p>
-        <p>但西方的治理系统试图用 <span class="highlight-red">学科工具</span> 来完成它：</p>
-        <ul>
-            <li>写一份环境影响评估报告（文本）</li>
-            <li>召开一系列公开听证会（辩论）</li>
-            <li>通过一项拨款法案（程序）</li>
-            <li>然后等待——等待法律挑战、等待政治周期、等待下一次选举。</li>
-        </ul>
-        <p><strong>加州高铁</strong>：2008年立项，2026年仍未完工。18年，足够一个钢琴学生从零达到演奏级。但对学科式治理来说，18年只够“讨论”完。</p>
-        <p>中国高铁：4万公里。没有一次是通过辩论建成的。它是通过 <span class="highlight">术科逻辑</span> 建成的：画蓝图、调方案、重复施工、持续修正、年复一年。</p>
-
-        <h2>五、学科式治理的五个盲区</h2>
+        <h2>二、理論與實踐之間的鴻溝</h2>
         <div class="table-wrap">
             <table>
-                <thead><tr><th>学科式治理的假设</th><th>现实</th></tr></thead>
+                <thead><tr><th>領域</th><th>紙上將軍的訓練</th><th>實際需要的</th></tr></thead>
                 <tbody>
-                    <tr><td>写对了就等于做对了</td><td>文本与执行之间存在巨大鸿沟</td></tr>
-                    <tr><td>辩论能产生正确决策</td><td>辩论产生妥协，不一定是正确决策</td></tr>
-                    <tr><td>程序正义保证结果正义</td><td>完美的程序可以产出灾难性的结果</td></tr>
-                    <tr><td>选举周期足以完成大工程</td><td>大型工程需要跨越多个选举周期的连续性</td></tr>
-                    <tr><td>知识存在于书本和文件中</td><td>真正的治理知识存在于实践和身体记忆中</td></tr>
+                    <tr><td><span class="highlight-blue">經濟學</span></td><td>模型、理論、方程式</td><td>理解真實生產、供應鏈與人民</td></tr>
+                    <tr><td><span class="highlight-blue">公共衛生</span></td><td>政策文件、委員會</td><td>醫院物流、疾病控制、前線照護</td></tr>
+                    <tr><td><span class="highlight-blue">基礎設施</span></td><td>顧問報告、預算</td><td>工程、建築、維護</td></tr>
+                    <tr><td><span class="highlight-blue">軍事</span></td><td>五角大廈簡報、兵棋推演</td><td>真實物流、真實戰鬥、真實戰略</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p><span class="highlight-red">這個鴻溝不是偶然的。它是結構性的。系統訓練人們<strong>談論</strong>問題，而非<strong>解決</strong>問題。</span></p>
+
+        <h2>三、紙上統治的後果</h2>
+        <ul>
+            <li><strong>基礎設施崩潰</strong>：橋樑倒塌、火車出軌、電網故障。紙上將軍從未建造它們，所以無法修復它們。</li>
+            <li><strong>公共衛生失敗</strong>：COVID暴露了鴻溝。紙上將軍談論模型；護士和醫生做實際工作。</li>
+            <li><strong>軍事災難</strong>：阿富汗、伊拉克、利比亞——紙上將軍規劃；士兵死亡。</li>
+            <li><strong>經濟危機</strong>：2008、2020、2023——紙上將軍管理；人民付出代價。</li>
+        </ul>
+        <p><span class="highlight">紙上將軍不是領導者。紙上將軍是<strong>負債</strong>。</span></p>
+
+        <h2>四、中國的對照組：實踐者在位</h2>
+        <p>中國的菁英不是紙上將軍。他們是<strong>實踐者</strong>。他們擔任過工程師、工廠經理、村幹部和省長。他們<strong>建造</strong>過東西。他們<strong>解決</strong>過問題。他們被<strong>考驗</strong>過。</p>
+        <p>當中國官員說話時，他們從經驗出發。當西方官員說話時，他們從PowerPoint出發。</p>
+        <p>差異不是文化的。它是<strong>制度的</strong>。中國的系統選拔<strong>執行力</strong>。西方的系統選拔<strong>表現力</strong>。</p>
+
+        <h2>五、GL框架診斷</h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>GL 維度</th><th>診斷</th></tr></thead>
+                <tbody>
+                    <tr><td><span class="highlight-blue">資訊不對稱</span></td><td>公眾被告知菁英證書等於能力——但數據顯示並非如此</td></tr>
+                    <tr><td><span class="highlight-blue">成本轉嫁</span></td><td>紙上統治的成本由公眾承擔——基礎設施崩潰、戰爭失敗、經濟危機</td></tr>
+                    <tr><td><span class="highlight-blue">結構完整性</span></td><td>系統選拔表現能力，而非執行能力</td></tr>
+                    <tr><td><span class="highlight-blue">閉環程度</span></td><td>統治階級通過菁英學校、實習與網絡自我複製——排除有真實世界經驗的人</td></tr>
                 </tbody>
             </table>
         </div>
 
-        <h2>六、术科式治理的五种特征</h2>
-        <div class="table-wrap">
-            <table>
-                <thead><tr><th>术科式治理的实践</th><th>含义</th></tr></thead>
-                <tbody>
-                    <tr><td>长期规划</td><td>接受治理需要跨越政治周期的时间</td></tr>
-                    <tr><td>试点先行</td><td>在全面推广前允许试错和调整</td></tr>
-                    <tr><td>系统思维</td><td>把治理看作一个有机整体，而非碎片</td></tr>
-                    <tr><td>持续迭代</td><td>每年修正、每年改进、每年积累</td></tr>
-                    <tr><td>结果导向</td><td>以“建成了什么”衡量，而非“写了什么”</td></tr>
-                </tbody>
-            </table>
+        <h2>六、結論：紙上將軍必須下台</h2>
+        <div class="conclusion-box">
+            <p><span class="highlight">西方被紙上將軍統治——從未建造過任何東西、從未解決過真正問題、從未被考驗過的人。他們不是領導者。他們是<strong>負債</strong>。直到他們被實踐者取代——被能建造、修復和交付的人取代——危機將繼續。</span></p>
+            <p style="margin-top:.5rem;font-size:.8rem;color:#6b5f4e;"><span class="highlight">治理不是辯論社。它是<strong>實踐的藝術</strong>。而紙上將軍已經忘記如何實踐它。</span></p>
         </div>
 
-        <h2>七、为什么中国能学到西方的学科，西方学不到中国的术科？</h2>
-        <p>这是一个讽刺的现实。</p>
-        <p>中国可以阅读西方的法律文件、学习西方的经济学理论、模仿西方的技术标准——<span class="highlight-blue">这些是学科，可以通过读写传递。</span></p>
-        <p>但西方无法复制中国的治理实践——<span class="highlight-red">因为术科无法通过文本传递。</span></p>
-        <p>你不能通过阅读一份“关于中国高铁建设经验的报告”来学会建设高铁。你需要：</p>
-        <ul>
-            <li>在工地上待十年</li>
-            <li>经历失败、修正、再失败、再修正</li>
-            <li>发展出无法写入报告的身体感知和判断力</li>
-        </ul>
-        <p><span class="highlight">学科可以通过翻译传递。术科只能通过时间传递。</span></p>
-
-        <h2>八、GFI框架下的结论</h2>
-        <p>在GFI治理正当性框架下：</p>
-        <ul>
-            <li><strong>学科式治理</strong>追求的是 <span class="highlight-blue">“程序正当性”</span>——我是否遵循了正确的步骤？我是否写对了文件？</li>
-            <li><strong>术科式治理</strong>追求的是 <span class="highlight">“成果正当性”</span>——我是否建成了可用的基础设施？我是否解决了实际问题？</li>
-        </ul>
-        <p>西方的正当性危机，本质上是一个 <span class="highlight-red">学科系统试图解决术科问题</span> 的危机。</p>
-        <p>你不能通过开会来修建高铁。你不能通过立法来消除贫困。你不能通过听证来治愈流行病。</p>
-        <p><span class="highlight-blue">治理是术科。它需要时间、重复、蓝图和肌肉记忆。</span></p>
-        <p>那些只懂得读写和讨论的治理者，在面对需要“做到”的任务时，终将失败。</p>
-
-        <h2>九、给西方同行的一封信</h2>
-        <p>你们拥有世界最好的法学院、商学院、文理学院。你们的学者能写出最精妙的论文，你们的智库能制作最精美的报告。</p>
-        <p>但你们建不出高铁。</p>
-        <p>不是因为你们“笨”。而是因为你们的整个治理系统是 <span class="highlight-red">学科式的</span>——它奖励读写、奖励辩论、奖励程序合规——却从来不奖励在工地上度过十年的人。</p>
-        <p>中国有一句话：</p>
-        <div class="quote-block">
-            <p>“纸上得来终觉浅，绝知此事要躬行。”</p>
+        <!-- ===== 文章導覽 ===== -->
+        <div class="nav-series">
+            <div class="lang-zh active">
+                <a href="harvard-heirs-not-geniuses.html">← 哈佛不選天才</a>
+                <a href="governance-is-practical-art.html">治理是術科，不是學科 →</a>
+            </div>
         </div>
-        <p>你们读了太多，做了太少。你们讨论了太多，练习了太少。</p>
-        <p><span class="highlight">治理不是一门学科。它是一门术科。你们用错了工具。</span></p>
 
-        <div class="footnote">
-            <span>GFI Flow Intelligence · 治理正当性框架</span><br />
-            <a href="index.html">← 返回首页</a> · <a href="global-south-turns-to-china.html">全球南方转向中国</a>
+        <div class="footer">
+            <div class="lang-zh active">
+                GFI · 美國批判系列 · 紙上將軍<br/>
+                &copy; 2026 · 本平台以證據、邏輯與結構性分析探討全球治理
+            </div>
+            <div class="footer-links">
+                <a href="/index.html">首頁</a>
+                <a href="/wellness/index.html">Wellness</a>
+                <a href="/about.html">關於</a>
+            </div>
         </div>
     </div>
 
 </div>
 
-<!-- ===== 脚本 ===== -->
 <script>
     (function() {
-        const btns = document.querySelectorAll('.lang-switch button');
-        const enContent = document.getElementById('en-content');
-        const zhContent = document.getElementById('zh-content');
-        const mainTitle = document.getElementById('mainTitle');
-        const subTitle = document.getElementById('subTitle');
-
-        const titles = {
-            en: {
-                main: 'Governance Is a Practical Art, Not a Liberal Art:<br />How Classical Piano Training Explains the East‑West Governance Divide',
-                sub: '治理是术科，不是学科：古典钢琴训练如何解释东西方的治理差异'
-            },
-            zh: {
-                main: '治理是术科，不是学科：<br />古典钢琴训练如何解释东西方的治理差异',
-                sub: 'Governance Is a Practical Art, Not a Liberal Art: How Classical Piano Training Explains the East‑West Governance Divide'
-            }
+        const btns = document.querySelectorAll('.lang-btn');
+        const blocks = {
+            en: document.getElementById('en'),
+            zh: document.getElementById('zh')
         };
 
-        function setLanguage(lang) {
-            btns.forEach(b => b.classList.remove('active'));
-            document.querySelector(`.lang-switch button[data-lang="${lang}"]`).classList.add('active');
+        function setLang(lang) {
+            Object.keys(blocks).forEach(key => {
+                if (blocks[key]) blocks[key].classList.remove('active');
+            });
+            if (blocks[lang]) blocks[lang].classList.add('active');
 
-            if (lang === 'en') {
-                enContent.classList.add('active');
-                zhContent.classList.remove('active');
-            } else {
-                zhContent.classList.add('active');
-                enContent.classList.remove('active');
-            }
+            btns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
 
-            mainTitle.innerHTML = titles[lang].main;
-            subTitle.textContent = titles[lang].sub;
+            document.querySelectorAll('.nav-series .lang-zh, .nav-series .lang-en').forEach(el => el.classList.remove('active'));
+            const navTarget = document.querySelector('.nav-series .lang-' + lang);
+            if (navTarget) navTarget.classList.add('active');
+
+            document.querySelectorAll('.footer .lang-zh, .footer .lang-en').forEach(el => el.classList.remove('active'));
+            const footerTarget = document.querySelector('.footer .lang-' + lang);
+            if (footerTarget) footerTarget.classList.add('active');
+
+            if (history.pushState) history.pushState(null, '', '#' + lang);
         }
 
         btns.forEach(btn => {
             btn.addEventListener('click', function() {
-                setLanguage(this.dataset.lang);
+                const lang = this.dataset.lang;
+                if (lang) setLang(lang);
             });
         });
 
-        setLanguage('en');
+        const hash = window.location.hash.replace('#', '');
+        if (hash === 'zh') {
+            setLang('zh');
+        } else {
+            setLang('en');
+        }
+
+        window.addEventListener('hashchange', function() {
+            const newHash = window.location.hash.replace('#', '');
+            if (newHash === 'zh') {
+                setLang('zh');
+            } else {
+                setLang('en');
+            }
+        });
     })();
 </script>
 
