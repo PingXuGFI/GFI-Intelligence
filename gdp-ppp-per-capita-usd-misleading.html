@@ -1,654 +1,314 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GDP、PPP、人均所得、美金：全是分子 — GL 框架看分母｜GFI Flow Intelligence</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="GDP, PPP, Per Capita Income, and the U.S. Dollar — They are all numerators — they never ask: who gets the value?" />
+    <meta name="keywords" content="GDP, PPP, per capita income, U.S. dollar, numerator problem, GL Framework, economic measurement" />
+    <meta property="og:title" content="GDP, PPP, Per Capita Income, and the U.S. Dollar | GFI Flow Intelligence" />
+    <meta property="og:description" content="They are all numerators — they never ask: who gets the value?" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="GDP, PPP, Per Capita Income, and the U.S. Dollar" />
+    <meta name="twitter:description" content="Numerators tell you what is produced — not who gets it." />
+    <link rel="alternate" hreflang="en" href="https://gfiintel.com/gdp-ppp-per-capita-usd-misleading.html" />
+    <link rel="alternate" hreflang="zh-TW" href="https://gfiintel.com/gdp-ppp-per-capita-usd-misleading.html?lang=tw" />
+    <link rel="alternate" hreflang="zh-CN" href="https://gfiintel.com/gdp-ppp-per-capita-usd-misleading.html?lang=cn" />
+    <link rel="alternate" hreflang="es" href="https://gfiintel.com/gdp-ppp-per-capita-usd-misleading.html?lang=es" />
+    <link rel="alternate" hreflang="x-default" href="https://gfiintel.com/gdp-ppp-per-capita-usd-misleading.html" />
+    <title>GDP, PPP, Per Capita Income, and the U.S. Dollar | GFI Flow Intelligence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            background: #0b1220;
-            color: #f8fbff;
-            font-family: 'DM Sans', system-ui, sans-serif;
-            line-height: 1.9;
-            padding: 2rem 1rem;
-        }
-        .container {
-            max-width: 860px;
-            margin: 0 auto;
-            background: #0d1526;
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 2rem;
-            padding: 3rem 2.5rem;
-            box-shadow: 0 20px 40px -12px rgba(0,0,0,0.6);
-        }
-        .lang-tabs {
-            display: flex;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-            margin-bottom: 2rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-        }
-        .lang-tabs button {
-            background: none;
-            border: 1px solid rgba(255,255,255,0.08);
-            color: #9fb0c8;
-            font-family: 'DM Mono', monospace;
-            font-size: 0.75rem;
-            padding: 0.3rem 1rem;
-            border-radius: 2rem;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .lang-tabs button:hover {
-            border-color: rgba(255,255,255,0.2);
-            color: #fff;
-        }
-        .lang-tabs button.active {
-            background: #fbbf24;
-            color: #0b1220;
-            border-color: #fbbf24;
-        }
-        .lang-content {
-            display: none;
-            animation: fade 0.3s ease;
-        }
-        .lang-content.active {
-            display: block;
-        }
-        @keyframes fade {
-            0% { opacity: 0.3; transform: translateY(6px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-        h1 {
-            font-family: 'DM Serif Display', Georgia, serif;
-            font-size: 2.4rem;
-            font-weight: 400;
-            color: #fbbf24;
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.02em;
-            line-height: 1.2;
-        }
-        .subhead {
-            font-size: 1.1rem;
-            color: #9fb0c8;
-            margin-bottom: 0.5rem;
-            border-left: 3px solid #f87171;
-            padding-left: 1.2rem;
-        }
-        .byline {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.8rem;
-            color: #7DD3FC;
-            margin-bottom: 2rem;
-        }
-        h2 {
-            font-family: 'DM Serif Display', Georgia, serif;
-            font-size: 1.5rem;
-            color: #fbbf24;
-            margin: 2.2rem 0 0.8rem 0;
-        }
-        p {
-            color: #c7d2e3;
-            margin-bottom: 1.2rem;
-        }
-        .pull-quote {
-            background: rgba(248,113,113,0.06);
-            border-left: 4px solid #f87171;
-            padding: 1.2rem 1.8rem;
-            margin: 1.8rem 0;
-            border-radius: 0 8px 8px 0;
-        }
-        .pull-quote p {
-            color: #f5e6c8;
-            font-style: italic;
-            margin-bottom: 0;
-            font-size: 1.05rem;
-        }
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.2rem 0;
-            font-size: 0.9rem;
-        }
-        .comparison-table th,
-        .comparison-table td {
-            border: 1px solid rgba(255,255,255,0.08);
-            padding: 0.6rem 0.8rem;
-            text-align: left;
-            color: #c7d2e3;
-        }
-        .comparison-table th {
-            background: rgba(255,255,255,0.04);
-            color: #fbbf24;
-            font-weight: 600;
-        }
-        .footer-note {
-            margin-top: 2.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(255,255,255,0.06);
-            font-size: 0.8rem;
-            color: #9fb0c8;
-            text-align: center;
-        }
-        .footer-note .lang-zh, .footer-note .lang-en, .footer-note .lang-es { display: none; }
-        .footer-note .lang-zh.active, .footer-note .lang-en.active, .footer-note .lang-es.active { display: block; }
-        .footer-note a {
-            color: #7DD3FC;
-            text-decoration: none;
-        }
-        .footer-note a:hover {
-            text-decoration: underline;
-        }
-        .back-link {
-            display: inline-block;
-            margin-top: 1rem;
-            font-family: 'DM Mono', monospace;
-            font-size: 0.7rem;
-            color: #9fb0c8;
-            text-decoration: none;
-            border: 1px solid rgba(255,255,255,0.06);
-            padding: 0.4rem 1rem;
-            border-radius: 2rem;
-            transition: 0.2s;
-        }
-        .back-link:hover {
-            border-color: rgba(255,255,255,0.2);
-            color: #fff;
-        }
-        .conclusion-box {
-            background: rgba(251,191,36,0.06);
-            border: 1px solid rgba(251,191,36,0.2);
-            border-radius: 1rem;
-            padding: 1.5rem 2rem;
-            margin-top: 2rem;
-        }
-        .conclusion-box p {
-            margin-bottom: 0.5rem;
-        }
-        .conclusion-box p:last-child {
-            margin-bottom: 0;
-        }
-        .nav-series {
-            margin-top: 2.8rem;
-            padding-top: 1.8rem;
-            border-top: 2px solid rgba(255,255,255,0.06);
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 0.8rem;
-        }
-        .nav-series a {
-            color: #7DD3FC;
-            text-decoration: none;
-            font-weight: 500;
-            border: 1px solid rgba(255,255,255,0.08);
-            padding: 0.4rem 1.2rem;
-            border-radius: 30px;
-            font-size: 0.75rem;
-            transition: 0.2s;
-            background: rgba(255,255,255,0.02);
-            font-family: 'DM Mono', monospace;
-            letter-spacing: 0.02em;
-        }
-        .nav-series a:hover {
-            background: rgba(125,211,252,0.1);
-            border-color: #7DD3FC;
-            color: #fff;
-        }
-        .nav-series .lang-zh, .nav-series .lang-en, .nav-series .lang-es { display: none; width: 100%; justify-content: space-between; gap: 0.8rem; flex-wrap: wrap; }
-        .nav-series .lang-zh.active, .nav-series .lang-en.active, .nav-series .lang-es.active { display: flex; }
-        @media (max-width: 700px) {
-            .container { padding: 1.5rem; }
-            h1 { font-size: 1.8rem; }
-            .nav-series .lang-zh.active, .nav-series .lang-en.active, .nav-series .lang-es.active { flex-direction: column; align-items: center; }
-        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:#f5f2eb;color:#1a1a24;font-family:'Georgia','Times New Roman',serif;line-height:1.8;padding:2rem 1rem}
+        .container{max-width:960px;margin:0 auto;background:#fff;padding:2.5rem 2.8rem;box-shadow:0 8px 24px rgba(0,0,0,0.06);border-radius:8px}
+        .lang-switch{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:2rem;border-bottom:1px solid #e0dcd5;padding-bottom:.8rem}
+        .lang-switch button{background:none;border:1px solid #ccc;padding:.3rem 1rem;border-radius:30px;font-size:.8rem;font-weight:600;color:#2a2a3a;cursor:pointer;transition:.2s}
+        .lang-switch button.active{background:#0b1a2e;color:#fff;border-color:#0b1a2e}
+        .lang-switch button:hover{background:#e0dcd5}
+        .lang-section{display:none}.lang-section.active{display:block}
+        h1{font-size:2.4rem;font-weight:700;letter-spacing:-0.02em;line-height:1.2;margin-bottom:.25rem;color:#0b1a2e}
+        .subhead{font-size:1.1rem;color:#4a4a5a;border-left:4px solid #b31b1b;padding-left:1.2rem;margin:.8rem 0 1.8rem 0;font-style:italic}
+        h2{font-size:1.6rem;margin:2.2rem 0 .8rem 0;color:#0b1a2e;border-bottom:2px solid #eae5dc;padding-bottom:.3rem}
+        h3{font-size:1.2rem;margin:1.6rem 0 .6rem 0;color:#1f2c3f}
+        p{margin-bottom:1.1rem;color:#2a2a3a}
+        ul,ol{margin:.5rem 0 1.2rem 2rem;color:#2a2a3a}
+        li{margin-bottom:.3rem}
+        .highlight-box{background:#f3f1ec;padding:1.4rem 1.8rem;border-radius:6px;margin:1.8rem 0;border-left:6px solid #b31b1b}
+        .highlight-box p{margin-bottom:0;font-weight:500;color:#0b1a2e}
+        .highlight-green{background:#ecf3ed;padding:1.4rem 1.8rem;border-radius:6px;margin:1.8rem 0;border-left:6px solid #1a6b3c}
+        .highlight-green p{margin-bottom:0;font-weight:500;color:#0b1a2e}
+        .comparison-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:1.2rem 0}
+        .cmp-item{background:#f9f8f5;padding:1rem 1.2rem;border-radius:4px;border-top:3px solid #b31b1b}
+        .cmp-item.green{border-top-color:#1a6b3c}
+        .cmp-item strong{display:block;font-size:.8rem;text-transform:uppercase;letter-spacing:.5px;color:#4a4a5a;margin-bottom:.3rem}
+        .cmp-item.wrong strong{color:#b31b1b}
+        .cmp-item.right strong{color:#1a6b3c}
+        .nav-series{margin-top:2.8rem;padding-top:1.8rem;border-top:2px solid #e0dcd5;display:flex;flex-wrap:wrap;justify-content:space-between;gap:.8rem}
+        .nav-series a{color:#0b1a2e;text-decoration:none;font-weight:600;border:1px solid #ccc;padding:.4rem 1.2rem;border-radius:30px;font-size:.85rem;transition:.2s;background:#fff}
+        .nav-series a:hover{background:#0b1a2e;color:#fff;border-color:#0b1a2e}
+        .nav-series .lang-zh,.nav-series .lang-en,.nav-series .lang-es{display:none;width:100%;justify-content:space-between;gap:.8rem;flex-wrap:wrap}
+        .nav-series .lang-zh.active,.nav-series .lang-en.active,.nav-series .lang-es.active{display:flex}
+        .back-home{display:inline-block;margin-top:1.5rem;font-weight:600;color:#0b1a2e;text-decoration:none;border-bottom:2px solid #b31b1b;padding-bottom:.1rem}
+        .back-home:hover{color:#b31b1b}
+        .footer-note{margin-top:2.5rem;font-size:.85rem;color:#6a6a7a;border-top:1px solid #e0dcd5;padding-top:1.5rem;text-align:center}
+        .tag{display:inline-block;background:#eae5dc;padding:.2rem .9rem;border-radius:30px;font-size:.75rem;font-weight:600;color:#1f2c3f;letter-spacing:.3px;margin-right:.4rem}
+        .series-badge{display:inline-block;background:#eae5dc;padding:.2rem .9rem;border-radius:30px;font-size:.7rem;font-weight:600;color:#1f2c3f;letter-spacing:.3px;margin-bottom:.5rem}
+        @media(max-width:700px){.container{padding:1.5rem}h1{font-size:1.8rem}.comparison-grid{grid-template-columns:1fr}.nav-series .lang-zh.active,.nav-series .lang-en.active,.nav-series .lang-es.active{flex-direction:column;align-items:center}}
     </style>
 </head>
 <body>
 <div class="container">
 
-    <div class="lang-tabs">
-        <button class="active" data-lang="en">EN</button>
-        <button data-lang="zh-Hant">繁</button>
-        <button data-lang="zh-Hans">简</button>
-        <button data-lang="es">ES</button>
+    <div class="lang-switch">
+        <button class="active" data-lang="en">English</button>
+        <button data-lang="tw">繁體中文</button>
+        <button data-lang="cn">简体中文</button>
+        <button data-lang="es">Español</button>
     </div>
 
-    <!-- ====== ENGLISH ====== -->
-    <div id="lang-en" class="lang-content active">
+    <!-- ============================================================ -->
+    <!-- 英文版 -->
+    <!-- ============================================================ -->
+    <div id="lang-en" class="lang-section active">
+        <span class="series-badge">Economy & Finance Series · Part 4 of 6</span>
         <h1>GDP, PPP, Per Capita Income, and the U.S. Dollar</h1>
-        <div class="subhead">They are all numerators — and they never ask who gets the value</div>
-        <div class="byline">Ping Xu · GFI Flow Intelligence · June 2026</div>
+        <div class="subhead">They Are All Numerators — They Never Ask: Who Gets the Value?</div>
 
-        <p>Every day, we are told which country is "richer," which is "catching up," and which is "falling behind." The numbers are presented as facts — objective, scientific, indisputable.</p>
-        <p>They are none of those things.</p>
-
-        <div class="pull-quote"><p>"The most dangerous numbers are the ones that look like facts but are actually designed to hide what you are not supposed to see."</p></div>
-
-        <h2>Four Metrics, One Problem: They Are All Numerators</h2>
-        <table class="comparison-table">
-            <thead><tr><th>Metric</th><th>What It Measures</th><th>What It Never Asks</th></tr></thead>
-            <tbody>
-                <tr><td><strong>GDP</strong></td><td>Total national output</td><td>Where did it go? Who got it?</td></tr>
-                <tr><td><strong>PPP</strong></td><td>Purchasing power</td><td>Who has purchasing power? Who doesn't?</td></tr>
-                <tr><td><strong>Per Capita Income</strong></td><td>Total income ÷ population</td><td>How is it distributed?</td></tr>
-                <tr><td><strong>U.S. Dollar</strong></td><td>Global pricing unit</td><td>Who prints it? Who is measured by it?</td></tr>
-            </tbody>
-        </table>
-
-        <p>Every single one of these metrics measures the <strong>total</strong>. None of them ask: <strong>Who actually got what?</strong></p>
-
-        <div class="pull-quote"><p>"They all tell you how much there is. None of them tell you how much you got."</p></div>
-
-        <h2>GDP: The Numerator of Transactions</h2>
-        <p>GDP measures <strong>transactions</strong> — not well-being, not delivery, not value returned to people.</p>
-        <p>A bridge is built. GDP increases.<br>But if it takes three years for citizens to get a permit to cross it — that GDP is an illusion.</p>
-        <p>A digital system goes live. GDP increases.<br>But if citizens have to fill out the same form ten times, wait six months, and get rejected — that GDP is a lie.</p>
-        <p>A budget is spent. GDP increases.<br>But if the money does not become outcomes, only consultant reports and vendor revenue — <strong>that GDP is not prosperity. It is transfer.</strong></p>
-
-        <h2>PPP: The Numerator of Cost</h2>
-        <p>Purchasing Power Parity was designed to fix GDP's currency problem. It adjusts for price differences across countries. It looks scientific. It looks objective.</p>
-        <p>But PPP has three fatal flaws:</p>
-        <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem;">
-            <li><strong>The basket is a fiction.</strong> The "basket of goods" used to calculate PPP is standardized across countries — but the quality, availability, and relevance of those goods vary wildly. An iPhone in the U.S. and an iPhone in China are not the same "basket item" for a typical family.</li>
-            <li><strong>It ignores public services.</strong> PPP only adjusts for private consumption. It completely ignores the quality and accessibility of healthcare, education, transportation, and public safety — which are often the largest determinants of quality of life.</li>
-            <li><strong>It ignores administrative friction.</strong> PPP adjusts for how much you pay. It does not adjust for how much time, energy, and dignity you lose in the process. That is what the GL Framework measures.</li>
-        </ul>
-
-        <h2>Per Capita Income: The Numerator of Averages</h2>
-        <p>Per capita income is simply total national income divided by population. It tells you the <strong>average</strong> — which tells you almost nothing about what most people actually experience.</p>
-        <p>If one person has $1,000,000 and nine people have $0, the per capita income is $100,000. That is technically correct. It is also completely meaningless.</p>
-
-        <h2>The U.S. Dollar: The Numerator of Measurement</h2>
-        <p>All international comparisons are conducted in U.S. dollars. This is presented as neutral — but it is anything but.</p>
-        <p>When you convert everything to dollars, you are measuring everything with an American ruler. Exchange rates fluctuate based on interest rates, capital flows, and geopolitical events — none of which have anything to do with how people actually live.</p>
-        <p>A country can appear to "get richer" or "get poorer" overnight, simply because the dollar moved. The people have not changed. But the number says they have.</p>
-
-        <div class="pull-quote"><p>"The U.S. dollar is not a neutral measuring stick. It is an American measuring stick — and the whole world is being measured against it."</p></div>
-
-        <h2>The GL Alternative: Looking at the Denominator</h2>
-        <p>GDP, PPP, per capita income, and the U.S. dollar are all <strong>numerators</strong>. They measure the <strong>total</strong>.</p>
-        <p>But the GL Framework asks a different question:</p>
-        <p style="font-size:1.2rem; color:#fbbf24; font-weight:500; text-align:center; margin:1.5rem 0;">"Underneath these totals, what do people actually carry? What do they lose? What do they receive?"</p>
-        <p>It measures the <strong>denominator</strong> — what the system ignores, what the averages hide, what the totals never reveal:</p>
-        <table class="comparison-table">
-            <thead><tr><th>GL Parameter</th><th>What It Measures</th></tr></thead>
-            <tbody>
-                <tr><td><strong>Waiting Cost</strong></td><td>How much time people lose</td></tr>
-                <tr><td><strong>Repetition Cost</strong></td><td>How many times people do the same thing</td></tr>
-                <tr><td><strong>Collapse Cost</strong></td><td>What happens when the system fails</td></tr>
-                <tr><td><strong>Info Asymmetry</strong></td><td>What the government knows but citizens don't</td></tr>
-                <tr><td><strong>Psychological Cost</strong></td><td>Anxiety, humiliation, helplessness</td></tr>
-                <tr><td><strong>Opportunity Cost</strong></td><td>What people lose because of the system</td></tr>
-                <tr><td><strong>Transfer Pathway</strong></td><td>How costs are shifted from government to people</td></tr>
-                <tr><td><strong>Loop Closure</strong></td><td>Whether the system actually learns and improves</td></tr>
-            </tbody>
-        </table>
-
-        <div class="conclusion-box">
-            <p><strong>GDP, PPP, per capita income, and the U.S. dollar are not the enemy.</strong></p>
-            <p>They are <strong>partial</strong> — designed for a different era.</p>
-            <p>The problem is not that they exist. The problem is that we treat them as complete.</p>
-            <p>They tell you how much exists. They never tell you <strong>who actually got it.</strong></p>
-            <p><strong>They are all numerators. But real life happens in the denominator.</strong></p>
-            <p style="margin-top: 0.8rem; color: #fbbf24; font-weight: 500;">That is what the GL Framework measures.</p>
+        <div class="highlight-box">
+            <p>📐 <strong>Structural fact:</strong> GDP, PPP, per capita income, and the U.S. dollar are all <strong>numerators</strong>. They tell you how much is produced — but not who gets it. They measure the size of the pie — but not how it is divided.</p>
         </div>
 
-        <a class="back-link" href="index.html">← Back to Home</a>
+        <h2>I. The Numerator Problem</h2>
+        <p>Every economic metric that dominates global discourse is a numerator. GDP is a numerator. PPP is a numerator. Per capita income is a numerator. The U.S. dollar is a numerator. They all measure <strong>aggregate value</strong> — but none of them measure <strong>distribution</strong>.</p>
 
+        <h2>II. What the Numerator Hides</h2>
+        <p>A country can have high GDP per capita and high inequality. High PPP and high poverty. High dollar reserves and high debt. The numerator tells you the total — but not the <strong>flow</strong>. The numerator hides the <strong>transfer</strong>.</p>
+
+        <h2>III. The Denominator</h2>
+        <p>The missing denominator is <strong>distribution</strong>. Who gets the value? In capitalist systems, the value flows upward — to capital, to landlords, to the wealthy. The denominator is the <strong>structural transfer</strong> that the numerator obscures.</p>
+
+        <h2>IV. The GL Framework Diagnosis</h2>
+        <p>The GL Framework measures governance legitimacy: <strong style="font-family:monospace;">GL = (Fs × Vn) / (Pd × Cf)</strong>. Numerator metrics produce low GL because:</p>
+        <ul>
+            <li><strong>Fs (Flow Success):</strong> Aggregate growth does not reach citizens</li>
+            <li><strong>Vn (Strategic Value):</strong> The system optimizes for aggregate — not distribution</li>
+            <li><strong>Pd (Pain Duration):</strong> Citizens suffer while aggregate numbers grow</li>
+            <li><strong>Cf (Cognitive Friction):</strong> Numerators hide the transfer</li>
+        </ul>
+
+        <div class="highlight-box">
+            <p><strong>Numerators are not neutral measurements. They are ideological tools — designed to obscure the transfer of value from the many to the few.</strong></p>
+        </div>
+
+        <a class="back-home" href="index.html">&larr; Back to Home</a>
+
+        <!-- ===== 英文導航 ===== -->
         <div class="nav-series">
             <div class="lang-en active">
-                <a href="gdp-fig-leaf.html">← GDP: Report Card or Fig Leaf?</a>
-                <a href="ghost-gdp.html">Ghost GDP Calculator →</a>
+                <a href="gdp-fig-leaf.html#en">← GDP: Report Card or Fig Leaf?</a>
+                <a href="ghost-gdp.html#en">Ghost GDP Calculator →</a>
             </div>
         </div>
 
         <div class="footer-note">
-            <div class="lang-en active">
-                <strong>Ping Xu</strong> · Creator of the GL Governance Legitimacy Framework · GFI Flow Intelligence · Boston<br>
-                <span style="font-size:0.75rem; color:#9fb0c8;">gfiintel.com · Free to read · Free to share</span>
-            </div>
+            <span>◆</span> GL Framework · Economy & Finance Series · GDP, PPP, Per Capita Income, and the U.S. Dollar <span>◆</span>
         </div>
     </div>
 
-    <!-- ====== 繁體中文 ====== -->
-    <div id="lang-zh-Hant" class="lang-content">
-        <h1>GDP、PPP、人均所得、美金</h1>
-        <div class="subhead">全部都是分子——它們從來不問：誰拿到了價值？</div>
-        <div class="byline">徐萍 · GFI Flow Intelligence · 2026年6月</div>
+    <!-- ============================================================ -->
+    <!-- 繁體中文 -->
+    <!-- ============================================================ -->
+    <div id="lang-tw" class="lang-section">
+        <span class="series-badge">經濟與金融系列 · 第 4 篇，共 6 篇</span>
+        <h1>GDP、PPP、人均收入與美元</h1>
+        <div class="subhead">它們都是分子——它們從不問：誰獲得了價值？</div>
 
-        <p>每天，我們都被灌輸哪個國家「比較有錢」、哪個正在「追趕」、哪個正在「落後」。這些數字被包裝成事實——客觀、科學、不容質疑。</p>
-        <p>它們完全不是這麼一回事。</p>
+        <div class="highlight-box">
+            <p>📐 <strong>結構性事實：</strong> GDP、PPP、人均收入和美元都是<strong>分子</strong>。它們告訴你生產了多少——但沒有告訴你誰獲得了它。它們測量了餅的大小——但沒有測量如何分配。</p>
+        </div>
 
-        <div class="pull-quote"><p>「最危險的數字，是那些看起來像事實，實際上卻被設計來隱藏你本不該看見的東西。」</p></div>
+        <h2>一、分子問題</h2>
+        <p>每一個主導全球論述的經濟指標都是分子。GDP 是分子。PPP 是分子。人均收入是分子。美元是分子。它們都測量<strong>總體價值</strong>——但沒有一個測量<strong>分配</strong>。</p>
 
-        <h2>四個指標，同一個問題：全部都是分子</h2>
-        <table class="comparison-table">
-            <thead><tr><th>指標</th><th>測量什麼</th><th>從來不問什麼</th></tr></thead>
-            <tbody>
-                <tr><td><strong>GDP</strong></td><td>全國總產出</td><td>去了哪裡？誰拿到了？</td></tr>
-                <tr><td><strong>PPP</strong></td><td>購買力</td><td>誰有購買力？誰沒有？</td></tr>
-                <tr><td><strong>人均所得</strong></td><td>總所得 ÷ 人口</td><td>怎麼分配的？</td></tr>
-                <tr><td><strong>美金</strong></td><td>全球計價單位</td><td>誰在印鈔票？誰被它衡量？</td></tr>
-            </tbody>
-        </table>
+        <h2>二、分子隱藏了什麼</h2>
+        <p>一個國家可以有高人均 GDP 和高不平等。高 PPP 和高貧困。高美元儲備和高債務。分子告訴你總量——但沒有告訴你<strong>流動</strong>。分子隱藏了<strong>轉移</strong>。</p>
 
-        <p>每一個指標都在測量<strong>總量</strong>。沒有一個問：<strong>誰真正拿到了什麼？</strong></p>
+        <h2>三、分母</h2>
+        <p>缺失的分母是<strong>分配</strong>。誰獲得了價值？在資本主義系統中，價值向上流動——流向資本、流向地主、流向富人。分母是分子所掩蓋的<strong>結構性轉移</strong>。</p>
 
-        <div class="pull-quote"><p>「它們都告訴你總共有多少。沒有一個告訴你，你拿到了多少。」</p></div>
-
-        <h2>GDP：交易的分子</h2>
-        <p>GDP測量的是<strong>交易</strong>——不是福祉、不是交付、不是回流到人民手中的價值。</p>
-        <p>一座橋蓋好了。GDP增加。<br>但如果人民要等三年才能拿到通行證——那筆GDP是虛的。</p>
-        <p>一個數位系統上線了。GDP增加。<br>但如果人民要重複填表十次、等六個月、最後被拒絕——那筆GDP是假的。</p>
-        <p>一筆預算花出去了。GDP增加。<br>但如果錢沒有變成人民的成果，只變成顧問報告和系統商營收——<strong>那筆GDP不是繁榮，是轉嫁。</strong></p>
-
-        <h2>PPP：成本的分子</h2>
-        <p>購買力平價被設計來修正GDP的匯率問題。它調整各國的物價差異。看起來很科學、很客觀。</p>
-        <p>但PPP有三個致命缺陷：</p>
-        <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem;">
-            <li><strong>籃子是虛構的。</strong>用來計算PPP的「一籃子商品」在各國被標準化——但這些商品的品質、可取得性和相關性差異極大。在美國和中國，一支iPhone對一般家庭來說根本不是同一種「籃子商品」。</li>
-            <li><strong>它忽略公共服務。</strong>PPP只調整私人消費，完全忽略醫療、教育、交通、公共安全的品質和可及性——而這些往往是生活品質的最大決定因素。</li>
-            <li><strong>它忽略行政摩擦。</strong>PPP調整的是你花了多少錢，但沒有調整你在過程中損失了多少時間、精力和尊嚴。那是GL框架在測量的。</li>
+        <h2>四、GL 框架診斷</h2>
+        <p>GL 框架衡量治理正當性：<strong style="font-family:monospace;">GL = (Fs × Vn) / (Pd × Cf)</strong>。分子指標產生低 GL，因為：</p>
+        <ul>
+            <li><strong>Fs（流程成功率）：</strong> 總體成長無法到達公民</li>
+            <li><strong>Vn（戰略價值）：</strong> 系統為總體而非分配優化</li>
+            <li><strong>Pd（痛苦持續時間）：</strong> 公民在總體數字成長時受苦</li>
+            <li><strong>Cf（認知摩擦）：</strong> 分子隱藏了轉移</li>
         </ul>
 
-        <h2>人均所得：平均數的分子</h2>
-        <p>人均所得就是把全國總所得除以人口。它告訴你<strong>平均數</strong>——這幾乎無法告訴你大多數人實際經歷了什麼。</p>
-        <p>如果一個人有一百萬美元，另外九個人有零元，人均所得是十萬美元。技術上正確。但完全沒有意義。</p>
-
-        <h2>美金：測量的分子</h2>
-        <p>所有的國際比較都用美金進行。這被包裝成中立的——但一點也不中立。</p>
-        <p>當你把一切都換算成美金，你就是在用美國的尺來測量全世界。匯率波動基於利率、資本流動和地緣政治事件——這些都與人民實際如何生活完全無關。</p>
-        <p>一個國家可以在一夜之間「變富」或「變窮」，只因為美金波動了。人民沒有改變。但數字說他們改變了。</p>
-
-        <div class="pull-quote"><p>「美金不是中立的尺。它是美國的尺——而全世界都在被這把尺測量。」</p></div>
-
-        <h2>GL的替代方案：看分母</h2>
-        <p>GDP、PPP、人均所得、美金——全部都是<strong>分子</strong>。它們測量的是<strong>總量</strong>。</p>
-        <p>但GL框架問的是另一個問題：</p>
-        <p style="font-size:1.2rem; color:#fbbf24; font-weight:500; text-align:center; margin:1.5rem 0;">「在這些總量底下，人民實際承擔了什麼？失去了什麼？得到了什麼？」</p>
-        <p>它測量的是<strong>分母</strong>——那些被系統忽略、被平均數隱藏、被總量從不揭示的東西：</p>
-        <table class="comparison-table">
-            <thead><tr><th>GL參數</th><th>測量什麼</th></tr></thead>
-            <tbody>
-                <tr><td><strong>等待成本</strong></td><td>人民損失了多少時間</td></tr>
-                <tr><td><strong>重複成本</strong></td><td>人民重複做了多少次同樣的事</td></tr>
-                <tr><td><strong>崩潰成本</strong></td><td>系統失靈時發生了什麼</td></tr>
-                <tr><td><strong>資訊不對稱</strong></td><td>政府知道但人民不知道的事</td></tr>
-                <tr><td><strong>心理成本</strong></td><td>焦慮、羞辱、無力感</td></tr>
-                <tr><td><strong>機會成本</strong></td><td>因為系統而失去的可能性</td></tr>
-                <tr><td><strong>轉嫁路徑</strong></td><td>成本如何從政府轉移到人民身上</td></tr>
-                <tr><td><strong>迴路閉合</strong></td><td>系統是否真的在學習和改進</td></tr>
-            </tbody>
-        </table>
-
-        <div class="conclusion-box">
-            <p><strong>GDP、PPP、人均所得、美金，都不是敵人。</strong></p>
-            <p>它們是<strong>片面的</strong>——為不同的時代設計。</p>
-            <p>問題不在於它們存在。問題在於我們把它們當作完整的。</p>
-            <p>它們告訴你「有多少」。它們從來不告訴你<strong>「誰真正拿到了」。</strong></p>
-            <p><strong>全部都是分子。但真實的生活，發生在分母裡。</strong></p>
-            <p style="margin-top: 0.8rem; color: #fbbf24; font-weight: 500;">這就是 GL 框架在測量的。</p>
+        <div class="highlight-box">
+            <p><strong>分子不是中性的測量。它們是意識形態工具——設計來掩蓋價值從多數人向少數人的轉移。</strong></p>
         </div>
 
-        <a class="back-link" href="index.html">← 回首頁</a>
+        <a class="back-home" href="index.html">&larr; 回到首頁</a>
 
+        <!-- ===== 繁體中文導航 ===== -->
         <div class="nav-series">
             <div class="lang-zh active">
-                <a href="gdp-fig-leaf.html">← GDP：成績單還是遮羞布？</a>
-                <a href="ghost-gdp.html">幽靈GDP 計算器 →</a>
+                <a href="gdp-fig-leaf.html#tw">← GDP：成績單還是遮羞布？</a>
+                <a href="ghost-gdp.html#tw">幽靈GDP 計算器 →</a>
             </div>
         </div>
 
         <div class="footer-note">
-            <div class="lang-zh active">
-                <strong>徐萍</strong> · GL 治理正當性框架 創建者 · GFI Flow Intelligence · 波士頓<br>
-                <span style="font-size:0.75rem; color:#9fb0c8;">gfiintel.com · 免費閱讀 · 免費分享</span>
-            </div>
+            <span>◆</span> GL 框架 · 經濟與金融系列 · GDP、PPP、人均收入與美元 <span>◆</span>
         </div>
     </div>
 
-    <!-- ====== 簡體中文 ====== -->
-    <div id="lang-zh-Hans" class="lang-content">
-        <h1>GDP、PPP、人均所得、美金</h1>
-        <div class="subhead">全部都是分子——它们从来不问：谁拿到了价值？</div>
-        <div class="byline">徐萍 · GFI Flow Intelligence · 2026年6月</div>
+    <!-- ============================================================ -->
+    <!-- 简体中文 -->
+    <!-- ============================================================ -->
+    <div id="lang-cn" class="lang-section">
+        <span class="series-badge">经济与金融系列 · 第 4 篇，共 6 篇</span>
+        <h1>GDP、PPP、人均收入与美元</h1>
+        <div class="subhead">它们都是分子——它们从不问：谁获得了价值？</div>
 
-        <p>每天，我们都被灌输哪个国家「比较有钱」、哪个正在「追赶」、哪个正在「落后」。这些数字被包装成事实——客观、科学、不容质疑。</p>
-        <p>它们完全不是这么一回事。</p>
+        <div class="highlight-box">
+            <p>📐 <strong>结构性事实：</strong> GDP、PPP、人均收入和美元都是<strong>分子</strong>。它们告诉你生产了多少——但没有告诉你谁获得了它。它们测量了饼的大小——但没有测量如何分配。</p>
+        </div>
 
-        <div class="pull-quote"><p>「最危险的数字，是那些看起来像事实，实际上却被设计来隐藏你本不该看见的东西。」</p></div>
+        <h2>一、分子问题</h2>
+        <p>每一个主导全球论述的经济指标都是分子。GDP 是分子。PPP 是分子。人均收入是分子。美元是分子。它们都测量<strong>总体价值</strong>——但没有一个测量<strong>分配</strong>。</p>
 
-        <h2>四个指标，同一个问题：全部都是分子</h2>
-        <table class="comparison-table">
-            <thead><tr><th>指标</th><th>测量什么</th><th>从来不问什么</th></tr></thead>
-            <tbody>
-                <tr><td><strong>GDP</strong></td><td>全国总产出</td><td>去了哪里？谁拿到了？</td></tr>
-                <tr><td><strong>PPP</strong></td><td>购买力</td><td>谁有购买力？谁没有？</td></tr>
-                <tr><td><strong>人均所得</strong></td><td>总所得 ÷ 人口</td><td>怎么分配的？</td></tr>
-                <tr><td><strong>美金</strong></td><td>全球计价单位</td><td>谁在印钞票？谁被它衡量？</td></tr>
-            </tbody>
-        </table>
+        <h2>二、分子隐藏了什么</h2>
+        <p>一个国家可以有高人均 GDP 和高不平等。高 PPP 和高贫困。高美元储备和高债务。分子告诉你总量——但没有告诉你<strong>流动</strong>。分子隐藏了<strong>转移</strong>。</p>
 
-        <p>每一个指标都在测量<strong>总量</strong>。没有一个问：<strong>谁真正拿到了什么？</strong></p>
+        <h2>三、分母</h2>
+        <p>缺失的分母是<strong>分配</strong>。谁获得了价值？在资本主义系统中，价值向上流动——流向资本、流向地主、流向富人。分母是分子所掩盖的<strong>结构性转移</strong>。</p>
 
-        <div class="pull-quote"><p>「它们都告诉你总共有多少。没有一个告诉你，你拿到了多少。」</p></div>
-
-        <h2>GDP：交易的分子</h2>
-        <p>GDP测量的是<strong>交易</strong>——不是福祉、不是交付、不是回流到人民手中的价值。</p>
-        <p>一座桥盖好了。GDP增加。<br>但如果人民要等三年才能拿到通行证——那笔GDP是虚的。</p>
-        <p>一个数字系统上线了。GDP增加。<br>但如果人民要重复填表十次、等六个月、最后被拒绝——那笔GDP是假的。</p>
-        <p>一笔预算花出去了。GDP增加。<br>但如果钱没有变成人民的成果，只变成顾问报告和系统商营收——<strong>那笔GDP不是繁荣，是转嫁。</strong></p>
-
-        <h2>PPP：成本的分子</h2>
-        <p>购买力平价被设计来修正GDP的汇率问题。它调整各国的物价差异。看起来很科学、很客观。</p>
-        <p>但PPP有三个致命缺陷：</p>
-        <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem;">
-            <li><strong>篮子是虚构的。</strong>用来计算PPP的「一篮子商品」在各国被标准化——但这些商品的品质、可取得性和相关性差异极大。在美国和中国，一支iPhone对一般家庭来说根本不是同一种「篮子商品」。</li>
-            <li><strong>它忽略公共服务。</strong>PPP只调整私人消费，完全忽略医疗、教育、交通、公共安全的品质和可及性——而这些往往是生活品质的最大决定因素。</li>
-            <li><strong>它忽略行政摩擦。</strong>PPP调整的是你花了多少钱，但没有调整你在过程中损失了多少时间、精力和尊严。那是GL框架在测量的。</li>
+        <h2>四、GL 框架诊断</h2>
+        <p>GL 框架衡量治理正当性：<strong style="font-family:monospace;">GL = (Fs × Vn) / (Pd × Cf)</strong>。分子指标产生低 GL，因为：</p>
+        <ul>
+            <li><strong>Fs（流程成功率）：</strong> 总体成长无法到达公民</li>
+            <li><strong>Vn（战略价值）：</strong> 系统为总体而非分配优化</li>
+            <li><strong>Pd（痛苦持续时间）：</strong> 公民在总体数字成长时受苦</li>
+            <li><strong>Cf（认知摩擦）：</strong> 分子隐藏了转移</li>
         </ul>
 
-        <h2>人均所得：平均数的分子</h2>
-        <p>人均所得就是把全国总所得除以人口。它告诉你<strong>平均数</strong>——这几乎无法告诉你大多数人实际经历了什么。</p>
-        <p>如果一个人有一百万美元，另外九个人有零元，人均所得是十万美元。技术上正确。但完全没有意义。</p>
-
-        <h2>美金：测量的分子</h2>
-        <p>所有的国际比较都用美金进行。这被包装成中立的——但一点也不中立。</p>
-        <p>当你把一切都换算成美金，你就是在用美国的尺来测量全世界。汇率波动基于利率、资本流动和地缘政治事件——这些都与人民实际如何生活完全无关。</p>
-        <p>一个国家可以在一夜之间「变富」或「变穷」，只因为美金波动了。人民没有改变。但数字说他们改变了。</p>
-
-        <div class="pull-quote"><p>「美金不是中立的尺。它是美国的尺——而全世界都在被这把尺测量。」</p></div>
-
-        <h2>GL的替代方案：看分母</h2>
-        <p>GDP、PPP、人均所得、美金——全部都是<strong>分子</strong>。它们测量的是<strong>总量</strong>。</p>
-        <p>但GL框架问的是另一个问题：</p>
-        <p style="font-size:1.2rem; color:#fbbf24; font-weight:500; text-align:center; margin:1.5rem 0;">「在这些总量底下，人民实际承担了什么？失去了什么？得到了什么？」</p>
-        <p>它测量的是<strong>分母</strong>——那些被系统忽略、被平均数隐藏、被总量从不揭示的东西：</p>
-        <table class="comparison-table">
-            <thead><tr><th>GL参数</th><th>测量什么</th></tr></thead>
-            <tbody>
-                <tr><td><strong>等待成本</strong></td><td>人民损失了多少时间</td></tr>
-                <tr><td><strong>重复成本</strong></td><td>人民重复做了多少次同样的事</td></tr>
-                <tr><td><strong>崩溃成本</strong></td><td>系统失灵时发生了什么</td></tr>
-                <tr><td><strong>信息不对称</strong></td><td>政府知道但人民不知道的事</td></tr>
-                <tr><td><strong>心理成本</strong></td><td>焦虑、羞辱、无力感</td></tr>
-                <tr><td><strong>机会成本</strong></td><td>因为系统而失去的可能性</td></tr>
-                <tr><td><strong>转嫁路径</strong></td><td>成本如何从政府转移到人民身上</td></tr>
-                <tr><td><strong>回路闭合</strong></td><td>系统是否真的在学习和改进</td></tr>
-            </tbody>
-        </table>
-
-        <div class="conclusion-box">
-            <p><strong>GDP、PPP、人均所得、美金，都不是敌人。</strong></p>
-            <p>它们是<strong>片面的</strong>——为不同的时代设计。</p>
-            <p>问题不在于它们存在。问题在于我们把它们当作完整的。</p>
-            <p>它们告诉你「有多少」。它们从来不告诉你<strong>「谁真正拿到了」。</strong></p>
-            <p><strong>全部都是分子。但真实的生活，发生在分母里。</strong></p>
-            <p style="margin-top: 0.8rem; color: #fbbf24; font-weight: 500;">这就是 GL 框架在测量的。</p>
+        <div class="highlight-box">
+            <p><strong>分子不是中性的测量。它们是意识形态工具——设计来掩盖价值从多数人向少数人的转移。</strong></p>
         </div>
 
-        <a class="back-link" href="index.html">← 回首页</a>
+        <a class="back-home" href="index.html">&larr; 回到首页</a>
 
+        <!-- ===== 简体中文导航 ===== -->
         <div class="nav-series">
             <div class="lang-zh active">
-                <a href="gdp-fig-leaf.html">← GDP：成绩单还是遮羞布？</a>
-                <a href="ghost-gdp.html">幽灵GDP 计算器 →</a>
+                <a href="gdp-fig-leaf.html#cn">← GDP：成绩单还是遮羞布？</a>
+                <a href="ghost-gdp.html#cn">幽灵GDP 计算器 →</a>
             </div>
         </div>
 
         <div class="footer-note">
-            <div class="lang-zh active">
-                <strong>徐萍</strong> · GL 治理正当性框架 创建者 · GFI Flow Intelligence · 波士顿<br>
-                <span style="font-size:0.75rem; color:#9fb0c8;">gfiintel.com · 免费阅读 · 免费分享</span>
-            </div>
+            <span>◆</span> GL 框架 · 经济与金融系列 · GDP、PPP、人均收入与美元 <span>◆</span>
         </div>
     </div>
 
-    <!-- ====== SPANISH ====== -->
-    <div id="lang-es" class="lang-content">
+    <!-- ============================================================ -->
+    <!-- 西班牙文 -->
+    <!-- ============================================================ -->
+    <div id="lang-es" class="lang-section">
+        <span class="series-badge">Serie de Economía y Finanzas · Parte 4 de 6</span>
         <h1>PIB, PPA, Ingreso Per Cápita y el Dólar Estadounidense</h1>
-        <div class="subhead">Todos son numeradores — y nunca preguntan quién recibe el valor</div>
-        <div class="byline">Ping Xu · GFI Flow Intelligence · Junio 2026</div>
+        <div class="subhead">Todos Son Numeradores — Nunca Preguntan: ¿Quién Obtiene el Valor?</div>
 
-        <p>Todos los días, nos dicen qué país es "más rico", cuál está "alcanzando" y cuál se está "quedando atrás". Los números se presentan como hechos — objetivos, científicos, indiscutibles.</p>
-        <p>No son nada de eso.</p>
-
-        <div class="pull-quote"><p>"Los números más peligrosos son los que parecen hechos, pero en realidad están diseñados para ocultar lo que no se supone que veas."</p></div>
-
-        <h2>Cuatro indicadores, un mismo problema: todos son numeradores</h2>
-        <table class="comparison-table">
-            <thead><tr><th>Indicador</th><th>Mide</th><th>Nunca pregunta</th></tr></thead>
-            <tbody>
-                <tr><td><strong>PIB</strong></td><td>Producción nacional total</td><td>¿A dónde fue? ¿Quién lo obtuvo?</td></tr>
-                <tr><td><strong>PPA</strong></td><td>Poder adquisitivo</td><td>¿Quién tiene poder adquisitivo? ¿Quién no?</td></tr>
-                <tr><td><strong>Ingreso per cápita</strong></td><td>Ingreso total ÷ población</td><td>¿Cómo se distribuye?</td></tr>
-                <tr><td><strong>Dólar estadounidense</strong></td><td>Unidad global de medición</td><td>¿Quién lo imprime? ¿Quién es medido por él?</td></tr>
-            </tbody>
-        </table>
-
-        <p>Cada uno de estos indicadores mide el <strong>total</strong>. Ninguno pregunta: <strong>¿Quién obtuvo qué?</strong></p>
-
-        <div class="pull-quote"><p>"Todos te dicen cuánto hay. Ninguno te dice cuánto obtuviste."</p></div>
-
-        <h2>PIB: El numerador de las transacciones</h2>
-        <p>El PIB mide <strong>transacciones</strong> — no bienestar, no entrega, no valor que regresa a las personas.</p>
-        <p>Se construye un puente. El PIB aumenta.<br>Pero si los ciudadanos tardan tres años en obtener un permiso para cruzarlo — ese PIB es una ilusión.</p>
-        <p>Un sistema digital se pone en marcha. El PIB aumenta.<br>Pero si los ciudadanos tienen que llenar el mismo formulario diez veces, esperar seis meses y ser rechazados — ese PIB es una mentira.</p>
-        <p>Se gasta un presupuesto. El PIB aumenta.<br>Pero si el dinero no se convierte en resultados, solo en informes de consultores e ingresos de proveedores — <strong>ese PIB no es prosperidad. Es transferencia.</strong></p>
-
-        <h2>PPA: El numerador del costo</h2>
-        <p>La Paridad de Poder Adquisitivo fue diseñada para corregir el problema del tipo de cambio del PIB. Ajusta las diferencias de precios entre países. Parece científica. Parece objetiva.</p>
-        <p>Pero la PPA tiene tres defectos fatales:</p>
-        <ul style="color:#c7d2e3; margin-left:1.5rem; margin-bottom:1rem;">
-            <li><strong>La canasta es una ficción.</strong> La "canasta de bienes" utilizada para calcular la PPA está estandarizada entre países — pero la calidad, disponibilidad y relevancia de esos bienes varían enormemente. Un iPhone en EE.UU. y un iPhone en China no son el mismo "bien de la canasta" para una familia típica.</li>
-            <li><strong>Ignora los servicios públicos.</strong> La PPA solo ajusta el consumo privado. Ignora por completo la calidad y accesibilidad de la atención médica, la educación, el transporte y la seguridad pública — que suelen ser los mayores determinantes de la calidad de vida.</li>
-            <li><strong>Ignora la fricción administrativa.</strong> La PPA ajusta cuánto pagas. No ajusta cuánto tiempo, energía y dignidad pierdes en el proceso. Eso es lo que mide el GL Framework.</li>
-        </ul>
-
-        <h2>Ingreso per cápita: El numerador de los promedios</h2>
-        <p>El ingreso per cápita es simplemente el ingreso nacional total dividido por la población. Te dice el <strong>promedio</strong> — lo que no te dice casi nada sobre lo que la mayoría de las personas experimentan realmente.</p>
-        <p>Si una persona tiene $1,000,000 y nueve personas tienen $0, el ingreso per cápita es $100,000. Técnicamente es correcto. También es completamente irrelevante.</p>
-
-        <h2>El Dólar: El numerador de la medición</h2>
-        <p>Todas las comparaciones internacionales se realizan en dólares estadounidenses. Esto se presenta como neutral — pero no lo es en absoluto.</p>
-        <p>Cuando conviertes todo a dólares, estás midiendo todo con una regla estadounidense. Los tipos de cambio fluctúan según las tasas de interés, los flujos de capital y los eventos geopolíticos — ninguno de los cuales tiene nada que ver con cómo vive realmente la gente.</p>
-        <p>Un país puede parecer "enriquecerse" o "empobrecerse" de la noche a la mañana, simplemente porque el dólar se movió. La gente no ha cambiado. Pero el número dice que sí.</p>
-
-        <div class="pull-quote"><p>"El dólar estadounidense no es una vara de medir neutral. Es una vara de medir estadounidense — y todo el mundo está siendo medido contra ella."</p></div>
-
-        <h2>La alternativa GL: Mirar el denominador</h2>
-        <p>El PIB, la PPA, el ingreso per cápita y el dólar son todos <strong>numeradores</strong>. Miden el <strong>total</strong>.</p>
-        <p>Pero el GL Framework hace una pregunta diferente:</p>
-        <p style="font-size:1.2rem; color:#fbbf24; font-weight:500; text-align:center; margin:1.5rem 0;">"Debajo de estos totales, ¿qué es lo que realmente cargan las personas? ¿Qué pierden? ¿Qué reciben?"</p>
-        <p>Mide el <strong>denominador</strong> — lo que el sistema ignora, lo que los promedios ocultan, lo que los totales nunca revelan:</p>
-        <table class="comparison-table">
-            <thead><tr><th>Parámetro GL</th><th>Mide</th></tr></thead>
-            <tbody>
-                <tr><td><strong>Costo de espera</strong></td><td>Cuánto tiempo pierden las personas</td></tr>
-                <tr><td><strong>Costo de repetición</strong></td><td>Cuántas veces las personas hacen lo mismo</td></tr>
-                <tr><td><strong>Costo de colapso</strong></td><td>Qué sucede cuando el sistema falla</td></tr>
-                <tr><td><strong>Asimetría de información</strong></td><td>Lo que el gobierno sabe pero los ciudadanos no</td></tr>
-                <tr><td><strong>Costo psicológico</strong></td><td>Ansiedad, humillación, impotencia</td></tr>
-                <tr><td><strong>Costo de oportunidad</strong></td><td>Lo que las personas pierden debido al sistema</td></tr>
-                <tr><td><strong>Vía de traslado</strong></td><td>Cómo los costos se trasladan del gobierno a las personas</td></tr>
-                <tr><td><strong>Cierre de circuito</strong></td><td>Si el sistema realmente aprende y mejora</td></tr>
-            </tbody>
-        </table>
-
-        <div class="conclusion-box">
-            <p><strong>El PIB, la PPA, el ingreso per cápita y el dólar no son el enemigo.</strong></p>
-            <p>Son <strong>parciales</strong> — diseñados para una era diferente.</p>
-            <p>El problema no es que existan. El problema es que los tratamos como completos.</p>
-            <p>Te dicen cuánto existe. Nunca te dicen <strong>quién lo recibió.</strong></p>
-            <p><strong>Todos son numeradores. Pero la vida real ocurre en el denominador.</strong></p>
-            <p style="margin-top: 0.8rem; color: #fbbf24; font-weight: 500;">Eso es lo que mide el GL Framework.</p>
+        <div class="highlight-box">
+            <p>📐 <strong>Hecho estructural:</strong> El PIB, la PPA, el ingreso per cápita y el dólar estadounidense son todos <strong>numeradores</strong>. Te dicen cuánto se produce — pero no quién lo obtiene. Miden el tamaño del pastel — pero no cómo se divide.</p>
         </div>
 
-        <a class="back-link" href="index.html">← Volver al Inicio</a>
+        <h2>I. El Problema del Numerador</h2>
+        <p>Cada métrica económica que domina el discurso global es un numerador. El PIB es un numerador. La PPA es un numerador. El ingreso per cápita es un numerador. El dólar estadounidense es un numerador. Todos miden el <strong>valor agregado</strong> — pero ninguno mide la <strong>distribución</strong>.</p>
 
+        <h2>II. Lo que el Numerador Oculta</h2>
+        <p>Un país puede tener alto PIB per cápita y alta desigualdad. Alta PPA y alta pobreza. Altas reservas en dólares y alta deuda. El numerador te dice el total — pero no el <strong>flujo</strong>. El numerador oculta la <strong>transferencia</strong>.</p>
+
+        <h2>III. El Denominador</h2>
+        <p>El denominador que falta es la <strong>distribución</strong>. ¿Quién obtiene el valor? En los sistemas capitalistas, el valor fluye hacia arriba — hacia el capital, hacia los terratenientes, hacia los ricos. El denominador es la <strong>transferencia estructural</strong> que el numerador oculta.</p>
+
+        <h2>IV. El Diagnóstico del GL Framework</h2>
+        <p>El GL Framework mide la legitimidad gubernamental: <strong style="font-family:monospace;">GL = (Fs × Vn) / (Pd × Cf)</strong>. Las métricas de numerador producen un GL bajo porque:</p>
+        <ul>
+            <li><strong>Fs (Éxito del Flujo):</strong> El crecimiento agregado no llega a los ciudadanos</li>
+            <li><strong>Vn (Valor Estratégico):</strong> El sistema optimiza para lo agregado — no para la distribución</li>
+            <li><strong>Pd (Duración del Dolor):</strong> Los ciudadanos sufren mientras los números agregados crecen</li>
+            <li><strong>Cf (Fricción Cognitiva):</strong> Los numeradores ocultan la transferencia</li>
+        </ul>
+
+        <div class="highlight-box">
+            <p><strong>Los numeradores no son mediciones neutrales. Son herramientas ideológicas — diseñadas para ocultar la transferencia de valor de los muchos a los pocos.</strong></p>
+        </div>
+
+        <a class="back-home" href="index.html">&larr; Volver al Inicio</a>
+
+        <!-- ===== Navegación en español ===== -->
         <div class="nav-series">
             <div class="lang-es active">
-                <a href="gdp-fig-leaf.html">← GDP: Report Card or Fig Leaf?</a>
-                <a href="ghost-gdp.html">Calculadora de PIB Fantasma →</a>
+                <a href="gdp-fig-leaf.html#es">← PIB: ¿Boletín de Calificaciones o Hoja de Parra?</a>
+                <a href="ghost-gdp.html#es">Calculadora de PIB Fantasma →</a>
             </div>
         </div>
 
         <div class="footer-note">
-            <div class="lang-es active">
-                <strong>Ping Xu</strong> · Creadora del GL Governance Legitimacy Framework · GFI Flow Intelligence · Boston<br>
-                <span style="font-size:0.75rem; color:#9fb0c8;">gfiintel.com · Lectura gratuita · Compartir gratuito</span>
-            </div>
+            <span>◆</span> GL Framework · Serie de Economía y Finanzas · PIB, PPA, Ingreso Per Cápita y el Dólar Estadounidense <span>◆</span>
         </div>
     </div>
 
 </div>
 
 <script>
-    (function() {
-        const tabs = document.querySelectorAll('.lang-tabs button');
-        const contents = document.querySelectorAll('.lang-content');
+    document.addEventListener('DOMContentLoaded', function() {
+        const buttons = document.querySelectorAll('.lang-switch button');
+        const sections = {
+            en: document.getElementById('lang-en'),
+            tw: document.getElementById('lang-tw'),
+            cn: document.getElementById('lang-cn'),
+            es: document.getElementById('lang-es')
+        };
 
-        function setLang(lang) {
-            tabs.forEach(b => b.classList.remove('active'));
-            contents.forEach(c => c.classList.remove('active'));
-            const targetTab = document.querySelector('.lang-tabs button[data-lang="' + lang + '"]');
-            if (targetTab) targetTab.classList.add('active');
-            const targetContent = document.getElementById('lang-' + lang);
-            if (targetContent) targetContent.classList.add('active');
-            // 導航同步
+        function switchLang(lang) {
+            Object.keys(sections).forEach(key => {
+                if (sections[key]) sections[key].classList.remove('active');
+            });
+            if (sections[lang]) sections[lang].classList.add('active');
+
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) btn.classList.add('active');
+            });
+
             document.querySelectorAll('.nav-series .lang-zh, .nav-series .lang-en, .nav-series .lang-es').forEach(el => el.classList.remove('active'));
-            const navTarget = document.querySelector('.nav-series .lang-' + lang);
+            const navMap = { en: 'lang-en', tw: 'lang-zh', cn: 'lang-zh', es: 'lang-es' };
+            const navTarget = document.querySelector('.nav-series .' + navMap[lang]);
             if (navTarget) navTarget.classList.add('active');
-            // 頁尾同步
-            document.querySelectorAll('.footer-note .lang-zh, .footer-note .lang-en, .footer-note .lang-es').forEach(el => el.classList.remove('active'));
-            const footerTarget = document.querySelector('.footer-note .lang-' + lang);
-            if (footerTarget) footerTarget.classList.add('active');
         }
 
-        tabs.forEach(tab => {
-            tab.addEventListener('click', function() {
+        buttons.forEach(btn => {
+            btn.addEventListener('click', function() {
                 const lang = this.dataset.lang;
-                setLang(lang);
+                if (lang) switchLang(lang);
             });
         });
 
-        // 預設 English
-        setLang('en');
-
-        // Hash 支援
-        window.addEventListener('hashchange', function() {
-            const hash = window.location.hash.replace('#', '');
-            if (hash === 'zh-Hant' || hash === 'zh-Hans' || hash === 'es') {
-                setLang(hash);
-            }
-        });
-    })();
+        const params = new URLSearchParams(window.location.search);
+        const langParam = params.get('lang');
+        if (langParam === 'tw' || langParam === 'cn' || langParam === 'es') {
+            switchLang(langParam);
+        } else {
+            switchLang('en');
+        }
+    });
 </script>
 
 </body>
