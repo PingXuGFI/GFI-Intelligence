@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Best Executable Action Plan · UK Land Reform 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f4f1ec;
+            font-family: 'Georgia', 'Times New Roman', 'Palatino', serif;
+            color: #1e1e1e;
+            padding: 2rem 1.5rem;
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 2.8rem 2.5rem;
+            border-radius: 6px;
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.05);
+            border-top: 8px solid #1e4a6b;
+            position: relative;
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+            font-family: 'Helvetica', 'Arial', sans-serif;
+        }
+
+        .lang-switch {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: 1px solid #b8ad9c;
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #2e2e2e;
+            cursor: pointer;
+            transition: all 0.15s;
+            letter-spacing: 0.3px;
+        }
+
+        .lang-btn:hover {
+            background: #e3dbd0;
+        }
+
+        .lang-btn.active {
+            background: #1e1e1e;
+            border-color: #1e1e1e;
+            color: #f5f2eb;
+        }
+
+        .pdf-btn {
+            background: #1e4a6b;
+            border: none;
+            padding: 0.4rem 1.6rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #ffffff;
+            cursor: pointer;
+            transition: background 0.15s;
+            letter-spacing: 0.4px;
+            font-family: 'Helvetica', 'Arial', sans-serif;
+        }
+
+        .pdf-btn:hover {
+            background: #0f3147;
+        }
+
+        .essay {
+            display: none;
+        }
+
+        /* 預設英文顯示（由 JS 控制，但 CSS 備援） */
+        .essay[lang="en"] {
+            display: block;
+        }
+
+        h1 {
+            font-size: 2.0rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            line-height: 1.2;
+            margin-bottom: 0.2rem;
+            color: #1a1410;
+        }
+
+        .subhead {
+            font-size: 1rem;
+            color: #6b5f4f;
+            border-bottom: 1px solid #e2d8cd;
+            padding-bottom: 1rem;
+            margin-bottom: 1.8rem;
+            font-style: italic;
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-top: 2.2rem;
+            margin-bottom: 0.4rem;
+            color: #1e4a6b;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-top: 1.4rem;
+            margin-bottom: 0.2rem;
+            color: #1e4a6b;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin: 0.3rem 0 1.2rem 1.8rem;
+        }
+
+        li {
+            margin-bottom: 0.4rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0;
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            border: 1px solid #d6cec2;
+            padding: 0.6rem 0.8rem;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background: #f0ebe3;
+            font-weight: 700;
+        }
+
+        .highlight-box {
+            background: #f0ebe3;
+            padding: 1.2rem 1.8rem;
+            border-left: 6px solid #1e4a6b;
+            margin: 1.6rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .highlight-box strong {
+            color: #1e4a6b;
+        }
+
+        .signature {
+            margin-top: 2.8rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid #ddd2c6;
+            font-style: italic;
+            color: #4f3f31;
+            text-align: right;
+            font-size: 0.95rem;
+        }
+
+        .footer-note {
+            font-size: 0.82rem;
+            color: #6a5d4d;
+            margin-top: 2rem;
+            background: #f6f2ec;
+            padding: 0.8rem 1.4rem;
+            border-radius: 4px;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0.5in;
+            }
+            .container {
+                box-shadow: none;
+                border-top: none;
+                padding: 0;
+                max-width: 100%;
+            }
+            .toolbar {
+                display: none !important;
+            }
+            .essay {
+                display: block !important;
+            }
+            .essay[lang="zh"] {
+                display: block !important;
+            }
+            .essay[lang="en"] {
+                display: block !important;
+            }
+            .essay[lang="es"] {
+                display: block !important;
+            }
+            .lang-switch,
+            .pdf-btn {
+                display: none !important;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .subhead {
+                border-bottom-color: #aaa;
+            }
+            table {
+                page-break-inside: avoid;
+            }
+            .highlight-box {
+                background: #f4f1ec;
+                border-left-color: #1e4a6b;
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 0.8rem;
+            }
+            .container {
+                padding: 1.6rem 1.2rem;
+            }
+            h1 {
+                font-size: 1.6rem;
+            }
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .lang-switch {
+                justify-content: center;
+            }
+            .pdf-btn {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <div class="toolbar">
+            <div class="lang-switch">
+                <button class="lang-btn" data-lang="zh">中文</button>
+                <button class="lang-btn active" data-lang="en">English</button>
+                <button class="lang-btn" data-lang="es">Español</button>
+            </div>
+            <button class="pdf-btn" id="pdfDownloadBtn">📄 Download PDF</button>
+        </div>
+
+        <!-- =============== 中文版 =============== -->
+        <div class="essay" lang="zh">
+            <h1>最佳執行可行方案</h1>
+            <div class="subhead">2026年英國土地改革 · 三層可執行策略</div>
+
+            <p>根據2026年最新的政治與法律現實，以下提出一套「三層可執行方案」，每一層都精準對應當前的政策窗口與法律工具。</p>
+
+            <h2>方案一：精準運用「社區價值資產」新制——這是最強的即戰力</h2>
+            <h3>2026年的新法律武器</h3>
+            <p><strong>《2026年英格蘭權力下放與社區賦能法》</strong>已於4月26日獲得御准，對「社區價值資產」（Assets of Community Value, ACV）制度進行了革命性改革：</p>
+            <ul>
+                <li><strong>從「投標權」升級為「購買權」</strong>：社區不再只是「有權投標」，而是擁有<strong>優先購買權</strong>（right of first refusal）——當ACV被出售時，社區有法定優先權以市場價格購買。</li>
+                <li><strong>ACV定義大幅擴張</strong>：過去僅限於「增進社會福祉」的資產，新法納入<strong>「經濟福祉」</strong>——村莊商店、街角商店等商業設施現在都可被指定為ACV。</li>
+                <li><strong>「近期過去」限制移除</strong>：過去僅能以「近期」的社區使用為依據申請ACV；新法允許以<strong>「任何時間點」的歷史社區使用</strong>為依據申請，只要未來五年內有可能恢復該用途。</li>
+                <li><strong>出售凍結期從6個月延長至12個月</strong>，給予社區更充裕的募資時間。</li>
+            </ul>
+
+            <h3>具體執行步驟</h3>
+            <p><strong>第一步：系統性指定ACV</strong><br />
+                針對英格蘭各地被閒置或拋售的歷史公共資產——關閉的酒吧、荒廢的村莊商店、閒置的公共建築——由地方社區團體向地方政府申請ACV指定。新法對ACV的定義已擴及「經濟福祉」，因此連商業設施都納入範圍。「任何時間點的過去使用」條款，使數十年前曾作為社區用途的資產都可被申請。</p>
+
+            <p><strong>第二步：觸發優先購買權</strong><br />
+                當地主出售ACV資產時，社區團體可啟動優先購買權，以市場價格購買。新法規定若雙方無法就價格達成協議，將由<strong>獨立估價師設定基於市場的價格</strong>。</p>
+
+            <p><strong>第三步：運用社區購買權基金</strong><br />
+                2026年6月，政府宣布成立<strong>6100萬英鎊的社區購買權基金</strong>。這筆資金可用於協助社區購買瀕臨關閉的社區資產——基金正是為此設立的。</p>
+
+            <h3>為何這是「最佳執行」方案</h3>
+            <table>
+                <thead><tr><th>優勢</th><th>說明</th></tr></thead>
+                <tbody>
+                    <tr><td>法律已生效</td><td>法已於4月26日獲御准，無需等待新立法</td></tr>
+                    <tr><td>基金已到位</td><td>6100萬英鎊資金已宣布</td></tr>
+                    <tr><td>無需挑戰憲政</td><td>完全在現行法律框架內運作</td></tr>
+                    <tr><td>可直接複製</td><td>全英格蘭各地皆可實施</td></tr>
+                </tbody>
+            </table>
+
+            <h2>方案二：善用蘇格蘭「荒廢或有害土地購買權」作為政策範本</h2>
+            <h3>蘇格蘭已有的更強武器</h3>
+            <p>蘇格蘭《2003年土地改革法》第3A部分提供了一個比「傳統社區購買權」更強大的工具——<strong>購買荒廢、遭忽視或對環境有害的土地的權利</strong>。</p>
+            <ul>
+                <li>傳統社區購買權：需等土地所有者主動出售</li>
+                <li><strong>荒廢/有害土地購買權：社區可「立即」啟動購買程序</strong>，無需等待地主出售</li>
+            </ul>
+            <p><strong>啟動條件</strong>：社區成立法定團體（至少10名成員，其中3/4為社區居民）→ 社區曾嘗試直接向地主購買但失敗 → 社區舉行投票（至少50%社區成員投票，且多數贊成）→ 向蘇格蘭部長申請，部長任命獨立估價師設定市場價格。</p>
+
+            <h3>政策移植策略</h3>
+            <p><strong>不談獨立，只談「政策移植」</strong>：蘇格蘭在社區資產轉移立法方面被研究證實為「英國最先進的國家」。研究指出：「毫無疑問，英國其他地區正在關注蘇格蘭，在立法影響方面有大量經驗可以傳授給其他國家。」英格蘭的新《社區賦能法》已建立了購買權框架，可在此基礎上透過次級立法擴展至「荒廢土地」範圍。</p>
+
+            <h3>具體行動</h3>
+            <ul>
+                <li><strong>試點複製</strong>：選擇英格蘭2-3個閒置土地問題嚴重的社區，參考蘇格蘭模式推動「荒廢土地購買」試點</li>
+                <li><strong>經驗交流平台</strong>：建立英格蘭與蘇格蘭社區代表之間的「土地改革經驗交流平台」</li>
+                <li><strong>立法倡議</strong>：推動英格蘭的次級立法，將購買權範圍從「社區資產」擴展至「荒廢或有害土地」</li>
+            </ul>
+
+            <h3>需注意的現實制約</h3>
+            <p>蘇格蘭社區購買權實施20年來，僅有2.6%的蘇格蘭土地真正進入社區所有權。主要障礙包括：社區缺乏行政管理、財務和法務技能；土地價格持續上漲（過去20年部分地區上漲3-4倍）；社區志工的時間與資源有限。<br />
+                <strong>解決方案</strong>：善用6100萬英鎊社區購買權基金中的「能力建設」部分（約1000萬英鎊），用於僱用專業人員協助社區進行購買程序。</p>
+
+            <h2>方案三：利用伯納姆「社會住宅轉向」的壓力點進行精準倡議</h2>
+            <h3>2026年8月的政治現實</h3>
+            <p>伯納姆在競選Makerfield選區議員時明確承諾：將<strong>£390億的社會與可負擔住宅計劃「全部」用於建設市議會住宅</strong>。他當時說：「讓我們不要再羞怯了……我說的是市議會住宅，因為控制權至關重要。」然而，2026年8月宣布的計劃僅將<strong>60%</strong>分配給社會租賃住宅，其餘用於共享所有權等「失敗的住房形式」。</p>
+
+            <h3>倡議團體的即時反應</h3>
+            <p>社會住宅行動運動（SHAC）批評這是「對住房市場和房東階級的重大讓步」。租戶改革聯盟（RRC）指出，興建7萬戶社會住宅的目標「不到住房團體計算所需數量的十分之一」。</p>
+
+            <h3>精準倡議策略</h3>
+            <ul>
+                <li><strong>數據連結</strong>：利用土地註冊處公開數據，系統性展示「土地壟斷 → 土地價格上漲 → 社會住宅建設成本過高 → 伯納姆無法實現承諾」的因果鏈</li>
+                <li><strong>捆綁訴求</strong>：將「土地價值稅」包裝為「讓市議會住宅建設變得可行的財源」。伯納姆曾表態支持LVT，這是一個可利用的政治槓桿</li>
+                <li><strong>地方層級施壓</strong>：新計劃中，超過£20億將投入倫敦以外的大都會區，且首次有三個地方議會成為「戰略夥伴」獲得十年期資金保障。在這些地方層級推動「土地增值回饋社會住宅」的試點方案</li>
+                <li><strong>倫敦的戰略價值</strong>：倫敦將獲得£60億額外資金。若倫敦市長與議會推動將部分資金用於「基於土地增值的開發貢獻」機制，將產生巨大的示範效應</li>
+            </ul>
+
+            <h2>整體執行架構</h2>
+            <table>
+                <thead><tr><th>方案</th><th>核心法律工具</th><th>時間窗口</th><th>所需資源</th><th>風險</th></tr></thead>
+                <tbody>
+                    <tr><td>一：ACV購買權</td><td>《賦能法》ACV條款</td><td>立即（已生效）</td><td>社區組織+6100萬基金</td><td>低</td></tr>
+                    <tr><td>二：荒廢土地購買</td><td>移植蘇格蘭模式</td><td>中期（次級立法）</td><td>專業能力建構</td><td>中</td></tr>
+                    <tr><td>三：社會住宅壓力</td><td>伯納姆承諾落差</td><td>立即（政治窗口）</td><td>倡議組織+數據</td><td>低</td></tr>
+                </tbody>
+            </table>
+
+            <h2>結論：從「最弱環節」開始</h2>
+            <p>最佳執行策略的關鍵在於<strong>從法律最穩固、政治阻力最小的方案開始</strong>：</p>
+            <ul>
+                <li><strong>立即行動</strong>：利用ACV新制與6100萬英鎊基金，在各地推動社區購買——這是法律已生效、資金已到位的「低掛果實」</li>
+                <li><strong>中期推進</strong>：透過試點與經驗交流，將蘇格蘭的荒廢土地購買權引入英格蘭</li>
+                <li><strong>持續施壓</strong>：利用伯納姆的承諾落差，將土地改革與社會住宅短缺直接掛鉤，形成政治壓力</li>
+            </ul>
+            <div class="highlight-box">
+                <strong>三條戰線中，方案一最無懈可擊</strong> —— 它完全基於已生效的法律與已宣布的資金，無需任何新立法或憲政挑戰，只需社區動員與地方政府配合即可推動。這應是改革的第一波攻勢。
+            </div>
+
+            <div class="signature">—— 最佳執行可行方案 · 2026</div>
+            <div class="footer-note">📌 本方案基於2026年已生效之法律與已宣布之資金編寫，所有策略均在現行憲政框架內運作。</div>
+        </div>
+
+        <!-- =============== 英文版（預設顯示） =============== -->
+        <div class="essay" lang="en">
+            <h1>Best Executable Action Plan</h1>
+            <div class="subhead">UK Land Reform 2026 · Three-Tier Strategy</div>
+
+            <p>Based on the latest political and legal realities of 2026, this document sets out a three‑tier executable plan, each layer precisely aligned with current policy windows and legal instruments.</p>
+
+            <h2>Plan 1: Leverage the New “Community Value Assets” Regime — The Strongest Immediate Lever</h2>
+            <h3>New Legal Weapon in 2026</h3>
+            <p>The <strong>Devolution and Community Empowerment Act 2026</strong> received Royal Assent on 26 April, introducing revolutionary changes to the Assets of Community Value (ACV) regime:</p>
+            <ul>
+                <li><strong>Upgrade from “right to bid” to “right to buy”</strong>: communities now have a statutory <strong>right of first refusal</strong> — when an ACV is sold, the community has the legal priority to purchase at market price.</li>
+                <li><strong>ACV definition significantly expanded</strong>: previously limited to assets that “enhance social wellbeing”, the new Act now includes <strong>“economic wellbeing”</strong> — village shops, corner shops and other commercial facilities can now be designated as ACVs.</li>
+                <li><strong>“Recent past” restriction removed</strong>: previously only “recent” community use could be cited; the new Act allows applications based on <strong>community use “at any time”</strong>, provided the use could be resumed within five years.</li>
+                <li><strong>Moratorium period extended from 6 to 12 months</strong>, giving communities more time to raise funds.</li>
+            </ul>
+
+            <h3>Concrete Execution Steps</h3>
+            <p><strong>Step 1: Systematically designate ACVs</strong><br />
+                For idle or abandoned historic public assets across England — closed pubs, derelict village shops, vacant public buildings — local community groups can apply to the local authority for ACV designation. With the expansion to “economic wellbeing”, even commercial premises are now covered. The “any time” clause allows assets that served community purposes decades ago to be nominated.</p>
+
+            <p><strong>Step 2: Trigger the right of first refusal</strong><br />
+                When a landowner sells an ACV, the community group can activate its right of first refusal to purchase at market price. If the parties fail to agree on price, an <strong>independent valuer will set a market-based price</strong>.</p>
+
+            <p><strong>Step 3: Utilise the Community Right to Buy Fund</strong><br />
+                In June 2026, the government announced a <strong>£61 million Community Right to Buy Fund</strong>. This money is specifically designed to help communities purchase assets at risk of closure.</p>
+
+            <h3>Why This Is the “Best Execution” Plan</h3>
+            <table>
+                <thead><tr><th>Advantage</th><th>Explanation</th></tr></thead>
+                <tbody>
+                    <tr><td>Law already in force</td><td>Royal Assent on 26 April, no waiting for new legislation</td></tr>
+                    <tr><td>Funds already available</td><td>£61 million announced</td></tr>
+                    <tr><td>No constitutional challenge</td><td>Operates entirely within current legal framework</td></tr>
+                    <tr><td>Directly replicable</td><td>Applicable across all of England</td></tr>
+                </tbody>
+            </table>
+
+            <h2>Plan 2: Use Scotland’s “Abandoned or Harmful Land” Purchase Right as a Policy Template</h2>
+            <h3>Scotland’s Stronger Tool</h3>
+            <p>Part 3A of Scotland’s Land Reform (Scotland) Act 2003 provides a tool even more powerful than the traditional community right to buy — the <strong>right to buy abandoned, neglected or harmful land</strong>.</p>
+            <ul>
+                <li>Traditional community right to buy: requires landowner willingness to sell</li>
+                <li><strong>Abandoned/harmful land right: the community can “immediately” initiate the purchase process</strong> without waiting for the owner to sell</li>
+            </ul>
+            <p><strong>Activation conditions</strong>: Community forms a legal body (at least 10 members, ¾ local residents) → community attempted but failed to buy directly → community vote (≥50% turnout, majority approval) → application to Scottish Ministers, who appoint an independent valuer to set the market price.</p>
+
+            <h3>Policy Transplantation Strategy</h3>
+            <p><strong>Do not talk about independence, only “policy transplantation”</strong>: Scotland has been confirmed by research as “the most advanced nation in the UK” for community asset transfer legislation. Research states: “There is no doubt that other parts of the UK are watching Scotland, and there is a great deal of experience to pass on to other countries in terms of legislative impact.” England’s new Community Empowerment Act has already established a purchase‑right framework, which can be extended to “abandoned land” via secondary legislation.</p>
+
+            <h3>Concrete Actions</h3>
+            <ul>
+                <li><strong>Pilot replication</strong>: select 2‑3 English communities with severe vacant‑land problems, and launch “abandoned land purchase” pilots modelled on Scotland</li>
+                <li><strong>Experience exchange platform</strong>: establish a “Land Reform Experience Exchange Platform” between English and Scottish community representatives</li>
+                <li><strong>Legislative advocacy</strong>: push for English secondary legislation to expand the purchase right from “community assets” to “abandoned or harmful land”</li>
+            </ul>
+
+            <h3>Realistic Constraints</h3>
+            <p>In 20 years of implementation, only 2.6% of Scottish land has actually entered community ownership. Key barriers: communities lack administrative, financial and legal skills; land prices have continued to rise (3‑4 times in some areas over 20 years); limited volunteer time and resources.<br />
+                <strong>Solution</strong>: use the “capacity‑building” portion (approx. £10 million) of the £61 million Community Right to Buy Fund to hire professionals to assist communities through the purchase process.</p>
+
+            <h2>Plan 3: Use Burnham’s “Social Housing Turn” Pressure Points for Targeted Advocacy</h2>
+            <h3>Political Reality as of August 2026</h3>
+            <p>During his campaign for the Makerfield constituency, Burnham explicitly committed to using <strong>the entire £39 billion social and affordable housing plan for council housing</strong>. He said: “Let’s not be shy anymore… I’m talking about council housing, because control is everything.” However, the plan announced in August 2026 allocated only <strong>60%</strong> to social rent, with the rest going to “failed housing forms” such as shared ownership.</p>
+
+            <h3>Immediate Response from Advocacy Groups</h3>
+            <p>The Social Housing Action Campaign (SHAC) called this “a major concession to the housing market and the landlord class”. The Renters’ Reform Coalition (RRC) noted that the target of 70,000 social homes “is less than one‑tenth of what housing groups calculate is needed”.</p>
+
+            <h3>Targeted Advocacy Strategy</h3>
+            <ul>
+                <li><strong>Data linkage</strong>: use Land Registry open data to systematically demonstrate the causal chain “land monopoly → rising land prices → excessive social housing construction costs → Burnham unable to deliver his promise”</li>
+                <li><strong>Bundle demands</strong>: frame Land Value Tax as “the revenue source that makes council housing viable”. Burnham has previously supported LVT — this is a political lever that can be used</li>
+                <li><strong>Local‑level pressure</strong>: the new plan allocates over £2 billion to metropolitan areas outside London, and for the first time three local councils have become “strategic partners” with ten‑year funding guarantees. At these local levels, pilot “land‑value recapture for social housing” schemes can be promoted</li>
+                <li><strong>London’s strategic value</strong>: London will receive an additional £6 billion. If the Mayor and the Assembly push to channel part of these funds into a “development contribution based on land‑value uplift”, it would create a powerful demonstration effect</li>
+            </ul>
+
+            <h2>Overall Execution Framework</h2>
+            <table>
+                <thead><tr><th>Plan</th><th>Core Legal Instrument</th><th>Time Window</th><th>Resources Required</th><th>Risk</th></tr></thead>
+                <tbody>
+                    <tr><td>1: ACV Right to Buy</td><td>Empowerment Act ACV clauses</td><td>Immediate (in force)</td><td>Community orgs + £61m Fund</td><td>Low</td></tr>
+                    <tr><td>2: Abandoned Land Purchase</td><td>Transplant Scottish model</td><td>Medium‑term (secondary legislation)</td><td>Professional capacity‑building</td><td>Medium</td></tr>
+                    <tr><td>3: Social Housing Pressure</td><td>Burnham’s commitment gap</td><td>Immediate (political window)</td><td>Advocacy groups + data</td><td>Low</td></tr>
+                </tbody>
+            </table>
+
+            <h2>Conclusion: Start with the “Weakest Link”</h2>
+            <p>The key to the best execution strategy is to <strong>start with the most legally solid and politically least resistant plan</strong>:</p>
+            <ul>
+                <li><strong>Immediate action</strong>: use the ACV regime and the £61 million Fund to drive community purchases across the country — these are “low‑hanging fruit” with law in force and money already available</li>
+                <li><strong>Medium‑term advancement</strong>: through pilots and experience exchange, introduce Scotland’s abandoned‑land purchase right into England</li>
+                <li><strong>Sustained pressure</strong>: use Burnham’s commitment gap to directly link land reform with the social housing shortage, creating political pressure</li>
+            </ul>
+            <div class="highlight-box">
+                <strong>Among the three fronts, Plan 1 is the most watertight</strong> — it is based entirely on law already in force and funds already announced, requiring no new legislation or constitutional challenge, only community mobilisation and local government cooperation. This should be the first wave of the reform effort.
+            </div>
+
+            <div class="signature">— Best Executable Action Plan · 2026</div>
+            <div class="footer-note">📌 This plan is drafted based on laws already in force and funds already announced in 2026. All strategies operate within the current constitutional framework.</div>
+        </div>
+
+        <!-- =============== 西班牙文版 =============== -->
+        <div class="essay" lang="es">
+            <h1>Plan de Acción Ejecutable Óptimo</h1>
+            <div class="subhead">Reforma Agraria del Reino Unido 2026 · Estrategia de Tres Niveles</div>
+
+            <p>Según las realidades políticas y legales más recientes de 2026, se presenta a continuación un «plan ejecutable de tres niveles», cada uno de los cuales se alinea con precisión con las ventanas de política y los instrumentos legales actuales.</p>
+
+            <h2>Plan 1: Aprovechar el nuevo régimen de «Activos de Valor Comunitario» — la herramienta más inmediata</h2>
+            <h3>Nueva arma legal en 2026</h3>
+            <p>La <strong>Ley de Descentralización y Empoderamiento Comunitario de 2026</strong> recibió la sanción real el 26 de abril, introduciendo cambios revolucionarios en el régimen de Activos de Valor Comunitario (ACV):</p>
+            <ul>
+                <li><strong>Actualización de «derecho a ofertar» a «derecho a comprar»</strong>: las comunidades ahora tienen un <strong>derecho de tanteo</strong> legal — cuando se vende un ACV, la comunidad tiene prioridad legal para comprarlo a precio de mercado.</li>
+                <li><strong>Definición de ACV ampliada</strong>: antes limitado a activos que «mejoran el bienestar social», la nueva ley incluye ahora <strong>«bienestar económico»</strong> — tiendas de pueblo, tiendas de esquina y otros establecimientos comerciales pueden ser designados ACV.</li>
+                <li><strong>Eliminación de la restricción de «pasado reciente»</strong>: antes solo se podía alegar uso comunitario «reciente»; la nueva ley permite solicitudes basadas en <strong>uso comunitario «en cualquier momento»</strong>, siempre que el uso pueda reanudarse en cinco años.</li>
+                <li><strong>Período de moratoria extendido de 6 a 12 meses</strong>, dando a las comunidades más tiempo para recaudar fondos.</li>
+            </ul>
+
+            <h3>Pasos de ejecución concretos</h3>
+            <p><strong>Paso 1: Designar ACV sistemáticamente</strong><br />
+                Para activos históricos públicos abandonados o en venta en toda Inglaterra — pubs cerrados, tiendas de pueblo abandonadas, edificios públicos vacíos — los grupos comunitarios locales pueden solicitar al gobierno local la designación ACV. Con la ampliación al «bienestar económico», incluso los locales comerciales están cubiertos. La cláusula de «cualquier momento» permite nominar activos que sirvieron a la comunidad hace décadas.</p>
+
+            <p><strong>Paso 2: Activar el derecho de tanteo</strong><br />
+                Cuando el propietario venda un ACV, el grupo comunitario puede activar su derecho de tanteo para comprarlo a precio de mercado. Si las partes no se ponen de acuerdo sobre el precio, un <strong>tasador independiente fijará un precio basado en el mercado</strong>.</p>
+
+            <p><strong>Paso 3: Utilizar el Fondo de Derecho Comunitario de Compra</strong><br />
+                En junio de 2026, el gobierno anunció un <strong>Fondo de Derecho Comunitario de Compra de £61 millones</strong>. Este dinero está específicamente diseñado para ayudar a las comunidades a comprar activos en riesgo de cierre.</p>
+
+            <h3>Por qué este es el plan de «mejor ejecución»</h3>
+            <table>
+                <thead><tr><th>Ventaja</th><th>Explicación</th></tr></thead>
+                <tbody>
+                    <tr><td>Ley ya en vigor</td><td>Sanción real el 26 de abril, sin esperar nueva legislación</td></tr>
+                    <tr><td>Fondos ya disponibles</td><td>£61 millones anunciados</td></tr>
+                    <tr><td>Sin desafío constitucional</td><td>Opera íntegramente dentro del marco legal actual</td></tr>
+                    <tr><td>Directamente replicable</td><td>Aplicable en toda Inglaterra</td></tr>
+                </tbody>
+            </table>
+
+            <h2>Plan 2: Utilizar el derecho de compra de tierras «abandonadas o nocivas» de Escocia como modelo de política</h2>
+            <h3>La herramienta más fuerte de Escocia</h3>
+            <p>La Parte 3A de la Ley de Reforma Agraria (Escocia) de 2003 proporciona una herramienta aún más poderosa que el derecho comunitario de compra tradicional — el <strong>derecho a comprar tierras abandonadas, descuidadas o nocivas para el medio ambiente</strong>.</p>
+            <ul>
+                <li>Derecho comunitario de compra tradicional: requiere la voluntad del propietario de vender</li>
+                <li><strong>Derecho de tierras abandonadas/nocivas: la comunidad puede «inmediatamente» iniciar el proceso de compra</strong> sin esperar a que el propietario venda</li>
+            </ul>
+            <p><strong>Condiciones de activación</strong>: La comunidad constituye un organismo legal (al menos 10 miembros, ¾ residentes locales) → la comunidad intentó comprar directamente pero fracasó → votación comunitaria (≥50% de participación, mayoría a favor) → solicitud a los Ministros escoceses, quienes nombran un tasador independiente para fijar el precio de mercado.</p>
+
+            <h3>Estrategia de trasplante de políticas</h3>
+            <p><strong>No hablar de independencia, solo de «trasplante de políticas»</strong>: Escocia ha sido confirmada por investigaciones como «la nación más avanzada del Reino Unido» en legislación de transferencia de activos comunitarios. La investigación afirma: «No hay duda de que otras partes del Reino Unido están observando a Escocia, y hay mucha experiencia que transmitir a otros países en términos de impacto legislativo». La nueva Ley de Empoderamiento Comunitario de Inglaterra ya ha establecido un marco de derecho de compra, que puede ampliarse a «tierras abandonadas» mediante legislación secundaria.</p>
+
+            <h3>Acciones concretas</h3>
+            <ul>
+                <li><strong>Replicación piloto</strong>: seleccionar 2-3 comunidades inglesas con graves problemas de tierras baldías y lanzar proyectos piloto de «compra de tierras abandonadas» basados en el modelo escocés</li>
+                <li><strong>Plataforma de intercambio de experiencias</strong>: establecer una «Plataforma de Intercambio de Experiencias en Reforma Agraria» entre representantes comunitarios ingleses y escoceses</li>
+                <li><strong>Iniciativa legislativa</strong>: impulsar la legislación secundaria en Inglaterra para ampliar el derecho de compra de «activos comunitarios» a «tierras abandonadas o nocivas»</li>
+            </ul>
+
+            <h3>Restricciones reales a tener en cuenta</h3>
+            <p>En 20 años de implementación, solo el 2,6% de la tierra escocesa ha pasado realmente a propiedad comunitaria. Las principales barreras son: falta de habilidades administrativas, financieras y legales en las comunidades; precios de la tierra en aumento (3-4 veces en algunas zonas en 20 años); tiempo y recursos limitados de los voluntarios.<br />
+                <strong>Solución</strong>: utilizar la parte de «creación de capacidad» (aproximadamente £10 millones) del Fondo de Derecho Comunitario de Compra de £61 millones para contratar profesionales que asistan a las comunidades en el proceso de compra.</p>
+
+            <h2>Plan 3: Utilizar los puntos de presión del «giro a la vivienda social» de Burnham para una incidencia precisa</h2>
+            <h3>Realidad política de agosto de 2026</h3>
+            <p>Durante su campaña para el distrito electoral de Makerfield, Burnham se comprometió explícitamente a utilizar <strong>los £39.000 millones del plan de vivienda social y asequible «íntegramente» para viviendas municipales</strong>. Dijo: «No seamos tímidos… hablo de viviendas municipales, porque el control es esencial». Sin embargo, el plan anunciado en agosto de 2026 asigna solo el <strong>60%</strong> a alquiler social, y el resto a formas «fallidas» de vivienda, como la propiedad compartida.</p>
+
+            <h3>Reacción inmediata de los grupos de incidencia</h3>
+            <p>La Campaña de Acción por la Vivienda Social (SHAC) calificó esto como «una concesión importante al mercado inmobiliario y a la clase terrateniente». La Coalición por la Reforma del Alquiler (RRC) señaló que el objetivo de 70.000 viviendas sociales «es menos de una décima parte de lo que los grupos de vivienda calculan que es necesario».</p>
+
+            <h3>Estrategia de incidencia precisa</h3>
+            <ul>
+                <li><strong>Vinculación de datos</strong>: utilizar los datos abiertos del Registro de la Propiedad para mostrar sistemáticamente la cadena causal «monopolio de la tierra → aumento de precios del suelo → costes excesivos de construcción de viviendas sociales → Burnham no puede cumplir su promesa»</li>
+                <li><strong>Exigencias vinculadas</strong>: enmarcar el Impuesto al Valor de la Tierra como «la fuente de ingresos que hace viable la vivienda municipal». Burnham ha apoyado anteriormente el LVT, una palanca política utilizable</li>
+                <li><strong>Presión a nivel local</strong>: el nuevo plan asigna más de £2.000 millones a áreas metropolitanas fuera de Londres, y por primera vez tres ayuntamientos se han convertido en «socios estratégicos» con garantías de financiación a diez años. A estos niveles locales se pueden promover proyectos piloto de «recuperación de plusvalías para vivienda social»</li>
+                <li><strong>Valor estratégico de Londres</strong>: Londres recibirá £6.000 millones adicionales. Si el alcalde y la asamblea impulsan que parte de estos fondos se canalicen a un mecanismo de «contribución al desarrollo basada en la plusvalía del suelo», se crearía un poderoso efecto demostrativo</li>
+            </ul>
+
+            <h2>Marco de ejecución general</h2>
+            <table>
+                <thead><tr><th>Plan</th><th>Instrumento legal principal</th><th>Ventana de tiempo</th><th>Recursos necesarios</th><th>Riesgo</th></tr></thead>
+                <tbody>
+                    <tr><td>1: ACV Compra</td><td>Cláusulas ACV de la Ley de Empoderamiento</td><td>Inmediato (en vigor)</td><td>Organizaciones comunitarias + Fondo £61M</td><td>Bajo</td></tr>
+                    <tr><td>2: Compra de tierras abandonadas</td><td>Trasplante del modelo escocés</td><td>Medio plazo (legislación secundaria)</td><td>Creación de capacidad profesional</td><td>Medio</td></tr>
+                    <tr><td>3: Presión por vivienda social</td><td>Brecha de compromiso de Burnham</td><td>Inmediato (ventana política)</td><td>Grupos de incidencia + datos</td><td>Bajo</td></tr>
+                </tbody>
+            </table>
+
+            <h2>Conclusión: Comenzar por el «eslabón más débil»</h2>
+            <p>La clave de la estrategia de mejor ejecución es <strong>comenzar por el plan más sólido legalmente y con menor resistencia política</strong>:</p>
+            <ul>
+                <li><strong>Acción inmediata</strong>: utilizar el régimen ACV y el Fondo de £61 millones para impulsar compras comunitarias en todo el país — estos son los «frutos bajos» con ley en vigor y dinero ya disponible</li>
+                <li><strong>Avance a medio plazo</strong>: a través de proyectos piloto e intercambio de experiencias, introducir el derecho de compra de tierras abandonadas de Escocia en Inglaterra</li>
+                <li><strong>Presión sostenida</strong>: utilizar la brecha de compromiso de Burnham para vincular directamente la reforma agraria con la escasez de vivienda social, creando presión política</li>
+            </ul>
+            <div class="highlight-box">
+                <strong>De los tres frentes, el Plan 1 es el más irrebatible</strong> — se basa íntegramente en leyes ya en vigor y fondos ya anunciados, sin necesidad de nueva legislación ni desafío constitucional, solo movilización comunitaria y cooperación del gobierno local. Esta debería ser la primera oleada de la reforma.
+            </div>
+
+            <div class="signature">— Plan de Acción Ejecutable Óptimo · 2026</div>
+            <div class="footer-note">📌 Este plan se ha redactado sobre la base de leyes ya en vigor y fondos ya anunciados en 2026. Todas las estrategias operan dentro del marco constitucional actual.</div>
+        </div>
+
+    </div>
+
+    <script>
+        (function() {
+            const buttons = document.querySelectorAll('.lang-btn');
+            const essays = document.querySelectorAll('.essay');
+
+            function setLanguage(lang) {
+                essays.forEach(essay => {
+                    essay.style.display = (essay.getAttribute('lang') === lang) ? 'block' : 'none';
+                });
+                buttons.forEach(btn => {
+                    btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+                });
+            }
+
+            buttons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    setLanguage(this.getAttribute('data-lang'));
+                });
+            });
+
+            // 預設英文
+            setLanguage('en');
+
+            // PDF 下載
+            document.getElementById('pdfDownloadBtn').addEventListener('click', function() {
+                window.print();
+            });
+        })();
+    </script>
+
+</body>
+</html>
