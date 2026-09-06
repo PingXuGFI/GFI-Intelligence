@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Procurement as Governance · 採購即治理 · La Contratación como Gobernanza</title>
+  <meta name="description" content="Procurement is governance. The structural diagnosis of how procurement systems shape — or break — state capacity.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{background:#0b1220;color:#f8fbff;font-family:'DM Sans',system-ui,sans-serif;font-size:15px;line-height:1.7;padding:0;min-height:100vh;display:flex;flex-direction:column}
+    .topbar{position:fixed;top:0;left:0;right:0;z-index:100;height:62px;padding:0 clamp(18px,5vw,52px);display:flex;align-items:center;justify-content:space-between;background:rgba(11,18,32,0.92);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.08)}
+    .logo{color:#fff;text-decoration:none;font-family:'DM Mono',monospace;font-size:13px;letter-spacing:.16em;text-transform:uppercase}
+    .nav-right{display:flex;align-items:center;gap:16px}
+    .lang-grp{display:flex;gap:6px}
+    .lb-btn{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.08em;padding:5px 10px;border:1px solid rgba(255,255,255,.1);border-radius:5px;background:0 0;color:#9fb0c8;cursor:pointer;transition:all .2s}
+    .lb-btn:hover{color:#fff;border-color:rgba(255,255,255,.2)}
+    .lb-btn.on{color:#9FE870;border-color:rgba(159,232,112,.35);background:rgba(159,232,112,.07)}
+    .lb{display:none;padding-top:62px;max-width:900px;margin:0 auto;padding:100px 40px 80px}
+    .lb.active{display:block}
+    .page-header{text-align:center;padding:0 0 40px 0}
+    .page-header .badge{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#9FE870;margin-bottom:16px}
+    .page-header .title{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(28px,3.5vw,44px);line-height:1.2;color:#f0f8f0;margin-bottom:8px}
+    .page-header .subtitle{font-family:'DM Serif Display',Georgia,serif;font-style:italic;font-size:clamp(18px,2vw,24px);color:#9fb0c8;margin-bottom:16px}
+    .page-header .meta{font-family:'DM Mono',monospace;font-size:.7rem;color:rgba(255,255,255,.2);margin-top:12px}
+    .page-header .divider{width:60px;height:2px;background:rgba(159,232,112,.3);margin:20px auto 0;border-radius:2px}
+    .content{font-size:16px;line-height:1.9;color:#c7d2e3}
+    .content .lead{font-size:1.1rem;font-weight:500;color:#f0f8f0;margin-bottom:24px}
+    .content p{margin-bottom:20px}
+    .content .highlight{color:#9FE870;font-weight:500}
+    .content .highlight-blue{color:#7DD3FC;font-weight:500}
+    .content .quote-block{background:rgba(159,232,112,.04);border-left:3px solid #9FE870;padding:16px 24px;margin:24px 0;border-radius:0 8px 8px 0}
+    .content .quote-block p{color:#d8e8d8;font-style:italic;margin-bottom:0}
+    .content .thesis-list{list-style:none;margin:20px 0 24px}
+    .content .thesis-list li{padding:12px 0;border-bottom:1px solid rgba(255,255,255,.04);display:flex;gap:14px;align-items:flex-start;color:#c7d2e3}
+    .content .thesis-list li::before{content:'⚡';color:#9FE870;font-size:1rem;flex-shrink:0;margin-top:2px}
+    .content .thesis-list li .sub{display:block;font-size:.75rem;color:rgba(255,255,255,.25);font-family:'DM Mono',monospace;margin-top:2px}
+    .content .signature{margin-top:40px;padding-top:24px;border-top:1px solid rgba(255,255,255,.06);font-family:'DM Serif Display',Georgia,serif;font-size:1.2rem;color:#f0f8f0}
+    .content .signature .title{font-family:'DM Mono',monospace;font-size:.65rem;color:rgba(255,255,255,.3);letter-spacing:.08em;display:block;margin-top:4px}
+    .content .signature .title-en{font-family:'DM Mono',monospace;font-size:.55rem;color:rgba(255,255,255,.15);letter-spacing:.04em;display:block;margin-top:2px}
+    .related-section{margin-top:40px;padding-top:24px;border-top:1px solid rgba(255,255,255,.06)}
+    .related-section .rel-label{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-bottom:12px}
+    .related-section .rel-list{display:flex;flex-direction:column;gap:6px}
+    .related-section .rel-list a{color:#9fb0c8;text-decoration:none;font-size:.9rem;transition:all .2s;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.03);display:flex;align-items:center;gap:10px}
+    .related-section .rel-list a:hover{color:#fff;padding-left:8px}
+    .related-section .rel-list a .rel-arrow{color:rgba(255,255,255,.08);font-size:.7rem;transition:all .2s}
+    .related-section .rel-list a:hover .rel-arrow{color:#9FE870;transform:translateX(3px)}
+    .back-link{display:inline-flex;align-items:center;gap:8px;margin-top:32px;color:#9fb0c8;text-decoration:none;font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.06em;transition:all .2s}
+    .back-link:hover{color:#fff}
+    .back-link .arrow{display:inline-block;transition:transform .2s}
+    .back-link:hover .arrow{transform:translateX(-3px)}
+    .footer{text-align:center;padding:24px 20px 32px;font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,.2);border-top:1px solid rgba(255,255,255,.05);margin-top:40px}
+    .footer a{color:rgba(255,255,255,.32);text-decoration:none;transition:color .2s}
+    .footer a:hover{color:#fff}
+    @media(max-width:600px){.lb{padding:80px 20px 60px}.content{font-size:15px}.topbar{padding:0 16px}}
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html" class="logo">GFI Flow Intelligence</a>
+  <div class="nav-right">
+    <div class="lang-grp">
+      <button class="lb-btn on" data-lang="en">EN</button>
+      <button class="lb-btn" data-lang="zh">中文</button>
+      <button class="lb-btn" data-lang="es">ES</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- ==================== 英文版（預設） ========================= -->
+<!-- ============================================================ -->
+<div class="lb active" data-lang="en">
+
+  <div class="page-header">
+    <div class="badge">Core Thesis · GL Framework</div>
+    <h1 class="title">Procurement Is Governance</h1>
+    <p class="subtitle">How procurement systems shape — or break — state capacity</p>
+    <div class="meta">Ping Xu · Creator of the GL Framework · September 2026</div>
+    <div class="divider"></div>
+  </div>
+
+  <div class="content">
+
+    <p class="lead">Procurement is not a technical function. It is a governance function.</p>
+
+    <p>The prevailing view treats procurement as an administrative tool — a back-office process for buying goods and services. This is the first error. The second error is treating it as a matter of "due diligence" or "compliance."</p>
+
+    <p><span class="highlight">Procurement is governance.</span> It determines:</p>
+
+    <ul class="thesis-list">
+      <li>
+        Who gets public money
+        <span class="sub">Allocation of public funds shapes markets, industries, and social outcomes</span>
+      </li>
+      <li>
+        Who bears risk
+        <span class="sub">Contract terms define how risk is distributed between state and private actors</span>
+      </li>
+      <li>
+        Who verifies results
+        <span class="sub">Outcome verification — not acceptance — determines whether public money delivers public value</span>
+      </li>
+      <li>
+        Whether the state can learn
+        <span class="sub">Procurement systems that fail to learn create structural inertia — policy that repeats its own failures</span>
+      </li>
+    </ul>
+
+    <p>When procurement is treated as mere administration, the state loses the ability to steer. It becomes a passive buyer — not an active governor. This is not a failure of procurement. <span class="highlight">It is a failure of governance.</span></p>
+
+    <div class="quote-block">
+      <p>"The state that cannot procure well cannot govern well. Procurement is the material expression of state capacity."</p>
+    </div>
+
+    <p>This is why the GL Framework was designed. It measures governance flow — the friction between intended policy and actual delivery. Procurement sits at the center of that flow. It is the valve through which policy becomes reality. If the valve is broken, nothing downstream works.</p>
+
+    <p>The evidence is already visible. The UK's <span class="highlight-blue">£54 billion</span> in consulting contracts. The Pentagon's inability to pass an audit with <span class="highlight-blue">$840 billion</span> on the line. Australia paying KPMG <span class="highlight-blue">$24 million</span> to teach ethics to public servants. These are not isolated failures. They are structural failures of procurement — which is to say, <span class="highlight">structural failures of governance</span>.</p>
+
+    <p>Procurement reform is not about better forms. It is not about digital tools. It is about <span class="highlight">reclaiming the state's capacity to govern</span> through the contracts it writes. This is why the GL Framework exists: to measure, diagnose, and restore that capacity.</p>
+
+    <div class="signature">
+      Ping Xu
+      <span class="title">Creator of the GL Framework</span>
+      <span class="title-en">Governance Legitimacy Framework · Flow Intelligence</span>
+    </div>
+
+    <!-- ===== 相關文章 ===== -->
+    <div class="related-section">
+      <div class="rel-label">Related Articles</div>
+      <div class="rel-list">
+        <a href="/government-failure-inc.html">
+          <span class="rel-arrow">→</span>
+          Government Failure, Inc. — How consultants broke the state
+        </a>
+        <a href="/procurement-inertia.html">
+          <span class="rel-arrow">→</span>
+          Procurement Inertia — Structural Gaps in Public Digital Transformation
+        </a>
+        <a href="/uk-us-governance-collapse.html">
+          <span class="rel-arrow">→</span>
+          UK &amp; US — Neoliberalism's Governance Collapse
+        </a>
+        <a href="/from-procedure-to-delivery.html">
+          <span class="rel-arrow">→</span>
+          From Procedure to Delivery — The Global Procurement Revolution
+        </a>
+        <a href="/governance-of-essential-livelihood-needs.html">
+          <span class="rel-arrow">→</span>
+          Governance of Essential Livelihood Needs — China's Systematic Practice
+        </a>
+      </div>
+    </div>
+
+    <a href="index.html" class="back-link"><span class="arrow">←</span> Back to Home</a>
+
+  </div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- ==================== 中文版 ================================== -->
+<!-- ============================================================ -->
+<div class="lb" data-lang="zh">
+
+  <div class="page-header">
+    <div class="badge">核心論述 · GL框架</div>
+    <h1 class="title">採購即治理</h1>
+    <p class="subtitle">採購系統如何塑造或摧毀國家治理能力</p>
+    <div class="meta">徐萍 · GL框架發明人 · 2026年9月</div>
+    <div class="divider"></div>
+  </div>
+
+  <div class="content">
+
+    <p class="lead">採購不是技術問題。它是治理問題。</p>
+
+    <p>主流觀點將採購視為行政工具——一個購買商品和服務的後勤流程。這是第一個錯誤。第二個錯誤是將它視為「盡職調查」或「合規」事項。</p>
+
+    <p><span class="highlight">採購就是治理。</span>它決定了：</p>
+
+    <ul class="thesis-list">
+      <li>
+        誰獲得公共資金
+        <span class="sub">公共資金的分配塑造市場、產業和社會結果</span>
+      </li>
+      <li>
+        誰承擔風險
+        <span class="sub">合約條款定義風險如何在國家與私部門之間分配</span>
+      </li>
+      <li>
+        誰驗證成果
+        <span class="sub">成果驗證——而非驗收——決定公共資金是否產生了公共價值</span>
+      </li>
+      <li>
+        國家是否能學習
+        <span class="sub">無法學習的採購系統會產生結構性慣性——政策重複自己的失敗</span>
+      </li>
+    </ul>
+
+    <p>當採購被當作單純的行政事務時，國家就失去了引導能力。它變成被動的買家——而不是主動的治理者。這不是採購的失敗。<span class="highlight">這是治理的失敗。</span></p>
+
+    <div class="quote-block">
+      <p>「一個國家如果無法做好採購，就無法做好治理。採購是國家治理能力的物質表現。」</p>
+    </div>
+
+    <p>這就是為什麼要設計 GL 框架。它測量治理流暢度——政策意圖與實際交付之間的摩擦。採購位於這個流程的中心。它是政策轉化為現實的閥門。如果閥門壞了，下游所有環節都無法運作。</p>
+
+    <p>證據已經可見。英國 <span class="highlight-blue">540 億英鎊</span> 的顧問合約。五角大廈在 <span class="highlight-blue">8,400 億美元</span> 的預算下仍無法通過審計。澳洲支付 KPMG <span class="highlight-blue">2,400 萬美元</span> 來教導公務員倫理。這些不是孤立的失敗。它們是採購的結構性失敗——也就是說，<span class="highlight">治理的結構性失敗</span>。</p>
+
+    <p>採購改革不是關於更好的表格。不是關於數位工具。而是關於 <span class="highlight">透過國家簽訂的合約，重新奪回國家的治理能力</span>。這就是 GL 框架存在的意義：測量、診斷、恢復這個能力。</p>
+
+    <div class="signature">
+      徐萍
+      <span class="title">GL框架發明人</span>
+      <span class="title-en">治理正當性框架 · 流暢治理</span>
+    </div>
+
+    <!-- ===== 相關文章（中文） ===== -->
+    <div class="related-section">
+      <div class="rel-label">相關文章</div>
+      <div class="rel-list">
+        <a href="/government-failure-inc.html">
+          <span class="rel-arrow">→</span>
+          政府失敗股份有限公司 —— 顧問如何搞垮國家
+        </a>
+        <a href="/procurement-inertia.html">
+          <span class="rel-arrow">→</span>
+          採購慣性 —— 公共數位轉型的結構性缺口
+        </a>
+        <a href="/uk-us-governance-collapse.html">
+          <span class="rel-arrow">→</span>
+          英國與美國 —— 新自由主義的治理崩潰
+        </a>
+        <a href="/from-procedure-to-delivery.html">
+          <span class="rel-arrow">→</span>
+          從程序到交付 —— 全球採購革命
+        </a>
+        <a href="/governance-of-essential-livelihood-needs.html">
+          <span class="rel-arrow">→</span>
+          民生必需品的治理 —— 中國的系統性實踐
+        </a>
+      </div>
+    </div>
+
+    <a href="index.html" class="back-link"><span class="arrow">←</span> 返回首頁</a>
+
+  </div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- ==================== 西班牙文版 ============================== -->
+<!-- ============================================================ -->
+<div class="lb" data-lang="es">
+
+  <div class="page-header">
+    <div class="badge">Tesis Central · GL Framework</div>
+    <h1 class="title">La Contratación es Gobernanza</h1>
+    <p class="subtitle">Cómo los sistemas de contratación construyen o destruyen la capacidad estatal</p>
+    <div class="meta">Ping Xu · Creadora del GL Framework · Septiembre 2026</div>
+    <div class="divider"></div>
+  </div>
+
+  <div class="content">
+
+    <p class="lead">La contratación no es una función técnica. Es una función de gobernanza.</p>
+
+    <p>La visión predominante trata la contratación como una herramienta administrativa — un proceso de oficina para comprar bienes y servicios. Este es el primer error. El segundo error es tratarlo como un asunto de "debida diligencia" o "cumplimiento."</p>
+
+    <p><span class="highlight">La contratación es gobernanza.</span> Determina:</p>
+
+    <ul class="thesis-list">
+      <li>
+        Quién recibe dinero público
+        <span class="sub">La asignación de fondos públicos moldea mercados, industrias y resultados sociales</span>
+      </li>
+      <li>
+        Quién asume el riesgo
+        <span class="sub">Los términos del contrato definen cómo se distribuye el riesgo entre el estado y los actores privados</span>
+      </li>
+      <li>
+        Quién verifica los resultados
+        <span class="sub">La verificación de resultados — no la aceptación — determina si el dinero público genera valor público</span>
+      </li>
+      <li>
+        Si el estado puede aprender
+        <span class="sub">Los sistemas de contratación que no aprenden crean inercia estructural — políticas que repiten sus propios fracasos</span>
+      </li>
+    </ul>
+
+    <p>Cuando la contratación se trata como mera administración, el estado pierde la capacidad de dirigir. Se convierte en un comprador pasivo — no en un gobernante activo. Esto no es un fracaso de la contratación. <span class="highlight">Es un fracaso de la gobernanza.</span></p>
+
+    <div class="quote-block">
+      <p>"El estado que no sabe contratar bien no puede gobernar bien. La contratación es la expresión material de la capacidad estatal."</p>
+    </div>
+
+    <p>Por eso se diseñó el GL Framework. Mide el flujo de gobernanza — la fricción entre la política deseada y la entrega real. La contratación está en el centro de ese flujo. Es la válvula a través de la cual la política se convierte en realidad. Si la válvula está rota, nada funciona río abajo.</p>
+
+    <p>La evidencia ya es visible. Los <span class="highlight-blue">£54 mil millones</span> en contratos de consultoría del Reino Unido. La incapacidad del Pentágono de pasar una auditoría con <span class="highlight-blue">$840 mil millones</span> en juego. Australia pagando a KPMG <span class="highlight-blue">$24 millones</span> para enseñar ética a funcionarios públicos. Estos no son fracasos aislados. Son fracasos estructurales de la contratación — es decir, <span class="highlight">fracasos estructurales de la gobernanza</span>.</p>
+
+    <p>La reforma de la contratación no se trata de mejores formularios. No se trata de herramientas digitales. Se trata de <span class="highlight">recuperar la capacidad del estado para gobernar a través de los contratos que firma</span>. Por eso existe el GL Framework: para medir, diagnosticar y restaurar esa capacidad.</p>
+
+    <div class="signature">
+      Ping Xu
+      <span class="title">Creadora del GL Framework</span>
+      <span class="title-en">Marco de Legitimidad Gubernamental · Inteligencia de Flujo</span>
+    </div>
+
+    <!-- ===== Artículos Relacionados ===== -->
+    <div class="related-section">
+      <div class="rel-label">Artículos Relacionados</div>
+      <div class="rel-list">
+        <a href="/government-failure-inc.html">
+          <span class="rel-arrow">→</span>
+          Government Failure, Inc. — Cómo los consultores quebraron el estado
+        </a>
+        <a href="/procurement-inertia.html">
+          <span class="rel-arrow">→</span>
+          Inercia de la Contratación — Brechas en la Transformación Digital Pública
+        </a>
+        <a href="/uk-us-governance-collapse.html">
+          <span class="rel-arrow">→</span>
+          Reino Unido y EE.UU. — El Colapso de la Gobernanza Neoliberal
+        </a>
+        <a href="/from-procedure-to-delivery.html">
+          <span class="rel-arrow">→</span>
+          Del Procedimiento a la Entrega — La Revolución Global de la Contratación
+        </a>
+        <a href="/governance-of-essential-livelihood-needs.html">
+          <span class="rel-arrow">→</span>
+          Gobernanza de Necesidades Esenciales — La Práctica Sistemática de China
+        </a>
+      </div>
+    </div>
+
+    <a href="index.html" class="back-link"><span class="arrow">←</span> Volver al Inicio</a>
+
+  </div>
+
+</div>
+
+<div class="footer">
+  © 2026 GFI Flow Intelligence · <a href="index.html">Home</a>
+</div>
+
+<script>
+  document.querySelectorAll('.lb-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var lang = this.dataset.lang;
+      document.querySelectorAll('.lb-btn').forEach(function(b) { b.classList.remove('on'); });
+      this.classList.add('on');
+      document.querySelectorAll('.lb').forEach(function(lb) { lb.classList.remove('active'); });
+      var target = document.querySelector('.lb[data-lang="' + lang + '"]');
+      if (target) target.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
