@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>劏房籠屋 · 香港的人道恥辱與終結之路</title>
+    <meta name="description" content="香港的劏房與籠屋，是殖民主義與資本主義極端化的歷史陳跡。在中國的土地制度下，這些人道恥辱即將被消弭。" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background: #f8f5f0;
+            color: #1e1e1e;
+            font-family: 'DM Sans', system-ui, sans-serif;
+            font-size: 16px;
+            line-height: 1.8;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .topbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            height: 60px;
+            padding: 0 clamp(18px, 5vw, 48px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(248, 245, 240, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
+        .logo {
+            font-family: 'DM Mono', monospace;
+            font-size: 12px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #1e1e1e;
+            text-decoration: none;
+        }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .lang-grp {
+            display: flex;
+            gap: 6px;
+        }
+        .lb-btn {
+            font-family: 'DM Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.06em;
+            padding: 4px 12px;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            border-radius: 4px;
+            background: transparent;
+            color: #4a4a4a;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lb-btn:hover {
+            background: rgba(0, 0, 0, 0.04);
+        }
+        .lb-btn.on {
+            background: #1e1e1e;
+            color: #f8f5f0;
+            border-color: #1e1e1e;
+        }
+        .pdf-btn {
+            font-family: 'DM Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.06em;
+            padding: 4px 12px;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.03);
+            color: #1e1e1e;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .pdf-btn:hover {
+            background: rgba(0, 0, 0, 0.08);
+        }
+        .lb {
+            display: none;
+            padding-top: 60px;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 90px 40px 70px;
+        }
+        .lb.active {
+            display: block;
+        }
+        .page-header {
+            text-align: center;
+            padding: 0 0 28px 0;
+        }
+        .page-header .badge {
+            font-family: 'DM Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #8a2e2e;
+            margin-bottom: 10px;
+        }
+        .page-header .title {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: clamp(28px, 3.4vw, 42px);
+            line-height: 1.2;
+            color: #1e1e1e;
+            margin-bottom: 4px;
+        }
+        .page-header .subtitle {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-style: italic;
+            font-size: clamp(16px, 1.6vw, 20px);
+            color: #5a3a2a;
+            margin-bottom: 10px;
+        }
+        .page-header .meta {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: rgba(30, 30, 30, 0.4);
+            margin-top: 6px;
+        }
+        .page-header .divider {
+            width: 50px;
+            height: 2px;
+            background: #8a2e2e;
+            margin: 14px auto 0;
+            border-radius: 2px;
+            opacity: 0.3;
+        }
+        .content {
+            font-size: 15.5px;
+            line-height: 1.9;
+            color: #2a2a2a;
+        }
+        .content p {
+            margin-bottom: 18px;
+        }
+        .content .lead {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: #1e1e1e;
+            margin-bottom: 22px;
+        }
+        .content .highlight {
+            color: #8a2e2e;
+            font-weight: 600;
+        }
+        .content .highlight-blue {
+            color: #1e6b8a;
+            font-weight: 500;
+        }
+        .content .section-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin: 1.8rem 0 0.5rem 0;
+            color: #1e1e1e;
+            border-bottom: 2px solid rgba(138, 46, 46, 0.15);
+            padding-bottom: 0.2rem;
+        }
+        .content .sub-section {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 1.4rem 0 0.3rem 0;
+            color: #2e2e2e;
+        }
+        .content .quote-block {
+            background: rgba(138, 46, 46, 0.04);
+            border-left: 4px solid #8a2e2e;
+            padding: 14px 22px;
+            margin: 22px 0;
+            border-radius: 0 6px 6px 0;
+            color: #3a3a3a;
+            font-style: italic;
+        }
+        .content .quote-block p {
+            margin-bottom: 0;
+        }
+        .content .highlight-box {
+            background: rgba(138, 46, 46, 0.04);
+            border-left: 4px solid #8a2e2e;
+            padding: 1rem 1.6rem;
+            margin: 22px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .content .highlight-box p {
+            margin-bottom: 4px;
+            color: #2a2a2a;
+        }
+        .content .highlight-box strong {
+            color: #1e1e1e;
+        }
+        .content .pillar-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 18px;
+            margin: 20px 0;
+        }
+        .content .pillar-card {
+            background: rgba(138, 46, 46, 0.04);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            border-radius: 12px;
+            padding: 1.2rem 1.2rem;
+        }
+        .content .pillar-card .num {
+            font-family: 'DM Mono', monospace;
+            font-size: 1.4rem;
+            color: #8a2e2e;
+            margin-bottom: 4px;
+        }
+        .content .pillar-card .p-title {
+            font-weight: 600;
+            color: #1e1e1e;
+            margin-bottom: 4px;
+        }
+        .content .pillar-card .p-desc {
+            font-size: 0.9rem;
+            color: #3a3a3a;
+            line-height: 1.7;
+        }
+        .content .signature {
+            margin-top: 36px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.1rem;
+            color: #1e1e1e;
+        }
+        .content .signature .title {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.6rem;
+            color: rgba(30, 30, 30, 0.4);
+            letter-spacing: 0.06em;
+            display: block;
+            margin-top: 2px;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 30px;
+            color: #5a4a3a;
+            text-decoration: none;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.04em;
+            transition: all 0.2s;
+        }
+        .back-link:hover {
+            color: #1e1e1e;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px 20px 28px;
+            font-family: 'DM Mono', monospace;
+            font-size: 10px;
+            color: rgba(30, 30, 30, 0.3);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            margin-top: 32px;
+        }
+        @media print {
+            body {
+                background: white;
+                color: #111;
+            }
+            .topbar {
+                display: none;
+            }
+            .lb {
+                padding: 40px 20px;
+            }
+            .lb-btn,
+            .pdf-btn {
+                display: none;
+            }
+            .content {
+                color: #222;
+            }
+            .page-header .title {
+                color: #111;
+            }
+            .page-header .subtitle {
+                color: #333;
+            }
+            .page-header .meta {
+                color: #666;
+            }
+            .footer {
+                color: #666;
+            }
+            .back-link {
+                color: #444;
+            }
+            .signature {
+                color: #111;
+            }
+            .content .highlight {
+                color: #7a2a1a;
+            }
+            .lb {
+                display: block !important;
+            }
+            .lb.active {
+                display: block !important;
+            }
+            .lb[data-lang="zh"] {
+                display: block !important;
+            }
+            .lb[data-lang="en"] {
+                display: block !important;
+            }
+        }
+        @media (max-width: 700px) {
+            .content .pillar-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 600px) {
+            .lb {
+                padding: 70px 18px 50px;
+            }
+            .content {
+                font-size: 14.5px;
+            }
+            .topbar {
+                padding: 0 14px;
+            }
+        }
+        .content ul {
+            margin: 0.3rem 0 1rem 1.6rem;
+            color: #2a2a2a;
+        }
+        .content ul li {
+            margin-bottom: 0.3rem;
+        }
+        .content .stat-highlight {
+            background: rgba(138, 46, 46, 0.05);
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            font-weight: 500;
+            color: #8a2e2e;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="topbar">
+        <a href="#" class="logo">劏房籠屋 · 人道恥辱</a>
+        <div class="nav-right">
+            <div class="lang-grp">
+                <button class="lb-btn on" data-lang="zh">中文</button>
+                <button class="lb-btn" data-lang="en">English</button>
+            </div>
+            <button class="pdf-btn" onclick="window.print()">⬇ PDF</button>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ==================== 中文版 ================================== -->
+    <!-- ============================================================ -->
+    <div class="lb active" data-lang="zh">
+
+        <div class="page-header">
+            <div class="badge">人道 · 制度 · 終結</div>
+            <h1 class="title">劏房籠屋</h1>
+            <p class="subtitle">香港的人道恥辱，即將在中國的土地制度下消弭</p>
+            <div class="meta">GFI Flow Intelligence · 2026年9月</div>
+            <div class="divider"></div>
+        </div>
+
+        <div class="content">
+
+            <p class="lead">香港的<span class="highlight">劏房</span>與<span class="highlight">籠屋</span>，不是偶然的社會現象，而是<span class="highlight">殖民主義與資本主義極端化的歷史陳跡</span>——是土地被徹底商品化、居住被徹底金融化之後，必然產生的制度性廢墟。</p>
+
+            <p>這些空間，是人道的恥辱，也是制度的鏡子。它們的存在，不是因為香港「沒有土地」，而是因為<span class="highlight">土地增值被少數人壟斷，居住淪為投機工具</span>。</p>
+
+            <div class="section-title">一、什麼是劏房與籠屋？——數字背後的人道危機</div>
+
+            <p><strong>劏房</strong>，是將一個正常住宅單位切割成多個獨立房間，每個房間面積僅有 <span class="stat-highlight">5-10 平方公尺</span>。租戶沒有廚房、沒有像樣的衛浴、沒有通風與採光。</p>
+
+            <p><strong>籠屋</strong>，是「床位寓所」的俗稱——在一間房間內放置數十個上下舖鐵籠床位，每個床位僅容一人躺臥，租戶以月租方式租用一個「籠子」作為棲身之所。</p>
+
+            <p><strong>規模與數據</strong>：</p>
+            <ul>
+                <li>全香港約有 <span class="stat-highlight">10.8 萬</span> 個劏房單位，居住超過 <span class="stat-highlight">22 萬</span> 人</li>
+                <li>籠屋住戶約 <span class="stat-highlight">3,000-5,000</span> 人，多為年老、失業或邊緣勞工</li>
+                <li>劏房月租中位數約 <span class="stat-highlight">4,500–5,500 港元</span>，每平方呎租金甚至高於豪宅</li>
+                <li>超過 <span class="stat-highlight">20%</span> 的劏房住戶為兒童，他們在沒有書桌、沒有窗戶的環境中成長</li>
+            </ul>
+
+            <div class="quote-block">
+                <p>「一個成年人睡在鐵籠裡，一個家庭擠在不到五平方米的空間裡，一個老人終其一生等不到一間像樣的公屋。這是二十一世紀的香港——一個國際金融中心。」</p>
+            </div>
+
+            <div class="section-title">二、劏房籠屋的根源——不是土地不足，是制度失能</div>
+
+            <p>香港不是沒有土地。香港的土地面積超過 <span class="stat-highlight">1,100 平方公里</span>，但已開發土地僅佔 <span class="stat-highlight">24%</span>，其餘是郊野公園與未開發土地。問題不是「土地不夠」，而是 <span class="highlight">「土地被壟斷」</span>。</p>
+
+            <p>香港的四大發展商——新鴻基、長實、恆基、新世界——控制了大量的住宅土地供應。他們不是沒有土地，而是 <span class="highlight">「囤地」</span>——等待地價上漲後再開發，或乾脆不開發，讓供應持續緊縮，房價不斷攀升。</p>
+
+            <p>而政府呢？</p>
+            <ul>
+                <li>香港政府的土地政策，長期依賴「賣地收入」作為財政支柱</li>
+                <li>每一次土地拍賣，都是把公共資源賣給最高出價者</li>
+                <li>土地增值被私人捕獲，公共財政卻沒有錢蓋足夠的公屋</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p><strong>核心矛盾</strong></p>
+                <p>香港政府依賴賣地收入維持財政，因此有強烈動機維持高地價、高房價。但高地價意味著高房價，高房價意味著更多人買不起房、住進劏房與籠屋。</p>
+                <p><span class="highlight">政府既是土地的唯一供應者，又是居住問題的監管者——這兩種角色，從根本上就是衝突的。</span></p>
+            </div>
+
+            <div class="section-title">三、歷史根源——殖民遺產與資本主義極端化</div>
+
+            <p>香港的土地制度，是英國殖民時期的遺產——土地所有權名義上屬於政府，但政府可以永久性地出讓土地使用權。這個制度設計的目的是 <span class="highlight">「最大化政府財政收入」</span>，而不是 <span class="highlight">「保障人民的居住權」</span>。</p>
+
+            <p>1997年回歸後，香港保留了原有的土地制度。《基本法》規定香港「保持原有的資本主義制度和生活方式，五十年不變」。這意味著：</p>
+            <ul>
+                <li>土地拍賣制度繼續運作</li>
+                <li>房地產繼續作為經濟支柱</li>
+                <li>居住繼續被當作商品，而不是基本人權</li>
+            </ul>
+
+            <p>結果是：香港的房價在回歸後持續攀升，成為全球最難負擔的房地產市場，而基層民眾的居住條件卻持續惡化。</p>
+
+            <div class="section-title">四、中國土地制度的對照——一條不同的邏輯</div>
+
+            <p>在中國內地，土地制度的邏輯與香港完全不同：</p>
+
+            <div class="pillar-grid">
+                <div class="pillar-card">
+                    <div class="num">01</div>
+                    <div class="p-title">土地公有制</div>
+                    <div class="p-desc">城市土地歸國家所有，農村土地歸集體所有。政府可以大規模徵收土地、系統性規劃城市，而不是被開發商綁架。</div>
+                </div>
+                <div class="pillar-card">
+                    <div class="num">02</div>
+                    <div class="p-title">公共住宅政策</div>
+                    <div class="p-desc">每個城市都有大規模的保障房、公租房、安置房計畫，以滿足不同收入階層的居住需求。</div>
+                </div>
+                <div class="pillar-card">
+                    <div class="num">03</div>
+                    <div class="p-title">基礎設施優先</div>
+                    <div class="p-desc">在蓋房子之前，先蓋道路、水電、下水道。土地增值回流公共財政，用於公共服務。</div>
+                </div>
+            </div>
+
+            <p>在中國的土地制度下，土地不是商品，而是 <span class="highlight">國家的基礎資源</span>。它的增值應當服務於公共利益，而非私人財富的累積。</p>
+
+            <p>這不是「干預市場」——這是 <span class="highlight">把土地從市場手中搶回來，還給人</span>。</p>
+
+            <div class="section-title">五、終結之路——2047年後的制度重構</div>
+
+            <p>香港的土地契約，絕大多數將在 <span class="stat-highlight">2047年6月30日</span> 到期。這是英國殖民時期留下的「制度懸崖」，也是香港土地制度重構的歷史窗口。</p>
+
+            <p>如果「一國兩制」框架在2047年後結束或調整，香港的土地制度將面臨根本性重構：</p>
+
+            <ul>
+                <li><strong>土地所有權全面國有化</strong>：所有土地契約到期不再續期，由政府重新規劃與分配</li>
+                <li><strong>土地增值回收機制</strong>：土地出讓金與年度地租，回流公共財政，用於公共服務</li>
+                <li><strong>大規模社會住宅建設</strong>：利用回收的土地，大規模興建公屋與居屋</li>
+            </ul>
+
+            <p>這不是「掠奪」——這是 <span class="highlight">「將已經流失的公共價值，重新引導回公共用途」</span>。</p>
+
+            <div class="quote-block">
+                <p><strong>「當土地增值被私人捕獲，籠屋就是必然的結果。當土地增值回流公共用途，籠屋就會被消滅。」</strong></p>
+            </div>
+
+            <div class="section-title">六、結論——一個讓人住得像畜生的文明，不配談進步</div>
+
+            <p>香港的劏房與籠屋，不是「市場失靈」，是 <span class="highlight">「制度犯罪」</span>。</p>
+
+            <p>而這套制度的名字，叫做 <span class="highlight">「新自由主義」</span>。</p>
+
+            <p>它用「自由市場」的語言，包裝了「階級壟斷」的事實；用「個人選擇」的修辭，掩蓋了「結構性暴力」的本質；用「人權」的旗幟，遮擋了「居住權被剝奪」的真相。</p>
+
+            <div class="highlight-box">
+                <p><strong>香港的劏房與籠屋，將在中國的土地制度下消弭。</strong></p>
+                <p>這不是預言——這是制度邏輯的必然結論。當土地不再是少數人的投機工具，當土地增值回流公共財政，當居住從階級特權變為基本人權——籠屋與劏房，將成為歷史陳跡。</p>
+                <p style="margin-top: 6px;"><span class="highlight">一個讓人住得像畜生的文明，不配談進步。一個不敢改革土地制度的社會，不配談人權。</span></p>
+            </div>
+
+            <div class="signature">
+                徐萍
+                <span class="title">GL框架發明人 · GFI Flow Intelligence</span>
+            </div>
+
+            <a href="index.html" class="back-link">← 返回首頁</a>
+
+        </div>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ==================== 英文版 ================================== -->
+    <!-- ============================================================ -->
+    <div class="lb" data-lang="en">
+
+        <div class="page-header">
+            <div class="badge">Humanity · Institutions · The End</div>
+            <h1 class="title">Subdivided Flats and Cage Homes</h1>
+            <p class="subtitle">Hong Kong's Humanitarian Shame — Soon to Be Eliminated Under China's Land System</p>
+            <div class="meta">GFI Flow Intelligence · September 2026</div>
+            <div class="divider"></div>
+        </div>
+
+        <div class="content">
+
+            <p class="lead">Hong Kong's <span class="highlight">subdivided flats</span> and <span class="highlight">cage homes</span> are not accidental social phenomena — they are <span class="highlight">historical relics of colonialism and extreme capitalism</span> — institutional ruins that inevitably emerge when land is fully commodified and housing is fully financialized.</p>
+
+            <p>These spaces are a humanitarian shame and a mirror of the system. Their existence is not because Hong Kong "has no land" — it is because <span class="highlight">land value appreciation is monopolized by a few, and housing has become a tool for speculation.</span></p>
+
+            <div class="section-title">I. What Are Subdivided Flats and Cage Homes? — A Humanitarian Crisis in Numbers</div>
+
+            <p><strong>Subdivided flats</strong> are normal residential units cut into multiple independent rooms, each only <span class="stat-highlight">5-10 square meters</span>. Tenants have no kitchen, no proper bathroom, no ventilation, and no natural light.</p>
+
+            <p><strong>Cage homes</strong> — formally known as "bed space apartments" — are rooms filled with dozens of metal bunk beds, each bed barely large enough for one person to lie down. Tenants rent a "cage" as their shelter.</p>
+
+            <p><strong>Scale and data</strong>:</p>
+            <ul>
+                <li>Approximately <span class="stat-highlight">108,000</span> subdivided flats across Hong Kong, housing over <span class="stat-highlight">220,000</span> people</li>
+                <li>Approximately <span class="stat-highlight">3,000-5,000</span> cage home residents, mostly elderly, unemployed, or marginalized workers</li>
+                <li>Median monthly rent for a subdivided flat is around <span class="stat-highlight">HK$4,500–5,500</span> — per square foot, often higher than luxury apartments</li>
+                <li>Over <span class="stat-highlight">20%</span> of subdivided flat residents are children, growing up without desks, without windows</li>
+            </ul>
+
+            <div class="quote-block">
+                <p>"An adult sleeping in a metal cage. A family squeezed into less than five square meters. An elderly person waiting a lifetime for a decent public housing unit. This is 21st-century Hong Kong — an international financial center."</p>
+            </div>
+
+            <div class="section-title">II. The Root Cause — Not a Lack of Land, but Institutional Failure</div>
+
+            <p>Hong Kong is not short of land. Hong Kong's land area exceeds <span class="stat-highlight">1,100 square kilometers</span>, but only <span class="stat-highlight">24%</span> is developed. The rest is country parks and undeveloped land. The problem is not "not enough land" — it is <span class="highlight">"land is monopolized."</span></p>
+
+            <p>Hong Kong's four major developers — Sun Hung Kai, CK Asset, Henderson Land, and New World — control a significant portion of residential land supply. They do not lack land — they <span class="highlight">"hoard land"</span> — waiting for prices to rise before developing, or simply not developing at all, keeping supply tight and prices high.</p>
+
+            <p>And the government?</p>
+            <ul>
+                <li>Hong Kong's land policy has long relied on "land premium revenue" as a fiscal pillar</li>
+                <li>Every land auction sells public resources to the highest bidder</li>
+                <li>Land value is privately captured — yet public finance has no money to build enough public housing</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p><strong>Core Contradiction</strong></p>
+                <p>The Hong Kong government relies on land premium revenue to sustain its finances — therefore, it has a strong incentive to keep land prices and housing prices high. But high land prices mean high housing prices — and high housing prices mean more people cannot afford homes, and end up in subdivided flats and cage homes.</p>
+                <p><span class="highlight">The government is both the sole supplier of land and the regulator of housing — these two roles are fundamentally in conflict.</span></p>
+            </div>
+
+            <div class="section-title">III. Historical Roots — Colonial Legacy and Extreme Capitalism</div>
+
+            <p>Hong Kong's land system is a legacy of British colonial rule — land ownership nominally belongs to the government, but the government can permanently lease land-use rights. The system's design purpose was <span class="highlight">"maximizing government revenue,"</span> not <span class="highlight">"guaranteeing the people's right to housing."</span></p>
+
+            <p>After the 1997 handover, Hong Kong retained its existing land system. The Basic Law stipulates that Hong Kong "shall maintain the capitalist system and way of life for fifty years without change." This means:</p>
+            <ul>
+                <li>The land auction system continues to operate</li>
+                <li>Real estate remains an economic pillar</li>
+                <li>Housing continues to be treated as a commodity, not a basic human right</li>
+            </ul>
+
+            <p>The result: Hong Kong's housing prices have continued to climb after the handover, becoming the most unaffordable property market in the world — while the living conditions of grassroots residents have continued to deteriorate.</p>
+
+            <div class="section-title">IV. The Contrast — China's Land System Offers a Different Logic</div>
+
+            <p>In mainland China, the logic of the land system is completely different from Hong Kong:</p>
+
+            <div class="pillar-grid">
+                <div class="pillar-card">
+                    <div class="num">01</div>
+                    <div class="p-title">Public Land Ownership</div>
+                    <div class="p-desc">Urban land belongs to the state, rural land belongs to the collective. The government can大规模 expropriate land and systematically plan cities — rather than being held hostage by developers.</div>
+                </div>
+                <div class="pillar-card">
+                    <div class="num">02</div>
+                    <div class="p-title">Public Housing Policies</div>
+                    <div class="p-desc">Every city has large-scale affordable housing, public rental housing, and resettlement housing programs to meet the needs of different income groups.</div>
+                </div>
+                <div class="pillar-card">
+                    <div class="num">03</div>
+                    <div class="p-title">Infrastructure First</div>
+                    <div class="p-desc">Before building houses, build roads, water, electricity, sewage systems. Land value appreciation flows back to public finance for public services.</div>
+                </div>
+            </div>
+
+            <p>Under China's land system, land is not a commodity — it is a <span class="highlight">fundamental resource of the state.</span> Its value appreciation should serve the public interest, not private wealth accumulation.</p>
+
+            <p>This is not "intervening in the market" — it is <span class="highlight">taking land back from the market and returning it to the people.</span></p>
+
+            <div class="section-title">V. The Path to Ending It — Institutional Restructuring After 2047</div>
+
+            <p>The vast majority of Hong Kong's land leases will expire on <span class="stat-highlight">June 30, 2047</span>. This is the "institutional cliff" left by British colonial rule — and the historical window for restructuring Hong Kong's land system.</p>
+
+            <p>If the "One Country, Two Systems" framework ends or is adjusted after 2047, Hong Kong's land system will face fundamental restructuring:</p>
+
+            <ul>
+                <li><strong>Full nationalization of land</strong>: All land leases expire without renewal — the government re-plans and re-allocates land</li>
+                <li><strong>Land value recovery mechanism</strong>: Land premiums and annual land rents flow back to public finance for public services</li>
+                <li><strong>Large-scale social housing construction</strong>: Using recovered land to massively build public housing and subsidized homeownership units</li>
+            </ul>
+
+            <p>This is not "expropriation" — it is <span class="highlight">"redirecting lost public value back to public use."</span></p>
+
+            <div class="quote-block">
+                <p><strong>"When land value is privately captured, cage homes are the inevitable result. When land value flows back to public use, cage homes will be eliminated."</strong></p>
+            </div>
+
+            <div class="section-title">VI. Conclusion — A Civilization Where People Live Like Animals Does Not Deserve to Speak of Progress</div>
+
+            <p>Hong Kong's subdivided flats and cage homes are not "market failures" — they are <span class="highlight">"institutional crimes."</span></p>
+
+            <p>And the name of this system is <span class="highlight">"neoliberalism."</span></p>
+
+            <p>It uses the language of the "free market" to package the reality of "class monopoly." It uses the rhetoric of "individual choice" to conceal the essence of "structural violence." It uses the banner of "human rights" to obscure the truth of "housing rights being stripped away."</p>
+
+            <div class="highlight-box">
+                <p><strong>Hong Kong's subdivided flats and cage homes will be eliminated under China's land system.</strong></p>
+                <p>This is not a prophecy — it is the inevitable conclusion of institutional logic. When land is no longer a speculative tool for a few, when land value flows back to public finance, when housing shifts from class privilege to a basic human right — cage homes and subdivided flats will become relics of history.</p>
+                <p style="margin-top: 6px;"><span class="highlight">A civilization where people live like animals does not deserve to speak of progress. A society that dares not reform its land system does not deserve to speak of human rights.</span></p>
+            </div>
+
+            <div class="signature">
+                Ping Xu
+                <span class="title">Creator of the GL Framework · GFI Flow Intelligence</span>
+            </div>
+
+            <a href="index.html" class="back-link">← Back to Home</a>
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+        © 2026 GFI Flow Intelligence · 劏房籠屋 · Subdivided Flats & Cage Homes
+    </div>
+
+    <script>
+        document.querySelectorAll('.lb-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var lang = this.dataset.lang;
+                document.querySelectorAll('.lb-btn').forEach(function(b) { b.classList.remove('on'); });
+                this.classList.add('on');
+                document.querySelectorAll('.lb').forEach(function(lb) { lb.classList.remove('active'); });
+                var target = document.querySelector('.lb[data-lang="' + lang + '"]');
+                if (target) target.classList.add('active');
+            });
+        });
+    </script>
+
+</body>
+</html>
