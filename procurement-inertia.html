@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Procurement Inertia · 採購慣性 · Ping Xu</title>
+    <meta name="description" content="Procurement Inertia: Structural Gaps in Public Digital Transformation by Ping Xu" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background: #faf8f6;
+            color: #1e1e1e;
+            font-family: 'DM Sans', system-ui, sans-serif;
+            font-size: 16px;
+            line-height: 1.8;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .topbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            height: 60px;
+            padding: 0 clamp(18px, 5vw, 48px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(250, 248, 246, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
+        .logo {
+            font-family: 'DM Mono', monospace;
+            font-size: 12px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #1e1e1e;
+            text-decoration: none;
+        }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .lang-grp {
+            display: flex;
+            gap: 6px;
+        }
+        .lb-btn {
+            font-family: 'DM Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.06em;
+            padding: 4px 12px;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            border-radius: 4px;
+            background: transparent;
+            color: #4a4a4a;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lb-btn:hover {
+            background: rgba(0, 0, 0, 0.04);
+        }
+        .lb-btn.on {
+            background: #1e1e1e;
+            color: #faf8f6;
+            border-color: #1e1e1e;
+        }
+        .pdf-btn {
+            font-family: 'DM Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.06em;
+            padding: 4px 12px;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.03);
+            color: #1e1e1e;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .pdf-btn:hover {
+            background: rgba(0, 0, 0, 0.08);
+        }
+        .lb {
+            display: none;
+            padding-top: 60px;
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 90px 40px 70px;
+        }
+        .lb.active {
+            display: block;
+        }
+        .page-header {
+            text-align: center;
+            padding: 0 0 28px 0;
+        }
+        .page-header .badge {
+            font-family: 'DM Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #8a6e4b;
+            margin-bottom: 10px;
+        }
+        .page-header .title {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: clamp(28px, 3.4vw, 42px);
+            line-height: 1.2;
+            color: #1e1e1e;
+            margin-bottom: 4px;
+        }
+        .page-header .subtitle {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-style: italic;
+            font-size: clamp(16px, 1.6vw, 20px);
+            color: #5a4a3a;
+            margin-bottom: 10px;
+        }
+        .page-header .meta {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: rgba(30, 30, 30, 0.4);
+            margin-top: 6px;
+        }
+        .page-header .divider {
+            width: 50px;
+            height: 2px;
+            background: #8a6e4b;
+            margin: 14px auto 0;
+            border-radius: 2px;
+            opacity: 0.25;
+        }
+        .content {
+            font-size: 15.5px;
+            line-height: 1.9;
+            color: #2a2a2a;
+        }
+        .content p {
+            margin-bottom: 18px;
+        }
+        .content .lead {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: #1e1e1e;
+            margin-bottom: 22px;
+        }
+        .content .highlight {
+            color: #8a6e4b;
+            font-weight: 500;
+        }
+        .content .highlight-blue {
+            color: #1e6b8a;
+            font-weight: 500;
+        }
+        .content .section-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin: 1.8rem 0 0.5rem 0;
+            color: #1e1e1e;
+            border-bottom: 2px solid rgba(138, 110, 75, 0.15);
+            padding-bottom: 0.2rem;
+        }
+        .content .sub-section {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 1.4rem 0 0.3rem 0;
+            color: #2e2e2e;
+        }
+        .content .quote-block {
+            background: rgba(138, 110, 75, 0.04);
+            border-left: 4px solid #8a6e4b;
+            padding: 14px 22px;
+            margin: 22px 0;
+            border-radius: 0 6px 6px 0;
+            color: #3a3a3a;
+            font-style: italic;
+        }
+        .content .quote-block p {
+            margin-bottom: 0;
+        }
+        .content .highlight-box {
+            background: rgba(138, 110, 75, 0.04);
+            border-left: 4px solid #8a6e4b;
+            padding: 1rem 1.6rem;
+            margin: 22px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .content .highlight-box p {
+            margin-bottom: 4px;
+            color: #2a2a2a;
+        }
+        .content .highlight-box strong {
+            color: #1e1e1e;
+        }
+        .content .keyword-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px 20px;
+            margin: 10px 0 18px 0;
+            font-size: 0.85rem;
+            color: #3a3a3a;
+        }
+        .content .keyword-grid span {
+            background: rgba(138, 110, 75, 0.06);
+            padding: 2px 10px;
+            border-radius: 12px;
+            display: inline-block;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.02em;
+        }
+        .content .signature {
+            margin-top: 36px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.1rem;
+            color: #1e1e1e;
+        }
+        .content .signature .title {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.6rem;
+            color: rgba(30, 30, 30, 0.4);
+            letter-spacing: 0.06em;
+            display: block;
+            margin-top: 2px;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 30px;
+            color: #5a4a3a;
+            text-decoration: none;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.04em;
+            transition: all 0.2s;
+        }
+        .back-link:hover {
+            color: #1e1e1e;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px 20px 28px;
+            font-family: 'DM Mono', monospace;
+            font-size: 10px;
+            color: rgba(30, 30, 30, 0.3);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            margin-top: 32px;
+        }
+        @media print {
+            body {
+                background: white;
+                color: #111;
+            }
+            .topbar {
+                display: none;
+            }
+            .lb {
+                padding: 40px 20px;
+            }
+            .lb-btn,
+            .pdf-btn {
+                display: none;
+            }
+            .content {
+                color: #222;
+            }
+            .page-header .title {
+                color: #111;
+            }
+            .page-header .subtitle {
+                color: #333;
+            }
+            .page-header .meta {
+                color: #666;
+            }
+            .footer {
+                color: #666;
+            }
+            .back-link {
+                color: #444;
+            }
+            .signature {
+                color: #111;
+            }
+            .content .highlight {
+                color: #6b4f2e;
+            }
+            .lb {
+                display: block !important;
+            }
+            .lb.active {
+                display: block !important;
+            }
+            .lb[data-lang="zh"] {
+                display: block !important;
+            }
+            .lb[data-lang="en"] {
+                display: block !important;
+            }
+        }
+        @media (max-width: 600px) {
+            .lb {
+                padding: 70px 18px 50px;
+            }
+            .content {
+                font-size: 14.5px;
+            }
+            .topbar {
+                padding: 0 14px;
+            }
+            .content .keyword-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .content ul {
+            margin: 0.3rem 0 1rem 1.6rem;
+            color: #2a2a2a;
+        }
+        .content ul li {
+            margin-bottom: 0.3rem;
+        }
+        .content ol {
+            margin: 0.3rem 0 1rem 1.6rem;
+            color: #2a2a2a;
+        }
+        .content ol li {
+            margin-bottom: 0.3rem;
+        }
+        .content .ref-link {
+            color: #8a6e4b;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            text-decoration-thickness: 1px;
+            text-decoration-color: rgba(138, 110, 75, 0.3);
+        }
+        .content .ref-link:hover {
+            text-decoration-color: #8a6e4b;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="topbar">
+        <a href="#" class="logo">GFI Flow Intelligence</a>
+        <div class="nav-right">
+            <div class="lang-grp">
+                <button class="lb-btn" data-lang="zh">中文</button>
+                <button class="lb-btn on" data-lang="en">English</button>
+            </div>
+            <button class="pdf-btn" onclick="window.print()">⬇ PDF</button>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ==================== 英文版（預設顯示） ===================== -->
+    <!-- ============================================================ -->
+    <div class="lb active" data-lang="en">
+
+        <div class="page-header">
+            <div class="badge">SSRN · 2026</div>
+            <h1 class="title">Procurement Inertia</h1>
+            <p class="subtitle">Structural Gaps in Public Digital Transformation</p>
+            <div class="meta">Ping Xu · GFI Flow Intelligence · Boston, United States</div>
+            <div class="divider"></div>
+        </div>
+
+        <div class="content">
+
+            <p class="lead">Public procurement systems play a central role in the delivery of digital transformation initiatives. However, many large-scale government technology projects continue to produce limited improvements in service outcomes despite substantial investment.</p>
+
+            <p>This paper introduces the concept of <span class="highlight">procurement inertia</span>—the structural tendency of procurement frameworks to prioritize procedural compliance over verified delivery outcomes.</p>
+
+            <p>The paper identifies a critical gap in current procurement structures: the absence of independent, outcome-based verification at the point of project acceptance. While oversight mechanisms such as internal IT validation, vendor reporting, and post-hoc audits exist, these mechanisms are often fragmented, retrospective, or structurally conflicted.</p>
+
+            <p>As a result, systems are frequently deemed "successfully implemented" without demonstrating measurable improvements in performance. This creates a condition in which accountability is diffused, delivery risk is obscured, and inefficiencies persist despite formal completion.</p>
+
+            <p>The paper argues that without integrating independent outcome verification into procurement frameworks, digital transformation efforts will continue to replicate structural inefficiencies. It concludes by emphasizing the need for a distinct verification layer that evaluates post-deployment outcomes rather than procedural completion alone.</p>
+
+            <div class="highlight-box">
+                <p><strong>Keywords</strong></p>
+                <div class="keyword-grid">
+                    <span>Public Procurement</span>
+                    <span>Digital Transformation</span>
+                    <span>Administrative Friction</span>
+                    <span>Accountability</span>
+                    <span>Outcome Verification</span>
+                    <span>Government Systems</span>
+                    <span>Process Design</span>
+                </div>
+            </div>
+
+            <div class="section-title">1. Introduction</div>
+
+            <p>Public procurement frameworks are designed to ensure transparency, fairness, and compliance in government contracting. In the context of digital transformation, these frameworks govern how systems are designed, implemented, and accepted.</p>
+
+            <p>Despite these safeguards, a recurring pattern has emerged: large-scale digital systems are delivered on time and within contractual scope, yet fail to produce meaningful improvements in service outcomes. Processing delays persist, user experiences remain fragmented, and administrative burdens continue.</p>
+
+            <p>This paper argues that the issue is not the absence of oversight, but the structure of oversight itself.</p>
+
+            <div class="section-title">2. The Structure of Procurement Validation</div>
+
+            <p>In typical digital transformation procurement, validation occurs through three primary channels:</p>
+
+            <ol>
+                <li>Vendor self-reporting</li>
+                <li>Internal IT acceptance testing</li>
+                <li>Compliance and audit review</li>
+            </ol>
+
+            <p>Each plays a role, but none provides a complete assessment of actual outcomes.</p>
+
+            <ul>
+                <li><strong>Vendors</strong> validate against contractual specifications</li>
+                <li><strong>IT departments</strong> validate system functionality</li>
+                <li><strong>Auditors</strong> review compliance and financial integrity</li>
+            </ul>
+
+            <p>However, these mechanisms do not answer a central question:</p>
+
+            <div class="quote-block">
+                <p>Did the system improve real-world service delivery?</p>
+            </div>
+
+            <div class="section-title">3. The Missing Layer: Outcome Verification</div>
+
+            <p>A structural gap exists between system deployment and actual performance.</p>
+
+            <p>At the point of acceptance, systems are evaluated based on:</p>
+
+            <ul>
+                <li>feature completion</li>
+                <li>technical functionality</li>
+                <li>contractual compliance</li>
+            </ul>
+
+            <p>But not on:</p>
+
+            <ul>
+                <li>reduction in processing time</li>
+                <li>improvement in access</li>
+                <li>increase in successful completion rates</li>
+            </ul>
+
+            <p>This absence creates a blind spot in procurement frameworks. Systems can be formally accepted while remaining operationally ineffective.</p>
+
+            <div class="section-title">4. Structural Conflict in Validation</div>
+
+            <p>Procurement validation often involves actors with overlapping or conflicting roles.</p>
+
+            <ul>
+                <li><strong>Vendors</strong> are responsible for delivery and may have incentives to present outcomes positively</li>
+                <li><strong>Internal IT teams</strong> are responsible for acceptance but are also stakeholders in project success</li>
+                <li><strong>External audits</strong> occur after deployment and focus on compliance rather than performance</li>
+            </ul>
+
+            <p>This structure does not necessarily produce intentional bias, but it creates a condition in which independent outcome verification is absent.</p>
+
+            <p>The result is not failure, but <span class="highlight">unverified success</span>.</p>
+
+            <div class="section-title">5. Consequences of Procurement Inertia</div>
+
+            <p>The absence of outcome verification leads to several systemic consequences.</p>
+
+            <p><strong>5.1 Diffused Accountability</strong><br />
+                No single entity is responsible for verifying whether the system actually improved outcomes.</p>
+
+            <p><strong>5.2 Acceptance Without Performance</strong><br />
+                Projects are completed and accepted based on procedural milestones, regardless of real-world impact.</p>
+
+            <p><strong>5.3 Repetition of Inefficiency</strong><br />
+                Without measurable feedback, ineffective structures are replicated in subsequent projects.</p>
+
+            <p><strong>5.4 Budget Utilization Without Outcome Clarity</strong><br />
+                Funds are expended with limited visibility into whether they produced proportional value.</p>
+
+            <div class="section-title">6. Digital Transformation as Procedural Replication</div>
+
+            <p>Digital transformation initiatives often replicate existing administrative processes in digital form.</p>
+
+            <p>Rather than redesigning workflows, systems encode:</p>
+
+            <ul>
+                <li>existing approval chains</li>
+                <li>existing documentation requirements</li>
+                <li>existing fragmentation</li>
+            </ul>
+
+            <p>As a result, inefficiency is not eliminated but automated.</p>
+
+            <p>Procurement frameworks, as currently structured, do not require evidence that these transformations improve outcomes.</p>
+
+            <div class="section-title">7. The Role of Independent Verification</div>
+
+            <p>To address procurement inertia, a distinct layer of evaluation is required.</p>
+
+            <p>This layer must:</p>
+
+            <ul>
+                <li>operate independently from vendors and implementation teams</li>
+                <li>assess outcomes after deployment, not just system readiness</li>
+                <li>measure changes in key performance indicators</li>
+                <li>provide comparable before- and after- analysis</li>
+            </ul>
+
+            <p>Such a layer does not replace existing oversight mechanisms, but complements them by focusing on outcome validation.</p>
+
+            <div class="section-title">8. Toward Outcome-Based Procurement</div>
+
+            <p>Integrating outcome verification into procurement frameworks requires a shift in evaluation criteria.</p>
+
+            <p>Key considerations include:</p>
+
+            <ul>
+                <li>defining measurable outcome indicators at the contracting stage</li>
+                <li>linking final acceptance to demonstrated performance improvements</li>
+                <li>establishing post-deployment evaluation periods</li>
+                <li>ensuring independence in verification processes</li>
+            </ul>
+
+            <p>This approach aligns procurement decisions with actual service delivery outcomes.</p>
+
+            <div class="section-title">9. Implications for Governance</div>
+
+            <p>The introduction of outcome-based verification has broader implications for governance.</p>
+
+            <ul>
+                <li>It enhances accountability by making performance measurable.</li>
+                <li>It reduces risk by identifying inefficiencies early.</li>
+                <li>It improves resource allocation by linking spending to results.</li>
+            </ul>
+
+            <p>Most importantly, it shifts the definition of success from <span class="highlight">"implemented"</span> to <span class="highlight">"effective."</span></p>
+
+            <div class="section-title">10. Conclusion</div>
+
+            <p>Procurement inertia reflects a structural limitation within existing frameworks.</p>
+
+            <p>Systems are evaluated based on compliance and completion, but not on outcomes. This creates a persistent gap between investment and impact.</p>
+
+            <p>Addressing this gap requires more than incremental reform. It requires the introduction of mechanisms that make outcomes visible and verifiable.</p>
+
+            <p>Without such mechanisms, digital transformation efforts will continue to deliver systems—but not necessarily results.</p>
+
+            <div class="signature">
+                Ping Xu
+                <span class="title">GFI Flow Intelligence · Boston, United States</span>
+            </div>
+
+            <a href="#" class="back-link">← Back to Home</a>
+
+        </div>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ==================== 中文版 ================================== -->
+    <!-- ============================================================ -->
+    <div class="lb" data-lang="zh">
+
+        <div class="page-header">
+            <div class="badge">SSRN · 2026</div>
+            <h1 class="title">採購慣性</h1>
+            <p class="subtitle">公共數位轉型的結構性缺口</p>
+            <div class="meta">徐萍 · GFI Flow Intelligence · 美國波士頓</div>
+            <div class="divider"></div>
+        </div>
+
+        <div class="content">
+
+            <p class="lead">公共採購系統在數位轉型計畫的推動中扮演核心角色。然而，許多大規模政府科技專案在投入巨額資金後，對服務成果的改善仍然有限。</p>
+
+            <p>本文提出<span class="highlight">「採購慣性」</span>（procurement inertia）的概念——指採購框架在結構上傾向優先遵循程序合規性，而非以經過驗證的交付成果為核心。</p>
+
+            <p>本文指出當前採購結構中的一個關鍵缺口：在專案驗收階段缺乏獨立的、基於成果的驗證機制。雖然存在內部IT驗證、廠商報告和事後審計等監督機制，但這些機制往往是碎片化的、回溯性的，或存在結構性利益衝突。</p>
+
+            <p>其結果是，系統經常在未展現可衡量的績效改善下，就被認定為「成功導入」。這導致責任分散、交付風險被掩蓋，且效率不彰的問題在形式上完成後仍然持續存在。</p>
+
+            <p>本文主張，若未將獨立的成果驗證整合進採購框架，數位轉型工作將持續複製結構性無效率。結論強調，需要一個獨立的驗證層級，專門評估部署後的實際成果，而非僅檢視程序完成度。</p>
+
+            <div class="highlight-box">
+                <p><strong>關鍵詞</strong></p>
+                <div class="keyword-grid">
+                    <span>公共採購</span>
+                    <span>數位轉型</span>
+                    <span>行政摩擦</span>
+                    <span>課責</span>
+                    <span>成果驗證</span>
+                    <span>政府系統</span>
+                    <span>流程設計</span>
+                </div>
+            </div>
+
+            <div class="section-title">1. 緒論</div>
+
+            <p>公共採購框架旨在確保政府合約的透明度、公平性與合規性。在數位轉型的脈絡下，這些框架規範了系統的設計、導入與驗收方式。</p>
+
+            <p>儘管有這些保障機制，仍反覆出現一種模式：大型數位系統如期交付、符合合約範圍，卻未能對服務成果帶來有意義的改善。處理延遲持續存在，使用者體驗依然破碎，行政負擔也未見減輕。</p>
+
+            <p>本文主張，問題不在於缺乏監督，而在於監督本身的結構。</p>
+
+            <div class="section-title">2. 採購驗證的結構</div>
+
+            <p>在典型的數位轉型採購中，驗證透過三個主要管道進行：</p>
+
+            <ol>
+                <li>廠商自我報告</li>
+                <li>內部IT驗收測試</li>
+                <li>合規與稽核審查</li>
+            </ol>
+
+            <p>每個管道都扮演一定角色，但沒有一個能完整評估實際成果。</p>
+
+            <ul>
+                <li><strong>廠商</strong>依據合約規格進行驗證</li>
+                <li><strong>IT部門</strong>驗證系統功能</li>
+                <li><strong>稽核人員</strong>審查合規性與財務健全度</li>
+            </ul>
+
+            <p>然而，這些機制並未回答一個核心問題：</p>
+
+            <div class="quote-block">
+                <p>這個系統是否改善了真實世界的服務交付？</p>
+            </div>
+
+            <div class="section-title">3. 缺失的環節：成果驗證</div>
+
+            <p>在系統部署與實際績效之間存在一個結構性缺口。</p>
+
+            <p>在驗收階段，系統的評估依據是：</p>
+
+            <ul>
+                <li>功能完成度</li>
+                <li>技術功能性</li>
+                <li>合約合規性</li>
+            </ul>
+
+            <p>而不是：</p>
+
+            <ul>
+                <li>處理時間的縮短</li>
+                <li>可及性的改善</li>
+                <li>完成率的提升</li>
+            </ul>
+
+            <p>這種缺失在採購框架中創造了一個盲點——系統可以在正式驗收的同時，仍維持運作上的無效率。</p>
+
+            <div class="section-title">4. 驗證中的結構性衝突</div>
+
+            <p>採購驗證經常涉及角色重疊或相互衝突的行動者。</p>
+
+            <ul>
+                <li><strong>廠商</strong>負責交付，可能傾向於正向呈現成果</li>
+                <li><strong>內部IT團隊</strong>負責驗收，但同時也是專案成功的利害關係人</li>
+                <li><strong>外部稽核</strong>在部署後進行，聚焦於合規性而非績效</li>
+            </ul>
+
+            <p>這種結構不一定會產生刻意偏誤，但確實創造了一種「缺乏獨立成果驗證」的條件。</p>
+
+            <p>其結果不是失敗，而是<span class="highlight">「未經驗證的成功」</span>。</p>
+
+            <div class="section-title">5. 採購慣性的後果</div>
+
+            <p>缺乏成果驗證會導致幾個系統性後果。</p>
+
+            <p><strong>5.1 責任分散</strong><br />
+                沒有任何單一實體負責驗證系統是否確實改善了成果。</p>
+
+            <p><strong>5.2 未達績效的驗收</strong><br />
+                專案依據程序里程碑完成與驗收，而不論其實際影響。</p>
+
+            <p><strong>5.3 無效率的重複</strong><br />
+                在缺乏可衡量回饋的情況下，無效率的結構會在後續專案中被複製。</p>
+
+            <p><strong>5.4 預算支出與成果脫鉤</strong><br />
+                經費被花費，但對於是否產生相應價值，能見度有限。</p>
+
+            <div class="section-title">6. 數位轉型作為程序的複製</div>
+
+            <p>數位轉型計畫經常以數位形式複製既有的行政流程。</p>
+
+            <p>系統編碼的不是重新設計的工作流程，而是：</p>
+
+            <ul>
+                <li>既有的核決鏈</li>
+                <li>既有的文件要求</li>
+                <li>既有的碎片化</li>
+            </ul>
+
+            <p>結果，無效率未被消除，而是被自動化。</p>
+
+            <p>以目前的結構而言，採購框架並不要求提出證據，證明這些轉型確實改善了成果。</p>
+
+            <div class="section-title">7. 獨立驗證的角色</div>
+
+            <p>為了解決採購慣性，需要一個獨立的評估層級。</p>
+
+            <p>這個層級必須：</p>
+
+            <ul>
+                <li>獨立於廠商與導入團隊運作</li>
+                <li>評估部署後的成果，而非僅評估系統就緒度</li>
+                <li>衡量關鍵績效指標的變化</li>
+                <li>提供可比較的前後分析</li>
+            </ul>
+
+            <p>這樣的層級並非取代現有的監督機制，而是透過聚焦於成果驗證來補足其不足。</p>
+
+            <div class="section-title">8. 邁向基於成果的採購</div>
+
+            <p>將成果驗證整合進採購框架，需要評估標準的轉變。</p>
+
+            <p>關鍵考量包括：</p>
+
+            <ul>
+                <li>在合約階段即定義可衡量的成果指標</li>
+                <li>將最終驗收與實際績效改善連結</li>
+                <li>建立部署後的評估期間</li>
+                <li>確保驗證程序的獨立性</li>
+            </ul>
+
+            <p>這種方法將採購決策與實際的服務交付成果對齊。</p>
+
+            <div class="section-title">9. 對治理的意涵</div>
+
+            <p>導入基於成果的驗證，對治理有更廣泛的意涵。</p>
+
+            <ul>
+                <li>它透過使績效可衡量來強化課責</li>
+                <li>它透過及早識別無效率來降低風險</li>
+                <li>它透過將支出與結果連結來改善資源配置</li>
+            </ul>
+
+            <p>最重要的是，它將成功的定義從<span class="highlight">「已導入」</span>轉變為<span class="highlight">「已有效」</span>。</p>
+
+            <div class="section-title">10. 結論</div>
+
+            <p>採購慣性反映了現有框架中的結構性限制。</p>
+
+            <p>系統的評估基於合規性與完成度，而非成果。這在投資與影響之間創造了一個持續存在的缺口。</p>
+
+            <p>解決這個缺口需要的不是漸進式改革，而是導入能使成果可視、可驗證的機制。</p>
+
+            <p>沒有這樣的機制，數位轉型工作將持續交付系統——但不一定交付成果。</p>
+
+            <div class="signature">
+                徐萍
+                <span class="title">GFI Flow Intelligence · 美國波士頓</span>
+            </div>
+
+            <a href="#" class="back-link">← 返回首頁</a>
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+        © 2026 Ping Xu · GFI Flow Intelligence · <span style="font-family: 'DM Sans', sans-serif; letter-spacing: 0.02em;">SSRN 6652780</span>
+    </div>
+
+    <script>
+        document.querySelectorAll('.lb-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var lang = this.dataset.lang;
+                document.querySelectorAll('.lb-btn').forEach(function(b) { b.classList.remove('on'); });
+                this.classList.add('on');
+                document.querySelectorAll('.lb').forEach(function(lb) { lb.classList.remove('active'); });
+                var target = document.querySelector('.lb[data-lang="' + lang + '"]');
+                if (target) target.classList.add('active');
+            });
+        });
+    </script>
+
+</body>
+</html>
