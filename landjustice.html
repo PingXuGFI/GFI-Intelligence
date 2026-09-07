@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>土地正義 · 系列指引</title>
+    <meta name="description" content="土地正義：從英國到台灣、香港的結構性批判——七篇土地改革文章完整收錄。" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background: #0d0a08;
+            color: #e0d6cc;
+            font-family: 'DM Sans', system-ui, sans-serif;
+            font-size: 16px;
+            line-height: 1.9;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .topbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            height: 60px;
+            padding: 0 clamp(18px, 5vw, 48px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(13, 10, 8, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .logo {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #b8aaa0;
+            text-decoration: none;
+        }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .lang-grp {
+            display: flex;
+            gap: 4px;
+        }
+        .lb-btn {
+            font-family: 'DM Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.06em;
+            padding: 4px 10px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 4px;
+            background: transparent;
+            color: #7a7068;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .lb-btn:hover {
+            color: #e0d6cc;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        .lb-btn.on {
+            background: #b8aaa0;
+            color: #0d0a08;
+            border-color: #b8aaa0;
+        }
+        .lb {
+            display: none;
+            padding-top: 60px;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 100px 40px 70px;
+        }
+        .lb.active {
+            display: block;
+        }
+        .page-header {
+            text-align: center;
+            padding: 0 0 32px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 32px;
+        }
+        .page-header .badge {
+            font-family: 'DM Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: #8a4a2a;
+            margin-bottom: 12px;
+        }
+        .page-header .title {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: clamp(32px, 4vw, 48px);
+            line-height: 1.1;
+            color: #f0e6dc;
+            margin-bottom: 6px;
+        }
+        .page-header .subtitle {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-style: italic;
+            font-size: clamp(17px, 1.8vw, 22px);
+            color: #8a7a6a;
+            margin-bottom: 10px;
+        }
+        .page-header .meta {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.2);
+            margin-top: 6px;
+        }
+        .page-header .divider {
+            width: 60px;
+            height: 2px;
+            background: #8a4a2a;
+            margin: 16px auto 0;
+            border-radius: 2px;
+            opacity: 0.4;
+        }
+        .content {
+            font-size: 16px;
+            line-height: 1.9;
+            color: #d0c6bc;
+        }
+        .content p {
+            margin-bottom: 18px;
+        }
+        .content .lead {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: #f0e6dc;
+            margin-bottom: 24px;
+        }
+        .content .highlight {
+            color: #c47a4a;
+            font-weight: 600;
+        }
+        .content .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 2rem 0 0.8rem 0;
+            color: #f0e6dc;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding-bottom: 0.3rem;
+        }
+        .content .article-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            margin: 20px 0 30px 0;
+        }
+        .content .article-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 1.2rem 1.5rem;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: block;
+            color: inherit;
+        }
+        .content .article-item:hover {
+            border-color: rgba(196, 122, 74, 0.3);
+            background: rgba(255, 255, 255, 0.04);
+            transform: translateX(4px);
+        }
+        .content .article-item .num {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: #8a4a2a;
+            letter-spacing: 0.04em;
+            margin-bottom: 2px;
+        }
+        .content .article-item .a-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #f0e6dc;
+            margin-bottom: 4px;
+        }
+        .content .article-item .a-desc {
+            font-size: 0.9rem;
+            color: #b0a69a;
+            line-height: 1.7;
+        }
+        .content .article-item .a-tags {
+            margin-top: 6px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .content .article-item .a-tags span {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.55rem;
+            color: #7a7068;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 2px 10px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .content .article-item .a-langs {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.55rem;
+            color: #5a5248;
+            margin-top: 4px;
+        }
+        .content .article-item .a-langs span {
+            color: #8a7a6a;
+        }
+        .content .article-item .a-badge {
+            display: inline-block;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.55rem;
+            color: #c47a4a;
+            background: rgba(196, 122, 74, 0.1);
+            padding: 2px 10px;
+            border-radius: 12px;
+            border: 1px solid rgba(196, 122, 74, 0.15);
+            margin-bottom: 4px;
+        }
+        .content .highlight-box {
+            background: rgba(138, 74, 42, 0.06);
+            border-left: 4px solid #8a4a2a;
+            padding: 1.2rem 1.8rem;
+            margin: 26px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .content .highlight-box p {
+            color: #d0c6bc;
+            margin-bottom: 4px;
+        }
+        .content .highlight-box strong {
+            color: #f0e6dc;
+        }
+        .content .signature {
+            margin-top: 40px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.1rem;
+            color: #f0e6dc;
+        }
+        .content .signature .title {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.6rem;
+            color: rgba(255, 255, 255, 0.25);
+            letter-spacing: 0.06em;
+            display: block;
+            margin-top: 2px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px 20px 28px;
+            font-family: 'DM Mono', monospace;
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.12);
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            margin-top: 32px;
+        }
+        @media print {
+            body {
+                background: white;
+                color: #111;
+            }
+            .topbar {
+                display: none;
+            }
+            .lb {
+                padding: 40px 20px;
+            }
+            .lb-btn {
+                display: none;
+            }
+            .content {
+                color: #222;
+            }
+            .page-header .title {
+                color: #111;
+            }
+            .page-header .subtitle {
+                color: #333;
+            }
+            .page-header .meta {
+                color: #666;
+            }
+            .footer {
+                color: #666;
+            }
+            .signature {
+                color: #111;
+            }
+            .content .highlight {
+                color: #7a3a1a;
+            }
+            .lb {
+                display: block !important;
+            }
+            .lb.active {
+                display: block !important;
+            }
+            .lb[data-lang="zh"] {
+                display: block !important;
+            }
+            .lb[data-lang="en"] {
+                display: block !important;
+            }
+            .lb[data-lang="es"] {
+                display: block !important;
+            }
+            .content .article-item {
+                border-color: #ccc;
+                background: #fafafa;
+            }
+            .content .article-item .a-title {
+                color: #111;
+            }
+            .content .article-item .a-desc {
+                color: #444;
+            }
+            .content .article-item .a-tags span {
+                color: #555;
+                border-color: #ccc;
+            }
+            .content .article-item .a-langs {
+                color: #555;
+            }
+            .content .article-item .a-langs span {
+                color: #333;
+            }
+        }
+        @media (max-width: 600px) {
+            .lb {
+                padding: 80px 20px 50px;
+            }
+            .content {
+                font-size: 15px;
+            }
+            .topbar {
+                padding: 0 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="topbar">
+        <a href="#" class="logo">土地正義 · 系列指引</a>
+        <div class="nav-right">
+            <div class="lang-grp">
+                <button class="lb-btn on" data-lang="zh">中文</button>
+                <button class="lb-btn" data-lang="en">EN</button>
+                <button class="lb-btn" data-lang="es">ES</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ==================== 中文版 ================================== -->
+    <!-- ============================================================ -->
+    <div class="lb active" data-lang="zh">
+
+        <div class="page-header">
+            <div class="badge">土地改革系列 · 七篇完整收錄</div>
+            <h1 class="title">土地正義</h1>
+            <p class="subtitle">從英國到台灣、香港的結構性批判</p>
+            <div class="meta">徐萍 · GFI Flow Intelligence · 2026年9月</div>
+            <div class="divider"></div>
+        </div>
+
+        <div class="content">
+
+            <p class="lead">這七篇文章從英國的「採購慣性」與「土地增值歸屬」到台灣的「耕者有其田」與「高房價困境」，再到香港的「2047制度斷裂」與「籠屋人道危機」。</p>
+
+            <p><span class="highlight">貫穿全系列的核心命題是：土地增值歸誰？</span> 這不是技術問題，而是政治問題——誰有權力決定土地的價值歸誰。</p>
+
+            <div class="section-title">文章目錄</div>
+
+            <div class="article-grid">
+
+                <!-- 第一章 -->
+                <a href="the-shadow-of-the-universal.html" class="article-item" style="border-color: rgba(196, 122, 74, 0.2); background: rgba(196, 122, 74, 0.04);">
+                    <div class="num">第一章</div>
+                    <div class="a-title">普世的陰影 · 完整四章</div>
+                    <div class="a-desc">一個讓人住得像畜生的文明，不配談進步；一個不敢改革土地制度的社會，不配談人權。從波士頓到台灣到孟買——土地政策的結構性批判。</div>
+                    <div class="a-tags"><span>新作</span><span>完整四章</span></div>
+                    <div class="a-langs">語言：<span>中文</span> · <span>English</span> · <span>Español</span></div>
+                </a>
+
+                <!-- 第二章 -->
+                <a href="seizing-the-moment-2026.html" class="article-item">
+                    <div class="num">第二章</div>
+                    <div class="a-title">順勢而為：2026年英國土地改革的現實路徑</div>
+                    <div class="a-desc">英國2026年已生效法律與到位資金，三層可立即執行的改革策略——社區購買權、蘇格蘭經驗移植、社會住宅施壓。</div>
+                    <div class="a-tags"><span>英國</span><span>執行方案</span></div>
+                    <div class="a-langs">語言：<span>中文</span> · <span>English</span> · <span>Español</span></div>
+                </a>
+
+                <!-- 第三章 -->
+                <a href="ownership-of-land-value.html" class="article-item">
+                    <div class="num">第三章</div>
+                    <div class="a-title">土地增值的歸屬</div>
+                    <div class="a-desc">英國LVT改革白皮書——GL框架診斷、7.1兆英鎊土地資產的稅制失靈、三大融資支柱、最佳執行方案。</div>
+                    <div class="a-tags"><span>英國</span><span>白皮書</span><span>LVT</span></div>
+                    <div class="a-langs">語言：<span>中文</span> · <span>English</span></div>
+                </a>
+
+                <!-- 第四章 -->
+                <a href="taiwan-land-reform.html" class="article-item">
+                    <div class="num">第四章</div>
+                    <div class="a-title">土地增值回歸於民：台灣的歷史、困境與未來</div>
+                    <div class="a-desc">從耕者有其田到高房價、居住品質崩壞、公共建設失能——台灣土地改革的歷史教訓與結構性出路。</div>
+                    <div class="a-tags"><span>台灣</span><span>歷史</span><span>居住正義</span></div>
+                    <div class="a-langs">語言：<span>中文</span> · <span>English</span></div>
+                </a>
+
+                <!-- 第五章 -->
+                <a href="hong-kong-2047.html" class="article-item">
+                    <div class="num">第五章</div>
+                    <div class="a-title">2047 · 香港土地制度的斷裂與重構</div>
+                    <div class="a-desc">一國兩制到期後的制度斷裂——三種重構路徑、土地增值回收機制、居住品質改善、籠屋與劏房的終結。</div>
+                    <div class="a-tags"><span>香港</span><span>2047</span><span>制度重構</span></div>
+                    <div class="a-langs">語言：<span>中文</span> · <span>English</span></div>
+                </a>
+
+                <!-- 第六章 -->
+                <a href="human-rights-land-hypocrisy.html" class="article-item">
+                    <div class="num">第六章</div>
+                    <div class="a-title">人權的幌子，土地政策的照妖鏡</div>
+                    <div class="a-desc">新自由主義一邊高舉人權攻擊中國，一邊在自己的土地上製造籠屋、遊民、世代絕望——人權雙標的結構性批判。</div>
+                    <div class="a-tags"><span>人權</span><span>雙標</span><span>新自由主義</span></div>
+                    <div class="a-langs">語言：<span>中文</span> · <span>English</span> · <span>Español</span></div>
+                </a>
+
+                <!-- 第七章 -->
+                <a href="land-policy-humanity.html" class="article-item">
+                    <div class="num">第七章</div>
+                    <div class="a-title">土地政策 · 人道 · 居住尊嚴</div>
+                    <div class="a-desc">土地是人道底線——籠屋、劏房、無家可歸不是市場失靈，是制度選擇。土地公有制如何把土地從市場手中搶回來，還給人。</div>
+                    <div class="a-tags"><span>人道</span><span>居住尊嚴</span><span>土地公有制</span></div>
+                    <div class="a-langs">語言：<span>中文</span> · <span>English</span> · <span>Español</span></div>
+                </a>
+
+            </div>
+
+            <div class="section-title">系列架構</div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0 24px 0;">
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); border-radius: 10px; padding: 1rem 1.2rem;">
+                    <div style="font-family:'DM Mono',monospace; font-size:0.6rem; color:#8a4a2a; letter-spacing:0.04em; margin-bottom:4px;">第一層 · 理論批判</div>
+                    <div style="color:#e0d6cc; font-size:0.9rem;">第一章 · 第六章</div>
+                    <div style="color:#8a7a6a; font-size:0.8rem;">全球視角 · 人權雙標</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); border-radius: 10px; padding: 1rem 1.2rem;">
+                    <div style="font-family:'DM Mono',monospace; font-size:0.6rem; color:#8a4a2a; letter-spacing:0.04em; margin-bottom:4px;">第二層 · 制度分析</div>
+                    <div style="color:#e0d6cc; font-size:0.9rem;">第二章 · 第三章</div>
+                    <div style="color:#8a7a6a; font-size:0.8rem;">英國 LVT · 執行方案</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); border-radius: 10px; padding: 1rem 1.2rem;">
+                    <div style="font-family:'DM Mono',monospace; font-size:0.6rem; color:#8a4a2a; letter-spacing:0.04em; margin-bottom:4px;">第三層 · 區域比較</div>
+                    <div style="color:#e0d6cc; font-size:0.9rem;">第四章 · 第五章</div>
+                    <div style="color:#8a7a6a; font-size:0.8rem;">台灣 · 香港</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); border-radius: 10px; padding: 1rem 1.2rem;">
+                    <div style="font-family:'DM Mono',monospace; font-size:0.6rem; color:#8a4a2a; letter-spacing:0.04em; margin-bottom:4px;">第四層 · 人道底線</div>
+                    <div style="color:#e0d6cc; font-size:0.9rem;">第七章</div>
+                    <div style="color:#8a7a6a; font-size:0.8rem;">土地與人的尊嚴</div>
+                </div>
+            </div>
+
+            <div class="section-title">核心論述</div>
+
+            <div class="highlight-box">
+                <p><strong>「一個社會怎麼對待它的土地，就是怎麼對待它的人民。」</strong></p>
+                <p style="margin-top: 6px;">七篇文章共同指向一個結論：<span class="highlight">土地改革的障礙從來不在技術，而在政治。</span> 無論是英國的貴族地主、台灣的既得利益集團，還是香港的殖民遺產與資本主義極端化——阻止土地增值回歸於民的力量，始終是同一群人：那些靠土地致富、卻不願讓土地價值服務於公共利益的人。</p>
+                <p style="margin-top: 6px;"><strong>土地正義，就是讓土地從商品變回資源，讓增值從私人捕獲變為公共回流，讓居住從階級特權變為基本人權。</strong></p>
+            </div>
+
+            <div class="signature">
+                徐萍
+                <span class="title">GL框架發明人 · GFI Flow Intelligence</span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ==================== 英文版 ================================== -->
+    <!-- ============================================================ -->
+    <div class="lb" data-lang="en">
+
+        <div class="page-header">
+            <div class="badge">Land Reform Series · 7 Essays</div>
+            <h1 class="title">Land Justice</h1>
+            <p class="subtitle">A Structural Critique from Britain to Taiwan and Hong Kong</p>
+            <div class="meta">Ping Xu · GFI Flow Intelligence · September 2026</div>
+            <div class="divider"></div>
+        </div>
+
+        <div class="content">
+
+            <p class="lead">This series brings together seven essays on land reform — from Britain's "procurement inertia" and "ownership of land value" to Taiwan's "Land to the Tiller" and "housing crisis," and to Hong Kong's "2047 institutional rupture" and "cage home humanitarian crisis."</p>
+
+            <p><span class="highlight">The central question running through all seven essays is: who owns the value of land?</span> This is not a technical question — it is a political question. Who has the power to decide who owns the value of land?</p>
+
+            <div class="section-title">Table of Contents</div>
+
+            <div class="article-grid">
+
+                <!-- Chapter 1 -->
+                <a href="the-shadow-of-the-universal.html" class="article-item" style="border-color: rgba(196, 122, 74, 0.2); background: rgba(196, 122, 74, 0.04);">
+                    <div class="num">Chapter 1</div>
+                    <div class="a-title">The Shadow of the Universal · Complete 4 Chapters</div>
+                    <div class="a-desc">A civilization where people live like animals does not deserve to speak of progress. A society that dares not reform its land system does not deserve to speak of human rights. From Boston to Taiwan to Mumbai — a structural critique of land policy.</div>
+                    <div class="a-tags"><span>New</span><span>4 Chapters</span></div>
+                    <div class="a-langs">Languages: <span>中文</span> · <span>English</span> · <span>Español</span></div>
+                </a>
+
+                <a href="seizing-the-moment-2026.html" class="article-item">
+                    <div class="num">Chapter 2</div>
+                    <div class="a-title">Seizing the Moment: Realistic Paths for UK Land Reform in 2026</div>
+                    <div class="a-desc">Laws already in force and funds already allocated in the UK — three immediately executable strategies: community right to buy, Scottish experience transplantation, social housing pressure.</div>
+                    <div class="a-tags"><span>UK</span><span>Execution</span></div>
+                    <div class="a-langs">Languages: <span>中文</span> · <span>English</span> · <span>Español</span></div>
+                </a>
+
+                <a href="ownership-of-land-value.html" class="article-item">
+                    <div class="num">Chapter 3</div>
+                    <div class="a-title">The Ownership of Land Value</div>
+                    <div class="a-desc">UK LVT reform white paper — GL Framework diagnosis, £7.1 trillion land asset tax failure, three financing pillars, and best execution plan.</div>
+                    <div class="a-tags"><span>UK</span><span>White Paper</span><span>LVT</span></div>
+                    <div class="a-langs">Languages: <span>中文</span> · <span>English</span></div>
+                </a>
+
+                <a href="taiwan-land-reform.html" class="article-item">
+                    <div class="num">Chapter 4</div>
+                    <div class="a-title">Returning Land Value to the People: Taiwan's History, Crisis, and Future</div>
+                    <div class="a-desc">From "Land to the Tiller" to soaring housing prices, deteriorating living quality, and dysfunctional public infrastructure — Taiwan's land reform lessons and structural pathways.</div>
+                    <div class="a-tags"><span>Taiwan</span><span>History</span><span>Housing Justice</span></div>
+                    <div class="a-langs">Languages: <span>中文</span> · <span>English</span></div>
+                </a>
+
+                <a href="hong-kong-2047.html" class="article-item">
+                    <div class="num">Chapter 5</div>
+                    <div class="a-title">2047 · The Rupture and Restructuring of Hong Kong's Land System</div>
+                    <div class="a-desc">Institutional rupture after "One Country, Two Systems" ends — three restructuring paths, land value recovery mechanisms, living quality improvements, and the end of cage homes and subdivided flats.</div>
+                    <div class="a-tags"><span>Hong Kong</span><span>2047</span><span>Restructuring</span></div>
+                    <div class="a-langs">Languages: <span>中文</span> · <span>English</span></div>
+                </a>
+
+                <a href="human-rights-land-hypocrisy.html" class="article-item">
+                    <div class="num">Chapter 6</div>
+                    <div class="a-title">The Façade of Human Rights, the Mirror of Land Policy</div>
+                    <div class="a-desc">Neoliberalism wields "human rights" as a weapon against China — while manufacturing cage homes, homelessness, and generational despair in its own backyard. A structural critique of human rights double standards.</div>
+                    <div class="a-tags"><span>Human Rights</span><span>Double Standards</span><span>Neoliberalism</span></div>
+                    <div class="a-langs">Languages: <span>中文</span> · <span>English</span> · <span>Español</span></div>
+                </a>
+
+                <a href="land-policy-humanity.html" class="article-item">
+                    <div class="num">Chapter 7</div>
+                    <div class="a-title">Land Policy · Humanity · Housing Dignity</div>
+                    <div class="a-desc">Land is the baseline of humanity — cage homes, subdivided flats, homelessness are not market failures, they are institutional choices. How public land ownership takes land back from the market and returns it to the people.</div>
+                    <div class="a-tags"><span>Humanity</span><span>Housing Dignity</span><span>Public Land</span></div>
+                    <div class="a-langs">Languages: <span>中文</span> · <span>English</span> · <span>Español</span></div>
+                </a>
+
+            </div>
+
+            <div class="section-title">Series Framework</div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0 24px 0;">
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); border-radius: 10px; padding: 1rem 1.2rem;">
+                    <div style="font-family:'DM Mono',monospace; font-size:0.6rem; color:#8a4a2a; letter-spacing:0.04em; margin-bottom:4px;">Layer 1 · Theoretical Critique</div>
+                    <div style="color:#e0d6cc; font-size:0.9rem;">Chapters 1 · 6</div>
+                    <div style="color:#8a7a6a; font-size:0.8rem;">Global · Human Rights</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); border-radius: 10px; padding: 1rem 1.2rem;">
+                    <div style="font-family:'DM Mono',monospace; font-size:0.6rem; color:#8a4a2a; letter-spacing:0.04em; margin-bottom:4px;">Layer 2 · Institutional Analysis</div>
+                    <div style="color:#e0d6cc; font-size:0.9rem;">Chapters 2 · 3</div>
+                    <div style="color:#8a7a6a; font-size:0.8rem;">UK LVT · Execution</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); border-radius: 10px; padding: 1rem 1.2rem;">
+                    <div style="font-family:'DM Mono',monospace; font-size:0.6rem; color:#8a4a2a; letter-spacing:0.04em; margin-bottom:4px;">Layer 3 · Regional Comparison</div>
+                    <div style="color:#e0d6cc; font-size:0.9rem;">Chapters 4 · 5</div>
+                    <div style="color:#8a7a6a; font-size:0.8rem;">Taiwan · Hong Kong</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); border-radius: 10px; padding: 1rem 1.2rem;">
+                    <div style="font-family:'DM Mono',monospace; font-size:0.6rem; color:#8a4a2a; letter-spacing:0.04em; margin-bottom:4px;">Layer 4 · Humanitarian Baseline</div>
+                    <div style="color:#e0d6cc; font-size:0.9rem;">Chapter 7</div>
+                    <div style="color:#8a7a6a; font-size:0.8rem;">Land & Human Dignity</div>
+                </div>
+            </div>
+
+            <div class="section-title">Core Argument</div>
+
+            <div class="highlight-box">
+                <p><strong>"How a society treats its land is how it treats its people."</strong></p>
+                <p style="margin-top: 6px;">All seven essays point to the same conclusion: <span class="highlight">the obstacle to land reform has never been technical — it has always been political.</span> Whether it's Britain's aristocratic landowners, Taiwan's vested interest groups, or Hong Kong's colonial legacy and extreme capitalism — the forces blocking the return of land value to the people are always the same: those who have grown rich from land and refuse to let its value serve the public interest.</p>
+                <p style="margin-top: 6px;"><strong>Land justice means turning land from a commodity back into a resource, turning value appreciation from private capture into public return, and turning housing from class privilege into a basic human right.</strong></p>
+            </div>
+
+            <div class="signature">
+                Ping Xu
+                <span class="title">Creator of the GL Framework · GFI Flow Intelligence</span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ==================== 西班牙文版 ============================== -->
+    <!-- ============================================================ -->
+    <div class="lb" data-lang="es">
+
+        <div class="page-header">
+            <div class="badge">Serie Reforma Agraria · 7 Ensayos</div>
+            <h1 class="title">Justicia de la Tierra</h1>
+            <p class="subtitle">Una Crítica Estructural desde Gran Bretaña hasta Taiwán y Hong Kong</p>
+            <div class="meta">Ping Xu · GFI Flow Intelligence · Septiembre 2026</div>
+            <div class="divider"></div>
+        </div>
+
+        <div class="content">
+
+            <p class="lead">Esta serie reúne siete ensayos sobre reforma agraria — desde la "inercia de la contratación pública" y la "propiedad del valor de la tierra" en Gran Bretaña, hasta la "tierra para el agricultor" y la "crisis de la vivienda" en Taiwán, y la "ruptura institucional de 2047" y la "crisis humanitaria de las jaulas" en Hong Kong.</p>
+
+            <p><span class="highlight">La pregunta central que atraviesa los siete ensayos es: ¿quién es dueño del valor de la tierra?</span> No es una cuestión técnica — es una cuestión política. ¿Quién tiene el poder de decidir quién es dueño del valor de la tierra?</p>
+
+            <div class="section-title">Índice</div>
+
+            <div class="article-grid">
+
+                <!-- Capítulo 1 -->
+                <a href="the-shadow-of-the-universal.html" class="article-item" style="border-color: rgba(196, 122, 74, 0.2); background: rgba(196, 122, 74, 0.04);">
+                    <div class="num">Capítulo 1</div>
+                    <div class="a-title">La Sombra de lo Universal · 4 Capítulos Completos</div>
+                    <div class="a-desc">Una civilización donde la gente vive como animales no merece hablar de progreso. Una sociedad que no se atreve a reformar su sistema de suelo no merece hablar de derechos humanos. De Boston a Taiwán a Mumbai — una crítica estructural de la política de suelo.</div>
+                    <div class="a-tags"><span>Nuevo</span><span>4 Capítulos</span></div>
+                    <div class="a-langs">Idiomas: <span>中文</span> · <span>English</span> · <span>Español</span></div>
+                </a>
+
+                <a href="seizing-the-moment-2026.html" class="article-item">
+                    <div class="num">Capítulo 2</div>
+                    <div class="a-title">Aprovechar el Momento: Vías Realistas para la Reforma Agraria en el Reino Unido en 2026</div>
+                    <div class="a-desc">Leyes ya en vigor y fondos ya asignados en el Reino Unido — tres estrategias ejecutables inmediatamente: derecho comunitario de compra, trasplante de la experiencia escocesa, presión por vivienda social.</div>
+                    <div class="a-tags"><span>Reino Unido</span><span>Ejecución</span></div>
+                    <div class="a-langs">Idiomas: <span>中文</span> · <span>English</span> · <span>Español</span></div>
+                </a>
+
+                <a href="ownership-of-land-value.html" class="article-item">
+                    <div class="num">Capítulo 3</div>
+                    <div class="a-title">La Propiedad del Valor de la Tierra</div>
+                    <div class="a-desc">Libro blanco sobre la reforma del LVT en el Reino Unido — diagnóstico del GL Framework, fracaso fiscal de £7,1 billones en activos territoriales, tres pilares de financiación y plan de mejor ejecución.</div>
+                    <div class="a-tags"><span>Reino Unido</span><span>Libro Blanco</span><span>LVT</span></div>
+                    <div class="a-langs">Idiomas: <span>中文</span> · <span>English</span></div>
+                </a>
+
+                <a href="taiwan-land-reform.html" class="article-item">
+                    <div class="num">Capítulo 4</div>
+                    <div class="a-title">Devolver el Valor de la Tierra al Pueblo: Historia, Crisis y Futuro de Taiwán</div>
+                    <div class="a-desc">Desde la "tierra para el agricultor" hasta los precios disparados de la vivienda, el deterioro de la calidad de vida y la infraestructura pública disfuncional — lecciones de la reforma agraria de Taiwán y vías estructurales.</div>
+                    <div class="a-tags"><span>Taiwán</span><span>Historia</span><span>Justicia Habitacional</span></div>
+                    <div class="a-langs">Idiomas: <span>中文</span> · <span>English</span></div>
+                </a>
+
+                <a href="hong-kong-2047.html" class="article-item">
+                    <div class="num">Capítulo 5</div>
+                    <div class="a-title">2047 · La Ruptura y Reestructuración del Sistema de Suelo de Hong Kong</div>
+                    <div class="a-desc">Ruptura institucional después del fin de "Un País, Dos Sistemas" — tres vías de reestructuración, mecanismos de recuperación del valor de la tierra, mejora de la calidad de vida y el fin de las jaulas y los pisos compartimentados.</div>
+                    <div class="a-tags"><span>Hong Kong</span><span>2047</span><span>Reestructuración</span></div>
+                    <div class="a-langs">Idiomas: <span>中文</span> · <span>English</span></div>
+                </a>
+
+                <a href="human-rights-land-hypocrisy.html" class="article-item">
+                    <div class="num">Capítulo 6</div>
+                    <div class="a-title">La Farsa de los Derechos Humanos, el Espejo de la Política de Suelo</div>
+                    <div class="a-desc">El neoliberalismo usa los "derechos humanos" como arma contra China — mientras produce jaulas, personas sin hogar y desesperación generacional en su propio territorio. Una crítica estructural del doble rasero de los derechos humanos.</div>
+                    <div class="a-tags"><span>Derechos Humanos</span><span>Doble Rasero</span><span>Neoliberalismo</span></div>
+                    <div class="a-langs">Idiomas: <span>中文</span> · <span>English</span> · <span>Español</span></div>
+                </a>
+
+                <a href="land-policy-humanity.html" class="article-item">
+                    <div class="num">Capítulo 7</div>
+                    <div class="a-title">Política de Suelo · Humanidad · Dignidad Habitacional</div>
+                    <div class="a-desc">La tierra es el límite de la humanidad — las jaulas, los pisos compartimentados, las personas sin hogar no son fallos del mercado, son elecciones institucionales. Cómo la propiedad pública de la tierra recupera la tierra del mercado y la devuelve al pueblo.</div>
+                    <div class="a-tags"><span>Humanidad</span><span>Dignidad Habitacional</span><span>Tierra Pública</span></div>
+                    <div class="a-langs">Idiomas: <span>中文</span> · <span>English</span> · <span>Español</span></div>
+                </a>
+
+            </div>
+
+            <div class="section-title">Estructura de la Serie</div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0 24px 0;">
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); border-radius: 10px; padding: 1rem 1.2rem;">
+                    <div style="font-family:'DM Mono',monospace; font-size:0.6rem; color:#8a4a2a; letter-spacing:0.04em; margin-bottom:4px;">Nivel 1 · Crítica Teórica</div>
+                    <div style="color:#e0d6cc; font-size:0.9rem;">Capítulos 1 · 6</div>
+                    <div style="color:#8a7a6a; font-size:0.8rem;">Global · Derechos Humanos</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); border-radius: 10px; padding: 1rem 1.2rem;">
+                    <div style="font-family:'DM Mono',monospace; font-size:0.6rem; color:#8a4a2a; letter-spacing:0.04em; margin-bottom:4px;">Nivel 2 · Análisis Institucional</div>
+                    <div style="color:#e0d6cc; font-size:0.9rem;">Capítulos 2 · 3</div>
+                    <div style="color:#8a7a6a; font-size:0.8rem;">LVT Reino Unido · Ejecución</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); border-radius: 10px; padding: 1rem 1.2rem;">
+                    <div style="font-family:'DM Mono',monospace; font-size:0.6rem; color:#8a4a2a; letter-spacing:0.04em; margin-bottom:4px;">Nivel 3 · Comparación Regional</div>
+                    <div style="color:#e0d6cc; font-size:0.9rem;">Capítulos 4 · 5</div>
+                    <div style="color:#8a7a6a; font-size:0.8rem;">Taiwán · Hong Kong</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); border-radius: 10px; padding: 1rem 1.2rem;">
+                    <div style="font-family:'DM Mono',monospace; font-size:0.6rem; color:#8a4a2a; letter-spacing:0.04em; margin-bottom:4px;">Nivel 4 · Límite Humanitario</div>
+                    <div style="color:#e0d6cc; font-size:0.9rem;">Capítulo 7</div>
+                    <div style="color:#8a7a6a; font-size:0.8rem;">Tierra y Dignidad Humana</div>
+                </div>
+            </div>
+
+            <div class="section-title">Argumento Central</div>
+
+            <div class="highlight-box">
+                <p><strong>"Cómo una sociedad trata su tierra es cómo trata a su pueblo."</strong></p>
+                <p style="margin-top: 6px;">Los siete ensayos apuntan a la misma conclusión: <span class="highlight">el obstáculo para la reforma agraria nunca ha sido técnico — siempre ha sido político.</span> Ya sean los terratenientes aristocráticos de Gran Bretaña, los grupos de intereses creados de Taiwán, o el legado colonial y el capitalismo extremo de Hong Kong — las fuerzas que bloquean el retorno del valor de la tierra al pueblo son siempre las mismas: aquellos que se han enriquecido con la tierra y se niegan a que su valor sirva al interés público.</p>
+                <p style="margin-top: 6px;"><strong>La justicia de la tierra significa convertir la tierra de mercancía en recurso, convertir la plusvalía de captura privada en retorno público, y convertir la vivienda de privilegio de clase en derecho humano básico.</strong></p>
+            </div>
+
+            <div class="signature">
+                Ping Xu
+                <span class="title">Creadora del GL Framework · GFI Flow Intelligence</span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+        © 2026 GFI Flow Intelligence · 土地正義 · Land Justice · Justicia de la Tierra
+    </div>
+
+    <script>
+        document.querySelectorAll('.lb-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var lang = this.dataset.lang;
+                document.querySelectorAll('.lb-btn').forEach(function(b) { b.classList.remove('on'); });
+                this.classList.add('on');
+                document.querySelectorAll('.lb').forEach(function(lb) { lb.classList.remove('active'); });
+                var target = document.querySelector('.lb[data-lang="' + lang + '"]');
+                if (target) target.classList.add('active');
+            });
+        });
+    </script>
+
+</body>
+</html>
