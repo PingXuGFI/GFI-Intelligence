@@ -96,6 +96,37 @@
             color: #e0d6cc;
             border-color: rgba(255, 255, 255, 0.2);
         }
+        /* ===== PDF 下載按鈕 ===== */
+        .pdf-btn {
+            font-family: 'DM Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.06em;
+            padding: 4px 12px;
+            border: 1px solid rgba(52, 211, 153, 0.5);
+            border-radius: 4px;
+            background: rgba(52, 211, 153, 0.1);
+            color: #34d399;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            text-decoration: none;
+        }
+        .pdf-btn:hover {
+            background: rgba(52, 211, 153, 0.2);
+            border-color: #34d399;
+            color: #d6fff0;
+        }
+        .pdf-btn svg {
+            width: 11px;
+            height: 11px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
         .lb {
             display: none;
             padding-top: 60px;
@@ -147,6 +178,76 @@
             margin: 16px auto 0;
             border-radius: 2px;
             opacity: 0.4;
+        }
+        /* ===== PDF 主下載區塊 ===== */
+        .pdf-hero {
+            background: rgba(52, 211, 153, 0.05);
+            border: 1px solid rgba(52, 211, 153, 0.2);
+            border-radius: 12px;
+            padding: 1.6rem 1.8rem;
+            margin: 0 0 32px 0;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .pdf-hero:hover {
+            border-color: rgba(52, 211, 153, 0.4);
+            background: rgba(52, 211, 153, 0.08);
+        }
+        .pdf-hero .pdf-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #34d399;
+            margin-bottom: 8px;
+        }
+        .pdf-hero .pdf-title {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.25rem;
+            color: #f0e6dc;
+            margin-bottom: 6px;
+        }
+        .pdf-hero .pdf-desc {
+            font-size: 0.9rem;
+            color: #a89e94;
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+        .pdf-hero .pdf-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.06em;
+            padding: 10px 24px;
+            border: 1px solid #34d399;
+            border-radius: 6px;
+            background: rgba(52, 211, 153, 0.15);
+            color: #34d399;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .pdf-hero .pdf-download:hover {
+            background: #34d399;
+            color: #0d0a08;
+        }
+        .pdf-hero .pdf-download svg {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .pdf-hero .pdf-meta {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.6rem;
+            color: #6a6058;
+            margin-top: 12px;
+            letter-spacing: 0.06em;
         }
         .content {
             font-size: 16px;
@@ -311,6 +412,36 @@
             color: rgba(255, 255, 255, 0.12);
             display: block;
         }
+        .footer .pdf-footer-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'DM Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.06em;
+            padding: 6px 16px;
+            border: 1px solid rgba(52, 211, 153, 0.4);
+            border-radius: 4px;
+            background: rgba(52, 211, 153, 0.06);
+            color: #34d399;
+            text-decoration: none;
+            transition: all 0.2s;
+            margin: 12px 0;
+        }
+        .footer .pdf-footer-btn:hover {
+            background: rgba(52, 211, 153, 0.15);
+            border-color: #34d399;
+            color: #d6fff0;
+        }
+        .footer .pdf-footer-btn svg {
+            width: 11px;
+            height: 11px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
         .nav-links {
             display: flex;
             gap: 16px;
@@ -444,6 +575,12 @@
             .lb-btn {
                 display: none;
             }
+            .pdf-hero {
+                display: none;
+            }
+            .footer .pdf-footer-btn {
+                display: none;
+            }
             .content {
                 color: #222;
             }
@@ -511,6 +648,12 @@
             .topbar {
                 padding: 0 14px;
             }
+            .nav-links {
+                display: none;
+            }
+            .pdf-btn span.pdf-btn-text {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -523,6 +666,10 @@
                 <a href="/index.html">Home</a>
                 <a href="/landjustice.html">Series</a>
             </div>
+            <a href="/downloads/land-justice-complete.pdf" class="pdf-btn" download>
+                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span class="pdf-btn-text">PDF</span>
+            </a>
             <div class="lang-grp">
                 <button class="lb-btn" data-lang="zh">中文</button>
                 <button class="lb-btn on" data-lang="en">EN</button>
@@ -542,6 +689,17 @@
             <p class="subtitle">A Structural Critique from Britain to Taiwan, Hong Kong, China's Urban Villages, State Land Systems, Migrant Labor, the Shared Fiscal Crisis, and the Public Return of Land Value</p>
             <div class="meta">Ping Xu · GFI Flow Intelligence · September 2026</div>
             <div class="divider"></div>
+        </div>
+
+        <div class="pdf-hero">
+            <div class="pdf-label">Complete Series · PDF Download</div>
+            <div class="pdf-title">Land Justice · Complete Collection</div>
+            <div class="pdf-desc">All 9 essays and 4 extensions in one PDF — with table of contents, series framework, and full three-language index.</div>
+            <a href="/downloads/land-justice-complete.pdf" class="pdf-download" download>
+                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download Complete Series PDF
+            </a>
+            <div class="pdf-meta">PDF · 9 essays + 4 extensions · English / 中文 / Español</div>
         </div>
 
         <div class="content">
@@ -727,6 +885,17 @@
             <div class="divider"></div>
         </div>
 
+        <div class="pdf-hero">
+            <div class="pdf-label">完整系列 · PDF 下載</div>
+            <div class="pdf-title">土地正義 · 完整合集</div>
+            <div class="pdf-desc">九篇正章與四篇延伸，收錄於一份 PDF——含目錄、系列架構、完整三語索引。</div>
+            <a href="/downloads/land-justice-complete.pdf" class="pdf-download" download>
+                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                下載完整系列 PDF
+            </a>
+            <div class="pdf-meta">PDF · 九篇正章 + 四篇延伸 · 中文 / English / Español</div>
+        </div>
+
         <div class="content">
 
             <p class="lead">這九篇文章從英國的「順勢而為」與「土地增值歸屬」到台灣的「耕者有其田」與「高房價困境」，再到香港的「2047制度斷裂」與「籠屋人道危機」，以及中國的「城中村」與土地增值捕獲後的分配黑洞，最後延伸到全球國有土地制度的比較、全球一線城市外來務工者的居住尊嚴、幾乎每個國家都面對的結構性財政危機，以及土地增值如何透過全民基本收入回到人民手裡。</p>
@@ -910,6 +1079,17 @@
             <div class="divider"></div>
         </div>
 
+        <div class="pdf-hero">
+            <div class="pdf-label">Serie Completa · Descarga PDF</div>
+            <div class="pdf-title">Justicia de la Tierra · Colección Completa</div>
+            <div class="pdf-desc">Los 9 ensayos y las 4 extensiones en un solo PDF — con índice, estructura de la serie y índice trilingüe completo.</div>
+            <a href="/downloads/land-justice-complete.pdf" class="pdf-download" download>
+                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Descargar la Serie Completa en PDF
+            </a>
+            <div class="pdf-meta">PDF · 9 ensayos + 4 extensiones · Español / 中文 / English</div>
+        </div>
+
         <div class="content">
 
             <p class="lead">Esta serie reúne nueve ensayos sobre reforma agraria — desde el "Aprovechar el Momento" y "La Propiedad del Valor de la Tierra" en Gran Bretaña, hasta la "tierra para el agricultor" y la "crisis de la vivienda" en Taiwán, la "ruptura institucional de 2047" y la "crisis humanitaria de las jaulas" en Hong Kong, las "aldeas urbanas" de China y el agujero negro de la distribución tras la captura del valor del suelo, la comparación global de los sistemas de suelo estatal, la dignidad habitacional de los trabajadores migrantes, la crisis fiscal estructural compartida que enfrenta casi todos los países, y finalmente el retorno público del valor del suelo capturado a través de la Renta Básica Universal.</p>
@@ -1082,6 +1262,10 @@
 
     <div class="footer">
         <span class="site">gfiintel.com</span>
+        <a href="/downloads/land-justice-complete.pdf" class="pdf-footer-btn" download>
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            下載完整系列 PDF · Download Complete Series PDF
+        </a>
         <span class="links">
             <a href="/">← Back to Home</a>
             <a href="/global-land-value-standard.html">← Global Land Value Standard</a>
