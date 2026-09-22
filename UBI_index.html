@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UBI 系列 · UBI as Relief for an Aging Society</title>
+<style>
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: #f6f5f2;
+    color: #1f1d1b;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                 "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+                 "Noto Sans CJK SC", "Source Han Sans SC",
+                 "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+    font-size: 17px;
+    line-height: 1.85;
+    letter-spacing: 0.01em;
+  }
+
+  /* ============ 顶部工具条 ============ */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(246, 245, 242, 0.9);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    border-bottom: 1px solid #e6e2db;
+  }
+
+  .topbar-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 11px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+  }
+
+  .brand {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #6b6560;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .top-tools {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .lang-switch {
+    display: flex;
+    gap: 2px;
+    background: #ebe8e2;
+    padding: 3px;
+    border-radius: 999px;
+  }
+
+  .lang-btn {
+    border: 0;
+    background: transparent;
+    color: #6b6560;
+    font: inherit;
+    font-size: 12.5px;
+    line-height: 1;
+    padding: 7px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background .18s ease, color .18s ease, box-shadow .18s ease;
+  }
+
+  .lang-btn:hover { color: #1f1d1b; }
+
+  .lang-btn.active {
+    background: #fff;
+    color: #1d5b79;
+    font-weight: 700;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .09);
+  }
+
+  .lang-btn:focus-visible,
+  .theme-btn:focus-visible,
+  .dl-btn:focus-visible {
+    outline: 2px solid #1d5b79;
+    outline-offset: 2px;
+  }
+
+  .theme-btn {
+    border: 0;
+    background: #ebe8e2;
+    color: #6b6560;
+    font: inherit;
+    font-size: 13px;
+    line-height: 1;
+    padding: 8px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background .18s ease, color .18s ease;
+  }
+
+  .theme-btn:hover { background: #e2ded6; color: #1f1d1b; }
+
+  /* ============ 通用容器 ============ */
+  .wrap {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ============ 首屏 Hero ============ */
+  .hero {
+    padding: 54px 0 34px;
+    border-bottom: 1px solid #e6e2db;
+  }
+
+  .hero-kicker {
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #1d5b79;
+    background: #e8f0f4;
+    border-radius: 999px;
+    padding: 6px 14px;
+    margin-bottom: 20px;
+  }
+
+  .hero h1 {
+    font-size: clamp(1.7rem, 3.6vw, 2.6rem);
+    line-height: 1.34;
+    letter-spacing: -0.012em;
+    font-weight: 800;
+    margin: 0 0 18px;
+    color: #16202a;
+    max-width: 22em;
+  }
+
+  .hero-lede {
+    font-size: clamp(1rem, 1.6vw, 1.12rem);
+    line-height: 1.85;
+    color: #4a453f;
+    max-width: 40em;
+    margin: 0 0 26px;
+  }
+
+  .hero-lede strong { color: #16202a; font-weight: 700; }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1;
+    padding: 14px 22px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: transform .16s ease, background .18s ease,
+                border-color .18s ease, box-shadow .18s ease;
+  }
+
+  .btn:active { transform: translateY(1px); }
+
+  .btn-primary {
+    background: #1d5b79;
+    color: #fff;
+    box-shadow: 0 2px 10px rgba(29, 91, 121, .22);
+  }
+
+  .btn-primary:hover { background: #16485f; }
+
+  .btn-ghost {
+    background: #fff;
+    color: #1d5b79;
+    border-color: #d9d4cc;
+  }
+
+  .btn-ghost:hover { border-color: #1d5b79; background: #f9fbfc; }
+
+  .btn-note {
+    font-size: 12.5px;
+    color: #8e8781;
+    letter-spacing: .02em;
+  }
+
+  /* ============ 核心数字条 ============ */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 14px;
+    padding: 34px 0 6px;
+  }
+
+  .stat {
+    background: #fff;
+    border: 1px solid #e6e2db;
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+
+  .stat-num {
+    display: block;
+    font-size: 1.65rem;
+    font-weight: 800;
+    color: #1d5b79;
+    line-height: 1.15;
+    margin-bottom: 5px;
+    letter-spacing: -0.01em;
+  }
+
+  .stat-label {
+    display: block;
+    font-size: 13px;
+    color: #6b6560;
+    line-height: 1.55;
+  }
+
+  /* ============ 系列文章 ============ */
+  .series {
+    padding: 52px 0 10px;
+  }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid #16202a;
+  }
+
+  .section-head h2 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: .02em;
+    margin: 0;
+    color: #16202a;
+  }
+
+  .section-head span {
+    font-size: 12.5px;
+    color: #8e8781;
+    letter-spacing: .04em;
+    white-space: nowrap;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 18px;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid #e6e2db;
+    border-radius: 12px;
+    padding: 24px 24px 22px;
+    transition: transform .18s ease, box-shadow .18s ease,
+                border-color .18s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 26px rgba(22, 32, 42, .08);
+    border-color: #cfc9c0;
+  }
+
+  .card.featured {
+    border-left: 4px solid #1d5b79;
+    background: linear-gradient(180deg, #fbfdfe 0%, #ffffff 60%);
+  }
+
+  .card-tag {
+    font-size: 11.5px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #1d5b79;
+    margin-bottom: 12px;
+  }
+
+  .card h3 {
+    font-size: 1.08rem;
+    line-height: 1.5;
+    font-weight: 800;
+    margin: 0 0 12px;
+    color: #16202a;
+  }
+
+  .card p {
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: #5d5751;
+    margin: 0 0 18px;
+    flex: 1;
+  }
+
+  .card-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding-top: 14px;
+    border-top: 1px solid #f0ece6;
+  }
+
+  .card-meta {
+    font-size: 12.5px;
+    color: #9a938b;
+    letter-spacing: .03em;
+  }
+
+  .card-link {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #1d5b79;
+    text-decoration: none;
+    white-space: nowrap;
+    border-bottom: 1px solid transparent;
+    transition: border-color .16s ease;
+  }
+
+  .card-link:hover { border-bottom-color: #1d5b79; }
+
+  /* ============ 下载区 ============ */
+  .download {
+    margin: 56px 0 0;
+    background: #16202a;
+    color: #e8e5e0;
+    border-radius: 14px;
+    padding: 34px 34px 32px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 22px;
+  }
+
+  .download-text { max-width: 34em; }
+
+  .download h2 {
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin: 0 0 8px;
+    color: #fff;
+    letter-spacing: .01em;
+  }
+
+  .download p {
+    margin: 0;
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: #a9a49d;
+  }
+
+  .dl-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1;
+    padding: 15px 24px;
+    border-radius: 10px;
+    border: 1px solid #3d4a55;
+    background: #1d5b79;
+    color: #fff;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background .18s ease, transform .16s ease;
+  }
+
+  .dl-btn:hover { background: #16485f; }
+
+  .dl-btn:active { transform: translateY(1px); }
+
+  .dl-hint {
+    display: block;
+    font-size: 12px;
+    color: #8b959c;
+    margin-top: 8px;
+    text-align: center;
+    letter-spacing: .03em;
+  }
+
+  /* ============ 页脚 ============ */
+  .foot {
+    margin-top: 64px;
+    padding: 30px 0 68px;
+    border-top: 1px solid #e6e2db;
+    font-size: 12.5px;
+    letter-spacing: .04em;
+    color: #9a938b;
+    line-height: 1.9;
+  }
+
+  .foot-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  /* ============ 暗色 ============ */
+  body.dark {
+    background: #17181a;
+    color: #d8d5d0;
+  }
+
+  body.dark .topbar {
+    background: rgba(23, 24, 26, 0.9);
+    border-bottom-color: #2c2e31;
+  }
+
+  body.dark .brand { color: #8b8782; }
+
+  body.dark .lang-switch { background: #26282b; }
+
+  body.dark .lang-btn { color: #a5a19b; }
+  body.dark .lang-btn:hover { color: #e4e1dc; }
+  body.dark .lang-btn.active {
+    background: #34383b;
+    color: #7cc0e0;
+    box-shadow: none;
+  }
+
+  body.dark .theme-btn {
+    background: #26282b;
+    color: #a5a19b;
+  }
+  body.dark .theme-btn:hover { background: #303336; color: #e4e1dc; }
+
+  body.dark .hero { border-bottom-color: #2c2e31; }
+
+  body.dark .hero-kicker {
+    background: #1d2a31;
+    color: #7cc0e0;
+  }
+
+  body.dark .hero h1 { color: #efedea; }
+  body.dark .hero-lede { color: #a9a49d; }
+  body.dark .hero-lede strong { color: #efedea; }
+
+  body.dark .btn-primary { background: #2a7396; box-shadow: none; }
+  body.dark .btn-primary:hover { background: #32809f; }
+
+  body.dark .btn-ghost {
+    background: #1e2023;
+    color: #7cc0e0;
+    border-color: #34383b;
+  }
+  body.dark .btn-ghost:hover { border-color: #4a9cc4; background: #202428; }
+
+  body.dark .btn-note { color: #6b6762; }
+
+  body.dark .stat {
+    background: #1e2023;
+    border-color: #2c2e31;
+  }
+  body.dark .stat-num { color: #7cc0e0; }
+  body.dark .stat-label { color: #8b8782; }
+
+  body.dark .section-head { border-bottom-color: #efedea; }
+  body.dark .section-head h2 { color: #efedea; }
+  body.dark .section-head span { color: #6b6762; }
+
+  body.dark .card {
+    background: #1e2023;
+    border-color: #2c2e31;
+  }
+  body.dark .card:hover {
+    border-color: #3d4247;
+    box-shadow: 0 10px 26px rgba(0, 0, 0, .3);
+  }
+  body.dark .card.featured {
+    border-left-color: #4a9cc4;
+    background: linear-gradient(180deg, #1f2a30 0%, #1e2023 60%);
+  }
+  body.dark .card-tag { color: #7cc0e0; }
+  body.dark .card h3 { color: #efedea; }
+  body.dark .card p { color: #a09b95; }
+  body.dark .card-foot { border-top-color: #2c2e31; }
+  body.dark .card-meta { color: #6b6762; }
+  body.dark .card-link { color: #7cc0e0; }
+  body.dark .card-link:hover { border-bottom-color: #7cc0e0; }
+
+  body.dark .download { background: #101214; }
+  body.dark .download p { color: #8b8782; }
+
+  body.dark .foot {
+    border-top-color: #2c2e31;
+    color: #6b6762;
+  }
+
+  /* ============ 窄屏 ============ */
+  @media (max-width: 720px) {
+    body { font-size: 16px; }
+
+    .topbar-inner {
+      padding: 9px 14px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .brand { display: none; }
+
+    .top-tools { width: 100%; justify-content: space-between; }
+
+    .lang-switch { flex: 1; }
+    .lang-btn { flex: 1; text-align: center; padding: 8px 4px; }
+
+    .wrap { padding: 0 18px; }
+
+    .hero { padding: 34px 0 26px; }
+
+    .hero-actions { flex-direction: column; align-items: stretch; }
+    .btn { justify-content: center; }
+
+    .stats { grid-template-columns: 1fr 1fr; gap: 10px; padding-top: 26px; }
+    .stat { padding: 14px 16px; }
+    .stat-num { font-size: 1.35rem; }
+    .stat-label { font-size: 12px; }
+
+    .series { padding-top: 40px; }
+    .cards { grid-template-columns: 1fr; }
+
+    .download {
+      padding: 26px 22px;
+      border-radius: 12px;
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .dl-btn { justify-content: center; }
+
+    .foot { margin-top: 48px; }
+    .foot-inner { flex-direction: column; gap: 8px; }
+  }
+
+  @media (max-width: 380px) {
+    .stats { grid-template-columns: 1fr; }
+  }
+
+  /* ============ 打印 ============ */
+  @media print {
+    .topbar, .hero-actions, .theme-btn, .dl-btn { display: none; }
+    body { background: #fff; color: #000; font-size: 11pt; }
+    .card, .stat, .download {
+      border: 1px solid #ccc;
+      background: #fff;
+      color: #000;
+      box-shadow: none;
+    }
+    .download h2 { color: #000; }
+    .stat-num { color: #000; }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- ===================== 顶部工具条 ===================== -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <span class="brand">UBI Series</span>
+
+    <div class="top-tools">
+      <nav class="lang-switch" role="group" aria-label="语言切换 / Language / Idioma">
+        <button type="button" class="lang-btn" data-lang="zh-CN" aria-pressed="true">简体</button>
+        <button type="button" class="lang-btn" data-lang="zh-TW" aria-pressed="false">繁體</button>
+        <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">English</button>
+        <button type="button" class="lang-btn" data-lang="es" aria-pressed="false">Español</button>
+      </nav>
+
+      <button type="button" class="theme-btn" id="themeBtn" aria-label="切换深浅色">🌙</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ===================== 首屏 ===================== -->
+  <section class="hero">
+
+    <span class="hero-kicker" data-i18n="kicker">UBI 系列 · 高龄化社会</span>
+
+    <h1 data-i18n="heroTitle">UBI 作为高龄化社会的舒缓</h1>
+
+    <p class="hero-lede" data-i18n="heroLede">
+      <strong>一百元，给城市中产是储蓄，给农村老人是消费。</strong>
+      农村居民边际消费倾向约为 0.79，城镇居民约为 0.52——同样一笔财政转移支付，
+      投向农村的消费释放效率约为城市的 1.5 倍。而在中国农村，最普遍的照护关系，
+      是六十岁的老人照顾八十岁的老人。
+    </p>
+
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#article" data-i18n="readBtn">阅读全文</a>
+      <button type="button" class="btn btn-ghost" id="dlBtn" data-i18n="dlBtn">下载简体版 PDF</button>
+      <span class="btn-note" data-i18n="dlNote">简体中文 · PDF · 适合打印与转发</span>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-num">0.79</span>
+        <span class="stat-label" data-i18n="stat1">农村居民边际消费倾向<br>每 100 元收入，79 元用于消费</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">0.52</span>
+        <span class="stat-label" data-i18n="stat2">城镇居民边际消费倾向<br>每 100 元收入，52 元用于消费</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">1.5×</span>
+        <span class="stat-label" data-i18n="stat3">农村消费释放效率<br>约为城市的 1.5 倍以上</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">223<span style="font-size:.6em;font-weight:700">元</span></span>
+        <span class="stat-label" data-i18n="stat4">1.71 亿农村老人<br>月均养老金水平</span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ===================== 系列文章 ===================== -->
+  <section class="series" id="article">
+
+    <div class="section-head">
+      <h2 data-i18n="seriesHead">UBI 系列</h2>
+      <span data-i18n="seriesCount">共 4 篇</span>
+    </div>
+
+    <div class="cards">
+
+      <!-- 主文章（置顶明显位置） -->
+      <article class="card featured">
+        <p class="card-tag" data-i18n="tagMain">主文 · 置顶</p>
+        <h3 data-i18n="card1Title">UBI 作为高龄化社会的舒缓</h3>
+        <p data-i18n="card1Desc">
+          用治理正当性框架分析全民基本收入。农村老人边际消费倾向接近 0.8，
+          每月 100 元是约 45% 的收入增量。从“六十岁照顾八十岁”的老老人照护现实出发，
+          讨论 UBI 如何同时舒缓老人与照护者。
+        </p>
+        <div class="card-foot">
+          <span class="card-meta" data-i18n="metaMain">约 1.2 万字 · 简体 / 繁體 / EN / ES</span>
+          <a class="card-link" href="#article" data-i18n="linkOpen">打开 →</a>
+        </div>
+      </article>
+
+      <!-- 子文章 1 -->
+      <article class="card">
+        <p class="card-tag" data-i18n="tagSub">专题 · 照护</p>
+        <h3 data-i18n="card2Title">六十岁照顾八十岁：老老人照护的辛酸</h3>
+        <p data-i18n="card2Desc">
+          中国农村最普遍的照护关系不是子女照顾父母，而是低龄老人照顾高龄老人。
+          他们自己也需要吃药、需要体检、需要休息，但这些需求被照护责任彻底挤压。
+        </p>
+        <div class="card-foot">
+          <span class="card-meta" data-i18n="metaSub">约 3 千字</span>
+          <a class="card-link" href="#article" data-i18n="linkOpen">打开 →</a>
+        </div>
+      </article>
+
+      <!-- 子文章 2 -->
+      <article class="card">
+        <p class="card-tag" data-i18n="tagSub2">专题 · 消费</p>
+        <h3 data-i18n="card3Title">一百元在农村的放大效应</h3>
+        <p data-i18n="card3Desc">
+          农村 MPC 0.79，城市 MPC 0.52。本地经济循环更封闭、漏损更少、代际溢出更显著——
+          同样的财政投入，投向农村的消费释放效率是投向城市的 1.5 倍以上。
+        </p>
+        <div class="card-foot">
+          <span class="card-meta" data-i18n="metaSub2">约 2 千字</span>
+          <a class="card-link" href="#article" data-i18n="linkOpen">打开 →</a>
+        </div>
+      </article>
+
+      <!-- 子文章 3 -->
+      <article class="card">
+        <p class="card-tag" data-i18n="tagSub3">专题 · 交付</p>
+        <h3 data-i18n="card4Title">数字人民币作为 UBI 的支付轨道</h3>
+        <p data-i18n="card4Desc">
+          累计交易 34.8 亿笔、金额 16.7 万亿元、个人钱包 2.3 亿个。
+          智能合约实现直达个人、定时发放、不可截留——支付轨道已经具备，
+          问题只剩资金来源。
+        </p>
+        <div class="card-foot">
+          <span class="card-meta" data-i18n="metaSub3">约 2 千字</span>
+          <a class="card-link" href="#article" data-i18n="linkOpen">打开 →</a>
+        </div>
+      </article>
+
+    </div>
+
+  </section>
+
+  <!-- ===================== 下载区 ===================== -->
+  <section class="download">
+    <div class="download-text">
+      <h2 data-i18n="dlTitle">下载简体版 PDF</h2>
+      <p data-i18n="dlDesc">
+        完整收录《UBI 作为高龄化社会的舒缓》全文，含数据表格与分阶段实施路径。
+        适合打印、转发与离线阅读。
+      </p>
+    </div>
+
+    <div>
+      <button type="button" class="dl-btn" id="dlBtn2" data-i18n="dlBtn">下载简体版 PDF</button>
+      <span class="dl-hint" data-i18n="dlHint">在打印对话框中选择“另存为 PDF”</span>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===================== 页脚 ===================== -->
+<footer class="foot">
+  <div class="wrap foot-inner">
+    <span data-i18n="footLeft">UBI 系列 · 治理正当性框架</span>
+    <span data-i18n="footRight">流程成功率 · 战略价值 · 痛苦时长 · 认知摩擦</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ============================================================
+     一、四语系文案（简体 / 繁體 / English / Español）
+     ============================================================ */
+  var I18N = {
+    'zh-CN': {
+      htmlLang: 'zh-CN',
+      docTitle: 'UBI 系列 · UBI 作为高龄化社会的舒缓',
+      kicker: 'UBI 系列 · 高龄化社会',
+      heroTitle: 'UBI 作为高龄化社会的舒缓',
+      heroLede: '<strong>一百元，给城市中产是储蓄，给农村老人是消费。</strong>农村居民边际消费倾向约为 0.79，城镇居民约为 0.52——同样一笔财政转移支付，投向农村的消费释放效率约为城市的 1.5 倍。而在中国农村，最普遍的照护关系，是六十岁的老人照顾八十岁的老人。',
+      readBtn: '阅读全文',
+      dlBtn: '下载简体版 PDF',
+      dlNote: '简体中文 · PDF · 适合打印与转发',
+      stat1: '农村居民边际消费倾向<br>每 100 元收入，79 元用于消费',
+      stat2: '城镇居民边际消费倾向<br>每 100 元收入，52 元用于消费',
+      stat3: '农村消费释放效率<br>约为城市的 1.5 倍以上',
+      stat4: '1.71 亿农村老人<br>月均养老金水平',
+      seriesHead: 'UBI 系列',
+      seriesCount: '共 4 篇',
+      tagMain: '主文 · 置顶',
+      tagSub: '专题 · 照护',
+      tagSub2: '专题 · 消费',
+      tagSub3: '专题 · 交付',
+      card1Title: 'UBI 作为高龄化社会的舒缓',
+      card1Desc: '用治理正当性框架分析全民基本收入。农村老人边际消费倾向接近 0.8，每月 100 元是约 45% 的收入增量。从“六十岁照顾八十岁”的老老人照护现实出发，讨论 UBI 如何同时舒缓老人与照护者。',
+      card2Title: '六十岁照顾八十岁：老老人照护的辛酸',
+      card2Desc: '中国农村最普遍的照护关系不是子女照顾父母，而是低龄老人照顾高龄老人。他们自己也需要吃药、需要体检、需要休息，但这些需求被照护责任彻底挤压。',
+      card3Title: '一百元在农村的放大效应',
+      card3Desc: '农村 MPC 0.79，城市 MPC 0.52。本地经济循环更封闭、漏损更少、代际溢出更显著——同样的财政投入，投向农村的消费释放效率是投向城市的 1.5 倍以上。',
+      card4Title: '数字人民币作为 UBI 的支付轨道',
+      card4Desc: '累计交易 34.8 亿笔、金额 16.7 万亿元、个人钱包 2.3 亿个。智能合约实现直达个人、定时发放、不可截留——支付轨道已经具备，问题只剩资金来源。',
+      metaMain: '约 1.2 万字 · 简体 / 繁體 / EN / ES',
+      metaSub: '约 3 千字',
+      metaSub2: '约 2 千字',
+      metaSub3: '约 2 千字',
+      linkOpen: '打开 →',
+      dlTitle: '下载简体版 PDF',
+      dlDesc: '完整收录《UBI 作为高龄化社会的舒缓》全文，含数据表格与分阶段实施路径。适合打印、转发与离线阅读。',
+      dlHint: '在打印对话框中选择“另存为 PDF”',
+      footLeft: 'UBI 系列 · 治理正当性框架',
+      footRight: '流程成功率 · 战略价值 · 痛苦时长 · 认知摩擦'
+    },
+
+    'zh-TW': {
+      htmlLang: 'zh-TW',
+      docTitle: 'UBI 系列 · UBI 作為高齡化社會的舒緩',
+      kicker: 'UBI 系列 · 高齡化社會',
+      heroTitle: 'UBI 作為高齡化社會的舒緩',
+      heroLede: '<strong>一百元，給城市中產是儲蓄，給農村老人是消費。</strong>農村居民邊際消費傾向約為 0.79，城鎮居民約為 0.52——同樣一筆財政轉移支付，投向農村的消費釋放效率約為城市的 1.5 倍。而在中國農村，最普遍的照護關係，是六十歲的老人照顧八十歲的老人。',
+      readBtn: '閱讀全文',
+      dlBtn: '下載簡體版 PDF',
+      dlNote: '簡體中文 · PDF · 適合列印與轉發',
+      stat1: '農村居民邊際消費傾向<br>每 100 元收入，79 元用於消費',
+      stat2: '城鎮居民邊際消費傾向<br>每 100 元收入，52 元用於消費',
+      stat3: '農村消費釋放效率<br>約為城市的 1.5 倍以上',
+      stat4: '1.71 億農村老人<br>月均養老金水平',
+      seriesHead: 'UBI 系列',
+      seriesCount: '共 4 篇',
+      tagMain: '主文 · 置頂',
+      tagSub: '專題 · 照護',
+      tagSub2: '專題 · 消費',
+      tagSub3: '專題 · 交付',
+      card1Title: 'UBI 作為高齡化社會的舒緩',
+      card1Desc: '用治理正當性框架分析全民基本收入。農村老人邊際消費傾向接近 0.8，每月 100 元是約 45% 的收入增量。從「六十歲照顧八十歲」的老老人照護現實出發，討論 UBI 如何同時舒緩老人與照護者。',
+      card2Title: '六十歲照顧八十歲：老老人照護的辛酸',
+      card2Desc: '中國農村最普遍的照護關係不是子女照顧父母，而是低齡老人照顧高齡老人。他們自己也需要吃藥、需要體檢、需要休息，但這些需求被照護責任徹底擠壓。',
+      card3Title: '一百元在農村的放大效應',
+      card3Desc: '農村 MPC 0.79，城市 MPC 0.52。本地經濟循環更封閉、漏損更少、代際溢出更顯著——同樣的財政投入，投向農村的消費釋放效率是投向城市的 1.5 倍以上。',
+      card4Title: '數字人民幣作為 UBI 的支付軌道',
+      card4Desc: '累計交易 34.8 億筆、金額 16.7 萬億元、個人錢包 2.3 億個。智能合約實現直達個人、定時發放、不可截留——支付軌道已經具備，問題只剩資金來源。',
+      metaMain: '約 1.2 萬字 · 简体 / 繁體 / EN / ES',
+      metaSub: '約 3 千字',
+      metaSub2: '約 2 千字',
+      metaSub3: '約 2 千字',
+      linkOpen: '打開 →',
+      dlTitle: '下載簡體版 PDF',
+      dlDesc: '完整收錄《UBI 作為高齡化社會的舒緩》全文，含數據表格與分階段實施路徑。適合列印、轉發與離線閱讀。',
+      dlHint: '在列印對話框中選擇「另存為 PDF」',
+      footLeft: 'UBI 系列 · 治理正當性框架',
+      footRight: '流程成功率 · 戰略價值 · 痛苦時長 · 認知摩擦'
+    },
+
+    'en': {
+      htmlLang: 'en',
+      docTitle: 'UBI Series · UBI as Relief for an Aging Society',
+      kicker: 'UBI Series · Aging Society',
+      heroTitle: 'UBI as Relief for an Aging Society',
+      heroLede: '<strong>One hundred yuan is savings for the urban middle class, and consumption for the rural elderly.</strong> The marginal propensity to consume is about 0.79 in rural areas and 0.52 in cities — the same fiscal transfer releases roughly 1.5 times more consumption when directed to rural residents. And in rural China, the most common caregiving relationship is a sixty-year-old caring for an eighty-year-old.',
+      readBtn: 'Read the full article',
+      dlBtn: 'Download Simplified Chinese PDF',
+      dlNote: 'Simplified Chinese · PDF · Print & share friendly',
+      stat1: 'Rural marginal propensity to consume<br>79 of every 100 yuan is spent',
+      stat2: 'Urban marginal propensity to consume<br>52 of every 100 yuan is spent',
+      stat3: 'Rural consumption release efficiency<br>About 1.5× that of cities',
+      stat4: '171 million rural elderly<br>Average monthly pension',
+      seriesHead: 'UBI Series',
+      seriesCount: '4 articles',
+      tagMain: 'Main article · Pinned',
+      tagSub: 'Topic · Caregiving',
+      tagSub2: 'Topic · Consumption',
+      tagSub3: 'Topic · Delivery',
+      card1Title: 'UBI as Relief for an Aging Society',
+      card1Desc: 'A governance-legitimacy analysis of universal basic income. The rural elderly have a marginal propensity to consume near 0.8; 100 yuan a month is roughly a 45% income increase. Starting from the reality of sixty-year-olds caring for eighty-year-olds, it asks how UBI can relieve both the elderly and their caregivers.',
+      card2Title: 'Sixty Caring for Eighty: The Hardship of Old-Old Caregiving',
+      card2Desc: 'The most common caregiving relationship in rural China is not children caring for parents, but younger-old caring for older-old. They too need medication, checkups, and rest — needs that caregiving responsibilities push aside entirely.',
+      card3Title: 'The Amplifying Effect of 100 Yuan in Rural Areas',
+      card3Desc: 'Rural MPC 0.79, urban MPC 0.52. Local economic loops are more closed, leakage is lower, and intergenerational spillover is stronger — the same fiscal input releases over 1.5 times more consumption when directed to rural areas.',
+      card4Title: 'The Digital Yuan as UBI\'s Payment Rail',
+      card4Desc: '3.48 billion transactions, 16.7 trillion yuan in cumulative value, 230 million personal wallets. Smart contracts enable direct, scheduled, non-interceptable disbursement — the payment rail exists; only the funding source remains open.',
+      metaMain: '~12,000 words · 简体 / 繁體 / EN / ES',
+      metaSub: '~3,000 words',
+      metaSub2: '~2,000 words',
+      metaSub3: '~2,000 words',
+      linkOpen: 'Open →',
+      dlTitle: 'Download Simplified Chinese PDF',
+      dlDesc: 'The complete text of "UBI as Relief for an Aging Society," including data tables and the phased implementation path. Suitable for printing, sharing, and offline reading.',
+      dlHint: 'Choose "Save as PDF" in the print dialog',
+      footLeft: 'UBI Series · Governance Legitimacy Framework',
+      footRight: 'Flow Success Rate · Strategic Value · Pain Duration · Cognitive Friction'
+    },
+
+    'es': {
+      htmlLang: 'es',
+      docTitle: 'Serie UBI · La UBI como alivio para una sociedad envejecida',
+      kicker: 'Serie UBI · Sociedad envejecida',
+      heroTitle: 'La UBI como alivio para una sociedad envejecida',
+      heroLede: '<strong>Cien yuanes son ahorro para la clase media urbana y consumo para el anciano rural.</strong> La propensión marginal al consumo es de aproximadamente 0,79 en las zonas rurales y de 0,52 en las ciudades: la misma transferencia fiscal libera alrededor de 1,5 veces más consumo cuando se dirige a los residentes rurales. Y en la China rural, la relación de cuidado más común es la de una persona de sesenta años que cuida a otra de ochenta.',
+      readBtn: 'Leer el artículo completo',
+      dlBtn: 'Descargar PDF en chino simplificado',
+      dlNote: 'Chino simplificado · PDF · Apto para imprimir y compartir',
+      stat1: 'Propensión marginal al consumo rural<br>De cada 100 yuanes, 79 se gastan',
+      stat2: 'Propensión marginal al consumo urbana<br>De cada 100 yuanes, 52 se gastan',
+      stat3: 'Eficiencia de liberación del consumo rural<br>Alrededor de 1,5 veces la urbana',
+      stat4: '171 millones de ancianos rurales<br>Pensión mensual promedio',
+      seriesHead: 'Serie UBI',
+      seriesCount: '4 artículos',
+      tagMain: 'Artículo principal · Fijado',
+      tagSub: 'Tema · Cuidados',
+      tagSub2: 'Tema · Consumo',
+      tagSub3: 'Tema · Entrega',
+      card1Title: 'La UBI como alivio para una sociedad envejecida',
+      card1Desc: 'Un análisis de la renta básica universal desde el marco de legitimidad de la gobernanza. La propensión marginal al consumo de los ancianos rurales se acerca a 0,8; 100 yuanes al mes equivalen a un aumento de ingresos de aproximadamente el 45 %. Partiendo de la realidad de los cuidados entre mayores, examina cómo la UBI puede aliviar tanto a los ancianos como a sus cuidadores.',
+      card2Title: 'Sesenta cuidando a ochenta: la dureza de los cuidados entre mayores',
+      card2Desc: 'La relación de cuidado más común en la China rural no es la de los hijos que cuidan a sus padres, sino la de los mayores jóvenes que cuidan a los mayores más ancianos. Ellos también necesitan medicación, revisiones y descanso, pero esas necesidades quedan completamente desplazadas por la responsabilidad del cuidado.',
+      card3Title: 'El efecto amplificador de 100 yuanes en las zonas rurales',
+      card3Desc: 'PMC rural 0,79, PMC urbana 0,52. Los circuitos económicos locales son más cerrados, las fugas son menores y el derrame intergeneracional es más fuerte: el mismo insumo fiscal libera más de 1,5 veces más consumo cuando se dirige al medio rural.',
+      card4Title: 'El yuan digital como riel de pago de la UBI',
+      card4Desc: '3.480 millones de transacciones, 16,7 billones de yuanes en valor acumulado, 230 millones de monederos personales. Los contratos inteligentes permiten un desembolso directo, programado e ininterceptable: el riel de pago ya existe; solo queda abierta la fuente de financiación.',
+      metaMain: '~12.000 palabras · 简体 / 繁體 / EN / ES',
+      metaSub: '~3.000 palabras',
+      metaSub2: '~2.000 palabras',
+      metaSub3: '~2.000 palabras',
+      linkOpen: 'Abrir →',
+      dlTitle: 'Descargar PDF en chino simplificado',
+      dlDesc: 'El texto completo de «La UBI como alivio para una sociedad envejecida», con tablas de datos y la ruta de implementación por etapas. Apto para imprimir, compartir y leer sin conexión.',
+      dlHint: 'Elija «Guardar como PDF» en el diálogo de impresión',
+      footLeft: 'Serie UBI · Marco de legitimidad de la gobernanza',
+      footRight: 'Tasa de éxito del flujo · Valor estratégico · Duración del dolor · Fricción cognitiva'
+    }
+  };
+
+  var SUPPORTED = ['zh-CN', 'zh-TW', 'en', 'es'];
+  var LANG_KEY = 'ubi-series-lang';
+  var THEME_KEY = 'ubi-series-theme';
+
+  var langBtns = Array.prototype.slice.call(document.querySelectorAll('.lang-btn'));
+
+  /* ============================================================
+     二、语言切换
+     ============================================================ */
+  function normalize(tag) {
+    if (!tag) { return null; }
+    tag = String(tag).toLowerCase();
+
+    if (tag.indexOf('zh') === 0) {
+      if (tag.indexOf('tw') > -1 || tag.indexOf('hk') > -1 ||
+          tag.indexOf('mo') > -1 || tag.indexOf('hant') > -1) {
+        return 'zh-TW';
+      }
+      return 'zh-CN';
+    }
+    if (tag.indexOf('es') === 0) { return 'es'; }
+    if (tag.indexOf('en') === 0) { return 'en'; }
+    return null;
+  }
+
+  function setLang(lang, persist) {
+    if (SUPPORTED.indexOf(lang) === -1) { lang = 'zh-CN'; }
+    var dict = I18N[lang];
+    if (!dict) { return; }
+
+    Array.prototype.forEach.call(
+      document.querySelectorAll('[data-i18n]'),
+      function (el) {
+        var key = el.getAttribute('data-i18n');
+        if (dict[key] !== undefined) {
+          el.innerHTML = dict[key];
+        }
+      }
+    );
+
+    langBtns.forEach(function (btn) {
+      var on = btn.getAttribute('data-lang') === lang;
+      btn.classList.toggle('active', on);
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+
+    document.documentElement.setAttribute('lang', dict.htmlLang);
+    document.title = dict.docTitle;
+
+    if (persist) {
+      try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
+    }
+  }
+
+  langBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      setLang(btn.getAttribute('data-lang'), true);
+    });
+  });
+
+  var savedLang = null;
+  try { savedLang = localStorage.getItem(LANG_KEY); } catch (e) {}
+
+  var initialLang = (savedLang && SUPPORTED.indexOf(savedLang) > -1)
+    ? savedLang
+    : (normalize(navigator.language || navigator.userLanguage) || 'zh-CN');
+
+  setLang(initialLang, false);
+
+  /* ============================================================
+     三、深浅色切换
+     ============================================================ */
+  var themeBtn = document.getElementById('themeBtn');
+
+  function applyTheme(dark) {
+    document.body.classList.toggle('dark', dark);
+    themeBtn.textContent = dark ? '☀️' : '🌙';
+    themeBtn.setAttribute('aria-label', dark ? '切换到浅色' : '切换到暗色');
+  }
+
+  var savedTheme = null;
+  try { savedTheme = localStorage.getItem(THEME_KEY); } catch (e) {}
+
+  var prefersDark = window.matchMedia &&
+    window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  var isDark = savedTheme ? savedTheme === 'dark' : prefersDark;
+  applyTheme(isDark);
+
+  themeBtn.addEventListener('click', function () {
+    isDark = !document.body.classList.contains('dark');
+    applyTheme(isDark);
+    try { localStorage.setItem(THEME_KEY, isDark ? 'dark' : 'light'); } catch (e) {}
+  });
+
+  /* ============================================================
+     四、下载 PDF（打开打印对话框，另存为 PDF）
+     ============================================================ */
+  function downloadPDF() {
+    var currentLang = null;
+    langBtns.forEach(function (b) {
+      if (b.classList.contains('active')) {
+        currentLang = b.getAttribute('data-lang');
+      }
+    });
+
+    if (currentLang !== 'zh-CN') {
+      setLang('zh-CN', true);
+      window.setTimeout(function () { window.print(); }, 120);
+    } else {
+      window.print();
+    }
+  }
+
+  var dlBtn = document.getElementById('dlBtn');
+  var dlBtn2 = document.getElementById('dlBtn2');
+
+  if (dlBtn) { dlBtn.addEventListener('click', downloadPDF); }
+  if (dlBtn2) { dlBtn2.addEventListener('click', downloadPDF); }
+
+})();
+</script>
+
+</body>
+</html>
