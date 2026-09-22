@@ -28,11 +28,19 @@
     display: flex; align-items: center; justify-content: space-between;
     gap: 14px;
   }
+  .nav-left {
+    display: flex; align-items: center; gap: 14px;
+  }
   .back-link {
     font-size: 13px; color: #6b6560; text-decoration: none;
     font-weight: 600; letter-spacing: .04em;
+    transition: color .18s ease;
   }
   .back-link:hover { color: #1d5b79; }
+  .nav-sep { color: #d6cfc4; }
+  .nav-meta {
+    font-size: 12px; color: #9a938b; letter-spacing: .06em;
+  }
   .post {
     max-width: 780px; margin: 0 auto;
     padding: 56px 24px 40px;
@@ -100,13 +108,37 @@
     font-size: 12px; color: #9a938b;
     text-align: center; line-height: 1.8;
   }
-  .foot a { color: #1d5b79; text-decoration: none; }
+  .foot-nav {
+    display: flex; justify-content: center; gap: 20px;
+    flex-wrap: wrap; margin-bottom: 10px;
+  }
+  .foot-nav a {
+    color: #1d5b79; text-decoration: none;
+    font-weight: 600; font-size: 13px;
+    transition: border-color .16s ease;
+    border-bottom: 1px solid transparent;
+  }
+  .foot-nav a:hover { border-bottom-color: #1d5b79; }
+  .foot-meta {
+    font-size: 12px; color: #9a938b;
+    letter-spacing: .04em;
+  }
   @media (max-width: 560px) {
     body { font-size: 16px; }
     .post { padding: 36px 18px 24px; }
     .post h1 { font-size: 1.5rem; }
     .post h2 { font-size: 1.14rem; margin-top: 2.5rem; }
     .stat-item { flex: 1 1 100%; }
+    .nav-meta { display: none; }
+    .topbar-inner { gap: 8px; }
+  }
+  @media print {
+    .topbar { display: none; }
+    body { background: #fff; color: #000; font-size: 11pt; }
+    .post { padding: 0; max-width: 100%; }
+    .lede, .stat-item, .callout { border: 1px solid #ccc; background: #fff; }
+    .stat-num { color: #000; }
+    .foot-nav { display: none; }
   }
 </style>
 </head>
@@ -114,8 +146,12 @@
 
 <header class="topbar">
   <div class="topbar-inner">
-    <a href="/UBI_index.html" class="back-link">← UBI 系列</a>
-    <span style="font-size:12px;color:#9a938b;letter-spacing:.06em;">专题 · 交付</span>
+    <div class="nav-left">
+      <a href="/UBI_index.html" class="back-link">← UBI 系列</a>
+      <span class="nav-sep">·</span>
+      <a href="/index.html" class="back-link">← 首页</a>
+    </div>
+    <span class="nav-meta">专题 · 交付</span>
   </div>
 </header>
 
@@ -206,7 +242,11 @@
 </main>
 
 <footer class="foot">
-  <a href="/UBI_index.html">← 返回 UBI 系列</a> · UBI 系列 · 治理正当性框架
+  <div class="foot-nav">
+    <a href="/UBI_index.html">← 返回 UBI 系列</a>
+    <a href="/index.html">← 回到 GFI 首页</a>
+  </div>
+  <div class="foot-meta">UBI 系列 · 治理正当性框架</div>
 </footer>
 
 </body>
