@@ -1,1090 +1,1143 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Land Value Standard | 全球土地增值統一標準 | Estándar Global del Valor del Suelo</title>
-    <style>
-        :root {
-            --bg-color: #0b1220;
-            --text-color: #f8fbff;
-            --muted: #c7d2e3;
-            --sub: #9fb0c8;
-            --accent-color: #7DD3FC;
-            --border-color: rgba(255,255,255,.08);
-            --light-gray: rgba(255,255,255,.02);
-            --green: #9FE870;
-            --gold: #fbbf24;
-            --red: #f87171;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.8;
-            margin: 0;
-            padding: 0;
-        }
-        .topnav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            height: 56px;
-            padding: 0 clamp(16px, 4vw, 40px);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: rgba(11,18,32,0.92);
-            backdrop-filter: blur(14px);
-            border-bottom: 1px solid var(--border-color);
-        }
-        .topnav a {
-            font-family: 'SF Mono', 'DM Mono', monospace;
-            font-size: 11px;
-            letter-spacing: 0.08em;
-            text-decoration: none;
-            color: var(--green);
-            padding: 6px 14px;
-            border-radius: 20px;
-            border: 1px solid rgba(159,232,112,0.3);
-            transition: all 0.2s;
-        }
-        .topnav a:hover {
-            background: rgba(159,232,112,0.1);
-            border-color: var(--green);
-        }
-        .topnav-title {
-            font-family: 'SF Mono', 'DM Mono', monospace;
-            font-size: 11px;
-            letter-spacing: 0.1em;
-            color: var(--sub);
-            opacity: 0.6;
-        }
-        @media (max-width: 600px) {
-            .topnav-title { display: none; }
-        }
-        .container {
-            max-width: 820px;
-            margin: 0 auto;
-            padding: 90px 20px 40px;
-        }
-        .lang-switch {
-            position: fixed;
-            top: 70px;
-            right: 20px;
-            background: rgba(11,18,32,0.95);
-            backdrop-filter: blur(10px);
-            padding: 8px 18px;
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-color);
-            z-index: 1000;
-            user-select: none;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-            transition: all 0.2s ease;
-        }
-        .lang-switch:hover {
-            border-color: var(--accent-color);
-            color: var(--accent-color);
-        }
-        h1 {
-            font-size: 2em;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            margin-bottom: 5px;
-            border-bottom: 3px solid var(--accent-color);
-            padding-bottom: 15px;
-        }
-        .subtitle {
-            font-size: 0.9em;
-            color: var(--sub);
-            margin-bottom: 35px;
-            margin-top: 5px;
-        }
-        h2 {
-            font-size: 1.3em;
-            font-weight: 600;
-            margin-top: 45px;
-            margin-bottom: 15px;
-            border-left: 4px solid var(--accent-color);
-            padding-left: 15px;
-        }
-        h3 {
-            font-size: 1.05em;
-            font-weight: 600;
-            margin-top: 25px;
-            margin-bottom: 10px;
-            color: var(--accent-color);
-        }
-        p {
-            margin-bottom: 15px;
-            font-size: 1em;
-            color: var(--muted);
-        }
-        ul {
-            padding-left: 20px;
-            margin-bottom: 20px;
-        }
-        li {
-            margin-bottom: 10px;
-            color: var(--muted);
-        }
-        li strong {
-            color: var(--accent-color);
-        }
-        .intro {
-            font-size: 1.05em;
-            color: var(--muted);
-            border-left: 2px solid var(--border-color);
-            padding-left: 20px;
-            margin-bottom: 35px;
-            font-style: italic;
-        }
-        .quote-block {
-            background-color: var(--light-gray);
-            padding: 20px 25px;
-            border-radius: 8px;
-            margin-bottom: 25px;
-            font-size: 1em;
-            border: 1px solid var(--border-color);
-        }
-        .premise-box {
-            background: rgba(251,191,36,.06);
-            border-left: 4px solid var(--gold);
-            padding: 1.5rem 2rem;
-            margin: 26px 0 40px 0;
-            border-radius: 0 6px 6px 0;
-        }
-        .premise-box p {
-            color: var(--text-color);
-            margin-bottom: 10px;
-            font-size: 1.05em;
-        }
-        .premise-box .claim {
-            font-size: 1.15em;
-            font-weight: 700;
-            color: var(--gold);
-            margin-bottom: 15px;
-        }
-        .highlight-box {
-            background: rgba(125,211,252,.06);
-            border-left: 4px solid var(--accent-color);
-            padding: 1.2rem 1.8rem;
-            margin: 26px 0;
-            border-radius: 0 6px 6px 0;
-        }
-        .highlight-box p {
-            color: var(--text-color);
-            margin-bottom: 6px;
-        }
-        .reason-card {
-            background: rgba(255,255,255,0.02);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1.2rem 1.5rem;
-            margin-bottom: 16px;
-            border-left: 4px solid var(--red);
-        }
-        .reason-card h4 {
-            font-size: 0.95em;
-            font-weight: 600;
-            color: var(--red);
-            margin-bottom: 6px;
-        }
-        .reason-card p {
-            font-size: 0.9em;
-            color: var(--muted);
-            margin-bottom: 8px;
-        }
-        .reason-card .verdict {
-            font-size: 0.85em;
-            color: var(--gold);
-            font-weight: 600;
-            border-top: 1px solid var(--border-color);
-            padding-top: 8px;
-            margin-top: 8px;
-        }
-        .silence-box {
-            background: rgba(251,191,36,.06);
-            border-left: 4px solid var(--gold);
-            padding: 1.2rem 1.8rem;
-            margin: 30px 0;
-            border-radius: 0 6px 6px 0;
-        }
-        .silence-box p {
-            color: var(--text-color);
-            margin-bottom: 6px;
-        }
-        .compare-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 0.9em;
-        }
-        .compare-table th, .compare-table td {
-            border: 1px solid var(--border-color);
-            padding: 10px 14px;
-            text-align: left;
-        }
-        .compare-table th {
-            background: rgba(125,211,252,.08);
-            color: var(--accent-color);
-            font-weight: 600;
-        }
-        .compare-table td {
-            color: var(--muted);
-        }
-        .footer {
-            margin-top: 60px;
-            padding-top: 20px;
-            border-top: 1px solid var(--border-color);
-            font-size: 0.85em;
-            color: var(--sub);
-            text-align: center;
-        }
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 12px;
-            flex-wrap: wrap;
-        }
-        .footer-links a {
-            font-family: 'SF Mono', 'DM Mono', monospace;
-            font-size: 0.7rem;
-            letter-spacing: 0.06em;
-            text-decoration: none;
-            color: var(--green);
-            padding: 6px 16px;
-            border-radius: 20px;
-            border: 1px solid rgba(159,232,112,0.3);
-            transition: all 0.2s;
-        }
-        .footer-links a:hover {
-            background: rgba(159,232,112,0.1);
-        }
-        .lang-zh, .lang-en, .lang-es {
-            display: none;
-        }
-        .lang-zh.active, .lang-en.active, .lang-es.active {
-            display: block;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Land Value Standard | 全球土地增值統一標準 | Estándar Global del Valor del Suelo</title>
+<meta property="og:title" content="Global Land Value Standard">
+<meta property="og:description" content="A single nation cannot confront transnational capital. But a transnational alliance can. Applied to the last uncoordinated tax base: land value.">
+<meta property="og:type" content="article">
+<style>
+  :root {
+    --bg-color: #0b1220;
+    --text-color: #f8fbff;
+    --muted: #c7d2e3;
+    --sub: #9fb0c8;
+    --accent-color: #7DD3FC;
+    --border-color: rgba(255,255,255,.08);
+    --light-gray: rgba(255,255,255,.02);
+    --green: #9FE870;
+    --gold: #fbbf24;
+    --red: #f87171;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+  }
+  .topnav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: 56px;
+    padding: 0 clamp(16px, 4vw, 40px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(11,18,32,0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border-color);
+  }
+  .topnav-left {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .topnav a {
+    font-family: 'SF Mono', 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    color: var(--green);
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(159,232,112,0.3);
+    transition: all 0.2s;
+  }
+  .topnav a:hover {
+    background: rgba(159,232,112,0.1);
+    border-color: var(--green);
+  }
+  .topnav-title {
+    font-family: 'SF Mono', 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--sub);
+    opacity: 0.6;
+  }
+  @media (max-width: 700px) {
+    .topnav-title { display: none; }
+  }
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 90px 20px 40px;
+  }
+  .lang-switch {
+    position: sticky;
+    top: 56px;
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 0;
+    background: rgba(11,18,32,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
+    margin: 0 -20px 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .lang-switch button {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--sub);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .lang-switch button:hover { color: var(--text-color); border-color: var(--accent-color); }
+  .lang-switch button.active {
+    background: var(--accent-color);
+    color: #0b1220;
+    border-color: var(--accent-color);
+    font-weight: 600;
+  }
+  .series-tag {
+    display: inline-block;
+    font-size: 12px;
+    color: var(--accent-color);
+    border: 1px solid var(--accent-color);
+    padding: 3px 10px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-family: 'SF Mono', 'DM Mono', monospace;
+    letter-spacing: 1px;
+  }
+  h1 {
+    font-size: 2em;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 5px;
+    border-bottom: 3px solid var(--accent-color);
+    padding-bottom: 15px;
+  }
+  .subtitle {
+    font-size: 0.9em;
+    color: var(--sub);
+    margin-bottom: 35px;
+    margin-top: 5px;
+    font-family: 'SF Mono', 'DM Mono', monospace;
+  }
+  h2 {
+    font-size: 1.3em;
+    font-weight: 600;
+    margin-top: 45px;
+    margin-bottom: 15px;
+    border-left: 4px solid var(--accent-color);
+    padding-left: 15px;
+  }
+  h3 {
+    font-size: 1.05em;
+    font-weight: 600;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    color: var(--accent-color);
+  }
+  p {
+    margin-bottom: 15px;
+    font-size: 1em;
+    color: var(--muted);
+  }
+  ul {
+    padding-left: 20px;
+    margin-bottom: 20px;
+  }
+  li {
+    margin-bottom: 10px;
+    color: var(--muted);
+  }
+  li strong {
+    color: var(--accent-color);
+  }
+  .intro {
+    font-size: 1.05em;
+    color: var(--muted);
+    border-left: 2px solid var(--border-color);
+    padding-left: 20px;
+    margin-bottom: 35px;
+    font-style: italic;
+  }
+  .quote-block {
+    background-color: var(--light-gray);
+    padding: 20px 25px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    font-size: 1em;
+    border: 1px solid var(--border-color);
+  }
+  .premise-box {
+    background: rgba(251,191,36,.06);
+    border-left: 4px solid var(--gold);
+    padding: 1.5rem 2rem;
+    margin: 26px 0 40px 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .premise-box p {
+    color: var(--text-color);
+    margin-bottom: 10px;
+    font-size: 1.05em;
+  }
+  .premise-box .claim {
+    font-size: 1.15em;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 15px;
+  }
+  .highlight-box {
+    background: rgba(125,211,252,.06);
+    border-left: 4px solid var(--accent-color);
+    padding: 1.2rem 1.8rem;
+    margin: 26px 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .highlight-box p {
+    color: var(--text-color);
+    margin-bottom: 6px;
+  }
+  .reason-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 16px;
+    border-left: 4px solid var(--red);
+  }
+  .reason-card h4 {
+    font-size: 0.95em;
+    font-weight: 600;
+    color: var(--red);
+    margin-bottom: 6px;
+  }
+  .reason-card p {
+    font-size: 0.9em;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .reason-card .verdict {
+    font-size: 0.85em;
+    color: var(--gold);
+    font-weight: 600;
+    border-top: 1px solid var(--border-color);
+    padding-top: 8px;
+    margin-top: 8px;
+  }
+  .silence-box {
+    background: rgba(251,191,36,.06);
+    border-left: 4px solid var(--gold);
+    padding: 1.2rem 1.8rem;
+    margin: 30px 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .silence-box p {
+    color: var(--text-color);
+    margin-bottom: 6px;
+  }
+  .compare-table-wrapper {
+    overflow-x: auto;
+    margin: 20px 0;
+    -webkit-overflow-scrolling: touch;
+  }
+  .compare-table {
+    width: 100%;
+    min-width: 520px;
+    border-collapse: collapse;
+    font-size: 0.9em;
+  }
+  .compare-table th, .compare-table td {
+    border: 1px solid var(--border-color);
+    padding: 10px 14px;
+    text-align: left;
+  }
+  .compare-table th {
+    background: rgba(125,211,252,.08);
+    color: var(--accent-color);
+    font-weight: 600;
+  }
+  .compare-table td {
+    color: var(--muted);
+  }
+  .footer {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.85em;
+    color: var(--sub);
+    text-align: center;
+    font-family: 'SF Mono', 'DM Mono', monospace;
+  }
+  .footer .site {
+    color: var(--sub);
+    letter-spacing: 0.08em;
+    display: block;
+    margin-bottom: 12px;
+  }
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .footer-links a {
+    font-family: 'SF Mono', 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    color: var(--green);
+    padding: 6px 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(159,232,112,0.3);
+    transition: all 0.2s;
+  }
+  .footer-links a:hover {
+    background: rgba(159,232,112,0.1);
+  }
+  .hidden { display: none; }
+  @media (max-width: 600px) {
+    h1 { font-size: 1.5em; }
+    h2 { font-size: 1.15em; }
+    .container { padding: 80px 16px 40px; }
+    .lang-switch { margin-left: -16px; margin-right: -16px; padding-left: 16px; padding-right: 16px; }
+  }
+</style>
 </head>
 <body>
 
-    <div class="topnav">
-        <a href="/index.html">← Home</a>
-        <div class="topnav-title">GFI · Global Land Value Standard</div>
+  <div class="topnav">
+    <div class="topnav-left">
+      <a href="/index.html">← Home</a>
+      <a href="/landjustice.html">← Series</a>
+    </div>
+    <div class="topnav-title">GFI · Global Land Value Standard</div>
+  </div>
+
+  <div class="container">
+
+    <div class="lang-switch">
+      <button data-lang="en" class="active">English</button>
+      <button data-lang="zh">中文</button>
+      <button data-lang="es">Español</button>
     </div>
 
-    <div class="lang-switch" id="langBtn">EN / 中 / ES</div>
-
-    <div class="container">
-
-        <!-- ======================== English ======================== -->
-        <div class="lang-en active" id="content-en">
-            <h1>A Global Standard for Land Value Capture</h1>
-            <p class="subtitle">GFI Flow Intelligence · gfintel.com · 2026</p>
-            <p class="intro">A single nation cannot confront transnational capital. But a transnational alliance can. This is not a utopia. It is a logical extension of existing cross-border coordination mechanisms — the Basel Accords, FATF, and the BEPS framework — applied to the last uncoordinated tax base: land value.</p>
-
-            <h2>0. Value Premise: Why This Proposal Exists</h2>
-
-            <div class="premise-box">
-                <p class="claim">The survival of the majority takes priority over the easy profits of capital.</p>
-                <p>Housing, healthcare, education, and generational fairness are being squeezed by land rent-seeking. Young people cannot afford homes — not because they do not work hard, but because land rent extracts the fruits of their labor.</p>
-                <p>This is the starting point of this proposal. Not "everyone wins." But "the majority wins, and the rent-seekers lose."</p>
-            </div>
-
-            <p><strong>Land rent-seeking transfers the fruits of the majority's labor to landowners and capital who do not produce, do not innovate, and do not take risks.</strong> This is not a "market outcome." This is an institutional design. This is not "win-win." This is a structural transfer.</p>
-
-            <p>This starting point is more honest than "win-win," and it is stronger. Win-win must prove that capital also wins — but capital is the vested interest in land rent-seeking. If you ask it to give up rent, it is necessarily losing. You can only call "forced transition" a "new direction," and once that rhetoric is seen through, win-win collapses.</p>
-
-            <p>But "the majority's survival takes priority" does not need to prove that capital also wins. It only needs to prove: <strong>the survival of the majority takes priority over the easy profits of capital.</strong> This is a value judgment, not an interest calculation. It does not need capital's consent. It only needs the majority's consent. This is the true political foundation of the proposal.</p>
-
-            <div class="quote-block">
-                <p><strong>Core Premise:</strong></p>
-                <p>Land value is created collectively by society — through public investment, population agglomeration, and economic development. The landowner did not produce it, did not innovate, did not take risks. He simply "stood there." Yet under current rules, he captures the entire increase.</p>
-                <p><strong>This is not a market outcome. This is an institutional design.</strong></p>
-            </div>
-
-            <h2>I. Why a Unified Global Standard?</h2>
-            <ul>
-                <li><strong>Capital is mobile; land is fixed.</strong> A piece of land in London cannot be moved to Ireland. A building in Tokyo cannot be relocated to Singapore.</li>
-                <li><strong>Income can be zeroed out.</strong> The wealthy can refuse salaries, refuse dividends, refuse to sell stocks. But land value cannot be zeroed out.</li>
-                <li><strong>A single nation cannot act alone.</strong> If only the UK levies a land value tax, capital threatens to flee. If only Germany acts, capital flees to France. This is the classic "race to the bottom."</li>
-                <li><strong>Only a unified standard can trap capital.</strong> If the G7 and G20 adopt the same standard simultaneously, capital's "48-hour escape" fails.</li>
-                <li><strong>This is not a new idea.</strong> The Basel Accords (1988) unified bank capital standards. FATF unified anti-money laundering standards. The BEPS framework (2021) established a 15% global minimum corporate tax. Each was once considered "impossible." Each was implemented when crisis was severe enough.</li>
-            </ul>
-
-            <h2>II. What Should the Unified Standard Include?</h2>
-
-            <h3>1. Unified Land Value Increment Tax Floor: 70%–80%</h3>
-            <ul>
-                <li>Land value is socially created. 70%–80% returns the bulk of the increase to public finance.</li>
-                <li>Landowners retain 20%–30% as holding cost and management compensation.</li>
-                <li>This is not confiscation. This is restitution.</li>
-                <li><strong>Note: it is a "unified floor," not a "minimum standard."</strong> Nations may set rates above the floor, but not below. Below the floor = not a member of the alliance.</li>
-                <li><strong>Why a unified floor, not a minimum standard?</strong> If nations could set 50%, 60%, 70%, or 80%, capital would flee from the 80% nation to the 50% nation. A unified floor closes the arbitrage space.</li>
-            </ul>
-
-            <h3>2. Global Land Beneficial Ownership Registry</h3>
-            <ul>
-                <li>All transnational land transactions must disclose the ultimate beneficial owner.</li>
-                <li>Break the anonymous structures of shell companies, trusts, and tax havens.</li>
-                <li>Unregistered land faces a punitive idle tax.</li>
-            </ul>
-
-            <h3>3. Unified REIT Regulatory Standards</h3>
-            <ul>
-                <li>Limit leverage ratios.</li>
-                <li>Mandatory disclosure of underlying assets.</li>
-                <li>Ban the securitization of residential land.</li>
-                <li>Cut the chain of land financialization.</li>
-            </ul>
-
-            <h3>4. G7 + G20 Capital Flow Stabilization Fund</h3>
-            <ul>
-                <li>When a member state faces capital flight due to reform, other members jointly provide liquidity support.</li>
-                <li>Enable single nations to dare to reform, free from the threat of "divestment."</li>
-            </ul>
-
-            <h3>5. Global South Collective Bargaining Platform</h3>
-            <ul>
-                <li>China, India, Brazil, South Africa jointly set standards for "land value capture," "vacant house communalization," and "public housing reserves."</li>
-                <li>Transform the Global South from "passive recipients" into "rule-makers."</li>
-            </ul>
-
-            <h3>6. Exit Tax + Home Country Taxing Right + Information Sharing</h3>
-            <ul>
-                <li><strong>Exit Tax:</strong> Capital must pay any outstanding land value tax before leaving a member state.</li>
-                <li><strong>Home Country Taxing Right + Information Sharing:</strong> Member states establish information-sharing mechanisms. The home country taxes the capital's global land assets, preventing escape through transfer pricing or offshore structures.</li>
-                <li>Following the BEPS enforcement logic, this does not depend on the receiving country's cooperation.</li>
-            </ul>
-
-            <h3>7. Effective Tax Rate Audit</h3>
-            <ul>
-                <li>Member states must annually disclose their <strong>effective tax rate</strong> (not nominal rate) and submit to independent audit.</li>
-                <li>If a member state's nominal rate is 70% but effective rate is 5%, other members may initiate a "compliance review."</li>
-                <li>If the review confirms substantive non-compliance, the state is treated as "not a member of the alliance" and faces capital flow penalty taxes.</li>
-            </ul>
-
-            <h2>III. Is This Possible?</h2>
-            <ul>
-                <li><strong>Technically feasible.</strong> Land cannot move. The tax base cannot be hidden. The tools exist.</li>
-                <li><strong>Politically extremely difficult.</strong> Transnational capital will mobilize media, think tanks, parties, and lobbyists to block it.</li>
-                <li><strong>But there is precedent.</strong> When crisis is severe enough, unified standards become possible.</li>
-                <li><strong>This framework is not the only path.</strong> Henry George's single tax, Sun Yat-sen's equalization of land rights, Taiwan's land-to-the-tiller, China's public land ownership and value-sharing — all are legitimate approaches. What is new here is the integration of land value capture with cross-border coordination.</li>
-            </ul>
-
-            <h2>IV. Implementation Path</h2>
-
-            <h3>Phase 1 (1–3 years): Build Consensus</h3>
-            <ul>
-                <li>Propose the "Unified Land Value Increment Tax Floor" at the G20 Summit.</li>
-                <li>China, India, Brazil, and South Africa form a "Southern Core Group" and sign bilateral tax treaties first.</li>
-                <li>The UK, Germany, and France act as "Northern Reformers" within the G7.</li>
-            </ul>
-
-            <h3>Phase 2 (3–5 years): Build Mechanisms</h3>
-            <ul>
-                <li>Establish the "G20 Capital Flow Stabilization Fund."</li>
-                <li>Launch the "Global Land Beneficial Ownership Registry."</li>
-                <li>Set "Unified REIT Regulatory Standards."</li>
-            </ul>
-
-            <h3>Phase 3 (5–10 years): Full Containment</h3>
-            <ul>
-                <li>All G20 members complete domestic legislation implementing the unified land value increment tax floor.</li>
-                <li>Transnational capital attempting to flee a member state faces "exit tax" and "home country taxing right."</li>
-                <li>The Global South alliance is formally established.</li>
-            </ul>
-
-            <h2>V. Why Global Participation Is the Only Path</h2>
-            <ul>
-                <li><strong>A single nation acts alone → capital flees to the next country.</strong> If only the UK levies the tax, capital moves to Ireland within 48 hours.</li>
-                <li><strong>Two nations act → capital flees to a third.</strong> If the UK and Germany act together, capital moves to Luxembourg, the Netherlands, or Singapore.</li>
-                <li><strong>The G7 acts → capital flees to the G20.</strong> If the G7 adopts the standard, capital moves to emerging economies that have not yet joined.</li>
-                <li><strong>The G20 acts → capital flees to tax havens.</strong> If the G20 adopts the standard, capital moves to offshore structures, shell companies, and anonymous trusts.</li>
-                <li><strong>Only G7 + G20 + Global South acting together leaves capital nowhere to go.</strong> Land cannot move. Value cannot be zeroed out. As long as all nations stand on the same floor, capital's "48-hour escape" fails.</li>
-                <li><strong>This is not a choice. It is arithmetic.</strong></li>
-            </ul>
-
-            <div class="highlight-box">
-                <p><strong>A country that does not join becomes a "capital haven" — but it also becomes a "capital hell."</strong></p>
-                <p>The mechanism: capital inflow → land demand rises → land prices rise → landowners capture the increase → government tax base erodes → public services collapse → young people cannot afford homes → housing crisis escalates to the electoral level → party turnover → the new government applies to join the alliance.</p>
-                <p>Not because it wants to. Because it has no alternative. The cost of being a capital haven is borne by its own voters, and ultimately settled by its own party system.</p>
-            </div>
-
-            <h2>VI. Why This Alliance Is Easier to Join Than Existing International Organizations</h2>
-            <ul>
-                <li><strong>No Security Council recommendation.</strong> The UN requires Security Council recommendation and a two-thirds General Assembly vote. The land value alliance requires only domestic legislation and adoption of the unified floor.</li>
-                <li><strong>No membership dues.</strong> The UN requires mandatory assessed contributions based on GDP. The land value alliance collects tax revenue domestically. All revenue stays in national treasuries. No fees paid to any international body.</li>
-                <li><strong>No sovereignty transfer.</strong> The UN requires acceptance of the Charter, Security Council resolutions, and ICJ jurisdiction. The land value alliance coordinates tax bases, not political systems. It does not infringe on sovereignty.</li>
-                <li><strong>No political negotiation.</strong> The UN is a political club: joining requires negotiation, compromise, and voting. The land value alliance is a technical standard: joining requires domestic legislation and compliance with the unified floor.</li>
-                <li><strong>Higher exit cost.</strong> Leaving the UN carries reputational damage. Leaving the land value alliance triggers capital flow penalties, effective tax rate audits, and a legitimacy deficit.</li>
-                <li><strong>Immediate financial benefit.</strong> Joining the UN costs money. Joining the land value alliance increases fiscal revenue.</li>
-                <li><strong>This is not "joining an international organization." This is "joining an international standard."</strong> Technical coordination is far easier than political integration.</li>
-            </ul>
-
-            <div class="compare-table-wrapper">
-                <table class="compare-table">
-                    <thead>
-                        <tr><th>Dimension</th><th>United Nations</th><th>Land Value Alliance</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>Entry threshold</td><td>Security Council recommendation + 2/3 General Assembly vote</td><td>Domestic legislation + unified floor</td></tr>
-                        <tr><td>Sovereignty transfer</td><td>Accept Charter, SC resolutions, ICJ jurisdiction</td><td>Coordinate tax base only; no sovereignty transfer</td></tr>
-                        <tr><td>Membership dues</td><td>Mandatory, GDP-based assessment</td><td>None. Tax revenue stays in national treasury</td></tr>
-                        <tr><td>Exit cost</td><td>Reputational damage only</td><td>Capital flow penalties + audits + legitimacy deficit</td></tr>
-                        <tr><td>Enforcement</td><td>Security Council resolutions (often vetoed)</td><td>Exit tax + home country taxing right + audit</td></tr>
-                        <tr><td>Immediate benefit</td><td>Peacekeeping, aid, voice</td><td>Fiscal stability, public services, rule-making power</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <h2>VII. The Boundary of Capital: Land Value Tax Is Not Anti-Capital</h2>
-            <ul>
-                <li>The purpose of land value tax is not to "eliminate capital."</li>
-                <li>Not to "ban investment."</li>
-                <li>Not to "close markets."</li>
-                <li>It is to <strong>"return socially created wealth to society, for infrastructure and public services."</strong></li>
-                <li>Land value tax is a <strong>fiscal tool</strong>, not an <strong>ideological tool</strong>.</li>
-                <li>Capital can go to space, deep sea, new energy, biotechnology — as long as it does not harm Earth's ecology or humanity's common interests.</li>
-                <li>But land value tax does not address these issues. It only addresses "monopoly rent on immovable tax bases."</li>
-                <li>Space, deep sea, and new energy are "mobile, risk-bearing innovative investments." Their taxation logic is another topic — carbon tax, resource tax, global commons contribution mechanisms, but not land value tax.</li>
-                <li><strong>The purpose of land value tax is not to stop capital flows, but to cut off capital's monopoly on "immovable tax bases."</strong> Capital can go anywhere, as long as it does not rely on monopolizing land rent.</li>
-                <li><strong>This is the ultimate goal of land value tax: push capital from rent-seeking toward innovation.</strong></li>
-            </ul>
-
-            <h2>VIII. Conclusion: The Only Logical Path</h2>
-            <div class="highlight-box">
-                <p><strong>Not reforming means slow collapse. Unifying the standard is the only logical path to trap capital.</strong></p>
-                <p>Land cannot move. Value cannot be zeroed out. As long as all nations stand on the same floor, transnational capital loses its "48-hour escape." Capital cannot flee, so nations can collect the tax. With the tax, governments can build public housing, improve healthcare, invest in infrastructure, and narrow the wealth gap.</p>
-                <p>This will not automatically bring world peace. Territorial disputes, historical grievances, religious conflicts, and great-power rivalry will remain. But it will remove one economic lever that capital uses to pit nations against each other.</p>
-                <p><strong>The measurement of the legitimacy deficit depends on the political will of member states.</strong> It is not an automatic mechanism, but a political process. The trigger for an audit depends on whether member states are willing to offend another member. But precisely because of this, the audited state faces a political choice: it can cooperate with the audit and prove its effective tax rate, or it can refuse the audit and be treated as "substantively non-compliant" by other members. Refusing an audit is a public admission. This is not a technical problem. It is a political problem. And political problems are ultimately settled by votes.</p>
-            </div>
-
-            <h2>IX. Ten Reasons That Cannot Be Publicly Rejected</h2>
-            <p>Every reason to reject the global land value capture standard, once publicly stated, exposes a position: favoring landlords over renters, capital over people. This does not automatically produce political bankruptcy. But it produces a legitimacy deficit that can be measured.</p>
-
-            <div class="reason-card">
-                <h4>1. "This violates national sovereignty."</h4>
-                <p>If a government says this publicly, it admits: sovereignty is higher than people's welfare. It admits: protecting landlord interests matters more than solving the housing crisis.</p>
-                <div class="verdict">Legitimacy deficit: "Sovereignty over livelihood."</div>
-            </div>
-
-            <div class="reason-card">
-                <h4>2. "This will hit the real estate market and trigger capital flight."</h4>
-                <p>If a government says this publicly, it admits: its primary task is to protect capital, not people. It admits: housing prices cannot fall, even if young people can never afford homes.</p>
-                <div class="verdict">Legitimacy deficit: "Capital over people."</div>
-            </div>
-
-            <div class="reason-card">
-                <h4>3. "Land value is created by the landowner."</h4>
-                <p>If a government says this publicly, it admits: wealth created by public investment should belong to landowners. It admits: socially created value being privately captured is legitimate.</p>
-                <div class="verdict">Legitimacy deficit: "Defending rent-seeking."</div>
-            </div>
-
-            <div class="reason-card">
-                <h4>4. "This is too radical. It will cause social unrest."</h4>
-                <p>If a government says this publicly, it admits: the status quo is stable, despite local government bankruptcy, collapsing NHS, and young people unable to afford homes.</p>
-                <div class="verdict">Legitimacy deficit: "Maintaining slow collapse."</div>
-            </div>
-
-            <div class="reason-card">
-                <h4>5. "Developing countries cannot afford it."</h4>
-                <p>If a government says this publicly, it admits: it does not believe developing countries can design their own localized versions. It admits: it only wants to maintain the existing unequal structure.</p>
-                <div class="verdict">Legitimacy deficit: "Hypocritical North."</div>
-            </div>
-
-            <div class="reason-card">
-                <h4>6. "Who will supervise? Who has the power to enforce?"</h4>
-                <p>If a government says this publicly, it admits: the Basel Accords, FATF, and BEPS do not exist. It admits: cross-border technical coordination is impossible.</p>
-                <div class="verdict">Legitimacy deficit: "International evader."</div>
-            </div>
-
-            <div class="reason-card">
-                <h4>7. "This will trigger capital flight and unemployment."</h4>
-                <p>If a government says this publicly, it admits: it would rather let young people never afford homes than let the stock market fluctuate short-term. It admits: capital can hijack national policy.</p>
-                <div class="verdict">Legitimacy deficit: "Servant of financial markets."</div>
-            </div>
-
-            <div class="reason-card">
-                <h4>8. "China, India, and others will not join."</h4>
-                <p>If a government says this publicly, it admits: it has not communicated with Global South countries. It admits: it presumes the Global South will refuse to join. It admits: it does not view the Global South as rule-makers who have already stated their position.</p>
-                <div class="verdict">Legitimacy deficit: "Denying the South's stated position."</div>
-            </div>
-
-            <div class="reason-card">
-                <h4>9. "This is just an idealistic proposal."</h4>
-                <p>If a government says this publicly, it admits: the Basel Accords were never implemented. It admits: any cross-border coordination is "idealism."</p>
-                <div class="verdict">Legitimacy deficit: "Denying precedent."</div>
-            </div>
-
-            <div class="reason-card">
-                <h4>10. "Who guarantees this standard will not be abused?"</h4>
-                <p>If a government says this publicly, it admits: it is unwilling to accept transparency. It admits: it would rather maintain anonymous structures.</p>
-                <div class="verdict">Legitimacy deficit: "Refusing transparency."</div>
-            </div>
-
-            <div class="silence-box">
-                <p><strong>This alliance cannot be rejected. Because rejection is political bankruptcy.</strong></p>
-                <p>A country that publicly rejects the land value capture standard is not making a policy choice. It is admitting, in front of its own citizens and the world, that it chooses to protect landlords over renters, capital over people, and slow collapse over structural reform.</p>
-                <p>Under the GL Framework, that choice is measurable. It is a legitimacy deficit.</p>
-                <p>Whether that deficit translates into political bankruptcy depends on internal political structures, electoral cycles, and social movements. But the deficit is real. And it is measurable.</p>
-            </div>
-        </div>
-
-        <!-- ======================== 中文版 ======================== -->
-        <div class="lang-zh" id="content-zh">
-            <h1>全球土地增值捕獲統一標準</h1>
-            <p class="subtitle">GFI Flow Intelligence · gfintel.com · 2026</p>
-            <p class="intro">單一國家無法對抗跨國資本。但跨國聯盟可以。這不是烏托邦。這是既有跨國協調機制的邏輯延伸——巴塞爾協議、FATF、BEPS 框架——應用到最後一塊未被協調的稅基：土地增值。</p>
-
-            <h2>零、 價值起點：這份提案為什麼存在</h2>
-
-            <div class="premise-box">
-                <p class="claim">大多數人的生存，優先於資本的輕鬆獲利。</p>
-                <p>住房、醫療、教育、世代公平，正在被土地尋租擠壓。年輕人買不起房——不是因為不努力，是因為地租把他們的勞動成果抽走了。</p>
-                <p>這是這份提案的起點。不是「大家都贏」。而是「多數人贏，尋租者輸」。</p>
-            </div>
-
-            <p><strong>土地尋租把多數人的勞動成果，轉移給不生產、不創新、不承擔風險的地主與資本。</strong> 這不是「市場結果」。這是制度設計。這不是「共贏」。這是結構性轉移。</p>
-
-            <p>這個起點，比「共贏」誠實，也更強。共贏必須證明資本也贏——但資本在土地尋租中是既得利益者。你要它放棄租金，它一定是輸的。你只能把「被迫轉向」說成「獲得新方向」，這個修辭一旦被看穿，共贏就崩了。</p>
-
-            <p>但「大多數人生存優先」不需要證明資本也贏。它只需要證明：<strong>大多數人的生存，在優先級上高於資本的輕鬆獲利。</strong> 這是價值判斷，不是利益計算。它不需要資本同意，只需要多數人同意。這才是提案真正的政治基礎。</p>
-
-            <div class="quote-block">
-                <p><strong>核心前提：</strong></p>
-                <p>土地增值是社會集體創造的——透過公共投資、人口聚集、經濟發展。地主沒有生產、沒有創新、沒有承擔風險。他只是「剛好站在那裡」。但在現行規則下，他捕獲了全部的增值。</p>
-                <p><strong>這不是市場結果。這是制度設計。</strong></p>
-            </div>
-
-            <h2>一、 為什麼需要全球統一標準？</h2>
-            <ul>
-                <li><strong>資本是流動的，土地是固定的。</strong> 倫敦的一塊地不能搬到愛爾蘭。東京的一棟樓不能搬到新加坡。</li>
-                <li><strong>所得可以歸零。</strong> 富豪可以不領薪水、不分紅、不賣股票。但土地增值無法歸零。</li>
-                <li><strong>單一國家無法獨自行動。</strong> 如果只有英國課徵土地增值稅，資本威脅撤離。如果只有德國行動，資本逃到法國。這是經典的「逐底競爭」。</li>
-                <li><strong>只有統一標準才能困住資本。</strong> 如果 G7 與 G20 同時採用同一套標準，資本的「48 小時逃逸」就失效了。</li>
-                <li><strong>這不是新想法。</strong> 巴塞爾協議（1988）統一了銀行資本標準。FATF 統一了反洗錢標準。BEPS 框架（2021）建立了 15% 全球最低企業稅。每一個都曾被視為「不可能」。每一個都在危機足夠嚴重時被落實。</li>
-            </ul>
-
-            <h2>二、 統一標準應該包含什麼？</h2>
-
-            <h3>1. 土地增值稅統一下限：70%–80%</h3>
-            <ul>
-                <li>土地增值是社會創造的。70%–80% 讓增值的絕大部分回到公共財政。</li>
-                <li>地主保留 20%–30%，作為持有成本與管理報酬。</li>
-                <li>這不是沒收。這是返還。</li>
-                <li><strong>注意：不是「最低標準」，而是「統一下限」。</strong> 各國可在下限之上自行加碼，但不得低於下限。若低於下限，視為未加入聯盟。</li>
-                <li><strong>為什麼必須是統一下限，而不是最低標準？</strong> 因為如果各國可以設 50%、60%、70%、80%，資本會從 80% 的國家逃到 50% 的國家，逐底競爭立刻重現。統一下限，才能壓縮套利空間。</li>
-            </ul>
-
-            <h3>2. 全球土地受益所有人登記系統</h3>
-            <ul>
-                <li>所有跨國土地交易，必須揭露最終受益人。</li>
-                <li>打破空殼公司、信託、避稅天堂的匿名結構。</li>
-                <li>未登記的土地，課以懲罰性閒置稅。</li>
-            </ul>
-
-            <h3>3. REITs 監管統一標準</h3>
-            <ul>
-                <li>限制槓桿倍數。</li>
-                <li>強制揭露底層資產。</li>
-                <li>禁止將住宅用地證券化。</li>
-                <li>切斷土地金融化的鏈條。</li>
-            </ul>
-
-            <h3>4. G7 + G20 資本流動穩定基金</h3>
-            <ul>
-                <li>當某個成員國因改革而遭遇資本外逃時，其他成員國共同提供流動性支持。</li>
-                <li>讓單一國家敢於改革，不必畏懼「撤資」威脅。</li>
-            </ul>
-
-            <h3>5. 全球南方集體談判平台</h3>
-            <ul>
-                <li>中國、印度、巴西、南非共同制定「土地增值捕獲」、「空屋公地化」、「公共住宅儲備」的標準。</li>
-                <li>把全球南方從「被動接受者」轉變為「規則制定者」。</li>
-            </ul>
-
-            <h3>6. 離境稅 + 母國徵稅權 + 資訊共享</h3>
-            <ul>
-                <li><strong>離境稅：</strong> 資本在離開成員國之前，必須先繳納土地增值稅的未繳部分。</li>
-                <li><strong>母國徵稅權 + 資訊共享：</strong> 成員國之間建立資訊共享機制，由資本的母國對其全球土地資產徵稅，防止透過轉移定價或離岸結構逃逸。</li>
-                <li>參照 BEPS 框架的執行邏輯，不依賴接收國配合。</li>
-            </ul>
-
-            <h3>7. 有效稅率審計</h3>
-            <ul>
-                <li>成員國必須每年公開其土地增值稅的<strong>有效稅率</strong>（不是名義稅率），並接受獨立審計。</li>
-                <li>如果某成員國的名義稅率是 70%，但有效稅率只有 5%，其他成員國可對其啟動「合規審查」。</li>
-                <li>若審查確認實質不合規，該國將被視為「未加入聯盟」，面臨資本流動懲罰稅。</li>
-            </ul>
-
-            <h2>三、 這有可能實現嗎？</h2>
-            <ul>
-                <li><strong>技術上可行。</strong> 土地不能移動。稅基無法隱藏。工具已經存在。</li>
-                <li><strong>政治上極其困難。</strong> 跨國資本會動用媒體、智庫、政黨、遊說團體來阻撓。</li>
-                <li><strong>但歷史上有先例。</strong> 當危機足夠嚴重時，統一標準是可能的。</li>
-                <li><strong>這套框架不是唯一路徑。</strong> 亨利·喬治的單一稅、孫中山的平均地權、台灣的耕者有其田、中國的土地公有與增值共享——都是正當路徑。這套框架的新意在於：將土地增值捕獲與跨國協調結合起來。</li>
-            </ul>
-
-            <h2>四、 實現路徑</h2>
-
-            <h3>第一階段（1–3 年）：建立共識</h3>
-            <ul>
-                <li>在 G20 峰會上提出「土地增值稅統一下限」倡議。</li>
-                <li>中國、印度、巴西、南非組成「南方核心小組」，先行簽署雙邊稅收協定。</li>
-                <li>英國、德國、法國作為「北方改革派」，在 G7 內部推動。</li>
-            </ul>
-
-            <h3>第二階段（3–5 年）：建立機制</h3>
-            <ul>
-                <li>成立「G20 資本流動穩定基金」。</li>
-                <li>啟動「全球土地受益所有人登記系統」。</li>
-                <li>制定「REITs 監管統一標準」。</li>
-            </ul>
-
-            <h3>第三階段（5–10 年）：全面圍堵</h3>
-            <ul>
-                <li>所有 G20 成員國完成國內立法，實施土地增值稅統一下限。</li>
-                <li>跨國資本若試圖逃離某成員國，將面臨「離境稅」與「母國徵稅權」。</li>
-                <li>全球南方聯盟正式成立。</li>
-            </ul>
-
-            <h2>五、 為什麼全球參與是唯一路徑</h2>
-            <ul>
-                <li><strong>單一國家行動 → 資本逃到下一個國家。</strong> 如果只有英國課稅，資本在 48 小時內逃到愛爾蘭。</li>
-                <li><strong>兩個國家行動 → 資本逃到第三個國家。</strong> 如果英國與德國同時行動，資本逃到盧森堡、荷蘭、或新加坡。</li>
-                <li><strong>G7 行動 → 資本逃到 G20。</strong> 如果 G7 採用標準，資本逃到尚未加入的新興經濟體。</li>
-                <li><strong>G20 行動 → 資本逃到避稅天堂。</strong> 如果 G20 採用標準，資本逃到離岸結構、空殼公司、匿名信託。</li>
-                <li><strong>只有 G7 + G20 + 全球南方一起行動，資本才無處可逃。</strong> 土地不能移動。增值無法歸零。只要各國站在同一個地板上，資本的「48 小時逃逸」就失效了。</li>
-                <li><strong>這不是選擇，這是數學。</strong></li>
-            </ul>
-
-            <div class="highlight-box">
-                <p><strong>一個不加入的國家，會成為「資本避風港」——但它也會成為「資本地獄」。</strong></p>
-                <p>機制是：資本流入 → 土地需求上升 → 地價上升 → 地主捕獲增值 → 政府稅基流失 → 公共服務崩潰 → 年輕人買不起房 → 住房危機惡化到選舉層面 → 政黨輪替 → 新政府主動申請加入。</p>
-                <p>不是因為它想加入，是因為它別無選擇。資本避風港的代價，由該國的選民承擔，最終由該國的政黨體系完成清算。</p>
-            </div>
-
-            <h2>六、 為什麼這個聯盟比現有國際組織更容易加入</h2>
-            <ul>
-                <li><strong>不需要安理會推薦。</strong> 聯合國需要安理會推薦 + 聯大三分之二通過。土地增值聯盟只需要國內立法 + 採用統一下限。</li>
-                <li><strong>不需要繳納會費。</strong> 聯合國需要按 GDP 比例強制分攤會費。土地增值聯盟的稅收全部留在本國財政。不需要向任何國際機構繳費。</li>
-                <li><strong>不需要讓渡主權。</strong> 聯合國需要接受憲章、安理會決議、國際法院管轄。土地增值聯盟只協調稅基，不干預政治制度，不侵犯主權。</li>
-                <li><strong>不需要政治談判。</strong> 聯合國是政治俱樂部：加入需要談判、妥協、投票。土地增值聯盟是技術標準：加入只需要國內立法、遵守統一下限。</li>
-                <li><strong>退出成本更高。</strong> 退出聯合國只有聲譽損失。退出土地增值聯盟會面臨資本流動懲罰、有效稅率審計、正當性赤字。</li>
-                <li><strong>加入立即帶來財政收益。</strong> 加入聯合國要花錢。加入土地增值聯盟增加財政收入。</li>
-                <li><strong>這不是「加入國際組織」，這是「加入國際標準」。</strong> 技術協調比政治整合容易得多。</li>
-            </ul>
-
-            <div class="compare-table-wrapper">
-                <table class="compare-table">
-                    <thead>
-                        <tr><th>維度</th><th>聯合國</th><th>土地增值聯盟</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>加入門檻</td><td>安理會推薦 + 聯大三分之二通過</td><td>國內立法 + 採用統一下限</td></tr>
-                        <tr><td>主權讓渡</td><td>接受憲章、安理會決議、國際法院管轄</td><td>只協調稅基，不讓渡主權</td></tr>
-                        <tr><td>會費</td><td>按 GDP 比例強制分攤</td><td>無。稅收全部留在本國財政</td></tr>
-                        <tr><td>退出成本</td><td>只有聲譽損失</td><td>資本流動懲罰 + 審計 + 正當性赤字</td></tr>
-                        <tr><td>執行機制</td><td>安理會決議（常被否決）</td><td>離境稅 + 母國徵稅權 + 審計</td></tr>
-                        <tr><td>立即收益</td><td>維和、援助、話語權</td><td>稅基穩定、公共服務、規則制定權</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <h2>七、 資本的邊界：土地增值稅不反資本，反尋租</h2>
-            <ul>
-                <li>土地增值稅的目的，不是「消滅資本」。</li>
-                <li>不是「禁止投資」。</li>
-                <li>不是「關閉市場」。</li>
-                <li>而是<strong>「讓社會集體創造的財富，回到社會手中，用於建設基建與服務人民」。</strong></li>
-                <li>土地增值稅是<strong>財政工具</strong>，不是<strong>意識形態工具</strong>。</li>
-                <li>資本可以去太空、深海、新能源、生物科技——只要不傷害地球生態人類。</li>
-                <li>但土地增值稅不處理這些問題。它只處理「不可移動稅基的壟斷租金」。</li>
-                <li>太空、深海、新能源是「可移動、需承擔風險的創新投資」。它們的課稅邏輯是另一個議題——可以是碳稅、資源稅、全球公域貢獻機制，但不是土地增值稅。</li>
-                <li><strong>土地增值稅的目的，不是阻止資本流動，而是切斷資本對「不可移動稅基」的壟斷。</strong> 資本可以去任何地方，只要它不靠壟斷土地尋租。</li>
-                <li><strong>這正是土地增值稅的最終目的：把資本從尋租，逼向創新。</strong></li>
-            </ul>
-
-            <h2>八、 結論：唯一的邏輯路徑</h2>
-            <div class="highlight-box">
-                <p><strong>不改革，就是慢性崩潰。統一標準，是唯一能讓資本無處可逃的邏輯路徑。</strong></p>
-                <p>土地不能移動。增值無法歸零。只要各國站在同一個地板上，跨國資本就失去了「48 小時逃逸」的能力。資本逃不掉，各國就能課徵到稅。課徵到稅，政府就有資源興建公共住宅、改善醫療、投資基礎設施、縮小貧富差距。</p>
-                <p>這不會自動帶來世界和平。領土爭議、歷史仇恨、宗教衝突、大國博弈，依然存在。但它會移除一個資本用來挑撥國家對立的經濟槓桿。</p>
-                <p><strong>正當性赤字的測量，依賴成員國之間的政治意願。</strong> 這不是自動機制，而是政治過程。審計的觸發，依賴成員國願意得罪另一個成員國。但正因為如此，被審計的國家面臨的是一個「政治選擇」：它可以選擇配合審計，證明自己的有效稅率；也可以選擇拒絕審計，從而被其他成員國視為「實質不合規」。拒絕審計，就是公開承認。這不是技術問題，這是政治問題。而政治問題，最終由選票清算。</p>
-            </div>
-
-            <h2>九、 十個無法公開拒絕的理由</h2>
-            <p>每一條拒絕全球土地增值標準的理由，一旦被公開挑明，都會暴露一個立場：選擇地主而非租客，選擇資本而非人民。這不會自動導致政治破產。但它會產生一個可測量的正當性赤字。</p>
-
-            <div class="reason-card">
-                <h4>一、「這侵犯國家主權。」</h4>
-                <p>如果政府敢這樣挑明，它等於承認：主權高於人民福祉。它等於承認：保護地主利益，比解決住房危機更重要。</p>
-                <div class="verdict">正當性赤字：「主權高於民生」。</div>
-            </div>
-
-            <div class="reason-card">
-                <h4>二、「這會打擊房地產市場，引發資本外逃。」</h4>
-                <p>如果政府敢這樣挑明，它等於承認：政府的首要任務，是保護資本利益，而不是保護人民利益。它等於承認：房價不能跌，即使年輕人永遠買不起房。</p>
-                <div class="verdict">正當性赤字：「資本優先於人民」。</div>
-            </div>
-
-            <div class="reason-card">
-                <h4>三、「土地增值是地主創造的。」</h4>
-                <p>如果政府敢這樣挑明，它等於承認：公共投資創造的財富，應該歸地主所有。它等於承認：社會集體創造的增值，被私人獨占是合理的。</p>
-                <div class="verdict">正當性赤字：「為尋租辯護」。</div>
-            </div>
-
-            <div class="reason-card">
-                <h4>四、「這太激進了，會引發社會動盪。」</h4>
-                <p>如果政府敢這樣挑明，它等於承認：現狀是穩定的，儘管地方政府破產、NHS 崩潰、年輕人買不起房。</p>
-                <div class="verdict">正當性赤字：「慢性崩潰的維護者」。</div>
-            </div>
-
-            <div class="reason-card">
-                <h4>五、「發展中國家負擔不起。」</h4>
-                <p>如果政府敢這樣挑明，它等於承認：它不相信發展中國家能自主設計本土化版本。它等於承認：它只想維持現有的不平等結構。</p>
-                <div class="verdict">正當性赤字：「偽善的北方」。</div>
-            </div>
-
-            <div class="reason-card">
-                <h4>六、「誰來監督？誰有權力執行？」</h4>
-                <p>如果政府敢這樣挑明，它等於承認：巴塞爾協議、FATF、BEPS 都不存在。它等於承認：跨國技術協調是不可能的。</p>
-                <div class="verdict">正當性赤字：「國際逃避者」。</div>
-            </div>
-
-            <div class="reason-card">
-                <h4>七、「這會引發資本外逃，導致失業與股市崩盤。」</h4>
-                <p>如果政府敢這樣挑明，它等於承認：它寧願讓年輕人永遠買不起房，也不願讓股市短期波動。它等於承認：資本可以綁架國家政策。</p>
-                <div class="verdict">正當性赤字：「金融市場的僕人」。</div>
-            </div>
-
-            <div class="reason-card">
-                <h4>八、「中國、印度等國家不會加入。」</h4>
-                <p>如果政府敢這樣挑明，它等於承認：它沒有跟全球南方國家溝通。它等於承認：它預設了全球南方會拒絕加入。它等於承認：它不把全球南方視為已表態的規則制定者。</p>
-                <div class="verdict">正當性赤字：「否認南方已表態」。</div>
-            </div>
-
-            <div class="reason-card">
-                <h4>九、「這只是一個理想主義提案。」</h4>
-                <p>如果政府敢這樣挑明，它等於承認：巴塞爾協議從未落地。它等於承認：任何跨國協調都是「理想主義」。</p>
-                <div class="verdict">正當性赤字：「否認先例」。</div>
-            </div>
-
-            <div class="reason-card">
-                <h4>十、「誰來保證這套標準不會被濫用？」</h4>
-                <p>如果政府敢這樣挑明，它等於承認：它不願意接受透明度。它等於承認：它寧願維持匿名結構。</p>
-                <div class="verdict">正當性赤字：「拒絕透明」。</div>
-            </div>
-
-            <div class="silence-box">
-                <p><strong>這個聯盟的成立無法被拒絕，因為一旦拒絕，就是一個國家的政治破產。</strong></p>
-                <p>一個公開拒絕土地增值標準的國家，不是在做出政策選擇。它是在自己的公民與全世界面前承認：它選擇保護地主而非租客，選擇資本而非人民，選擇慢性崩潰而非結構性改革。</p>
-                <p>在 GL 框架下，這個選擇是可測量的。它是正當性赤字。</p>
-                <p>這個赤字是否轉化為政治破產，取決於該國的內部政治結構、選舉週期與社會運動。但這個赤字是真實的。它是可測量的。</p>
-            </div>
-        </div>
-
-        <!-- ======================== Español ======================== -->
-        <div class="lang-es" id="content-es">
-            <h1>Estándar Global para la Captura del Valor del Suelo</h1>
-            <p class="subtitle">GFI Flow Intelligence · gfintel.com · 2026</p>
-            <p class="intro">Una sola nación no puede enfrentar al capital transnacional. Pero una alianza transnacional sí. Esto no es una utopía. Es una extensión lógica de los mecanismos de coordinación transfronteriza existentes — los Acuerdos de Basilea, el GAFI y el marco BEPS — aplicados a la última base imponible no coordinada: el valor del suelo.</p>
-
-            <h2>0. Premisa de Valor: Por qué existe esta propuesta</h2>
-
-            <div class="premise-box">
-                <p class="claim">La supervivencia de la mayoría tiene prioridad sobre las ganancias fáciles del capital.</p>
-                <p>La vivienda, la atención médica, la educación y la equidad generacional están siendo aplastadas por la búsqueda de rentas del suelo. Los jóvenes no pueden pagar una vivienda, no porque no trabajen duro, sino porque la renta del suelo extrae los frutos de su trabajo.</p>
-                <p>Este es el punto de partida de esta propuesta. No "todos ganan". Sino "la mayoría gana, y los buscadores de rentas pierden".</p>
-            </div>
-
-            <p><strong>La búsqueda de rentas del suelo transfiere los frutos del trabajo de la mayoría a terratenientes y capital que no producen, no innovan y no asumen riesgos.</strong> Esto no es un "resultado del mercado". Esto es un diseño institucional. Esto no es "ganar-ganar". Esto es una transferencia estructural.</p>
-
-            <p>Este punto de partida es más honesto que "ganar-ganar", y es más fuerte. Ganar-ganar debe probar que el capital también gana, pero el capital es el interés creado en la búsqueda de rentas del suelo. Si le pides que renuncie a la renta, necesariamente pierde. Solo puedes llamar "transición forzada" a una "nueva dirección", y una vez que esa retórica se descubre, ganar-ganar colapsa.</p>
-
-            <p>Pero "la supervivencia de la mayoría tiene prioridad" no necesita probar que el capital también gana. Solo necesita probar: <strong>la supervivencia de la mayoría tiene prioridad sobre las ganancias fáciles del capital.</strong> Esto es un juicio de valor, no un cálculo de intereses. No necesita el consentimiento del capital. Solo necesita el consentimiento de la mayoría. Esta es la verdadera base política de la propuesta.</p>
-
-            <div class="quote-block">
-                <p><strong>Premisa central:</strong></p>
-                <p>El valor del suelo es creado colectivamente por la sociedad — mediante la inversión pública, la aglomeración de población y el desarrollo económico. El terrateniente no lo produjo, no innovó, no asumió riesgos. Simplemente "estaba allí". Sin embargo, bajo las reglas actuales, captura todo el incremento.</p>
-                <p><strong>Esto no es un resultado del mercado. Esto es un diseño institucional.</strong></p>
-            </div>
-
-            <h2>I. ¿Por qué un estándar global unificado?</h2>
-            <ul>
-                <li><strong>El capital es móvil; la tierra es fija.</strong> Un terreno en Londres no puede trasladarse a Irlanda. Un edificio en Tokio no puede reubicarse en Singapur.</li>
-                <li><strong>Los ingresos pueden reducirse a cero.</strong> Los ricos pueden rechazar salarios, dividendos, ventas de acciones. Pero el valor del suelo no puede reducirse a cero.</li>
-                <li><strong>Una sola nación no puede actuar sola.</strong> Si solo el Reino Unido aplica un impuesto al valor del suelo, el capital amenaza con huir. Si solo Alemania actúa, el capital huye a Francia. Esta es la clásica "carrera hacia el fondo".</li>
-                <li><strong>Solo un estándar unificado puede atrapar al capital.</strong> Si el G7 y el G20 adoptan simultáneamente el mismo estándar, el "escape de 48 horas" del capital fracasa.</li>
-                <li><strong>Esto no es una idea nueva.</strong> Los Acuerdos de Basilea (1988) unificaron los estándares de capital bancario. El GAFI unificó los estándares contra el lavado de dinero. El marco BEPS (2021) estableció un impuesto corporativo mínimo global del 15%. Cada uno fue considerado "imposible" en su momento. Cada uno se implementó cuando la crisis fue lo suficientemente grave.</li>
-            </ul>
-
-            <h2>II. ¿Qué debería incluir el estándar unificado?</h2>
-
-            <h3>1. Piso unificado del impuesto al incremento del valor del suelo: 70%–80%</h3>
-            <ul>
-                <li>El valor del suelo es creado socialmente. El 70%–80% devuelve la mayor parte del incremento a las finanzas públicas.</li>
-                <li>Los terratenientes retienen el 20%–30% como costo de tenencia y compensación de gestión.</li>
-                <li>Esto no es confiscación. Esto es restitución.</li>
-                <li><strong>Nota: es un "piso unificado", no un "estándar mínimo".</strong> Las naciones pueden establecer tasas por encima del piso, pero no por debajo. Por debajo del piso = no es miembro de la alianza.</li>
-                <li><strong>¿Por qué un piso unificado, no un estándar mínimo?</strong> Si las naciones pudieran establecer 50%, 60%, 70% u 80%, el capital huiría de la nación del 80% a la del 50%. Un piso unificado cierra el espacio de arbitraje.</li>
-            </ul>
-
-            <h3>2. Registro Global de Beneficiarios Finales del Suelo</h3>
-            <ul>
-                <li>Todas las transacciones transnacionales de suelo deben revelar al beneficiario final.</li>
-                <li>Romper las estructuras anónimas de empresas fantasma, fideicomisos y paraísos fiscales.</li>
-                <li>El suelo no registrado enfrenta un impuesto punitivo al suelo ocioso.</li>
-            </ul>
-
-            <h3>3. Estándares Regulatorios Unificados para REITs</h3>
-            <ul>
-                <li>Limitar los ratios de apalancamiento.</li>
-                <li>Divulgación obligatoria de activos subyacentes.</li>
-                <li>Prohibir la titulización de suelo residencial.</li>
-                <li>Cortar la cadena de financiarización del suelo.</li>
-            </ul>
-
-            <h3>4. Fondo G7 + G20 de Estabilización de Flujos de Capital</h3>
-            <ul>
-                <li>Cuando un Estado miembro enfrenta fuga de capitales debido a una reforma, los otros miembros proporcionan conjuntamente apoyo de liquidez.</li>
-                <li>Permitir que las naciones individuales se atrevan a reformar, libres de la amenaza de "desinversión".</li>
-            </ul>
-
-            <h3>5. Plataforma de Negociación Colectiva del Sur Global</h3>
-            <ul>
-                <li>China, India, Brasil y Sudáfrica fijan conjuntamente estándares para la "captura del valor del suelo", la "comunalización de viviendas vacías" y las "reservas de vivienda pública".</li>
-                <li>Transformar al Sur Global de "receptor pasivo" en "creador de reglas".</li>
-            </ul>
-
-            <h3>6. Impuesto de Salida + Derecho de Tributación del País de Origen + Intercambio de Información</h3>
-            <ul>
-                <li><strong>Impuesto de Salida:</strong> El capital debe pagar cualquier impuesto al valor del suelo pendiente antes de salir de un Estado miembro.</li>
-                <li><strong>Derecho de Tributación del País de Origen + Intercambio de Información:</strong> Los Estados miembros establecen mecanismos de intercambio de información. El país de origen grava los activos globales de suelo del capital, evitando la fuga mediante precios de transferencia o estructuras offshore.</li>
-                <li>Siguiendo la lógica de aplicación del BEPS, esto no depende de la cooperación del país receptor.</li>
-            </ul>
-
-            <h3>7. Auditoría de Tasa Impositiva Efectiva</h3>
-            <ul>
-                <li>Los Estados miembros deben divulgar anualmente su <strong>tasa impositiva efectiva</strong> (no la tasa nominal) y someterse a una auditoría independiente.</li>
-                <li>Si la tasa nominal de un Estado miembro es del 70% pero la tasa efectiva es del 5%, otros miembros pueden iniciar una "revisión de cumplimiento".</li>
-                <li>Si la revisión confirma un incumplimiento sustantivo, el Estado es tratado como "no miembro de la alianza" y enfrenta impuestos penales a los flujos de capital.</li>
-            </ul>
-
-            <h2>III. ¿Es esto posible?</h2>
-            <ul>
-                <li><strong>Técnicamente viable.</strong> La tierra no puede moverse. La base imponible no puede ocultarse. Las herramientas existen.</li>
-                <li><strong>Políticamente extremadamente difícil.</strong> El capital transnacional movilizará medios, think tanks, partidos y lobistas para bloquearlo.</li>
-                <li><strong>Pero hay precedentes.</strong> Cuando la crisis es lo suficientemente grave, los estándares unificados se vuelven posibles.</li>
-                <li><strong>Este marco no es el único camino.</strong> El impuesto único de Henry George, la igualación de derechos de suelo de Sun Yat-sen, la tierra para el agricultor de Taiwán, la propiedad pública del suelo y la distribución del valor de China — todos son enfoques legítimos. Lo nuevo aquí es la integración de la captura del valor del suelo con la coordinación transfronteriza.</li>
-            </ul>
-
-            <h2>IV. Ruta de implementación</h2>
-
-            <h3>Fase 1 (1–3 años): Construir consenso</h3>
-            <ul>
-                <li>Proponer el "Piso Unificado del Impuesto al Incremento del Valor del Suelo" en la Cumbre del G20.</li>
-                <li>China, India, Brasil y Sudáfrica forman un "Grupo Núcleo del Sur" y firman primero tratados fiscales bilaterales.</li>
-                <li>El Reino Unido, Alemania y Francia actúan como "Reformadores del Norte" dentro del G7.</li>
-            </ul>
-
-            <h3>Fase 2 (3–5 años): Construir mecanismos</h3>
-            <ul>
-                <li>Establecer el "Fondo G20 de Estabilización de Flujos de Capital".</li>
-                <li>Lanzar el "Registro Global de Beneficiarios Finales del Suelo".</li>
-                <li>Establecer "Estándares Regulatorios Unificados para REITs".</li>
-            </ul>
-
-            <h3>Fase 3 (5–10 años): Contención total</h3>
-            <ul>
-                <li>Todos los miembros del G20 completan la legislación nacional implementando el piso unificado del impuesto al incremento del valor del suelo.</li>
-                <li>El capital transnacional que intente huir de un Estado miembro enfrenta "impuesto de salida" y "derecho de tributación del país de origen".</li>
-                <li>Se establece formalmente la alianza del Sur Global.</li>
-            </ul>
-
-            <h2>V. Por qué la participación global es el único camino</h2>
-            <ul>
-                <li><strong>Una sola nación actúa → el capital huye al siguiente país.</strong> Si solo el Reino Unido aplica el impuesto, el capital se muda a Irlanda en 48 horas.</li>
-                <li><strong>Dos naciones actúan → el capital huye a una tercera.</strong> Si el Reino Unido y Alemania actúan juntos, el capital se muda a Luxemburgo, Países Bajos o Singapur.</li>
-                <li><strong>El G7 actúa → el capital huye al G20.</strong> Si el G7 adopta el estándar, el capital se muda a economías emergentes que aún no se han unido.</li>
-                <li><strong>El G20 actúa → el capital huye a los paraísos fiscales.</strong> Si el G20 adopta el estándar, el capital se muda a estructuras offshore, empresas fantasma y fideicomisos anónimos.</li>
-                <li><strong>Solo el G7 + G20 + Sur Global actuando juntos deja al capital sin adónde ir.</strong> La tierra no puede moverse. El valor no puede reducirse a cero. Mientras todas las naciones estén en el mismo piso, el "escape de 48 horas" del capital fracasa.</li>
-                <li><strong>Esto no es una elección. Es aritmética.</strong></li>
-            </ul>
-
-            <div class="highlight-box">
-                <p><strong>Un país que no se une se convierte en un "paraíso del capital" — pero también se convierte en un "infierno del capital".</strong></p>
-                <p>El mecanismo: entrada de capital → la demanda de suelo sube → los precios del suelo suben → los terratenientes capturan el incremento → la base imponible del gobierno se erosiona → los servicios públicos colapsan → los jóvenes no pueden pagar viviendas → la crisis de vivienda escala al nivel electoral → rotación de partidos → el nuevo gobierno solicita unirse a la alianza.</p>
-                <p>No porque quiera. Porque no tiene alternativa. El costo de ser un paraíso del capital lo soportan sus propios votantes, y finalmente lo liquida su propio sistema de partidos.</p>
-            </div>
-
-            <h2>VI. Por qué esta alianza es más fácil de unirse que las organizaciones internacionales existentes</h2>
-            <ul>
-                <li><strong>No se requiere recomendación del Consejo de Seguridad.</strong> La ONU requiere recomendación del Consejo de Seguridad y voto de dos tercios de la Asamblea General. La alianza del valor del suelo requiere solo legislación nacional y adopción del piso unificado.</li>
-                <li><strong>No se requieren cuotas de membresía.</strong> La ONU requiere contribuciones obligatorias basadas en el PIB. La alianza del valor del suelo recauda impuestos a nivel nacional. Todos los ingresos permanecen en las tesorerías nacionales. No se pagan tarifas a ningún organismo internacional.</li>
-                <li><strong>No hay transferencia de soberanía.</strong> La ONU requiere aceptar la Carta, las resoluciones del Consejo de Seguridad y la jurisdicción de la CIJ. La alianza del valor del suelo coordina bases imponibles, no sistemas políticos. No infringe la soberanía.</li>
-                <li><strong>No hay negociación política.</strong> La ONU es un club político: unirse requiere negociación, compromiso y votación. La alianza del valor del suelo es un estándar técnico: unirse requiere legislación nacional y cumplimiento del piso unificado.</li>
-                <li><strong>Mayor costo de salida.</strong> Salir de la ONU conlleva daño reputacional. Salir de la alianza del valor del suelo desencadena sanciones a los flujos de capital, auditorías de tasa efectiva y un déficit de legitimidad.</li>
-                <li><strong>Beneficio financiero inmediato.</strong> Unirse a la ONU cuesta dinero. Unirse a la alianza del valor del suelo aumenta los ingresos fiscales.</li>
-                <li><strong>Esto no es "unirse a una organización internacional". Esto es "unirse a un estándar internacional".</strong> La coordinación técnica es mucho más fácil que la integración política.</li>
-            </ul>
-
-            <div class="compare-table-wrapper">
-                <table class="compare-table">
-                    <thead>
-                        <tr><th>Dimensión</th><th>ONU</th><th>Alianza del Valor del Suelo</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>Umbral de entrada</td><td>Recomendación del Consejo de Seguridad + voto de 2/3 de la Asamblea General</td><td>Legislación nacional + piso unificado</td></tr>
-                        <tr><td>Transferencia de soberanía</td><td>Aceptar la Carta, resoluciones del CS, jurisdicción de la CIJ</td><td>Solo coordina la base imponible; sin transferencia de soberanía</td></tr>
-                        <tr><td>Cuotas de membresía</td><td>Obligatorias, basadas en el PIB</td><td>Ninguna. Los ingresos fiscales permanecen en la tesorería nacional</td></tr>
-                        <tr><td>Costo de salida</td><td>Solo daño reputacional</td><td>Sanciones a flujos de capital + auditorías + déficit de legitimidad</td></tr>
-                        <tr><td>Aplicación</td><td>Resoluciones del Consejo de Seguridad (a menudo vetadas)</td><td>Impuesto de salida + derecho de tributación del país de origen + auditoría</td></tr>
-                        <tr><td>Beneficio inmediato</td><td>Mantenimiento de paz, ayuda, voz</td><td>Estabilidad fiscal, servicios públicos, poder de creación de reglas</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <h2>VII. El límite del capital: el impuesto al valor del suelo no es anti-capital</h2>
-            <ul>
-                <li>El propósito del impuesto al valor del suelo no es "eliminar el capital".</li>
-                <li>No es "prohibir la inversión".</li>
-                <li>No es "cerrar mercados".</li>
-                <li>Es <strong>"devolver la riqueza creada socialmente a la sociedad, para infraestructura y servicios públicos".</strong></li>
-                <li>El impuesto al valor del suelo es una <strong>herramienta fiscal</strong>, no una <strong>herramienta ideológica</strong>.</li>
-                <li>El capital puede ir al espacio, al mar profundo, a la nueva energía, a la biotecnología — siempre que no dañe la ecología de la Tierra o los intereses comunes de la humanidad.</li>
-                <li>Pero el impuesto al valor del suelo no aborda estos temas. Solo aborda la "renta de monopolio sobre bases imponibles inmóviles".</li>
-                <li>El espacio, el mar profundo y la nueva energía son "inversiones innovadoras móviles que asumen riesgos". Su lógica de tributación es otro tema — impuesto al carbono, impuesto a los recursos, mecanismos de contribución a los bienes comunes globales, pero no el impuesto al valor del suelo.</li>
-                <li><strong>El propósito del impuesto al valor del suelo no es detener los flujos de capital, sino cortar el monopolio del capital sobre las "bases imponibles inmóviles".</strong> El capital puede ir a cualquier lugar, siempre que no dependa de monopolizar la renta del suelo.</li>
-                <li><strong>Este es el objetivo final del impuesto al valor del suelo: empujar al capital de la búsqueda de rentas hacia la innovación.</strong></li>
-            </ul>
-
-            <h2>VIII. Conclusión: El único camino lógico</h2>
-            <div class="highlight-box">
-                <p><strong>No reformar significa colapso lento. Unificar el estándar es el único camino lógico para atrapar al capital.</strong></p>
-                <p>La tierra no puede moverse. El valor no puede reducirse a cero. Mientras todas las naciones estén en el mismo piso, el capital transnacional pierde su "escape de 48 horas". El capital no puede huir, por lo que las naciones pueden recaudar el impuesto. Con el impuesto, los gobiernos pueden construir vivienda pública, mejorar la atención médica, invertir en infraestructura y reducir la brecha de riqueza.</p>
-                <p>Esto no traerá automáticamente la paz mundial. Las disputas territoriales, los agravios históricos, los conflictos religiosos y la rivalidad entre grandes potencias permanecerán. Pero eliminará una palanca económica que el capital utiliza para enfrentar a las naciones entre sí.</p>
-                <p><strong>La medición del déficit de legitimidad depende de la voluntad política de los Estados miembros.</strong> No es un mecanismo automático, sino un proceso político. El desencadenante de una auditoría depende de si los Estados miembros están dispuestos a ofender a otro miembro. Pero precisamente por eso, el Estado auditado enfrenta una elección política: puede cooperar con la auditoría y probar su tasa efectiva, o puede rechazar la auditoría y ser tratado como "sustancialmente no conforme" por otros miembros. Rechazar una auditoría es una admisión pública. Esto no es un problema técnico. Es un problema político. Y los problemas políticos finalmente se resuelven con votos.</p>
-            </div>
-
-            <h2>IX. Diez Razones Que No Pueden Ser Rechazadas Públicamente</h2>
-            <p>Cada razón para rechazar el estándar global de captura del valor del suelo, una vez declarada públicamente, expone una posición: favorecer a los terratenientes sobre los inquilinos, al capital sobre las personas. Esto no produce automáticamente una bancarrota política. Pero produce un déficit de legitimidad que puede medirse.</p>
-
-            <div class="reason-card">
-                <h4>1. "Esto viola la soberanía nacional."</h4>
-                <p>Si un gobierno dice esto públicamente, admite: la soberanía está por encima del bienestar del pueblo. Admite: proteger los intereses de los terratenientes importa más que resolver la crisis de vivienda.</p>
-                <div class="verdict">Déficit de legitimidad: "Soberanía sobre el sustento".</div>
-            </div>
-
-            <div class="reason-card">
-                <h4>2. "Esto golpeará el mercado inmobiliario y provocará fuga de capitales."</h4>
-                <p>Si un gobierno dice esto públicamente, admite: su tarea principal es proteger el capital, no a las personas. Admite: los precios de la vivienda no pueden caer, incluso si los jóvenes nunca pueden pagar una vivienda.</p>
-                <div class="verdict">Déficit de legitimidad: "Capital sobre personas".</div>
-            </div>
-
-            <div class="reason-card">
-                <h4>3. "El valor del suelo es creado por el terrateniente."</h4>
-                <p>Si un gobierno dice esto públicamente, admite: la riqueza creada por la inversión pública debería pertenecer a los terratenientes. Admite: la captura privada de valor creado socialmente es legítima.</p>
-                <div class="verdict">Déficit de legitimidad: "Defender la búsqueda de rentas".</div>
-            </div>
-
-            <div class="reason-card">
-                <h4>4. "Esto es demasiado radical. Causará disturbios sociales."</h4>
-                <p>Si un gobierno dice esto públicamente, admite: el statu quo es estable, a pesar de la bancarrota de gobiernos locales, el colapso del NHS y los jóvenes que no pueden pagar una vivienda.</p>
-                <div class="verdict">Déficit de legitimidad: "Mantener el colapso lento".</div>
-            </div>
-
-            <div class="reason-card">
-                <h4>5. "Los países en desarrollo no pueden permitírselo."</h4>
-                <p>Si un gobierno dice esto públicamente, admite: no cree que los países en desarrollo puedan diseñar sus propias versiones localizadas. Admite: solo quiere mantener la estructura desigual existente.</p>
-                <div class="verdict">Déficit de legitimidad: "Norte hipócrita".</div>
-            </div>
-
-            <div class="reason-card">
-                <h4>6. "¿Quién supervisará? ¿Quién tiene el poder de hacer cumplir?"</h4>
-                <p>Si un gobierno dice esto públicamente, admite: los Acuerdos de Basilea, el GAFI y el BEPS no existen. Admite: la coordinación técnica transfronteriza es imposible.</p>
-                <div class="verdict">Déficit de legitimidad: "Evasor internacional".</div>
-            </div>
-
-            <div class="reason-card">
-                <h4>7. "Esto provocará fuga de capitales, causando desempleo y caídas bursátiles."</h4>
-                <p>Si un gobierno dice esto públicamente, admite: preferiría que los jóvenes nunca puedan pagar una vivienda antes que dejar que el mercado de valores fluctúe a corto plazo. Admite: el capital puede secuestrar la política nacional.</p>
-                <div class="verdict">Déficit de legitimidad: "Servidor de los mercados financieros".</div>
-            </div>
-
-            <div class="reason-card">
-                <h4>8. "China, India y otros no se unirán."</h4>
-                <p>Si un gobierno dice esto públicamente, admite: no se ha comunicado con los países del Sur Global. Admite: presume que el Sur Global se negará a unirse. Admite: no ve al Sur Global como creadores de reglas que ya han declarado su posición.</p>
-                <div class="verdict">Déficit de legitimidad: "Negar la posición declarada del Sur".</div>
-            </div>
-
-            <div class="reason-card">
-                <h4>9. "Esto es solo una propuesta idealista."</h4>
-                <p>Si un gobierno dice esto públicamente, admite: los Acuerdos de Basilea nunca se implementaron. Admite: cualquier coordinación transfronteriza es "idealismo".</p>
-                <div class="verdict">Déficit de legitimidad: "Negar precedentes".</div>
-            </div>
-
-            <div class="reason-card">
-                <h4>10. "¿Quién garantiza que este estándar no será abusado?"</h4>
-                <p>Si un gobierno dice esto públicamente, admite: no está dispuesto a aceptar transparencia. Admite: preferiría mantener estructuras anónimas.</p>
-                <div class="verdict">Déficit de legitimidad: "Rechazar la transparencia".</div>
-            </div>
-
-            <div class="silence-box">
-                <p><strong>Esta alianza no puede ser rechazada. Porque rechazarla es la bancarrota política.</strong></p>
-                <p>Un país que rechaza públicamente el estándar de captura del valor del suelo no está tomando una decisión política. Está admitiendo, ante sus propios ciudadanos y ante el mundo, que elige proteger a los terratenientes antes que a los inquilinos, al capital antes que a las personas, y el colapso lento antes que la reforma estructural.</p>
-                <p>Bajo el GL Framework, esa elección es medible. Es un déficit de legitimidad.</p>
-                <p>Si ese déficit se traduce en bancarrota política depende de las estructuras políticas internas, los ciclos electorales y los movimientos sociales. Pero el déficit es real. Y es medible.</p>
-            </div>
-        </div>
-
-        <div class="footer">
-            <p>GFI Flow Intelligence · gfiintel.com</p>
-            <div class="footer-links">
-                <a href="/index.html">← Back to Home</a>
-                <a href="/g20_capital_containment.html">← G20 Containment Strategy</a>
-            </div>
-        </div>
-
+    <!-- ======================== English ======================== -->
+    <div class="lang-content" data-lang="en">
+      <div class="series-tag">LAND JUSTICE SERIES · EXTENSION</div>
+      <h1>A Global Standard for Land Value Capture</h1>
+      <p class="subtitle">GFI Flow Intelligence · gfiintel.com · 2026</p>
+      <p class="intro">A single nation cannot confront transnational capital. But a transnational alliance can. This is not a utopia. It is a logical extension of existing cross-border coordination mechanisms — the Basel Accords, FATF, and the BEPS framework — applied to the last uncoordinated tax base: land value.</p>
+
+      <h2>0. Value Premise: Why This Proposal Exists</h2>
+
+      <div class="premise-box">
+        <p class="claim">The survival of the majority takes priority over the easy profits of capital.</p>
+        <p>Housing, healthcare, education, and generational fairness are being squeezed by land rent-seeking. Young people cannot afford homes — not because they do not work hard, but because land rent extracts the fruits of their labor.</p>
+        <p>This is the starting point of this proposal. Not "everyone wins." But "the majority wins, and the rent-seekers lose."</p>
+      </div>
+
+      <p><strong>Land rent-seeking transfers the fruits of the majority's labor to landowners and capital who do not produce, do not innovate, and do not take risks.</strong> This is not a "market outcome." This is an institutional design. This is not "win-win." This is a structural transfer.</p>
+
+      <p>This starting point is more honest than "win-win," and it is stronger. Win-win must prove that capital also wins — but capital is the vested interest in land rent-seeking. If you ask it to give up rent, it is necessarily losing. You can only call "forced transition" a "new direction," and once that rhetoric is seen through, win-win collapses.</p>
+
+      <p>But "the majority's survival takes priority" does not need to prove that capital also wins. It only needs to prove: <strong>the survival of the majority takes priority over the easy profits of capital.</strong> This is a value judgment, not an interest calculation. It does not need capital's consent. It only needs the majority's consent. This is the true political foundation of the proposal.</p>
+
+      <div class="quote-block">
+        <p><strong>Core Premise:</strong></p>
+        <p>Land value is created collectively by society — through public investment, population agglomeration, and economic development. The landowner did not produce it, did not innovate, did not take risks. He simply "stood there." Yet under current rules, he captures the entire increase.</p>
+        <p><strong>This is not a market outcome. This is an institutional design.</strong></p>
+      </div>
+
+      <h2>I. Why a Unified Global Standard?</h2>
+      <ul>
+        <li><strong>Capital is mobile; land is fixed.</strong> A piece of land in London cannot be moved to Ireland. A building in Tokyo cannot be relocated to Singapore.</li>
+        <li><strong>Income can be zeroed out.</strong> The wealthy can refuse salaries, refuse dividends, refuse to sell stocks. But land value cannot be zeroed out.</li>
+        <li><strong>A single nation cannot act alone.</strong> If only the UK levies a land value tax, capital threatens to flee. If only Germany acts, capital flees to France. This is the classic "race to the bottom."</li>
+        <li><strong>Only a unified standard can trap capital.</strong> If the G7 and G20 adopt the same standard simultaneously, capital's "48-hour escape" fails.</li>
+        <li><strong>This is not a new idea.</strong> The Basel Accords (1988) unified bank capital standards. FATF unified anti-money laundering standards. The BEPS framework (2021) established a 15% global minimum corporate tax. Each was once considered "impossible." Each was implemented when crisis was severe enough.</li>
+      </ul>
+
+      <h2>II. What Should the Unified Standard Include?</h2>
+
+      <h3>1. Unified Land Value Increment Tax Floor: 70%–80%</h3>
+      <ul>
+        <li>Land value is socially created. 70%–80% returns the bulk of the increase to public finance.</li>
+        <li>Landowners retain 20%–30% as holding cost and management compensation.</li>
+        <li>This is not confiscation. This is restitution.</li>
+        <li><strong>Note: it is a "unified floor," not a "minimum standard."</strong> Nations may set rates above the floor, but not below. Below the floor = not a member of the alliance.</li>
+        <li><strong>Why a unified floor, not a minimum standard?</strong> If nations could set 50%, 60%, 70%, or 80%, capital would flee from the 80% nation to the 50% nation. A unified floor closes the arbitrage space.</li>
+      </ul>
+
+      <h3>2. Global Land Beneficial Ownership Registry</h3>
+      <ul>
+        <li>All transnational land transactions must disclose the ultimate beneficial owner.</li>
+        <li>Break the anonymous structures of shell companies, trusts, and tax havens.</li>
+        <li>Unregistered land faces a punitive idle tax.</li>
+      </ul>
+
+      <h3>3. Unified REIT Regulatory Standards</h3>
+      <ul>
+        <li>Limit leverage ratios.</li>
+        <li>Mandatory disclosure of underlying assets.</li>
+        <li>Ban the securitization of residential land.</li>
+        <li>Cut the chain of land financialization.</li>
+      </ul>
+
+      <h3>4. G7 + G20 Capital Flow Stabilization Fund</h3>
+      <ul>
+        <li>When a member state faces capital flight due to reform, other members jointly provide liquidity support.</li>
+        <li>Enable single nations to dare to reform, free from the threat of "divestment."</li>
+      </ul>
+
+      <h3>5. Global South Collective Bargaining Platform</h3>
+      <ul>
+        <li>China, India, Brazil, South Africa jointly set standards for "land value capture," "vacant house communalization," and "public housing reserves."</li>
+        <li>Transform the Global South from "passive recipients" into "rule-makers."</li>
+      </ul>
+
+      <h3>6. Exit Tax + Home Country Taxing Right + Information Sharing</h3>
+      <ul>
+        <li><strong>Exit Tax:</strong> Capital must pay any outstanding land value tax before leaving a member state.</li>
+        <li><strong>Home Country Taxing Right + Information Sharing:</strong> Member states establish information-sharing mechanisms. The home country taxes the capital's global land assets, preventing escape through transfer pricing or offshore structures.</li>
+        <li>Following the BEPS enforcement logic, this does not depend on the receiving country's cooperation.</li>
+      </ul>
+
+      <h3>7. Effective Tax Rate Audit</h3>
+      <ul>
+        <li>Member states must annually disclose their <strong>effective tax rate</strong> (not nominal rate) and submit to independent audit.</li>
+        <li>If a member state's nominal rate is 70% but effective rate is 5%, other members may initiate a "compliance review."</li>
+        <li>If the review confirms substantive non-compliance, the state is treated as "not a member of the alliance" and faces capital flow penalty taxes.</li>
+      </ul>
+
+      <h2>III. Is This Possible?</h2>
+      <ul>
+        <li><strong>Technically feasible.</strong> Land cannot move. The tax base cannot be hidden. The tools exist.</li>
+        <li><strong>Politically extremely difficult.</strong> Transnational capital will mobilize media, think tanks, parties, and lobbyists to block it.</li>
+        <li><strong>But there is precedent.</strong> When crisis is severe enough, unified standards become possible.</li>
+        <li><strong>This framework is not the only path.</strong> Henry George's single tax, Sun Yat-sen's equalization of land rights, Taiwan's land-to-the-tiller, China's public land ownership and value-sharing — all are legitimate approaches. What is new here is the integration of land value capture with cross-border coordination.</li>
+      </ul>
+
+      <h2>IV. Implementation Path</h2>
+
+      <h3>Phase 1 (1–3 years): Build Consensus</h3>
+      <ul>
+        <li>Propose the "Unified Land Value Increment Tax Floor" at the G20 Summit.</li>
+        <li>China, India, Brazil, and South Africa form a "Southern Core Group" and sign bilateral tax treaties first.</li>
+        <li>The UK, Germany, and France act as "Northern Reformers" within the G7.</li>
+      </ul>
+
+      <h3>Phase 2 (3–5 years): Build Mechanisms</h3>
+      <ul>
+        <li>Establish the "G20 Capital Flow Stabilization Fund."</li>
+        <li>Launch the "Global Land Beneficial Ownership Registry."</li>
+        <li>Set "Unified REIT Regulatory Standards."</li>
+      </ul>
+
+      <h3>Phase 3 (5–10 years): Full Containment</h3>
+      <ul>
+        <li>All G20 members complete domestic legislation implementing the unified land value increment tax floor.</li>
+        <li>Transnational capital attempting to flee a member state faces "exit tax" and "home country taxing right."</li>
+        <li>The Global South alliance is formally established.</li>
+      </ul>
+
+      <h2>V. Why Global Participation Is the Only Path</h2>
+      <ul>
+        <li><strong>A single nation acts alone → capital flees to the next country.</strong> If only the UK levies the tax, capital moves to Ireland within 48 hours.</li>
+        <li><strong>Two nations act → capital flees to a third.</strong> If the UK and Germany act together, capital moves to Luxembourg, the Netherlands, or Singapore.</li>
+        <li><strong>The G7 acts → capital flees to the G20.</strong> If the G7 adopts the standard, capital moves to emerging economies that have not yet joined.</li>
+        <li><strong>The G20 acts → capital flees to tax havens.</strong> If the G20 adopts the standard, capital moves to offshore structures, shell companies, and anonymous trusts.</li>
+        <li><strong>Only G7 + G20 + Global South acting together leaves capital nowhere to go.</strong> Land cannot move. Value cannot be zeroed out. As long as all nations stand on the same floor, capital's "48-hour escape" fails.</li>
+        <li><strong>This is not a choice. It is arithmetic.</strong></li>
+      </ul>
+
+      <div class="highlight-box">
+        <p><strong>A country that does not join becomes a "capital haven" — but it also becomes a "capital hell."</strong></p>
+        <p>The mechanism: capital inflow → land demand rises → land prices rise → landowners capture the increase → government tax base erodes → public services collapse → young people cannot afford homes → housing crisis escalates to the electoral level → party turnover → the new government applies to join the alliance.</p>
+        <p>Not because it wants to. Because it has no alternative. The cost of being a capital haven is borne by its own voters, and ultimately settled by its own party system.</p>
+      </div>
+
+      <h2>VI. Why This Alliance Is Easier to Join Than Existing International Organizations</h2>
+      <ul>
+        <li><strong>No Security Council recommendation.</strong> The UN requires Security Council recommendation and a two-thirds General Assembly vote. The land value alliance requires only domestic legislation and adoption of the unified floor.</li>
+        <li><strong>No membership dues.</strong> The UN requires mandatory assessed contributions based on GDP. The land value alliance collects tax revenue domestically. All revenue stays in national treasuries. No fees paid to any international body.</li>
+        <li><strong>No sovereignty transfer.</strong> The UN requires acceptance of the Charter, Security Council resolutions, and ICJ jurisdiction. The land value alliance coordinates tax bases, not political systems. It does not infringe on sovereignty.</li>
+        <li><strong>No political negotiation.</strong> The UN is a political club: joining requires negotiation, compromise, and voting. The land value alliance is a technical standard: joining requires domestic legislation and compliance with the unified floor.</li>
+        <li><strong>Higher exit cost.</strong> Leaving the UN carries reputational damage. Leaving the land value alliance triggers capital flow penalties, effective tax rate audits, and a legitimacy deficit.</li>
+        <li><strong>Immediate financial benefit.</strong> Joining the UN costs money. Joining the land value alliance increases fiscal revenue.</li>
+        <li><strong>This is not "joining an international organization." This is "joining an international standard."</strong> Technical coordination is far easier than political integration.</li>
+      </ul>
+
+      <div class="compare-table-wrapper">
+        <table class="compare-table">
+          <thead>
+            <tr><th>Dimension</th><th>United Nations</th><th>Land Value Alliance</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Entry threshold</td><td>Security Council recommendation + 2/3 General Assembly vote</td><td>Domestic legislation + unified floor</td></tr>
+            <tr><td>Sovereignty transfer</td><td>Accept Charter, SC resolutions, ICJ jurisdiction</td><td>Coordinate tax base only; no sovereignty transfer</td></tr>
+            <tr><td>Membership dues</td><td>Mandatory, GDP-based assessment</td><td>None. Tax revenue stays in national treasury</td></tr>
+            <tr><td>Exit cost</td><td>Reputational damage only</td><td>Capital flow penalties + audits + legitimacy deficit</td></tr>
+            <tr><td>Enforcement</td><td>Security Council resolutions (often vetoed)</td><td>Exit tax + home country taxing right + audit</td></tr>
+            <tr><td>Immediate benefit</td><td>Peacekeeping, aid, voice</td><td>Fiscal stability, public services, rule-making power</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>VII. The Boundary of Capital: Land Value Tax Is Not Anti-Capital</h2>
+      <ul>
+        <li>The purpose of land value tax is not to "eliminate capital."</li>
+        <li>Not to "ban investment."</li>
+        <li>Not to "close markets."</li>
+        <li>It is to <strong>"return socially created wealth to society, for infrastructure and public services."</strong></li>
+        <li>Land value tax is a <strong>fiscal tool</strong>, not an <strong>ideological tool</strong>.</li>
+        <li>Capital can go to space, deep sea, new energy, biotechnology — as long as it does not harm Earth's ecology or humanity's common interests.</li>
+        <li>But land value tax does not address these issues. It only addresses "monopoly rent on immovable tax bases."</li>
+        <li>Space, deep sea, and new energy are "mobile, risk-bearing innovative investments." Their taxation logic is another topic — carbon tax, resource tax, global commons contribution mechanisms, but not land value tax.</li>
+        <li><strong>The purpose of land value tax is not to stop capital flows, but to cut off capital's monopoly on "immovable tax bases."</strong> Capital can go anywhere, as long as it does not rely on monopolizing land rent.</li>
+        <li><strong>This is the ultimate goal of land value tax: push capital from rent-seeking toward innovation.</strong></li>
+      </ul>
+
+      <h2>VIII. Conclusion: The Only Logical Path</h2>
+      <div class="highlight-box">
+        <p><strong>Not reforming means slow collapse. Unifying the standard is the only logical path to trap capital.</strong></p>
+        <p>Land cannot move. Value cannot be zeroed out. As long as all nations stand on the same floor, transnational capital loses its "48-hour escape." Capital cannot flee, so nations can collect the tax. With the tax, governments can build public housing, improve healthcare, invest in infrastructure, and narrow the wealth gap.</p>
+        <p>This will not automatically bring world peace. Territorial disputes, historical grievances, religious conflicts, and great-power rivalry will remain. But it will remove one economic lever that capital uses to pit nations against each other.</p>
+        <p><strong>The measurement of the legitimacy deficit depends on the political will of member states.</strong> It is not an automatic mechanism, but a political process. The trigger for an audit depends on whether member states are willing to offend another member. But precisely because of this, the audited state faces a political choice: it can cooperate with the audit and prove its effective tax rate, or it can refuse the audit and be treated as "substantively non-compliant" by other members. Refusing an audit is a public admission. This is not a technical problem. It is a political problem. And political problems are ultimately settled by votes.</p>
+      </div>
+
+      <h2>IX. Ten Reasons That Cannot Be Publicly Rejected</h2>
+      <p>Every reason to reject the global land value capture standard, once publicly stated, exposes a position: favoring landlords over renters, capital over people. This does not automatically produce political bankruptcy. But it produces a legitimacy deficit that can be measured.</p>
+
+      <div class="reason-card">
+        <h4>1. "This violates national sovereignty."</h4>
+        <p>If a government says this publicly, it admits: sovereignty is higher than people's welfare. It admits: protecting landlord interests matters more than solving the housing crisis.</p>
+        <div class="verdict">Legitimacy deficit: "Sovereignty over livelihood."</div>
+      </div>
+
+      <div class="reason-card">
+        <h4>2. "This will hit the real estate market and trigger capital flight."</h4>
+        <p>If a government says this publicly, it admits: its primary task is to protect capital, not people. It admits: housing prices cannot fall, even if young people can never afford homes.</p>
+        <div class="verdict">Legitimacy deficit: "Capital over people."</div>
+      </div>
+
+      <div class="reason-card">
+        <h4>3. "Land value is created by the landowner."</h4>
+        <p>If a government says this publicly, it admits: wealth created by public investment should belong to landowners. It admits: socially created value being privately captured is legitimate.</p>
+        <div class="verdict">Legitimacy deficit: "Defending rent-seeking."</div>
+      </div>
+
+      <div class="reason-card">
+        <h4>4. "This is too radical. It will cause social unrest."</h4>
+        <p>If a government says this publicly, it admits: the status quo is stable, despite local government bankruptcy, collapsing NHS, and young people unable to afford homes.</p>
+        <div class="verdict">Legitimacy deficit: "Maintaining slow collapse."</div>
+      </div>
+
+      <div class="reason-card">
+        <h4>5. "Developing countries cannot afford it."</h4>
+        <p>If a government says this publicly, it admits: it does not believe developing countries can design their own localized versions. It admits: it only wants to maintain the existing unequal structure.</p>
+        <div class="verdict">Legitimacy deficit: "Hypocritical North."</div>
+      </div>
+
+      <div class="reason-card">
+        <h4>6. "Who will supervise? Who has the power to enforce?"</h4>
+        <p>If a government says this publicly, it admits: the Basel Accords, FATF, and BEPS do not exist. It admits: cross-border technical coordination is impossible.</p>
+        <div class="verdict">Legitimacy deficit: "International evader."</div>
+      </div>
+
+      <div class="reason-card">
+        <h4>7. "This will trigger capital flight and unemployment."</h4>
+        <p>If a government says this publicly, it admits: it would rather let young people never afford homes than let the stock market fluctuate short-term. It admits: capital can hijack national policy.</p>
+        <div class="verdict">Legitimacy deficit: "Servant of financial markets."</div>
+      </div>
+
+      <div class="reason-card">
+        <h4>8. "China, India, and others will not join."</h4>
+        <p>If a government says this publicly, it admits: it has not communicated with Global South countries. It admits: it presumes the Global South will refuse to join. It admits: it does not view the Global South as rule-makers who have already stated their position.</p>
+        <div class="verdict">Legitimacy deficit: "Denying the South's stated position."</div>
+      </div>
+
+      <div class="reason-card">
+        <h4>9. "This is just an idealistic proposal."</h4>
+        <p>If a government says this publicly, it admits: the Basel Accords were never implemented. It admits: any cross-border coordination is "idealism."</p>
+        <div class="verdict">Legitimacy deficit: "Denying precedent."</div>
+      </div>
+
+      <div class="reason-card">
+        <h4>10. "Who guarantees this standard will not be abused?"</h4>
+        <p>If a government says this publicly, it admits: it is unwilling to accept transparency. It admits: it would rather maintain anonymous structures.</p>
+        <div class="verdict">Legitimacy deficit: "Refusing transparency."</div>
+      </div>
+
+      <div class="silence-box">
+        <p><strong>This alliance cannot be rejected. Because rejection is political bankruptcy.</strong></p>
+        <p>A country that publicly rejects the land value capture standard is not making a policy choice. It is admitting, in front of its own citizens and the world, that it chooses to protect landlords over renters, capital over people, and slow collapse over structural reform.</p>
+        <p>Under the GL Framework, that choice is measurable. It is a legitimacy deficit.</p>
+        <p>Whether that deficit translates into political bankruptcy depends on internal political structures, electoral cycles, and social movements. But the deficit is real. And it is measurable.</p>
+      </div>
     </div>
 
-    <script>
-        const langBtn = document.getElementById('langBtn');
-        const contentZh = document.getElementById('content-zh');
-        const contentEn = document.getElementById('content-en');
-        const contentEs = document.getElementById('content-es');
-        let currentLang = 'en';
+    <!-- ======================== 中文版 ======================== -->
+    <div class="lang-content hidden" data-lang="zh">
+      <div class="series-tag">土地正義系列 · 延伸</div>
+      <h1>全球土地增值捕獲統一標準</h1>
+      <p class="subtitle">GFI Flow Intelligence · gfiintel.com · 2026</p>
+      <p class="intro">單一國家無法對抗跨國資本。但跨國聯盟可以。這不是烏托邦。這是既有跨國協調機制的邏輯延伸——巴塞爾協議、FATF、BEPS 框架——應用到最後一塊未被協調的稅基：土地增值。</p>
 
-        langBtn.addEventListener('click', () => {
-            if (currentLang === 'en') {
-                contentEn.classList.remove('active');
-                contentZh.classList.add('active');
-                langBtn.textContent = '中 / ES / EN';
-                currentLang = 'zh';
-            } else if (currentLang === 'zh') {
-                contentZh.classList.remove('active');
-                contentEs.classList.add('active');
-                langBtn.textContent = 'ES / EN / 中';
-                currentLang = 'es';
-            } else {
-                contentEs.classList.remove('active');
-                contentEn.classList.add('active');
-                langBtn.textContent = 'EN / 中 / ES';
-                currentLang = 'en';
-            }
-        });
-    </script>
+      <h2>零、 價值起點：這份提案為什麼存在</h2>
+
+      <div class="premise-box">
+        <p class="claim">大多數人的生存，優先於資本的輕鬆獲利。</p>
+        <p>住房、醫療、教育、世代公平，正在被土地尋租擠壓。年輕人買不起房——不是因為不努力，是因為地租把他們的勞動成果抽走了。</p>
+        <p>這是這份提案的起點。不是「大家都贏」。而是「多數人贏，尋租者輸」。</p>
+      </div>
+
+      <p><strong>土地尋租把多數人的勞動成果，轉移給不生產、不創新、不承擔風險的地主與資本。</strong> 這不是「市場結果」。這是制度設計。這不是「共贏」。這是結構性轉移。</p>
+
+      <p>這個起點，比「共贏」誠實，也更強。共贏必須證明資本也贏——但資本在土地尋租中是既得利益者。你要它放棄租金，它一定是輸的。你只能把「被迫轉向」說成「獲得新方向」，這個修辭一旦被看穿，共贏就崩了。</p>
+
+      <p>但「大多數人生存優先」不需要證明資本也贏。它只需要證明：<strong>大多數人的生存，在優先級上高於資本的輕鬆獲利。</strong> 這是價值判斷，不是利益計算。它不需要資本同意，只需要多數人同意。這才是提案真正的政治基礎。</p>
+
+      <div class="quote-block">
+        <p><strong>核心前提：</strong></p>
+        <p>土地增值是社會集體創造的——透過公共投資、人口聚集、經濟發展。地主沒有生產、沒有創新、沒有承擔風險。他只是「剛好站在那裡」。但在現行規則下，他捕獲了全部的增值。</p>
+        <p><strong>這不是市場結果。這是制度設計。</strong></p>
+      </div>
+
+      <h2>一、 為什麼需要全球統一標準？</h2>
+      <ul>
+        <li><strong>資本是流動的，土地是固定的。</strong> 倫敦的一塊地不能搬到愛爾蘭。東京的一棟樓不能搬到新加坡。</li>
+        <li><strong>所得可以歸零。</strong> 富豪可以不領薪水、不分紅、不賣股票。但土地增值無法歸零。</li>
+        <li><strong>單一國家無法獨自行動。</strong> 如果只有英國課徵土地增值稅，資本威脅撤離。如果只有德國行動，資本逃到法國。這是經典的「逐底競爭」。</li>
+        <li><strong>只有統一標準才能困住資本。</strong> 如果 G7 與 G20 同時採用同一套標準，資本的「48 小時逃逸」就失效了。</li>
+        <li><strong>這不是新想法。</strong> 巴塞爾協議（1988）統一了銀行資本標準。FATF 統一了反洗錢標準。BEPS 框架（2021）建立了 15% 全球最低企業稅。每一個都曾被視為「不可能」。每一個都在危機足夠嚴重時被落實。</li>
+      </ul>
+
+      <h2>二、 統一標準應該包含什麼？</h2>
+
+      <h3>1. 土地增值稅統一下限：70%–80%</h3>
+      <ul>
+        <li>土地增值是社會創造的。70%–80% 讓增值的絕大部分回到公共財政。</li>
+        <li>地主保留 20%–30%，作為持有成本與管理報酬。</li>
+        <li>這不是沒收。這是返還。</li>
+        <li><strong>注意：不是「最低標準」，而是「統一下限」。</strong> 各國可在下限之上自行加碼，但不得低於下限。若低於下限，視為未加入聯盟。</li>
+        <li><strong>為什麼必須是統一下限，而不是最低標準？</strong> 因為如果各國可以設 50%、60%、70%、80%，資本會從 80% 的國家逃到 50% 的國家，逐底競爭立刻重現。統一下限，才能壓縮套利空間。</li>
+      </ul>
+
+      <h3>2. 全球土地受益所有人登記系統</h3>
+      <ul>
+        <li>所有跨國土地交易，必須揭露最終受益人。</li>
+        <li>打破空殼公司、信託、避稅天堂的匿名結構。</li>
+        <li>未登記的土地，課以懲罰性閒置稅。</li>
+      </ul>
+
+      <h3>3. REITs 監管統一標準</h3>
+      <ul>
+        <li>限制槓桿倍數。</li>
+        <li>強制揭露底層資產。</li>
+        <li>禁止將住宅用地證券化。</li>
+        <li>切斷土地金融化的鏈條。</li>
+      </ul>
+
+      <h3>4. G7 + G20 資本流動穩定基金</h3>
+      <ul>
+        <li>當某個成員國因改革而遭遇資本外逃時，其他成員國共同提供流動性支持。</li>
+        <li>讓單一國家敢於改革，不必畏懼「撤資」威脅。</li>
+      </ul>
+
+      <h3>5. 全球南方集體談判平台</h3>
+      <ul>
+        <li>中國、印度、巴西、南非共同制定「土地增值捕獲」、「空屋公地化」、「公共住宅儲備」的標準。</li>
+        <li>把全球南方從「被動接受者」轉變為「規則制定者」。</li>
+      </ul>
+
+      <h3>6. 離境稅 + 母國徵稅權 + 資訊共享</h3>
+      <ul>
+        <li><strong>離境稅：</strong> 資本在離開成員國之前，必須先繳納土地增值稅的未繳部分。</li>
+        <li><strong>母國徵稅權 + 資訊共享：</strong> 成員國之間建立資訊共享機制，由資本的母國對其全球土地資產徵稅，防止透過轉移定價或離岸結構逃逸。</li>
+        <li>參照 BEPS 框架的執行邏輯，不依賴接收國配合。</li>
+      </ul>
+
+      <h3>7. 有效稅率審計</h3>
+      <ul>
+        <li>成員國必須每年公開其土地增值稅的<strong>有效稅率</strong>（不是名義稅率），並接受獨立審計。</li>
+        <li>如果某成員國的名義稅率是 70%，但有效稅率只有 5%，其他成員國可對其啟動「合規審查」。</li>
+        <li>若審查確認實質不合規，該國將被視為「未加入聯盟」，面臨資本流動懲罰稅。</li>
+      </ul>
+
+      <h2>三、 這有可能實現嗎？</h2>
+      <ul>
+        <li><strong>技術上可行。</strong> 土地不能移動。稅基無法隱藏。工具已經存在。</li>
+        <li><strong>政治上極其困難。</strong> 跨國資本會動用媒體、智庫、政黨、遊說團體來阻撓。</li>
+        <li><strong>但歷史上有先例。</strong> 當危機足夠嚴重時，統一標準是可能的。</li>
+        <li><strong>這套框架不是唯一路徑。</strong> 亨利·喬治的單一稅、孫中山的平均地權、台灣的耕者有其田、中國的土地公有與增值共享——都是正當路徑。這套框架的新意在於：將土地增值捕獲與跨國協調結合起來。</li>
+      </ul>
+
+      <h2>四、 實現路徑</h2>
+
+      <h3>第一階段（1–3 年）：建立共識</h3>
+      <ul>
+        <li>在 G20 峰會上提出「土地增值稅統一下限」倡議。</li>
+        <li>中國、印度、巴西、南非組成「南方核心小組」，先行簽署雙邊稅收協定。</li>
+        <li>英國、德國、法國作為「北方改革派」，在 G7 內部推動。</li>
+      </ul>
+
+      <h3>第二階段（3–5 年）：建立機制</h3>
+      <ul>
+        <li>成立「G20 資本流動穩定基金」。</li>
+        <li>啟動「全球土地受益所有人登記系統」。</li>
+        <li>制定「REITs 監管統一標準」。</li>
+      </ul>
+
+      <h3>第三階段（5–10 年）：全面圍堵</h3>
+      <ul>
+        <li>所有 G20 成員國完成國內立法，實施土地增值稅統一下限。</li>
+        <li>跨國資本若試圖逃離某成員國，將面臨「離境稅」與「母國徵稅權」。</li>
+        <li>全球南方聯盟正式成立。</li>
+      </ul>
+
+      <h2>五、 為什麼全球參與是唯一路徑</h2>
+      <ul>
+        <li><strong>單一國家行動 → 資本逃到下一個國家。</strong> 如果只有英國課稅，資本在 48 小時內逃到愛爾蘭。</li>
+        <li><strong>兩個國家行動 → 資本逃到第三個國家。</strong> 如果英國與德國同時行動，資本逃到盧森堡、荷蘭、或新加坡。</li>
+        <li><strong>G7 行動 → 資本逃到 G20。</strong> 如果 G7 採用標準，資本逃到尚未加入的新興經濟體。</li>
+        <li><strong>G20 行動 → 資本逃到避稅天堂。</strong> 如果 G20 採用標準，資本逃到離岸結構、空殼公司、匿名信託。</li>
+        <li><strong>只有 G7 + G20 + 全球南方一起行動，資本才無處可逃。</strong> 土地不能移動。增值無法歸零。只要各國站在同一個地板上，資本的「48 小時逃逸」就失效了。</li>
+        <li><strong>這不是選擇，這是數學。</strong></li>
+      </ul>
+
+      <div class="highlight-box">
+        <p><strong>一個不加入的國家，會成為「資本避風港」——但它也會成為「資本地獄」。</strong></p>
+        <p>機制是：資本流入 → 土地需求上升 → 地價上升 → 地主捕獲增值 → 政府稅基流失 → 公共服務崩潰 → 年輕人買不起房 → 住房危機惡化到選舉層面 → 政黨輪替 → 新政府主動申請加入。</p>
+        <p>不是因為它想加入，是因為它別無選擇。資本避風港的代價，由該國的選民承擔，最終由該國的政黨體系完成清算。</p>
+      </div>
+
+      <h2>六、 為什麼這個聯盟比現有國際組織更容易加入</h2>
+      <ul>
+        <li><strong>不需要安理會推薦。</strong> 聯合國需要安理會推薦 + 聯大三分之二通過。土地增值聯盟只需要國內立法 + 採用統一下限。</li>
+        <li><strong>不需要繳納會費。</strong> 聯合國需要按 GDP 比例強制分攤會費。土地增值聯盟的稅收全部留在本國財政。不需要向任何國際機構繳費。</li>
+        <li><strong>不需要讓渡主權。</strong> 聯合國需要接受憲章、安理會決議、國際法院管轄。土地增值聯盟只協調稅基，不干預政治制度，不侵犯主權。</li>
+        <li><strong>不需要政治談判。</strong> 聯合國是政治俱樂部：加入需要談判、妥協、投票。土地增值聯盟是技術標準：加入只需要國內立法、遵守統一下限。</li>
+        <li><strong>退出成本更高。</strong> 退出聯合國只有聲譽損失。退出土地增值聯盟會面臨資本流動懲罰、有效稅率審計、正當性赤字。</li>
+        <li><strong>加入立即帶來財政收益。</strong> 加入聯合國要花錢。加入土地增值聯盟增加財政收入。</li>
+        <li><strong>這不是「加入國際組織」，這是「加入國際標準」。</strong> 技術協調比政治整合容易得多。</li>
+      </ul>
+
+      <div class="compare-table-wrapper">
+        <table class="compare-table">
+          <thead>
+            <tr><th>維度</th><th>聯合國</th><th>土地增值聯盟</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>加入門檻</td><td>安理會推薦 + 聯大三分之二通過</td><td>國內立法 + 採用統一下限</td></tr>
+            <tr><td>主權讓渡</td><td>接受憲章、安理會決議、國際法院管轄</td><td>只協調稅基，不讓渡主權</td></tr>
+            <tr><td>會費</td><td>按 GDP 比例強制分攤</td><td>無。稅收全部留在本國財政</td></tr>
+            <tr><td>退出成本</td><td>只有聲譽損失</td><td>資本流動懲罰 + 審計 + 正當性赤字</td></tr>
+            <tr><td>執行機制</td><td>安理會決議（常被否決）</td><td>離境稅 + 母國徵稅權 + 審計</td></tr>
+            <tr><td>立即收益</td><td>維和、援助、話語權</td><td>稅基穩定、公共服務、規則制定權</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>七、 資本的邊界：土地增值稅不反資本，反尋租</h2>
+      <ul>
+        <li>土地增值稅的目的，不是「消滅資本」。</li>
+        <li>不是「禁止投資」。</li>
+        <li>不是「關閉市場」。</li>
+        <li>而是<strong>「讓社會集體創造的財富，回到社會手中，用於建設基建與服務人民」。</strong></li>
+        <li>土地增值稅是<strong>財政工具</strong>，不是<strong>意識形態工具</strong>。</li>
+        <li>資本可以去太空、深海、新能源、生物科技——只要不傷害地球生態人類。</li>
+        <li>但土地增值稅不處理這些問題。它只處理「不可移動稅基的壟斷租金」。</li>
+        <li>太空、深海、新能源是「可移動、需承擔風險的創新投資」。它們的課稅邏輯是另一個議題——可以是碳稅、資源稅、全球公域貢獻機制，但不是土地增值稅。</li>
+        <li><strong>土地增值稅的目的，不是阻止資本流動，而是切斷資本對「不可移動稅基」的壟斷。</strong> 資本可以去任何地方，只要它不靠壟斷土地尋租。</li>
+        <li><strong>這正是土地增值稅的最終目的：把資本從尋租，逼向創新。</strong></li>
+      </ul>
+
+      <h2>八、 結論：唯一的邏輯路徑</h2>
+      <div class="highlight-box">
+        <p><strong>不改革，就是慢性崩潰。統一標準，是唯一能讓資本無處可逃的邏輯路徑。</strong></p>
+        <p>土地不能移動。增值無法歸零。只要各國站在同一個地板上，跨國資本就失去了「48 小時逃逸」的能力。資本逃不掉，各國就能課徵到稅。課徵到稅，政府就有資源興建公共住宅、改善醫療、投資基礎設施、縮小貧富差距。</p>
+        <p>這不會自動帶來世界和平。領土爭議、歷史仇恨、宗教衝突、大國博弈，依然存在。但它會移除一個資本用來挑撥國家對立的經濟槓桿。</p>
+        <p><strong>正當性赤字的測量，依賴成員國之間的政治意願。</strong> 這不是自動機制，而是政治過程。審計的觸發，依賴成員國願意得罪另一個成員國。但正因為如此，被審計的國家面臨的是一個「政治選擇」：它可以選擇配合審計，證明自己的有效稅率；也可以選擇拒絕審計，從而被其他成員國視為「實質不合規」。拒絕審計，就是公開承認。這不是技術問題，這是政治問題。而政治問題，最終由選票清算。</p>
+      </div>
+
+      <h2>九、 十個無法公開拒絕的理由</h2>
+      <p>每一條拒絕全球土地增值標準的理由，一旦被公開挑明，都會暴露一個立場：選擇地主而非租客，選擇資本而非人民。這不會自動導致政治破產。但它會產生一個可測量的正當性赤字。</p>
+
+      <div class="reason-card">
+        <h4>一、「這侵犯國家主權。」</h4>
+        <p>如果政府敢這樣挑明，它等於承認：主權高於人民福祉。它等於承認：保護地主利益，比解決住房危機更重要。</p>
+        <div class="verdict">正當性赤字：「主權高於民生」。</div>
+      </div>
+
+      <div class="reason-card">
+        <h4>二、「這會打擊房地產市場，引發資本外逃。」</h4>
+        <p>如果政府敢這樣挑明，它等於承認：政府的首要任務，是保護資本利益，而不是保護人民利益。它等於承認：房價不能跌，即使年輕人永遠買不起房。</p>
+        <div class="verdict">正當性赤字：「資本優先於人民」。</div>
+      </div>
+
+      <div class="reason-card">
+        <h4>三、「土地增值是地主創造的。」</h4>
+        <p>如果政府敢這樣挑明，它等於承認：公共投資創造的財富，應該歸地主所有。它等於承認：社會集體創造的增值，被私人獨占是合理的。</p>
+        <div class="verdict">正當性赤字：「為尋租辯護」。</div>
+      </div>
+
+      <div class="reason-card">
+        <h4>四、「這太激進了，會引發社會動盪。」</h4>
+        <p>如果政府敢這樣挑明，它等於承認：現狀是穩定的，儘管地方政府破產、NHS 崩潰、年輕人買不起房。</p>
+        <div class="verdict">正當性赤字：「慢性崩潰的維護者」。</div>
+      </div>
+
+      <div class="reason-card">
+        <h4>五、「發展中國家負擔不起。」</h4>
+        <p>如果政府敢這樣挑明，它等於承認：它不相信發展中國家能自主設計本土化版本。它等於承認：它只想維持現有的不平等結構。</p>
+        <div class="verdict">正當性赤字：「偽善的北方」。</div>
+      </div>
+
+      <div class="reason-card">
+        <h4>六、「誰來監督？誰有權力執行？」</h4>
+        <p>如果政府敢這樣挑明，它等於承認：巴塞爾協議、FATF、BEPS 都不存在。它等於承認：跨國技術協調是不可能的。</p>
+        <div class="verdict">正當性赤字：「國際逃避者」。</div>
+      </div>
+
+      <div class="reason-card">
+        <h4>七、「這會引發資本外逃，導致失業與股市崩盤。」</h4>
+        <p>如果政府敢這樣挑明，它等於承認：它寧願讓年輕人永遠買不起房，也不願讓股市短期波動。它等於承認：資本可以綁架國家政策。</p>
+        <div class="verdict">正當性赤字：「金融市場的僕人」。</div>
+      </div>
+
+      <div class="reason-card">
+        <h4>八、「中國、印度等國家不會加入。」</h4>
+        <p>如果政府敢這樣挑明，它等於承認：它沒有跟全球南方國家溝通。它等於承認：它預設了全球南方會拒絕加入。它等於承認：它不把全球南方視為已表態的規則制定者。</p>
+        <div class="verdict">正當性赤字：「否認南方已表態」。</div>
+      </div>
+
+      <div class="reason-card">
+        <h4>九、「這只是一個理想主義提案。」</h4>
+        <p>如果政府敢這樣挑明，它等於承認：巴塞爾協議從未落地。它等於承認：任何跨國協調都是「理想主義」。</p>
+        <div class="verdict">正當性赤字：「否認先例」。</div>
+      </div>
+
+      <div class="reason-card">
+        <h4>十、「誰來保證這套標準不會被濫用？」</h4>
+        <p>如果政府敢這樣挑明，它等於承認：它不願意接受透明度。它等於承認：它寧願維持匿名結構。</p>
+        <div class="verdict">正當性赤字：「拒絕透明」。</div>
+      </div>
+
+      <div class="silence-box">
+        <p><strong>這個聯盟的成立無法被拒絕，因為一旦拒絕，就是一個國家的政治破產。</strong></p>
+        <p>一個公開拒絕土地增值標準的國家，不是在做出政策選擇。它是在自己的公民與全世界面前承認：它選擇保護地主而非租客，選擇資本而非人民，選擇慢性崩潰而非結構性改革。</p>
+        <p>在 GL 框架下，這個選擇是可測量的。它是正當性赤字。</p>
+        <p>這個赤字是否轉化為政治破產，取決於該國的內部政治結構、選舉週期與社會運動。但這個赤字是真實的。它是可測量的。</p>
+      </div>
+    </div>
+
+    <!-- ======================== Español ======================== -->
+    <div class="lang-content hidden" data-lang="es">
+      <div class="series-tag">SERIE JUSTICIA DE LA TIERRA · EXTENSIÓN</div>
+      <h1>Estándar Global para la Captura del Valor del Suelo</h1>
+      <p class="subtitle">GFI Flow Intelligence · gfiintel.com · 2026</p>
+      <p class="intro">Una sola nación no puede enfrentar al capital transnacional. Pero una alianza transnacional sí. Esto no es una utopía. Es una extensión lógica de los mecanismos de coordinación transfronteriza existentes — los Acuerdos de Basilea, el GAFI y el marco BEPS — aplicados a la última base imponible no coordinada: el valor del suelo.</p>
+
+      <h2>0. Premisa de Valor: Por qué existe esta propuesta</h2>
+
+      <div class="premise-box">
+        <p class="claim">La supervivencia de la mayoría tiene prioridad sobre las ganancias fáciles del capital.</p>
+        <p>La vivienda, la atención médica, la educación y la equidad generacional están siendo aplastadas por la búsqueda de rentas del suelo. Los jóvenes no pueden pagar una vivienda, no porque no trabajen duro, sino porque la renta del suelo extrae los frutos de su trabajo.</p>
+        <p>Este es el punto de partida de esta propuesta. No "todos ganan". Sino "la mayoría gana, y los buscadores de rentas pierden".</p>
+      </div>
+
+      <p><strong>La búsqueda de rentas del suelo transfiere los frutos del trabajo de la mayoría a terratenientes y capital que no producen, no innovan y no asumen riesgos.</strong> Esto no es un "resultado del mercado". Esto es un diseño institucional. Esto no es "ganar-ganar". Esto es una transferencia estructural.</p>
+
+      <p>Este punto de partida es más honesto que "ganar-ganar", y es más fuerte. Ganar-ganar debe probar que el capital también gana, pero el capital es el interés creado en la búsqueda de rentas del suelo. Si le pides que renuncie a la renta, necesariamente pierde. Solo puedes llamar "transición forzada" a una "nueva dirección", y una vez que esa retórica se descubre, ganar-ganar colapsa.</p>
+
+      <p>Pero "la supervivencia de la mayoría tiene prioridad" no necesita probar que el capital también gana. Solo necesita probar: <strong>la supervivencia de la mayoría tiene prioridad sobre las ganancias fáciles del capital.</strong> Esto es un juicio de valor, no un cálculo de intereses. No necesita el consentimiento del capital. Solo necesita el consentimiento de la mayoría. Esta es la verdadera base política de la propuesta.</p>
+
+      <div class="quote-block">
+        <p><strong>Premisa central:</strong></p>
+        <p>El valor del suelo es creado colectivamente por la sociedad — mediante la inversión pública, la aglomeración de población y el desarrollo económico. El terrateniente no lo produjo, no innovó, no asumió riesgos. Simplemente "estaba allí". Sin embargo, bajo las reglas actuales, captura todo el incremento.</p>
+        <p><strong>Esto no es un resultado del mercado. Esto es un diseño institucional.</strong></p>
+      </div>
+
+      <h2>I. ¿Por qué un estándar global unificado?</h2>
+      <ul>
+        <li><strong>El capital es móvil; la tierra es fija.</strong> Un terreno en Londres no puede trasladarse a Irlanda. Un edificio en Tokio no puede reubicarse en Singapur.</li>
+        <li><strong>Los ingresos pueden reducirse a cero.</strong> Los ricos pueden rechazar salarios, dividendos, ventas de acciones. Pero el valor del suelo no puede reducirse a cero.</li>
+        <li><strong>Una sola nación no puede actuar sola.</strong> Si solo el Reino Unido aplica un impuesto al valor del suelo, el capital amenaza con huir. Si solo Alemania actúa, el capital huye a Francia. Esta es la clásica "carrera hacia el fondo".</li>
+        <li><strong>Solo un estándar unificado puede atrapar al capital.</strong> Si el G7 y el G20 adoptan simultáneamente el mismo estándar, el "escape de 48 horas" del capital fracasa.</li>
+        <li><strong>Esto no es una idea nueva.</strong> Los Acuerdos de Basilea (1988) unificaron los estándares de capital bancario. El GAFI unificó los estándares contra el lavado de dinero. El marco BEPS (2021) estableció un impuesto corporativo mínimo global del 15%. Cada uno fue considerado "imposible" en su momento. Cada uno se implementó cuando la crisis fue lo suficientemente grave.</li>
+      </ul>
+
+      <h2>II. ¿Qué debería incluir el estándar unificado?</h2>
+
+      <h3>1. Piso unificado del impuesto al incremento del valor del suelo: 70%–80%</h3>
+      <ul>
+        <li>El valor del suelo es creado socialmente. El 70%–80% devuelve la mayor parte del incremento a las finanzas públicas.</li>
+        <li>Los terratenientes retienen el 20%–30% como costo de tenencia y compensación de gestión.</li>
+        <li>Esto no es confiscación. Esto es restitución.</li>
+        <li><strong>Nota: es un "piso unificado", no un "estándar mínimo".</strong> Las naciones pueden establecer tasas por encima del piso, pero no por debajo. Por debajo del piso = no es miembro de la alianza.</li>
+        <li><strong>¿Por qué un piso unificado, no un estándar mínimo?</strong> Si las naciones pudieran establecer 50%, 60%, 70% u 80%, el capital huiría de la nación del 80% a la del 50%. Un piso unificado cierra el espacio de arbitraje.</li>
+      </ul>
+
+      <h3>2. Registro Global de Beneficiarios Finales del Suelo</h3>
+      <ul>
+        <li>Todas las transacciones transnacionales de suelo deben revelar al beneficiario final.</li>
+        <li>Romper las estructuras anónimas de empresas fantasma, fideicomisos y paraísos fiscales.</li>
+        <li>El suelo no registrado enfrenta un impuesto punitivo al suelo ocioso.</li>
+      </ul>
+
+      <h3>3. Estándares Regulatorios Unificados para REITs</h3>
+      <ul>
+        <li>Limitar los ratios de apalancamiento.</li>
+        <li>Divulgación obligatoria de activos subyacentes.</li>
+        <li>Prohibir la titulización de suelo residencial.</li>
+        <li>Cortar la cadena de financiarización del suelo.</li>
+      </ul>
+
+      <h3>4. Fondo G7 + G20 de Estabilización de Flujos de Capital</h3>
+      <ul>
+        <li>Cuando un Estado miembro enfrenta fuga de capitales debido a una reforma, los otros miembros proporcionan conjuntamente apoyo de liquidez.</li>
+        <li>Permitir que las naciones individuales se atrevan a reformar, libres de la amenaza de "desinversión".</li>
+      </ul>
+
+      <h3>5. Plataforma de Negociación Colectiva del Sur Global</h3>
+      <ul>
+        <li>China, India, Brasil y Sudáfrica fijan conjuntamente estándares para la "captura del valor del suelo", la "comunalización de viviendas vacías" y las "reservas de vivienda pública".</li>
+        <li>Transformar al Sur Global de "receptor pasivo" en "creador de reglas".</li>
+      </ul>
+
+      <h3>6. Impuesto de Salida + Derecho de Tributación del País de Origen + Intercambio de Información</h3>
+      <ul>
+        <li><strong>Impuesto de Salida:</strong> El capital debe pagar cualquier impuesto al valor del suelo pendiente antes de salir de un Estado miembro.</li>
+        <li><strong>Derecho de Tributación del País de Origen + Intercambio de Información:</strong> Los Estados miembros establecen mecanismos de intercambio de información. El país de origen grava los activos globales de suelo del capital, evitando la fuga mediante precios de transferencia o estructuras offshore.</li>
+        <li>Siguiendo la lógica de aplicación del BEPS, esto no depende de la cooperación del país receptor.</li>
+      </ul>
+
+      <h3>7. Auditoría de Tasa Impositiva Efectiva</h3>
+      <ul>
+        <li>Los Estados miembros deben divulgar anualmente su <strong>tasa impositiva efectiva</strong> (no la tasa nominal) y someterse a una auditoría independiente.</li>
+        <li>Si la tasa nominal de un Estado miembro es del 70% pero la tasa efectiva es del 5%, otros miembros pueden iniciar una "revisión de cumplimiento".</li>
+        <li>Si la revisión confirma un incumplimiento sustantivo, el Estado es tratado como "no miembro de la alianza" y enfrenta impuestos penales a los flujos de capital.</li>
+      </ul>
+
+      <h2>III. ¿Es esto posible?</h2>
+      <ul>
+        <li><strong>Técnicamente viable.</strong> La tierra no puede moverse. La base imponible no puede ocultarse. Las herramientas existen.</li>
+        <li><strong>Políticamente extremadamente difícil.</strong> El capital transnacional movilizará medios, think tanks, partidos y lobistas para bloquearlo.</li>
+        <li><strong>Pero hay precedentes.</strong> Cuando la crisis es lo suficientemente grave, los estándares unificados se vuelven posibles.</li>
+        <li><strong>Este marco no es el único camino.</strong> El impuesto único de Henry George, la igualación de derechos de suelo de Sun Yat-sen, la tierra para el agricultor de Taiwán, la propiedad pública del suelo y la distribución del valor de China — todos son enfoques legítimos. Lo nuevo aquí es la integración de la captura del valor del suelo con la coordinación transfronteriza.</li>
+      </ul>
+
+      <h2>IV. Ruta de implementación</h2>
+
+      <h3>Fase 1 (1–3 años): Construir consenso</h3>
+      <ul>
+        <li>Proponer el "Piso Unificado del Impuesto al Incremento del Valor del Suelo" en la Cumbre del G20.</li>
+        <li>China, India, Brasil y Sudáfrica forman un "Grupo Núcleo del Sur" y firman primero tratados fiscales bilaterales.</li>
+        <li>El Reino Unido, Alemania y Francia actúan como "Reformadores del Norte" dentro del G7.</li>
+      </ul>
+
+      <h3>Fase 2 (3–5 años): Construir mecanismos</h3>
+      <ul>
+        <li>Establecer el "Fondo G20 de Estabilización de Flujos de Capital".</li>
+        <li>Lanzar el "Registro Global de Beneficiarios Finales del Suelo".</li>
+        <li>Establecer "Estándares Regulatorios Unificados para REITs".</li>
+      </ul>
+
+      <h3>Fase 3 (5–10 años): Contención total</h3>
+      <ul>
+        <li>Todos los miembros del G20 completan la legislación nacional implementando el piso unificado del impuesto al incremento del valor del suelo.</li>
+        <li>El capital transnacional que intente huir de un Estado miembro enfrenta "impuesto de salida" y "derecho de tributación del país de origen".</li>
+        <li>Se establece formalmente la alianza del Sur Global.</li>
+      </ul>
+
+      <h2>V. Por qué la participación global es el único camino</h2>
+      <ul>
+        <li><strong>Una sola nación actúa → el capital huye al siguiente país.</strong> Si solo el Reino Unido aplica el impuesto, el capital se muda a Irlanda en 48 horas.</li>
+        <li><strong>Dos naciones actúan → el capital huye a una tercera.</strong> Si el Reino Unido y Alemania actúan juntos, el capital se muda a Luxemburgo, Países Bajos o Singapur.</li>
+        <li><strong>El G7 actúa → el capital huye al G20.</strong> Si el G7 adopta el estándar, el capital se muda a economías emergentes que aún no se han unido.</li>
+        <li><strong>El G20 actúa → el capital huye a los paraísos fiscales.</strong> Si el G20 adopta el estándar, el capital se muda a estructuras offshore, empresas fantasma y fideicomisos anónimos.</li>
+        <li><strong>Solo el G7 + G20 + Sur Global actuando juntos deja al capital sin adónde ir.</strong> La tierra no puede moverse. El valor no puede reducirse a cero. Mientras todas las naciones estén en el mismo piso, el "escape de 48 horas" del capital fracasa.</li>
+        <li><strong>Esto no es una elección. Es aritmética.</strong></li>
+      </ul>
+
+      <div class="highlight-box">
+        <p><strong>Un país que no se une se convierte en un "paraíso del capital" — pero también se convierte en un "infierno del capital".</strong></p>
+        <p>El mecanismo: entrada de capital → la demanda de suelo sube → los precios del suelo suben → los terratenientes capturan el incremento → la base imponible del gobierno se erosiona → los servicios públicos colapsan → los jóvenes no pueden pagar viviendas → la crisis de vivienda escala al nivel electoral → rotación de partidos → el nuevo gobierno solicita unirse a la alianza.</p>
+        <p>No porque quiera. Porque no tiene alternativa. El costo de ser un paraíso del capital lo soportan sus propios votantes, y finalmente lo liquida su propio sistema de partidos.</p>
+      </div>
+
+      <h2>VI. Por qué esta alianza es más fácil de unirse que las organizaciones internacionales existentes</h2>
+      <ul>
+        <li><strong>No se requiere recomendación del Consejo de Seguridad.</strong> La ONU requiere recomendación del Consejo de Seguridad y voto de dos tercios de la Asamblea General. La alianza del valor del suelo requiere solo legislación nacional y adopción del piso unificado.</li>
+        <li><strong>No se requieren cuotas de membresía.</strong> La ONU requiere contribuciones obligatorias basadas en el PIB. La alianza del valor del suelo recauda impuestos a nivel nacional. Todos los ingresos permanecen en las tesorerías nacionales. No se pagan tarifas a ningún organismo internacional.</li>
+        <li><strong>No hay transferencia de soberanía.</strong> La ONU requiere aceptar la Carta, las resoluciones del Consejo de Seguridad y la jurisdicción de la CIJ. La alianza del valor del suelo coordina bases imponibles, no sistemas políticos. No infringe la soberanía.</li>
+        <li><strong>No hay negociación política.</strong> La ONU es un club político: unirse requiere negociación, compromiso y votación. La alianza del valor del suelo es un estándar técnico: unirse requiere legislación nacional y cumplimiento del piso unificado.</li>
+        <li><strong>Mayor costo de salida.</strong> Salir de la ONU conlleva daño reputacional. Salir de la alianza del valor del suelo desencadena sanciones a los flujos de capital, auditorías de tasa efectiva y un déficit de legitimidad.</li>
+        <li><strong>Beneficio financiero inmediato.</strong> Unirse a la ONU cuesta dinero. Unirse a la alianza del valor del suelo aumenta los ingresos fiscales.</li>
+        <li><strong>Esto no es "unirse a una organización internacional". Esto es "unirse a un estándar internacional".</strong> La coordinación técnica es mucho más fácil que la integración política.</li>
+      </ul>
+
+      <div class="compare-table-wrapper">
+        <table class="compare-table">
+          <thead>
+            <tr><th>Dimensión</th><th>ONU</th><th>Alianza del Valor del Suelo</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Umbral de entrada</td><td>Recomendación del Consejo de Seguridad + voto de 2/3 de la Asamblea General</td><td>Legislación nacional + piso unificado</td></tr>
+            <tr><td>Transferencia de soberanía</td><td>Aceptar la Carta, resoluciones del CS, jurisdicción de la CIJ</td><td>Solo coordina la base imponible; sin transferencia de soberanía</td></tr>
+            <tr><td>Cuotas de membresía</td><td>Obligatorias, basadas en el PIB</td><td>Ninguna. Los ingresos fiscales permanecen en la tesorería nacional</td></tr>
+            <tr><td>Costo de salida</td><td>Solo daño reputacional</td><td>Sanciones a flujos de capital + auditorías + déficit de legitimidad</td></tr>
+            <tr><td>Aplicación</td><td>Resoluciones del Consejo de Seguridad (a menudo vetadas)</td><td>Impuesto de salida + derecho de tributación del país de origen + auditoría</td></tr>
+            <tr><td>Beneficio inmediato</td><td>Mantenimiento de paz, ayuda, voz</td><td>Estabilidad fiscal, servicios públicos, poder de creación de reglas</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>VII. El límite del capital: el impuesto al valor del suelo no es anti-capital</h2>
+      <ul>
+        <li>El propósito del impuesto al valor del suelo no es "eliminar el capital".</li>
+        <li>No es "prohibir la inversión".</li>
+        <li>No es "cerrar mercados".</li>
+        <li>Es <strong>"devolver la riqueza creada socialmente a la sociedad, para infraestructura y servicios públicos".</strong></li>
+        <li>El impuesto al valor del suelo es una <strong>herramienta fiscal</strong>, no una <strong>herramienta ideológica</strong>.</li>
+        <li>El capital puede ir al espacio, al mar profundo, a la nueva energía, a la biotecnología — siempre que no dañe la ecología de la Tierra o los intereses comunes de la humanidad.</li>
+        <li>Pero el impuesto al valor del suelo no aborda estos temas. Solo aborda la "renta de monopolio sobre bases imponibles inmóviles".</li>
+        <li>El espacio, el mar profundo y la nueva energía son "inversiones innovadoras móviles que asumen riesgos". Su lógica de tributación es otro tema — impuesto al carbono, impuesto a los recursos, mecanismos de contribución a los bienes comunes globales, pero no el impuesto al valor del suelo.</li>
+        <li><strong>El propósito del impuesto al valor del suelo no es detener los flujos de capital, sino cortar el monopolio del capital sobre las "bases imponibles inmóviles".</strong> El capital puede ir a cualquier lugar, siempre que no dependa de monopolizar la renta del suelo.</li>
+        <li><strong>Este es el objetivo final del impuesto al valor del suelo: empujar al capital de la búsqueda de rentas hacia la innovación.</strong></li>
+      </ul>
+
+      <h2>VIII. Conclusión: El único camino lógico</h2>
+      <div class="highlight-box">
+        <p><strong>No reformar significa colapso lento. Unificar el estándar es el único camino lógico para atrapar al capital.</strong></p>
+        <p>La tierra no puede moverse. El valor no puede reducirse a cero. Mientras todas las naciones estén en el mismo piso, el capital transnacional pierde su "escape de 48 horas". El capital no puede huir, por lo que las naciones pueden recaudar el impuesto. Con el impuesto, los gobiernos pueden construir vivienda pública, mejorar la atención médica, invertir en infraestructura y reducir la brecha de riqueza.</p>
+        <p>Esto no traerá automáticamente la paz mundial. Las disputas territoriales, los agravios históricos, los conflictos religiosos y la rivalidad entre grandes potencias permanecerán. Pero eliminará una palanca económica que el capital utiliza para enfrentar a las naciones entre sí.</p>
+        <p><strong>La medición del déficit de legitimidad depende de la voluntad política de los Estados miembros.</strong> No es un mecanismo automático, sino un proceso político. El desencadenante de una auditoría depende de si los Estados miembros están dispuestos a ofender a otro miembro. Pero precisamente por eso, el Estado auditado enfrenta una elección política: puede cooperar con la auditoría y probar su tasa efectiva, o puede rechazar la auditoría y ser tratado como "sustancialmente no conforme" por otros miembros. Rechazar una auditoría es una admisión pública. Esto no es un problema técnico. Es un problema político. Y los problemas políticos finalmente se resuelven con votos.</p>
+      </div>
+
+      <h2>IX. Diez Razones Que No Pueden Ser Rechazadas Públicamente</h2>
+      <p>Cada razón para rechazar el estándar global de captura del valor del suelo, una vez declarada públicamente, expone una posición: favorecer a los terratenientes sobre los inquilinos, al capital sobre las personas. Esto no produce automáticamente una bancarrota política. Pero produce un déficit de legitimidad que puede medirse.</p>
+
+      <div class="reason-card">
+        <h4>1. "Esto viola la soberanía nacional."</h4>
+        <p>Si un gobierno dice esto públicamente, admite: la soberanía está por encima del bienestar del pueblo. Admite: proteger los intereses de los terratenientes importa más que resolver la crisis de vivienda.</p>
+        <div class="verdict">Déficit de legitimidad: "Soberanía sobre el sustento".</div>
+      </div>
+
+      <div class="reason-card">
+        <h4>2. "Esto golpeará el mercado inmobiliario y provocará fuga de capitales."</h4>
+        <p>Si un gobierno dice esto públicamente, admite: su tarea principal es proteger el capital, no a las personas. Admite: los precios de la vivienda no pueden caer, incluso si los jóvenes nunca pueden pagar una vivienda.</p>
+        <div class="verdict">Déficit de legitimidad: "Capital sobre personas".</div>
+      </div>
+
+      <div class="reason-card">
+        <h4>3. "El valor del suelo es creado por el terrateniente."</h4>
+        <p>Si un gobierno dice esto públicamente, admite: la riqueza creada por la inversión pública debería pertenecer a los terratenientes. Admite: la captura privada de valor creado socialmente es legítima.</p>
+        <div class="verdict">Déficit de legitimidad: "Defender la búsqueda de rentas".</div>
+      </div>
+
+      <div class="reason-card">
+        <h4>4. "Esto es demasiado radical. Causará disturbios sociales."</h4>
+        <p>Si un gobierno dice esto públicamente, admite: el statu quo es estable, a pesar de la bancarrota de gobiernos locales, el colapso del NHS y los jóvenes que no pueden pagar una vivienda.</p>
+        <div class="verdict">Déficit de legitimidad: "Mantener el colapso lento".</div>
+      </div>
+
+      <div class="reason-card">
+        <h4>5. "Los países en desarrollo no pueden permitírselo."</h4>
+        <p>Si un gobierno dice esto públicamente, admite: no cree que los países en desarrollo puedan diseñar sus propias versiones localizadas. Admite: solo quiere mantener la estructura desigual existente.</p>
+        <div class="verdict">Déficit de legitimidad: "Norte hipócrita".</div>
+      </div>
+
+      <div class="reason-card">
+        <h4>6. "¿Quién supervisará? ¿Quién tiene el poder de hacer cumplir?"</h4>
+        <p>Si un gobierno dice esto públicamente, admite: los Acuerdos de Basilea, el GAFI y el BEPS no existen. Admite: la coordinación técnica transfronteriza es imposible.</p>
+        <div class="verdict">Déficit de legitimidad: "Evasor internacional".</div>
+      </div>
+
+      <div class="reason-card">
+        <h4>7. "Esto provocará fuga de capitales, causando desempleo y caídas bursátiles."</h4>
+        <p>Si un gobierno dice esto públicamente, admite: preferiría que los jóvenes nunca puedan pagar una vivienda antes que dejar que el mercado de valores fluctúe a corto plazo. Admite: el capital puede secuestrar la política nacional.</p>
+        <div class="verdict">Déficit de legitimidad: "Servidor de los mercados financieros".</div>
+      </div>
+
+      <div class="reason-card">
+        <h4>8. "China, India y otros no se unirán."</h4>
+        <p>Si un gobierno dice esto públicamente, admite: no se ha comunicado con los países del Sur Global. Admite: presume que el Sur Global se negará a unirse. Admite: no ve al Sur Global como creadores de reglas que ya han declarado su posición.</p>
+        <div class="verdict">Déficit de legitimidad: "Negar la posición declarada del Sur".</div>
+      </div>
+
+      <div class="reason-card">
+        <h4>9. "Esto es solo una propuesta idealista."</h4>
+        <p>Si un gobierno dice esto públicamente, admite: los Acuerdos de Basilea nunca se implementaron. Admite: cualquier coordinación transfronteriza es "idealismo".</p>
+        <div class="verdict">Déficit de legitimidad: "Negar precedentes".</div>
+      </div>
+
+      <div class="reason-card">
+        <h4>10. "¿Quién garantiza que este estándar no será abusado?"</h4>
+        <p>Si un gobierno dice esto públicamente, admite: no está dispuesto a aceptar transparencia. Admite: preferiría mantener estructuras anónimas.</p>
+        <div class="verdict">Déficit de legitimidad: "Rechazar la transparencia".</div>
+      </div>
+
+      <div class="silence-box">
+        <p><strong>Esta alianza no puede ser rechazada. Porque rechazarla es la bancarrota política.</strong></p>
+        <p>Un país que rechaza públicamente el estándar de captura del valor del suelo no está tomando una decisión política. Está admitiendo, ante sus propios ciudadanos y ante el mundo, que elige proteger a los terratenientes antes que a los inquilinos, al capital antes que a las personas, y el colapso lento antes que la reforma estructural.</p>
+        <p>Bajo el GL Framework, esa elección es medible. Es un déficit de legitimidad.</p>
+        <p>Si ese déficit se traduce en bancarrota política depende de las estructuras políticas internas, los ciclos electorales y los movimientos sociales. Pero el déficit es real. Y es medible.</p>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span class="site">gfiintel.com</span>
+      <div class="footer-links">
+        <a href="/index.html">← Back to Home</a>
+        <a href="/landjustice.html">← Back to Series</a>
+        <a href="/g20_capital_containment.html">← G20 Containment Strategy</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    (function() {
+      const buttons = document.querySelectorAll('.lang-switch button');
+      const contents = document.querySelectorAll('.lang-content');
+
+      function setLang(lang) {
+        buttons.forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+        contents.forEach(c => c.classList.toggle('hidden', c.dataset.lang !== lang));
+        document.documentElement.lang = lang;
+        try { localStorage.setItem('gfi-lang', lang); } catch(e) {}
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      buttons.forEach(b => {
+        b.addEventListener('click', () => setLang(b.dataset.lang));
+      });
+
+      try {
+        const saved = localStorage.getItem('gfi-lang');
+        if (saved && ['en','zh','es'].includes(saved)) setLang(saved);
+      } catch(e) {}
+    })();
+  </script>
 
 </body>
 </html>
