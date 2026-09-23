@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GL Framework · 治理正當性框架 · Marco GL</title>
+<meta name="description" content="The GL Framework — Governance Legitimacy Framework. A universal measurement tool for governance: Flow Success Rate, Strategic Value, Pain Duration, Cognitive Friction.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: #0d0a08;
+    color: #e0d6cc;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.85;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .topbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    height: 60px;
+    padding: 0 clamp(18px, 5vw, 48px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(13, 10, 8, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #b8aaa0;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .logo:hover { color: #34d399; }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+  .nav-links { display: flex; gap: 14px; align-items: center; }
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: #7a7068;
+    text-decoration: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover { color: #e0d6cc; background: rgba(255,255,255,0.04); }
+  .lang-grp { display: flex; gap: 4px; }
+  .lb-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    padding: 4px 10px;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 4px;
+    background: transparent;
+    color: #7a7068;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .lb-btn:hover { color: #e0d6cc; border-color: rgba(255,255,255,0.2); }
+  .lb-btn.on { background: #34d399; color: #0d0a08; border-color: #34d399; }
+  .lb { display: none; }
+  .lb.active { display: block; }
+
+  .wrap {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 100px 40px 70px;
+    width: 100%;
+  }
+
+  .page-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #34d399;
+    border: 1px solid rgba(52,211,153,0.35);
+    padding: 4px 12px;
+    border-radius: 4px;
+    margin-bottom: 22px;
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(30px, 4.2vw, 46px);
+    line-height: 1.15;
+    font-weight: 400;
+    color: #f0e6dc;
+    margin-bottom: 14px;
+    letter-spacing: -0.01em;
+  }
+
+  .subtitle {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-style: italic;
+    font-size: clamp(16px, 1.8vw, 21px);
+    color: #8a7a6a;
+    margin-bottom: 18px;
+    line-height: 1.5;
+  }
+
+  .meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+
+  .title-divider {
+    width: 60px;
+    height: 2px;
+    background: #34d399;
+    margin: 26px 0 42px;
+    border-radius: 2px;
+    opacity: 0.6;
+  }
+
+  .content { color: #d0c6bc; }
+
+  .content h2 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(21px, 2.5vw, 28px);
+    font-weight: 400;
+    color: #f0e6dc;
+    margin: 60px 0 22px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    letter-spacing: -0.005em;
+  }
+  .content h2:first-of-type { margin-top: 20px; }
+
+  .content h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #34d399;
+    margin: 34px 0 12px;
+  }
+
+  .content p { margin-bottom: 18px; }
+
+  .content .lead {
+    font-size: 1.08rem;
+    color: #f0e6dc;
+    font-weight: 400;
+    margin-bottom: 26px;
+  }
+
+  .content ul { margin: 0 0 20px 0; padding-left: 0; list-style: none; }
+  .content li {
+    margin-bottom: 10px;
+    padding-left: 22px;
+    position: relative;
+  }
+  .content li::before {
+    content: "·";
+    position: absolute;
+    left: 4px;
+    color: #34d399;
+    font-weight: bold;
+  }
+
+  .content strong { color: #f0e6dc; font-weight: 600; }
+  .content .term { color: #34d399; font-weight: 600; }
+  .content a { color: #34d399; text-decoration: none; }
+  .content a:hover { text-decoration: underline; }
+
+  .formula-box {
+    background: rgba(52, 211, 153, 0.06);
+    border: 1px solid rgba(52, 211, 153, 0.2);
+    border-radius: 10px;
+    padding: 24px 22px;
+    margin: 28px 0;
+    text-align: center;
+  }
+  .formula-box .formula {
+    font-family: 'DM Mono', monospace;
+    font-size: clamp(18px, 2.2vw, 24px);
+    color: #34d399;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+  .formula-box .formula-note {
+    font-size: 0.8rem;
+    color: #8a7a6a;
+    margin-top: 10px;
+  }
+
+  .highlight-box {
+    background: rgba(52, 211, 153, 0.05);
+    border-left: 3px solid #34d399;
+    padding: 18px 22px;
+    margin: 26px 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .highlight-box p { margin-bottom: 8px; }
+  .highlight-box p:last-child { margin-bottom: 0; }
+  .highlight-box strong { color: #f0e6dc; }
+
+  .param-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 24px 0;
+  }
+  .param-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px;
+    padding: 16px 18px;
+    transition: border-color 0.2s;
+  }
+  .param-card:hover { border-color: rgba(52,211,153,0.3); }
+  .param-card .p-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: #34d399;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+  }
+  .param-card .p-name {
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: #f0e6dc;
+    margin-bottom: 4px;
+  }
+  .param-card .p-desc {
+    font-size: 0.85rem;
+    color: #a89e94;
+    line-height: 1.6;
+  }
+
+  .grade-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 14px;
+  }
+  .grade-table th {
+    text-align: left;
+    padding: 12px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    color: #34d399;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .grade-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    vertical-align: top;
+    line-height: 1.7;
+    color: #c8beb4;
+  }
+  .grade-table td:first-child {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    white-space: nowrap;
+    color: #f0e6dc;
+  }
+
+  .doc-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin: 24px 0;
+  }
+  .doc-item {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px;
+    padding: 16px 20px;
+    text-decoration: none;
+    display: block;
+    transition: all 0.25s;
+  }
+  .doc-item:hover {
+    border-color: rgba(52,211,153,0.3);
+    background: rgba(255,255,255,0.04);
+    transform: translateX(4px);
+  }
+  .doc-item .d-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    color: #34d399;
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+  .doc-item .d-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #f0e6dc;
+    margin-bottom: 4px;
+  }
+  .doc-item .d-desc {
+    font-size: 0.85rem;
+    color: #a89e94;
+    line-height: 1.6;
+  }
+
+  .layer-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #8a7a6a;
+    margin: 30px 0 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .independence-box {
+    background: rgba(52, 211, 153, 0.04);
+    border: 1px solid rgba(52, 211, 153, 0.15);
+    border-radius: 12px;
+    padding: 26px 24px;
+    margin: 30px 0;
+    text-align: center;
+  }
+  .independence-box .i-line {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    color: #f0e6dc;
+    letter-spacing: 0.04em;
+    line-height: 2;
+  }
+  .independence-box .i-rule {
+    font-size: 1rem;
+    color: #34d399;
+    font-weight: 600;
+    margin-top: 12px;
+  }
+
+  .closing {
+    margin-top: 64px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: #7a7068;
+    line-height: 1.9;
+    letter-spacing: 0.04em;
+  }
+  .closing a { color: #34d399; text-decoration: none; }
+  .closing a:hover { text-decoration: underline; }
+
+  @media (max-width: 640px) {
+    .wrap { padding: 84px 20px 50px; }
+    .content { font-size: 15px; }
+    .param-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .topbar { padding: 0 14px; }
+  }
+
+  @media print {
+    body { background: white; color: #111; }
+    .topbar { display: none; }
+    .lb { display: block !important; }
+    .wrap { padding: 20px; }
+    h1, .content h2, .content strong { color: #111; }
+    .content, .content p, .content li { color: #222; }
+    .formula-box, .highlight-box, .independence-box { background: #f5f5f5; border-color: #888; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="/" class="logo">← GFI</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="/landjustice.html">Land Justice</a>
+      <a href="/">Home</a>
+    </div>
+    <div class="lang-grp">
+      <button class="lb-btn" data-lang="zh">简体</button>
+      <button class="lb-btn on" data-lang="en">EN</button>
+      <button class="lb-btn" data-lang="es">ES</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- ==================== English (default) ===================== -->
+<!-- ============================================================ -->
+<div class="lb active" data-lang="en">
+<div class="wrap">
+
+  <span class="page-badge">The Framework · Core Reference</span>
+
+  <h1>The GL Framework</h1>
+  <p class="subtitle">Governance Legitimacy Framework — a universal tool for measuring what was previously unmeasurable.</p>
+  <div class="meta">Ping Xu · GFI Flow Intelligence · 2026</div>
+  <div class="title-divider"></div>
+
+  <div class="content">
+
+    <p class="lead">Before the GL Framework, governance was an abstract concept. Governments, international organizations, and think tanks discussed "governance," "effectiveness," "transparency," and "accountability" for decades — but these words remained qualitative descriptions. They could not be quantified, compared, or verified.</p>
+
+    <p>The GL Framework changes that. It turns governance from an abstract concept into a set of measurable parameters. Not "what is good governance," but "how do we measure your governance." Measurement is the starting point of all reform.</p>
+
+    <h2>I. The Core Formula</h2>
+
+    <div class="formula-box">
+      <div class="formula">GL = (Fs × Vn) / (Pd × Cf)</div>
+      <div class="formula-note">Governance Legitimacy Score</div>
+    </div>
+
+    <p>The GL score measures the delivery quality of a public system. It does not ask "how much money the government spent," nor "whether the policy is compliant." It asks:</p>
+
+    <div class="highlight-box">
+      <p><strong>"Does a public system actually enable people to accomplish what they need to accomplish?"</strong></p>
+    </div>
+
+    <h2>II. The Four Variables</h2>
+
+    <div class="param-grid">
+      <div class="param-card">
+        <div class="p-num">Fs</div>
+        <div class="p-name">Flow Success Rate</div>
+        <div class="p-desc">Of those eligible, how many actually completed the process? Not "how many applied," but "how many finished."</div>
+      </div>
+      <div class="param-card">
+        <div class="p-num">Vn</div>
+        <div class="p-name">Strategic Value</div>
+        <div class="p-desc">How important is this service to people's lives? Does it address a real need, or is it a bureaucratic ritual?</div>
+      </div>
+      <div class="param-card">
+        <div class="p-num">Pd</div>
+        <div class="p-name">Pain Duration</div>
+        <div class="p-desc">How much active time do people spend waiting, queuing, filling out forms, chasing approvals?</div>
+      </div>
+      <div class="param-card">
+        <div class="p-num">Cf</div>
+        <div class="p-name">Cognitive Friction</div>
+        <div class="p-desc">How confusing, exhausting, and discouraging is the system? How many people give up because it is too complex?</div>
+      </div>
+    </div>
+
+    <h2>III. GL Score Ratings</h2>
+
+    <table class="grade-table">
+      <thead>
+        <tr>
+          <th>GL Score</th>
+          <th>Rating</th>
+          <th>Meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2.0 – 5.0</td>
+          <td>Efficient</td>
+          <td>The system functions well; value created exceeds cost consumed.</td>
+        </tr>
+        <tr>
+          <td>1.0 – 2.0</td>
+          <td>Functional Degradation</td>
+          <td>Low efficiency; value is being lost.</td>
+        </tr>
+        <tr>
+          <td>0.5 – 1.0</td>
+          <td>Fragile</td>
+          <td>Highly unstable; may collapse at any time.</td>
+        </tr>
+        <tr>
+          <td>GL &lt; 0.5</td>
+          <td>Data Lost</td>
+          <td>The system is almost ineffective; resources cannot be converted into public value.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>IV. The Eight Parameters</h2>
+
+    <p>The GL Framework breaks administrative friction into eight parameters. Each can be observed separately or analyzed in combination.</p>
+
+    <div class="param-grid">
+      <div class="param-card">
+        <div class="p-num">01</div>
+        <div class="p-name">Waiting Cost</div>
+        <div class="p-desc">Time the system requires people to wait. GDP does not record waiting — only the transactions that occur after it ends.</div>
+      </div>
+      <div class="param-card">
+        <div class="p-num">02</div>
+        <div class="p-name">Repetition Cost</div>
+        <div class="p-desc">The number of times people are required to provide the same information. Each repetition consumes time and energy.</div>
+      </div>
+      <div class="param-card">
+        <div class="p-num">03</div>
+        <div class="p-name">Collapse Cost</div>
+        <div class="p-desc">The point at which people give up. Each "forget it" is a collapse. GDP does not record collapses.</div>
+      </div>
+      <div class="param-card">
+        <div class="p-num">04</div>
+        <div class="p-name">Information Asymmetry Cost</div>
+        <div class="p-desc">Losses from unequal information between transacting parties. The party with less information pays more.</div>
+      </div>
+      <div class="param-card">
+        <div class="p-num">05</div>
+        <div class="p-name">Psychological Cost</div>
+        <div class="p-desc">The emotional toll of interacting with institutions — anxiety, stress, helplessness, shame.</div>
+      </div>
+      <div class="param-card">
+        <div class="p-num">06</div>
+        <div class="p-name">Opportunity Cost</div>
+        <div class="p-desc">The value of options given up when a choice is made. These appear on no one's ledger.</div>
+      </div>
+      <div class="param-card">
+        <div class="p-num">07</div>
+        <div class="p-name">Shift Pathway</div>
+        <div class="p-desc">The mechanism by which costs are transferred from those who create them to those who bear them.</div>
+      </div>
+      <div class="param-card">
+        <div class="p-num">08</div>
+        <div class="p-name">Loop Closure</div>
+        <div class="p-desc">The completeness of value capture. Does value return to the public, or is it captured privately?</div>
+      </div>
+    </div>
+
+    <h2>V. GhostGDP — The Ledger That Cannot Be Seen</h2>
+
+    <p>GDP records completed transactions. It does not record waiting. It does not record filling out the same form multiple times. It does not record the moment a person gives up. It does not record psychological costs.</p>
+
+    <p>Those costs do not disappear. They are shifted. They are just not on the ledger.</p>
+
+    <div class="highlight-box">
+      <p><strong>GhostGDP = Waiting + Repetition + Collapse + Information Asymmetry + Psychological + Opportunity</strong></p>
+      <p>This formula is not meant to be summed to a single number. It is meant to be a checklist of items that should be asked about but are not recorded.</p>
+    </div>
+
+    <h2>VI. The Applications</h2>
+
+    <p>The GL Framework has been applied to diagnose governance systems across multiple countries and regions. Each application uses the same four variables, producing comparable GL scores.</p>
+
+    <div class="layer-label">Layer 1 · Theoretical Critique</div>
+    <div class="doc-list">
+      <a href="/the-shadow-of-the-universal.html" class="doc-item">
+        <div class="d-tag">Chapter 1 · Global</div>
+        <div class="d-title">The Shadow of the Universal</div>
+        <div class="d-desc">A civilization where people live like animals does not deserve to speak of progress. A structural critique of land policy from Boston to Taiwan to Mumbai.</div>
+      </a>
+      <a href="/human-rights-land-hypocrisy.html" class="doc-item">
+        <div class="d-tag">Chapter 6 · Human Rights</div>
+        <div class="d-title">The Façade of Human Rights, the Mirror of Land Policy</div>
+        <div class="d-desc">Neoliberalism wields "human rights" as a weapon against China — while manufacturing cage homes, homelessness, and generational despair in its own backyard.</div>
+      </a>
+    </div>
+
+    <div class="layer-label">Layer 2 · Institutional Analysis</div>
+    <div class="doc-list">
+      <a href="/seizing-the-moment-2026.html" class="doc-item">
+        <div class="d-tag">Chapter 2 · UK</div>
+        <div class="d-title">Seizing the Moment: Realistic Paths for UK Land Reform in 2026</div>
+        <div class="d-desc">Laws already in force and funds already allocated — three immediately executable strategies.</div>
+      </a>
+      <a href="/ownership-of-land-value.html" class="doc-item">
+        <div class="d-tag">Chapter 3 · UK White Paper</div>
+        <div class="d-title">The Ownership of Land Value</div>
+        <div class="d-desc">How the Burnham Government can reclaim public wealth from landowners. LVT reform, financing mechanisms, and three immediately executable pathways.</div>
+      </a>
+    </div>
+
+    <div class="layer-label">Layer 3 · Regional Comparison</div>
+    <div class="doc-list">
+      <a href="/taiwan-land-reform.html" class="doc-item">
+        <div class="d-tag">Chapter 4 · Taiwan</div>
+        <div class="d-title">Returning Land Value to the People: Taiwan's History, Crisis, and Future</div>
+        <div class="d-desc">From "Land to the Tiller" to soaring housing prices, deteriorating living quality, and dysfunctional public infrastructure.</div>
+      </a>
+      <a href="/hong-kong-2047.html" class="doc-item">
+        <div class="d-tag">Chapter 5 · Hong Kong</div>
+        <div class="d-title">2047 · The Rupture and Restructuring of Hong Kong's Land System</div>
+        <div class="d-desc">Institutional rupture after "One Country, Two Systems" ends — three restructuring paths, land value recovery mechanisms.</div>
+      </a>
+      <a href="/urban-villages.html" class="doc-item">
+        <div class="d-tag">Chapter 8 · China</div>
+        <div class="d-title">Urban Villages: The Distribution Black Hole After Land Value Capture</div>
+        <div class="d-desc">Urban villages are not a "rural problem" or a "city problem" — they are the product of land value capture with a failed distribution mechanism.</div>
+      </a>
+      <a href="/ubi-land-value-return.html" class="doc-item">
+        <div class="d-tag">Chapter 9 · Closure</div>
+        <div class="d-title">Returning Land Value to the People: UBI as the Fiscal Exit</div>
+        <div class="d-desc">Land value capture is only half the battle. The other half is where the captured value goes. Universal Basic Income as the mechanism.</div>
+      </a>
+    </div>
+
+    <div class="layer-label">Layer 4 · Humanitarian Baseline</div>
+    <div class="doc-list">
+      <a href="/land-policy-humanity.html" class="doc-item">
+        <div class="d-tag">Chapter 7 · Humanity</div>
+        <div class="d-title">Land Policy · Humanity · Housing Dignity</div>
+        <div class="d-desc">Land is the baseline of humanity — cage homes, subdivided flats, homelessness are not market failures, they are institutional choices.</div>
+      </a>
+    </div>
+
+    <div class="layer-label">Series Extensions</div>
+    <div class="doc-list">
+      <a href="/hk_sham_policy.html" class="doc-item">
+        <div class="d-tag">Hong Kong · Live Critique</div>
+        <div class="d-title">Monopolizing Land, Doing Nothing: Hong Kong's "Sham" Policy</div>
+        <div class="d-desc">You monopolize land supply, yet you say "there is no land." Are you incompetent, or complicit?</div>
+      </a>
+      <a href="/state-land-systems.html" class="doc-item">
+        <div class="d-tag">Global · Comparison</div>
+        <div class="d-title">State Land Systems: Who Owns the Land, and Who Captures Its Value?</div>
+        <div class="d-desc">China, Israel, Singapore, Hong Kong, Sweden, Vietnam, Cuba — state land ownership is not an anomaly. It is a cross-system practice.</div>
+      </a>
+      <a href="/migrant-labor-global-cities.html" class="doc-item">
+        <div class="d-tag">Global Cities · Housing Dignity</div>
+        <div class="d-title">Migrant Labor and the Splendor of Global Cities</div>
+        <div class="d-desc">From Shenzhen to London, New York to Singapore — every global city's splendor is built on the labor of migrants. They deserve better.</div>
+      </a>
+      <a href="/structural-fiscal-crisis.html" class="doc-item">
+        <div class="d-tag">Structural Crisis · Global</div>
+        <div class="d-title">The Shared Delusion: Every Country Thinks Its Fiscal Crisis Is Unique</div>
+        <div class="d-desc">Britain thinks it's Brexit. Germany thinks it's the debt brake. China thinks it's land finance. They are all the same structural crisis.</div>
+      </a>
+    </div>
+
+    <div class="layer-label">Core Documents</div>
+    <div class="doc-list">
+      <a href="/global-land-value-standard.html" class="doc-item">
+        <div class="d-tag">Global · Standard Proposal</div>
+        <div class="d-title">A Global Standard for Land Value Capture</div>
+        <div class="d-desc">A transnational coordination mechanism for the last uncoordinated tax base: land value. Modelled on Basel, FATF, and BEPS.</div>
+      </a>
+      <a href="/gl-fr.html" class="doc-item">
+        <div class="d-tag">Reform Proposal</div>
+        <div class="d-title">Breaking Free from Neoliberal Inertia</div>
+        <div class="d-desc">A structural reform proposal for governments: rebuilding national governance legitimacy with the GL Framework.</div>
+      </a>
+      <a href="/execution-manual.html" class="doc-item">
+        <div class="d-tag">Execution</div>
+        <div class="d-title">Value Flow Execution Manual</div>
+        <div class="d-desc">9-step operational framework for turning governance diagnosis into measurable reform. No system required.</div>
+      </a>
+    </div>
+
+    <h2>VII. Independence · Stance</h2>
+
+    <div class="independence-box">
+      <div class="i-line">No Sponsor · No Boss · No Client · No Debt · No Dependents</div>
+      <div class="i-line" style="margin-top:10px; color:#a89e94;">No advertisers. No board. No review committee. No conflicts to manage.<br>No one to please. No one to fundraise from.</div>
+      <div class="i-rule">One rule only: the data speaks.</div>
+      <div class="i-line" style="margin-top:18px; font-style:italic; color:#8a7a6a;">
+        "If your system returns value to the people, we write that.<br>
+        If your system shifts costs to the vulnerable, we write that too."
+      </div>
+    </div>
+
+    <h2>VIII. Conclusion</h2>
+
+    <p>The GL Framework does not provide a single answer. It does not say that land should be completely private or completely public. It does not say that the government should capture all value or that the market should capture all value.</p>
+
+    <p>What it provides is a way of seeing. A framework for asking the question: <strong>to whom are costs shifted?</strong></p>
+
+    <div class="highlight-box">
+      <p><strong>The first step is taking the increment back from private hands. The second step is returning the captured increment to the people.</strong></p>
+    </div>
+
+    <p>When you have asked these questions, you may not have numbers. But you will have direction. And direction is more valuable than false precision.</p>
+
+    <div class="closing">
+      <p>GL Framework · Flow Success Rate · Strategic Value · Pain Duration · Cognitive Friction</p>
+      <p>gfintel.com/framework · GFI Flow Intelligence · 2026</p>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- ==================== 简体中文版 ============================== -->
+<!-- ============================================================ -->
+<div class="lb" data-lang="zh">
+<div class="wrap">
+
+  <span class="page-badge">核心框架 · 完整参考</span>
+
+  <h1>GL 治理正当性框架</h1>
+  <p class="subtitle">一个测量「以前无法测量之物」的通用工具。</p>
+  <div class="meta">徐萍 · GFI Flow Intelligence · 2026</div>
+  <div class="title-divider"></div>
+
+  <div class="content">
+
+    <p class="lead">在 GL 框架出现之前，「治理」是一个抽象概念。各国政府、国际组织、智库，几十年来都在谈「治理」、「效能」、「透明」、「问责」——但这些词全部停留在定性描述，无法被量化、无法被比较、无法被验证。</p>
+
+    <p>GL 框架改变了这一点。它把「治理」从抽象概念，变成了可测量的参数。不是「什么是好的治理」，而是「怎么测量你的治理」。测量，是所有改革的起点。</p>
+
+    <h2>一、核心公式</h2>
+
+    <div class="formula-box">
+      <div class="formula">GL = (Fs × Vn) / (Pd × Cf)</div>
+      <div class="formula-note">治理正当性分数</div>
+    </div>
+
+    <p>GL 分数衡量一个公共系统的交付质量。它不问「政府花了多少钱」，也不问「政策是否合规」。它问的是：</p>
+
+    <div class="highlight-box">
+      <p><strong>「一个公共系统，是否真的让人完成了他们需要完成的事？」</strong></p>
+    </div>
+
+    <h2>二、四个变量</h2>
+
+    <div class="param-grid">
+      <div class="param-card">
+        <div class="p-num">Fs</div>
+        <div class="p-name">流程成功率</div>
+        <div class="p-desc">符合条件的人里，有多少真正完成了？不是「有多少人申请」，而是「有多少人走完」。</div>
+      </div>
+      <div class="param-card">
+        <div class="p-num">Vn</div>
+        <div class="p-name">战略价值</div>
+        <div class="p-desc">这个服务对人们的生活有多重要？它解决的是真实需求，还是官僚仪式？</div>
+      </div>
+      <div class="param-card">
+        <div class="p-num">Pd</div>
+        <div class="p-name">痛苦时长</div>
+        <div class="p-desc">人们花了多少主动时间在等待、排队、填表、追审批？</div>
+      </div>
+      <div class="param-card">
+        <div class="p-num">Cf</div>
+        <div class="p-name">认知摩擦</div>
+        <div class="p-desc">系统有多令人困惑、令人疲惫、令人放弃？有多少人因为太复杂而中途退出？</div>
+      </div>
+    </div>
+
+    <h2>三、GL 分数评级</h2>
+
+    <table class="grade-table">
+      <thead>
+        <tr>
+          <th>GL 分数</th>
+          <th>评级</th>
+          <th>含义</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2.0 – 5.0</td>
+          <td>高效</td>
+          <td>系统运作良好，创造的价值大于消耗。</td>
+        </tr>
+        <tr>
+          <td>1.0 – 2.0</td>
+          <td>功能退化</td>
+          <td>效率低下，价值正在流失。</td>
+        </tr>
+        <tr>
+          <td>0.5 – 1.0</td>
+          <td>脆弱</td>
+          <td>极不稳定，随时可能崩溃。</td>
+        </tr>
+        <tr>
+          <td>GL &lt; 0.5</td>
+          <td>数据丢失</td>
+          <td>系统几乎无效，投入的资源无法转化为公共价值。</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>四、八个参数</h2>
+
+    <p>GL 框架把行政摩擦拆解成八个参数。每个可以单独观察，也可以组合分析。</p>
+
+    <div class="param-grid">
+      <div class="param-card">
+        <div class="p-num">01</div>
+        <div class="p-name">等待成本</div>
+        <div class="p-desc">系统要求人们等待的时间。GDP 不记录等待，只记录等待结束后的交易。</div>
+      </div>
+      <div class="param-card">
+        <div class="p-num">02</div>
+        <div class="p-name">重复成本</div>
+        <div class="p-desc">人们被要求提供相同信息的次数。每次重复都消耗时间和精力。</div>
+      </div>
+      <div class="param-card">
+        <div class="p-num">03</div>
+        <div class="p-name">崩溃成本</div>
+        <div class="p-desc">人们放弃的那一刻。每一次「算了」都是一次崩溃。GDP 不记录崩溃。</div>
+      </div>
+      <div class="param-card">
+        <div class="p-num">04</div>
+        <div class="p-name">信息不对称</div>
+        <div class="p-desc">交易双方信息不对等导致的损失。信息少的一方被迫支付更高价格。</div>
+      </div>
+      <div class="param-card">
+        <div class="p-num">05</div>
+        <div class="p-name">心理成本</div>
+        <div class="p-desc">与制度互动带来的情绪负担——焦虑、压力、无助、羞耻。</div>
+      </div>
+      <div class="param-card">
+        <div class="p-num">06</div>
+        <div class="p-name">机会成本</div>
+        <div class="p-desc">做出选择时放弃的其他选项的价值。这些不出现在任何人的账本上。</div>
+      </div>
+      <div class="param-card">
+        <div class="p-num">07</div>
+        <div class="p-name">转嫁路径</div>
+        <div class="p-desc">成本从制造者转移到承担者的机制。</div>
+      </div>
+      <div class="param-card">
+        <div class="p-num">08</div>
+        <div class="p-name">回路闭合</div>
+        <div class="p-desc">价值捕获的完整程度。价值回流公共，还是被私人捕获？</div>
+      </div>
+    </div>
+
+    <h2>五、GhostGDP——看不见的账本</h2>
+
+    <p>GDP 记录已完成的交易。它不记录等待。它不记录重复填表。它不记录一个人放弃的那一刻。它不记录心理成本。</p>
+
+    <p>这些成本不会消失。它们被转嫁了。只是不在账本上。</p>
+
+    <div class="highlight-box">
+      <p><strong>GhostGDP = 等待 + 重复 + 崩溃 + 信息不对称 + 心理 + 机会</strong></p>
+      <p>这个公式不是要被加总成一个数字，而是要作为一个检查清单——那些应该被问、却没有被记录的项目。</p>
+    </div>
+
+    <h2>六、应用案例</h2>
+
+    <p>GL 框架已被应用于诊断多个国家与地区的治理系统。每个应用使用同样的四个变量，产出可比较的 GL 分数。</p>
+
+    <div class="layer-label">第一层 · 理论批判</div>
+    <div class="doc-list">
+      <a href="/the-shadow-of-the-universal.html" class="doc-item">
+        <div class="d-tag">第一章 · 全球</div>
+        <div class="d-title">普世的阴影</div>
+        <div class="d-desc">一个让人住得像畜生的文明，不配谈进步；一个不敢改革土地制度的社会，不配谈人权。</div>
+      </a>
+      <a href="/human-rights-land-hypocrisy.html" class="doc-item">
+        <div class="d-tag">第六章 · 人权</div>
+        <div class="d-title">人权的幌子，土地政策的照妖镜</div>
+        <div class="d-desc">新自由主义一边高举人权攻击中国，一边在自己的土地上制造笼屋、游民、世代绝望。</div>
+      </a>
+    </div>
+
+    <div class="layer-label">第二层 · 制度分析</div>
+    <div class="doc-list">
+      <a href="/seizing-the-moment-2026.html" class="doc-item">
+        <div class="d-tag">第二章 · 英国</div>
+        <div class="d-title">顺势而为：2026年英国土地改革的现实路径</div>
+        <div class="d-desc">英国2026年已生效法律与到位资金，三层可立即执行的改革策略。</div>
+      </a>
+      <a href="/ownership-of-land-value.html" class="doc-item">
+        <div class="d-tag">第三章 · 英国白皮书</div>
+        <div class="d-title">土地增值的归属</div>
+        <div class="d-desc">伯纳姆政府如何从地主手中取回公共财富。LVT 改革、融资机制、三个可立即执行路径。</div>
+      </a>
+    </div>
+
+    <div class="layer-label">第三层 · 区域比较</div>
+    <div class="doc-list">
+      <a href="/taiwan-land-reform.html" class="doc-item">
+        <div class="d-tag">第四章 · 台湾地区</div>
+        <div class="d-title">土地增值回归于民：台湾地区的历史、困境与未来</div>
+        <div class="d-desc">从耕者有其田到高房价、居住品质崩坏、公共建设失能。</div>
+      </a>
+      <a href="/hong-kong-2047.html" class="doc-item">
+        <div class="d-tag">第五章 · 香港</div>
+        <div class="d-title">2047 · 香港土地制度的断裂与重构</div>
+        <div class="d-desc">一国两制到期后的制度断裂——三种重构路径、土地增值回收机制。</div>
+      </a>
+      <a href="/urban-villages.html" class="doc-item">
+        <div class="d-tag">第八章 · 中国</div>
+        <div class="d-title">城中村：土地增值捕获后的分配黑洞</div>
+        <div class="d-desc">城中村不是「农村问题」，也不是「城市问题」——它是土地增值捕获后，分配机制失灵的产物。</div>
+      </a>
+      <a href="/ubi-land-value-return.html" class="doc-item">
+        <div class="d-tag">第九章 · 闭环</div>
+        <div class="d-title">土地增值回归于民：UBI 作为财政出口</div>
+        <div class="d-desc">土地增值捕获只是上半场，下半场是「捕获后的增值去了哪里」。全民基本收入作为闭环机制。</div>
+      </a>
+    </div>
+
+    <div class="layer-label">第四层 · 人道底线</div>
+    <div class="doc-list">
+      <a href="/land-policy-humanity.html" class="doc-item">
+        <div class="d-tag">第七章 · 人道</div>
+        <div class="d-title">土地政策 · 人道 · 居住尊严</div>
+        <div class="d-desc">土地是人道底线——笼屋、劏房、无家可归不是市场失灵，是制度选择。</div>
+      </a>
+    </div>
+
+    <div class="layer-label">系列延伸</div>
+    <div class="doc-list">
+      <a href="/hk_sham_policy.html" class="doc-item">
+        <div class="d-tag">香港 · 即时批判</div>
+        <div class="d-title">垄断土地，却只会做样子：香港的「鬼打墙」政策</div>
+        <div class="d-desc">你垄断土地，却说「没有地」。你到底是无能，还是共谋？</div>
+      </a>
+      <a href="/state-land-systems.html" class="doc-item">
+        <div class="d-tag">全球 · 比较</div>
+        <div class="d-title">国有土地制度：谁拥有土地，谁捕获增值？</div>
+        <div class="d-desc">中国、以色列、新加坡、香港地区、瑞典、越南、古巴——土地国有不是异端，是跨制度实践。</div>
+      </a>
+      <a href="/migrant-labor-global-cities.html" class="doc-item">
+        <div class="d-tag">全球城市 · 居住尊严</div>
+        <div class="d-title">外来务工者与全球一线城市的体面</div>
+        <div class="d-desc">从深圳到伦敦，从纽约到新加坡——每一个全球一线城市的体面，都建立在外来务工者的劳动之上。</div>
+      </a>
+      <a href="/structural-fiscal-crisis.html" class="doc-item">
+        <div class="d-tag">结构性危机 · 全球</div>
+        <div class="d-title">共同的幻觉：每个国家都以为自己的财政危机是独特的</div>
+        <div class="d-desc">英国以为是脱欧，德国以为是债务刹车，中国以为是土地财政。其实是同一个结构性危机。</div>
+      </a>
+    </div>
+
+    <div class="layer-label">核心文件</div>
+    <div class="doc-list">
+      <a href="/global-land-value-standard.html" class="doc-item">
+        <div class="d-tag">全球 · 标准提案</div>
+        <div class="d-title">全球土地价值捕捉标准</div>
+        <div class="d-desc">针对最后一个未被协调的税基——土地价值——的跨国协调机制。参照巴塞尔协议、FATF、BEPS。</div>
+      </a>
+      <a href="/gl-fr.html" class="doc-item">
+        <div class="d-tag">改革方案</div>
+        <div class="d-title">挣脱新自由主义惯性</div>
+        <div class="d-desc">面向各国政府的结构性改革方案：用 GL 框架重建国家治理正当性。</div>
+      </a>
+      <a href="/execution-manual.html" class="doc-item">
+        <div class="d-tag">执行</div>
+        <div class="d-title">价值流动执行手册</div>
+        <div class="d-desc">9 步操作框架，把治理诊断转化为可测量的改革。无需系统。</div>
+      </a>
+    </div>
+
+    <h2>七、独立性声明</h2>
+
+    <div class="independence-box">
+      <div class="i-line">无赞助商 · 无老板 · 无客户 · 无债务 · 无家累</div>
+      <div class="i-line" style="margin-top:10px; color:#a89e94;">无广告、无董事会、无审查委员会、无利益冲突需要管理。<br>无需讨好任何人，无需向任何人募款。</div>
+      <div class="i-rule">唯一规则：数据说话。</div>
+      <div class="i-line" style="margin-top:18px; font-style:italic; color:#8a7a6a;">
+        「如果你的系统把价值还给人民，我们照写。<br>
+        如果你的系统把成本转嫁给弱势者，我们也照写。」
+      </div>
+    </div>
+
+    <h2>八、结语</h2>
+
+    <p>GL 框架不提供单一答案。它不说土地应该完全私有或完全公有。它不说政府应该捕获全部价值或市场应该捕获全部价值。</p>
+
+    <p>它提供的是一种看世界的方式。一个用来提问的框架：<strong>成本被转嫁给了谁？</strong></p>
+
+    <div class="highlight-box">
+      <p><strong>第一步是把增值从私人手里拿回来，第二步是把拿回来的增值还给人民。</strong></p>
+    </div>
+
+    <p>当你问完这些问题，你也许没有数字。但你会有方向。而方向，比虚假的精确更有价值。</p>
+
+    <div class="closing">
+      <p>GL Framework · 流程成功率 · 战略价值 · 痛苦时长 · 认知摩擦</p>
+      <p>gfintel.com/framework · GFI Flow Intelligence · 2026</p>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- ==================== Español =============================== -->
+<!-- ============================================================ -->
+<div class="lb" data-lang="es">
+<div class="wrap">
+
+  <span class="page-badge">El Marco · Referencia Central</span>
+
+  <h1>El Marco GL</h1>
+  <p class="subtitle">Marco de Legitimidad de la Gobernanza — una herramienta universal para medir lo que antes era inmedible.</p>
+  <div class="meta">Ping Xu · GFI Flow Intelligence · 2026</div>
+  <div class="title-divider"></div>
+
+  <div class="content">
+
+    <p class="lead">Antes del Marco GL, la gobernanza era un concepto abstracto. Gobiernos, organizaciones internacionales y think tanks discutieron durante décadas sobre "gobernanza", "eficacia", "transparencia" y "rendición de cuentas" — pero estas palabras permanecían como descripciones cualitativas. No podían cuantificarse, compararse ni verificarse.</p>
+
+    <p>El Marco GL cambia esto. Convierte la gobernanza de un concepto abstracto en un conjunto de parámetros medibles. No "qué es la buena gobernanza", sino "cómo medimos tu gobernanza". La medición es el punto de partida de toda reforma.</p>
+
+    <h2>I. La Fórmula Central</h2>
+
+    <div class="formula-box">
+      <div class="formula">GL = (Fs × Vn) / (Pd × Cf)</div>
+      <div class="formula-note">Puntuación de Legitimidad de la Gobernanza</div>
+    </div>
+
+    <p>La puntuación GL mide la calidad de la entrega de un sistema público. No pregunta "cuánto dinero gastó el gobierno", ni "si la política es conforme a la normativa". Pregunta:</p>
+
+    <div class="highlight-box">
+      <p><strong>"¿Un sistema público realmente permite que las personas logren lo que necesitan lograr?"</strong></p>
+    </div>
+
+    <h2>II. Las Cuatro Variables</h2>
+
+    <div class="param-grid">
+      <div class="param-card">
+        <div class="p-num">Fs</div>
+        <div class="p-name">Tasa de Éxito del Flujo</div>
+        <div class="p-desc">De los elegibles, ¿cuántos completaron realmente el proceso? No "cuántos solicitaron", sino "cuántos terminaron".</div>
+      </div>
+      <div class="param-card">
+        <div class="p-num">Vn</div>
+        <div class="p-name">Valor Estratégico</div>
+        <div class="p-desc">¿Qué importancia tiene este servicio en la vida de las personas? ¿Aborda una necesidad real o es un ritual burocrático?</div>
+      </div>
+      <div class="param-card">
+        <div class="p-num">Pd</div>
+        <div class="p-name">Duración del Dolor</div>
+        <div class="p-desc">¿Cuánto tiempo activo pasan las personas esperando, haciendo cola, llenando formularios, persiguiendo aprobaciones?</div>
+      </div>
+      <div class="param-card">
+        <div class="p-num">Cf</div>
+        <div class="p-name">Fricción Cognitiva</div>
+        <div class="p-desc">¿Qué tan confuso, agotador y desalentador es el sistema? ¿Cuántas personas se rinden porque es demasiado complejo?</div>
+      </div>
+    </div>
+
+    <h2>III. Escala de Puntuación GL</h2>
+
+    <table class="grade-table">
+      <thead>
+        <tr>
+          <th>Puntuación GL</th>
+          <th>Calificación</th>
+          <th>Significado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2.0 – 5.0</td>
+          <td>Eficiente</td>
+          <td>El sistema funciona bien; el valor creado supera el costo consumido.</td>
+        </tr>
+        <tr>
+          <td>1.0 – 2.0</td>
+          <td>Degradación Funcional</td>
+          <td>Baja eficiencia; el valor se está perdiendo.</td>
+        </tr>
+        <tr>
+          <td>0.5 – 1.0</td>
+          <td>Frágil</td>
+          <td>Altamente inestable; puede colapsar en cualquier momento.</td>
+        </tr>
+        <tr>
+          <td>GL &lt; 0.5</td>
+          <td>Datos Perdidos</td>
+          <td>El sistema es casi ineficaz; los recursos no pueden convertirse en valor público.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>IV. Los Ocho Parámetros</h2>
+
+    <p>El Marco GL descompone la fricción administrativa en ocho parámetros. Cada uno puede observarse por separado o analizarse en combinación.</p>
+
+    <div class="param-grid">
+      <div class="param-card">
+        <div class="p-num">01</div>
+        <div class="p-name">Costo de Espera</div>
+        <div class="p-desc">Tiempo que el sistema exige a las personas esperar. El PIB no registra la espera — solo las transacciones que ocurren después.</div>
+      </div>
+      <div class="param-card">
+        <div class="p-num">02</div>
+        <div class="p-name">Costo de Repetición</div>
+        <div class="p-desc">El número de veces que se exige a las personas proporcionar la misma información. Cada repetición consume tiempo y energía.</div>
+      </div>
+      <div class="param-card">
+        <div class="p-num">03</div>
+        <div class="p-name">Costo de Colapso</div>
+        <div class="p-desc">El punto en que las personas se rinden. Cada "déjalo" es un colapso. El PIB no registra colapsos.</div>
+      </div>
+      <div class="param-card">
+        <div class="p-num">04</div>
+        <div class="p-name">Costo de Asimetría de Información</div>
+        <div class="p-desc">Pérdidas por información desigual entre las partes. La parte con menos información paga más.</div>
+      </div>
+      <div class="param-card">
+        <div class="p-num">05</div>
+        <div class="p-name">Costo Psicológico</div>
+        <div class="p-desc">La carga emocional de interactuar con las instituciones — ansiedad, estrés, indefensión, vergüenza.</div>
+      </div>
+      <div class="param-card">
+        <div class="p-num">06</div>
+        <div class="p-name">Costo de Oportunidad</div>
+        <div class="p-desc">El valor de las opciones abandonadas cuando se toma una decisión. No aparecen en ningún libro contable.</div>
+      </div>
+      <div class="param-card">
+        <div class="p-num">07</div>
+        <div class="p-name">Trayectoria de Traslado</div>
+        <div class="p-desc">El mecanismo por el cual los costos se transfieren de quienes los crean a quienes los soportan.</div>
+      </div>
+      <div class="param-card">
+        <div class="p-num">08</div>
+        <div class="p-name">Grado de Cierre del Bucle</div>
+        <div class="p-desc">La completitud de la captura de valor. ¿El valor regresa al público o es capturado privadamente?</div>
+      </div>
+    </div>
+
+    <h2>V. GhostGDP — El Libro Contable Que No Se Ve</h2>
+
+    <p>El PIB registra las transacciones completadas. No registra la espera. No registra llenar el mismo formulario varias veces. No registra el momento en que una persona se rinde. No registra los costos psicológicos.</p>
+
+    <p>Esos costos no desaparecen. Se trasladan. Simplemente no están en el libro contable.</p>
+
+    <div class="highlight-box">
+      <p><strong>GhostGDP = Espera + Repetición + Colapso + Asimetría de Información + Psicológico + Oportunidad</strong></p>
+      <p>Esta fórmula no pretende sumarse a un solo número. Pretende ser una lista de verificación de elementos que deberían preguntarse pero no se registran.</p>
+    </div>
+
+    <h2>VI. Las Aplicaciones</h2>
+
+    <p>El Marco GL se ha aplicado para diagnosticar sistemas de gobernanza en múltiples países y regiones. Cada aplicación utiliza las mismas cuatro variables, produciendo puntuaciones GL comparables.</p>
+
+    <div class="layer-label">Nivel 1 · Crítica Teórica</div>
+    <div class="doc-list">
+      <a href="/the-shadow-of-the-universal.html" class="doc-item">
+        <div class="d-tag">Capítulo 1 · Global</div>
+        <div class="d-title">La Sombra de lo Universal</div>
+        <div class="d-desc">Una civilización donde la gente vive como animales no merece hablar de progreso.</div>
+      </a>
+      <a href="/human-rights-land-hypocrisy.html" class="doc-item">
+        <div class="d-tag">Capítulo 6 · Derechos Humanos</div>
+        <div class="d-title">La Farsa de los Derechos Humanos, el Espejo de la Política de Suelo</div>
+        <div class="d-desc">El neoliberalismo usa los "derechos humanos" como arma contra China — mientras produce jaulas en su propio territorio.</div>
+      </a>
+    </div>
+
+    <div class="layer-label">Nivel 2 · Análisis Institucional</div>
+    <div class="doc-list">
+      <a href="/seizing-the-moment-2026.html" class="doc-item">
+        <div class="d-tag">Capítulo 2 · Reino Unido</div>
+        <div class="d-title">Aprovechar el Momento: Vías Realistas para la Reforma Agraria en 2026</div>
+        <div class="d-desc">Leyes ya en vigor y fondos ya asignados — tres estrategias ejecutables inmediatamente.</div>
+      </a>
+      <a href="/ownership-of-land-value.html" class="doc-item">
+        <div class="d-tag">Capítulo 3 · Libro Blanco UK</div>
+        <div class="d-title">La Propiedad del Valor de la Tierra</div>
+        <div class="d-desc">Cómo el gobierno de Burnham puede recuperar la riqueza pública de los terratenientes.</div>
+      </a>
+    </div>
+
+    <div class="layer-label">Nivel 3 · Comparación Regional</div>
+    <div class="doc-list">
+      <a href="/taiwan-land-reform.html" class="doc-item">
+        <div class="d-tag">Capítulo 4 · Taiwán</div>
+        <div class="d-title">Devolver el Valor de la Tierra al Pueblo</div>
+        <div class="d-desc">Desde la "tierra para el agricultor" hasta los precios disparados de la vivienda.</div>
+      </a>
+      <a href="/hong-kong-2047.html" class="doc-item">
+        <div class="d-tag">Capítulo 5 · Hong Kong</div>
+        <div class="d-title">2047 · La Ruptura y Reestructuración del Sistema de Suelo</div>
+        <div class="d-desc">Ruptura institucional después del fin de "Un País, Dos Sistemas".</div>
+      </a>
+      <a href="/urban-villages.html" class="doc-item">
+        <div class="d-tag">Capítulo 8 · China</div>
+        <div class="d-title">Aldeas Urbanas: El Agujero Negro de la Distribución</div>
+        <div class="d-desc">Las aldeas urbanas no son un "problema rural" ni un "problema urbano".</div>
+      </a>
+      <a href="/ubi-land-value-return.html" class="doc-item">
+        <div class="d-tag">Capítulo 9 · Cierre</div>
+        <div class="d-title">Devolver el Valor de la Tierra al Pueblo: La RBU como Salida Fiscal</div>
+        <div class="d-desc">La captura del valor del suelo es solo la primera mitad.</div>
+      </a>
+    </div>
+
+    <div class="layer-label">Nivel 4 · Límite Humanitario</div>
+    <div class="doc-list">
+      <a href="/land-policy-humanity.html" class="doc-item">
+        <div class="d-tag">Capítulo 7 · Humanidad</div>
+        <div class="d-title">Política de Suelo · Humanidad · Dignidad Habitacional</div>
+        <div class="d-desc">La tierra es el límite de la humanidad — las jaulas no son fallos del mercado.</div>
+      </a>
+    </div>
+
+    <div class="layer-label">Extensiones de la Serie</div>
+    <div class="doc-list">
+      <a href="/hk_sham_policy.html" class="doc-item">
+        <div class="d-tag">Hong Kong · Crítica en Vivo</div>
+        <div class="d-title">Monopolizar el Suelo y No Hacer Nada</div>
+        <div class="d-desc">Monopolizas el suelo, pero dices "no hay tierra". ¿Eres incompetente o cómplice?</div>
+      </a>
+      <a href="/state-land-systems.html" class="doc-item">
+        <div class="d-tag">Global · Comparación</div>
+        <div class="d-title">Sistemas de Suelo Estatal</div>
+        <div class="d-desc">China, Israel, Singapur, Hong Kong, Suecia, Vietnam, Cuba.</div>
+      </a>
+      <a href="/migrant-labor-global-cities.html" class="doc-item">
+        <div class="d-tag">Ciudades Globales · Dignidad</div>
+        <div class="d-title">Trabajo Migrante y el Esplendor de las Ciudades Globales</div>
+        <div class="d-desc">De Shenzhen a Londres, de Nueva York a Singapur.</div>
+      </a>
+      <a href="/structural-fiscal-crisis.html" class="doc-item">
+        <div class="d-tag">Crisis Estructural · Global</div>
+        <div class="d-title">La Ilusión Compartida</div>
+        <div class="d-desc">Gran Bretaña cree que es el Brexit. Alemania cree que es el freno de la deuda.</div>
+      </a>
+    </div>
+
+    <div class="layer-label">Documentos Centrales</div>
+    <div class="doc-list">
+      <a href="/global-land-value-standard.html" class="doc-item">
+        <div class="d-tag">Global · Propuesta de Estándar</div>
+        <div class="d-title">Un Estándar Global para la Captura del Valor del Suelo</div>
+        <div class="d-desc">Un mecanismo de coordinación transnacional para la última base imponible no coordinada.</div>
+      </a>
+      <a href="/gl-fr.html" class="doc-item">
+        <div class="d-tag">Propuesta de Reforma</div>
+        <div class="d-title">Liberarse de la Inercia Neoliberal</div>
+        <div class="d-desc">Una propuesta de reforma estructural para gobiernos.</div>
+      </a>
+      <a href="/execution-manual.html" class="doc-item">
+        <div class="d-tag">Ejecución</div>
+        <div class="d-title">Manual de Ejecución del Flujo de Valor</div>
+        <div class="d-desc">Marco operativo de 9 pasos. Sin necesidad de sistema.</div>
+      </a>
+    </div>
+
+    <h2>VII. Independencia · Postura</h2>
+
+    <div class="independence-box">
+      <div class="i-line">Sin Patrocinador · Sin Jefe · Sin Cliente · Sin Deuda · Sin Dependientes</div>
+      <div class="i-line" style="margin-top:10px; color:#a89e94;">Sin anunciantes. Sin junta. Sin comité de revisión. Sin conflictos que gestionar.<br>Nadie a quien complacer. Nadie a quien recaudar fondos.</div>
+      <div class="i-rule">Una sola regla: los datos hablan.</div>
+      <div class="i-line" style="margin-top:18px; font-style:italic; color:#8a7a6a;">
+        "Si tu sistema devuelve valor al pueblo, lo escribimos.<br>
+        Si tu sistema traslada costos a los vulnerables, también lo escribimos."
+      </div>
+    </div>
+
+    <h2>VIII. Conclusión</h2>
+
+    <p>El Marco GL no proporciona una única respuesta. No dice que la tierra deba ser completamente privada o completamente pública.</p>
+
+    <p>Lo que proporciona es una forma de ver. Un marco para hacer la pregunta: <strong>¿a quién se trasladan los costos?</strong></p>
+
+    <div class="highlight-box">
+      <p><strong>El primer paso es recuperar el incremento de manos privadas. El segundo paso es devolver el incremento capturado al pueblo.</strong></p>
+    </div>
+
+    <p>Cuando hayas hecho estas preguntas, puede que no tengas números. Pero tendrás dirección. Y la dirección es más valiosa que la falsa precisión.</p>
+
+    <div class="closing">
+      <p>Marco GL · Tasa de Éxito del Flujo · Valor Estratégico · Duración del Dolor · Fricción Cognitiva</p>
+      <p>gfintel.com/framework · GFI Flow Intelligence · 2026</p>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<script>
+  (function () {
+    var buttons = document.querySelectorAll('.lb-btn');
+    var langs = document.querySelectorAll('.lb');
+
+    function setLang(lang) {
+      buttons.forEach(function (b) {
+        b.classList.toggle('on', b.dataset.lang === lang);
+      });
+      langs.forEach(function (l) {
+        l.classList.toggle('active', l.dataset.lang === lang);
+      });
+      document.documentElement.setAttribute('lang', lang);
+    }
+
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        setLang(btn.dataset.lang);
+      });
+    });
+
+    var nav = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
+    if (nav.indexOf('zh') === 0) { setLang('zh'); }
+    else if (nav.indexOf('es') === 0) { setLang('es'); }
+    else { setLang('en'); }
+  })();
+</script>
+
+</body>
+</html>
