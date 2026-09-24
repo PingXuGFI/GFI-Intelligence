@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Domestic Healthcare Policy: From Treatment to Public Health · 醫療內政篇：從治療導向到公共衛生</title>
+    <meta name="description" content="Universal logic, local rules. How countries can rebuild healthcare as a public good rather than a commodity — within the non-negotiable principles of the Governance Legitimacy Framework." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: #0d0a08;
+            color: #e0d6cc;
+            font-family: 'DM Sans', system-ui, sans-serif;
+            font-size: 16px;
+            line-height: 1.9;
+            min-height: 100vh;
+        }
+        .topbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            height: 60px; padding: 0 clamp(18px, 5vw, 48px);
+            display: flex; align-items: center; justify-content: space-between;
+            background: rgba(13, 10, 8, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .logo {
+            font-family: 'DM Mono', monospace; font-size: 11px;
+            letter-spacing: 0.16em; text-transform: uppercase;
+            color: #b8aaa0; text-decoration: none;
+        }
+        .nav-right { display: flex; align-items: center; gap: 12px; }
+        .lang-grp { display: flex; gap: 4px; }
+        .lb-btn {
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            letter-spacing: 0.06em; padding: 4px 10px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 4px; background: transparent;
+            color: #7a7068; cursor: pointer; transition: all 0.2s;
+        }
+        .lb-btn:hover { color: #e0d6cc; border-color: rgba(255, 255, 255, 0.2); }
+        .lb-btn.on { background: #b8aaa0; color: #0d0a08; border-color: #b8aaa0; }
+        .nav-links { display: flex; gap: 16px; align-items: center; }
+        .nav-links a {
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            letter-spacing: 0.06em; color: #7a7068;
+            text-decoration: none; padding: 4px 8px;
+            border-radius: 4px; transition: all 0.2s;
+        }
+        .nav-links a:hover { color: #e0d6cc; background: rgba(255, 255, 255, 0.04); }
+        .lb { display: none; padding: 100px 40px 70px; max-width: 860px; margin: 0 auto; }
+        .lb.active { display: block; }
+        .page-header {
+            padding: 0 0 32px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 32px;
+        }
+        .page-header .badge {
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            letter-spacing: 0.22em; text-transform: uppercase;
+            color: #8a4a2a; margin-bottom: 12px;
+        }
+        .page-header .badge.dual {
+            color: #7DD3FC;
+        }
+        .page-header .title {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: clamp(28px, 3.6vw, 42px);
+            line-height: 1.15; color: #f0e6dc; margin-bottom: 8px;
+        }
+        .page-header .subtitle {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-style: italic; font-size: clamp(16px, 1.7vw, 20px);
+            color: #8a7a6a; margin-bottom: 12px;
+        }
+        .page-header .meta {
+            font-family: 'DM Mono', monospace; font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.2);
+        }
+        .content h2 {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.4rem; color: #f0e6dc;
+            margin: 2.2rem 0 0.8rem 0;
+            padding-bottom: 0.3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .content h3 {
+            font-size: 1.1rem; font-weight: 600;
+            color: #e0d6cc; margin: 1.8rem 0 0.5rem 0;
+        }
+        .content p { margin-bottom: 1.2rem; color: #d0c6bc; }
+        .content ul, .content ol { margin-bottom: 1.2rem; padding-left: 1.6rem; }
+        .content li { margin-bottom: 0.5rem; color: #d0c6bc; }
+        .content .highlight { color: #c47a4a; font-weight: 600; }
+        .content .formula-block {
+            background: #161210;
+            border-left: 4px solid #8a4a2a;
+            padding: 1.2rem 1.6rem;
+            margin: 1.5rem 0;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.95rem;
+            color: #e0d6cc;
+            border-radius: 0 6px 6px 0;
+        }
+        .content .highlight-box {
+            background: rgba(138, 74, 42, 0.08);
+            border-left: 4px solid #8a4a2a;
+            padding: 1.2rem 1.8rem;
+            margin: 1.8rem 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .content .highlight-box p { margin-bottom: 0.5rem; }
+        .content .highlight-box strong { color: #f0e6dc; }
+        .content .highlight-box.dual-box {
+            border-left-color: #7DD3FC;
+            background: rgba(125, 211, 252, 0.05);
+        }
+        .content .layer-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            padding: 1.2rem 1.5rem;
+            margin: 1rem 0;
+        }
+        .content .layer-card .layer-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #c47a4a;
+            margin-bottom: 6px;
+        }
+        .content .layer-card .layer-label.blue { color: #7DD3FC; }
+        .content .layer-card p {
+            font-size: 0.95rem;
+            color: #d0c6bc;
+            margin-bottom: 0.5rem;
+        }
+        .content .layer-card p:last-child { margin-bottom: 0; }
+        .content .layer-card ul { margin-top: 0.5rem; margin-bottom: 0.5rem; }
+        .content .layer-card li { font-size: 0.95rem; }
+        .signature {
+            margin-top: 40px; padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.05rem; color: #f0e6dc;
+        }
+        .signature .title {
+            font-family: 'DM Mono', monospace; font-size: 0.6rem;
+            color: rgba(255, 255, 255, 0.25);
+            letter-spacing: 0.06em; display: block; margin-top: 2px;
+        }
+        .footer {
+            text-align: center; padding: 28px 20px 36px;
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            color: rgba(255, 255, 255, 0.18);
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            margin-top: 48px; line-height: 2;
+        }
+        .footer a { color: #b8aaa0; text-decoration: none; margin: 0 8px; }
+        .footer a:hover { color: #e0d6cc; }
+        .footer .site { display: block; margin-bottom: 8px; color: rgba(255, 255, 255, 0.25); letter-spacing: 0.06em; }
+        .footer .links { display: block; margin-bottom: 8px; }
+        .footer .copyright { color: rgba(255, 255, 255, 0.12); display: block; }
+        @media (max-width: 640px) {
+            .lb { padding: 80px 20px 50px; }
+            .topbar { padding: 0 14px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="topbar">
+    <a href="/" class="logo">← Home</a>
+    <div class="nav-right">
+        <div class="nav-links">
+            <a href="/gl-principle-universal-local.html">Principle</a>
+            <a href="/shared-delusion.html">Shared Delusion</a>
+            <a href="/landjustice.html">Land Justice</a>
+        </div>
+        <div class="lang-grp">
+            <button class="lb-btn on" data-lang="en">EN</button>
+            <button class="lb-btn" data-lang="tw">繁</button>
+            <button class="lb-btn" data-lang="cn">简</button>
+            <button class="lb-btn" data-lang="es">ES</button>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 英文版 ==================== -->
+<div class="lb active" data-lang="en">
+    <div class="page-header">
+        <div class="badge dual">Domestic Policy Series · Healthcare · GL Framework Applied</div>
+        <div class="title">Domestic Healthcare Policy: From Treatment to Public Health</div>
+        <div class="subtitle">Universal logic, local rules. How countries can rebuild healthcare as a public good, not a commodity.</div>
+        <div class="meta">Ping Xu · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+        <h2>1. Problem Diagnosis</h2>
+        <p>The surface causes of healthcare crises vary, but the structural root is the same: <span class="highlight">healthcare has been commodified, and public health has been eroded by the logic of profit.</span></p>
+        <p>This manifests at three levels:</p>
+        <ol>
+            <li><strong>Healthcare costs crush households</strong>: In the US, medical bills are a leading cause of bankruptcy. In other countries, out-of-pocket payments push families into poverty. Healthcare is treated as a market transaction, not a right.</li>
+            <li><strong>Pharmaceutical capital captures health value</strong>: Transnational pharmaceutical companies set monopoly prices for patented drugs, often funded by public research. Insurance capital extracts profits from risk pooling. The value of health flows to private capital, not to public health.</li>
+            <li><strong>Public health is marginalized</strong>: Prevention, sanitation, nutrition, and health education — the foundations of population health — are underfunded. Systems focus on treatment (which is profitable) rather than prevention (which is not).</li>
+        </ol>
+        <p><strong>The result: people pay more for healthcare, but live less healthy lives. Systems treat disease, not health.</strong></p>
+
+        <h2>2. Universal Logic (Non-Negotiable)</h2>
+        <p>The following are the core requirements of the Governance Legitimacy Framework for domestic healthcare policy. These principles are globally universal; no country can bypass them.</p>
+
+        <div class="layer-card">
+            <div class="layer-label">Universal Logic</div>
+            <p><strong>1. Land value must be publicly captured to finance universal healthcare.</strong> A portion of land value increment must be earmarked for public health systems, ensuring that healthcare funding does not depend on employer contributions or out-of-pocket payments. This is the fiscal foundation of health equity.</p>
+            <p><strong>2. Healthcare must be a public good, not a market commodity.</strong> Universal healthcare coverage must be legally guaranteed, funded publicly, and delivered based on need, not ability to pay.</p>
+            <p><strong>3. Public health must be prioritized over treatment.</strong> Systems must invest in prevention, sanitation, nutrition, and health education — the foundational determinants of population health. Treatment is important, but it is downstream.</p>
+            <p><strong>4. Pharmaceutical pricing must be publicly regulated.</strong> Patent monopolies must not allow transnational pharmaceutical companies to set prices that exclude patients. Public funding of research must come with public control of pricing.</p>
+            <p><strong>5. Healthcare access must be decoupled from employment.</strong> Health coverage must be tied to citizenship or residence, not to employment status. Employer-tied healthcare traps workers in jobs and excludes the unemployed, gig workers, and retirees.</p>
+        </div>
+
+        <h2>3. Local Rules (Locally Tailored)</h2>
+        <p>The following are the concrete policy tools that countries can design according to their own conditions. These tools have no globally uniform standard; they must be locally tailored.</p>
+
+        <div class="layer-card">
+            <div class="layer-label blue">Local Rules</div>
+            <p><strong>1. Healthcare financing models.</strong> Countries may choose different models based on their fiscal systems and social contracts:</p>
+            <ul>
+                <li><strong>Single-payer national health service</strong>: Government-funded and delivered (e.g., UK NHS, Canada).</li>
+                <li><strong>Social health insurance</strong>: Mandatory insurance with public regulation, decoupled from employers (e.g., Germany, Japan, Taiwan).</li>
+                <li><strong>National health insurance</strong>: Single public insurer with private delivery (e.g., Taiwan, South Korea).</li>
+                <li><strong>Mixed system</strong>: Public and private insurance coexisting, with universal floor (e.g., Australia, Netherlands).</li>
+            </ul>
+            <p><strong>2. Pharmaceutical pricing and procurement.</strong> Countries may design different frameworks based on their market conditions:</p>
+            <ul>
+                <li><strong>Reference pricing</strong>: Setting prices based on international comparison.</li>
+                <li><strong>Value-based pricing</strong>: Setting prices based on health outcomes, not on patent monopolies.</li>
+                <li><strong>Compulsory licensing</strong>: Allowing domestic production of patented drugs in public health emergencies.</li>
+                <li><strong>Pooled procurement</strong>: Joint purchasing by multiple countries to negotiate lower prices.</li>
+                <li><strong>Public research, public pricing</strong>: Requiring public control of pricing for drugs developed with public funding.</li>
+            </ul>
+            <p><strong>3. Public health infrastructure.</strong> Countries may design different systems based on their administrative conditions:</p>
+            <ul>
+                <li><strong>Primary care networks</strong>: Community-based primary care as the foundation of the health system.</li>
+                <li><strong>Preventive care incentives</strong>: Public funding for vaccination, screening, and health education.</li>
+                <li><strong>Public health workforce</strong>: Training and deploying community health workers, especially in underserved areas.</li>
+                <li><strong>Environmental health</strong>: Integrating environmental protection with public health (air quality, water quality, sanitation).</li>
+            </ul>
+            <p><strong>4. Decoupling healthcare from employment.</strong> Countries may design different policies based on their administrative systems:</p>
+            <ul>
+                <li><strong>Universal coverage</strong>: Health coverage based on residence, not employment.</li>
+                <li><strong>Portable benefits</strong>: Health coverage follows workers across jobs and locations.</li>
+                <li><strong>Gig worker coverage</strong>: Health coverage for platform workers and independent contractors.</li>
+                <li><strong>Unemployment bridge</strong>: Health coverage continues during unemployment.</li>
+            </ul>
+            <p><strong>5. Healthcare quality and equity measurement.</strong> Countries may design different measurement frameworks based on their statistical capacity:</p>
+            <ul>
+                <li><strong>Access indicators</strong>: Measuring unmet healthcare needs, waiting times, and out-of-pocket costs.</li>
+                <li><strong>Outcome indicators</strong>: Measuring life expectancy, preventable mortality, and health disparities.</li>
+                <li><strong>Equity indicators</strong>: Measuring health outcomes by income, region, and social group.</li>
+                <li><strong>Financial protection</strong>: Measuring the share of households pushed into poverty by medical expenses.</li>
+            </ul>
+        </div>
+
+        <h2>4. The Necessity of Cross-Border Coordination</h2>
+        <p>Why must domestic healthcare reform be combined with global coordination?</p>
+        <p><strong>Because pharmaceutical capital is transnational.</strong> If one country negotiates lower drug prices, pharmaceutical companies can threaten to withhold supply or relocate. If one country invests in public health, its gains can be undermined by drug prices set globally.</p>
+        <p><strong>Only global coordination can prevent pharmaceutical arbitrage.</strong> This requires:</p>
+        <ul>
+            <li><strong>Uniform land value capture floor</strong>: To ensure all countries have the fiscal resources for universal healthcare.</li>
+            <li><strong>Beneficial ownership registry</strong>: To prevent pharmaceutical companies from hiding behind offshore structures.</li>
+            <li><strong>Pooled procurement</strong>: Joint purchasing by multiple countries to negotiate lower drug prices.</li>
+            <li><strong>Public research, public pricing</strong>: Global framework requiring public control of pricing for publicly funded research.</li>
+            <li><strong>Capital flow stabilization fund</strong>: To provide liquidity support for countries investing in public health against capital flight.</li>
+        </ul>
+        <p><strong>Precedents already exist</strong>: The Basel Accords for bank capital standards, FATF for anti-money laundering, BEPS for global minimum corporate tax. Cross-border coordination is not an ideal — it is a fact.</p>
+
+        <h2>5. Conclusion</h2>
+        <p><strong>The core of domestic healthcare reform is the institutional design of universal public health financed by land value capture.</strong></p>
+        <p>It must simultaneously satisfy two conditions:</p>
+        <ol>
+            <li><strong>Consistent with universal logic</strong>: public capture of land value for healthcare; healthcare as a public good; priority on public health and prevention; regulated pharmaceutical pricing; decoupling from employment.</li>
+            <li><strong>Respectful of local differences</strong>: healthcare financing models; pharmaceutical pricing frameworks; public health infrastructure; decoupling policies; quality and equity measurement.</li>
+        </ol>
+        <p><strong>Only when the underlying logic is globally universal and the concrete rules are locally tailored can countries preserve their policy space while preventing capital flight.</strong></p>
+        <p><strong>Healthcare is not a market — it is the institutional foundation of human dignity. A society that treats health as a commodity is not a healthy society.</strong></p>
+
+        <div class="highlight-box dual-box">
+            <p><strong>This essay follows the foundational principle: universal logic, local rules.</strong> For the full methodological framework, see <a href="/gl-principle-universal-local.html" style="color:#7DD3FC;">Universal Logic, Local Rules →</a></p>
+        </div>
+
+        <div class="signature">
+            Ping Xu
+            <span class="title">Creator of the Governance Legitimacy Framework · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 繁體中文版 ==================== -->
+<div class="lb" data-lang="tw">
+    <div class="page-header">
+        <div class="badge dual">內政篇系列 · 醫療 · 治理正當性框架應用</div>
+        <div class="title">醫療內政篇：從治療導向到公共衛生</div>
+        <div class="subtitle">底層邏輯全球通用，具體規則因地制宜。各國如何重建醫療為公共財，而不是商品。</div>
+        <div class="meta">徐萍 · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+        <h2>一、問題診斷</h2>
+        <p>各國醫療危機的表面原因各異，但結構性根源是同一個：<span class="highlight">醫療被商品化，公共衛生被利潤邏輯侵蝕。</span></p>
+        <p>具體表現在三個層面：</p>
+        <ol>
+            <li><strong>醫療成本壓垮家庭</strong>：在美國，醫療帳單是破產的主要原因之一。在其他國家，自付費用將家庭推入貧困。醫療被當作市場交易，而不是權利。</li>
+            <li><strong>藥廠資本捕獲健康增值</strong>：跨國藥廠為專利藥品設定壟斷價格，而這些藥品往往由公共研究資助。保險資本從風險池中提取利潤。健康的價值流向私人資本，而不是公共衛生。</li>
+            <li><strong>公共衛生被邊緣化</strong>：預防、環境衛生、營養與健康教育——人口健康的基礎——資金不足。系統聚焦於治療（有利可圖），而不是預防（無利可圖）。</li>
+        </ol>
+        <p><strong>結果是：人們為醫療支付更多，卻活得更不健康。系統治療疾病，而不是健康。</strong></p>
+
+        <h2>二、全球通用的底層邏輯（不可談判）</h2>
+        <p>以下是治理正當性框架對醫療內政的核心要求。這些原則是全球通用的，任何國家都不能繞過。</p>
+
+        <div class="layer-card">
+            <div class="layer-label">全球通用的底層邏輯</div>
+            <p><strong>1. 土地增值必須被公共捕獲，用於普惠醫療。</strong>土地增值的一部分必須專項用於公共衛生體系，確保醫療資金不依賴僱主繳費或自付費用。這是健康公平的財政基礎。</p>
+            <p><strong>2. 醫療必須是公共財，而不是市場商品。</strong>全民醫療覆蓋必須受到法律保障、公共資助，並根據需要而非支付能力提供。</p>
+            <p><strong>3. 公共衛生必須優先於治療。</strong>系統必須投資於預防、環境衛生、營養與健康教育——人口健康的基礎決定因素。治療很重要，但它是下游的。</p>
+            <p><strong>4. 藥品定價必須受到公共監管。</strong>專利壟斷不得讓跨國藥廠設定排除患者的價格。公共研究資助必須伴隨公共定價控制。</p>
+            <p><strong>5. 醫療可及性必須與就業脫鉤。</strong>健康覆蓋必須與公民身分或居住地掛鉤，而不是與就業狀態掛鉤。僱主綁定的醫療將勞動者困在工作崗位上，並排除失業者、零工勞動者與退休者。</p>
+        </div>
+
+        <h2>三、各國因地制宜的具體規則（可調整）</h2>
+        <p>以下是各國可以根據自身國情設計的具體政策工具。這些工具沒有全球統一的標準，必須因地制宜。</p>
+
+        <div class="layer-card">
+            <div class="layer-label blue">各國自訂的具體規則</div>
+            <p><strong>1. 醫療融資模式。</strong>各國可以根據自己的財政體系與社會契約，選擇不同的模式：</p>
+            <ul>
+                <li><strong>單一支付者公醫制度</strong>：政府資助並提供（如英國 NHS、加拿大）。</li>
+                <li><strong>社會健康保險</strong>：強制保險，公共監管，與僱主脫鉤（如德國、日本、台灣地區）。</li>
+                <li><strong>全民健康保險</strong>：單一公共保險人，私人提供服務（如台灣地區、韓國）。</li>
+                <li><strong>混合制度</strong>：公共與私人保險並存，設有全民底線（如澳洲、荷蘭）。</li>
+            </ul>
+            <p><strong>2. 藥品定價與採購。</strong>各國可以根據自己的市場條件，設計不同的框架：</p>
+            <ul>
+                <li><strong>參考定價</strong>：根據國際比較設定價格。</li>
+                <li><strong>價值導向定價</strong>：根據健康結果而非專利壟斷設定價格。</li>
+                <li><strong>強制授權</strong>：在公共衛生緊急情況下允許國內生產專利藥品。</li>
+                <li><strong>聯合採購</strong>：多國聯合採購以談判更低價格。</li>
+                <li><strong>公共研究，公共定價</strong>：要求對公共資助研發的藥品實施公共定價控制。</li>
+            </ul>
+            <p><strong>3. 公共衛生基礎設施。</strong>各國可以根據自己的行政條件，設計不同的體系：</p>
+            <ul>
+                <li><strong>基層醫療網絡</strong>：以社區為基礎的基層醫療作為衛生體系的基礎。</li>
+                <li><strong>預防照護激勵</strong>：為疫苗接種、篩檢與健康教育提供公共資金。</li>
+                <li><strong>公共衛生人力</strong>：培訓與部署社區衛生工作者，特別是在服務不足地區。</li>
+                <li><strong>環境衛生</strong>：將環境保護與公共衛生整合（空氣品質、水質、環境衛生）。</li>
+            </ul>
+            <p><strong>4. 醫療與就業脫鉤。</strong>各國可以根據自己的行政體系，設計不同的政策：</p>
+            <ul>
+                <li><strong>全民覆蓋</strong>：健康覆蓋基於居住地，而非就業。</li>
+                <li><strong>可攜式福利</strong>：健康覆蓋跟隨勞動者跨工作與地點流動。</li>
+                <li><strong>零工勞動者覆蓋</strong>：為平台勞動者與獨立承包商提供健康覆蓋。</li>
+                <li><strong>失業過渡</strong>：失業期間健康覆蓋繼續。</li>
+            </ul>
+            <p><strong>5. 醫療品質與公平測量。</strong>各國可以根據自己的統計能力，設計不同的測量框架：</p>
+            <ul>
+                <li><strong>可及性指標</strong>：測量未滿足的醫療需求、等候時間與自付費用。</li>
+                <li><strong>結果指標</strong>：測量預期壽命、可預防死亡率與健康差距。</li>
+                <li><strong>公平指標</strong>：按收入、地區與社會群體測量健康結果。</li>
+                <li><strong>財務保護</strong>：測量因醫療費用陷入貧困的家庭比例。</li>
+            </ul>
+        </div>
+
+        <h2>四、跨國協調的必要性</h2>
+        <p>為什麼醫療內政改革必須與全球協調相結合？</p>
+        <p><strong>因為藥廠資本是跨國的。</strong>如果一個國家談判降低藥價，藥廠可以威脅停止供應或遷移。如果一個國家投資公共衛生，其成果可能被全球設定的藥價所侵蝕。</p>
+        <p><strong>只有全球協調，才能防止藥廠套利。</strong>這需要：</p>
+        <ul>
+            <li><strong>統一的土地增值捕獲下限</strong>：確保所有國家都有財政資源實現全民醫療。</li>
+            <li><strong>受益所有人登記</strong>：防止藥廠躲在離岸結構背後。</li>
+            <li><strong>聯合採購</strong>：多國聯合採購以談判更低藥價。</li>
+            <li><strong>公共研究，公共定價</strong>：全球框架要求對公共資助研究實施公共定價控制。</li>
+            <li><strong>資本流動穩定基金</strong>：為投資公共衛生的國家提供流動性支持，對抗資本外逃。</li>
+        </ul>
+        <p><strong>先例已經存在</strong>：巴塞爾協議（銀行資本標準）、FATF（反洗錢標準）、BEPS（全球最低企業稅）。跨國協調不是理想，是已經落地的事實。</p>
+
+        <h2>五、結論</h2>
+        <p><strong>醫療內政改革的核心，是用土地增值收益，建立普惠公共衛生的制度設計。</strong></p>
+        <p>它必須同時滿足兩個條件：</p>
+        <ol>
+            <li><strong>符合全球通用的底層邏輯</strong>：土地增值公共捕獲用於醫療；醫療作為公共財；優先公共衛生與預防；藥品定價監管；與就業脫鉤。</li>
+            <li><strong>尊重各國的具體差異</strong>：醫療融資模式；藥品定價框架；公共衛生基礎設施；脫鉤政策；品質與公平測量。</li>
+        </ol>
+        <p><strong>只有當底層邏輯全球通用、具體規則因地制宜時，各國才能既保住自己的政策空間，又防止資本逃逸。</strong></p>
+        <p><strong>醫療不是市場——它是人類尊嚴的制度基礎。一個把健康當成商品的社會，不是一個健康的社會。</strong></p>
+
+        <div class="highlight-box dual-box">
+            <p><strong>本文依循基礎原則：底層邏輯全球通用，具體規則因地制宜。</strong>完整方法論框架請見 <a href="/gl-principle-universal-local.html" style="color:#7DD3FC;">底層邏輯全球通用，具體規則因地制宜 →</a></p>
+        </div>
+
+        <div class="signature">
+            徐萍
+            <span class="title">治理正當性框架發明人 · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 簡體中文版 ==================== -->
+<div class="lb" data-lang="cn">
+    <div class="page-header">
+        <div class="badge dual">内政篇系列 · 医疗 · 治理正当性框架应用</div>
+        <div class="title">医疗内政篇：从治疗导向到公共卫生</div>
+        <div class="subtitle">底层逻辑全球通用，具体规则因地制宜。各国如何重建医疗为公共财，而不是商品。</div>
+        <div class="meta">徐萍 · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+        <h2>一、问题诊断</h2>
+        <p>各国医疗危机的表面原因各异，但结构性根源是同一个：<span class="highlight">医疗被商品化，公共卫生被利润逻辑侵蚀。</span></p>
+        <p>具体表现在三个层面：</p>
+        <ol>
+            <li><strong>医疗成本压垮家庭</strong>：在美国，医疗帐单是破产的主要原因之一。在其他国家，自付费用将家庭推入贫困。医疗被当作市场交易，而不是权利。</li>
+            <li><strong>药厂资本捕获健康增值</strong>：跨国药厂为专利药品设定垄断价格，而这些药品往往由公共研究资助。保险资本从风险池中提取利润。健康的价值流向私人资本，而不是公共卫生。</li>
+            <li><strong>公共卫生被边缘化</strong>：预防、环境卫生、营养与健康教育——人口健康的基础——资金不足。系统聚焦于治疗（有利可图），而不是预防（无利可图）。</li>
+        </ol>
+        <p><strong>结果是：人们为医疗支付更多，却活得更不健康。系统治疗疾病，而不是健康。</strong></p>
+
+        <h2>二、全球通用的底层逻辑（不可谈判）</h2>
+        <p>以下是治理正当性框架对医疗内政的核心要求。这些原则是全球通用的，任何国家都不能绕过。</p>
+
+        <div class="layer-card">
+            <div class="layer-label">全球通用的底层逻辑</div>
+            <p><strong>1. 土地增值必须被公共捕获，用于普惠医疗。</strong>土地增值的一部分必须专项用于公共卫生体系，确保医疗资金不依赖雇主缴费或自付费用。这是健康公平的财政基础。</p>
+            <p><strong>2. 医疗必须是公共财，而不是市场商品。</strong>全民医疗覆盖必须受到法律保障、公共资助，并根据需要而非支付能力提供。</p>
+            <p><strong>3. 公共卫生必须优先于治疗。</strong>系统必须投资于预防、环境卫生、营养与健康教育——人口健康的基础决定因素。治疗很重要，但它是下游的。</p>
+            <p><strong>4. 药品定价必须受到公共监管。</strong>专利垄断不得让跨国药厂设定排除患者的价格。公共研究资助必须伴随公共定价控制。</p>
+            <p><strong>5. 医疗可及性必须与就业脱钩。</strong>健康覆盖必须与公民身分或居住地挂钩，而不是与就业状态挂钩。雇主绑定的医疗将劳动者困在工作岗位上，并排除失业者、零工劳动者与退休者。</p>
+        </div>
+
+        <h2>三、各国因地制宜的具体规则（可调整）</h2>
+        <p>以下是各国可以根据自身国情设计的具体政策工具。这些工具没有全球统一的标准，必须因地制宜。</p>
+
+        <div class="layer-card">
+            <div class="layer-label blue">各国自订的具体规则</div>
+            <p><strong>1. 医疗融资模式。</strong>各国可以根据自己的财政体系与社会契约，选择不同的模式：</p>
+            <ul>
+                <li><strong>单一支付者公医制度</strong>：政府资助并提供（如英国 NHS、加拿大）。</li>
+                <li><strong>社会健康保险</strong>：强制保险，公共监管，与雇主脱钩（如德国、日本、台湾地区）。</li>
+                <li><strong>全民健康保险</strong>：单一公共保险人，私人提供服务（如台湾地区、韩国）。</li>
+                <li><strong>混合制度</strong>：公共与私人保险并存，设有全民底线（如澳洲、荷兰）。</li>
+            </ul>
+            <p><strong>2. 药品定价与采购。</strong>各国可以根据自己的市场条件，设计不同的框架：</p>
+            <ul>
+                <li><strong>参考定价</strong>：根据国际比较设定价格。</li>
+                <li><strong>价值导向定价</strong>：根据健康结果而非专利垄断设定价格。</li>
+                <li><strong>强制授权</strong>：在公共卫生紧急情况下允许国内生产专利药品。</li>
+                <li><strong>联合采购</strong>：多国联合采购以谈判更低价格。</li>
+                <li><strong>公共研究，公共定价</strong>：要求对公共资助研发的药品实施公共定价控制。</li>
+            </ul>
+            <p><strong>3. 公共卫生基础设施。</strong>各国可以根据自己的行政条件，设计不同的体系：</p>
+            <ul>
+                <li><strong>基层医疗网络</strong>：以社区为基础的基层医疗作为卫生体系的基础。</li>
+                <li><strong>预防照护激励</strong>：为疫苗接种、筛检与健康教育提供公共资金。</li>
+                <li><strong>公共卫生人力</strong>：培训与部署社区卫生工作者，特别是在服务不足地区。</li>
+                <li><strong>环境卫生</strong>：将环境保护与公共卫生整合（空气品质、水质、环境卫生）。</li>
+            </ul>
+            <p><strong>4. 医疗与就业脱钩。</strong>各国可以根据自己的行政体系，设计不同的政策：</p>
+            <ul>
+                <li><strong>全民覆盖</strong>：健康覆盖基于居住地，而非就业。</li>
+                <li><strong>可携式福利</strong>：健康覆盖跟随劳动者跨工作与地点流动。</li>
+                <li><strong>零工劳动者覆盖</strong>：为平台劳动者与独立承包商提供健康覆盖。</li>
+                <li><strong>失业过渡</strong>：失业期间健康覆盖继续。</li>
+            </ul>
+            <p><strong>5. 医疗质量与公平测量。</strong>各国可以根据自己的统计能力，设计不同的测量框架：</p>
+            <ul>
+                <li><strong>可及性指标</strong>：测量未满足的医疗需求、等候时间与自付费用。</li>
+                <li><strong>结果指标</strong>：测量预期寿命、可预防死亡率与健康差距。</li>
+                <li><strong>公平指标</strong>：按收入、地区与社会群体测量健康结果。</li>
+                <li><strong>财务保护</strong>：测量因医疗费用陷入贫困的家庭比例。</li>
+            </ul>
+        </div>
+
+        <h2>四、跨国协调的必要性</h2>
+        <p>为什么医疗内政改革必须与全球协调相结合？</p>
+        <p><strong>因为药厂资本是跨国的。</strong>如果一个国家谈判降低药价，药厂可以威胁停止供应或迁移。如果一个国家投资公共卫生，其成果可能被全球设定的药价所侵蚀。</p>
+        <p><strong>只有全球协调，才能防止药厂套利。</strong>这需要：</p>
+        <ul>
+            <li><strong>统一的土地增值捕获下限</strong>：确保所有国家都有财政资源实现全民医疗。</li>
+            <li><strong>受益所有人登记</strong>：防止药厂躲在离岸结构背后。</li>
+            <li><strong>联合采购</strong>：多国联合采购以谈判更低药价。</li>
+            <li><strong>公共研究，公共定价</strong>：全球框架要求对公共资助研究实施公共定价控制。</li>
+            <li><strong>资本流动稳定基金</strong>：为投资公共卫生的国家提供流动性支持，对抗资本外逃。</li>
+        </ul>
+        <p><strong>先例已经存在</strong>：巴塞尔协议（银行资本标准）、FATF（反洗钱标准）、BEPS（全球最低企业税）。跨国协调不是理想，是已经落地的事实。</p>
+
+        <h2>五、结论</h2>
+        <p><strong>医疗内政改革的核心，是用土地增值收益，建立普惠公共卫生的制度设计。</strong></p>
+        <p>它必须同时满足两个条件：</p>
+        <ol>
+            <li><strong>符合全球通用的底层逻辑</strong>：土地增值公共捕获用于医疗；医疗作为公共财；优先公共卫生与预防；药品定价监管；与就业脱钩。</li>
+            <li><strong>尊重各国的具体差异</strong>：医疗融资模式；药品定价框架；公共卫生基础设施；脱钩政策；质量与公平测量。</li>
+        </ol>
+        <p><strong>只有当底层逻辑全球通用、具体规则因地制宜时，各国才能既保住自己的政策空间，又防止资本逃逸。</strong></p>
+        <p><strong>医疗不是市场——它是人类尊严的制度基础。一个把健康当成商品的社会，不是一个健康的社会。</strong></p>
+
+        <div class="highlight-box dual-box">
+            <p><strong>本文依循基础原则：底层逻辑全球通用，具体规则因地制宜。</strong>完整方法论框架请见 <a href="/gl-principle-universal-local.html" style="color:#7DD3FC;">底层逻辑全球通用，具体规则因地制宜 →</a></p>
+        </div>
+
+        <div class="signature">
+            徐萍
+            <span class="title">治理正当性框架发明人 · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 西班牙文版 ==================== -->
+<div class="lb" data-lang="es">
+    <div class="page-header">
+        <div class="badge dual">Serie de Política Interior · Salud · Aplicación del Marco de Legitimidad Gubernamental</div>
+        <div class="title">Política Sanitaria Interior: De la Curación a la Salud Pública</div>
+        <div class="subtitle">Lógica universal, reglas locales. Cómo los países pueden reconstruir la atención médica como un bien público, no una mercancía.</div>
+        <div class="meta">Ping Xu · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+        <h2>1. Diagnóstico del Problema</h2>
+        <p>Las causas superficiales de las crisis sanitarias varían, pero la raíz estructural es la misma: <span class="highlight">la atención médica ha sido mercantilizada, y la salud pública ha sido erosionada por la lógica del lucro.</span></p>
+        <p>Esto se manifiesta en tres niveles:</p>
+        <ol>
+            <li><strong>Los costos sanitarios aplastan a los hogares</strong>: En EE.UU., las facturas médicas son una de las principales causas de bancarrota. En otros países, los pagos de bolsillo empujan a las familias a la pobreza. La atención médica se trata como una transacción de mercado, no como un derecho.</li>
+            <li><strong>El capital farmacéutico captura el valor de la salud</strong>: Las farmacéuticas transnacionales fijan precios de monopolio para medicamentos patentados, a menudo financiados por investigación pública. El capital asegurador extrae ganancias del pool de riesgos. El valor de la salud fluye hacia el capital privado, no hacia la salud pública.</li>
+            <li><strong>La salud pública está marginada</strong>: La prevención, el saneamiento, la nutrición y la educación sanitaria — los fundamentos de la salud de la población — están infrafinanciados. Los sistemas se centran en el tratamiento (que es rentable) en lugar de la prevención (que no lo es).</li>
+        </ol>
+        <p><strong>El resultado: las personas pagan más por la atención médica, pero viven vidas menos saludables. Los sistemas tratan enfermedades, no salud.</strong></p>
+
+        <h2>2. Lógica Universal (No Negociable)</h2>
+        <p>Los siguientes son los requisitos fundamentales del Marco de Legitimidad Gubernamental para la política sanitaria interior. Estos principios son globalmente universales; ningún país puede eludirlos.</p>
+
+        <div class="layer-card">
+            <div class="layer-label">Lógica Universal</div>
+            <p><strong>1. El valor del suelo debe ser capturado públicamente para financiar la atención médica universal.</strong> Una parte del incremento del valor del suelo debe destinarse a los sistemas de salud pública, asegurando que el financiamiento sanitario no dependa de las contribuciones de los empleadores o de los pagos de bolsillo. Esta es la base fiscal de la equidad en salud.</p>
+            <p><strong>2. La atención médica debe ser un bien público, no una mercancía de mercado.</strong> La cobertura médica universal debe estar legalmente garantizada, financiada públicamente y prestada según la necesidad, no la capacidad de pago.</p>
+            <p><strong>3. La salud pública debe priorizarse sobre el tratamiento.</strong> Los sistemas deben invertir en prevención, saneamiento, nutrición y educación sanitaria — los determinantes fundamentales de la salud de la población. El tratamiento es importante, pero está aguas abajo.</p>
+            <p><strong>4. Los precios farmacéuticos deben estar regulados públicamente.</strong> Los monopolios de patentes no deben permitir que las farmacéuticas transnacionales fijen precios que excluyan a los pacientes. El financiamiento público de la investigación debe conllevar control público de los precios.</p>
+            <p><strong>5. El acceso a la atención médica debe estar desvinculado del empleo.</strong> La cobertura sanitaria debe estar vinculada a la ciudadanía o residencia, no al estado de empleo. La atención médica vinculada al empleador atrapa a los trabajadores en sus puestos de trabajo y excluye a los desempleados, trabajadores gig y jubilados.</p>
+        </div>
+
+        <h2>3. Reglas Locales (Adaptadas Localmente)</h2>
+        <p>Las siguientes son las herramientas de política concretas que los países pueden diseñar según sus propias condiciones. Estas herramientas no tienen un estándar globalmente uniforme; deben adaptarse localmente.</p>
+
+        <div class="layer-card">
+            <div class="layer-label blue">Reglas Locales</div>
+            <p><strong>1. Modelos de financiamiento sanitario.</strong> Los países pueden elegir diferentes modelos según sus sistemas fiscales y contratos sociales:</p>
+            <ul>
+                <li><strong>Servicio nacional de salud de pagador único</strong>: Financiado y prestado por el gobierno (ej., NHS del Reino Unido, Canadá).</li>
+                <li><strong>Seguro social de salud</strong>: Seguro obligatorio con regulación pública, desvinculado de los empleadores (ej., Alemania, Japón, Taiwán).</li>
+                <li><strong>Seguro nacional de salud</strong>: Asegurador público único con prestación privada (ej., Taiwán, Corea del Sur).</li>
+                <li><strong>Sistema mixto</strong>: Seguro público y privado coexistiendo, con un piso universal (ej., Australia, Países Bajos).</li>
+            </ul>
+            <p><strong>2. Precios farmacéuticos y adquisiciones.</strong> Los países pueden diseñar diferentes marcos según sus condiciones de mercado:</p>
+            <ul>
+                <li><strong>Precios de referencia</strong>: Establecer precios basados en comparación internacional.</li>
+                <li><strong>Precios basados en valor</strong>: Establecer precios basados en resultados de salud, no en monopolios de patentes.</li>
+                <li><strong>Licencias obligatorias</strong>: Permitir la producción nacional de medicamentos patentados en emergencias de salud pública.</li>
+                <li><strong>Adquisición conjunta</strong>: Compra conjunta por múltiples países para negociar precios más bajos.</li>
+                <li><strong>Investigación pública, precios públicos</strong>: Requerir control público de precios para medicamentos desarrollados con financiamiento público.</li>
+            </ul>
+            <p><strong>3. Infraestructura de salud pública.</strong> Los países pueden diseñar diferentes sistemas según sus condiciones administrativas:</p>
+            <ul>
+                <li><strong>Redes de atención primaria</strong>: Atención primaria basada en la comunidad como fundamento del sistema de salud.</li>
+                <li><strong>Incentivos de atención preventiva</strong>: Financiamiento público para vacunación, cribado y educación sanitaria.</li>
+                <li><strong>Fuerza laboral de salud pública</strong>: Capacitar y desplegar trabajadores de salud comunitarios, especialmente en áreas desatendidas.</li>
+                <li><strong>Salud ambiental</strong>: Integrar la protección ambiental con la salud pública (calidad del aire, calidad del agua, saneamiento).</li>
+            </ul>
+            <p><strong>4. Desvinculación de la atención médica del empleo.</strong> Los países pueden diseñar diferentes políticas según sus sistemas administrativos:</p>
+            <ul>
+                <li><strong>Cobertura universal</strong>: Cobertura sanitaria basada en la residencia, no en el empleo.</li>
+                <li><strong>Beneficios portables</strong>: La cobertura sanitaria sigue a los trabajadores entre trabajos y ubicaciones.</li>
+                <li><strong>Cobertura para trabajadores gig</strong>: Cobertura sanitaria para trabajadores de plataformas y contratistas independientes.</li>
+                <li><strong>Puente de desempleo</strong>: La cobertura sanitaria continúa durante el desempleo.</li>
+            </ul>
+            <p><strong>5. Medición de calidad y equidad sanitarias.</strong> Los países pueden diseñar diferentes marcos de medición según su capacidad estadística:</p>
+            <ul>
+                <li><strong>Indicadores de acceso</strong>: Medir necesidades sanitarias no satisfechas, tiempos de espera y costos de bolsillo.</li>
+                <li><strong>Indicadores de resultados</strong>: Medir esperanza de vida, mortalidad prevenible y disparidades de salud.</li>
+                <li><strong>Indicadores de equidad</strong>: Medir resultados de salud por ingresos, región y grupo social.</li>
+                <li><strong>Protección financiera</strong>: Medir la proporción de hogares empujados a la pobreza por gastos médicos.</li>
+            </ul>
+        </div>
+
+        <h2>4. La Necesidad de la Coordinación Transfronteriza</h2>
+        <p>¿Por qué la reforma sanitaria interior debe combinarse con la coordinación global?</p>
+        <p><strong>Porque el capital farmacéutico es transnacional.</strong> Si un país negocia precios más bajos de medicamentos, las farmacéuticas pueden amenazar con retener el suministro o trasladarse. Si un país invierte en salud pública, sus ganancias pueden verse socavadas por los precios de los medicamentos fijados globalmente.</p>
+        <p><strong>Solo la coordinación global puede prevenir el arbitraje farmacéutico.</strong> Esto requiere:</p>
+        <ul>
+            <li><strong>Piso uniforme de captura del valor del suelo</strong>: Para asegurar que todos los países tengan los recursos fiscales para la atención médica universal.</li>
+            <li><strong>Registro de beneficiarios finales</strong>: Para evitar que las farmacéuticas se oculten detrás de estructuras offshore.</li>
+            <li><strong>Adquisición conjunta</strong>: Compra conjunta por múltiples países para negociar precios más bajos de medicamentos.</li>
+            <li><strong>Investigación pública, precios públicos</strong>: Marco global que requiera control público de precios para investigación financiada públicamente.</li>
+            <li><strong>Fondo de estabilización de flujos de capital</strong>: Para proporcionar apoyo de liquidez a los países que invierten en salud pública contra la fuga de capitales.</li>
+        </ul>
+        <p><strong>Ya existen precedentes</strong>: los Acuerdos de Basilea para estándares de capital bancario, el GAFI para anti-blanqueo de capitales, BEPS para el impuesto corporativo mínimo global. La coordinación transfronteriza no es un ideal — es un hecho.</p>
+
+        <h2>5. Conclusión</h2>
+        <p><strong>El núcleo de la reforma sanitaria interior es el diseño institucional de la salud pública universal financiada por la captura del valor del suelo.</strong></p>
+        <p>Debe satisfacer simultáneamente dos condiciones:</p>
+        <ol>
+            <li><strong>Consistente con la lógica universal</strong>: captura pública del valor del suelo para la salud; atención médica como bien público; prioridad a la salud pública y la prevención; precios farmacéuticos regulados; desvinculación del empleo.</li>
+            <li><strong>Respetuosa de las diferencias locales</strong>: modelos de financiamiento sanitario; marcos de precios farmacéuticos; infraestructura de salud pública; políticas de desvinculación; medición de calidad y equidad.</li>
+        </ol>
+        <p><strong>Solo cuando la lógica subyacente es globalmente universal y las reglas concretas se adaptan localmente, los países pueden preservar su espacio de política mientras previenen la fuga de capitales.</strong></p>
+        <p><strong>La atención médica no es un mercado — es la base institucional de la dignidad humana. Una sociedad que trata la salud como una mercancía no es una sociedad sana.</strong></p>
+
+        <div class="highlight-box dual-box">
+            <p><strong>Este ensayo sigue el principio fundacional: lógica universal, reglas locales.</strong> Para el marco metodológico completo, véase <a href="/gl-principle-universal-local.html" style="color:#7DD3FC;">Lógica Universal, Reglas Locales →</a></p>
+        </div>
+
+        <div class="signature">
+            Ping Xu
+            <span class="title">Creadora del Marco de Legitimidad Gubernamental · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <span class="site">gfiintel.com</span>
+    <span class="links">
+        <a href="/">← Back to Home</a>
+        <a href="/gl-principle-universal-local.html">← Foundational Principle</a>
+        <a href="/shared-delusion.html">← Shared Delusion Series</a>
+        <a href="/landjustice.html">← Land Justice Series</a>
+    </span>
+    <span class="copyright">© 2026 GFI Flow Intelligence · 醫療內政篇 · Domestic Healthcare Policy</span>
+</div>
+
+<script>
+    document.querySelectorAll('.lb-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var lang = this.dataset.lang;
+            document.querySelectorAll('.lb-btn').forEach(function(b) { b.classList.remove('on'); });
+            this.classList.add('on');
+            document.querySelectorAll('.lb').forEach(function(lb) { lb.classList.remove('active'); });
+            var target = document.querySelector('.lb[data-lang="' + lang + '"]');
+            if (target) target.classList.add('active');
+        });
+    });
+</script>
+
+</body>
+</html>
