@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Domestic Policy Series · 內政篇系列</title>
+    <meta name="description" content="Universal logic, local rules. Seven domestic policy essays grounded in the Governance Legitimacy Framework — fiscal, housing, employment, aging, education, healthcare, and environment." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: #0d0a08;
+            color: #e0d6cc;
+            font-family: 'DM Sans', system-ui, sans-serif;
+            font-size: 16px;
+            line-height: 1.9;
+            min-height: 100vh;
+        }
+        .topbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            height: 60px; padding: 0 clamp(18px, 5vw, 48px);
+            display: flex; align-items: center; justify-content: space-between;
+            background: rgba(13, 10, 8, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .logo {
+            font-family: 'DM Mono', monospace; font-size: 11px;
+            letter-spacing: 0.16em; text-transform: uppercase;
+            color: #b8aaa0; text-decoration: none;
+        }
+        .nav-right { display: flex; align-items: center; gap: 12px; }
+        .lang-grp { display: flex; gap: 4px; }
+        .lb-btn {
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            letter-spacing: 0.06em; padding: 4px 10px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 4px; background: transparent;
+            color: #7a7068; cursor: pointer; transition: all 0.2s;
+        }
+        .lb-btn:hover { color: #e0d6cc; border-color: rgba(255, 255, 255, 0.2); }
+        .lb-btn.on { background: #b8aaa0; color: #0d0a08; border-color: #b8aaa0; }
+        .nav-links { display: flex; gap: 16px; align-items: center; }
+        .nav-links a {
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            letter-spacing: 0.06em; color: #7a7068;
+            text-decoration: none; padding: 4px 8px;
+            border-radius: 4px; transition: all 0.2s;
+        }
+        .nav-links a:hover { color: #e0d6cc; background: rgba(255, 255, 255, 0.04); }
+        .lb { display: none; padding: 100px 40px 70px; max-width: 900px; margin: 0 auto; }
+        .lb.active { display: block; }
+        .page-header {
+            text-align: center;
+            padding: 0 0 32px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 32px;
+        }
+        .page-header .badge {
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            letter-spacing: 0.22em; text-transform: uppercase;
+            color: #8a4a2a; margin-bottom: 12px;
+        }
+        .page-header .title {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: clamp(32px, 4vw, 48px);
+            line-height: 1.1; color: #f0e6dc; margin-bottom: 6px;
+        }
+        .page-header .subtitle {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-style: italic; font-size: clamp(16px, 1.8vw, 20px);
+            color: #8a7a6a; margin-bottom: 10px;
+        }
+        .page-header .meta {
+            font-family: 'DM Mono', monospace; font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.2);
+        }
+        .page-header .divider {
+            width: 60px; height: 2px; background: #8a4a2a;
+            margin: 16px auto 0; border-radius: 2px; opacity: 0.4;
+        }
+        .content .lead {
+            font-size: 1.05rem; font-weight: 500;
+            color: #f0e6dc; margin-bottom: 24px;
+        }
+        .content .highlight { color: #c47a4a; font-weight: 600; }
+        .content .section-title {
+            font-size: 1.3rem; font-weight: 700;
+            margin: 2rem 0 0.8rem 0; color: #f0e6dc;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding-bottom: 0.3rem;
+        }
+        .article-grid {
+            display: grid; grid-template-columns: 1fr; gap: 16px; margin: 20px 0 30px 0;
+        }
+        .article-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px; padding: 1.2rem 1.5rem;
+            transition: all 0.3s; text-decoration: none;
+            display: block; color: inherit;
+        }
+        .article-item:hover {
+            border-color: rgba(196, 122, 74, 0.3);
+            background: rgba(255, 255, 255, 0.04);
+            transform: translateX(4px);
+        }
+        .article-item.principle {
+            border-color: rgba(125, 211, 252, 0.3);
+            background: rgba(125, 211, 252, 0.04);
+        }
+        .article-item.principle:hover {
+            border-color: rgba(125, 211, 252, 0.5);
+            background: rgba(125, 211, 252, 0.08);
+        }
+        .article-item .num {
+            font-family: 'DM Mono', monospace; font-size: 0.7rem;
+            color: #8a4a2a; letter-spacing: 0.04em; margin-bottom: 2px;
+        }
+        .article-item.principle .num {
+            color: #7DD3FC;
+        }
+        .article-item .a-title {
+            font-size: 1.05rem; font-weight: 600;
+            color: #f0e6dc; margin-bottom: 4px;
+        }
+        .article-item.principle .a-title {
+            color: #d8eeff;
+        }
+        .article-item .a-desc {
+            font-size: 0.9rem; color: #b0a69a; line-height: 1.7;
+        }
+        .article-item .a-tags {
+            margin-top: 6px; display: flex; flex-wrap: wrap; gap: 6px;
+        }
+        .article-item .a-tags span {
+            font-family: 'DM Mono', monospace; font-size: 0.55rem;
+            color: #7a7068; background: rgba(255, 255, 255, 0.04);
+            padding: 2px 10px; border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .article-item .a-langs {
+            font-family: 'DM Mono', monospace; font-size: 0.55rem;
+            color: #5a5248; margin-top: 4px;
+        }
+        .article-item .a-langs span { color: #8a7a6a; }
+        .article-item .a-badge {
+            display: inline-block;
+            font-family: 'DM Mono', monospace; font-size: 0.55rem;
+            color: #c47a4a; background: rgba(196, 122, 74, 0.1);
+            padding: 2px 10px; border-radius: 12px;
+            border: 1px solid rgba(196, 122, 74, 0.15);
+            margin-bottom: 4px;
+        }
+        .article-item .a-badge.dual {
+            color: #7DD3FC;
+            background: rgba(125, 211, 252, 0.1);
+            border-color: rgba(125, 211, 252, 0.2);
+        }
+        .highlight-box {
+            background: rgba(138, 74, 42, 0.06);
+            border-left: 4px solid #8a4a2a;
+            padding: 1.2rem 1.8rem; margin: 26px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .highlight-box p { color: #d0c6bc; margin-bottom: 4px; }
+        .highlight-box strong { color: #f0e6dc; }
+        .highlight-box.dual-box {
+            border-left-color: #7DD3FC;
+            background: rgba(125, 211, 252, 0.05);
+        }
+        .signature {
+            margin-top: 40px; padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.1rem; color: #f0e6dc;
+        }
+        .signature .title {
+            font-family: 'DM Mono', monospace; font-size: 0.6rem;
+            color: rgba(255, 255, 255, 0.25);
+            letter-spacing: 0.06em; display: block; margin-top: 2px;
+        }
+        .footer {
+            text-align: center; padding: 28px 20px 36px;
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            color: rgba(255, 255, 255, 0.18);
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            margin-top: 48px; line-height: 2;
+        }
+        .footer a { color: #b8aaa0; text-decoration: none; margin: 0 8px; }
+        .footer a:hover { color: #e0d6cc; }
+        .footer .site { display: block; margin-bottom: 8px; color: rgba(255, 255, 255, 0.25); letter-spacing: 0.06em; }
+        .footer .links { display: block; margin-bottom: 8px; }
+        .footer .copyright { color: rgba(255, 255, 255, 0.12); display: block; }
+        @media (max-width: 640px) {
+            .lb { padding: 80px 20px 50px; }
+            .topbar { padding: 0 14px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="topbar">
+    <a href="/" class="logo">← Home</a>
+    <div class="nav-right">
+        <div class="lang-grp">
+            <button class="lb-btn on" data-lang="en">EN</button>
+            <button class="lb-btn" data-lang="tw">繁</button>
+            <button class="lb-btn" data-lang="cn">简</button>
+            <button class="lb-btn" data-lang="es">ES</button>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 英文版 ==================== -->
+<div class="lb active" data-lang="en">
+    <div class="page-header">
+        <div class="badge">Domestic Policy Series · 1 Principle + 7 Essays</div>
+        <div class="title">Domestic Policy Series</div>
+        <div class="subtitle">Universal logic, local rules. Seven domains, one fiscal foundation.</div>
+        <div class="meta">Ping Xu · GFI Flow Intelligence · 2026</div>
+        <div class="divider"></div>
+    </div>
+
+    <div class="content">
+        <p class="lead">The "Domestic Policy Series" is the policy toolkit of the Governance Legitimacy Framework. It translates the framework's structural diagnosis into concrete domestic policy design — grounded in one foundational principle and one structural root: <span class="highlight">land value captured publicly is the fiscal foundation of all governance delivery.</span></p>
+
+        <p>Each essay follows the same structure: <strong>problem diagnosis → universal logic (non-negotiable) → local rules (locally tailored) → necessity of cross-border coordination → conclusion</strong>.</p>
+
+        <div class="highlight-box dual-box">
+            <p><strong>Foundational Principle</strong></p>
+            <p>Domestic rules cannot be globally universal, but the underlying logic must be. The universal logic includes: public capture of land value, a uniform floor, beneficial ownership registry, effective tax rate audit, and exit tax + home country taxing right. The local rules include: tax base assessment methods, tax rate schedules, exemptions, provision models, and organizational forms.</p>
+        </div>
+
+        <div class="section-title">Table of Contents</div>
+
+        <div class="article-grid">
+
+            <a href="/gl-principle-universal-local.html" class="article-item principle">
+                <div class="num">Foundational Principle · Series Prelude</div>
+                <div class="a-badge dual">Methodological Framework</div>
+                <div class="a-title">Universal Logic, Local Rules</div>
+                <div class="a-desc">Domestic rules cannot be globally universal, but the underlying logic must be. The GL Framework is not a global domestic policy code — it is a global accounting standard for governance legitimacy.</div>
+                <div class="a-tags"><span>Foundational Principle</span><span>IFRS Analogy</span><span>Uniform Floor</span><span>Local Rules</span></div>
+                <div class="a-langs">Languages: <span>中文</span> · <span>English</span> · <span>Español</span></div>
+            </a>
+
+            <a href="/domestic-fiscal-land-value-tax.html" class="article-item">
+                <div class="num">Essay I · Fiscal</div>
+                <div class="a-badge">Land Value Tax · Tax Base</div>
+                <div class="a-title">Domestic Fiscal Policy: Designing the Land Value Tax</div>
+                <div class="a-desc">How countries can design a land value tax suited to their own conditions — tax base assessment, rate schedules, exemptions, collection agencies, and coordination with other taxes.</div>
+                <div class="a-tags"><span>Fiscal</span><span>Land Value Tax</span><span>Tax Base</span><span>Uniform Floor</span></div>
+                <div class="a-langs">Languages: <span>中文</span> · <span>English</span> · <span>Español</span></div>
+            </a>
+
+            <a href="/domestic-housing-public-housing.html" class="article-item">
+                <div class="num">Essay II · Housing</div>
+                <div class="a-badge">Public Housing · Tenant Rights</div>
+                <div class="a-title">Domestic Housing Policy: Public Housing and Tenant Rights</div>
+                <div class="a-desc">How countries can build public housing at scale and protect tenant rights — land acquisition mechanisms, supply models, tenant rights frameworks, funding mechanisms, and urban renewal procedures.</div>
+                <div class="a-tags"><span>Housing</span><span>Public Housing</span><span>Tenant Rights</span><span>Land Value Return</span></div>
+                <div class="a-langs">Languages: <span>中文</span> · <span>English</span> · <span>Español</span></div>
+            </a>
+
+            <a href="/domestic-employment-income-dignity.html" class="article-item">
+                <div class="num">Essay III · Employment &amp; Income</div>
+                <div class="a-badge">Living Wage · Decoupled Social Security</div>
+                <div class="a-title">Domestic Employment Policy: Living Wage and Decoupled Social Security</div>
+                <div class="a-desc">How countries can guarantee income dignity, not just job statistics — living wage calculation methods, social security organizational forms, gig economy regulation, collective bargaining frameworks, and income dignity measurement.</div>
+                <div class="a-tags"><span>Employment</span><span>Living Wage</span><span>Social Security</span><span>Income Dignity</span></div>
+                <div class="a-langs">Languages: <span>中文</span> · <span>English</span> · <span>Español</span></div>
+            </a>
+
+            <a href="/domestic-aging-childcare.html" class="article-item">
+                <div class="num">Essay IV · Aging &amp; Childcare</div>
+                <div class="a-badge">Universal Childcare · Elderly Care</div>
+                <div class="a-title">Domestic Aging Policy: Universal Childcare and Elderly Care</div>
+                <div class="a-desc">How countries can finance childcare and elderly care through land value capture — provision models, funding mechanisms, caregiver support policies, and rural aging policies.</div>
+                <div class="a-tags"><span>Aging</span><span>Childcare</span><span>Elderly Care</span><span>Land Value Return</span></div>
+                <div class="a-langs">Languages: <span>中文</span> · <span>English</span> · <span>Español</span></div>
+            </a>
+
+            <a href="/domestic-education-human-development.html" class="article-item">
+                <div class="num">Essay V · Education</div>
+                <div class="a-badge">Human Development · Public Education</div>
+                <div class="a-title">Domestic Education Policy: From Employment Orientation to Human Development</div>
+                <div class="a-desc">How countries can rebuild education as human development, not just labor supply — funding models, curriculum frameworks, decoupling from household registration, and vocational education reform.</div>
+                <div class="a-tags"><span>Education</span><span>Human Development</span><span>Public Good</span><span>Vocational Dignity</span></div>
+                <div class="a-langs">Languages: <span>中文</span> · <span>English</span> · <span>Español</span></div>
+            </a>
+
+            <a href="/domestic-healthcare-public-health.html" class="article-item">
+                <div class="num">Essay VI · Healthcare</div>
+                <div class="a-badge">Public Health · Universal Coverage</div>
+                <div class="a-title">Domestic Healthcare Policy: From Treatment to Public Health</div>
+                <div class="a-desc">How countries can rebuild healthcare as a public good, not a commodity — financing models, pharmaceutical pricing, public health infrastructure, and decoupling from employment.</div>
+                <div class="a-tags"><span>Healthcare</span><span>Public Health</span><span>Pharmaceutical Pricing</span><span>Universal Coverage</span></div>
+                <div class="a-langs">Languages: <span>中文</span> · <span>English</span> · <span>Español</span></div>
+            </a>
+
+            <a href="/domestic-environment-cost-internalization.html" class="article-item">
+                <div class="num">Essay VII · Environment · Final Essay</div>
+                <div class="a-badge">Cost Internalization · Environmental Justice</div>
+                <div class="a-title">Domestic Environmental Policy: Cost Internalization and Environmental Justice</div>
+                <div class="a-desc">How countries can internalize environmental costs and achieve environmental justice — carbon taxes, pollution levies, environmental justice frameworks, green transition financing, and monitoring systems.</div>
+                <div class="a-tags"><span>Environment</span><span>Cost Internalization</span><span>Environmental Justice</span><span>Green Transition</span></div>
+                <div class="a-langs">Languages: <span>中文</span> · <span>English</span> · <span>Español</span></div>
+            </a>
+
+        </div>
+
+        <div class="section-title">Series Framework</div>
+
+        <div class="highlight-box">
+            <p><strong>"Domestic rules cannot be globally universal, but the underlying logic must be."</strong></p>
+            <p style="margin-top: 6px;">Each essay in this series applies the same method: diagnose the problem, establish the universal logic (non-negotiable principles), design local rules (locally tailored tools), and explain why cross-border coordination is necessary.</p>
+            <p style="margin-top: 6px;"><span class="highlight">The structural root of all seven domains is the same: land value is captured privately, public finance bleeds out, and public services cannot be delivered. The fiscal foundation of all governance delivery is the public capture of land value.</span></p>
+        </div>
+
+        <div class="highlight-box dual-box">
+            <p><strong>Three Series, One Framework</strong></p>
+            <p>The "Domestic Policy Series" is the policy toolkit of the Governance Legitimacy Framework. It sits alongside two other series:</p>
+            <p><strong>Shared Delusion Series</strong> — the diagnostic toolbox, asking why all countries believe their crisis is unique.</p>
+            <p><strong>Land Justice Series</strong> — the structural critique, asking who owns the value of land.</p>
+            <p>Together, they constitute a complete structural critique and policy toolkit for rebuilding governance legitimacy.</p>
+        </div>
+
+        <div class="signature">
+            Ping Xu
+            <span class="title">Creator of the Governance Legitimacy Framework · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 繁體中文版 ==================== -->
+<div class="lb" data-lang="tw">
+    <div class="page-header">
+        <div class="badge">內政篇系列 · 一篇基礎原則 + 七篇內政</div>
+        <div class="title">內政篇系列</div>
+        <div class="subtitle">底層邏輯全球通用，具體規則因地制宜。七個領域，一個財政基礎。</div>
+        <div class="meta">徐萍 · GFI Flow Intelligence · 2026</div>
+        <div class="divider"></div>
+    </div>
+
+    <div class="content">
+        <p class="lead">「內政篇系列」是治理正當性框架的政策工具箱。它將框架的結構性診斷，轉化為具體的內政政策設計——立足於一個基礎原則與一個結構性根源：<span class="highlight">土地增值被公共捕獲，是所有治理交付的財政基礎。</span></p>
+
+        <p>每一篇文章都遵循相同的結構：<strong>問題診斷 → 全球通用的底層邏輯（不可談判）→ 各國因地制宜的具體規則（可調整）→ 跨國協調的必要性 → 結論</strong>。</p>
+
+        <div class="highlight-box dual-box">
+            <p><strong>基礎原則</strong></p>
+            <p>內政規則不能全球通用，但底層邏輯必須全球通用。全球通用的底層邏輯包括：土地增值公共捕獲、統一下限、受益所有人登記、有效稅率審計、離境稅與母國徵稅權。各國因地制宜的具體規則包括：稅基評估方法、稅率階梯、免徵額、供給模式、組織形式。</p>
+        </div>
+
+        <div class="section-title">文章目錄</div>
+
+        <div class="article-grid">
+
+            <a href="/gl-principle-universal-local.html" class="article-item principle">
+                <div class="num">基礎原則 · 系列前導</div>
+                <div class="a-badge dual">方法論框架</div>
+                <div class="a-title">底層邏輯全球通用，具體規則因地制宜</div>
+                <div class="a-desc">內政規則不能全球通用，但底層邏輯必須全球通用。治理正當性框架不是一套全球統一的內政法典——它是一套治理正當性的全球會計準則。</div>
+                <div class="a-tags"><span>基礎原則</span><span>IFRS 類比</span><span>統一下限</span><span>因地制宜</span></div>
+                <div class="a-langs">語言：<span>中文</span> · <span>English</span> · <span>Español</span></div>
+            </a>
+
+            <a href="/domestic-fiscal-land-value-tax.html" class="article-item">
+                <div class="num">第一篇 · 財政</div>
+                <div class="a-badge">土地增值稅 · 稅基</div>
+                <div class="a-title">財政內政篇：土地增值稅的制度設計</div>
+                <div class="a-desc">各國如何設計符合自身國情的土地增值稅——稅基評估方法、稅率階梯、免徵額、徵收機構，以及與其他稅種的協調。</div>
+                <div class="a-tags"><span>財政</span><span>土地增值稅</span><span>稅基</span><span>統一下限</span></div>
+                <div class="a-langs">語言：<span>中文</span> · <span>English</span> · <span>Español</span></div>
+            </a>
+
+            <a href="/domestic-housing-public-housing.html" class="article-item">
+                <div class="num">第二篇 · 住房</div>
+                <div class="a-badge">公共住宅 · 租戶權益</div>
+                <div class="a-title">住房內政篇：公共住宅與租戶權益</div>
+                <div class="a-desc">各國如何大規模興建公共住宅、保障租戶權益——土地取得機制、供給模式、租戶權益框架、資金來源機制，以及都市更新程序。</div>
+                <div class="a-tags"><span>住房</span><span>公共住宅</span><span>租戶權益</span><span>土地增值返還</span></div>
+                <div class="a-langs">語言：<span>中文</span> · <span>English</span> · <span>Español</span></div>
+            </a>
+
+            <a href="/domestic-employment-income-dignity.html" class="article-item">
+                <div class="num">第三篇 · 就業與收入</div>
+                <div class="a-badge">生活工資 · 社會保障脫鉤</div>
+                <div class="a-title">就業內政篇：生活工資與社會保障脫鉤</div>
+                <div class="a-desc">各國如何保障收入尊嚴，而不只是就業統計——生活工資計算方法、社會保障組織形式、零工經濟監管、集體談判框架，以及收入尊嚴測量。</div>
+                <div class="a-tags"><span>就業</span><span>生活工資</span><span>社會保障</span><span>收入尊嚴</span></div>
+                <div class="a-langs">語言：<span>中文</span> · <span>English</span> · <span>Español</span></div>
+            </a>
+
+            <a href="/domestic-aging-childcare.html" class="article-item">
+                <div class="num">第四篇 · 高齡化與育兒</div>
+                <div class="a-badge">普惠托育 · 養老保障</div>
+                <div class="a-title">高齡化內政篇：普惠托育與養老保障</div>
+                <div class="a-desc">各國如何用土地增值收益，建立普惠的托育與養老體系——供給模式、資金來源機制、照護者支持政策，以及農村高齡化政策。</div>
+                <div class="a-tags"><span>高齡化</span><span>托育</span><span>養老</span><span>土地增值返還</span></div>
+                <div class="a-langs">語言：<span>中文</span> · <span>English</span> · <span>Español</span></div>
+            </a>
+
+            <a href="/domestic-education-human-development.html" class="article-item">
+                <div class="num">第五篇 · 教育</div>
+                <div class="a-badge">人的發展 · 公共教育</div>
+                <div class="a-title">教育內政篇：從就業導向到人的發展</div>
+                <div class="a-desc">各國如何重建教育為人的發展，而不只是勞動力供給——教育財政模式、課程框架、與戶籍脫鉤，以及職業教育改革。</div>
+                <div class="a-tags"><span>教育</span><span>人的發展</span><span>公共財</span><span>職業尊嚴</span></div>
+                <div class="a-langs">語言：<span>中文</span> · <span>English</span> · <span>Español</span></div>
+            </a>
+
+            <a href="/domestic-healthcare-public-health.html" class="article-item">
+                <div class="num">第六篇 · 醫療</div>
+                <div class="a-badge">公共衛生 · 全民覆蓋</div>
+                <div class="a-title">醫療內政篇：從治療導向到公共衛生</div>
+                <div class="a-desc">各國如何重建醫療為公共財，而不是商品——融資模式、藥品定價、公共衛生基礎設施，以及與就業脫鉤。</div>
+                <div class="a-tags"><span>醫療</span><span>公共衛生</span><span>藥品定價</span><span>全民覆蓋</span></div>
+                <div class="a-langs">語言：<span>中文</span> · <span>English</span> · <span>Español</span></div>
+            </a>
+
+            <a href="/domestic-environment-cost-internalization.html" class="article-item">
+                <div class="num">第七篇 · 環境 · 終篇</div>
+                <div class="a-badge">成本內部化 · 環境正義</div>
+                <div class="a-title">環境內政篇：環境成本內部化與環境正義</div>
+                <div class="a-desc">各國如何將環境成本內部化，實現環境正義——碳稅、污染稅、環境正義框架、綠色轉型融資，以及監測與執法體系。</div>
+                <div class="a-tags"><span>環境</span><span>成本內部化</span><span>環境正義</span><span>綠色轉型</span></div>
+                <div class="a-langs">語言：<span>中文</span> · <span>English</span> · <span>Español</span></div>
+            </a>
+
+        </div>
+
+        <div class="section-title">系列架構</div>
+
+        <div class="highlight-box">
+            <p><strong>「內政規則不能全球通用，但底層邏輯必須全球通用。」</strong></p>
+            <p style="margin-top: 6px;">本系列的每一篇文章都應用同樣的方法：診斷問題、確立全球通用的底層邏輯（不可談判的原則）、設計各國因地制宜的具體規則（可調整的工具），並解釋為什麼跨國協調是必要的。</p>
+            <p style="margin-top: 6px;"><span class="highlight">七個領域的結構性根源是同一個：土地增值被私人捕獲，公共財政失血，公共服務無法交付。所有治理交付的財政基礎，是土地增值的公共捕獲。</span></p>
+        </div>
+
+        <div class="highlight-box dual-box">
+            <p><strong>三個系列，一個框架</strong></p>
+            <p>「內政篇系列」是治理正當性框架的政策工具箱。它與另外兩個系列並列：</p>
+            <p><strong>共同的幻覺系列</strong>——診斷工具箱，追問為什麼所有國家都以為自己的危機是獨特的。</p>
+            <p><strong>土地正義系列</strong>——結構批判，追問土地增值歸誰。</p>
+            <p>三者合在一起，構成完整的結構性批判與治理正當性重建的政策工具箱。</p>
+        </div>
+
+        <div class="signature">
+            徐萍
+            <span class="title">治理正當性框架發明人 · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 簡體中文版 ==================== -->
+<div class="lb" data-lang="cn">
+    <div class="page-header">
+        <div class="badge">内政篇系列 · 一篇基础原则 + 七篇内政</div>
+        <div class="title">内政篇系列</div>
+        <div class="subtitle">底层逻辑全球通用，具体规则因地制宜。七个领域，一个财政基础。</div>
+        <div class="meta">徐萍 · GFI Flow Intelligence · 2026</div>
+        <div class="divider"></div>
+    </div>
+
+    <div class="content">
+        <p class="lead">「内政篇系列」是治理正当性框架的政策工具箱。它将框架的结构性诊断，转化为具体的内政政策设计——立足于一个基础原则与一个结构性根源：<span class="highlight">土地增值被公共捕获，是所有治理交付的财政基础。</span></p>
+
+        <p>每一篇文章都遵循相同的结构：<strong>问题诊断 → 全球通用的底层逻辑（不可谈判）→ 各国因地制宜的具体规则（可调整）→ 跨国协调的必要性 → 结论</strong>。</p>
+
+        <div class="highlight-box dual-box">
+            <p><strong>基础原则</strong></p>
+            <p>内政规则不能全球通用，但底层逻辑必须全球通用。全球通用的底层逻辑包括：土地增值公共捕获、统一下限、受益所有人登记、有效税率审计、离境税与母国征税权。各国因地制宜的具体规则包括：税基评估方法、税率阶梯、免征额、供给模式、组织形式。</p>
+        </div>
+
+        <div class="section-title">文章目录</div>
+
+        <div class="article-grid">
+
+            <a href="/gl-principle-universal-local.html" class="article-item principle">
+                <div class="num">基础原则 · 系列前导</div>
+                <div class="a-badge dual">方法论框架</div>
+                <div class="a-title">底层逻辑全球通用，具体规则因地制宜</div>
+                <div class="a-desc">内政规则不能全球通用，但底层逻辑必须全球通用。治理正当性框架不是一套全球统一的內政法典——它是一套治理正当性的全球会计准则。</div>
+                <div class="a-tags"><span>基础原则</span><span>IFRS 类比</span><span>统一下限</span><span>因地制宜</span></div>
+                <div class="a-langs">语言：<span>中文</span> · <span>English</span> · <span>Español</span></div>
+            </a>
+
+            <a href="/domestic-fiscal-land-value-tax.html" class="article-item">
+                <div class="num">第一篇 · 财政</div>
+                <div class="a-badge">土地增值税 · 税基</div>
+                <div class="a-title">财政内政篇：土地增值税的制度设计</div>
+                <div class="a-desc">各国如何设计符合自身国情的土地增值税——税基评估方法、税率阶梯、免征额、征收机构，以及与其他税种的协调。</div>
+                <div class="a-tags"><span>财政</span><span>土地增值税</span><span>税基</span><span>统一下限</span></div>
+                <div class="a-langs">语言：<span>中文</span> · <span>English</span> · <span>Español</span></div>
+            </a>
+
+            <a href="/domestic-housing-public-housing.html" class="article-item">
+                <div class="num">第二篇 · 住房</div>
+                <div class="a-badge">公共住宅 · 租户权益</div>
+                <div class="a-title">住房内政篇：公共住宅与租户权益</div>
+                <div class="a-desc">各国如何大规模兴建公共住宅、保障租户权益——土地取得机制、供给模式、租户权益框架、资金来源机制，以及城市更新程序。</div>
+                <div class="a-tags"><span>住房</span><span>公共住宅</span><span>租户权益</span><span>土地增值返还</span></div>
+                <div class="a-langs">语言：<span>中文</span> · <span>English</span> · <span>Español</span></div>
+            </a>
+
+            <a href="/domestic-employment-income-dignity.html" class="article-item">
+                <div class="num">第三篇 · 就业与收入</div>
+                <div class="a-badge">生活工资 · 社会保障脱钩</div>
+                <div class="a-title">就业内政篇：生活工资与社会保障脱钩</div>
+                <div class="a-desc">各国如何保障收入尊严，而不只是就业统计——生活工资计算方法、社会保障组织形式、零工经济监管、集体谈判框架，以及收入尊严测量。</div>
+                <div class="a-tags"><span>就业</span><span>生活工资</span><span>社会保障</span><span>收入尊严</span></div>
+                <div class="a-langs">语言：<span>中文</span> · <span>English</span> · <span>Español</span></div>
+            </a>
+
+            <a href="/domestic-aging-childcare.html" class="article-item">
+                <div class="num">第四篇 · 高龄化与育儿</div>
+                <div class="a-badge">普惠托育 · 养老保障</div>
+                <div class="a-title">高龄化内政篇：普惠托育与养老保障</div>
+                <div class="a-desc">各国如何用土地增值收益，建立普惠的托育与养老体系——供给模式、资金来源机制、照护者支持政策，以及农村高龄化政策。</div>
+                <div class="a-tags"><span>高龄化</span><span>托育</span><span>养老</span><span>土地增值返还</span></div>
+                <div class="a-langs">语言：<span>中文</span> · <span>English</span> · <span>Español</span></div>
+            </a>
+
+            <a href="/domestic-education-human-development.html" class="article-item">
+                <div class="num">第五篇 · 教育</div>
+                <div class="a-badge">人的发展 · 公共教育</div>
+                <div class="a-title">教育内政篇：从就业导向到人的发展</div>
+                <div class="a-desc">各国如何重建教育为人的发展，而不只是劳动力供给——教育财政模式、课程框架、与户籍脱钩，以及职业教育改革。</div>
+                <div class="a-tags"><span>教育</span><span>人的发展</span><span>公共财</span><span>职业尊严</span></div>
+                <div class="a-langs">语言：<span>中文</span> · <span>English</span> · <span>Español</span></div>
+            </a>
+
+            <a href="/domestic-healthcare-public-health.html" class="article-item">
+                <div class="num">第六篇 · 医疗</div>
+                <div class="a-badge">公共卫生 · 全民覆盖</div>
+                <div class="a-title">医疗内政篇：从治疗导向到公共卫生</div>
+                <div class="a-desc">各国如何重建医疗为公共财，而不是商品——融资模式、药品定价、公共卫生基础设施，以及与就业脱钩。</div>
+                <div class="a-tags"><span>医疗</span><span>公共卫生</span><span>药品定价</span><span>全民覆盖</span></div>
+                <div class="a-langs">语言：<span>中文</span> · <span>English</span> · <span>Español</span></div>
+            </a>
+
+            <a href="/domestic-environment-cost-internalization.html" class="article-item">
+                <div class="num">第七篇 · 环境 · 终篇</div>
+                <div class="a-badge">成本内部化 · 环境正义</div>
+                <div class="a-title">环境内政篇：环境成本内部化与环境正义</div>
+                <div class="a-desc">各国如何将环境成本内部化，实现环境正义——碳税、污染税、环境正义框架、绿色转型融资，以及监测与执法体系。</div>
+                <div class="a-tags"><span>环境</span><span>成本内部化</span><span>环境正义</span><span>绿色转型</span></div>
+                <div class="a-langs">语言：<span>中文</span> · <span>English</span> · <span>Español</span></div>
+            </a>
+
+        </div>
+
+        <div class="section-title">系列架构</div>
+
+        <div class="highlight-box">
+            <p><strong>「内政规则不能全球通用，但底层逻辑必须全球通用。」</strong></p>
+            <p style="margin-top: 6px;">本系列的每一篇文章都应用同样的方法：诊断问题、确立全球通用的底层逻辑（不可谈判的原则）、设计各国因地制宜的具体规则（可调整的工具），并解释为什么跨国协调是必要的。</p>
+            <p style="margin-top: 6px;"><span class="highlight">七个领域的结构性根源是同一个：土地增值被私人捕获，公共财政失血，公共服务无法交付。所有治理交付的财政基础，是土地增值的公共捕获。</span></p>
+        </div>
+
+        <div class="highlight-box dual-box">
+            <p><strong>三个系列，一个框架</strong></p>
+            <p>「内政篇系列」是治理正当性框架的政策工具箱。它与另外两个系列并列：</p>
+            <p><strong>共同的幻觉系列</strong>——诊断工具箱，追问为什么所有国家都以为自己的危机是独特的。</p>
+            <p><strong>土地正义系列</strong>——结构批判，追问土地增值归谁。</p>
+            <p>三者合在一起，构成完整的结构性批判与治理正当性重建的政策工具箱。</p>
+        </div>
+
+        <div class="signature">
+            徐萍
+            <span class="title">治理正当性框架发明人 · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 西班牙文版 ==================== -->
+<div class="lb" data-lang="es">
+    <div class="page-header">
+        <div class="badge">Serie de Política Interior · 1 Principio + 7 Ensayos</div>
+        <div class="title">Serie de Política Interior</div>
+        <div class="subtitle">Lógica universal, reglas locales. Siete dominios, una base fiscal.</div>
+        <div class="meta">Ping Xu · GFI Flow Intelligence · 2026</div>
+        <div class="divider"></div>
+    </div>
+
+    <div class="content">
+        <p class="lead">La "Serie de Política Interior" es la caja de herramientas de política del Marco de Legitimidad Gubernamental. Traduce el diagnóstico estructural del marco en diseño concreto de política interior — fundamentado en un principio fundacional y una raíz estructural: <span class="highlight">el valor del suelo capturado públicamente es la base fiscal de toda entrega de gobernanza.</span></p>
+
+        <p>Cada ensayo sigue la misma estructura: <strong>diagnóstico del problema → lógica universal (no negociable) → reglas locales (adaptadas localmente) → necesidad de coordinación transfronteriza → conclusión</strong>.</p>
+
+        <div class="highlight-box dual-box">
+            <p><strong>Principio Fundacional</strong></p>
+            <p>Las reglas de política interior no pueden ser globalmente universales, pero la lógica subyacente debe serlo. La lógica universal incluye: captura pública del valor del suelo, piso uniforme, registro de beneficiarios finales, auditoría de la tasa efectiva, e impuesto de salida + derecho tributario del país de origen. Las reglas locales incluyen: métodos de evaluación de la base imponible, escalas de tasas, exenciones, modelos de provisión y formas organizativas.</p>
+        </div>
+
+        <div class="section-title">Índice</div>
+
+        <div class="article-grid">
+
+            <a href="/gl-principle-universal-local.html" class="article-item principle">
+                <div class="num">Principio Fundacional · Preludio de la Serie</div>
+                <div class="a-badge dual">Marco Metodológico</div>
+                <div class="a-title">Lógica Universal, Reglas Locales</div>
+                <div class="a-desc">Las reglas de política interior no pueden ser globalmente universales, pero la lógica subyacente debe serlo. El Marco de Legitimidad Gubernamental no es un código global de política interior — es un estándar contable global para la legitimidad de la gobernanza.</div>
+                <div class="a-tags"><span>Principio Fundacional</span><span>Analogía IFRS</span><span>Piso Uniforme</span><span>Reglas Locales</span></div>
+                <div class="a-langs">Idiomas: <span>中文</span> · <span>English</span> · <span>Español</span></div>
+            </a>
+
+            <a href="/domestic-fiscal-land-value-tax.html" class="article-item">
+                <div class="num">Ensayo I · Fiscal</div>
+                <div class="a-badge">Impuesto al Valor del Suelo · Base Imponible</div>
+                <div class="a-title">Política Fiscal Interior: El Diseño del Impuesto al Valor del Suelo</div>
+                <div class="a-desc">Cómo los países pueden diseñar un impuesto al valor del suelo adaptado a sus propias condiciones — evaluación de la base imponible, escalas de tasas, exenciones, agencias de recaudación y coordinación con otros impuestos.</div>
+                <div class="a-tags"><span>Fiscal</span><span>Impuesto al Valor del Suelo</span><span>Base Imponible</span><span>Piso Uniforme</span></div>
+                <div class="a-langs">Idiomas: <span>中文</span> · <span>English</span> · <span>Español</span></div>
+            </a>
+
+            <a href="/domestic-housing-public-housing.html" class="article-item">
+                <div class="num">Ensayo II · Vivienda</div>
+                <div class="a-badge">Vivienda Pública · Derechos de Inquilinos</div>
+                <div class="a-title">Política de Vivienda Interior: Vivienda Pública y Derechos de los Inquilinos</div>
+                <div class="a-desc">Cómo los países pueden construir vivienda pública a escala y proteger los derechos de los inquilinos — mecanismos de adquisición de suelo, modelos de oferta, marcos de derechos, mecanismos de financiación y procedimientos de renovación urbana.</div>
+                <div class="a-tags"><span>Vivienda</span><span>Vivienda Pública</span><span>Derechos de Inquilinos</span><span>Retorno del Valor del Suelo</span></div>
+                <div class="a-langs">Idiomas: <span>中文</span> · <span>English</span> · <span>Español</span></div>
+            </a>
+
+            <a href="/domestic-employment-income-dignity.html" class="article-item">
+                <div class="num">Ensayo III · Empleo e Ingresos</div>
+                <div class="a-badge">Salario Vital · Seguridad Social Desvinculada</div>
+                <div class="a-title">Política de Empleo Interior: Salario Vital y Seguridad Social Desvinculada</div>
+                <div class="a-desc">Cómo los países pueden garantizar la dignidad del ingreso, no solo las estadísticas de empleo — métodos de cálculo del salario vital, formas organizativas de seguridad social, regulación de la economía gig, marcos de negociación colectiva y medición de la dignidad del ingreso.</div>
+                <div class="a-tags"><span>Empleo</span><span>Salario Vital</span><span>Seguridad Social</span><span>Dignidad del Ingreso</span></div>
+                <div class="a-langs">Idiomas: <span>中文</span> · <span>English</span> · <span>Español</span></div>
+            </a>
+
+            <a href="/domestic-aging-childcare.html" class="article-item">
+                <div class="num">Ensayo IV · Envejecimiento y Cuidado Infantil</div>
+                <div class="a-badge">Cuidado Infantil Universal · Cuidado de Ancianos</div>
+                <div class="a-title">Política de Envejecimiento Interior: Cuidado Infantil y de Ancianos Universal</div>
+                <div class="a-desc">Cómo los países pueden financiar el cuidado infantil y de ancianos mediante la captura del valor del suelo — modelos de provisión, mecanismos de financiación, políticas de apoyo a los cuidadores y políticas de envejecimiento rural.</div>
+                <div class="a-tags"><span>Envejecimiento</span><span>Cuidado Infantil</span><span>Cuidado de Ancianos</span><span>Retorno del Valor del Suelo</span></div>
+                <div class="a-langs">Idiomas: <span>中文</span> · <span>English</span> · <span>Español</span></div>
+            </a>
+
+            <a href="/domestic-education-human-development.html" class="article-item">
+                <div class="num">Ensayo V · Educación</div>
+                <div class="a-badge">Desarrollo Humano · Educación Pública</div>
+                <div class="a-title">Política Educativa Interior: De la Orientación al Empleo al Desarrollo Humano</div>
+                <div class="a-desc">Cómo los países pueden reconstruir la educación como desarrollo humano, no solo como suministro de mano de obra — modelos de financiamiento, marcos curriculares, desvinculación del registro de hogares y reforma de la educación vocacional.</div>
+                <div class="a-tags"><span>Educación</span><span>Desarrollo Humano</span><span>Bien Público</span><span>Dignidad Vocacional</span></div>
+                <div class="a-langs">Idiomas: <span>中文</span> · <span>English</span> · <span>Español</span></div>
+            </a>
+
+            <a href="/domestic-healthcare-public-health.html" class="article-item">
+                <div class="num">Ensayo VI · Salud</div>
+                <div class="a-badge">Salud Pública · Cobertura Universal</div>
+                <div class="a-title">Política Sanitaria Interior: De la Curación a la Salud Pública</div>
+                <div class="a-desc">Cómo los países pueden reconstruir la atención médica como un bien público, no una mercancía — modelos de financiamiento, precios farmacéuticos, infraestructura de salud pública y desvinculación del empleo.</div>
+                <div class="a-tags"><span>Salud</span><span>Salud Pública</span><span>Precios Farmacéuticos</span><span>Cobertura Universal</span></div>
+                <div class="a-langs">Idiomas: <span>中文</span> · <span>English</span> · <span>Español</span></div>
+            </a>
+
+            <a href="/domestic-environment-cost-internalization.html" class="article-item">
+                <div class="num">Ensayo VII · Medio Ambiente · Ensayo Final</div>
+                <div class="a-badge">Internalización de Costos · Justicia Ambiental</div>
+                <div class="a-title">Política Ambiental Interior: Internalización de Costos y Justicia Ambiental</div>
+                <div class="a-desc">Cómo los países pueden internalizar los costos ambientales y lograr la justicia ambiental — impuestos al carbono, gravámenes a la contaminación, marcos de justicia ambiental, financiamiento de la transición verde y sistemas de monitoreo.</div>
+                <div class="a-tags"><span>Medio Ambiente</span><span>Internalización de Costos</span><span>Justicia Ambiental</span><span>Transición Verde</span></div>
+                <div class="a-langs">Idiomas: <span>中文</span> · <span>English</span> · <span>Español</span></div>
+            </a>
+
+        </div>
+
+        <div class="section-title">Estructura de la Serie</div>
+
+        <div class="highlight-box">
+            <p><strong>"Las reglas de política interior no pueden ser globalmente universales, pero la lógica subyacente debe serlo."</strong></p>
+            <p style="margin-top: 6px;">Cada ensayo de esta serie aplica el mismo método: diagnosticar el problema, establecer la lógica universal (principios no negociables), diseñar reglas locales (herramientas adaptadas localmente) y explicar por qué la coordinación transfronteriza es necesaria.</p>
+            <p style="margin-top: 6px;"><span class="highlight">La raíz estructural de los siete dominios es la misma: el valor del suelo es capturado privadamente, las finanzas públicas sangran, y los servicios públicos no pueden entregarse. La base fiscal de toda entrega de gobernanza es la captura pública del valor del suelo.</span></p>
+        </div>
+
+        <div class="highlight-box dual-box">
+            <p><strong>Tres Series, Un Marco</strong></p>
+            <p>La "Serie de Política Interior" es la caja de herramientas de política del Marco de Legitimidad Gubernamental. Se sitúa junto a otras dos series:</p>
+            <p><strong>Serie Ilusión Compartida</strong> — la caja de herramientas de diagnóstico, preguntando por qué todos los países creen que su crisis es única.</p>
+            <p><strong>Serie Justicia de la Tierra</strong> — la crítica estructural, preguntando quién es dueño del valor de la tierra.</p>
+            <p>Juntas, constituyen una crítica estructural completa y una caja de herramientas de política para reconstruir la legitimidad de la gobernanza.</p>
+        </div>
+
+        <div class="signature">
+            Ping Xu
+            <span class="title">Creadora del Marco de Legitimidad Gubernamental · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <span class="site">gfiintel.com</span>
+    <span class="links">
+        <a href="/">← Back to Home</a>
+        <a href="/shared-delusion.html">← Shared Delusion Series</a>
+        <a href="/landjustice.html">← Land Justice Series</a>
+        <a href="/UBI_index.html">← UBI Series</a>
+    </span>
+    <span class="copyright">© 2026 GFI Flow Intelligence · 內政篇系列 · Domestic Policy Series</span>
+</div>
+
+<script>
+    document.querySelectorAll('.lb-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var lang = this.dataset.lang;
+            document.querySelectorAll('.lb-btn').forEach(function(b) { b.classList.remove('on'); });
+            this.classList.add('on');
+            document.querySelectorAll('.lb').forEach(function(lb) { lb.classList.remove('active'); });
+            var target = document.querySelector('.lb[data-lang="' + lang + '"]');
+            if (target) target.classList.add('active');
+        });
+    });
+</script>
+
+</body>
+</html>
