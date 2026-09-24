@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Land: The Common Denominator of Shared Delusions · 土地：共同的幻覺的共同分母</title>
+    <meta name="description" content="Seven crises, one root. Fiscal, education, healthcare, housing, employment, environment, aging — why every governance crisis ultimately points back to land." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: #0d0a08;
+            color: #e0d6cc;
+            font-family: 'DM Sans', system-ui, sans-serif;
+            font-size: 16px;
+            line-height: 1.9;
+            min-height: 100vh;
+        }
+        .topbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            height: 60px; padding: 0 clamp(18px, 5vw, 48px);
+            display: flex; align-items: center; justify-content: space-between;
+            background: rgba(13, 10, 8, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .logo {
+            font-family: 'DM Mono', monospace; font-size: 11px;
+            letter-spacing: 0.16em; text-transform: uppercase;
+            color: #b8aaa0; text-decoration: none;
+        }
+        .nav-right { display: flex; align-items: center; gap: 12px; }
+        .lang-grp { display: flex; gap: 4px; }
+        .lb-btn {
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            letter-spacing: 0.06em; padding: 4px 10px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 4px; background: transparent;
+            color: #7a7068; cursor: pointer; transition: all 0.2s;
+        }
+        .lb-btn:hover { color: #e0d6cc; border-color: rgba(255, 255, 255, 0.2); }
+        .lb-btn.on { background: #b8aaa0; color: #0d0a08; border-color: #b8aaa0; }
+        .nav-links { display: flex; gap: 16px; align-items: center; }
+        .nav-links a {
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            letter-spacing: 0.06em; color: #7a7068;
+            text-decoration: none; padding: 4px 8px;
+            border-radius: 4px; transition: all 0.2s;
+        }
+        .nav-links a:hover { color: #e0d6cc; background: rgba(255, 255, 255, 0.04); }
+        .lb { display: none; padding: 100px 40px 70px; max-width: 860px; margin: 0 auto; }
+        .lb.active { display: block; }
+        .page-header {
+            padding: 0 0 32px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 32px;
+        }
+        .page-header .badge {
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            letter-spacing: 0.22em; text-transform: uppercase;
+            color: #8a4a2a; margin-bottom: 12px;
+        }
+        .page-header .badge.dual {
+            color: #7DD3FC;
+        }
+        .page-header .title {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: clamp(28px, 3.6vw, 42px);
+            line-height: 1.15; color: #f0e6dc; margin-bottom: 8px;
+        }
+        .page-header .subtitle {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-style: italic; font-size: clamp(16px, 1.7vw, 20px);
+            color: #8a7a6a; margin-bottom: 12px;
+        }
+        .page-header .meta {
+            font-family: 'DM Mono', monospace; font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.2);
+        }
+        .content h2 {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.4rem; color: #f0e6dc;
+            margin: 2.2rem 0 0.8rem 0;
+            padding-bottom: 0.3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .content h3 {
+            font-size: 1.1rem; font-weight: 600;
+            color: #e0d6cc; margin: 1.8rem 0 0.5rem 0;
+        }
+        .content p { margin-bottom: 1.2rem; color: #d0c6bc; }
+        .content ul, .content ol { margin-bottom: 1.2rem; padding-left: 1.6rem; }
+        .content li { margin-bottom: 0.5rem; color: #d0c6bc; }
+        .content .highlight { color: #c47a4a; font-weight: 600; }
+        .content .formula-block {
+            background: #161210;
+            border-left: 4px solid #8a4a2a;
+            padding: 1.2rem 1.6rem;
+            margin: 1.5rem 0;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.95rem;
+            color: #e0d6cc;
+            border-radius: 0 6px 6px 0;
+        }
+        .content .highlight-box {
+            background: rgba(138, 74, 42, 0.08);
+            border-left: 4px solid #8a4a2a;
+            padding: 1.2rem 1.8rem;
+            margin: 1.8rem 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .content .highlight-box p { margin-bottom: 0.5rem; }
+        .content .highlight-box strong { color: #f0e6dc; }
+        .content .highlight-box.dual-box {
+            border-left-color: #7DD3FC;
+            background: rgba(125, 211, 252, 0.05);
+        }
+        .content .crisis-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            padding: 1.2rem 1.5rem;
+            margin: 1rem 0;
+        }
+        .content .crisis-card .crisis-title {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #c47a4a;
+            margin-bottom: 6px;
+        }
+        .content .crisis-card p {
+            font-size: 0.95rem;
+            color: #d0c6bc;
+            margin-bottom: 0.5rem;
+        }
+        .content .crisis-card p:last-child { margin-bottom: 0; }
+        .content .crisis-card .land-link {
+            color: #c47a4a;
+            font-weight: 600;
+        }
+        .signature {
+            margin-top: 40px; padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.05rem; color: #f0e6dc;
+        }
+        .signature .title {
+            font-family: 'DM Mono', monospace; font-size: 0.6rem;
+            color: rgba(255, 255, 255, 0.25);
+            letter-spacing: 0.06em; display: block; margin-top: 2px;
+        }
+        .footer {
+            text-align: center; padding: 28px 20px 36px;
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            color: rgba(255, 255, 255, 0.18);
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            margin-top: 48px; line-height: 2;
+        }
+        .footer a { color: #b8aaa0; text-decoration: none; margin: 0 8px; }
+        .footer a:hover { color: #e0d6cc; }
+        .footer .site { display: block; margin-bottom: 8px; color: rgba(255, 255, 255, 0.25); letter-spacing: 0.06em; }
+        .footer .links { display: block; margin-bottom: 8px; }
+        .footer .copyright { color: rgba(255, 255, 255, 0.12); display: block; }
+        @media (max-width: 640px) {
+            .lb { padding: 80px 20px 50px; }
+            .topbar { padding: 0 14px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="topbar">
+    <a href="/" class="logo">← Home</a>
+    <div class="nav-right">
+        <div class="nav-links">
+            <a href="/shared-delusion.html">Shared Delusion</a>
+        </div>
+        <div class="lang-grp">
+            <button class="lb-btn on" data-lang="en">EN</button>
+            <button class="lb-btn" data-lang="tw">繁</button>
+            <button class="lb-btn" data-lang="cn">简</button>
+            <button class="lb-btn" data-lang="es">ES</button>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 英文版 ==================== -->
+<div class="lb active" data-lang="en">
+    <div class="page-header">
+        <div class="badge dual">Shared Delusion Series · Theoretical Synthesis · Also Land Justice Series</div>
+        <div class="title">Land: The Common Denominator of Shared Delusions</div>
+        <div class="subtitle">Seven crises, one root. Why every governance crisis ultimately points back to land.</div>
+        <div class="meta">Ping Xu · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+        <h2>1. The Starting Point: Seven Crises, One Root</h2>
+        <p>The "Shared Delusion" series diagnosed seven seemingly independent but structurally homologous crises:</p>
+        <ol>
+            <li><strong>Fiscal crisis</strong>: The tax base is hollowed out by transnational capital; expenditure pressure explodes.</li>
+            <li><strong>Education crisis</strong>: Education systems are captured by the employment market, and the employment market by transnational capital.</li>
+            <li><strong>Healthcare crisis</strong>: Healthcare is commodified; public health is eroded by the logic of profit.</li>
+            <li><strong>Housing crisis</strong>: Land value is captured privately; housing turns from a human right into a class privilege.</li>
+            <li><strong>Employment &amp; income crisis</strong>: The unemployment rate is a statistical illusion; the real crisis is income distribution.</li>
+            <li><strong>Environmental crisis</strong>: Environmental costs are externalized; capital can move, but pollution cannot.</li>
+            <li><strong>Aging &amp; declining birthrate crisis</strong>: Young people are pushed out of the future; the governance delivery ratio in childcare and elderly care is below 1.0.</li>
+        </ol>
+        <p><span class="highlight">These seven crises appear to be seven different policy domains. But their structural root is the same: land value is captured privately, public finance bleeds out, social costs rise, and the younger generation is pushed out of the future.</span></p>
+
+        <h2>2. Why Land?</h2>
+
+        <h3>First, land is the only anchor of wealth that cannot move.</h3>
+        <p>Transnational capital can shift profits to the Cayman Islands, but it cannot move Manhattan to the Cayman Islands. This means that among all factors of production, <span class="highlight">land value is the only tax base that cannot be hidden or transferred</span>. While governments are busy courting transnational capital, they forget: the land under their feet is the last foundation of national sovereignty.</p>
+
+        <h3>Second, land value is socially created, but privately captured.</h3>
+        <p>Public investment builds a subway, and surrounding land prices soar — the increment is created by taxpayers' money, but captured by landowners and developers. Zoning changes increase density, and developers profit — the increment is created by public policy, but public finance gets no return. Population agglomeration drives up housing prices — the increment is created by social progress, but tenants and young people pay for it.</p>
+        <p><span class="highlight">Value goes private. Risk goes public. This is the fiscal root of all governance crises.</span></p>
+
+        <h3>Third, public capture of land value determines a government's fiscal capacity.</h3>
+        <p>Can a government provide quality education, healthcare, housing, elderly care, and environmental governance? It depends on whether it has a stable fiscal source. If land value is captured privately, the government can only rely on an increasingly shrinking tax base (wage taxes, consumption taxes) — a tax base that is being systematically hollowed out by transnational capital.</p>
+        <p><span class="highlight">Land value not publicly captured → government finance bleeds → public services collapse → social costs rise → young people pushed out of the future → fertility rate collapses.</span></p>
+        <p>This is a complete causal chain.</p>
+
+        <h2>3. Unpacking the Seven Crises: How They All Point Back to Land</h2>
+
+        <div class="crisis-card">
+            <div class="crisis-title">1. Fiscal Crisis ↔ Land</div>
+            <p>The surface causes of fiscal crises vary (Brexit in the UK, the debt brake in Germany, land finance in China, population decline in Japan), but the common structural root is: <span class="land-link">land value is captured privately, and the tax base is hollowed out by transnational capital</span>.</p>
+            <p>If land value were publicly captured, governments would have a stable fiscal source and would not have to rely on an increasingly shrinking wage and consumption tax base. Denmark's fiscal health comes precisely from capturing a portion of land value publicly through property taxes and social housing.</p>
+        </div>
+
+        <div class="crisis-card">
+            <div class="crisis-title">2. Education Crisis ↔ Land</div>
+            <p>The surface causes of education crises vary (student loans in the US, vocational education in the UK, the dual system in Germany, exam-oriented education in China), but the common structural root is: <span class="land-link">education systems are captured by the employment market, and the employment market is captured by the race to the bottom of transnational capital</span>.</p>
+            <p>And why can transnational capital race to the bottom? Because it can move. But land cannot. If land value were publicly captured, governments would have the resources to provide free or low-cost education, rather than turning education into a subordinate of "human capital investment."</p>
+        </div>
+
+        <div class="crisis-card">
+            <div class="crisis-title">3. Healthcare Crisis ↔ Land</div>
+            <p>The surface causes of healthcare crises vary (insurance and drug prices in the US, NHS waiting times in the UK, medical insurance coverage in China, cost control in Germany), but the common structural root is: <span class="land-link">healthcare is commodified, and public health is eroded by the logic of profit</span>.</p>
+            <p>If land value were publicly captured, governments would have the resources to build universal public health systems, rather than letting transnational pharmaceutical companies and insurance capital capture health value.</p>
+        </div>
+
+        <div class="crisis-card">
+            <div class="crisis-title">4. Housing Crisis ↔ Land</div>
+            <p>This is the most direct. The root of the housing crisis is: <span class="land-link">land value is captured privately, and housing turns from a basic human right into a class privilege</span>.</p>
+            <p>The subprime crisis in the US, runaway house prices in the UK, the real estate bubble in China, the failure of rent control in Germany — behind these surface phenomena is the same structural fact: land value is not publicly captured. If it were, governments would have the resources to build public housing on a large scale, returning housing to a basic human right.</p>
+        </div>
+
+        <div class="crisis-card">
+            <div class="crisis-title">5. Employment &amp; Income Crisis ↔ Land</div>
+            <p>The unemployment rate is a statistical illusion; the real crisis is income distribution. And the deterioration of income distribution is closely tied to the private capture of land value: <span class="land-link">rising housing prices push up the cost of living, and workers' real incomes are eroded by rent and mortgages</span>. Even with a job, a dignified life is unattainable.</p>
+            <p>If land value were publicly captured, housing costs would not spiral out of control, and workers' real incomes could maintain dignity.</p>
+        </div>
+
+        <div class="crisis-card">
+            <div class="crisis-title">6. Environmental Crisis ↔ Land</div>
+            <p>Environmental costs are externalized; capital can move, but pollution cannot. And the private capture of land value exacerbates this problem: <span class="land-link">local governments relax environmental standards to attract investment; public finance has no resources for environmental governance</span>.</p>
+            <p>If land value were publicly captured, governments would have the resources to invest in environmental governance, rather than having to choose between "economic development" and "environmental protection."</p>
+        </div>
+
+        <div class="crisis-card">
+            <div class="crisis-title">7. Aging &amp; Declining Birthrate Crisis ↔ Land</div>
+            <p>Why do young people dare not and do not want to have children? Because housing costs, education costs, and healthcare costs crush them. And the root of these three mountains is <span class="land-link">the private capture of land value</span>.</p>
+            <p>If land value were publicly captured, governments would have the resources to provide public housing, universal childcare, and elderly care security. Only then could young people "have the ability and the will to have children."</p>
+        </div>
+
+        <h2>4. GL Framework Diagnosis: Land Is the Foundation of Governance Delivery</h2>
+        <p>If we use the GL Framework to diagnose, we find that <span class="highlight">the public capture ratio of land value directly determines the governance delivery ratio (GL value)</span>.</p>
+        <div class="formula-block">
+            GL = ( Fs × Vn ) ÷ ( Pd × Cf )
+        </div>
+        <ul>
+            <li><strong>Fs (Flow Success Rate)</strong>: Does the government have the resources to let eligible people actually receive services?</li>
+            <li><strong>Vn (Strategic Value)</strong>: Do public services actually improve people's lives?</li>
+            <li><strong>Pd (Process Duration)</strong>: Do people have to pay excessive time costs to receive services?</li>
+            <li><strong>Cf (Complexity Factor)</strong>: Does the private capture of land value exacerbate institutional inequality?</li>
+        </ul>
+        <p><span class="highlight">If land value is not publicly captured, the GL value must be low.</span> Because the government lacks resources, public services cannot be effectively delivered; because housing costs spiral, people cannot achieve a dignified life; because transnational capital can escape, the tax base is continuously hollowed out.</p>
+
+        <h2>5. Conclusion: Land Is the Common Denominator of All Governance Crises</h2>
+        <p>Fiscal, education, healthcare, housing, employment and income, environment, aging and declining birthrates — these seven crises appear to be seven different policy domains. But their structural root is the same: <span class="highlight">land value is captured privately</span>.</p>
+        <p><strong>Land is the common denominator of all governance crises.</strong></p>
+        <p>This is not the platitude that "land policy is important." It is a structural fact: <span class="highlight">in an era of transnational capital racing to the bottom, land value is the only tax base that cannot move and cannot be hidden. If it is publicly captured, governments have the resources to solve all other crises. If it is privately captured, no other crisis can be solved.</span></p>
+
+        <div class="highlight-box dual-box">
+            <p><strong>This is why the "Shared Delusion" series and the "Land Justice" series are dually anchored.</strong></p>
+            <p>The former diagnoses the symptoms; the latter reveals the root. Together, they constitute a complete structural critique.</p>
+        </div>
+
+        <div class="signature">
+            Ping Xu
+            <span class="title">Creator of the GL Framework · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 繁體中文版 ==================== -->
+<div class="lb" data-lang="tw">
+    <div class="page-header">
+        <div class="badge dual">共同的幻覺系列 · 理論綜合 · 亦屬土地正義系列</div>
+        <div class="title">土地：共同的幻覺的共同分母</div>
+        <div class="subtitle">七個危機，一個根源。為什麼所有治理危機最終都指向土地。</div>
+        <div class="meta">徐萍 · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+        <h2>一、問題的起點：七個危機，一個根源</h2>
+        <p>「共同的幻覺」系列診斷了七個看似獨立、實則同源的結構性危機：</p>
+        <ol>
+            <li><strong>財政危機</strong>：各國稅基被跨國資本掏空，支出壓力爆炸。</li>
+            <li><strong>教育危機</strong>：教育體系被就業市場綁架，就業市場被跨國資本綁架。</li>
+            <li><strong>醫療危機</strong>：醫療被商品化，公共衛生被利潤邏輯侵蝕。</li>
+            <li><strong>住房危機</strong>：土地增值被私人捕獲，住房從人權變成階級特權。</li>
+            <li><strong>就業與收入危機</strong>：失業率是統計幻覺，真正的危機是收入分配。</li>
+            <li><strong>環境危機</strong>：環境成本被外部化，資本可以移動，但污染不能。</li>
+            <li><strong>高齡化與少子化危機</strong>：年輕人被擠出未來，育兒與養老的治理交付比率低於 1.0。</li>
+        </ol>
+        <p><span class="highlight">這七個危機，表面上是七個不同的政策領域。但它們的結構性根源，是同一個：土地增值被私人捕獲，公共財政失血，社會成本上升，年輕世代被擠出未來。</span></p>
+
+        <h2>二、為什麼是土地？</h2>
+
+        <h3>第一，土地是唯一不能移動的財富錨點。</h3>
+        <p>跨國資本可以把利潤轉移到開曼群島，但無法把曼哈頓的土地搬到開曼。這意味著，在所有生產要素中，<span class="highlight">土地增值是唯一無法隱藏、無法轉移的稅基</span>。當各國政府忙著討好跨國資本時，他們忘了：腳下的土地，才是最後的國本。</p>
+
+        <h3>第二，土地增值是社會集體創造的，卻被私人捕獲。</h3>
+        <p>公共投資修建地鐵，周邊地價飆升——增值是納稅人的錢創造的，卻被地主與開發商捕獲。城市規劃放寬容積率，開發商獲利——增值是公共政策創造的，公共財政卻沒有回報。人口聚集推高房價——增值是社會進步創造的，租戶與年輕人卻要為此買單。</p>
+        <p><span class="highlight">增值歸私，風險歸公。這就是所有治理危機的財政根源。</span></p>
+
+        <h3>第三，土地增值的公共捕獲，決定了政府的財政能力。</h3>
+        <p>一個政府能不能提供優質的教育、醫療、住房、養老、環境治理？取決於它有沒有穩定的財政來源。如果土地增值被私人捕獲，政府就只能依賴日益萎縮的稅基（工資稅、消費稅），而這個稅基正在被跨國資本系統性地掏空。</p>
+        <p><span class="highlight">土地增值沒有被公共捕獲 → 政府財政失血 → 公共服務崩潰 → 社會成本上升 → 年輕人被擠出未來 → 生育率崩潰。</span></p>
+        <p>這是一條完整的因果鏈。</p>
+
+        <h2>三、逐一拆解：七個危機如何都指向土地</h2>
+
+        <div class="crisis-card">
+            <div class="crisis-title">1. 財政危機 ↔ 土地</div>
+            <p>各國財政危機的表面原因各異（英國脫歐、德國債務剎車、中國土地財政、日本人口萎縮），但共同的結構性根源是：<span class="land-link">土地增值被私人捕獲，稅基被跨國資本掏空</span>。</p>
+            <p>如果土地增值被公共捕獲，政府就有了穩定的財政來源，不必依賴日益萎縮的工資稅與消費稅。丹麥的財政健康，正是因為它透過財產稅與社會住宅體系，把土地增值的一部分鎖在了公共領域。</p>
+        </div>
+
+        <div class="crisis-card">
+            <div class="crisis-title">2. 教育危機 ↔ 土地</div>
+            <p>各國教育危機的表面原因各異（美國學貸、英國職業教育、德國雙元制、中國應試教育），但共同的結構性根源是：<span class="land-link">教育體系被就業市場綁架，而就業市場被跨國資本的逐底競爭綁架</span>。</p>
+            <p>而跨國資本為什麼能逐底競爭？因為它可以移動。但土地不能移動。如果土地增值被公共捕獲，政府就有資源提供免費或低成本的教育，不必把教育體系變成「人力資本投資」的附屬品。</p>
+        </div>
+
+        <div class="crisis-card">
+            <div class="crisis-title">3. 醫療危機 ↔ 土地</div>
+            <p>各國醫療危機的表面原因各異（美國保險與藥價、英國 NHS 等候、中國醫保覆蓋率、德國成本控制），但共同的結構性根源是：<span class="land-link">醫療被商品化，公共衛生被利潤邏輯侵蝕</span>。</p>
+            <p>如果土地增值被公共捕獲，政府就有資源建立普惠的公共衛生體系，不必讓跨國藥廠與保險資本捕獲健康增值。</p>
+        </div>
+
+        <div class="crisis-card">
+            <div class="crisis-title">4. 住房危機 ↔ 土地</div>
+            <p>這一點最直接。住房危機的根源就是：<span class="land-link">土地增值被私人捕獲，住房從基本人權變成階級特權</span>。</p>
+            <p>美國次貸危機、英國房價失控、中國房地產泡沫、德國租金管制失效——這些表面現象背後，是同一個結構性事實：土地增值沒有被公共捕獲。如果土地增值被公共捕獲，政府就有資源大規模興建公共住宅，讓住房回歸基本人權。</p>
+        </div>
+
+        <div class="crisis-card">
+            <div class="crisis-title">5. 就業與收入危機 ↔ 土地</div>
+            <p>失業率是統計幻覺，真正的危機是收入分配。而收入分配的惡化，與土地增值被私人捕獲密切相關：<span class="land-link">房價上漲推高生活成本，勞動者的實際收入被房租與房貸侵蝕</span>。即使有工作，也無法獲得有尊嚴的生活。</p>
+            <p>如果土地增值被公共捕獲，居住成本就不會失控，勞動者的實際收入就能維持尊嚴。</p>
+        </div>
+
+        <div class="crisis-card">
+            <div class="crisis-title">6. 環境危機 ↔ 土地</div>
+            <p>環境成本被外部化，資本可以移動，但污染不能移動。而土地增值被私人捕獲，加劇了這個問題：<span class="land-link">地方政府為了招商引資，不惜放寬環境標準；土地增值被私人捕獲，公共財政沒有資源投入環境治理</span>。</p>
+            <p>如果土地增值被公共捕獲，政府就有資源投入環境治理，不必在「經濟發展」與「環境保護」之間二選一。</p>
+        </div>
+
+        <div class="crisis-card">
+            <div class="crisis-title">7. 高齡化與少子化危機 ↔ 土地</div>
+            <p>年輕人為什麼不敢生、不想生？因為住房成本、教育成本、醫療成本三重擠壓。而這三座大山的根源，都是<span class="land-link">土地增值被私人捕獲</span>。</p>
+            <p>如果土地增值被公共捕獲，政府就有資源提供公共住宅、普惠托育、養老保障，年輕人才有可能「有能力生、願意生」。</p>
+        </div>
+
+        <h2>四、GL Framework 的診斷：土地是治理交付的基礎</h2>
+        <p>如果用 GL Framework 來診斷，就會發現：<span class="highlight">土地增值的公共捕獲比率，直接決定了治理的交付比率（GL 值）</span>。</p>
+        <div class="formula-block">
+            GL = ( Fs × Vn ) ÷ ( Pd × Cf )
+        </div>
+        <ul>
+            <li><strong>Fs（流程成功率）</strong>：政府有沒有資源讓符合資格的人真正獲得服務？</li>
+            <li><strong>Vn（策略價值）</strong>：公共服務是否真正改善了人民的生活？</li>
+            <li><strong>Pd（時間負擔）</strong>：人民為了獲得服務，是否要付出過高的時間成本？</li>
+            <li><strong>Cf（結構性摩擦）</strong>：土地增值被私人捕獲，是否加劇了制度性的不公平？</li>
+        </ul>
+        <p><span class="highlight">土地增值沒有被公共捕獲，GL 值就必然低落。</span>因為政府沒有資源，公共服務就無法有效交付；因為居住成本失控，人民就無法獲得有尊嚴的生活；因為跨國資本可以逃逸，稅基就持續被掏空。</p>
+
+        <h2>五、結論：土地是所有治理危機的共同分母</h2>
+        <p>財政、教育、醫療、住房、就業與收入、環境、高齡化與少子化——這七個危機，表面上是七個不同的政策領域。但它們的結構性根源，是同一個：<span class="highlight">土地增值被私人捕獲</span>。</p>
+        <p><strong>土地是所有治理危機的共同分母。</strong></p>
+        <p>這不是「土地政策很重要」這種老生常談。這是一個結構性事實：<span class="highlight">在跨國資本逐底競爭的時代，土地增值是唯一無法移動、無法隱藏的稅基。如果它被公共捕獲，政府就有資源解決所有其他危機；如果它被私人捕獲，所有其他危機都無法解決。</span></p>
+
+        <div class="highlight-box dual-box">
+            <p><strong>這就是為什麼「共同的幻覺」系列與「土地正義」系列必須雙重錨定。</strong></p>
+            <p>前者診斷現象，後者揭示根源。兩者合在一起，才構成完整的結構性批判。</p>
+        </div>
+
+        <div class="signature">
+            徐萍
+            <span class="title">GL框架發明人 · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 簡體中文版 ==================== -->
+<div class="lb" data-lang="cn">
+    <div class="page-header">
+        <div class="badge dual">共同的幻觉系列 · 理论综合 · 亦属土地正义系列</div>
+        <div class="title">土地：共同的幻觉的共同分母</div>
+        <div class="subtitle">七个危机，一个根源。为什么所有治理危机最终都指向土地。</div>
+        <div class="meta">徐萍 · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+        <h2>一、问题的起点：七个危机，一个根源</h2>
+        <p>「共同的幻觉」系列诊断了七个看似独立、实则同源的结构性危机：</p>
+        <ol>
+            <li><strong>财政危机</strong>：各国税基被跨国资本掏空，支出压力爆炸。</li>
+            <li><strong>教育危机</strong>：教育体系被就业市场绑架，就业市场被跨国资本绑架。</li>
+            <li><strong>医疗危机</strong>：医疗被商品化，公共卫生被利润逻辑侵蚀。</li>
+            <li><strong>住房危机</strong>：土地增值被私人捕获，住房从人权变成阶级特权。</li>
+            <li><strong>就业与收入危机</strong>：失业率是统计幻觉，真正的危机是收入分配。</li>
+            <li><strong>环境危机</strong>：环境成本被外部化，资本可以移动，但污染不能。</li>
+            <li><strong>高龄化与少子化危机</strong>：年轻人被挤出未来，育儿与养老的治理交付比率低于 1.0。</li>
+        </ol>
+        <p><span class="highlight">这七个危机，表面上是七个不同的政策领域。但它们的结构性根源，是同一个：土地增值被私人捕获，公共财政失血，社会成本上升，年轻世代被挤出未来。</span></p>
+
+        <h2>二、为什么是土地？</h2>
+
+        <h3>第一，土地是唯一不能移动的财富锚点。</h3>
+        <p>跨国资本可以把利润转移到开曼群岛，但无法把曼哈顿的土地搬到开曼。这意味着，在所有生产要素中，<span class="highlight">土地增值是唯一无法隐藏、无法转移的税基</span>。当各国政府忙着讨好跨国资本时，他们忘了：脚下的土地，才是最后的国本。</p>
+
+        <h3>第二，土地增值是社会集体创造的，却被私人捕获。</h3>
+        <p>公共投资修建地铁，周边地价飙升——增值是纳税人的钱创造的，却被地主与开发商捕获。城市规划放宽容积率，开发商获利——增值是公共政策创造的，公共财政却没有回报。人口聚集推高房价——增值是社会进步创造的，租户与年轻人却要为此买单。</p>
+        <p><span class="highlight">增值归私，风险归公。这就是所有治理危机的财政根源。</span></p>
+
+        <h3>第三，土地增值的公共捕获，决定了政府的财政能力。</h3>
+        <p>一个政府能不能提供优质的教育、医疗、住房、养老、环境治理？取决于它有没有稳定的财政来源。如果土地增值被私人捕获，政府就只能依赖日益萎缩的税基（工资税、消费税），而这个税基正在被跨国资本系统性地掏空。</p>
+        <p><span class="highlight">土地增值没有被公共捕获 → 政府财政失血 → 公共服务崩溃 → 社会成本上升 → 年轻人被挤出未来 → 生育率崩溃。</span></p>
+        <p>这是一条完整的因果链。</p>
+
+        <h2>三、逐一拆解：七个危机如何都指向土地</h2>
+
+        <div class="crisis-card">
+            <div class="crisis-title">1. 财政危机 ↔ 土地</div>
+            <p>各国财政危机的表面原因各异（英国脱欧、德国债务刹车、中国土地财政、日本人口萎缩），但共同的结构性根源是：<span class="land-link">土地增值被私人捕获，税基被跨国资本掏空</span>。</p>
+            <p>如果土地增值被公共捕获，政府就有了稳定的财政来源，不必依赖日益萎缩的工资税与消费税。丹麦的财政健康，正是因为它透过财产税与社会住宅体系，把土地增值的一部分锁在了公共领域。</p>
+        </div>
+
+        <div class="crisis-card">
+            <div class="crisis-title">2. 教育危机 ↔ 土地</div>
+            <p>各国教育危机的表面原因各异（美国学贷、英国职业教育、德国双元制、中国应试教育），但共同的结构性根源是：<span class="land-link">教育体系被就业市场绑架，而就业市场被跨国资本的逐底竞争绑架</span>。</p>
+            <p>而跨国资本为什么能逐底竞争？因为它可以移动。但土地不能移动。如果土地增值被公共捕获，政府就有资源提供免费或低成本的教育，不必把教育体系变成「人力资本投资」的附属品。</p>
+        </div>
+
+        <div class="crisis-card">
+            <div class="crisis-title">3. 医疗危机 ↔ 土地</div>
+            <p>各国医疗危机的表面原因各异（美国保险与药价、英国 NHS 等候、中国医保覆盖率、德国成本控制），但共同的结构性根源是：<span class="land-link">医疗被商品化，公共卫生被利润逻辑侵蚀</span>。</p>
+            <p>如果土地增值被公共捕获，政府就有资源建立普惠的公共卫生体系，不必让跨国药厂与保险资本捕获健康增值。</p>
+        </div>
+
+        <div class="crisis-card">
+            <div class="crisis-title">4. 住房危机 ↔ 土地</div>
+            <p>这一点最直接。住房危机的根源就是：<span class="land-link">土地增值被私人捕获，住房从基本人权变成阶级特权</span>。</p>
+            <p>美国次贷危机、英国房价失控、中国房地产泡沫、德国租金管制失效——这些表面现象背后，是同一个结构性事实：土地增值没有被公共捕获。如果土地增值被公共捕获，政府就有资源大规模兴建公共住宅，让住房回归基本人权。</p>
+        </div>
+
+        <div class="crisis-card">
+            <div class="crisis-title">5. 就业与收入危机 ↔ 土地</div>
+            <p>失业率是统计幻觉，真正的危机是收入分配。而收入分配的恶化，与土地增值被私人捕获密切相关：<span class="land-link">房价上涨推高生活成本，劳动者的实际收入被房租与房贷侵蚀</span>。即使有工作，也无法获得有尊严的生活。</p>
+            <p>如果土地增值被公共捕获，居住成本就不会失控，劳动者的实际收入就能维持尊严。</p>
+        </div>
+
+        <div class="crisis-card">
+            <div class="crisis-title">6. 环境危机 ↔ 土地</div>
+            <p>环境成本被外部化，资本可以移动，但污染不能移动。而土地增值被私人捕获，加剧了这个问题：<span class="land-link">地方政府为了招商引资，不惜放宽环境标准；土地增值被私人捕获，公共财政没有资源投入环境治理</span>。</p>
+            <p>如果土地增值被公共捕获，政府就有资源投入环境治理，不必在「经济发展」与「环境保护」之间二选一。</p>
+        </div>
+
+        <div class="crisis-card">
+            <div class="crisis-title">7. 高龄化与少子化危机 ↔ 土地</div>
+            <p>年轻人为什么不敢生、不想生？因为住房成本、教育成本、医疗成本三重挤压。而这三座大山的根源，都是<span class="land-link">土地增值被私人捕获</span>。</p>
+            <p>如果土地增值被公共捕获，政府就有资源提供公共住宅、普惠托育、养老保障，年轻人才有可能「有能力生、愿意生」。</p>
+        </div>
+
+        <h2>四、GL Framework 的诊断：土地是治理交付的基础</h2>
+        <p>如果用 GL Framework 来诊断，就会发现：<span class="highlight">土地增值的公共捕获比率，直接决定了治理的交付比率（GL 值）</span>。</p>
+        <div class="formula-block">
+            GL = ( Fs × Vn ) ÷ ( Pd × Cf )
+        </div>
+        <ul>
+            <li><strong>Fs（流程成功率）</strong>：政府有没有资源让符合资格的人真正获得服务？</li>
+            <li><strong>Vn（策略价值）</strong>：公共服务是否真正改善了人民的生活？</li>
+            <li><strong>Pd（时间负担）</strong>：人民为了获得服务，是否要付出过高的时间成本？</li>
+            <li><strong>Cf（结构性摩擦）</strong>：土地增值被私人捕获，是否加剧了制度性的不公平？</li>
+        </ul>
+        <p><span class="highlight">土地增值没有被公共捕获，GL 值就必然低落。</span>因为政府没有资源，公共服务就无法有效交付；因为居住成本失控，人民就无法获得有尊严的生活；因为跨国资本可以逃逸，税基就持续被掏空。</p>
+
+        <h2>五、结论：土地是所有治理危机的共同分母</h2>
+        <p>财政、教育、医疗、住房、就业与收入、环境、高龄化与少子化——这七个危机，表面上是七个不同的政策领域。但它们的结构性根源，是同一个：<span class="highlight">土地增值被私人捕获</span>。</p>
+        <p><strong>土地是所有治理危机的共同分母。</strong></p>
+        <p>这不是「土地政策很重要」这种老生常谈。这是一个结构性事实：<span class="highlight">在跨国资本逐底竞争的时代，土地增值是唯一无法移动、无法隐藏的税基。如果它被公共捕获，政府就有资源解决所有其他危机；如果它被私人捕获，所有其他危机都无法解决。</span></p>
+
+        <div class="highlight-box dual-box">
+            <p><strong>这就是为什么「共同的幻觉」系列与「土地正义」系列必须双重锚定。</strong></p>
+            <p>前者诊断现象，后者揭示根源。两者合在一起，才构成完整的结构性批判。</p>
+        </div>
+
+        <div class="signature">
+            徐萍
+            <span class="title">GL框架发明人 · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 西班牙文版 ==================== -->
+<div class="lb" data-lang="es">
+    <div class="page-header">
+        <div class="badge dual">Serie Ilusión Compartida · Síntesis Teórica · También Serie Justicia de la Tierra</div>
+        <div class="title">La Tierra: El Denominador Común de las Ilusiones Compartidas</div>
+        <div class="subtitle">Siete crisis, una raíz. Por qué toda crisis de gobernanza apunta finalmente a la tierra.</div>
+        <div class="meta">Ping Xu · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+        <h2>1. El Punto de Partida: Siete Crisis, Una Raíz</h2>
+        <p>La serie "Ilusión Compartida" diagnosticó siete crisis aparentemente independientes pero estructuralmente homólogas:</p>
+        <ol>
+            <li><strong>Crisis fiscal</strong>: La base imponible es vaciada por el capital transnacional; la presión del gasto explota.</li>
+            <li><strong>Crisis educativa</strong>: Los sistemas educativos son capturados por el mercado laboral, y el mercado laboral por el capital transnacional.</li>
+            <li><strong>Crisis sanitaria</strong>: La atención médica está mercantilizada; la salud pública es erosionada por la lógica del lucro.</li>
+            <li><strong>Crisis de vivienda</strong>: El valor del suelo es capturado privadamente; la vivienda pasa de derecho humano a privilegio de clase.</li>
+            <li><strong>Crisis de empleo e ingresos</strong>: La tasa de desempleo es una ilusión estadística; la verdadera crisis es la distribución del ingreso.</li>
+            <li><strong>Crisis ambiental</strong>: Los costos ambientales se externalizan; el capital puede moverse, pero la contaminación no.</li>
+            <li><strong>Crisis de envejecimiento y natalidad</strong>: Los jóvenes son expulsados del futuro; la tasa de entrega de gobernanza en cuidado infantil y de ancianos está por debajo de 1.0.</li>
+        </ol>
+        <p><span class="highlight">Estas siete crisis parecen ser siete dominios de política diferentes. Pero su raíz estructural es la misma: el valor del suelo es capturado privadamente, las finanzas públicas sangran, los costos sociales aumentan, y la generación más joven es expulsada del futuro.</span></p>
+
+        <h2>2. ¿Por Qué la Tierra?</h2>
+
+        <h3>Primero, la tierra es el único ancla de riqueza que no puede moverse.</h3>
+        <p>El capital transnacional puede trasladar beneficios a las Islas Caimán, pero no puede trasladar Manhattan a las Islas Caimán. Esto significa que, entre todos los factores de producción, <span class="highlight">el valor del suelo es la única base imponible que no puede ocultarse ni transferirse</span>. Mientras los gobiernos se afanan en cortejar al capital transnacional, olvidan: la tierra bajo sus pies es el último fundamento de la soberanía nacional.</p>
+
+        <h3>Segundo, el valor del suelo es creado socialmente, pero capturado privadamente.</h3>
+        <p>La inversión pública construye un metro, y los precios del suelo circundante se disparan — el incremento es creado por el dinero de los contribuyentes, pero capturado por terratenientes y promotores. Los cambios de zonificación aumentan la densidad, y los promotores se benefician — el incremento es creado por la política pública, pero las finanzas públicas no obtienen retorno. La aglomeración poblacional impulsa los precios de la vivienda — el incremento es creado por el progreso social, pero los inquilinos y los jóvenes pagan por él.</p>
+        <p><span class="highlight">El valor se privatiza. El riesgo se socializa. Esta es la raíz fiscal de todas las crisis de gobernanza.</span></p>
+
+        <h3>Tercero, la captura pública del valor del suelo determina la capacidad fiscal de un gobierno.</h3>
+        <p>¿Puede un gobierno proporcionar educación, sanidad, vivienda, cuidado de ancianos y gobernanza ambiental de calidad? Depende de si tiene una fuente fiscal estable. Si el valor del suelo es capturado privadamente, el gobierno solo puede depender de una base imponible cada vez más reducida (impuestos sobre salarios, impuestos al consumo) — una base imponible que está siendo sistemáticamente vaciada por el capital transnacional.</p>
+        <p><span class="highlight">Valor del suelo no capturado públicamente → finanzas gubernamentales sangran → servicios públicos colapsan → costos sociales aumentan → jóvenes expulsados del futuro → tasa de fertilidad colapsa.</span></p>
+        <p>Esta es una cadena causal completa.</p>
+
+        <h2>3. Desglosando las Siete Crisis: Cómo Todas Apuntan a la Tierra</h2>
+
+        <div class="crisis-card">
+            <div class="crisis-title">1. Crisis Fiscal ↔ Tierra</div>
+            <p>Las causas superficiales de las crisis fiscales varían (Brexit en el Reino Unido, freno de la deuda en Alemania, finanzas del suelo en China, declive poblacional en Japón), pero la raíz estructural común es: <span class="land-link">el valor del suelo es capturado privadamente, y la base imponible es vaciada por el capital transnacional</span>.</p>
+            <p>Si el valor del suelo fuera capturado públicamente, los gobiernos tendrían una fuente fiscal estable y no tendrían que depender de una base imponible de salarios y consumo cada vez más reducida. La salud fiscal de Dinamarca proviene precisamente de capturar públicamente una parte del valor del suelo a través de impuestos a la propiedad y vivienda social.</p>
+        </div>
+
+        <div class="crisis-card">
+            <div class="crisis-title">2. Crisis Educativa ↔ Tierra</div>
+            <p>Las causas superficiales de las crisis educativas varían (préstamos estudiantiles en EE.UU., educación vocacional en el Reino Unido, sistema dual en Alemania, educación orientada a exámenes en China), pero la raíz estructural común es: <span class="land-link">los sistemas educativos son capturados por el mercado laboral, y el mercado laboral por la carrera hacia el fondo del capital transnacional</span>.</p>
+            <p>¿Y por qué puede el capital transnacional correr hacia el fondo? Porque puede moverse. Pero la tierra no. Si el valor del suelo fuera capturado públicamente, los gobiernos tendrían los recursos para proporcionar educación gratuita o de bajo costo, en lugar de convertir la educación en un subordinado de la "inversión en capital humano".</p>
+        </div>
+
+        <div class="crisis-card">
+            <div class="crisis-title">3. Crisis Sanitaria ↔ Tierra</div>
+            <p>Las causas superficiales de las crisis sanitarias varían (seguros y precios de medicamentos en EE.UU., tiempos de espera del NHS en el Reino Unido, cobertura del seguro médico en China, control de costos en Alemania), pero la raíz estructural común es: <span class="land-link">la atención médica está mercantilizada, y la salud pública es erosionada por la lógica del lucro</span>.</p>
+            <p>Si el valor del suelo fuera capturado públicamente, los gobiernos tendrían los recursos para construir sistemas de salud pública universales, en lugar de dejar que las farmacéuticas transnacionales y el capital asegurador capturen el valor de la salud.</p>
+        </div>
+
+        <div class="crisis-card">
+            <div class="crisis-title">4. Crisis de Vivienda ↔ Tierra</div>
+            <p>Esto es lo más directo. La raíz de la crisis de vivienda es: <span class="land-link">el valor del suelo es capturado privadamente, y la vivienda pasa de derecho humano básico a privilegio de clase</span>.</p>
+            <p>La crisis de las subprime en EE.UU., los precios descontrolados en el Reino Unido, la burbuja inmobiliaria en China, el fracaso del control de alquileres en Alemania — detrás de estos fenómenos superficiales está el mismo hecho estructural: el valor del suelo no es capturado públicamente. Si lo fuera, los gobiernos tendrían los recursos para construir vivienda pública a gran escala, devolviendo la vivienda a la categoría de derecho humano básico.</p>
+        </div>
+
+        <div class="crisis-card">
+            <div class="crisis-title">5. Crisis de Empleo e Ingresos ↔ Tierra</div>
+            <p>La tasa de desempleo es una ilusión estadística; la verdadera crisis es la distribución del ingreso. Y el deterioro de la distribución del ingreso está estrechamente vinculado a la captura privada del valor del suelo: <span class="land-link">el aumento de los precios de la vivienda eleva el costo de vida, y los ingresos reales de los trabajadores son erosionados por el alquiler y las hipotecas</span>. Incluso con empleo, una vida digna es inalcanzable.</p>
+            <p>Si el valor del suelo fuera capturado públicamente, los costos de vivienda no se dispararían, y los ingresos reales de los trabajadores podrían mantener la dignidad.</p>
+        </div>
+
+        <div class="crisis-card">
+            <div class="crisis-title">6. Crisis Ambiental ↔ Tierra</div>
+            <p>Los costos ambientales se externalizan; el capital puede moverse, pero la contaminación no. Y la captura privada del valor del suelo agrava este problema: <span class="land-link">los gobiernos locales relajan los estándares ambientales para atraer inversión; las finanzas públicas no tienen recursos para la gobernanza ambiental</span>.</p>
+            <p>Si el valor del suelo fuera capturado públicamente, los gobiernos tendrían los recursos para invertir en gobernanza ambiental, en lugar de tener que elegir entre "desarrollo económico" y "protección ambiental".</p>
+        </div>
+
+        <div class="crisis-card">
+            <div class="crisis-title">7. Crisis de Envejecimiento y Natalidad ↔ Tierra</div>
+            <p>¿Por qué los jóvenes no se atreven y no quieren tener hijos? Porque los costos de vivienda, educación y atención médica los aplastan. Y la raíz de estas tres montañas es <span class="land-link">la captura privada del valor del suelo</span>.</p>
+            <p>Si el valor del suelo fuera capturado públicamente, los gobiernos tendrían los recursos para proporcionar vivienda pública, cuidado infantil universal y seguridad para ancianos. Solo entonces los jóvenes podrían "tener la capacidad y la voluntad de tener hijos".</p>
+        </div>
+
+        <h2>4. Diagnóstico del Marco GL: La Tierra Es la Base de la Entrega de Gobernanza</h2>
+        <p>Si utilizamos el Marco GL para diagnosticar, encontramos que <span class="highlight">la tasa de captura pública del valor del suelo determina directamente la tasa de entrega de gobernanza (valor GL)</span>.</p>
+        <div class="formula-block">
+            GL = ( Fs × Vn ) ÷ ( Pd × Cf )
+        </div>
+        <ul>
+            <li><strong>Fs (Tasa de Éxito del Proceso)</strong>: ¿Tiene el gobierno los recursos para que las personas elegibles reciban realmente los servicios?</li>
+            <li><strong>Vn (Valor Estratégico)</strong>: ¿Mejoran realmente los servicios públicos la vida de las personas?</li>
+            <li><strong>Pd (Duración del Proceso)</strong>: ¿Tienen las personas que pagar costos de tiempo excesivos para recibir servicios?</li>
+            <li><strong>Cf (Factor de Complejidad)</strong>: ¿Agrava la captura privada del valor del suelo la desigualdad institucional?</li>
+        </ul>
+        <p><span class="highlight">Si el valor del suelo no es capturado públicamente, el valor GL debe ser bajo.</span> Porque el gobierno carece de recursos, los servicios públicos no pueden entregarse eficazmente; porque los costos de vivienda se disparan, las personas no pueden alcanzar una vida digna; porque el capital transnacional puede escapar, la base imponible se vacía continuamente.</p>
+
+        <h2>5. Conclusión: La Tierra Es el Denominador Común de Todas las Crisis de Gobernanza</h2>
+        <p>Fiscal, educación, sanidad, vivienda, empleo e ingresos, medio ambiente, envejecimiento y natalidad — estas siete crisis parecen ser siete dominios de política diferentes. Pero su raíz estructural es la misma: <span class="highlight">el valor del suelo es capturado privadamente</span>.</p>
+        <p><strong>La tierra es el denominador común de todas las crisis de gobernanza.</strong></p>
+        <p>Esto no es el tópico de que "la política de suelo es importante". Es un hecho estructural: <span class="highlight">en una era en que el capital transnacional corre hacia el fondo, el valor del suelo es la única base imponible que no puede moverse ni ocultarse. Si se captura públicamente, los gobiernos tienen los recursos para resolver todas las demás crisis. Si se captura privadamente, ninguna otra crisis puede resolverse.</span></p>
+
+        <div class="highlight-box dual-box">
+            <p><strong>Por esto la serie "Ilusión Compartida" y la serie "Justicia de la Tierra" están doblemente ancladas.</strong></p>
+            <p>La primera diagnostica los síntomas; la segunda revela la raíz. Juntas, constituyen una crítica estructural completa.</p>
+        </div>
+
+        <div class="signature">
+            Ping Xu
+            <span class="title">Creadora del GL Framework · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <span class="site">gfiintel.com</span>
+    <span class="links">
+        <a href="/">← Back to Home</a>
+        <a href="/shared-delusion.html">← Shared Delusion Series</a>
+        <a href="/landjustice.html">← Land Justice Series</a>
+    </span>
+    <span class="copyright">© 2026 GFI Flow Intelligence · 共同的幻覺 · Shared Delusion · Ilusión Compartida</span>
+</div>
+
+<script>
+    document.querySelectorAll('.lb-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var lang = this.dataset.lang;
+            document.querySelectorAll('.lb-btn').forEach(function(b) { b.classList.remove('on'); });
+            this.classList.add('on');
+            document.querySelectorAll('.lb').forEach(function(lb) { lb.classList.remove('active'); });
+            var target = document.querySelector('.lb[data-lang="' + lang + '"]');
+            if (target) target.classList.add('active');
+        });
+    });
+</script>
+
+</body>
+</html>
