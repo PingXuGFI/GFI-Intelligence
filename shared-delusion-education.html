@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shared Delusion II: Education · 共同的幻覺之二：教育</title>
+    <meta name="description" content="Every country thinks it values education. In reality, every country only values employment. A structural diagnosis of the global education crisis." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: #0d0a08;
+            color: #e0d6cc;
+            font-family: 'DM Sans', system-ui, sans-serif;
+            font-size: 16px;
+            line-height: 1.9;
+            min-height: 100vh;
+        }
+        .topbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            height: 60px; padding: 0 clamp(18px, 5vw, 48px);
+            display: flex; align-items: center; justify-content: space-between;
+            background: rgba(13, 10, 8, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .logo {
+            font-family: 'DM Mono', monospace; font-size: 11px;
+            letter-spacing: 0.16em; text-transform: uppercase;
+            color: #b8aaa0; text-decoration: none;
+        }
+        .nav-right { display: flex; align-items: center; gap: 12px; }
+        .lang-grp { display: flex; gap: 4px; }
+        .lb-btn {
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            letter-spacing: 0.06em; padding: 4px 10px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 4px; background: transparent;
+            color: #7a7068; cursor: pointer; transition: all 0.2s;
+        }
+        .lb-btn:hover { color: #e0d6cc; border-color: rgba(255, 255, 255, 0.2); }
+        .lb-btn.on { background: #b8aaa0; color: #0d0a08; border-color: #b8aaa0; }
+        .nav-links { display: flex; gap: 16px; align-items: center; }
+        .nav-links a {
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            letter-spacing: 0.06em; color: #7a7068;
+            text-decoration: none; padding: 4px 8px;
+            border-radius: 4px; transition: all 0.2s;
+        }
+        .nav-links a:hover { color: #e0d6cc; background: rgba(255, 255, 255, 0.04); }
+        .lb { display: none; padding: 100px 40px 70px; max-width: 860px; margin: 0 auto; }
+        .lb.active { display: block; }
+        .page-header {
+            padding: 0 0 32px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 32px;
+        }
+        .page-header .badge {
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            letter-spacing: 0.22em; text-transform: uppercase;
+            color: #8a4a2a; margin-bottom: 12px;
+        }
+        .page-header .title {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: clamp(28px, 3.6vw, 42px);
+            line-height: 1.15; color: #f0e6dc; margin-bottom: 8px;
+        }
+        .page-header .subtitle {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-style: italic; font-size: clamp(16px, 1.7vw, 20px);
+            color: #8a7a6a; margin-bottom: 12px;
+        }
+        .page-header .meta {
+            font-family: 'DM Mono', monospace; font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.2);
+        }
+        .content h2 {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.4rem; color: #f0e6dc;
+            margin: 2.2rem 0 0.8rem 0;
+            padding-bottom: 0.3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .content h3 {
+            font-size: 1.1rem; font-weight: 600;
+            color: #e0d6cc; margin: 1.8rem 0 0.5rem 0;
+        }
+        .content p { margin-bottom: 1.2rem; color: #d0c6bc; }
+        .content ul, .content ol { margin-bottom: 1.2rem; padding-left: 1.6rem; }
+        .content li { margin-bottom: 0.5rem; color: #d0c6bc; }
+        .content .highlight { color: #c47a4a; font-weight: 600; }
+        .content .formula-block {
+            background: #161210;
+            border-left: 4px solid #8a4a2a;
+            padding: 1.2rem 1.6rem;
+            margin: 1.5rem 0;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.95rem;
+            color: #e0d6cc;
+            border-radius: 0 6px 6px 0;
+        }
+        .content .highlight-box {
+            background: rgba(138, 74, 42, 0.08);
+            border-left: 4px solid #8a4a2a;
+            padding: 1.2rem 1.8rem;
+            margin: 1.8rem 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .content .highlight-box p { margin-bottom: 0.5rem; }
+        .content .highlight-box strong { color: #f0e6dc; }
+        .signature {
+            margin-top: 40px; padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.05rem; color: #f0e6dc;
+        }
+        .signature .title {
+            font-family: 'DM Mono', monospace; font-size: 0.6rem;
+            color: rgba(255, 255, 255, 0.25);
+            letter-spacing: 0.06em; display: block; margin-top: 2px;
+        }
+        .footer {
+            text-align: center; padding: 28px 20px 36px;
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            color: rgba(255, 255, 255, 0.18);
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            margin-top: 48px; line-height: 2;
+        }
+        .footer a { color: #b8aaa0; text-decoration: none; margin: 0 8px; }
+        .footer a:hover { color: #e0d6cc; }
+        .footer .site { display: block; margin-bottom: 8px; color: rgba(255, 255, 255, 0.25); letter-spacing: 0.06em; }
+        .footer .links { display: block; margin-bottom: 8px; }
+        .footer .copyright { color: rgba(255, 255, 255, 0.12); display: block; }
+        @media (max-width: 640px) {
+            .lb { padding: 80px 20px 50px; }
+            .topbar { padding: 0 14px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="topbar">
+    <a href="/" class="logo">← Home</a>
+    <div class="nav-right">
+        <div class="nav-links">
+            <a href="/shared-delusion.html">Shared Delusion</a>
+        </div>
+        <div class="lang-grp">
+            <button class="lb-btn on" data-lang="en">EN</button>
+            <button class="lb-btn" data-lang="tw">繁</button>
+            <button class="lb-btn" data-lang="cn">简</button>
+            <button class="lb-btn" data-lang="es">ES</button>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 英文版 ==================== -->
+<div class="lb active" data-lang="en">
+    <div class="page-header">
+        <div class="badge">Shared Delusion Series · Essay II</div>
+        <div class="title">Every Country Thinks It Values Education</div>
+        <div class="subtitle">In reality, every country only values employment.</div>
+        <div class="meta">Ping Xu · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+        <h2>1. The Myth of Education and the Reality of Employment</h2>
+        <p>Every government declares that "education is the foundation of the nation." But look at budget allocation, policy priorities, and social evaluation — they are all oriented toward <span class="highlight">employment</span>. The essence of education has become "human capital investment," not "the full development of the person."</p>
+
+        <h2>2. The Structural Homology of National Education Crises</h2>
+        <p>The United States thinks it has a student loan crisis. The UK thinks it has a vocational education gap. Germany thinks its dual system is failing. China thinks it has an exam-oriented education problem. Japan thinks it is declining birthrates. These are not separate problems — they are the <span class="highlight">same structural crisis</span>: education systems are captured by the employment market, and the employment market is captured by the race to the bottom of transnational capital.</p>
+
+        <h2>3. GL Diagnosis: The Delivery Ratio of Education</h2>
+        <div class="formula-block">
+            GL = ( Fs × Vn ) ÷ ( Pd × Cf )
+        </div>
+        <ul>
+            <li><strong>Fs (Flow Success Rate)</strong>: How many students actually complete the transition from learning to employment?</li>
+            <li><strong>Pd (Process Duration)</strong>: How many years do students spend in school, only to delay entry into the job market?</li>
+            <li><strong>Cf (Complexity Factor)</strong>: Degree inflation, industry-academia disconnect, urban-rural gaps, class reproduction.</li>
+        </ul>
+        <p>The GL value of education is not measured by enrollment rates, but by whether graduates achieve a dignified life.</p>
+
+        <h2>4. The Way Out: From "Employment Orientation" to "Human Development"</h2>
+        <p>Only when global coordination mechanisms are established can countries escape the vicious cycle of "education serving employment." The goal of education should be to cultivate citizens, critical thinking, and social responsibility — not merely labor power.</p>
+
+        <div class="highlight-box">
+            <p><strong>The shared delusion is not that countries don't value education. It's that they value it only as a means to employment — and when employment itself is hollowed out by transnational capital, education loses its direction.</strong></p>
+        </div>
+
+        <div class="signature">
+            Ping Xu
+            <span class="title">Creator of the GL Framework · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 繁體中文版 ==================== -->
+<div class="lb" data-lang="tw">
+    <div class="page-header">
+        <div class="badge">共同的幻覺系列 · 第二篇</div>
+        <div class="title">每個國家都以為自己重視教育</div>
+        <div class="subtitle">其實每個國家都只重視就業</div>
+        <div class="meta">徐萍 · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+        <h2>一、教育的神話與就業的現實</h2>
+        <p>每個國家的政府都宣稱「教育是國本」。但看看預算分配、政策優先級、社會評價——全部以<span class="highlight">就業</span>為導向。教育的本質已經變成了「人力資本投資」，而不是「人的全面發展」。</p>
+
+        <h2>二、各國教育危機的結構性同源</h2>
+        <p>美國以為自己有學貸危機，英國以為自己有職業教育缺口，德國以為自己的雙元制失靈，中國以為自己有應試教育問題，日本以為自己是少子化。這些不是各自的問題——它們是<span class="highlight">同一個結構性危機</span>：教育體系被就業市場綁架，就業市場被跨國資本的逐底競爭綁架。</p>
+
+        <h2>三、GL 診斷：教育的交付比率</h2>
+        <div class="formula-block">
+            GL = ( Fs × Vn ) ÷ ( Pd × Cf )
+        </div>
+        <ul>
+            <li><strong>Fs（流程成功率）</strong>：有多少學生真正完成了「從學習到就業」的轉化？</li>
+            <li><strong>Pd（時間負擔）</strong>：學生花了多少年時間在學校，卻只是為了延後進入就業市場？</li>
+            <li><strong>Cf（結構性摩擦）</strong>：學歷通膨、產學脫節、城鄉差距、階級複製。</li>
+        </ul>
+        <p>教育的 GL 值，不是看升學率，而是看畢業生是否獲得了有尊嚴的生活。</p>
+
+        <h2>四、出路：從「就業導向」到「人的發展」</h2>
+        <p>只有當全球協調機制建立起來，各國才能擺脫「教育為就業服務」的惡性循環。教育的目標應該是培養公民、批判性思維與社會責任感，而不是單純的勞動力。</p>
+
+        <div class="highlight-box">
+            <p><strong>共同的幻覺不是各國不重視教育，而是各國只把教育當成就業的手段——而當就業本身被跨國資本掏空時，教育就失去了方向。</strong></p>
+        </div>
+
+        <div class="signature">
+            徐萍
+            <span class="title">GL框架發明人 · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 簡體中文版 ==================== -->
+<div class="lb" data-lang="cn">
+    <div class="page-header">
+        <div class="badge">共同的幻觉系列 · 第二篇</div>
+        <div class="title">每个国家都以为自己重视教育</div>
+        <div class="subtitle">其实每个国家都只重视就业</div>
+        <div class="meta">徐萍 · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+        <h2>一、教育的神话与就业的现实</h2>
+        <p>每个国家的政府都宣称「教育是国本」。但看看预算分配、政策优先级、社会评价——全部以<span class="highlight">就业</span>为导向。教育的本质已经变成了「人力资本投资」，而不是「人的全面发展」。</p>
+
+        <h2>二、各国教育危机的结构性同源</h2>
+        <p>美国以为自己有学贷危机，英国以为自己有职业教育缺口，德国以为自己的双元制失灵，中国以为自己有应试教育问题，日本以为自己是少子化。这些不是各自的问题——它们是<span class="highlight">同一个结构性危机</span>：教育体系被就业市场绑架，就业市场被跨国资本的逐底竞争绑架。</p>
+
+        <h2>三、GL 诊断：教育的交付比率</h2>
+        <div class="formula-block">
+            GL = ( Fs × Vn ) ÷ ( Pd × Cf )
+        </div>
+        <ul>
+            <li><strong>Fs（流程成功率）</strong>：有多少学生真正完成了「从学习到就业」的转化？</li>
+            <li><strong>Pd（时间负担）</strong>：学生花了多少年时间在学校，却只是为了延后进入就业市场？</li>
+            <li><strong>Cf（结构性摩擦）</strong>：学历通膨、产学脱节、城乡差距、阶级复制。</li>
+        </ul>
+        <p>教育的 GL 值，不是看升学率，而是看毕业生是否获得了有尊严的生活。</p>
+
+        <h2>四、出路：从「就业导向」到「人的发展」</h2>
+        <p>只有当全球协调机制建立起来，各国才能摆脱「教育为就业服务」的恶性循环。教育的目标应该是培养公民、批判性思维与社会责任感，而不是单纯的劳动力。</p>
+
+        <div class="highlight-box">
+            <p><strong>共同的幻觉不是各国不重视教育，而是各国只把教育当成就业的手段——而当就业本身被跨国资本掏空时，教育就失去了方向。</strong></p>
+        </div>
+
+        <div class="signature">
+            徐萍
+            <span class="title">GL框架发明人 · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 西班牙文版 ==================== -->
+<div class="lb" data-lang="es">
+    <div class="page-header">
+        <div class="badge">Serie Ilusión Compartida · Ensayo II</div>
+        <div class="title">Cada País Cree que Valora la Educación</div>
+        <div class="subtitle">En realidad, cada país solo valora el empleo.</div>
+        <div class="meta">Ping Xu · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+        <h2>1. El Mito de la Educación y la Realidad del Empleo</h2>
+        <p>Cada gobierno declara que "la educación es la base de la nación". Pero observe la asignación presupuestaria, las prioridades políticas y la evaluación social: todas están orientadas hacia el <span class="highlight">empleo</span>. La esencia de la educación se ha convertido en "inversión en capital humano", no en "desarrollo integral de la persona".</p>
+
+        <h2>2. La Homología Estructural de las Crisis Educativas Nacionales</h2>
+        <p>Estados Unidos cree que tiene una crisis de préstamos estudiantiles. El Reino Unido cree que tiene una brecha de educación vocacional. Alemania cree que su sistema dual está fallando. China cree que tiene un problema de educación orientada a exámenes. Japón cree que es la disminución de la natalidad. No son problemas separados: son la <span class="highlight">misma crisis estructural</span>: los sistemas educativos están capturados por el mercado laboral, y el mercado laboral está capturado por la carrera hacia el fondo del capital transnacional.</p>
+
+        <h2>3. Diagnóstico GL: La Tasa de Entrega de la Educación</h2>
+        <div class="formula-block">
+            GL = ( Fs × Vn ) ÷ ( Pd × Cf )
+        </div>
+        <ul>
+            <li><strong>Fs (Tasa de Éxito del Proceso)</strong>: ¿Cuántos estudiantes completan realmente la transición del aprendizaje al empleo?</li>
+            <li><strong>Pd (Duración del Proceso)</strong>: ¿Cuántos años pasan los estudiantes en la escuela, solo para retrasar la entrada al mercado laboral?</li>
+            <li><strong>Cf (Factor de Complejidad)</strong>: Inflación de títulos, desconexión entre industria y academia, brechas urbano-rurales, reproducción de clase.</li>
+        </ul>
+        <p>El valor GL de la educación no se mide por las tasas de matrícula, sino por si los graduados logran una vida digna.</p>
+
+        <h2>4. La Salida: De la "Orientación al Empleo" al "Desarrollo Humano"</h2>
+        <p>Solo cuando se establezcan mecanismos de coordinación global, los países podrán escapar del círculo vicioso de "la educación al servicio del empleo". El objetivo de la educación debe ser cultivar ciudadanos, pensamiento crítico y responsabilidad social, no simplemente fuerza laboral.</p>
+
+        <div class="highlight-box">
+            <p><strong>La ilusión compartida no es que los países no valoren la educación. Es que solo la valoran como un medio para el empleo — y cuando el empleo mismo es vaciado por el capital transnacional, la educación pierde su dirección.</strong></p>
+        </div>
+
+        <div class="signature">
+            Ping Xu
+            <span class="title">Creadora del GL Framework · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <span class="site">gfiintel.com</span>
+    <span class="links">
+        <a href="/">← Back to Home</a>
+        <a href="/shared-delusion.html">← Shared Delusion Series</a>
+        <a href="/landjustice.html">← Land Justice Series</a>
+    </span>
+    <span class="copyright">© 2026 GFI Flow Intelligence · 共同的幻覺 · Shared Delusion · Ilusión Compartida</span>
+</div>
+
+<script>
+    document.querySelectorAll('.lb-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var lang = this.dataset.lang;
+            document.querySelectorAll('.lb-btn').forEach(function(b) { b.classList.remove('on'); });
+            this.classList.add('on');
+            document.querySelectorAll('.lb').forEach(function(lb) { lb.classList.remove('active'); });
+            var target = document.querySelector('.lb[data-lang="' + lang + '"]');
+            if (target) target.classList.add('active');
+        });
+    });
+</script>
+
+</body>
+</html>
