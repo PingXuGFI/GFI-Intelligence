@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shared Delusion IV: Housing · 共同的幻覺之四：住房</title>
+    <meta name="description" content="Every country thinks its housing crisis is unique. In reality, land value is captured privately, and housing has been turned from a basic human right into a class privilege." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: #0d0a08;
+            color: #e0d6cc;
+            font-family: 'DM Sans', system-ui, sans-serif;
+            font-size: 16px;
+            line-height: 1.9;
+            min-height: 100vh;
+        }
+        .topbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            height: 60px; padding: 0 clamp(18px, 5vw, 48px);
+            display: flex; align-items: center; justify-content: space-between;
+            background: rgba(13, 10, 8, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .logo {
+            font-family: 'DM Mono', monospace; font-size: 11px;
+            letter-spacing: 0.16em; text-transform: uppercase;
+            color: #b8aaa0; text-decoration: none;
+        }
+        .nav-right { display: flex; align-items: center; gap: 12px; }
+        .lang-grp { display: flex; gap: 4px; }
+        .lb-btn {
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            letter-spacing: 0.06em; padding: 4px 10px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 4px; background: transparent;
+            color: #7a7068; cursor: pointer; transition: all 0.2s;
+        }
+        .lb-btn:hover { color: #e0d6cc; border-color: rgba(255, 255, 255, 0.2); }
+        .lb-btn.on { background: #b8aaa0; color: #0d0a08; border-color: #b8aaa0; }
+        .nav-links { display: flex; gap: 16px; align-items: center; }
+        .nav-links a {
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            letter-spacing: 0.06em; color: #7a7068;
+            text-decoration: none; padding: 4px 8px;
+            border-radius: 4px; transition: all 0.2s;
+        }
+        .nav-links a:hover { color: #e0d6cc; background: rgba(255, 255, 255, 0.04); }
+        .lb { display: none; padding: 100px 40px 70px; max-width: 860px; margin: 0 auto; }
+        .lb.active { display: block; }
+        .page-header {
+            padding: 0 0 32px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 32px;
+        }
+        .page-header .badge {
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            letter-spacing: 0.22em; text-transform: uppercase;
+            color: #8a4a2a; margin-bottom: 12px;
+        }
+        .page-header .title {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: clamp(28px, 3.6vw, 42px);
+            line-height: 1.15; color: #f0e6dc; margin-bottom: 8px;
+        }
+        .page-header .subtitle {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-style: italic; font-size: clamp(16px, 1.7vw, 20px);
+            color: #8a7a6a; margin-bottom: 12px;
+        }
+        .page-header .meta {
+            font-family: 'DM Mono', monospace; font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.2);
+        }
+        .content h2 {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.4rem; color: #f0e6dc;
+            margin: 2.2rem 0 0.8rem 0;
+            padding-bottom: 0.3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .content p { margin-bottom: 1.2rem; color: #d0c6bc; }
+        .content ul, .content ol { margin-bottom: 1.2rem; padding-left: 1.6rem; }
+        .content li { margin-bottom: 0.5rem; color: #d0c6bc; }
+        .content .highlight { color: #c47a4a; font-weight: 600; }
+        .content .formula-block {
+            background: #161210;
+            border-left: 4px solid #8a4a2a;
+            padding: 1.2rem 1.6rem;
+            margin: 1.5rem 0;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.95rem;
+            color: #e0d6cc;
+            border-radius: 0 6px 6px 0;
+        }
+        .content .highlight-box {
+            background: rgba(138, 74, 42, 0.08);
+            border-left: 4px solid #8a4a2a;
+            padding: 1.2rem 1.8rem;
+            margin: 1.8rem 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .content .highlight-box p { margin-bottom: 0.5rem; }
+        .content .highlight-box strong { color: #f0e6dc; }
+        .signature {
+            margin-top: 40px; padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.05rem; color: #f0e6dc;
+        }
+        .signature .title {
+            font-family: 'DM Mono', monospace; font-size: 0.6rem;
+            color: rgba(255, 255, 255, 0.25);
+            letter-spacing: 0.06em; display: block; margin-top: 2px;
+        }
+        .footer {
+            text-align: center; padding: 28px 20px 36px;
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            color: rgba(255, 255, 255, 0.18);
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            margin-top: 48px; line-height: 2;
+        }
+        .footer a { color: #b8aaa0; text-decoration: none; margin: 0 8px; }
+        .footer a:hover { color: #e0d6cc; }
+        .footer .site { display: block; margin-bottom: 8px; color: rgba(255, 255, 255, 0.25); letter-spacing: 0.06em; }
+        .footer .links { display: block; margin-bottom: 8px; }
+        .footer .copyright { color: rgba(255, 255, 255, 0.12); display: block; }
+        @media (max-width: 640px) {
+            .lb { padding: 80px 20px 50px; }
+            .topbar { padding: 0 14px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="topbar">
+    <a href="/" class="logo">← Home</a>
+    <div class="nav-right">
+        <div class="nav-links">
+            <a href="/shared-delusion.html">Shared Delusion</a>
+        </div>
+        <div class="lang-grp">
+            <button class="lb-btn on" data-lang="en">EN</button>
+            <button class="lb-btn" data-lang="tw">繁</button>
+            <button class="lb-btn" data-lang="cn">简</button>
+            <button class="lb-btn" data-lang="es">ES</button>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 英文版 ==================== -->
+<div class="lb active" data-lang="en">
+    <div class="page-header">
+        <div class="badge">Shared Delusion Series · Essay IV</div>
+        <div class="title">Every Country Thinks Its Housing Crisis Is Unique</div>
+        <div class="subtitle">In reality, land value is captured privately, and housing has been turned from a basic human right into a class privilege.</div>
+        <div class="meta">Ping Xu · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+        <h2>1. The Global Homology of the Housing Crisis</h2>
+        <p>The United States thinks it is the subprime crisis. The UK thinks it is runaway house prices. China thinks it is a real estate bubble. Germany thinks it is the failure of rent control. Korea thinks it is the jeonse deposit system. They are all the same structural crisis — <span class="highlight">land value is captured privately, and housing has been turned from a basic human right into a class privilege.</span></p>
+
+        <h2>2. GL Diagnosis: The Delivery Ratio of Housing</h2>
+        <div class="formula-block">
+            GL = ( Fs × Vn ) ÷ ( Pd × Cf )
+        </div>
+        <ul>
+            <li><strong>Fs (Flow Success Rate)</strong>: How many families actually obtain affordable housing?</li>
+            <li><strong>Pd (Process Duration)</strong>: How much time and effort are spent applying for social housing, waiting in queues, and processing mortgages?</li>
+            <li><strong>Cf (Complexity Factor)</strong>: Land supply monopoly, real estate financialization, lack of tenant rights.</li>
+        </ul>
+        <p>The GL value of housing is not measured by homeownership rates, but by whether people obtain dignified living space.</p>
+
+        <h2>3. The Way Out: The Public Return of Land Value</h2>
+        <p>A portion of land value increment should be earmarked for public housing. This is not "additional expenditure" — it is the <span class="highlight">social return of land value increment</span>. Only when land value is captured publicly can housing return to being a basic human right.</p>
+
+        <div class="highlight-box">
+            <p><strong>The shared delusion is not that countries don't build housing. It's that they treat housing as a commodity first, and a right second — and when land value is captured privately, the people are priced out.</strong></p>
+        </div>
+
+        <div class="signature">
+            Ping Xu
+            <span class="title">Creator of the GL Framework · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 繁體中文版 ==================== -->
+<div class="lb" data-lang="tw">
+    <div class="page-header">
+        <div class="badge">共同的幻覺系列 · 第四篇</div>
+        <div class="title">每個國家都以為自己的住房危機是獨特的</div>
+        <div class="subtitle">其實土地增值被私人捕獲，住房從基本人權變成階級特權。</div>
+        <div class="meta">徐萍 · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+        <h2>一、住房危機的全球同源</h2>
+        <p>美國以為是次貸危機，英國以為是房價失控，中國以為是房地產泡沫，德國以為是租金管制失效，韓國以為是全租房保證金。其實是同一個結構性危機——<span class="highlight">土地增值被私人捕獲，住房從基本人權變成階級特權。</span></p>
+
+        <h2>二、GL 診斷：住房的交付比率</h2>
+        <div class="formula-block">
+            GL = ( Fs × Vn ) ÷ ( Pd × Cf )
+        </div>
+        <ul>
+            <li><strong>Fs（流程成功率）</strong>：有多少家庭真正獲得了可負擔的住房？</li>
+            <li><strong>Pd（時間負擔）</strong>：申請社會住宅、排隊等待、辦理貸款，花了多少時間與精力？</li>
+            <li><strong>Cf（結構性摩擦）</strong>：土地供應壟斷、房地產金融化、租戶權益缺失。</li>
+        </ul>
+        <p>住房的 GL 值，不是看自有率，而是看人民是否獲得了有尊嚴的居住空間。</p>
+
+        <h2>三、出路：土地增值的公共回流</h2>
+        <p>將土地增值的一部分，專項用於公共住宅。這不是「額外支出」，而是<span class="highlight">土地增值的社會返還</span>。只有當土地增值被公共捕獲，住房才能回歸基本人權。</p>
+
+        <div class="highlight-box">
+            <p><strong>共同的幻覺不是各國不蓋房子，而是各國把住房當成商品，而不是權利——而當土地增值被私人捕獲時，人民就被擠出了市場。</strong></p>
+        </div>
+
+        <div class="signature">
+            徐萍
+            <span class="title">GL框架發明人 · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 簡體中文版 ==================== -->
+<div class="lb" data-lang="cn">
+    <div class="page-header">
+        <div class="badge">共同的幻觉系列 · 第四篇</div>
+        <div class="title">每个国家都以为自己的住房危机是独特的</div>
+        <div class="subtitle">其实土地增值被私人捕获，住房从基本人权变成阶级特权。</div>
+        <div class="meta">徐萍 · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+        <h2>一、住房危机的全球同源</h2>
+        <p>美国以为是次贷危机，英国以为是房价失控，中国以为是房地产泡沫，德国以为是租金管制失效，韩国以为是全租房保证金。其实是同一个结构性危机——<span class="highlight">土地增值被私人捕获，住房从基本人权变成阶级特权。</span></p>
+
+        <h2>二、GL 诊断：住房的交付比率</h2>
+        <div class="formula-block">
+            GL = ( Fs × Vn ) ÷ ( Pd × Cf )
+        </div>
+        <ul>
+            <li><strong>Fs（流程成功率）</strong>：有多少家庭真正获得了可负担的住房？</li>
+            <li><strong>Pd（时间负担）</strong>：申请社会住宅、排队等待、办理贷款，花了多少时间与精力？</li>
+            <li><strong>Cf（结构性摩擦）</strong>：土地供应垄断、房地产金融化、租户权益缺失。</li>
+        </ul>
+        <p>住房的 GL 值，不是看自有率，而是看人民是否获得了有尊严的居住空间。</p>
+
+        <h2>三、出路：土地增值的公共回流</h2>
+        <p>将土地增值的一部分，专项用于公共住宅。这不是「额外支出」，而是<span class="highlight">土地增值的社会返还</span>。只有当土地增值被公共捕获，住房才能回归基本人权。</p>
+
+        <div class="highlight-box">
+            <p><strong>共同的幻觉不是各国不盖房子，而是各国把住房当成商品，而不是权利——而当土地增值被私人捕获时，人民就被挤出了市场。</strong></p>
+        </div>
+
+        <div class="signature">
+            徐萍
+            <span class="title">GL框架发明人 · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 西班牙文版 ==================== -->
+<div class="lb" data-lang="es">
+    <div class="page-header">
+        <div class="badge">Serie Ilusión Compartida · Ensayo IV</div>
+        <div class="title">Cada País Cree que su Crisis de Vivienda es Única</div>
+        <div class="subtitle">En realidad, el valor del suelo es capturado privadamente, y la vivienda se ha convertido de un derecho humano básico en un privilegio de clase.</div>
+        <div class="meta">Ping Xu · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+        <h2>1. La Homología Global de la Crisis de Vivienda</h2>
+        <p>Estados Unidos cree que es la crisis de las hipotecas subprime. El Reino Unido cree que son los precios descontrolados. China cree que es una burbuja inmobiliaria. Alemania cree que es el fracaso del control de alquileres. Corea cree que es el sistema de depósito jeonse. Todas son la misma crisis estructural: <span class="highlight">el valor del suelo es capturado privadamente, y la vivienda se ha convertido de un derecho humano básico en un privilegio de clase.</span></p>
+
+        <h2>2. Diagnóstico GL: La Tasa de Entrega de la Vivienda</h2>
+        <div class="formula-block">
+            GL = ( Fs × Vn ) ÷ ( Pd × Cf )
+        </div>
+        <ul>
+            <li><strong>Fs (Tasa de Éxito del Proceso)</strong>: ¿Cuántas familias obtienen realmente vivienda asequible?</li>
+            <li><strong>Pd (Duración del Proceso)</strong>: ¿Cuánto tiempo y esfuerzo se dedica a solicitar vivienda social, esperar en colas y procesar hipotecas?</li>
+            <li><strong>Cf (Factor de Complejidad)</strong>: Monopolio de la oferta de suelo, financiarización inmobiliaria, falta de derechos de los inquilinos.</li>
+        </ul>
+        <p>El valor GL de la vivienda no se mide por las tasas de propiedad, sino por si las personas obtienen un espacio vital digno.</p>
+
+        <h2>3. La Salida: El Retorno Público del Valor del Suelo</h2>
+        <p>Una parte del incremento del valor del suelo debe destinarse a vivienda pública. Esto no es "gasto adicional" — es el <span class="highlight">retorno social del incremento del valor del suelo</span>. Solo cuando el valor del suelo es capturado públicamente, la vivienda puede volver a ser un derecho humano básico.</p>
+
+        <div class="highlight-box">
+            <p><strong>La ilusión compartida no es que los países no construyan vivienda. Es que la tratan como una mercancía primero, y como un derecho después — y cuando el valor del suelo es capturado privadamente, el pueblo queda fuera del mercado.</strong></p>
+        </div>
+
+        <div class="signature">
+            Ping Xu
+            <span class="title">Creadora del GL Framework · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <span class="site">gfiintel.com</span>
+    <span class="links">
+        <a href="/">← Back to Home</a>
+        <a href="/shared-delusion.html">← Shared Delusion Series</a>
+        <a href="/landjustice.html">← Land Justice Series</a>
+    </span>
+    <span class="copyright">© 2026 GFI Flow Intelligence · 共同的幻覺 · Shared Delusion · Ilusión Compartida</span>
+</div>
+
+<script>
+    document.querySelectorAll('.lb-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var lang = this.dataset.lang;
+            document.querySelectorAll('.lb-btn').forEach(function(b) { b.classList.remove('on'); });
+            this.classList.add('on');
+            document.querySelectorAll('.lb').forEach(function(lb) { lb.classList.remove('active'); });
+            var target = document.querySelector('.lb[data-lang="' + lang + '"]');
+            if (target) target.classList.add('active');
+        });
+    });
+</script>
+
+</body>
+</html>
