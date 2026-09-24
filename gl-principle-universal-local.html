@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Universal Logic, Local Rules · 底層邏輯全球通用，具體規則因地制宜</title>
+    <meta name="description" content="GL Framework does not prescribe a global domestic policy code. It prescribes a global accounting standard for governance legitimacy. The logic is universal; the rules are local." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: #0d0a08;
+            color: #e0d6cc;
+            font-family: 'DM Sans', system-ui, sans-serif;
+            font-size: 16px;
+            line-height: 1.9;
+            min-height: 100vh;
+        }
+        .topbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            height: 60px; padding: 0 clamp(18px, 5vw, 48px);
+            display: flex; align-items: center; justify-content: space-between;
+            background: rgba(13, 10, 8, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .logo {
+            font-family: 'DM Mono', monospace; font-size: 11px;
+            letter-spacing: 0.16em; text-transform: uppercase;
+            color: #b8aaa0; text-decoration: none;
+        }
+        .nav-right { display: flex; align-items: center; gap: 12px; }
+        .lang-grp { display: flex; gap: 4px; }
+        .lb-btn {
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            letter-spacing: 0.06em; padding: 4px 10px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 4px; background: transparent;
+            color: #7a7068; cursor: pointer; transition: all 0.2s;
+        }
+        .lb-btn:hover { color: #e0d6cc; border-color: rgba(255, 255, 255, 0.2); }
+        .lb-btn.on { background: #b8aaa0; color: #0d0a08; border-color: #b8aaa0; }
+        .nav-links { display: flex; gap: 16px; align-items: center; }
+        .nav-links a {
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            letter-spacing: 0.06em; color: #7a7068;
+            text-decoration: none; padding: 4px 8px;
+            border-radius: 4px; transition: all 0.2s;
+        }
+        .nav-links a:hover { color: #e0d6cc; background: rgba(255, 255, 255, 0.04); }
+        .lb { display: none; padding: 100px 40px 70px; max-width: 860px; margin: 0 auto; }
+        .lb.active { display: block; }
+        .page-header {
+            padding: 0 0 32px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 32px;
+        }
+        .page-header .badge {
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            letter-spacing: 0.22em; text-transform: uppercase;
+            color: #8a4a2a; margin-bottom: 12px;
+        }
+        .page-header .badge.dual {
+            color: #7DD3FC;
+        }
+        .page-header .title {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: clamp(28px, 3.6vw, 42px);
+            line-height: 1.15; color: #f0e6dc; margin-bottom: 8px;
+        }
+        .page-header .subtitle {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-style: italic; font-size: clamp(16px, 1.7vw, 20px);
+            color: #8a7a6a; margin-bottom: 12px;
+        }
+        .page-header .meta {
+            font-family: 'DM Mono', monospace; font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.2);
+        }
+        .content h2 {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.4rem; color: #f0e6dc;
+            margin: 2.2rem 0 0.8rem 0;
+            padding-bottom: 0.3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .content h3 {
+            font-size: 1.1rem; font-weight: 600;
+            color: #e0d6cc; margin: 1.8rem 0 0.5rem 0;
+        }
+        .content p { margin-bottom: 1.2rem; color: #d0c6bc; }
+        .content ul, .content ol { margin-bottom: 1.2rem; padding-left: 1.6rem; }
+        .content li { margin-bottom: 0.5rem; color: #d0c6bc; }
+        .content .highlight { color: #c47a4a; font-weight: 600; }
+        .content .formula-block {
+            background: #161210;
+            border-left: 4px solid #8a4a2a;
+            padding: 1.2rem 1.6rem;
+            margin: 1.5rem 0;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.95rem;
+            color: #e0d6cc;
+            border-radius: 0 6px 6px 0;
+        }
+        .content .highlight-box {
+            background: rgba(138, 74, 42, 0.08);
+            border-left: 4px solid #8a4a2a;
+            padding: 1.2rem 1.8rem;
+            margin: 1.8rem 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .content .highlight-box p { margin-bottom: 0.5rem; }
+        .content .highlight-box strong { color: #f0e6dc; }
+        .content .highlight-box.dual-box {
+            border-left-color: #7DD3FC;
+            background: rgba(125, 211, 252, 0.05);
+        }
+        .content .layer-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            padding: 1.2rem 1.5rem;
+            margin: 1rem 0;
+        }
+        .content .layer-card .layer-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #c47a4a;
+            margin-bottom: 6px;
+        }
+        .content .layer-card .layer-label.blue { color: #7DD3FC; }
+        .content .layer-card p {
+            font-size: 0.95rem;
+            color: #d0c6bc;
+            margin-bottom: 0.5rem;
+        }
+        .content .layer-card p:last-child { margin-bottom: 0; }
+        .signature {
+            margin-top: 40px; padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.05rem; color: #f0e6dc;
+        }
+        .signature .title {
+            font-family: 'DM Mono', monospace; font-size: 0.6rem;
+            color: rgba(255, 255, 255, 0.25);
+            letter-spacing: 0.06em; display: block; margin-top: 2px;
+        }
+        .footer {
+            text-align: center; padding: 28px 20px 36px;
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            color: rgba(255, 255, 255, 0.18);
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            margin-top: 48px; line-height: 2;
+        }
+        .footer a { color: #b8aaa0; text-decoration: none; margin: 0 8px; }
+        .footer a:hover { color: #e0d6cc; }
+        .footer .site { display: block; margin-bottom: 8px; color: rgba(255, 255, 255, 0.25); letter-spacing: 0.06em; }
+        .footer .links { display: block; margin-bottom: 8px; }
+        .footer .copyright { color: rgba(255, 255, 255, 0.12); display: block; }
+        @media (max-width: 640px) {
+            .lb { padding: 80px 20px 50px; }
+            .topbar { padding: 0 14px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="topbar">
+    <a href="/" class="logo">← Home</a>
+    <div class="nav-right">
+        <div class="nav-links">
+            <a href="/shared-delusion.html">Shared Delusion</a>
+            <a href="/landjustice.html">Land Justice</a>
+        </div>
+        <div class="lang-grp">
+            <button class="lb-btn on" data-lang="en">EN</button>
+            <button class="lb-btn" data-lang="tw">繁</button>
+            <button class="lb-btn" data-lang="cn">简</button>
+            <button class="lb-btn" data-lang="es">ES</button>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 英文版 ==================== -->
+<div class="lb active" data-lang="en">
+    <div class="page-header">
+        <div class="badge dual">GL Framework · Foundational Principle</div>
+        <div class="title">Universal Logic, Local Rules</div>
+        <div class="subtitle">The underlying logic must be globally universal. The concrete rules must be locally tailored.</div>
+        <div class="meta">Ping Xu · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+        <h2>1. The Question</h2>
+        <p>GL Framework proposes a set of principles for capturing land value and preventing capital flight. A critical question arises immediately: <span class="highlight">Can these domestic rules be globally universal?</span></p>
+        <p>The answer is: <strong>No — but the underlying logic must be.</strong></p>
+        <p>This distinction is the foundation of the entire framework. If we confuse the two, we fall into one of two traps.</p>
+
+        <h2>2. Two Traps</h2>
+
+        <h3>Trap One: Assuming domestic rules can be globally universal</h3>
+        <p>If we directly impose a single set of domestic rules — a uniform land value tax rate, uniform social security benefits, uniform public housing quotas — it will fail for three reasons:</p>
+        <ul>
+            <li><strong>Different fiscal capacities</strong>: Denmark's social housing system rests on its unique property tax structure and per capita GDP. Rural elderly care in China cannot use Danish standards. Forced uniformity leads to resource misallocation.</li>
+            <li><strong>Different institutional legacies</strong>: The UK has the NHS; the US has private insurance; China has its medical insurance system. These are historically formed and cannot be replaced overnight by "universal rules."</li>
+            <li><strong>Different sovereignty sensitivities</strong>: Tax rates, social security, and land policy are core to sovereignty. Directly requiring all countries to adopt the same domestic rules is politically infeasible.</li>
+        </ul>
+
+        <h3>Trap Two: Assuming domestic rules can be entirely self-determined</h3>
+        <p>If we let each country set its own rules completely freely, we fall into another trap: <span class="highlight">transnational capital will arbitrage the differences.</span></p>
+        <ul>
+            <li>Country A taxes land value; Country B does not — capital flows from A to B.</li>
+            <li>Country A requires REITs to disclose beneficial owners; Country B does not — capital hides through B's REITs.</li>
+            <li>Country A builds public housing; Country B does not — capital withdraws from A's public housing market and shifts to B's real estate speculation.</li>
+        </ul>
+        <p>This is the root of the race to the bottom. If each country sets its own rules, capital chooses the loosest rules.</p>
+
+        <h2>3. The Correct Answer: Universal Logic, Local Rules</h2>
+        <p>The correct positioning of the GL Framework is: <strong>the underlying logic is globally universal; the concrete rules are locally tailored.</strong></p>
+
+        <div class="layer-card">
+            <div class="layer-label">Universal Logic (Non-Negotiable)</div>
+            <p><strong>1. Land value must be publicly captured.</strong> This principle is non-negotiable. Regardless of the tool (land value tax, property tax, state land leasing, social housing), a portion of land value must return to the public domain.</p>
+            <p><strong>2. Uniform floor, not uniform rate.</strong> What is globally coordinated is the "floor" (e.g., land value capture rate must not fall below 70%), not the "uniform rate." Countries may adjust above the floor.</p>
+            <p><strong>3. Beneficial ownership registry.</strong> This is a non-negotiable transparency requirement. Regardless of the registry system, the true beneficial owners of land and real estate must be disclosed.</p>
+            <p><strong>4. Effective tax rate audit.</strong> Nominal rates do not matter; effective rates do. Countries must accept independent cross-border audits.</p>
+            <p><strong>5. Exit tax + home country taxing right.</strong> Capital cannot escape. Countries must establish exit taxes and home country taxing rights to prevent capital from escaping through "physical exit" or "asset transfer."</p>
+        </div>
+
+        <div class="layer-card">
+            <div class="layer-label blue">Local Rules (Locally Tailored)</div>
+            <p><strong>1. Tax base assessment methods.</strong> Countries may choose different land value assessment methods based on their land systems.</p>
+            <p><strong>2. Tax rate schedules.</strong> Above the uniform floor, countries may design different rate schedules based on their fiscal needs and social tolerance.</p>
+            <p><strong>3. Exemptions and transition clauses.</strong> Countries may design different exemptions and transition clauses based on their social security systems.</p>
+            <p><strong>4. Public housing supply models.</strong> Countries may choose different public housing models (social housing, cooperative housing, rental housing).</p>
+            <p><strong>5. Social security organizational forms.</strong> Countries may choose different social security organizational forms (universal health insurance, social insurance, tax-financed).</p>
+        </div>
+
+        <h2>4. An Analogy: IFRS for Governance Legitimacy</h2>
+        <p>The GL Framework is not a "global domestic policy code." It is a <strong>"global accounting standard" for governance legitimacy.</strong></p>
+        <p>Consider the International Financial Reporting Standards (IFRS):</p>
+        <ul>
+            <li>It does not prescribe what products companies should produce.</li>
+            <li>It prescribes how companies should disclose financial information.</li>
+            <li>Companies may determine their business strategies freely within the IFRS framework.</li>
+        </ul>
+        <p>Similarly, the GL Framework:</p>
+        <ul>
+            <li>It does not prescribe how countries should design their domestic policies.</li>
+            <li>It prescribes how countries should disclose the flow of land value, ensure public capture of value increments, and prevent capital flight.</li>
+            <li>Countries may determine their concrete domestic rules freely within the GL Framework.</li>
+        </ul>
+
+        <h2>5. What This Means for Domestic Policy Writing</h2>
+        <p>If we are to write "domestic policy" essays, they must simultaneously satisfy two conditions:</p>
+        <ol>
+            <li><strong>Consistent with universal logic</strong>: Every domestic policy recommendation must be consistent with the core principles of the GL Framework (public capture of land value, uniform floor, beneficial ownership registry, effective tax rate audit, exit tax + home country taxing right).</li>
+            <li><strong>Respectful of local differences</strong>: Every domestic policy recommendation must acknowledge that institutional legacies differ, and no one-size-fits-all approach is possible.</li>
+        </ol>
+        <p>In other words, domestic policy essays are not a "globally universal policy manual," but "how each country can design domestic policies suited to its own conditions within the GL Framework."</p>
+
+        <h2>6. Recommended Structure for Domestic Policy Essays</h2>
+        <p>Each domestic policy essay can adopt the following structure:</p>
+        <ol>
+            <li><strong>Problem diagnosis</strong>: What is the domestic policy predicament in this domain?</li>
+            <li><strong>Universal logic</strong>: What are the core requirements of the GL Framework for this domain? (The non-negotiable parts)</li>
+            <li><strong>Local rules</strong>: How can different countries design concrete policies? (The adjustable parts)</li>
+            <li><strong>The necessity of cross-border coordination</strong>: Why must domestic reform in this domain be combined with global coordination?</li>
+            <li><strong>Conclusion</strong>: How does domestic reform in this domain balance universal logic and local rules?</li>
+        </ol>
+
+        <h2>7. Conclusion</h2>
+        <p><strong>Domestic rules cannot be globally universal, but the underlying logic must be.</strong></p>
+        <p>This is the core tension of the GL Framework: it must respect national sovereignty and institutional legacies, while preventing transnational capital from arbitraging differences in domestic rules.</p>
+
+        <div class="highlight-box dual-box">
+            <p><strong>Only when the underlying logic is globally universal and the concrete rules are locally tailored can countries preserve their policy space while preventing capital flight.</strong></p>
+        </div>
+
+        <div class="signature">
+            Ping Xu
+            <span class="title">Creator of the GL Framework · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 繁體中文版 ==================== -->
+<div class="lb" data-lang="tw">
+    <div class="page-header">
+        <div class="badge dual">治理正當性框架 · 基礎原則</div>
+        <div class="title">底層邏輯全球通用，具體規則因地制宜</div>
+        <div class="subtitle">底層邏輯必須全球通用，具體規則必須因地制宜。</div>
+        <div class="meta">徐萍 · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+        <h2>一、問題的起點</h2>
+        <p>治理正當性框架提出了一套土地增值捕獲與防止資本逃逸的原則。一個關鍵問題立刻出現：<span class="highlight">這些內政規則可以全球通用嗎？</span></p>
+        <p>答案是：<strong>不能——但底層邏輯必須全球通用。</strong></p>
+        <p>這個區分是整個框架的基礎。如果把兩者混為一談，就會掉進兩個陷阱之一。</p>
+
+        <h2>二、兩個陷阱</h2>
+
+        <h3>陷阱一：假設內政規則可以全球通用</h3>
+        <p>如果我們直接寫一套全球通用的內政規則——全球統一的土地增值稅稅率、全球統一的社會保障給付標準、全球統一的公共住宅配額——這會失敗，原因有三：</p>
+        <ul>
+            <li><strong>各國財政能力不同</strong>：丹麥的社會住宅體系，建立在它獨特的財產稅結構與人均 GDP 上；中國農村的養老保障，不可能用丹麥的標準。強行統一，只會造成資源錯配。</li>
+            <li><strong>各國制度遺產不同</strong>：英國有 NHS，美國有私人保險，中國有醫保體系。這些制度遺產是歷史形成的，無法一夜之間用「全球通用規則」取代。</li>
+            <li><strong>各國主權敏感度不同</strong>：稅率、社會保障、土地政策，是主權的核心。直接要求各國採用同一套內政規則，在政治上不可行。</li>
+        </ul>
+
+        <h3>陷阱二：假設內政規則可以各國自訂</h3>
+        <p>但如果我們完全放任各國自訂規則，又會掉進另一個陷阱：<span class="highlight">跨國資本會利用各國規則的差異進行套利。</span></p>
+        <ul>
+            <li>A 國課徵土地增值稅，B 國不課，資本就從 A 國流向 B 國。</li>
+            <li>A 國要求 REITs 揭露受益所有人，B 國不要求，資本就透過 B 國的 REITs 隱藏。</li>
+            <li>A 國建立公共住宅體系，B 國不建立，資本就從 A 國的公共住宅市場抽走資金，轉向 B 國的房地產投機。</li>
+        </ul>
+        <p>這正是「逐底競爭」的根源。各國自訂規則，等於讓資本選擇最寬鬆的規則。</p>
+
+        <h2>三、正確的答案：底層邏輯全球通用，具體規則因地制宜</h2>
+        <p>治理正當性框架的正確定位是：<strong>底層邏輯全球通用，具體規則因地制宜。</strong></p>
+
+        <div class="layer-card">
+            <div class="layer-label">全球通用的底層邏輯（不可談判）</div>
+            <p><strong>1. 土地增值必須被公共捕獲。</strong>這是不可談判的原則。無論各國用什麼工具（土地增值稅、財產稅、國有土地出讓、社會住宅），都必須確保土地增值的一部分回流公共領域。</p>
+            <p><strong>2. 統一下限，而非統一稅率。</strong>全球協調的是「下限」（例如土地增值捕獲率不得低於 70%），而不是「統一稅率」。各國可以在下限之上自行調整。</p>
+            <p><strong>3. 受益所有人登記。</strong>這是不可談判的透明性要求。無論各國用什麼登記系統，都必須揭露土地與房地產的真實受益所有人。</p>
+            <p><strong>4. 有效稅率審計。</strong>名義稅率不重要，有效稅率才重要。各國必須接受獨立的跨國審計。</p>
+            <p><strong>5. 離境稅與母國徵稅權。</strong>資本逃不掉。各國必須建立離境稅與母國徵稅權，防止資本透過「肉身脫離」或「資產轉移」逃逸。</p>
+        </div>
+
+        <div class="layer-card">
+            <div class="layer-label blue">各國自訂的具體規則（因地制宜）</div>
+            <p><strong>1. 稅基評估方法。</strong>各國可以根據自己的土地制度，選擇不同的土地增值評估方法。</p>
+            <p><strong>2. 稅率階梯。</strong>在統一下限之上，各國可以根據自己的財政需求與社會承受度，設計不同的稅率階梯。</p>
+            <p><strong>3. 免徵額與過渡條款。</strong>各國可以根據自己的社會保障體系，設計不同的免徵額與過渡條款。</p>
+            <p><strong>4. 公共住宅的供給模式。</strong>各國可以選擇不同的公共住宅模式（社會住宅、合作住宅、租賃住宅）。</p>
+            <p><strong>5. 社會保障的組織形式。</strong>各國可以選擇不同的社會保障組織形式（全民健保、社會保險、稅收融資）。</p>
+        </div>
+
+        <h2>四、一個比喻：治理正當性的 IFRS</h2>
+        <p>治理正當性框架不是一套「全球統一的內政法典」，而是一套<strong>「治理正當性的全球會計準則」</strong>。</p>
+        <p>就像國際財務報導準則（IFRS）：</p>
+        <ul>
+            <li>它不規定各國企業「應該生產什麼產品」。</li>
+            <li>它規定各國企業「應該如何揭露財務資訊」。</li>
+            <li>各國企業可以在 IFRS 的框架下，自行決定經營策略。</li>
+        </ul>
+        <p>同樣地，治理正當性框架：</p>
+        <ul>
+            <li>它不規定各國「應該如何設計內政」。</li>
+            <li>它規定各國「應該如何揭露土地增值的流向、如何確保增值的公共捕獲、如何防止資本逃逸」。</li>
+            <li>各國可以在治理正當性框架的框架下，自行決定具體的內政規則。</li>
+        </ul>
+
+        <h2>五、這對「內政篇」的寫作意味著什麼？</h2>
+        <p>如果我們要寫「內政篇」，它必須同時滿足兩個條件：</p>
+        <ol>
+            <li><strong>符合全球通用的底層邏輯</strong>：每一篇內政政策建議，都必須與治理正當性框架的核心原則一致（土地增值公共捕獲、統一下限、受益所有人登記、有效稅率審計、離境稅與母國徵稅權）。</li>
+            <li><strong>尊重各國的具體差異</strong>：每一篇內政政策建議，都必須承認各國制度遺產不同，不能一刀切。</li>
+        </ol>
+        <p>換句話說，內政篇不是「全球通用的政策手冊」，而是「各國如何在治理正當性框架的框架下，設計符合自身國情的內政政策」。</p>
+
+        <h2>六、內政篇的建議寫作結構</h2>
+        <p>每一篇內政篇，可以採用以下結構：</p>
+        <ol>
+            <li><strong>問題診斷</strong>：該領域的內政困境是什麼？</li>
+            <li><strong>全球通用的底層邏輯</strong>：治理正當性框架對該領域的核心要求是什麼？（不可談判的部分）</li>
+            <li><strong>各國因地制宜的具體規則</strong>：不同國家可以如何設計具體政策？（可調整的部分）</li>
+            <li><strong>跨國協調的必要性</strong>：為什麼該領域的內政改革，必須與全球協調相結合？</li>
+            <li><strong>結論</strong>：該領域的內政改革，如何在全球通用的底層邏輯與各國因地制宜的具體規則之間取得平衡？</li>
+        </ol>
+
+        <h2>七、結論</h2>
+        <p><strong>內政規則不能全球通用，但內政規則的底層邏輯必須全球通用。</strong></p>
+        <p>這正是治理正當性框架的核心張力：它既要尊重各國主權與制度遺產，又要防止跨國資本利用各國規則的差異進行套利。</p>
+
+        <div class="highlight-box dual-box">
+            <p><strong>只有當底層邏輯全球通用、具體規則因地制宜時，各國才能既保住自己的政策空間，又防止資本逃逸。</strong></p>
+        </div>
+
+        <div class="signature">
+            徐萍
+            <span class="title">治理正當性框架發明人 · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 簡體中文版 ==================== -->
+<div class="lb" data-lang="cn">
+    <div class="page-header">
+        <div class="badge dual">治理正当性框架 · 基础原则</div>
+        <div class="title">底层逻辑全球通用，具体规则因地制宜</div>
+        <div class="subtitle">底层逻辑必须全球通用，具体规则必须因地制宜。</div>
+        <div class="meta">徐萍 · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+        <h2>一、问题的起点</h2>
+        <p>治理正当性框架提出了一套土地增值捕获与防止资本逃逸的原则。一个关键问题立刻出现：<span class="highlight">这些内政规则可以全球通用吗？</span></p>
+        <p>答案是：<strong>不能——但底层逻辑必须全球通用。</strong></p>
+        <p>这个区分是整个框架的基础。如果把两者混为一谈，就会掉进两个陷阱之一。</p>
+
+        <h2>二、两个陷阱</h2>
+
+        <h3>陷阱一：假设内政规则可以全球通用</h3>
+        <p>如果我们直接写一套全球通用的内政规则——全球统一的土地增值税税率、全球统一的社会保障给付标准、全球统一的公共住宅配额——这会失败，原因有三：</p>
+        <ul>
+            <li><strong>各国财政能力不同</strong>：丹麦的社会住宅体系，建立在它独特的财产税结构与人均 GDP 上；中国农村的养老保障，不可能用丹麦的标准。强行统一，只会造成资源错配。</li>
+            <li><strong>各国制度遗产不同</strong>：英国有 NHS，美国有私人保险，中国有医保体系。这些制度遗产是历史形成的，无法一夜之间用「全球通用规则」取代。</li>
+            <li><strong>各国主权敏感度不同</strong>：税率、社会保障、土地政策，是主权的核心。直接要求各国采用同一套内政规则，在政治上不可行。</li>
+        </ul>
+
+        <h3>陷阱二：假设内政规则可以各国自订</h3>
+        <p>但如果我们完全放任各国自订规则，又会掉进另一个陷阱：<span class="highlight">跨国资本会利用各国规则的差异进行套利。</span></p>
+        <ul>
+            <li>A 国课征土地增值税，B 国不课，资本就从 A 国流向 B 国。</li>
+            <li>A 国要求 REITs 揭露受益所有人，B 国不要求，资本就透过 B 国的 REITs 隐藏。</li>
+            <li>A 国建立公共住宅体系，B 国不建立，资本就从 A 国的公共住宅市场抽走资金，转向 B 国的房地产投机。</li>
+        </ul>
+        <p>这正是「逐底竞争」的根源。各国自订规则，等于让资本选择最宽松的规则。</p>
+
+        <h2>三、正确的答案：底层逻辑全球通用，具体规则因地制宜</h2>
+        <p>治理正当性框架的正确定位是：<strong>底层逻辑全球通用，具体规则因地制宜。</strong></p>
+
+        <div class="layer-card">
+            <div class="layer-label">全球通用的底层逻辑（不可谈判）</div>
+            <p><strong>1. 土地增值必须被公共捕获。</strong>这是不可谈判的原则。无论各国用什么工具（土地增值税、财产税、国有土地出让、社会住宅），都必须确保土地增值的一部分回流公共领域。</p>
+            <p><strong>2. 统一下限，而非统一税率。</strong>全球协调的是「下限」（例如土地增值捕获率不得低于 70%），而不是「统一税率」。各国可以在下限之上自行调整。</p>
+            <p><strong>3. 受益所有人登记。</strong>这是不可谈判的透明性要求。无论各国用什么登记系统，都必须揭露土地与房地产的真实受益所有人。</p>
+            <p><strong>4. 有效税率审计。</strong>名义税率不重要，有效税率才重要。各国必须接受独立的跨国审计。</p>
+            <p><strong>5. 离境税与母国征税权。</strong>资本逃不掉。各国必须建立离境税与母国征税权，防止资本透过「肉身脱离」或「资产转移」逃逸。</p>
+        </div>
+
+        <div class="layer-card">
+            <div class="layer-label blue">各国自订的具体规则（因地制宜）</div>
+            <p><strong>1. 税基评估方法。</strong>各国可以根据自己的土地制度，选择不同的土地增值评估方法。</p>
+            <p><strong>2. 税率阶梯。</strong>在统一下限之上，各国可以根据自己的财政需求与社会承受度，设计不同的税率阶梯。</p>
+            <p><strong>3. 免征额与过渡条款。</strong>各国可以根据自己的社会保障体系，设计不同的免征额与过渡条款。</p>
+            <p><strong>4. 公共住宅的供给模式。</strong>各国可以选择不同的公共住宅模式（社会住宅、合作住宅、租赁住宅）。</p>
+            <p><strong>5. 社会保障的组织形式。</strong>各国可以选择不同的社会保障组织形式（全民健保、社会保险、税收融资）。</p>
+        </div>
+
+        <h2>四、一个比喻：治理正当性的 IFRS</h2>
+        <p>治理正当性框架不是一套「全球统一的內政法典」，而是一套<strong>「治理正当性的全球会计准则」</strong>。</p>
+        <p>就像国际财务报告准则（IFRS）：</p>
+        <ul>
+            <li>它不规定各国企业「应该生产什么产品」。</li>
+            <li>它规定各国企业「应该如何揭露财务信息」。</li>
+            <li>各国企业可以在 IFRS 的框架下，自行决定经营策略。</li>
+        </ul>
+        <p>同样地，治理正当性框架：</p>
+        <ul>
+            <li>它不规定各国「应该如何设计内政」。</li>
+            <li>它规定各国「应该如何揭露土地增值的流向、如何确保增值的公共捕获、如何防止资本逃逸」。</li>
+            <li>各国可以在治理正当性框架的框架下，自行决定具体的内政规则。</li>
+        </ul>
+
+        <h2>五、这对「内政篇」的写作意味着什么？</h2>
+        <p>如果我们要写「内政篇」，它必须同时满足两个条件：</p>
+        <ol>
+            <li><strong>符合全球通用的底层逻辑</strong>：每一篇内政政策建议，都必须与治理正当性框架的核心原则一致（土地增值公共捕获、统一下限、受益所有人登记、有效税率审计、离境税与母国征税权）。</li>
+            <li><strong>尊重各国的具体差异</strong>：每一篇内政政策建议，都必须承认各国制度遗产不同，不能一刀切。</li>
+        </ol>
+        <p>换句话说，内政篇不是「全球通用的政策手册」，而是「各国如何在治理正当性框架的框架下，设计符合自身国情的內政政策」。</p>
+
+        <h2>六、内政篇的建议写作结构</h2>
+        <p>每一篇内政篇，可以采用以下结构：</p>
+        <ol>
+            <li><strong>问题诊断</strong>：该领域的内政困境是什么？</li>
+            <li><strong>全球通用的底层逻辑</strong>：治理正当性框架对该领域的核心要求是什么？（不可谈判的部分）</li>
+            <li><strong>各国因地制宜的具体规则</strong>：不同国家可以如何设计具体政策？（可调整的部分）</li>
+            <li><strong>跨国协调的必要性</strong>：为什么该领域的内政改革，必须与全球协调相结合？</li>
+            <li><strong>结论</strong>：该领域的内政改革，如何在全球通用的底层逻辑与各国因地制宜的具体规则之间取得平衡？</li>
+        </ol>
+
+        <h2>七、结论</h2>
+        <p><strong>内政规则不能全球通用，但内政规则的底层逻辑必须全球通用。</strong></p>
+        <p>这正是治理正当性框架的核心张力：它既要尊重各国主权与制度遗产，又要防止跨国资本利用各国规则的差异进行套利。</p>
+
+        <div class="highlight-box dual-box">
+            <p><strong>只有当底层逻辑全球通用、具体规则因地制宜时，各国才能既保住自己的政策空间，又防止资本逃逸。</strong></p>
+        </div>
+
+        <div class="signature">
+            徐萍
+            <span class="title">治理正当性框架发明人 · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 西班牙文版 ==================== -->
+<div class="lb" data-lang="es">
+    <div class="page-header">
+        <div class="badge dual">Marco de Legitimidad Gubernamental · Principio Fundacional</div>
+        <div class="title">Lógica Universal, Reglas Locales</div>
+        <div class="subtitle">La lógica subyacente debe ser globalmente universal. Las reglas concretas deben adaptarse localmente.</div>
+        <div class="meta">Ping Xu · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+        <h2>1. La Pregunta</h2>
+        <p>El Marco de Legitimidad Gubernamental propone un conjunto de principios para capturar el valor del suelo y prevenir la fuga de capitales. Surge de inmediato una pregunta crítica: <span class="highlight">¿Pueden estas reglas de política interior ser globalmente universales?</span></p>
+        <p>La respuesta es: <strong>No — pero la lógica subyacente debe serlo.</strong></p>
+        <p>Esta distinción es la base de todo el marco. Si confundimos ambas cosas, caemos en una de dos trampas.</p>
+
+        <h2>2. Dos Trampas</h2>
+
+        <h3>Trampa uno: suponer que las reglas de política interior pueden ser globalmente universales</h3>
+        <p>Si imponemos directamente un único conjunto de reglas — un tipo uniforme de impuesto al valor del suelo, prestaciones sociales uniformes, cuotas uniformes de vivienda pública — fracasará por tres razones:</p>
+        <ul>
+            <li><strong>Diferentes capacidades fiscales</strong>: El sistema de vivienda social de Dinamarca se basa en su estructura única de impuestos a la propiedad y su PIB per cápita. El cuidado de ancianos rurales en China no puede usar estándares daneses. La uniformidad forzada conduce a una mala asignación de recursos.</li>
+            <li><strong>Diferentes legados institucionales</strong>: El Reino Unido tiene el NHS; Estados Unidos tiene seguro privado; China tiene su sistema de seguro médico. Son históricamente formados y no pueden reemplazarse de la noche a la mañana por "reglas universales".</li>
+            <li><strong>Diferentes sensibilidades de soberanía</strong>: Los tipos impositivos, la seguridad social y la política de suelo son el núcleo de la soberanía. Exigir directamente que todos los países adopten las mismas reglas es políticamente inviable.</li>
+        </ul>
+
+        <h3>Trampa dos: suponer que las reglas de política interior pueden ser enteramente autodeterminadas</h3>
+        <p>Si dejamos que cada país establezca sus reglas con total libertad, caemos en otra trampa: <span class="highlight">el capital transnacional arbitrará las diferencias.</span></p>
+        <ul>
+            <li>El país A grava el valor del suelo; el país B no — el capital fluye de A a B.</li>
+            <li>El país A exige que los REITs revelen a los beneficiarios finales; el país B no — el capital se oculta a través de los REITs de B.</li>
+            <li>El país A construye vivienda pública; el país B no — el capital se retira del mercado de vivienda pública de A y se traslada a la especulación inmobiliaria de B.</li>
+        </ul>
+        <p>Esta es la raíz de la carrera hacia el fondo. Si cada país establece sus propias reglas, el capital elige las más laxas.</p>
+
+        <h2>3. La Respuesta Correcta: Lógica Universal, Reglas Locales</h2>
+        <p>El posicionamiento correcto del Marco de Legitimidad Gubernamental es: <strong>la lógica subyacente es globalmente universal; las reglas concretas se adaptan localmente.</strong></p>
+
+        <div class="layer-card">
+            <div class="layer-label">Lógica Universal (No Negociable)</div>
+            <p><strong>1. El valor del suelo debe ser capturado públicamente.</strong> Este principio no es negociable. Independientemente de la herramienta (impuesto al valor del suelo, impuesto a la propiedad, arrendamiento de suelo estatal, vivienda social), una parte del valor del suelo debe regresar al dominio público.</p>
+            <p><strong>2. Piso uniforme, no tasa uniforme.</strong> Lo que se coordina globalmente es el "piso" (por ejemplo, la tasa de captura del valor del suelo no debe caer por debajo del 70%), no la "tasa uniforme". Los países pueden ajustar por encima del piso.</p>
+            <p><strong>3. Registro de beneficiarios finales.</strong> Este es un requisito de transparencia no negociable. Independientemente del sistema de registro, deben revelarse los verdaderos beneficiarios finales del suelo y los bienes raíces.</p>
+            <p><strong>4. Auditoría de la tasa impositiva efectiva.</strong> Las tasas nominales no importan; las efectivas sí. Los países deben aceptar auditorías independientes transfronterizas.</p>
+            <p><strong>5. Impuesto de salida + derecho tributario del país de origen.</strong> El capital no puede escapar. Los países deben establecer impuestos de salida y derechos tributarios del país de origen para evitar que el capital escape mediante la "salida física" o la "transferencia de activos".</p>
+        </div>
+
+        <div class="layer-card">
+            <div class="layer-label blue">Reglas Locales (Adaptadas Localmente)</div>
+            <p><strong>1. Métodos de evaluación de la base imponible.</strong> Los países pueden elegir diferentes métodos de evaluación del valor del suelo según sus sistemas de suelo.</p>
+            <p><strong>2. Escalas de tasas impositivas.</strong> Por encima del piso uniforme, los países pueden diseñar diferentes escalas según sus necesidades fiscales y tolerancia social.</p>
+            <p><strong>3. Exenciones y cláusulas de transición.</strong> Los países pueden diseñar diferentes exenciones y cláusulas de transición según sus sistemas de seguridad social.</p>
+            <p><strong>4. Modelos de oferta de vivienda pública.</strong> Los países pueden elegir diferentes modelos de vivienda pública (vivienda social, vivienda cooperativa, vivienda de alquiler).</p>
+            <p><strong>5. Formas organizativas de la seguridad social.</strong> Los países pueden elegir diferentes formas organizativas de seguridad social (seguro de salud universal, seguro social, financiado por impuestos).</p>
+        </div>
+
+        <h2>4. Una Analogía: IFRS para la Legitimidad de la Gobernanza</h2>
+        <p>El Marco de Legitimidad Gubernamental no es un "código global de política interior". Es un <strong>"estándar contable global" para la legitimidad de la gobernanza.</strong></p>
+        <p>Considere las Normas Internacionales de Información Financiera (IFRS):</p>
+        <ul>
+            <li>No prescribe qué productos deben producir las empresas.</li>
+            <li>Prescribe cómo deben divulgar la información financiera.</li>
+            <li>Las empresas pueden determinar libremente sus estrategias dentro del marco IFRS.</li>
+        </ul>
+        <p>De manera similar, el Marco de Legitimidad Gubernamental:</p>
+        <ul>
+            <li>No prescribe cómo deben diseñar los países sus políticas interiores.</li>
+            <li>Prescribe cómo deben divulgar el flujo del valor del suelo, asegurar la captura pública de los incrementos de valor y prevenir la fuga de capitales.</li>
+            <li>Los países pueden determinar libremente sus reglas interiores concretas dentro del Marco de Legitimidad Gubernamental.</li>
+        </ul>
+
+        <h2>5. Qué Significa Esto para la Redacción de Políticas Interiores</h2>
+        <p>Si vamos a escribir ensayos de "política interior", deben satisfacer simultáneamente dos condiciones:</p>
+        <ol>
+            <li><strong>Consistentes con la lógica universal</strong>: Cada recomendación de política interior debe ser consistente con los principios fundamentales del Marco de Legitimidad Gubernamental (captura pública del valor del suelo, piso uniforme, registro de beneficiarios finales, auditoría de la tasa efectiva, impuesto de salida + derecho tributario del país de origen).</li>
+            <li><strong>Respetuosas de las diferencias locales</strong>: Cada recomendación debe reconocer que los legados institucionales difieren y que no es posible un enfoque único para todos.</li>
+        </ol>
+        <p>En otras palabras, los ensayos de política interior no son un "manual de política globalmente universal", sino "cómo cada país puede diseñar políticas interiores adaptadas a sus propias condiciones dentro del Marco de Legitimidad Gubernamental".</p>
+
+        <h2>6. Estructura Recomendada para los Ensayos de Política Interior</h2>
+        <p>Cada ensayo de política interior puede adoptar la siguiente estructura:</p>
+        <ol>
+            <li><strong>Diagnóstico del problema</strong>: ¿Cuál es el predicamento de política interior en este dominio?</li>
+            <li><strong>Lógica universal</strong>: ¿Cuáles son los requisitos fundamentales del Marco de Legitimidad Gubernamental para este dominio? (Las partes no negociables)</li>
+            <li><strong>Reglas locales</strong>: ¿Cómo pueden los diferentes países diseñar políticas concretas? (Las partes ajustables)</li>
+            <li><strong>La necesidad de la coordinación transfronteriza</strong>: ¿Por qué la reforma interior en este dominio debe combinarse con la coordinación global?</li>
+            <li><strong>Conclusión</strong>: ¿Cómo equilibra la reforma interior en este dominio la lógica universal y las reglas locales?</li>
+        </ol>
+
+        <h2>7. Conclusión</h2>
+        <p><strong>Las reglas de política interior no pueden ser globalmente universales, pero la lógica subyacente debe serlo.</strong></p>
+        <p>Esta es la tensión central del Marco de Legitimidad Gubernamental: debe respetar la soberanía nacional y los legados institucionales, mientras previene que el capital transnacional arbitre las diferencias en las reglas interiores.</p>
+
+        <div class="highlight-box dual-box">
+            <p><strong>Solo cuando la lógica subyacente es globalmente universal y las reglas concretas se adaptan localmente, los países pueden preservar su espacio de política mientras previenen la fuga de capitales.</strong></p>
+        </div>
+
+        <div class="signature">
+            Ping Xu
+            <span class="title">Creadora del Marco de Legitimidad Gubernamental · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <span class="site">gfiintel.com</span>
+    <span class="links">
+        <a href="/">← Back to Home</a>
+        <a href="/shared-delusion.html">← Shared Delusion Series</a>
+        <a href="/landjustice.html">← Land Justice Series</a>
+    </span>
+    <span class="copyright">© 2026 GFI Flow Intelligence · 底層邏輯全球通用，具體規則因地制宜</span>
+</div>
+
+<script>
+    document.querySelectorAll('.lb-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var lang = this.dataset.lang;
+            document.querySelectorAll('.lb-btn').forEach(function(b) { b.classList.remove('on'); });
+            this.classList.add('on');
+            document.querySelectorAll('.lb').forEach(function(lb) { lb.classList.remove('active'); });
+            var target = document.querySelector('.lb[data-lang="' + lang + '"]');
+            if (target) target.classList.add('active');
+        });
+    });
+</script>
+
+</body>
+</html>
