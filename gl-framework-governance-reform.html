@@ -40,17 +40,24 @@
             padding-bottom: 0.8rem;
             border-bottom: 1px solid rgba(255,255,255,.06);
         }
+        .nav-left {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.5rem;
+        }
         .home-link {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
+            gap: 6px;
+            padding: 0.3rem 0.9rem;
+            border-radius: 40px;
             border: 1px solid rgba(255,255,255,.1);
-            color: rgba(255,255,255,.3);
+            color: rgba(255,255,255,.5);
             text-decoration: none;
-            font-size: 1.1rem;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: .06em;
             transition: all .2s;
             flex-shrink: 0;
         }
@@ -58,6 +65,16 @@
             color: #9FE870;
             border-color: rgba(159,232,112,.3);
             background: rgba(159,232,112,.05);
+        }
+        .home-link.landjustice:hover {
+            color: #c47a4a;
+            border-color: rgba(196,122,74,.4);
+            background: rgba(196,122,74,.06);
+        }
+        .home-link.domestic:hover {
+            color: #9FE870;
+            border-color: rgba(159,232,112,.4);
+            background: rgba(159,232,112,.06);
         }
         .lang-tools {
             display: flex;
@@ -140,19 +157,24 @@
             margin-top: 0.1rem;
         }
 
+        .page-home-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.2rem;
+        }
         .page-home-link {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            margin-bottom: 1.2rem;
-            color: rgba(255,255,255,.2);
+            color: rgba(255,255,255,.3);
             text-decoration: none;
             font-family: 'DM Mono', monospace;
             font-size: 0.65rem;
             letter-spacing: .06em;
             transition: all .2s;
             border: 1px solid rgba(255,255,255,.05);
-            padding: 0.2rem 0.8rem;
+            padding: 0.25rem 0.9rem;
             border-radius: 40px;
             background: rgba(255,255,255,.02);
         }
@@ -161,6 +183,16 @@
             border-color: rgba(159,232,112,.3);
             background: rgba(159,232,112,.05);
             transform: translateX(-3px);
+        }
+        .page-home-link.landjustice:hover {
+            color: #c47a4a;
+            border-color: rgba(196,122,74,.4);
+            background: rgba(196,122,74,.06);
+        }
+        .page-home-link.domestic:hover {
+            color: #9FE870;
+            border-color: rgba(159,232,112,.4);
+            background: rgba(159,232,112,.06);
         }
         .page-home-link .arrow {
             display: inline-block;
@@ -299,6 +331,47 @@
             padding-top: 1.2rem;
         }
 
+        /* ===== 系列導航（頁腳） ===== */
+        .series-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 1.2rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid rgba(255,255,255,.06);
+        }
+        .series-nav a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            border: 1px solid rgba(255,255,255,.08);
+            background: rgba(255,255,255,.02);
+            color: rgba(255,255,255,.5);
+            text-decoration: none;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: .06em;
+            transition: all .22s;
+        }
+        .series-nav a:hover {
+            color: #9FE870;
+            border-color: rgba(159,232,112,.3);
+            background: rgba(159,232,112,.05);
+            transform: translateY(-2px);
+        }
+        .series-nav a.landjustice:hover {
+            color: #c47a4a;
+            border-color: rgba(196,122,74,.4);
+            background: rgba(196,122,74,.06);
+        }
+        .series-nav a.domestic:hover {
+            color: #9FE870;
+            border-color: rgba(159,232,112,.4);
+            background: rgba(159,232,112,.06);
+        }
+
         /* ===== 上一篇 / 下一篇导航 ===== */
         .post-nav {
             display: flex;
@@ -363,7 +436,8 @@
             .container { background: #fff; border: none; padding: 0; }
             .top-bar { border-bottom: 1px solid #ccc; }
             .home-link { display: none; }
-            .page-home-link { display: none !important; }
+            .page-home-links { display: none !important; }
+            .series-nav { display: none !important; }
             .lang-buttons, .pdf-btn { display: none; }
             .title-section .gl-title { color: #0b1220; }
             .title-section .gl-sub { color: #999; }
@@ -388,6 +462,7 @@
 
         @media (max-width: 600px) {
             .top-bar { flex-direction: column; align-items: stretch; gap: 0.6rem; }
+            .nav-left { justify-content: flex-start; }
             .lang-tools { justify-content: flex-start; flex-wrap: wrap; }
             .lang-btn { font-size: 0.6rem; padding: 0.2rem 0.6rem; }
             .pdf-btn { font-size: 0.6rem; padding: 0.25rem 0.7rem; }
@@ -397,6 +472,7 @@
             .china-exception .ce-text { font-size: 1rem; }
             .post-nav { flex-direction: column; align-items: stretch; }
             .post-nav a { justify-content: center; }
+            .series-nav a { font-size: 0.6rem; }
         }
     </style>
 </head>
@@ -405,7 +481,11 @@
 
     <!-- ===== 顶部栏 ===== -->
     <div class="top-bar">
-        <a href="/" class="home-link" title="Back to Home">⌂</a>
+        <div class="nav-left">
+            <a href="/" class="home-link" title="Back to Home">⌂ Home</a>
+            <a href="/landjustice.html" class="home-link landjustice" title="Land Justice Series">📚 Land Justice</a>
+            <a href="/domestic-policy.html" class="home-link domestic" title="Domestic Policy Series">⚙️ Domestic Policy</a>
+        </div>
         <div class="lang-tools">
             <div class="lang-buttons">
                 <button class="lang-btn" data-lang="zh-CN">简体</button>
@@ -427,13 +507,17 @@
     <!-- ================= 简体中文版 ============================= -->
     <!-- ========================================================= -->
     <div class="lang-content" id="zh-CN">
-        <a href="/" class="page-home-link"><span class="arrow">←</span> 返回首页</a>
+        <div class="page-home-links">
+            <a href="/" class="page-home-link"><span class="arrow">←</span> 返回首页</a>
+            <a href="/landjustice.html" class="page-home-link landjustice"><span class="arrow">←</span> 土地正义系列</a>
+            <a href="/domestic-policy.html" class="page-home-link domestic"><span class="arrow">←</span> 内政篇系列</a>
+        </div>
 
         <h1 style="font-family:'DM Serif Display',Georgia,serif;font-size:2rem;color:#f8fbff;margin-bottom:0.2rem;">脱出新自由主义惯性</h1>
         <p style="font-size:1.1rem;color:#9fb0c8;margin-bottom:1.5rem;">以 GL 框架重建国家治理正当性 —— 给各国政府的结构性改革方案</p>
 
         <div class="core-insight">
-            <p>“脱离惯性很难，直接崩溃很容易。”</p>
+            <p>"脱离惯性很难，直接崩溃很容易。"</p>
             <div class="attribution">— GL 框架 · 治理改革战略判断</div>
         </div>
 
@@ -567,6 +651,13 @@
         </div>
         <div class="footnote">本方案由 GFI Flow Intelligence 依据 GL（治理正当性）框架编制。欢迎各国政府翻译、调整、采纳。</div>
 
+        <!-- ===== 系列導航 ===== -->
+        <div class="series-nav">
+            <a href="/">⌂ 返回首页</a>
+            <a href="/landjustice.html" class="landjustice">📚 土地正义系列</a>
+            <a href="/domestic-policy.html" class="domestic">⚙️ 内政篇系列</a>
+        </div>
+
         <!-- ===== 上一篇 / 下一篇 ===== -->
         <div class="post-nav">
             <a href="/neoliberalism-final-diagnosis" class="prev"><span class="arrow">←</span> <span class="nav-label">上一篇</span> <span class="nav-title">新自由主义：终极诊断</span></a>
@@ -578,7 +669,11 @@
     <!-- ================= 繁体中文版 ============================= -->
     <!-- ========================================================= -->
     <div class="lang-content" id="zh-TW">
-        <a href="/" class="page-home-link"><span class="arrow">←</span> 返回首頁</a>
+        <div class="page-home-links">
+            <a href="/" class="page-home-link"><span class="arrow">←</span> 返回首頁</a>
+            <a href="/landjustice.html" class="page-home-link landjustice"><span class="arrow">←</span> 土地正義系列</a>
+            <a href="/domestic-policy.html" class="page-home-link domestic"><span class="arrow">←</span> 內政篇系列</a>
+        </div>
 
         <h1 style="font-family:'DM Serif Display',Georgia,serif;font-size:2rem;color:#f8fbff;margin-bottom:0.2rem;">脫出新自由主義慣性</h1>
         <p style="font-size:1.1rem;color:#9fb0c8;margin-bottom:1.5rem;">以 GL 框架重建國家治理正當性 —— 給各國政府的結構性改革方案</p>
@@ -713,6 +808,12 @@
         </div>
         <div class="footnote">本方案由 GFI Flow Intelligence 依據 GL（治理正當性）框架編製。歡迎各國政府翻譯、調整、採納。</div>
 
+        <div class="series-nav">
+            <a href="/">⌂ 返回首頁</a>
+            <a href="/landjustice.html" class="landjustice">📚 土地正義系列</a>
+            <a href="/domestic-policy.html" class="domestic">⚙️ 內政篇系列</a>
+        </div>
+
         <div class="post-nav">
             <a href="/neoliberalism-final-diagnosis" class="prev"><span class="arrow">←</span> <span class="nav-label">上一篇</span> <span class="nav-title">新自由主義：終極診斷</span></a>
             <a href="/land-ideology-demonization" class="next"><span class="nav-label">下一篇</span> <span class="nav-title">土地、意識形態與中國的妖魔化</span> <span class="arrow">→</span></a>
@@ -723,7 +824,11 @@
     <!-- ================= 英文版 ================================= -->
     <!-- ========================================================= -->
     <div class="lang-content active" id="en">
-        <a href="/" class="page-home-link"><span class="arrow">←</span> Back to Home</a>
+        <div class="page-home-links">
+            <a href="/" class="page-home-link"><span class="arrow">←</span> Back to Home</a>
+            <a href="/landjustice.html" class="page-home-link landjustice"><span class="arrow">←</span> Land Justice Series</a>
+            <a href="/domestic-policy.html" class="page-home-link domestic"><span class="arrow">←</span> Domestic Policy Series</a>
+        </div>
 
         <h1 style="font-family:'DM Serif Display',Georgia,serif;font-size:2rem;color:#f8fbff;margin-bottom:0.2rem;">Breaking Free from Neoliberal Inertia</h1>
         <p style="font-size:1.1rem;color:#9fb0c8;margin-bottom:1.5rem;">Rebuilding National Governance Legitimacy with the GL Framework — A Structural Reform Proposal for Governments</p>
@@ -747,7 +852,6 @@
             <li><strong>Policy systems self-reinforce and reject external criticism</strong> (high closure degree)</li>
         </ul>
 
-        <!-- ===== China Exception ===== -->
         <div class="china-exception">
             <div class="ce-label">● Historical Validation</div>
             <div class="ce-text">
@@ -859,6 +963,12 @@
         </div>
         <div class="footnote">This proposal is prepared by GFI Flow Intelligence under the GL (Governance Legitimacy) Framework. Governments are welcome to translate, adapt, and adopt it.</div>
 
+        <div class="series-nav">
+            <a href="/">⌂ Back to Home</a>
+            <a href="/landjustice.html" class="landjustice">📚 Land Justice Series</a>
+            <a href="/domestic-policy.html" class="domestic">⚙️ Domestic Policy Series</a>
+        </div>
+
         <div class="post-nav">
             <a href="/neoliberalism-final-diagnosis" class="prev"><span class="arrow">←</span> <span class="nav-label">Previous</span> <span class="nav-title">Neoliberalism: The Final Diagnosis</span></a>
             <a href="/land-ideology-demonization" class="next"><span class="nav-label">Next</span> <span class="nav-title">Land, Ideology, and the Demonization of China</span> <span class="arrow">→</span></a>
@@ -869,7 +979,11 @@
     <!-- ================= 西班牙文版 ============================= -->
     <!-- ========================================================= -->
     <div class="lang-content" id="es">
-        <a href="/" class="page-home-link"><span class="arrow">←</span> Volver al Inicio</a>
+        <div class="page-home-links">
+            <a href="/" class="page-home-link"><span class="arrow">←</span> Volver al Inicio</a>
+            <a href="/landjustice.html" class="page-home-link landjustice"><span class="arrow">←</span> Serie Justicia de la Tierra</a>
+            <a href="/domestic-policy.html" class="page-home-link domestic"><span class="arrow">←</span> Serie de Política Interior</a>
+        </div>
 
         <h1 style="font-family:'DM Serif Display',Georgia,serif;font-size:2rem;color:#f8fbff;margin-bottom:0.2rem;">Rompiendo con la Inercia Neoliberal</h1>
         <p style="font-size:1.1rem;color:#9fb0c8;margin-bottom:1.5rem;">Reconstruyendo la Legitimidad Gubernamental con el Marco GL — Una Propuesta de Reforma Estructural para Gobiernos</p>
@@ -1003,6 +1117,12 @@
             <strong>Desde hoy, la legitimidad de un gobierno ya no reside en lo bien que habla, sino en cuánto puede reducir las cargas reales de su pueblo.</strong>
         </div>
         <div class="footnote">Esta propuesta ha sido elaborada por GFI Flow Intelligence bajo el Marco GL (Legitimidad Gubernamental). Se invita a los gobiernos a traducirla, adaptarla y adoptarla.</div>
+
+        <div class="series-nav">
+            <a href="/">⌂ Volver al Inicio</a>
+            <a href="/landjustice.html" class="landjustice">📚 Serie Justicia de la Tierra</a>
+            <a href="/domestic-policy.html" class="domestic">⚙️ Serie de Política Interior</a>
+        </div>
 
         <div class="post-nav">
             <a href="/neoliberalism-final-diagnosis" class="prev"><span class="arrow">←</span> <span class="nav-label">Anterior</span> <span class="nav-title">Neoliberalismo: El Diagnóstico Final</span></a>
