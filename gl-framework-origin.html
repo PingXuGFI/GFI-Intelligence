@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Origin of the GL Framework: Cut Waste First, Then Find Revenue · GL 框架的起源：先節流，再開源</title>
+    <meta name="description" content="Governance is resource allocation. 1 yuan in, 5 cents delivered. The GL Framework began as a tool to find where the other 95 cents burned up — and ended as a universal governance legitimacy diagnostic." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: #0d0a08;
+            color: #e0d6cc;
+            font-family: 'DM Sans', system-ui, sans-serif;
+            font-size: 16px;
+            line-height: 1.9;
+            min-height: 100vh;
+        }
+        .topbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            height: 60px; padding: 0 clamp(18px, 5vw, 48px);
+            display: flex; align-items: center; justify-content: space-between;
+            background: rgba(13, 10, 8, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .logo {
+            font-family: 'DM Mono', monospace; font-size: 11px;
+            letter-spacing: 0.16em; text-transform: uppercase;
+            color: #b8aaa0; text-decoration: none;
+        }
+        .nav-right { display: flex; align-items: center; gap: 12px; }
+        .lang-grp { display: flex; gap: 4px; }
+        .lb-btn {
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            letter-spacing: 0.06em; padding: 4px 10px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 4px; background: transparent;
+            color: #7a7068; cursor: pointer; transition: all 0.2s;
+        }
+        .lb-btn:hover { color: #e0d6cc; border-color: rgba(255, 255, 255, 0.2); }
+        .lb-btn.on { background: #b8aaa0; color: #0d0a08; border-color: #b8aaa0; }
+        .nav-links { display: flex; gap: 16px; align-items: center; }
+        .nav-links a {
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            letter-spacing: 0.06em; color: #7a7068;
+            text-decoration: none; padding: 4px 8px;
+            border-radius: 4px; transition: all 0.2s;
+        }
+        .nav-links a:hover { color: #e0d6cc; background: rgba(255, 255, 255, 0.04); }
+        .lb { display: none; padding: 100px 40px 70px; max-width: 860px; margin: 0 auto; }
+        .lb.active { display: block; }
+        .page-header {
+            padding: 0 0 32px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 32px;
+        }
+        .page-header .badge {
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            letter-spacing: 0.22em; text-transform: uppercase;
+            color: #8a4a2a; margin-bottom: 12px;
+        }
+        .page-header .badge.dual {
+            color: #7DD3FC;
+        }
+        .page-header .title {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: clamp(28px, 3.6vw, 42px);
+            line-height: 1.15; color: #f0e6dc; margin-bottom: 8px;
+        }
+        .page-header .subtitle {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-style: italic; font-size: clamp(16px, 1.7vw, 20px);
+            color: #8a7a6a; margin-bottom: 12px;
+        }
+        .page-header .meta {
+            font-family: 'DM Mono', monospace; font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.2);
+        }
+        .content .part-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #8a4a2a;
+            margin: 3rem 0 1rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(138, 74, 42, 0.3);
+        }
+        .content .part-label:first-of-type {
+            margin-top: 1rem;
+        }
+        .content h2 {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.4rem; color: #f0e6dc;
+            margin: 2rem 0 0.8rem 0;
+            padding-bottom: 0.3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .content h3 {
+            font-size: 1.1rem; font-weight: 600;
+            color: #e0d6cc; margin: 1.6rem 0 0.5rem 0;
+        }
+        .content p { margin-bottom: 1.2rem; color: #d0c6bc; }
+        .content ul, .content ol { margin-bottom: 1.2rem; padding-left: 1.6rem; }
+        .content li { margin-bottom: 0.5rem; color: #d0c6bc; }
+        .content .highlight { color: #c47a4a; font-weight: 600; }
+        .content .formula-block {
+            background: #161210;
+            border-left: 4px solid #8a4a2a;
+            padding: 1.2rem 1.6rem;
+            margin: 1.5rem 0;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.95rem;
+            color: #e0d6cc;
+            border-radius: 0 6px 6px 0;
+        }
+        .content .highlight-box {
+            background: rgba(138, 74, 42, 0.08);
+            border-left: 4px solid #8a4a2a;
+            padding: 1.2rem 1.8rem;
+            margin: 1.8rem 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .content .highlight-box p { margin-bottom: 0.5rem; }
+        .content .highlight-box strong { color: #f0e6dc; }
+        .content .highlight-box.dual-box {
+            border-left-color: #7DD3FC;
+            background: rgba(125, 211, 252, 0.05);
+        }
+        .content .principle-box {
+            background: rgba(251, 191, 36, 0.06);
+            border-left: 6px solid #fbbf24;
+            padding: 1.4rem 1.8rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .content .principle-box p {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.2rem;
+            color: #fde68a;
+            font-style: italic;
+            margin-bottom: 0.4rem;
+            line-height: 1.5;
+        }
+        .content .principle-box .attribution {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            color: rgba(255, 255, 255, 0.3);
+            text-align: right;
+            font-style: normal;
+            letter-spacing: 0.06em;
+        }
+        .content .arithmetic-box {
+            background: rgba(251, 191, 36, 0.08);
+            border: 1px solid rgba(251, 191, 36, 0.25);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .content .arithmetic-box .big {
+            font-family: 'DM Mono', monospace;
+            font-size: 2rem;
+            color: #fbbf24;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            margin-bottom: 0.5rem;
+        }
+        .content .arithmetic-box .small {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .content .layer-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            padding: 1.2rem 1.5rem;
+            margin: 1rem 0;
+            border-left: 4px solid #7DD3FC;
+        }
+        .content .layer-card .layer-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #7DD3FC;
+            margin-bottom: 6px;
+        }
+        .content .layer-card p {
+            font-size: 0.95rem;
+            color: #d0c6bc;
+            margin-bottom: 0.5rem;
+        }
+        .content .layer-card p:last-child { margin-bottom: 0; }
+        .content .param-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0;
+            font-size: 0.9rem;
+        }
+        .content .param-table th {
+            background: rgba(255, 255, 255, 0.04);
+            color: #c47a4a;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 0.6rem 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .content .param-table td {
+            padding: 0.6rem 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: #d0c6bc;
+            font-size: 0.9rem;
+        }
+        .content .param-table td:first-child {
+            font-family: 'DM Mono', monospace;
+            color: #7DD3FC;
+            font-size: 0.7rem;
+            width: 40px;
+        }
+        .signature {
+            margin-top: 40px; padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.05rem; color: #f0e6dc;
+        }
+        .signature .title {
+            font-family: 'DM Mono', monospace; font-size: 0.6rem;
+            color: rgba(255, 255, 255, 0.25);
+            letter-spacing: 0.06em; display: block; margin-top: 2px;
+        }
+        .footer {
+            text-align: center; padding: 28px 20px 36px;
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            color: rgba(255, 255, 255, 0.18);
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            margin-top: 48px; line-height: 2;
+        }
+        .footer a { color: #b8aaa0; text-decoration: none; margin: 0 8px; }
+        .footer a:hover { color: #e0d6cc; }
+        .footer .site { display: block; margin-bottom: 8px; color: rgba(255, 255, 255, 0.25); letter-spacing: 0.06em; }
+        .footer .links { display: block; margin-bottom: 8px; }
+        .footer .copyright { color: rgba(255, 255, 255, 0.12); display: block; }
+        @media (max-width: 640px) {
+            .lb { padding: 80px 20px 50px; }
+            .topbar { padding: 0 14px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="topbar">
+    <a href="/" class="logo">← Home</a>
+    <div class="nav-right">
+        <div class="nav-links">
+            <a href="/framework.html">Framework</a>
+            <a href="/UBI_index.html">UBI Series</a>
+            <a href="/domestic-policy.html">Domestic Policy</a>
+        </div>
+        <div class="lang-grp">
+            <button class="lb-btn on" data-lang="en">EN</button>
+            <button class="lb-btn" data-lang="tw">繁</button>
+            <button class="lb-btn" data-lang="cn">简</button>
+            <button class="lb-btn" data-lang="es">ES</button>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 英文版 ==================== -->
+<div class="lb active" data-lang="en">
+    <div class="page-header">
+        <div class="badge dual">GL Framework · Origin Document</div>
+        <div class="title">The Origin of the GL Framework</div>
+        <div class="subtitle">Cut Waste First, Then Find Revenue</div>
+        <div class="meta">Ping Xu · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+
+        <!-- ===== 引子 ===== -->
+        <div class="part-label">Prologue · A Simple Analogy</div>
+        <p>When a client is in financial distress, the correct order is: <strong>cut waste first, then find revenue.</strong></p>
+        <p>First, look at where the money is going. Find the waste, the duplication, the black holes. Cut the unnecessary spending. <strong>Before finding new revenue, protect what you already have.</strong></p>
+        <p>Only after cutting waste, if it is still not enough, should you look for new income. Revenue is not the first step — because if you find new revenue while waste continues, the new money burns up too.</p>
+        <p><strong>Stop the bleeding first. Then transfuse.</strong></p>
+        <p>This order is the order of the GL Framework. This document is the full unfolding of that order.</p>
+
+        <!-- ===== Part 1 ===== -->
+        <div class="part-label">Part One · Governance Is Resource Allocation</div>
+
+        <h2>1. The Three Things Governance Does</h2>
+        <p>Any government does only three things:</p>
+        <ol>
+            <li><strong>Collect resources</strong> (taxes, land revenue, state capital returns).</li>
+            <li><strong>Allocate resources</strong> (welfare, education, healthcare, housing, infrastructure, defense).</li>
+            <li><strong>Verify outcomes</strong> (did the money spent actually benefit the people?).</li>
+        </ol>
+        <p>Most governments do not have a problem with step one or step two. They have a problem with <span class="highlight">step three</span>. The layer that verifies outcomes is the missing layer.</p>
+
+        <h2>2. The Three Black Holes of Resource Waste</h2>
+
+        <div class="layer-card">
+            <div class="layer-label">Black Hole One · Consultant Outsourcing</div>
+            <p>The system is too complex for the government to digest internally, so it is outsourced to consulting firms. The consultants design the system; government employees are trained to operate only a small part of it. No one understands the whole system. Any modification requires hiring consultants again. <strong>Resources flow to consulting firms, but the government loses control over its own system.</strong></p>
+        </div>
+
+        <div class="layer-card">
+            <div class="layer-label">Black Hole Two · Procurement Without Delivery Verification</div>
+            <p>The contract is signed, the money is disbursed, the system goes live. But no one asks: did this system actually improve anything? There is no independent third party verifying the delivery outcome. <strong>Resources flow toward the act of "going live," not toward the outcome of "improvement."</strong></p>
+        </div>
+
+        <div class="layer-card">
+            <div class="layer-label">Black Hole Three · Rule Accumulation</div>
+            <p>Every government, every department, every crisis adds new rules. Almost no one removes old rules. Old and new rules coexist, conflicting, overlapping, and canceling each other out. <strong>Resources are consumed by "complying with rules," not by "solving problems."</strong></p>
+        </div>
+
+        <p><strong>These three black holes share one characteristic: resources flow toward process, not toward outcome.</strong> And no one asks whether the people actually benefited.</p>
+
+        <!-- ===== Part 2 ===== -->
+        <div class="part-label">Part Two · Cutting Waste (The Starting Point of the GL Framework)</div>
+
+        <h2>3. An Arithmetic Fact</h2>
+        <p>The GL Framework did not begin as a grand theory of governance. It began with a simple, undeniable arithmetic fact:</p>
+
+        <div class="arithmetic-box">
+            <div class="big">1 Yuan → 5 Cents</div>
+            <div class="small">The Weight of the Delivery Process</div>
+        </div>
+
+        <p>A government invests 1 unit of social welfare budget. After layers of bureaucratic process, only 5 cents reach the people. <span class="highlight">The other 95 cents burn up in the process.</span></p>
+        <p>This is not corruption. It is not waste. It is the <strong>weight of the process itself</strong>.</p>
+
+        <h2>4. Quantifying the Weight</h2>
+        <p>To diagnose this weight, four parameters were developed:</p>
+
+        <div class="formula-block">
+            GL = ( Fs × Vn ) ÷ ( Pd × Cf )
+        </div>
+
+        <ul>
+            <li><strong>Fs (Flow Success Rate)</strong>: How many people actually complete the process and receive the benefit?</li>
+            <li><strong>Vn (Strategic Value)</strong>: How much does this benefit actually contribute to the recipient's life?</li>
+            <li><strong>Pd (Process Duration)</strong>: How much time do people spend waiting, queuing, and reapplying?</li>
+            <li><strong>Cf (Complexity Factor)</strong>: How many layers, rules, and handoffs exist in the process?</li>
+        </ul>
+
+        <p>When Pd and Cf are extremely high, the GL value is extremely low. <strong>This is the mathematical expression of "1 yuan in, 5 cents delivered."</strong></p>
+        <p>The four parameters were later expanded into eight: waiting, repetition, collapse, information asymmetry, psychological cost, opportunity cost, transfer pathway, and closure degree.</p>
+
+        <!-- ===== Part 3 ===== -->
+        <div class="part-label">Part Three · Why the 95 Cents Burn Up (Mechanism Revealed)</div>
+
+        <h2>5. The Closed Loop of Rule Accumulation</h2>
+        <ol>
+            <li>Policy rules only increase; they are never simplified.</li>
+            <li>The government outsources the system to consulting firms.</li>
+            <li>Government employees cannot understand the whole system.</li>
+            <li>After automation, the system becomes a low-efficiency, bloated monster.</li>
+            <li>The government becomes more dependent on consulting firms.</li>
+            <li>Rules continue to accumulate. The loop continues.</li>
+        </ol>
+
+        <h2>6. The Missing Layer</h2>
+        <p>The process is: <strong>Procurement → Implementation → Go-Live.</strong></p>
+        <p>But between "Go-Live" and "Public Outcomes," there is a missing layer:</p>
+
+        <div class="highlight-box">
+            <p><strong>Post-deployment Outcome Verification</strong></p>
+            <p>No clearly defined role is responsible for independently verifying whether outcomes actually improved.</p>
+        </div>
+
+        <p>This is the missing layer. And it is precisely where the 95 cents burn up.</p>
+
+        <h2>7. Why the Missing Layer Cannot Be Filled</h2>
+        <p>The missing layer cannot be filled — not because no one thought of it, but because a self-protecting structure prevents it:</p>
+        <ul>
+            <li><strong>Procurement black hole</strong>: The system is too complex for anyone to evaluate whether the price is reasonable. The contract scope cannot be clearly defined. Every modification, upgrade, and maintenance becomes a new contract, a new black hole.</li>
+            <li><strong>Lack of independent third party</strong>: Who verifies the delivery outcome? Government employees do not understand the system. Other consulting firms have conflicts of interest. So "whether delivery happened" becomes an unverifiable question.</li>
+            <li><strong>Revolving door</strong>: Government IT officials retire or leave to join consulting firms. Consulting firm employees enter government IT departments. The same people move back and forth between two positions. Procurement decisions, contract design, and acceptance standards may all be influenced by this revolving door. <strong>Fraud does not require cash transactions — it only requires connections and tacit understanding.</strong></li>
+            <li><strong>Privatization of governance power</strong>: The government no longer understands its own system. It no longer controls its own procurement. It can no longer verify its own delivery. <strong>Governance power is, in effect, outsourced to consulting firms</strong> — which are not subject to democratic accountability or public oversight.</li>
+        </ul>
+
+        <!-- ===== Part 4 ===== -->
+        <div class="part-label">Part Four · The Diagnosis Enters the Accountability System</div>
+
+        <h2>8. From Diagnosis to Policy</h2>
+        <p>The diagnosis was drawn into a flowchart. The flowchart visualized the structure of the missing layer — procurement, implementation, go-live, and the absent outcome verification role.</p>
+        <p>The flowchart was sent to the U.S. Government Accountability Office (GAO). <strong>One week later, EO 14402 was signed.</strong></p>
+        <p>The time sequence is stated here without asserting causality. The flowchart reached GAO. One week later, the executive order was signed.</p>
+
+        <h2>9. The Content of EO 14402</h2>
+        <p>The order's stated purpose: "The American people expect their government to operate with integrity, efficiency, and transparency. For too long, federal procurement has tolerated unpredictable costs, bloated overhead, and weak performance incentives."</p>
+        <p>One key figure: in FY2024, the federal government spent approximately <strong>$120 billion</strong> on cost-reimbursement consulting contracts alone.</p>
+        <p>Core measures of EO 14402:</p>
+        <ul>
+            <li>Default to fixed-price contracts.</li>
+            <li>Non-fixed-price contracts require written justification.</li>
+            <li>Review and restructure the 10 largest non-fixed-price contracts within 90 days.</li>
+        </ul>
+        <p>Its core logic: <strong>spending is not delivery.</strong></p>
+
+        <!-- ===== Part 5 ===== -->
+        <div class="part-label">Part Five · The Optimal Solution to Cutting Waste (UBI)</div>
+
+        <h2>10. Why UBI Is the Extreme of Cutting Waste</h2>
+        <p>The weight of traditional welfare comes from eligibility verification — verifying who qualifies, who truly needs it, who is not cheating. Each layer of verification adds Pd and Cf and burns more money.</p>
+        <p>UBI's logic: <strong>no verification, direct delivery.</strong> No eligibility verification means no multi-layer review. No multi-layer review means no burning of the 95 cents.</p>
+
+        <div class="highlight-box">
+            <p><strong>UBI's waste-cutting is not merely reducing process — it is canceling an entire power structure.</strong></p>
+            <p>No complex system design. No outsourcing to consulting firms. No procurement black hole. No revolving door. No independent third-party verification needed (because there is no complex delivery chain).</p>
+        </div>
+
+        <h2>11. But UBI Needs a Stable Fiscal Source</h2>
+        <p>For UBI to be sustained, it needs a stable fiscal source.</p>
+        <ul>
+            <li>Income tax: capital will flee.</li>
+            <li>Consumption tax: regressive, crushing the poor.</li>
+            <li>Wealth tax: assets will hide.</li>
+            <li>Carbon tax: industry will relocate.</li>
+        </ul>
+        <p><strong>Every tax base can be moved, hidden, or escaped.</strong> This is the structural obstacle to UBI — not "whether there is money," but "whether the money can be reliably collected."</p>
+
+        <!-- ===== Part 6 ===== -->
+        <div class="part-label">Part Six · Finding Revenue (Public Capture of Land Value)</div>
+
+        <h2>12. Why Only Land Value Cannot Be Escaped</h2>
+        <ul>
+            <li>Land cannot move.</li>
+            <li>Value increment cannot be zeroed out.</li>
+            <li>The tax base cannot be hidden.</li>
+        </ul>
+        <p>This is the only tax base among all factors of production that cannot be escaped by transnational capital.</p>
+
+        <h2>13. Without Public Capture of Land Value, UBI Is Futile</h2>
+        <p>Without public capture of land value, UBI has no stable fiscal source. Without a stable fiscal source, UBI is a one-time cash transfer, not a sustainable system. <strong>A UBI that cannot be sustained is futile even if delivered.</strong></p>
+
+        <!-- ===== Part 7 ===== -->
+        <div class="part-label">Part Seven · From Cutting Waste to Legitimacy (Framework Upgrade)</div>
+
+        <h2>14. The Legitimacy Criterion</h2>
+        <p>If a system burns 95% of its resources in process and delivers only 5% to the people, it has lost the legitimacy to govern. Why? Because those 95 cents are transferred to those with no voice.</p>
+
+        <div class="highlight-box dual-box">
+            <p><strong>Costs must not be transferred to the voiceless vulnerable.</strong></p>
+            <p>— The Legitimacy Criterion</p>
+        </div>
+
+        <div class="principle-box">
+            <p>"A government that consumes its own citizens has lost the legitimacy to govern."</p>
+            <div class="attribution">— First Principle · GL Framework</div>
+        </div>
+
+        <h2>15. Cross-Domain Diagnosis</h2>
+        <p>The same diagnostic lens was applied to fiscal, education, healthcare, housing, employment, environmental, and aging policy. In every domain, the same failure appeared:</p>
+        <ul>
+            <li>Fiscal: revenue is collected, but public services cannot be delivered.</li>
+            <li>Education: schools are built, but graduates cannot find dignified work.</li>
+            <li>Healthcare: hospitals exist, but people cannot afford care.</li>
+            <li>Housing: buildings are constructed, but people cannot afford to live in them.</li>
+            <li>Employment: jobs are created, but workers cannot achieve a dignified life.</li>
+            <li>Environment: regulations are written, but pollution continues.</li>
+            <li>Aging: policies are announced, but fertility rates keep falling.</li>
+        </ul>
+
+        <h2>16. The Common Structural Root</h2>
+        <p>What is the common root of all these failures?</p>
+
+        <div class="highlight-box">
+            <p><strong>Land value is captured privately, and the tax base is hollowed out by transnational capital.</strong></p>
+            <p>Governments lack the fiscal resources to protect the vulnerable. Because delivery systems are underfunded, they accumulate structural friction. The costs are transferred to those with no voice.</p>
+        </div>
+
+        <!-- ===== Part 8 ===== -->
+        <div class="part-label">Part Eight · The Framework's Position</div>
+
+        <h2>17. The Dual Positioning of the GL Framework</h2>
+        <ul>
+            <li>It is a <strong>waste-cutting tool</strong>: quantifying process weight, identifying the 95 cents burned up.</li>
+            <li>It is a <strong>legitimacy diagnostic</strong>: judging whether a governance system can be trusted.</li>
+        </ul>
+        <p>Its criterion: costs must not be transferred to the voiceless vulnerable.</p>
+        <p>Its conclusion: <span class="highlight">public capture of land value is the fiscal foundation of all governance legitimacy.</span></p>
+
+        <h2>18. Independence · Stance</h2>
+
+        <div class="highlight-box dual-box">
+            <p><strong>No Sponsor · No Boss · No Client · No Debt · No Dependents</strong></p>
+            <p>No advertisers. No board. No review committee. No conflicts to manage. No one to please. No one to fundraise from.</p>
+            <p><strong>One rule only: the data speaks.</strong></p>
+            <p>"If your system returns value to the people, we write that. If your system shifts costs to the vulnerable, we write that too."</p>
+        </div>
+
+        <h2>19. Conclusion</h2>
+        <p>The GL Framework began with an arithmetic fact: <strong>1 yuan in, 5 cents delivered.</strong></p>
+        <p>The extreme of cutting waste is UBI. But without public capture of land value, UBI is futile even if delivered.</p>
+        <p>This chain of reasoning upgraded the GL Framework from a waste-cutting tool to a universal governance legitimacy diagnostic framework.</p>
+        <p>It begins not with a political position, but with a question:</p>
+
+        <div class="highlight-box dual-box">
+            <p><strong>Under the current system, are the real burdens on citizens decreasing or increasing year by year? And are those burdens being transferred to those with no voice?</strong></p>
+        </div>
+
+        <div class="principle-box">
+            <p>"A government that consumes its own citizens has lost the legitimacy to govern."</p>
+            <div class="attribution">— First Principle · GL Framework</div>
+        </div>
+
+        <p>It points to a structural fact: <span class="highlight">public capture of land value is the fiscal foundation of all governance legitimacy.</span></p>
+
+        <div class="signature">
+            Ping Xu
+            <span class="title">Creator of the Governance Legitimacy Framework · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 繁體中文版 ==================== -->
+<div class="lb" data-lang="tw">
+    <div class="page-header">
+        <div class="badge dual">治理正當性框架 · 起源文檔</div>
+        <div class="title">GL 框架的起源</div>
+        <div class="subtitle">先節流，再開源</div>
+        <div class="meta">徐萍 · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+
+        <!-- ===== 引子 ===== -->
+        <div class="part-label">引子 · 一個簡單的比喻</div>
+        <p>當一個客戶陷入財務困境，正確的順序是：<strong>先節流，再開源。</strong></p>
+        <p>先看錢花到哪裡去了。找出浪費、重複、黑洞。把不必要的支出砍掉。<strong>在開源之前，先把已經有的錢守住。</strong></p>
+        <p>節流之後，如果仍然不夠，才去尋找新的收入來源。開源不是第一步，因為如果一邊開源、一邊浪費，新的收入也會被浪費掉。</p>
+        <p><strong>先止血，再輸血。</strong></p>
+        <p>這個順序，正是 GL 框架的順序。這份文檔，就是這個順序的完整展開。</p>
+
+        <!-- ===== 第一部分 ===== -->
+        <div class="part-label">第一部分 · 治理就是資源分配</div>
+
+        <h2>一、治理只做三件事</h2>
+        <p>任何政府，本質上只做三件事：</p>
+        <ol>
+            <li><strong>收資源</strong>（稅收、土地出讓、國有資本收益）。</li>
+            <li><strong>分資源</strong>（社福、教育、醫療、住房、基建、國防）。</li>
+            <li><strong>驗結果</strong>（錢花了，人民有沒有受益？）。</li>
+        </ol>
+        <p>大部分政府的問題，不在第一步，也不在第二步，而在<span class="highlight">第三步</span>。驗結果的那一層，是缺失的。</p>
+
+        <h2>二、資源浪費的三大黑洞</h2>
+
+        <div class="layer-card">
+            <div class="layer-label">黑洞一 · 顧問公司外包</div>
+            <p>系統太複雜，政府內部無法消化，外包給顧問公司。顧問公司設計系統，政府雇員只被訓練操作一小部分。沒有人理解整個系統，任何修改都必須再找顧問公司。<strong>資源流向顧問公司，但政府失去了對自己系統的控制權。</strong></p>
+        </div>
+
+        <div class="layer-card">
+            <div class="layer-label">黑洞二 · 採購不問交付結果</div>
+            <p>合約簽了，錢撥了，系統上線了。但沒有人問：這個系統到底改善了什麼？沒有獨立第三方驗證交付成果。<strong>資源流向了「上線」這個動作，而不是「改善」這個結果。</strong></p>
+        </div>
+
+        <div class="layer-card">
+            <div class="layer-label">黑洞三 · 規則疊加</div>
+            <p>每一屆政府、每一個部門、每一次危機，都會新增規則。幾乎沒有人會刪除舊規則。舊規則與新規則並存，互相衝突、互相重疊、互相抵消。<strong>資源被消耗在「遵守規則」上，而不是「解決問題」上。</strong></p>
+        </div>
+
+        <p><strong>這三個黑洞的共同特徵：資源流向了「過程」，而不是「結果」。</strong>而人民有沒有受益，沒有人問。</p>
+
+        <!-- ===== 第二部分 ===== -->
+        <div class="part-label">第二部分 · 節流（GL 框架的起點）</div>
+
+        <h2>三、一個算術事實</h2>
+        <p>治理正當性框架不是一開始就作為一套宏大的治理理論出現的。它始於一個簡單、無法否認的算術事實：</p>
+
+        <div class="arithmetic-box">
+            <div class="big">1 元 → 5 分錢</div>
+            <div class="small">交付流程的重量</div>
+        </div>
+
+        <p>政府投入 1 元社會福利預算，經過重重官僚程序，真正到達人民手中的只有 5 分錢。<span class="highlight">其餘 95 分錢，在整個流程裡燒完了。</span></p>
+        <p>這不是貪污，不是浪費。這是<strong>流程本身的重量</strong>。</p>
+
+        <h2>四、量化這個重量</h2>
+        <p>為了診斷這個重量，四個參數被發展出來：</p>
+
+        <div class="formula-block">
+            GL = ( Fs × Vn ) ÷ ( Pd × Cf )
+        </div>
+
+        <ul>
+            <li><strong>Fs（流程成功率）</strong>：有多少人真正完成了流程、拿到了錢？</li>
+            <li><strong>Vn（策略價值）</strong>：這筆錢對受助者的生活實際貢獻了多少？</li>
+            <li><strong>Pd（時間負擔）</strong>：人民為了拿到錢，花了多少時間？</li>
+            <li><strong>Cf（結構性摩擦）</strong>：流程中有多少層級、多少規則、多少交接？</li>
+        </ul>
+
+        <p>當 Pd 和 Cf 極高時，GL 值極低。<strong>這就是「1 元投入、5 分錢交付」的數學表達。</strong></p>
+        <p>四個參數後來擴展為八個：等待、重複、崩潰、資訊不對稱、心理成本、機會成本、轉移路徑、閉環程度。</p>
+
+        <!-- ===== 第三部分 ===== -->
+        <div class="part-label">第三部分 · 為什麼 95 分錢會燒掉（機制揭露）</div>
+
+        <h2>五、規則疊加的閉環</h2>
+        <ol>
+            <li>政策規則只增無法精簡。</li>
+            <li>政府將系統外包給顧問公司。</li>
+            <li>政府雇員無從理解整個系統。</li>
+            <li>自動化後成為低效龐然怪物。</li>
+            <li>必須更依賴顧問公司。</li>
+            <li>規則繼續疊加，循環繼續。</li>
+        </ol>
+
+        <h2>六、缺失層</h2>
+        <p>流程是：<strong>採購 → 執行 → 上線。</strong></p>
+        <p>但在「上線」與「公共成果」之間，有一個缺失的層：</p>
+
+        <div class="highlight-box">
+            <p><strong>部署後的成果驗證（Post-deployment Outcome Verification）</strong></p>
+            <p>沒有明確的角色，負責獨立驗證成果是否真的改善了。</p>
+        </div>
+
+        <p>這就是缺失層。而這正是 95 分錢燒掉的地方。</p>
+
+        <h2>七、為什麼缺失層補不上</h2>
+        <p>缺失層之所以補不上，不是因為沒有人想到，而是因為一個自我保護的結構阻止了它：</p>
+        <ul>
+            <li><strong>採購黑洞</strong>：系統太複雜，沒有人能評估報價是否合理。合約範圍無法清楚界定。每一次修改、升級、維護，都是新的合約、新的黑洞。</li>
+            <li><strong>缺乏獨立第三方</strong>：誰來檢查交付成果？政府雇員不懂系統。其他顧問公司有利益衝突。於是「有沒有交付」變成一個無法驗證的問題。</li>
+            <li><strong>旋轉門</strong>：政府 IT 部門的官員，退休或離職後進入顧問公司。顧問公司的員工，進入政府 IT 部門任職。同一個人在兩個位置之間來回。採購決策、合約設計、驗收標準，都可能被這條旋轉門影響。<strong>舞弊不需要現金交易，它只需要人脈與默契。</strong></li>
+            <li><strong>治理權力私有化</strong>：政府不再理解自己的系統。政府不再控制自己的採購。政府不再能驗證自己的交付。<strong>治理權力，實質上被外包給了顧問公司</strong>——而顧問公司不受民主問責，不受公共監督。</li>
+        </ul>
+
+        <!-- ===== 第四部分 ===== -->
+        <div class="part-label">第四部分 · 診斷進入問責體系</div>
+
+        <h2>八、從診斷到政策</h2>
+        <p>診斷被繪製成流程圖。流程圖呈現了缺失層的結構——採購、執行、上線，以及缺席的成果驗證角色。</p>
+        <p>流程圖被送達美國政府問責署（GAO）。<strong>一週後，EO 14402 簽署。</strong></p>
+        <p>這裡只陳述時間序列，不宣稱因果。流程圖送達 GAO。一週後，行政命令簽署。</p>
+
+        <h2>九、EO 14402 的內容</h2>
+        <p>命令的 Purpose 寫道：「美國人民期望他們的政府以誠信、效率和透明的方式運作。長期以來，聯邦採購容忍了不可預測的成本、臃腫的管理費用和微弱的績效激勵。」</p>
+        <p>一個關鍵數據：2024 財年，僅成本報銷型諮詢合約一項，聯邦政府就支出了約 <strong>1200 億美元</strong>。</p>
+        <p>EO 14402 的核心舉措：</p>
+        <ul>
+            <li>默認固定價格合約。</li>
+            <li>非固定價格合約須書面說明理由。</li>
+            <li>90 天內審查並重組金額最大的 10 個非固定價格合約。</li>
+        </ul>
+        <p>它的核心邏輯：<strong>支出不等於交付。</strong></p>
+
+        <!-- ===== 第五部分 ===== -->
+        <div class="part-label">第五部分 · 節流的最優解（UBI）</div>
+
+        <h2>十、為什麼 UBI 是節流的極致</h2>
+        <p>傳統社福的流程重量，來自資格審查——審查誰符合資格、誰真的需要、誰沒有騙人。每一層審查，都增加 Pd 和 Cf，都燒掉更多錢。</p>
+        <p>UBI 的邏輯：<strong>不審查，直接發。</strong>沒有資格審查，就沒有多層審核。沒有多層審核，就沒有 95 分錢的燒毀。</p>
+
+        <div class="highlight-box">
+            <p><strong>UBI 的節流，不只是減少流程，而是取消整個權力結構。</strong></p>
+            <p>不需要複雜的系統設計。不需要外包給顧問公司。不需要採購黑洞。不需要旋轉門。不需要獨立第三方檢視（因為沒有複雜的交付鏈）。</p>
+        </div>
+
+        <h2>十一、但 UBI 需要穩定的財政來源</h2>
+        <p>UBI 要持續發放，就需要穩定的財政來源。</p>
+        <ul>
+            <li>所得稅：資本會逃。</li>
+            <li>消費稅：累退性壓垮窮人。</li>
+            <li>財富稅：資產會隱藏。</li>
+            <li>碳稅：產業會外移。</li>
+        </ul>
+        <p><strong>每一種稅基，都可以被移動、被隱藏、被逃避。</strong>這就是 UBI 的結構性障礙——不是「有沒有錢」，而是「錢能不能被穩定地收上來」。</p>
+
+        <!-- ===== 第六部分 ===== -->
+        <div class="part-label">第六部分 · 開源（土地增值公共捕獲）</div>
+
+        <h2>十二、為什麼只有土地增值無法逃避</h2>
+        <ul>
+            <li>土地不能移動。</li>
+            <li>增值無法歸零。</li>
+            <li>稅基無法隱藏。</li>
+        </ul>
+        <p>這是所有生產要素中，唯一無法被跨國資本逃避的稅基。</p>
+
+        <h2>十三、沒有土地增值公共捕獲，UBI 發放也枉然</h2>
+        <p>沒有土地增值公共捕獲，UBI 就沒有穩定的財政來源。沒有穩定的財政來源，UBI 就只是一次性的現金發放，無法持續。<strong>無法持續的 UBI，發了也枉然。</strong></p>
+
+        <!-- ===== 第七部分 ===== -->
+        <div class="part-label">第七部分 · 從節流到正當性（框架的升級）</div>
+
+        <h2>十四、正當性判準</h2>
+        <p>如果一個系統把 95% 的資源燒在流程裡，只讓 5% 到達人民手中，它已經失去了統治的正當性。為什麼？因為這 95 分錢，被轉嫁給了沒有聲音的人。</p>
+
+        <div class="highlight-box dual-box">
+            <p><strong>成本不得轉嫁給沒有聲音的脆弱者。</strong></p>
+            <p>— 正當性判準</p>
+        </div>
+
+        <div class="principle-box">
+            <p>「一個消耗自己公民的政府，已經失去了統治的正當性。」</p>
+            <div class="attribution">— 第一原則 · 治理正當性框架</div>
+        </div>
+
+        <h2>十五、跨領域診斷</h2>
+        <p>同樣的診斷視角，被應用到財政、教育、醫療、住房、就業、環境、高齡化政策。在每一個領域，同樣的失靈出現：</p>
+        <ul>
+            <li>財政：錢收上來了，公共服務無法交付。</li>
+            <li>教育：學校蓋了，畢業生找不到有尊嚴的工作。</li>
+            <li>醫療：醫院有了，人民負擔不起。</li>
+            <li>住房：房子蓋了，人民住不起。</li>
+            <li>就業：工作有了，收入沒有尊嚴。</li>
+            <li>環境：法規寫了，污染繼續。</li>
+            <li>高齡化：政策宣布了，生育率繼續下降。</li>
+        </ul>
+
+        <h2>十六、共同的結構性根源</h2>
+        <p>這些失靈的共同根源是什麼？</p>
+
+        <div class="highlight-box">
+            <p><strong>土地增值被私人捕獲，稅基被跨國資本掏空。</strong></p>
+            <p>政府缺乏財政資源來保護脆弱者。而因為交付系統資金不足，它們累積結構性摩擦。成本被轉嫁給那些沒有聲音的人。</p>
+        </div>
+
+        <!-- ===== 第八部分 ===== -->
+        <div class="part-label">第八部分 · 框架的定位</div>
+
+        <h2>十七、GL 框架的雙重定位</h2>
+        <ul>
+            <li>它是<strong>節流工具</strong>：量化流程重量，找出被燒掉的 95 分錢。</li>
+            <li>它是<strong>正當性診斷工具</strong>：判斷一個治理系統能不能被信任。</li>
+        </ul>
+        <p>它的判準：成本不得轉嫁給沒有聲音的脆弱者。</p>
+        <p>它的結論：<span class="highlight">土地增值被公共捕獲，是所有治理正當性的財政基礎。</span></p>
+
+        <h2>十八、獨立 · 立場</h2>
+
+        <div class="highlight-box dual-box">
+            <p><strong>沒有金主 · 沒有上司 · 沒有客戶 · 沒有債務 · 沒有依附者</strong></p>
+            <p>沒有廣告主。沒有董事會。沒有審查委員會。沒有利益衝突要管理。沒有人要討好。沒有人要募款。</p>
+            <p><strong>只有一條規則：數據說話。</strong></p>
+            <p>「如果你的系統把價值還給人民，我們就寫下來。如果你的系統把成本轉嫁給脆弱者，我們也寫下來。」</p>
+        </div>
+
+        <h2>十九、結論</h2>
+        <p>治理正當性框架始於一個算術事實：<strong>1 元投入，5 分錢交付。</strong></p>
+        <p>節流的極致是 UBI。但沒有土地增值公共捕獲，UBI 發放也枉然。</p>
+        <p>這條推演，讓 GL 框架從節流工具升級為普遍治理正當性診斷框架。</p>
+        <p>它不是從一個政治立場開始的。它是從一個問題開始的：</p>
+
+        <div class="highlight-box dual-box">
+            <p><strong>在現有制度下，人民的真實負擔是逐年降低，還是逐年升高？而這些負擔，是否被轉嫁給了那些沒有聲音的人？</strong></p>
+        </div>
+
+        <div class="principle-box">
+            <p>「一個消耗自己公民的政府，已經失去了統治的正當性。」</p>
+            <div class="attribution">— 第一原則 · 治理正當性框架</div>
+        </div>
+
+        <p>它指向一個結構性事實：<span class="highlight">土地增值被公共捕獲，是所有治理正當性的財政基礎。</span></p>
+
+        <div class="signature">
+            徐萍
+            <span class="title">治理正當性框架發明人 · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 簡體中文版 ==================== -->
+<div class="lb" data-lang="cn">
+    <div class="page-header">
+        <div class="badge dual">治理正当性框架 · 起源文档</div>
+        <div class="title">GL 框架的起源</div>
+        <div class="subtitle">先节流，再开源</div>
+        <div class="meta">徐萍 · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+
+        <!-- ===== 引子 ===== -->
+        <div class="part-label">引子 · 一个简单的比喻</div>
+        <p>当一个客户陷入财务困境，正确的顺序是：<strong>先节流，再开源。</strong></p>
+        <p>先看钱花到哪里去了。找出浪费、重复、黑洞。把不必要的支出砍掉。<strong>在开源之前，先把已经有的钱守住。</strong></p>
+        <p>节流之后，如果仍然不够，才去寻找新的收入来源。开源不是第一步，因为如果一边开源、一边浪费，新的收入也会被浪费掉。</p>
+        <p><strong>先止血，再输血。</strong></p>
+        <p>这个顺序，正是 GL 框架的顺序。这份文档，就是这个顺序的完整展开。</p>
+
+        <!-- ===== 第一部分 ===== -->
+        <div class="part-label">第一部分 · 治理就是资源分配</div>
+
+        <h2>一、治理只做三件事</h2>
+        <p>任何政府，本质上只做三件事：</p>
+        <ol>
+            <li><strong>收资源</strong>（税收、土地出让、国有资本收益）。</li>
+            <li><strong>分资源</strong>（社福、教育、医疗、住房、基建、国防）。</li>
+            <li><strong>验结果</strong>（钱花了，人民有没有受益？）。</li>
+        </ol>
+        <p>大部分政府的问题，不在第一步，也不在第二步，而在<span class="highlight">第三步</span>。验结果的那一层，是缺失的。</p>
+
+        <h2>二、资源浪费的三大黑洞</h2>
+
+        <div class="layer-card">
+            <div class="layer-label">黑洞一 · 顾问公司外包</div>
+            <p>系统太复杂，政府内部无法消化，外包给顾问公司。顾问公司设计系统，政府雇员只被训练操作一小部分。没有人理解整个系统，任何修改都必须再找顾问公司。<strong>资源流向顾问公司，但政府失去了对自己系统的控制权。</strong></p>
+        </div>
+
+        <div class="layer-card">
+            <div class="layer-label">黑洞二 · 采购不问交付结果</div>
+            <p>合约签了，钱拨了，系统上线了。但没有人问：这个系统到底改善了什么？没有独立第三方验证交付成果。<strong>资源流向了「上线」这个动作，而不是「改善」这个结果。</strong></p>
+        </div>
+
+        <div class="layer-card">
+            <div class="layer-label">黑洞三 · 规则叠加</div>
+            <p>每一届政府、每一个部门、每一次危机，都会新增规则。几乎没有人会删除旧规则。旧规则与新规则并存，互相冲突、互相重叠、互相抵消。<strong>资源被消耗在「遵守规则」上，而不是「解决问题」上。</strong></p>
+        </div>
+
+        <p><strong>这三个黑洞的共同特征：资源流向了「过程」，而不是「结果」。</strong>而人民有没有受益，没有人问。</p>
+
+        <!-- ===== 第二部分 ===== -->
+        <div class="part-label">第二部分 · 节流（GL 框架的起点）</div>
+
+        <h2>三、一个算术事实</h2>
+        <p>治理正当性框架不是一开始就作为一套宏大的治理理论出现的。它始于一个简单、无法否认的算术事实：</p>
+
+        <div class="arithmetic-box">
+            <div class="big">1 元 → 5 分钱</div>
+            <div class="small">交付流程的重量</div>
+        </div>
+
+        <p>政府投入 1 元社会福利预算，经过重重官僚程序，真正到达人民手中的只有 5 分钱。<span class="highlight">其余 95 分钱，在整个流程里烧完了。</span></p>
+        <p>这不是贪污，不是浪费。这是<strong>流程本身的重量</strong>。</p>
+
+        <h2>四、量化这个重量</h2>
+        <p>为了诊断这个重量，四个参数被发展出来：</p>
+
+        <div class="formula-block">
+            GL = ( Fs × Vn ) ÷ ( Pd × Cf )
+        </div>
+
+        <ul>
+            <li><strong>Fs（流程成功率）</strong>：有多少人真正完成了流程、拿到了钱？</li>
+            <li><strong>Vn（策略价值）</strong>：这笔钱对受助者的生活实际贡献了多少？</li>
+            <li><strong>Pd（时间负担）</strong>：人民为了拿到钱，花了多少时间？</li>
+            <li><strong>Cf（结构性摩擦）</strong>：流程中有多少层级、多少规则、多少交接？</li>
+        </ul>
+
+        <p>当 Pd 和 Cf 极高时，GL 值极低。<strong>这就是「1 元投入、5 分钱交付」的数学表达。</strong></p>
+        <p>四个参数后来扩展为八个：等待、重复、崩溃、信息不对称、心理成本、机会成本、转移路径、闭环程度。</p>
+
+        <!-- ===== 第三部分 ===== -->
+        <div class="part-label">第三部分 · 为什么 95 分钱会烧掉（机制揭露）</div>
+
+        <h2>五、规则叠加的闭环</h2>
+        <ol>
+            <li>政策规则只增无法精简。</li>
+            <li>政府将系统外包给顾问公司。</li>
+            <li>政府雇员无从理解整个系统。</li>
+            <li>自动化后成为低效庞然怪物。</li>
+            <li>必须更依赖顾问公司。</li>
+            <li>规则继续叠加，循环继续。</li>
+        </ol>
+
+        <h2>六、缺失层</h2>
+        <p>流程是：<strong>采购 → 执行 → 上线。</strong></p>
+        <p>但在「上线」与「公共成果」之间，有一个缺失的层：</p>
+
+        <div class="highlight-box">
+            <p><strong>部署后的成果验证（Post-deployment Outcome Verification）</strong></p>
+            <p>没有明确的角色，负责独立验证成果是否真的改善了。</p>
+        </div>
+
+        <p>这就是缺失层。而这正是 95 分钱烧掉的地方。</p>
+
+        <h2>七、为什么缺失层补不上</h2>
+        <p>缺失层之所以补不上，不是因为没有人想到，而是因为一个自我保护的結構阻止了它：</p>
+        <ul>
+            <li><strong>采购黑洞</strong>：系统太复杂，没有人能评估报价是否合理。合约范围无法清楚界定。每一次修改、升级、维护，都是新的合约、新的黑洞。</li>
+            <li><strong>缺乏独立第三方</strong>：谁来检查交付成果？政府雇员不懂系统。其他顾问公司有利益冲突。于是「有没有交付」变成一个无法验证的问题。</li>
+            <li><strong>旋转门</strong>：政府 IT 部门的官员，退休或离职后进入顾问公司。顾问公司的员工，进入政府 IT 部门任职。同一个人在兩個位置之间来回。采购决策、合约设计、验收标准，都可能被这条旋转门影响。<strong>舞弊不需要现金交易，它只需要人脉与默契。</strong></li>
+            <li><strong>治理权力私有化</strong>：政府不再理解自己的系统。政府不再控制自己的采购。政府不再能验证自己的交付。<strong>治理权力，实质上被外包给了顾问公司</strong>——而顾问公司不受民主问责，不受公共监督。</li>
+        </ul>
+
+        <!-- ===== 第四部分 ===== -->
+        <div class="part-label">第四部分 · 诊断进入问责体系</div>
+
+        <h2>八、从诊断到政策</h2>
+        <p>诊断被绘制成流程图。流程图呈现了缺失层的结构——采购、执行、上线，以及缺席的成果验证角色。</p>
+        <p>流程图被送达美国政府问责署（GAO）。<strong>一周后，EO 14402 签署。</strong></p>
+        <p>这里只陈述时间序列，不宣称因果。流程图送达 GAO。一周后，行政命令签署。</p>
+
+        <h2>九、EO 14402 的内容</h2>
+        <p>命令的 Purpose 写道：「美国人民期望他们的政府以诚信、效率和透明的方式运作。长期以来，联邦采购容忍了不可预测的成本、臃肿的管理费用和微弱的绩效激励。」</p>
+        <p>一个关键数据：2024 财年，仅成本报销型咨询合约一项，联邦政府就支出了约 <strong>1200 亿美元</strong>。</p>
+        <p>EO 14402 的核心举措：</p>
+        <ul>
+            <li>默认固定价格合约。</li>
+            <li>非固定价格合约须书面说明理由。</li>
+            <li>90 天内审查并重组金额最大的 10 个非固定价格合约。</li>
+        </ul>
+        <p>它的核心逻辑：<strong>支出不等于交付。</strong></p>
+
+        <!-- ===== 第五部分 ===== -->
+        <div class="part-label">第五部分 · 节流的最优解（UBI）</div>
+
+        <h2>十、为什么 UBI 是节流的极致</h2>
+        <p>传统社福的流程重量，来自资格审查——审查谁符合资格、谁真的需要、谁没有骗人。每一层审查，都增加 Pd 和 Cf，都烧掉更多钱。</p>
+        <p>UBI 的逻辑：<strong>不审查，直接发。</strong>没有资格审查，就没有多层审核。没有多层审核，就没有 95 分钱的烧毁。</p>
+
+        <div class="highlight-box">
+            <p><strong>UBI 的节流，不只是减少流程，而是取消整个权力结构。</strong></p>
+            <p>不需要复杂的系统设计。不需要外包给顾问公司。不需要采购黑洞。不需要旋转门。不需要独立第三方检视（因为没有复杂的交付链）。</p>
+        </div>
+
+        <h2>十一、但 UBI 需要稳定的财政来源</h2>
+        <p>UBI 要持续发放，就需要稳定的财政来源。</p>
+        <ul>
+            <li>所得税：资本会逃。</li>
+            <li>消费税：累退性压垮穷人。</li>
+            <li>财富税：资产会隐藏。</li>
+            <li>碳税：产业会外移。</li>
+        </ul>
+        <p><strong>每一种税基，都可以被移动、被隐藏、被逃避。</strong>这就是 UBI 的结构性障碍——不是「有没有钱」，而是「钱能不能被稳定地收上来」。</p>
+
+        <!-- ===== 第六部分 ===== -->
+        <div class="part-label">第六部分 · 开源（土地增值公共捕获）</div>
+
+        <h2>十二、为什么只有土地增值无法逃避</h2>
+        <ul>
+            <li>土地不能移动。</li>
+            <li>增值无法归零。</li>
+            <li>税基无法隐藏。</li>
+        </ul>
+        <p>这是所有生产要素中，唯一无法被跨国资本逃避的税基。</p>
+
+        <h2>十三、没有土地增值公共捕获，UBI 发放也枉然</h2>
+        <p>没有土地增值公共捕获，UBI 就没有稳定的财政来源。没有稳定的财政来源，UBI 就只是一次性的现金发放，无法持续。<strong>无法持续的 UBI，发了也枉然。</strong></p>
+
+        <!-- ===== 第七部分 ===== -->
+        <div class="part-label">第七部分 · 从节流到正当性（框架的升级）</div>
+
+        <h2>十四、正当性判准</h2>
+        <p>如果一个系统把 95% 的资源烧在流程里，只让 5% 到达人民手中，它已经失去了统治的正当性。为什么？因为这 95 分钱，被转嫁给了没有声音的人。</p>
+
+        <div class="highlight-box dual-box">
+            <p><strong>成本不得转嫁给没有声音的脆弱者。</strong></p>
+            <p>— 正当性判准</p>
+        </div>
+
+        <div class="principle-box">
+            <p>「一个消耗自己公民的政府，已经失去了统治的正当性。」</p>
+            <div class="attribution">— 第一原则 · 治理正当性框架</div>
+        </div>
+
+        <h2>十五、跨领域诊断</h2>
+        <p>同样的诊断视角，被应用到财政、教育、医疗、住房、就业、环境、高龄化政策。在每一个领域，同样的失灵出现：</p>
+        <ul>
+            <li>财政：钱收上来了，公共服务无法交付。</li>
+            <li>教育：学校盖了，毕业生找不到有尊严的工作。</li>
+            <li>医疗：医院有了，人民负担不起。</li>
+            <li>住房：房子盖了，人民住不起。</li>
+            <li>就业：工作有了，收入没有尊严。</li>
+            <li>环境：法规写了，污染继续。</li>
+            <li>高龄化：政策宣布了，生育率继续下降。</li>
+        </ul>
+
+        <h2>十六、共同的结构性根源</h2>
+        <p>这些失灵的 common 根源是什么？</p>
+
+        <div class="highlight-box">
+            <p><strong>土地增值被私人捕获，税基被跨国资本掏空。</strong></p>
+            <p>政府缺乏财政资源来保护脆弱者。而因为交付系统资金不足，它们累积结构性摩擦。成本被转嫁给那些没有声音的人。</p>
+        </div>
+
+        <!-- ===== 第八部分 ===== -->
+        <div class="part-label">第八部分 · 框架的定位</div>
+
+        <h2>十七、GL 框架的双重定位</h2>
+        <ul>
+            <li>它是<strong>节流工具</strong>：量化流程重量，找出被烧掉的 95 分钱。</li>
+            <li>它是<strong>正当性诊断工具</strong>：判断一个治理系统能不能被信任。</li>
+        </ul>
+        <p>它的判准：成本不得转嫁给没有声音的脆弱者。</p>
+        <p>它的结论：<span class="highlight">土地增值被公共捕获，是所有治理正当性的财政基础。</span></p>
+
+        <h2>十八、独立 · 立场</h2>
+
+        <div class="highlight-box dual-box">
+            <p><strong>没有金主 · 没有上司 · 没有客户 · 没有债务 · 没有依附者</strong></p>
+            <p>没有广告主。没有董事会。没有审查委员会。没有利益冲突要管理。没有人要讨好。没有人要募款。</p>
+            <p><strong>只有一条规则：数据说话。</strong></p>
+            <p>「如果你的系统把价值还给人民，我们就写下来。如果你的系统把成本转嫁给脆弱者，我们也写下来。」</p>
+        </div>
+
+        <h2>十九、结论</h2>
+        <p>治理正当性框架始于一个算术事实：<strong>1 元投入，5 分钱交付。</strong></p>
+        <p>节流的极致是 UBI。但没有土地增值公共捕获，UBI 发放也枉然。</p>
+        <p>这条推演，让 GL 框架从节流工具升级为普遍治理正当性诊断框架。</p>
+        <p>它不是从一个政治立场开始的。它是从一个问题开始的：</p>
+
+        <div class="highlight-box dual-box">
+            <p><strong>在现有制度下，人民的真实负担是逐年降低，还是逐年升高？而这些负担，是否被转嫁给了那些没有声音的人？</strong></p>
+        </div>
+
+        <div class="principle-box">
+            <p>「一个消耗自己公民的政府，已经失去了统治的正当性。」</p>
+            <div class="attribution">— 第一原则 · 治理正当性框架</div>
+        </div>
+
+        <p>它指向一个结构性事实：<span class="highlight">土地增值被公共捕获，是所有治理正当性的财政基础。</span></p>
+
+        <div class="signature">
+            徐萍
+            <span class="title">治理正当性框架发明人 · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 西班牙文版 ==================== -->
+<div class="lb" data-lang="es">
+    <div class="page-header">
+        <div class="badge dual">Marco de Legitimidad Gubernamental · Documento de Origen</div>
+        <div class="title">El Origen del Marco GL</div>
+        <div class="subtitle">Primero Cortar el Desperdicio, Luego Buscar Ingresos</div>
+        <div class="meta">Ping Xu · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+
+        <div class="part-label">Prólogo · Una Analogía Simple</div>
+        <p>Cuando un cliente está en dificultades financieras, el orden correcto es: <strong>primero cortar el desperdicio, luego buscar ingresos.</strong></p>
+        <p>Primero, mira a dónde va el dinero. Encuentra el desperdicio, la duplicación, los agujeros negros. Corta el gasto innecesario. <strong>Antes de buscar nuevos ingresos, protege lo que ya tienes.</strong></p>
+        <p>Solo después de cortar el desperdicio, si aún no es suficiente, deberías buscar nuevos ingresos. Los ingresos no son el primer paso — porque si encuentras nuevos ingresos mientras el desperdicio continúa, el nuevo dinero también se quema.</p>
+        <p><strong>Primero detén la hemorragia. Luego transfunde.</strong></p>
+        <p>Este orden es el orden del Marco GL. Este documento es el despliegue completo de ese orden.</p>
+
+        <div class="part-label">Parte Uno · La Gobernanza Es Asignación de Recursos</div>
+
+        <h2>1. Las Tres Cosas que Hace la Gobernanza</h2>
+        <p>Cualquier gobierno solo hace tres cosas:</p>
+        <ol>
+            <li><strong>Recolectar recursos</strong> (impuestos, ingresos del suelo, retornos del capital estatal).</li>
+            <li><strong>Asignar recursos</strong> (bienestar, educación, sanidad, vivienda, infraestructura, defensa).</li>
+            <li><strong>Verificar resultados</strong> (¿el dinero gastado realmente benefició al pueblo?).</li>
+        </ol>
+        <p>La mayoría de los gobiernos no tienen un problema con el paso uno o el paso dos. Tienen un problema con el <span class="highlight">paso tres</span>. La capa que verifica resultados es la capa ausente.</p>
+
+        <h2>2. Los Tres Agujeros Negros del Desperdicio de Recursos</h2>
+
+        <div class="layer-card">
+            <div class="layer-label">Agujero Negro Uno · Externalización a Consultoras</div>
+            <p>El sistema es demasiado complejo para que el gobierno lo digiera internamente, así que se externaliza a consultoras. Los consultores diseñan el sistema; los empleados públicos solo son capacitados para operar una pequeña parte. Nadie entiende todo el sistema. Cualquier modificación requiere contratar consultores de nuevo. <strong>Los recursos fluyen a las consultoras, pero el gobierno pierde el control sobre su propio sistema.</strong></p>
+        </div>
+
+        <div class="layer-card">
+            <div class="layer-label">Agujero Negro Dos · Contratación Sin Verificación de Entrega</div>
+            <p>Se firma el contrato, se desembolsa el dinero, el sistema entra en funcionamiento. Pero nadie pregunta: ¿este sistema realmente mejoró algo? No hay un tercero independiente que verifique el resultado de la entrega. <strong>Los recursos fluyen hacia el acto de "entrar en funcionamiento", no hacia el resultado de "mejora".</strong></p>
+        </div>
+
+        <div class="layer-card">
+            <div class="layer-label">Agujero Negro Tres · Acumulación de Reglas</div>
+            <p>Cada gobierno, cada departamento, cada crisis añade nuevas reglas. Casi nadie elimina reglas antiguas. Reglas viejas y nuevas coexisten, en conflicto, superponiéndose y anulándose mutuamente. <strong>Los recursos se consumen en "cumplir reglas", no en "resolver problemas".</strong></p>
+        </div>
+
+        <p><strong>Estos tres agujeros negros comparten una característica: los recursos fluyen hacia el proceso, no hacia el resultado.</strong> Y nadie pregunta si el pueblo realmente se benefició.</p>
+
+        <div class="part-label">Parte Dos · Cortar el Desperdicio (El Punto de Partida del Marco GL)</div>
+
+        <h2>3. Un Hecho Aritmético</h2>
+        <p>El Marco GL no comenzó como una gran teoría de la gobernanza. Comenzó con un hecho aritmético simple e innegable:</p>
+
+        <div class="arithmetic-box">
+            <div class="big">1 Yuan → 5 Centavos</div>
+            <div class="small">El Peso del Proceso de Entrega</div>
+        </div>
+
+        <p>Un gobierno invierte 1 unidad de presupuesto de bienestar social. Después de capas de proceso burocrático, solo 5 centavos llegan a las personas. <span class="highlight">Los otros 95 centavos se queman en el proceso.</span></p>
+        <p>Esto no es corrupción. No es desperdicio. Es el <strong>peso del proceso mismo</strong>.</p>
+
+        <h2>4. Cuantificar el Peso</h2>
+        <p>Para diagnosticar este peso, se desarrollaron cuatro parámetros:</p>
+
+        <div class="formula-block">
+            GL = ( Fs × Vn ) ÷ ( Pd × Cf )
+        </div>
+
+        <ul>
+            <li><strong>Fs (Tasa de Éxito del Proceso)</strong>: ¿Cuántas personas completan realmente el proceso y reciben el beneficio?</li>
+            <li><strong>Vn (Valor Estratégico)</strong>: ¿Cuánto contribuye este beneficio realmente a la vida del receptor?</li>
+            <li><strong>Pd (Duración del Proceso)</strong>: ¿Cuánto tiempo pasan las personas esperando, haciendo cola y volviendo a solicitar?</li>
+            <li><strong>Cf (Factor de Complejidad)</strong>: ¿Cuántas capas, reglas y transferencias existen en el proceso?</li>
+        </ul>
+
+        <p>Cuando Pd y Cf son extremadamente altos, el valor GL es extremadamente bajo. <strong>Esta es la expresión matemática de "1 yuan entra, 5 centavos se entregan".</strong></p>
+        <p>Los cuatro parámetros se expandieron luego a ocho: espera, repetición, colapso, asimetría de información, coste psicológico, coste de oportunidad, vía de transferencia y grado de cierre.</p>
+
+        <div class="part-label">Parte Tres · Por Qué se Queman los 95 Centavos (Mecanismo Revelado)</div>
+
+        <h2>5. El Bucle Cerrado de la Acumulación de Reglas</h2>
+        <ol>
+            <li>Las reglas de política solo aumentan; nunca se simplifican.</li>
+            <li>El gobierno externaliza el sistema a consultoras.</li>
+            <li>Los empleados públicos no pueden entender todo el sistema.</li>
+            <li>Tras la automatización, el sistema se convierte en un monstruo inflado de baja eficiencia.</li>
+            <li>El gobierno se vuelve más dependiente de las consultoras.</li>
+            <li>Las reglas siguen acumulándose. El bucle continúa.</li>
+        </ol>
+
+        <h2>6. La Capa Ausente</h2>
+        <p>El proceso es: <strong>Contratación → Implementación → Puesta en Marcha.</strong></p>
+        <p>Pero entre "Puesta en Marcha" y "Resultados Públicos", hay una capa ausente:</p>
+
+        <div class="highlight-box">
+            <p><strong>Verificación de Resultados Post-Despliegue</strong></p>
+            <p>Ningún rol claramente definido es responsable de verificar independientemente si los resultados realmente mejoraron.</p>
+        </div>
+
+        <p>Esta es la capa ausente. Y es precisamente donde se queman los 95 centavos.</p>
+
+        <h2>7. Por Qué la Capa Ausente No Puede Llenarse</h2>
+        <p>La capa ausente no puede llenarse — no porque nadie haya pensado en ello, sino porque una estructura autoprotectora lo impide:</p>
+        <ul>
+            <li><strong>Agujero negro de contratación</strong>: El sistema es demasiado complejo para que nadie evalúe si el precio es razonable. El alcance del contrato no puede definirse claramente. Cada modificación, actualización y mantenimiento se convierte en un nuevo contrato, un nuevo agujero negro.</li>
+            <li><strong>Falta de tercero independiente</strong>: ¿Quién verifica el resultado de la entrega? Los empleados públicos no entienden el sistema. Otras consultoras tienen conflictos de interés. Así, "si hubo entrega" se convierte en una pregunta inverificable.</li>
+            <li><strong>Puerta giratoria</strong>: Los funcionarios de TI del gobierno se jubilan o se van para unirse a consultoras. Los empleados de consultoras entran en los departamentos de TI del gobierno. Las mismas personas se mueven entre dos posiciones. Las decisiones de contratación, el diseño de contratos y los estándares de aceptación pueden verse influenciados por esta puerta giratoria. <strong>El fraude no requiere transacciones en efectivo — solo requiere conexiones y entendimiento tácito.</strong></li>
+            <li><strong>Privatización del poder de gobernanza</strong>: El gobierno ya no entiende su propio sistema. Ya no controla su propia contratación. Ya no puede verificar su propia entrega. <strong>El poder de gobernanza está, en efecto, externalizado a consultoras</strong> — que no están sujetas a rendición de cuentas democrática ni supervisión pública.</li>
+        </ul>
+
+        <div class="part-label">Parte Cuatro · El Diagnóstico Entra en el Sistema de Rendición de Cuentas</div>
+
+        <h2>8. Del Diagnóstico a la Política</h2>
+        <p>El diagnóstico se dibujó en un diagrama de flujo. El diagrama visualizó la estructura de la capa ausente — contratación, implementación, puesta en marcha, y el rol ausente de verificación de resultados.</p>
+        <p>El diagrama se envió a la Oficina de Rendición de Cuentas del Gobierno de EE.UU. (GAO). <strong>Una semana después, se firmó la EO 14402.</strong></p>
+        <p>La secuencia temporal se declara aquí sin afirmar causalidad. El diagrama llegó a la GAO. Una semana después, se firmó la orden ejecutiva.</p>
+
+        <h2>9. El Contenido de la EO 14402</h2>
+        <p>El propósito declarado de la orden: "El pueblo estadounidense espera que su gobierno opere con integridad, eficiencia y transparencia. Durante demasiado tiempo, la contratación federal ha tolerado costes impredecibles, gastos generales inflados e incentivos de rendimiento débiles."</p>
+        <p>Una cifra clave: en el año fiscal 2024, el gobierno federal gastó aproximadamente <strong>120.000 millones de dólares</strong> solo en contratos de consultoría de reembolso de costes.</p>
+        <p>Medidas centrales de la EO 14402:</p>
+        <ul>
+            <li>Predeterminación de contratos de precio fijo.</li>
+            <li>Los contratos de precio no fijo requieren justificación escrita.</li>
+            <li>Revisar y reestructurar los 10 contratos de precio no fijo más grandes en 90 días.</li>
+        </ul>
+        <p>Su lógica central: <strong>gastar no es entregar.</strong></p>
+
+        <div class="part-label">Parte Cinco · La Solución Óptima para Cortar el Desperdicio (UBI)</div>
+
+        <h2>10. Por Qué la UBI Es el Extremo de Cortar el Desperdicio</h2>
+        <p>El peso del bienestar tradicional proviene de la verificación de elegibilidad — verificar quién califica, quién realmente lo necesita, quién no está haciendo trampa. Cada capa de verificación añade Pd y Cf y quema más dinero.</p>
+        <p>La lógica de la UBI: <strong>sin verificación, entrega directa.</strong> Sin verificación de elegibilidad no hay revisión de múltiples capas. Sin revisión de múltiples capas no hay quema de los 95 centavos.</p>
+
+        <div class="highlight-box">
+            <p><strong>El corte de desperdicio de la UBI no es meramente reducir el proceso — es cancelar toda una estructura de poder.</strong></p>
+            <p>Sin diseño complejo de sistemas. Sin externalización a consultoras. Sin agujero negro de contratación. Sin puerta giratoria. Sin necesidad de verificación independiente de terceros (porque no hay cadena de entrega compleja).</p>
+        </div>
+
+        <h2>11. Pero la UBI Necesita una Fuente Fiscal Estable</h2>
+        <p>Para que la UBI se sostenga, necesita una fuente fiscal estable.</p>
+        <ul>
+            <li>Impuesto sobre la renta: el capital huirá.</li>
+            <li>Impuesto al consumo: regresivo, aplasta a los pobres.</li>
+            <li>Impuesto a la riqueza: los activos se ocultarán.</li>
+            <li>Impuesto al carbono: la industria se trasladará.</li>
+        </ul>
+        <p><strong>Cada base imponible puede moverse, ocultarse o escaparse.</strong> Este es el obstáculo estructural de la UBI — no "si hay dinero", sino "si el dinero puede recolectarse de manera confiable".</p>
+
+        <div class="part-label">Parte Seis · Buscar Ingresos (Captura Pública del Valor del Suelo)</div>
+
+        <h2>12. Por Qué Solo el Valor del Suelo No Puede Escaparse</h2>
+        <ul>
+            <li>La tierra no puede moverse.</li>
+            <li>El incremento de valor no puede reducirse a cero.</li>
+            <li>La base imponible no puede ocultarse.</li>
+        </ul>
+        <p>Esta es la única base imponible entre todos los factores de producción que no puede ser evadida por el capital transnacional.</p>
+
+        <h2>13. Sin Captura Pública del Valor del Suelo, la UBI Es Inútil</h2>
+        <p>Sin captura pública del valor del suelo, la UBI no tiene fuente fiscal estable. Sin fuente fiscal estable, la UBI es una transferencia de efectivo única, no un sistema sostenible. <strong>Una UBI que no puede sostenerse es inútil incluso si se entrega.</strong></p>
+
+        <div class="part-label">Parte Siete · De Cortar el Desperdicio a la Legitimidad (Actualización del Marco)</div>
+
+        <h2>14. El Criterio de Legitimidad</h2>
+        <p>Si un sistema quema el 95% de sus recursos en el proceso y solo entrega el 5% a las personas, ha perdido la legitimidad para gobernar. ¿Por qué? Porque esos 95 centavos se transfieren a quienes no tienen voz.</p>
+
+        <div class="highlight-box dual-box">
+            <p><strong>Los costes no deben transferirse a los vulnerables sin voz.</strong></p>
+            <p>— El Criterio de Legitimidad</p>
+        </div>
+
+        <div class="principle-box">
+            <p>"Un gobierno que consume a sus propios ciudadanos ha perdido la legitimidad para gobernar."</p>
+            <div class="attribution">— Primer Principio · Marco GL</div>
+        </div>
+
+        <h2>15. Diagnóstico Transversal</h2>
+        <p>La misma lente de diagnóstico se aplicó a políticas fiscal, educativa, sanitaria, de vivienda, empleo, ambiental y de envejecimiento. En todos los dominios apareció el mismo fallo:</p>
+        <ul>
+            <li>Fiscal: se recaudan ingresos, pero los servicios públicos no pueden entregarse.</li>
+            <li>Educación: se construyen escuelas, pero los graduados no encuentran trabajo digno.</li>
+            <li>Sanidad: existen hospitales, pero las personas no pueden pagar la atención.</li>
+            <li>Vivienda: se construyen edificios, pero las personas no pueden permitirse vivir en ellos.</li>
+            <li>Empleo: se crean empleos, pero los trabajadores no alcanzan una vida digna.</li>
+            <li>Medio ambiente: se escriben regulaciones, pero la contaminación continúa.</li>
+            <li>Envejecimiento: se anuncian políticas, pero las tasas de fertilidad siguen cayendo.</li>
+        </ul>
+
+        <h2>16. La Raíz Estructural Común</h2>
+        <p>¿Cuál es la raíz común de todos estos fallos?</p>
+
+        <div class="highlight-box">
+            <p><strong>El valor del suelo es capturado privadamente, y la base imponible es vaciada por el capital transnacional.</strong></p>
+            <p>Los gobiernos carecen de los recursos fiscales para proteger a los vulnerables. Porque los sistemas de entrega están infrafinanciados, acumulan fricción estructural. Los costes se transfieren a quienes no tienen voz.</p>
+        </div>
+
+        <div class="part-label">Parte Ocho · La Posición del Marco</div>
+
+        <h2>17. El Doble Posicionamiento del Marco GL</h2>
+        <ul>
+            <li>Es una <strong>herramienta para cortar el desperdicio</strong>: cuantificar el peso del proceso, identificar los 95 centavos quemados.</li>
+            <li>Es un <strong>diagnóstico de legitimidad</strong>: juzgar si un sistema de gobernanza puede ser confiable.</li>
+        </ul>
+        <p>Su criterio: los costes no deben transferirse a los vulnerables sin voz.</p>
+        <p>Su conclusión: <span class="highlight">la captura pública del valor del suelo es la base fiscal de toda legitimidad de gobernanza.</span></p>
+
+        <h2>18. Independencia · Postura</h2>
+
+        <div class="highlight-box dual-box">
+            <p><strong>Sin Patrocinador · Sin Jefe · Sin Cliente · Sin Deuda · Sin Dependientes</strong></p>
+            <p>Sin anunciantes. Sin junta. Sin comité de revisión. Sin conflictos que gestionar. Nadie a quien complacer. Nadie de quien recaudar fondos.</p>
+            <p><strong>Una sola regla: los datos hablan.</strong></p>
+            <p>"Si tu sistema devuelve valor al pueblo, lo escribimos. Si tu sistema traslada costes a los vulnerables, también lo escribimos."</p>
+        </div>
+
+        <h2>19. Conclusión</h2>
+        <p>El Marco GL comenzó con un hecho aritmético: <strong>1 yuan entra, 5 centavos se entregan.</strong></p>
+        <p>El extremo de cortar el desperdicio es la UBI. Pero sin captura pública del valor del suelo, la UBI es inútil incluso si se entrega.</p>
+        <p>Esta cadena de razonamiento actualizó el Marco GL de una herramienta para cortar el desperdicio a un marco universal de diagnóstico de legitimidad de gobernanza.</p>
+        <p>No comienza con una posición política, sino con una pregunta:</p>
+
+        <div class="highlight-box dual-box">
+            <p><strong>Bajo el sistema actual, ¿las cargas reales sobre los ciudadanos disminuyen o aumentan año tras año? ¿Y se están transfiriendo esas cargas a quienes no tienen voz?</strong></p>
+        </div>
+
+        <div class="principle-box">
+            <p>"Un gobierno que consume a sus propios ciudadanos ha perdido la legitimidad para gobernar."</p>
+            <div class="attribution">— Primer Principio · Marco GL</div>
+        </div>
+
+        <p>Apunta a un hecho estructural: <span class="highlight">la captura pública del valor del suelo es la base fiscal de toda legitimidad de gobernanza.</span></p>
+
+        <div class="signature">
+            Ping Xu
+            <span class="title">Creadora del Marco de Legitimidad Gubernamental · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <span class="site">gfiintel.com</span>
+    <span class="links">
+        <a href="/">← Back to Home</a>
+        <a href="/framework.html">← Framework</a>
+        <a href="/UBI_index.html">← UBI Series</a>
+        <a href="/domestic-policy.html">← Domestic Policy Series</a>
+        <a href="/landjustice.html">← Land Justice Series</a>
+    </span>
+    <span class="copyright">© 2026 GFI Flow Intelligence · GL 框架的起源 · Origin of the GL Framework</span>
+</div>
+
+<script>
+    document.querySelectorAll('.lb-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var lang = this.dataset.lang;
+            document.querySelectorAll('.lb-btn').forEach(function(b) { b.classList.remove('on'); });
+            this.classList.add('on');
+            document.querySelectorAll('.lb').forEach(function(lb) { lb.classList.remove('active'); });
+            var target = document.querySelector('.lb[data-lang="' + lang + '"]');
+            if (target) target.classList.add('active');
+        });
+    });
+</script>
+
+</body>
+</html>
