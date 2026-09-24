@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shared Delusion V: Employment & Income · 共同的幻覺之五：就業與收入</title>
+    <meta name="description" content="Every country thinks its unemployment problem is unique. In reality, unemployment is a statistical illusion — the real crisis is income dignity." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: #0d0a08;
+            color: #e0d6cc;
+            font-family: 'DM Sans', system-ui, sans-serif;
+            font-size: 16px;
+            line-height: 1.9;
+            min-height: 100vh;
+        }
+        .topbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            height: 60px; padding: 0 clamp(18px, 5vw, 48px);
+            display: flex; align-items: center; justify-content: space-between;
+            background: rgba(13, 10, 8, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .logo {
+            font-family: 'DM Mono', monospace; font-size: 11px;
+            letter-spacing: 0.16em; text-transform: uppercase;
+            color: #b8aaa0; text-decoration: none;
+        }
+        .nav-right { display: flex; align-items: center; gap: 12px; }
+        .lang-grp { display: flex; gap: 4px; }
+        .lb-btn {
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            letter-spacing: 0.06em; padding: 4px 10px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 4px; background: transparent;
+            color: #7a7068; cursor: pointer; transition: all 0.2s;
+        }
+        .lb-btn:hover { color: #e0d6cc; border-color: rgba(255, 255, 255, 0.2); }
+        .lb-btn.on { background: #b8aaa0; color: #0d0a08; border-color: #b8aaa0; }
+        .nav-links { display: flex; gap: 16px; align-items: center; }
+        .nav-links a {
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            letter-spacing: 0.06em; color: #7a7068;
+            text-decoration: none; padding: 4px 8px;
+            border-radius: 4px; transition: all 0.2s;
+        }
+        .nav-links a:hover { color: #e0d6cc; background: rgba(255, 255, 255, 0.04); }
+        .lb { display: none; padding: 100px 40px 70px; max-width: 860px; margin: 0 auto; }
+        .lb.active { display: block; }
+        .page-header {
+            padding: 0 0 32px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 32px;
+        }
+        .page-header .badge {
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            letter-spacing: 0.22em; text-transform: uppercase;
+            color: #8a4a2a; margin-bottom: 12px;
+        }
+        .page-header .title {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: clamp(28px, 3.6vw, 42px);
+            line-height: 1.15; color: #f0e6dc; margin-bottom: 8px;
+        }
+        .page-header .subtitle {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-style: italic; font-size: clamp(16px, 1.7vw, 20px);
+            color: #8a7a6a; margin-bottom: 12px;
+        }
+        .page-header .meta {
+            font-family: 'DM Mono', monospace; font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.2);
+        }
+        .content h2 {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.4rem; color: #f0e6dc;
+            margin: 2.2rem 0 0.8rem 0;
+            padding-bottom: 0.3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .content h3 {
+            font-size: 1.1rem; font-weight: 600;
+            color: #e0d6cc; margin: 1.8rem 0 0.5rem 0;
+        }
+        .content p { margin-bottom: 1.2rem; color: #d0c6bc; }
+        .content ul, .content ol { margin-bottom: 1.2rem; padding-left: 1.6rem; }
+        .content li { margin-bottom: 0.5rem; color: #d0c6bc; }
+        .content .highlight { color: #c47a4a; font-weight: 600; }
+        .content .formula-block {
+            background: #161210;
+            border-left: 4px solid #8a4a2a;
+            padding: 1.2rem 1.6rem;
+            margin: 1.5rem 0;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.95rem;
+            color: #e0d6cc;
+            border-radius: 0 6px 6px 0;
+        }
+        .content .highlight-box {
+            background: rgba(138, 74, 42, 0.08);
+            border-left: 4px solid #8a4a2a;
+            padding: 1.2rem 1.8rem;
+            margin: 1.8rem 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .content .highlight-box p { margin-bottom: 0.5rem; }
+        .content .highlight-box strong { color: #f0e6dc; }
+        .signature {
+            margin-top: 40px; padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.05rem; color: #f0e6dc;
+        }
+        .signature .title {
+            font-family: 'DM Mono', monospace; font-size: 0.6rem;
+            color: rgba(255, 255, 255, 0.25);
+            letter-spacing: 0.06em; display: block; margin-top: 2px;
+        }
+        .footer {
+            text-align: center; padding: 28px 20px 36px;
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            color: rgba(255, 255, 255, 0.18);
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            margin-top: 48px; line-height: 2;
+        }
+        .footer a { color: #b8aaa0; text-decoration: none; margin: 0 8px; }
+        .footer a:hover { color: #e0d6cc; }
+        .footer .site { display: block; margin-bottom: 8px; color: rgba(255, 255, 255, 0.25); letter-spacing: 0.06em; }
+        .footer .links { display: block; margin-bottom: 8px; }
+        .footer .copyright { color: rgba(255, 255, 255, 0.12); display: block; }
+        @media (max-width: 640px) {
+            .lb { padding: 80px 20px 50px; }
+            .topbar { padding: 0 14px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="topbar">
+    <a href="/" class="logo">← Home</a>
+    <div class="nav-right">
+        <div class="nav-links">
+            <a href="/shared-delusion.html">Shared Delusion</a>
+        </div>
+        <div class="lang-grp">
+            <button class="lb-btn on" data-lang="en">EN</button>
+            <button class="lb-btn" data-lang="tw">繁</button>
+            <button class="lb-btn" data-lang="cn">简</button>
+            <button class="lb-btn" data-lang="es">ES</button>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 英文版 ==================== -->
+<div class="lb active" data-lang="en">
+    <div class="page-header">
+        <div class="badge">Shared Delusion Series · Essay V</div>
+        <div class="title">Every Country Thinks Its Unemployment Problem Is Unique</div>
+        <div class="subtitle">In reality, unemployment is a statistical illusion — the real crisis is income dignity.</div>
+        <div class="meta">Ping Xu · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+        <h2>1. The Starting Point: The Unemployment Rate Is a Statistical Illusion</h2>
+        <p>One of the most cited economic indicators by governments is the "unemployment rate." The United States says 4% is full employment. The UK says 3.8% is a historic low. China says the urban surveyed unemployment rate is around 5%. Germany says 6% is a structural problem.</p>
+        <p>But these numbers conceal a more fundamental fact: <span class="highlight">the unemployment rate only measures "whether there is a job," not "whether the job allows a person to live."</span></p>
+        <p>A country's unemployment rate can be very low, while at the same time:</p>
+        <ul>
+            <li>A large number of workers are in "involuntary part-time" work (wanting full-time but only able to find part-time).</li>
+            <li>A large number of workers are in the "gig economy" (no stable income, no social security).</li>
+            <li>A large number of workers are in "in-work poverty" (employed, but income below the poverty line).</li>
+        </ul>
+        <p><span class="highlight">The unemployment rate is a statistical magic trick.</span> It makes governments look like they are "solving the problem," when in reality they are only "redefining the problem."</p>
+
+        <h2>2. Unemployment and Income: Two Different Dimensions</h2>
+        <p>If we use the GL Framework to deconstruct this, we find that "unemployment" and "income" are two independent dimensions:</p>
+
+        <h3>Dimension One: Access to Employment</h3>
+        <ul>
+            <li>How many people actually find work?</li>
+            <li>This corresponds to <strong>Fs (Flow Success Rate)</strong> in the GL formula: the conversion rate from "unemployed" to "employed."</li>
+        </ul>
+
+        <h3>Dimension Two: Income Dignity</h3>
+        <ul>
+            <li>For those who find work, is the income sufficient to maintain a dignified life?</li>
+            <li>This corresponds to <strong>Vn (Strategic Value)</strong> in the GL formula: the actual contribution of the job to the worker's life.</li>
+        </ul>
+
+        <p>A country can have high access to employment but extremely low income dignity. For example:</p>
+        <ul>
+            <li><strong>United States</strong>: Low unemployment, but many workers rely on the gig economy, income is unstable, and health insurance is tied to employers.</li>
+            <li><strong>Japan</strong>: Low unemployment, but non-regular employment exceeds 40%, and the younger generation is trapped in "working poor" conditions.</li>
+            <li><strong>China</strong>: Urban unemployment appears stable, but migrant workers lack social security, and income is decoupled from household registration.</li>
+        </ul>
+        <p><span class="highlight">This is not an "unemployment problem." It is an "income distribution problem."</span></p>
+
+        <h2>3. The Specific Manifestations of National Illusions</h2>
+        <p>Each government attributes the problem to "unemployment," but in reality, they face different structural income crises:</p>
+        <ul>
+            <li><strong>United States</strong>: Thinks it is "manufacturing offshoring causing unemployment." In reality, it is "union decline, stagnant minimum wage, and employer-tied health insurance" causing "in-work poverty."</li>
+            <li><strong>United Kingdom</strong>: Thinks it is "Brexit causing unemployment." In reality, it is "gig economy expansion and welfare cuts" causing "employment instability."</li>
+            <li><strong>Germany</strong>: Thinks it is a "skilled worker shortage." In reality, it is "low-wage sector expansion and mini-job proliferation" causing "income polarization."</li>
+            <li><strong>China</strong>: Thinks it is "youth unemployment." In reality, it is "household registration system, lack of migrant worker protections, and stagnant graduate salaries" causing a "structural income predicament."</li>
+            <li><strong>Japan</strong>: Thinks it is the "collapse of lifetime employment." In reality, it is "non-regular employment expansion and the collapse of seniority wages" causing "generational income inequality."</li>
+        </ul>
+        <p><span class="highlight">The problem in these countries is not "no jobs." It is "jobs that do not provide a dignified income."</span></p>
+
+        <h2>4. GL Diagnosis: The Delivery Ratio of Employment and Income</h2>
+        <p>If we separate "employment" and "income," the GL formula can be split into two levels:</p>
+
+        <h3>Level One: The Delivery Ratio of Employment</h3>
+        <ul>
+            <li><strong>Fs</strong>: How many unemployed people actually find work?</li>
+            <li><strong>Pd</strong>: How much time do job seekers spend oscillating between unemployment and job hunting?</li>
+            <li><strong>Cf</strong>: Degree inflation, workplace discrimination, lack of social security.</li>
+        </ul>
+
+        <h3>Level Two: The Delivery Ratio of Income</h3>
+        <ul>
+            <li><strong>Fs</strong>: How many employed people actually earn enough for a dignified life?</li>
+            <li><strong>Pd</strong>: How much time do workers spend on overtime, side jobs, and commuting just to make ends meet?</li>
+            <li><strong>Cf</strong>: Union decline, stagnant minimum wage, employer-tied social security, structural exploitation of the gig economy.</li>
+        </ul>
+
+        <p><span class="highlight">The real crisis is that the GL value of Level Two is far lower than Level One.</span> Governments are busy pushing down unemployment rates while ignoring the collapse of income dignity.</p>
+
+        <h2>5. The Way Out: From "Job Creation" to "Income Dignity"</h2>
+        <p>True employment policy should not be about "creating jobs," but about "guaranteeing income dignity." The specific paths are:</p>
+        <ol>
+            <li><strong>Minimum wage and collective bargaining rights</strong>: Ensure workers' income is not below the threshold of a dignified life, and rebuild unions' bargaining power.</li>
+            <li><strong>Decouple social security from employers</strong>: Medical, pension, and unemployment protections should be tied to citizenship or residence, not employment.</li>
+            <li><strong>Structural regulation of the gig economy</strong>: Bring platform workers into labor law protection, ensuring they receive basic income and social security.</li>
+            <li><strong>Public return of land value</strong>: Use a portion of land value increment for public services and social security, reducing workers' dependence on employers.</li>
+            <li><strong>Transnational coordination of income floors</strong>: Only global coordination can prevent transnational capital from arbitraging income differences between countries.</li>
+        </ol>
+
+        <h2>6. Conclusion: Unemployment Is Not the Problem, Income Is</h2>
+        <p>Governments think they are solving the "unemployment problem," but in reality, they face a <span class="highlight">structural crisis of income distribution</span>. When a country's workers cannot earn a dignified income even when employed, no matter how low the unemployment rate, it is only a statistical illusion.</p>
+
+        <div class="highlight-box">
+            <p><strong>The core task of the "Shared Delusion" series is to expose these illusions: your unemployment problem is not unique; your income crisis is. Only when income dignity becomes the core of policy — only when land value is captured publicly, social security is decoupled from employers, and transnational coordination is established — can workers truly achieve a dignified life.</strong></p>
+        </div>
+
+        <div class="signature">
+            Ping Xu
+            <span class="title">Creator of the GL Framework · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 繁體中文版 ==================== -->
+<div class="lb" data-lang="tw">
+    <div class="page-header">
+        <div class="badge">共同的幻覺系列 · 第五篇</div>
+        <div class="title">每個國家都以為自己的失業問題是獨特的</div>
+        <div class="subtitle">其實失業率是統計幻覺，真正的危機是收入尊嚴。</div>
+        <div class="meta">徐萍 · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+        <h2>一、問題的起點：失業率是一個騙局</h2>
+        <p>各國政府最常引用的經濟指標之一，就是「失業率」。美國說失業率 4% 是充分就業，英國說失業率 3.8% 是歷史新低，中國說城鎮調查失業率 5% 左右，德國說失業率 6% 是結構性問題。</p>
+        <p>但這些數字掩蓋了一個更根本的事實：<span class="highlight">失業率只測量「有沒有工作」，不測量「工作能不能讓人活下去」。</span></p>
+        <p>一個國家的失業率可以很低，但同時：</p>
+        <ul>
+            <li>大量勞動者處於「非自願兼職」（想全職卻只能兼職）</li>
+            <li>大量勞動者處於「零工經濟」（沒有穩定收入、沒有社會保障）</li>
+            <li>大量勞動者處於「在職貧窮」（有工作，但收入低於貧困線）</li>
+        </ul>
+        <p><span class="highlight">失業率是一個統計魔術。</span> 它讓各國政府看起來在「解決問題」，實際上只是在「重新定義問題」。</p>
+
+        <h2>二、失業與收入：兩個不同的維度</h2>
+        <p>如果我們用 GL Framework 來拆解，就會發現「失業」與「收入」是兩個獨立的維度：</p>
+
+        <h3>維度一：就業可及性</h3>
+        <ul>
+            <li>有多少人真正找到了工作？</li>
+            <li>這對應的是 GL 公式中的 <strong>Fs（流程成功率）</strong>：從「失業」到「就業」的轉化率。</li>
+        </ul>
+
+        <h3>維度二：收入尊嚴性</h3>
+        <ul>
+            <li>找到工作的人，收入是否足以維持尊嚴的生活？</li>
+            <li>這對應的是 GL 公式中的 <strong>Vn（策略價值）</strong>：這份工作對勞動者生活的實際貢獻。</li>
+        </ul>
+
+        <p>一個國家可以就業可及性很高，但收入尊嚴性極低。例如：</p>
+        <ul>
+            <li><strong>美國</strong>：失業率低，但大量勞動者依賴零工經濟，收入不穩定，醫療保險綁定僱主。</li>
+            <li><strong>日本</strong>：失業率低，但非正規僱用比例超過 40%，年輕世代陷入「窮忙族」困境。</li>
+            <li><strong>中國</strong>：城鎮失業率看似穩定，但農民工群體缺乏社會保障，收入與戶籍脫鉤。</li>
+        </ul>
+        <p><span class="highlight">這不是「失業問題」，而是「收入分配問題」。</span></p>
+
+        <h2>三、各國幻覺的具體表現</h2>
+        <p>各國政府都把問題歸因於「失業」，但實際上，它們面對的是不同的結構性收入危機：</p>
+        <ul>
+            <li><strong>美國</strong>：以為是「製造業外移導致失業」，其實是「工會瓦解、最低工資停滯、醫療保險綁定僱主」導致的「在職貧窮」。</li>
+            <li><strong>英國</strong>：以為是「脫歐導致失業」，其實是「零工經濟擴張、社會保障削減」導致的「就業不穩定」。</li>
+            <li><strong>德國</strong>：以為是「技術工人短缺」，其實是「低薪部門擴張、迷你工作氾濫」導致的「收入兩極化」。</li>
+            <li><strong>中國</strong>：以為是「青年失業」，其實是「戶籍制度、農民工保障缺失、大學畢業生薪資停滯」導致的「結構性收入困境」。</li>
+            <li><strong>日本</strong>：以為是「終身僱傭制瓦解」，其實是「非正規僱用擴大、年功序列崩潰」導致的「世代收入不平等」。</li>
+        </ul>
+        <p><span class="highlight">這些國家的問題，不是「沒有工作」，而是「有工作也無法獲得有尊嚴的收入」。</span></p>
+
+        <h2>四、GL 診斷：就業與收入的交付比率</h2>
+        <p>如果我們把「就業」與「收入」分開來看，GL 公式可以拆解成兩個層次：</p>
+
+        <h3>層次一：就業的交付比率</h3>
+        <ul>
+            <li><strong>Fs</strong>：有多少失業者真正找到了工作？</li>
+            <li><strong>Pd</strong>：求職者花了多少時間在失業與找工作之間徘徊？</li>
+            <li><strong>Cf</strong>：學歷通膨、職場歧視、社會保障缺失。</li>
+        </ul>
+
+        <h3>層次二：收入的交付比率</h3>
+        <ul>
+            <li><strong>Fs</strong>：有多少就業者真正獲得了足以維持尊嚴生活的收入？</li>
+            <li><strong>Pd</strong>：勞動者為了維持生計，花了多少時間在加班、兼職、通勤上？</li>
+            <li><strong>Cf</strong>：工會瓦解、最低工資停滯、社會保障與僱主綁定、零工經濟的結構性剝削。</li>
+        </ul>
+
+        <p><span class="highlight">真正的危機，是第二層次的 GL 值遠低於第一層次。</span> 各國政府忙著壓低失業率，卻忽略了收入尊嚴性的崩潰。</p>
+
+        <h2>五、出路：從「創造就業」到「保障收入尊嚴」</h2>
+        <p>真正的就業政策，不應該是「創造就業機會」，而應該是「保障收入尊嚴」。具體路徑：</p>
+        <ol>
+            <li><strong>最低工資與集體談判權</strong>：確保勞動者的收入不低於尊嚴生活的門檻，並重建工會的議價能力。</li>
+            <li><strong>社會保障與僱主脫鉤</strong>：醫療、養老、失業保障不應該綁定僱主，而應該與公民身分或居住地掛鉤。</li>
+            <li><strong>零工經濟的結構性監管</strong>：將平台勞動者納入勞動法保護，確保他們獲得基本收入與社會保障。</li>
+            <li><strong>土地增值的公共回流</strong>：將土地增值的一部分，用於公共服務與社會保障，降低勞動者對僱主的依賴。</li>
+            <li><strong>跨國協調的收入底線</strong>：只有全球協調，才能防止跨國資本利用各國的收入差異進行套利。</li>
+        </ol>
+
+        <h2>六、結論：失業不是問題，收入才是</h2>
+        <p>各國政府以為自己在解決「失業問題」，但實際上，它們面對的是<span class="highlight">收入分配的結構性危機</span>。當一個國家的勞動者即使有工作，也無法獲得有尊嚴的收入時，失業率再低，也只是統計上的幻覺。</p>
+
+        <div class="highlight-box">
+            <p><strong>「共同的幻覺」的核心任務，就是揭穿這些幻覺：你的失業問題不是獨特的，你的收入危機才是。只有當收入尊嚴成為政策的核心，只有當土地增值被公共捕獲、社會保障與僱主脫鉤、跨國協調建立起來時，勞動者才能真正獲得有尊嚴的生活。</strong></p>
+        </div>
+
+        <div class="signature">
+            徐萍
+            <span class="title">GL框架發明人 · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 簡體中文版 ==================== -->
+<div class="lb" data-lang="cn">
+    <div class="page-header">
+        <div class="badge">共同的幻觉系列 · 第五篇</div>
+        <div class="title">每个国家都以为自己的失业问题是独特的</div>
+        <div class="subtitle">其实失业率是统计幻觉，真正的危机是收入尊严。</div>
+        <div class="meta">徐萍 · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+        <h2>一、问题的起点：失业率是一个骗局</h2>
+        <p>各国政府最常引用的经济指标之一，就是「失业率」。美国说失业率 4% 是充分就业，英国说失业率 3.8% 是历史新低，中国说城镇调查失业率 5% 左右，德国说失业率 6% 是结构性问题。</p>
+        <p>但这些数字掩盖了一个更根本的事实：<span class="highlight">失业率只测量「有没有工作」，不测量「工作能不能让人活下去」。</span></p>
+        <p>一个国家的失业率可以很低，但同时：</p>
+        <ul>
+            <li>大量劳动者处于「非自愿兼职」（想全职却只能兼职）</li>
+            <li>大量劳动者处于「零工经济」（没有稳定收入、没有社会保障）</li>
+            <li>大量劳动者处于「在职贫穷」（有工作，但收入低于贫困线）</li>
+        </ul>
+        <p><span class="highlight">失业率是一个统计魔术。</span> 它让各国政府看起来在「解决问题」，实际上只是在「重新定义问题」。</p>
+
+        <h2>二、失业与收入：两个不同的维度</h2>
+        <p>如果我们用 GL Framework 来拆解，就会发现「失业」与「收入」是两个独立的维度：</p>
+
+        <h3>维度一：就业可及性</h3>
+        <ul>
+            <li>有多少人真正找到了工作？</li>
+            <li>这对应的是 GL 公式中的 <strong>Fs（流程成功率）</strong>：从「失业」到「就业」的转化率。</li>
+        </ul>
+
+        <h3>维度二：收入尊严性</h3>
+        <ul>
+            <li>找到工作的人，收入是否足以维持尊严的生活？</li>
+            <li>这对应的是 GL 公式中的 <strong>Vn（策略价值）</strong>：这份工作对劳动者生活的实际贡献。</li>
+        </ul>
+
+        <p>一个国家可以就业可及性很高，但收入尊严性极低。例如：</p>
+        <ul>
+            <li><strong>美国</strong>：失业率低，但大量劳动者依赖零工经济，收入不稳定，医疗保险绑定雇主。</li>
+            <li><strong>日本</strong>：失业率低，但非正规雇用比例超过 40%，年轻世代陷入「穷忙族」困境。</li>
+            <li><strong>中国</strong>：城镇失业率看似稳定，但农民工群体缺乏社会保障，收入与户籍脱钩。</li>
+        </ul>
+        <p><span class="highlight">这不是「失业问题」，而是「收入分配问题」。</span></p>
+
+        <h2>三、各国幻觉的具体表现</h2>
+        <p>各国政府都把问题归因于「失业」，但实际上，它们面对的是不同的结构性收入危机：</p>
+        <ul>
+            <li><strong>美国</strong>：以为是「制造业外移导致失业」，其实是「工会瓦解、最低工资停滞、医疗保险绑定雇主」导致的「在职贫穷」。</li>
+            <li><strong>英国</strong>：以为是「脱欧导致失业」，其实是「零工经济扩张、社会保障削减」导致的「就业不稳定」。</li>
+            <li><strong>德国</strong>：以为是「技术工人短缺」，其实是「低薪部门扩张、迷你工作泛滥」导致的「收入两极化」。</li>
+            <li><strong>中国</strong>：以为是「青年失业」，其实是「户籍制度、农民工保障缺失、大学毕业生薪资停滞」导致的「结构性收入困境」。</li>
+            <li><strong>日本</strong>：以为是「终身雇佣制瓦解」，其实是「非正规雇用扩大、年功序列崩溃」导致的「世代收入不平等」。</li>
+        </ul>
+        <p><span class="highlight">这些国家的问题，不是「没有工作」，而是「有工作也无法获得有尊严的收入」。</span></p>
+
+        <h2>四、GL 诊断：就业与收入的交付比率</h2>
+        <p>如果我们把「就业」与「收入」分开来看，GL 公式可以拆解成两个层次：</p>
+
+        <h3>层次一：就业的交付比率</h3>
+        <ul>
+            <li><strong>Fs</strong>：有多少失业者真正找到了工作？</li>
+            <li><strong>Pd</strong>：求职者花了多少时间在失业与找工作之间徘徊？</li>
+            <li><strong>Cf</strong>：学历通膨、职场歧视、社会保障缺失。</li>
+        </ul>
+
+        <h3>层次二：收入的交付比率</h3>
+        <ul>
+            <li><strong>Fs</strong>：有多少就业者真正获得了足以维持尊严生活的收入？</li>
+            <li><strong>Pd</strong>：劳动者为了维持生计，花了多少时间在加班、兼职、通勤上？</li>
+            <li><strong>Cf</strong>：工会瓦解、最低工资停滞、社会保障与雇主绑定、零工经济的结构性剥削。</li>
+        </ul>
+
+        <p><span class="highlight">真正的危机，是第二层次的 GL 值远低于第一层次。</span> 各国政府忙着压低失业率，却忽略了收入尊严性的崩溃。</p>
+
+        <h2>五、出路：从「创造就业」到「保障收入尊严」</h2>
+        <p>真正的就业政策，不应该是「创造就业机会」，而应该是「保障收入尊严」。具体路径：</p>
+        <ol>
+            <li><strong>最低工资与集体谈判权</strong>：确保劳动者的收入不低于尊严生活的门槛，并重建工会的议价能力。</li>
+            <li><strong>社会保障与雇主脱钩</strong>：医疗、养老、失业保障不应该绑定雇主，而应该与公民身分或居住地挂钩。</li>
+            <li><strong>零工经济的结构性监管</strong>：将平台劳动者纳入劳动法保护，确保他们获得基本收入与社会保障。</li>
+            <li><strong>土地增值的公共回流</strong>：将土地增值的一部分，用于公共服务与社会保障，降低劳动者对雇主的依赖。</li>
+            <li><strong>跨国协调的收入底线</strong>：只有全球协调，才能防止跨国资本利用各国的收入差异进行套利。</li>
+        </ol>
+
+        <h2>六、结论：失业不是问题，收入才是</h2>
+        <p>各国政府以为自己在解决「失业问题」，但实际上，它们面对的是<span class="highlight">收入分配的结构性危机</span>。当一个国家的劳动者即使有工作，也无法获得有尊严的收入时，失业率再低，也只是统计上的幻觉。</p>
+
+        <div class="highlight-box">
+            <p><strong>「共同的幻觉」的核心任务，就是揭穿这些幻觉：你的失业问题不是独特的，你的收入危机才是。只有当收入尊严成为政策的核心，只有当土地增值被公共捕获、社会保障与雇主脱钩、跨国协调建立起来时，劳动者才能真正获得有尊严的生活。</strong></p>
+        </div>
+
+        <div class="signature">
+            徐萍
+            <span class="title">GL框架发明人 · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 西班牙文版 ==================== -->
+<div class="lb" data-lang="es">
+    <div class="page-header">
+        <div class="badge">Serie Ilusión Compartida · Ensayo V</div>
+        <div class="title">Cada País Cree que su Problema de Desempleo es Único</div>
+        <div class="subtitle">En realidad, la tasa de desempleo es una ilusión estadística — la verdadera crisis es la dignidad del ingreso.</div>
+        <div class="meta">Ping Xu · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+        <h2>1. El Punto de Partida: La Tasa de Desempleo es una Ilusión Estadística</h2>
+        <p>Uno de los indicadores económicos más citados por los gobiernos es la "tasa de desempleo". Estados Unidos dice que el 4% es pleno empleo. El Reino Unido dice que el 3.8% es un mínimo histórico. China dice que la tasa de desempleo urbana encuestada es de alrededor del 5%. Alemania dice que el 6% es un problema estructural.</p>
+        <p>Pero estas cifras ocultan un hecho más fundamental: <span class="highlight">la tasa de desempleo solo mide "si hay trabajo", no "si el trabajo permite vivir".</span></p>
+        <p>La tasa de desempleo de un país puede ser muy baja, mientras que al mismo tiempo:</p>
+        <ul>
+            <li>Un gran número de trabajadores se encuentran en "tiempo parcial involuntario" (quieren tiempo completo pero solo encuentran tiempo parcial).</li>
+            <li>Un gran número de trabajadores se encuentran en la "economía gig" (sin ingresos estables, sin seguridad social).</li>
+            <li>Un gran número de trabajadores se encuentran en "pobreza laboral" (empleados, pero con ingresos por debajo del umbral de pobreza).</li>
+        </ul>
+        <p><span class="highlight">La tasa de desempleo es un truco estadístico.</span> Hace que los gobiernos parezcan estar "resolviendo el problema", cuando en realidad solo están "redefiniendo el problema".</p>
+
+        <h2>2. Desempleo e Ingreso: Dos Dimensiones Diferentes</h2>
+        <p>Si utilizamos el Marco GL para deconstruir esto, encontramos que "desempleo" e "ingreso" son dos dimensiones independientes:</p>
+
+        <h3>Dimensión Uno: Acceso al Empleo</h3>
+        <ul>
+            <li>¿Cuántas personas encuentran realmente trabajo?</li>
+            <li>Esto corresponde a <strong>Fs (Tasa de Éxito del Proceso)</strong> en la fórmula GL: la tasa de conversión de "desempleado" a "empleado".</li>
+        </ul>
+
+        <h3>Dimensión Dos: Dignidad del Ingreso</h3>
+        <ul>
+            <li>Para quienes encuentran trabajo, ¿el ingreso es suficiente para mantener una vida digna?</li>
+            <li>Esto corresponde a <strong>Vn (Valor Estratégico)</strong> en la fórmula GL: la contribución real del trabajo a la vida del trabajador.</li>
+        </ul>
+
+        <p>Un país puede tener un alto acceso al empleo pero una dignidad de ingreso extremadamente baja. Por ejemplo:</p>
+        <ul>
+            <li><strong>Estados Unidos</strong>: Bajo desempleo, pero muchos trabajadores dependen de la economía gig, los ingresos son inestables y el seguro médico está vinculado al empleador.</li>
+            <li><strong>Japón</strong>: Bajo desempleo, pero el empleo no regular supera el 40%, y la generación más joven está atrapada en condiciones de "trabajador pobre".</li>
+            <li><strong>China</strong>: El desempleo urbano parece estable, pero los trabajadores migrantes carecen de seguridad social y los ingresos están desvinculados del registro de hogares.</li>
+        </ul>
+        <p><span class="highlight">Esto no es un "problema de desempleo". Es un "problema de distribución del ingreso".</span></p>
+
+        <h2>3. Las Manifestaciones Específicas de las Ilusiones Nacionales</h2>
+        <p>Cada gobierno atribuye el problema al "desempleo", pero en realidad, enfrentan diferentes crisis estructurales de ingresos:</p>
+        <ul>
+            <li><strong>Estados Unidos</strong>: Cree que es "la deslocalización manufacturera causando desempleo". En realidad, es "el declive sindical, el salario mínimo estancado y el seguro médico vinculado al empleador" causando "pobreza laboral".</li>
+            <li><strong>Reino Unido</strong>: Cree que es "el Brexit causando desempleo". En realidad, es "la expansión de la economía gig y los recortes de bienestar" causando "inestabilidad laboral".</li>
+            <li><strong>Alemania</strong>: Cree que es una "escasez de trabajadores cualificados". En realidad, es "la expansión del sector de bajos salarios y la proliferación de mini-empleos" causando "polarización de ingresos".</li>
+            <li><strong>China</strong>: Cree que es "el desempleo juvenil". En realidad, es "el sistema de registro de hogares, la falta de protecciones para trabajadores migrantes y los salarios estancados de los graduados" causando un "predicamento estructural de ingresos".</li>
+            <li><strong>Japón</strong>: Cree que es el "colapso del empleo vitalicio". En realidad, es "la expansión del empleo no regular y el colapso de los salarios por antigüedad" causando "desigualdad generacional de ingresos".</li>
+        </ul>
+        <p><span class="highlight">El problema en estos países no es "falta de empleos". Es "empleos que no proporcionan un ingreso digno".</span></p>
+
+        <h2>4. Diagnóstico GL: La Tasa de Entrega del Empleo y el Ingreso</h2>
+        <p>Si separamos "empleo" e "ingreso", la fórmula GL se puede dividir en dos niveles:</p>
+
+        <h3>Nivel Uno: La Tasa de Entrega del Empleo</h3>
+        <ul>
+            <li><strong>Fs</strong>: ¿Cuántas personas desempleadas encuentran realmente trabajo?</li>
+            <li><strong>Pd</strong>: ¿Cuánto tiempo pasan los buscadores de empleo oscilando entre el desempleo y la búsqueda de trabajo?</li>
+            <li><strong>Cf</strong>: Inflación de títulos, discriminación laboral, falta de seguridad social.</li>
+        </ul>
+
+        <h3>Nivel Dos: La Tasa de Entrega del Ingreso</h3>
+        <ul>
+            <li><strong>Fs</strong>: ¿Cuántas personas empleadas ganan realmente lo suficiente para una vida digna?</li>
+            <li><strong>Pd</strong>: ¿Cuánto tiempo pasan los trabajadores en horas extras, trabajos secundarios y desplazamientos solo para llegar a fin de mes?</li>
+            <li><strong>Cf</strong>: Declive sindical, salario mínimo estancado, seguridad social vinculada al empleador, explotación estructural de la economía gig.</li>
+        </ul>
+
+        <p><span class="highlight">La verdadera crisis es que el valor GL del Nivel Dos es muy inferior al Nivel Uno.</span> Los gobiernos están ocupados reduciendo las tasas de desempleo mientras ignoran el colapso de la dignidad del ingreso.</p>
+
+        <h2>5. La Salida: De la "Creación de Empleo" a la "Dignidad del Ingreso"</h2>
+        <p>La verdadera política de empleo no debería ser "crear empleos", sino "garantizar la dignidad del ingreso". Las rutas específicas son:</p>
+        <ol>
+            <li><strong>Salario mínimo y derechos de negociación colectiva</strong>: Asegurar que el ingreso de los trabajadores no esté por debajo del umbral de una vida digna, y reconstruir el poder de negociación de los sindicatos.</li>
+            <li><strong>Desvincular la seguridad social de los empleadores</strong>: Las protecciones médicas, de pensión y de desempleo deben estar vinculadas a la ciudadanía o residencia, no al empleo.</li>
+            <li><strong>Regulación estructural de la economía gig</strong>: Incorporar a los trabajadores de plataformas a la protección de la ley laboral, asegurando que reciban ingresos básicos y seguridad social.</li>
+            <li><strong>Retorno público del valor del suelo</strong>: Utilizar una parte del incremento del valor del suelo para servicios públicos y seguridad social, reduciendo la dependencia de los trabajadores de los empleadores.</li>
+            <li><strong>Coordinación transnacional de pisos de ingreso</strong>: Solo la coordinación global puede evitar que el capital transnacional arbitre las diferencias de ingresos entre países.</li>
+        </ol>
+
+        <h2>6. Conclusión: El Desempleo No es el Problema, el Ingreso Sí</h2>
+        <p>Los gobiernos creen que están resolviendo el "problema del desempleo", pero en realidad, enfrentan una <span class="highlight">crisis estructural de distribución del ingreso</span>. Cuando los trabajadores de un país no pueden obtener un ingreso digno incluso estando empleados, no importa cuán baja sea la tasa de desempleo, es solo una ilusión estadística.</p>
+
+        <div class="highlight-box">
+            <p><strong>La tarea central de la serie "Ilusión Compartida" es exponer estas ilusiones: tu problema de desempleo no es único; tu crisis de ingresos sí lo es. Solo cuando la dignidad del ingreso se convierta en el núcleo de la política — solo cuando el valor del suelo sea capturado públicamente, la seguridad social se desvincule de los empleadores y se establezca la coordinación transnacional — los trabajadores podrán alcanzar verdaderamente una vida digna.</strong></p>
+        </div>
+
+        <div class="signature">
+            Ping Xu
+            <span class="title">Creadora del GL Framework · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <span class="site">gfiintel.com</span>
+    <span class="links">
+        <a href="/">← Back to Home</a>
+        <a href="/shared-delusion.html">← Shared Delusion Series</a>
+        <a href="/landjustice.html">← Land Justice Series</a>
+    </span>
+    <span class="copyright">© 2026 GFI Flow Intelligence · 共同的幻覺 · Shared Delusion · Ilusión Compartida</span>
+</div>
+
+<script>
+    document.querySelectorAll('.lb-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var lang = this.dataset.lang;
+            document.querySelectorAll('.lb-btn').forEach(function(b) { b.classList.remove('on'); });
+            this.classList.add('on');
+            document.querySelectorAll('.lb').forEach(function(lb) { lb.classList.remove('active'); });
+            var target = document.querySelector('.lb[data-lang="' + lang + '"]');
+            if (target) target.classList.add('active');
+        });
+    });
+</script>
+
+</body>
+</html>
