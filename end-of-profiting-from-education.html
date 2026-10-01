@@ -1,1 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The End of Profiting from Education · 將教育當作獲利工具的時代正在結束 · El Fin de Lucrar con la Educación</title>
+    <meta name="description" content="A structural critique of the education system — student debt, for-profit colleges, OPM contracts, and the securitization of learning." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: #0d0a08;
+            color: #e0d6cc;
+            font-family: 'DM Sans', system-ui, sans-serif;
+            font-size: 16px;
+            line-height: 1.9;
+            min-height: 100vh;
+        }
+        .topbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            height: 60px; padding: 0 clamp(18px, 5vw, 48px);
+            display: flex; align-items: center; justify-content: space-between;
+            background: rgba(13, 10, 8, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .logo {
+            font-family: 'DM Mono', monospace; font-size: 11px;
+            letter-spacing: 0.16em; text-transform: uppercase;
+            color: #b8aaa0; text-decoration: none;
+        }
+        .nav-right { display: flex; align-items: center; gap: 12px; }
+        .lang-grp { display: flex; gap: 4px; }
+        .lb-btn {
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            letter-spacing: 0.06em; padding: 4px 10px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 4px; background: transparent;
+            color: #7a7068; cursor: pointer; transition: all 0.2s;
+        }
+        .lb-btn:hover { color: #e0d6cc; border-color: rgba(255, 255, 255, 0.2); }
+        .lb-btn.on { background: #b8aaa0; color: #0d0a08; border-color: #b8aaa0; }
+        .lb { display: none; padding: 100px 40px 70px; max-width: 860px; margin: 0 auto; }
+        .lb.active { display: block; }
+        .page-header {
+            padding: 0 0 32px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 32px;
+        }
+        .page-header .badge {
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            letter-spacing: 0.22em; text-transform: uppercase;
+            color: #8a4a2a; margin-bottom: 12px;
+        }
+        .page-header .title {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: clamp(28px, 3.6vw, 42px);
+            line-height: 1.15; color: #f0e6dc; margin-bottom: 8px;
+        }
+        .page-header .subtitle {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-style: italic; font-size: clamp(16px, 1.7vw, 20px);
+            color: #8a7a6a; margin-bottom: 12px;
+        }
+        .page-header .meta {
+            font-family: 'DM Mono', monospace; font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.2);
+        }
+        .content .part-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #8a4a2a;
+            margin: 3rem 0 1rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(138, 74, 42, 0.3);
+        }
+        .content .part-label:first-of-type { margin-top: 1rem; }
+        .content h2 {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.4rem; color: #f0e6dc;
+            margin: 2rem 0 0.8rem 0;
+            padding-bottom: 0.3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .content h3 {
+            font-size: 1.1rem; font-weight: 600;
+            color: #e0d6cc; margin: 1.6rem 0 0.5rem 0;
+        }
+        .content p { margin-bottom: 1.2rem; color: #d0c6bc; }
+        .content ul, .content ol { margin-bottom: 1.2rem; padding-left: 1.6rem; }
+        .content li { margin-bottom: 0.5rem; color: #d0c6bc; }
+        .content .highlight { color: #c47a4a; font-weight: 600; }
+        .content .highlight-box {
+            background: rgba(138, 74, 42, 0.08);
+            border-left: 4px solid #8a4a2a;
+            padding: 1.2rem 1.8rem;
+            margin: 1.8rem 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .content .highlight-box p { margin-bottom: 0.5rem; }
+        .content .highlight-box strong { color: #f0e6dc; }
+        .content .highlight-box.dual-box {
+            border-left-color: #7DD3FC;
+            background: rgba(125, 211, 252, 0.05);
+        }
+        .content .highlight-box.abuse-box {
+            border-left-color: #f87171;
+            background: rgba(248, 113, 113, 0.05);
+        }
+        .content .highlight-box.abuse-box strong { color: #fecaca; }
+        .content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        .content th {
+            background: rgba(255, 255, 255, 0.04);
+            color: #c47a4a;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 0.6rem 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .content td {
+            padding: 0.6rem 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: #d0c6bc;
+        }
+        .signature {
+            margin-top: 40px; padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.05rem; color: #f0e6dc;
+        }
+        .signature .title {
+            font-family: 'DM Mono', monospace; font-size: 0.6rem;
+            color: rgba(255, 255, 255, 0.25);
+            letter-spacing: 0.06em; display: block; margin-top: 2px;
+        }
+        .footer {
+            text-align: center; padding: 28px 20px 36px;
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            color: rgba(255, 255, 255, 0.18);
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            margin-top: 48px; line-height: 2;
+        }
+        .footer a { color: #b8aaa0; text-decoration: none; margin: 0 8px; }
+        .footer a:hover { color: #e0d6cc; }
+        .footer .site { display: block; margin-bottom: 8px; color: rgba(255, 255, 255, 0.25); letter-spacing: 0.06em; }
+        .footer .links { display: block; margin-bottom: 8px; }
+        .footer .copyright { color: rgba(255, 255, 255, 0.12); display: block; }
+        @media (max-width: 640px) {
+            .lb { padding: 80px 20px 50px; }
+            .topbar { padding: 0 14px; }
+        }
+    </style>
+</head>
+<body>
 
+<div class="topbar">
+    <a href="/" class="logo">← Home</a>
+    <div class="nav-right">
+        <div class="lang-grp">
+            <button class="lb-btn on" data-lang="en">EN</button>
+            <button class="lb-btn" data-lang="tw">繁</button>
+            <button class="lb-btn" data-lang="cn">简</button>
+            <button class="lb-btn" data-lang="es">ES</button>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 英文版 ==================== -->
+<div class="lb active" data-lang="en">
+    <div class="page-header">
+        <div class="badge">Cost Transfer Series · Essay V</div>
+        <div class="title">The End of Profiting from Education</div>
+        <div class="subtitle">How student loans convert learning into a lifetime debt obligation — and why for-profit colleges are the collection arm</div>
+        <div class="meta">Ping Xu · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+
+        <div class="part-label">Prologue: From Public Good to Debt Production Machine</div>
+        <p>Education was once a public good: society invests in citizens' knowledge; citizens return higher productivity to society. But the for-profit education system operates on a completely different model: <strong>revenue comes from tuition; profit comes from the difference between tuition income and teaching cost.</strong> This means <strong>every enrollment, every loan, directly converts into revenue.</strong></p>
+        <p>The US federal government originates approximately <strong>USD 87.2 billion</strong> in student loans for higher education annually. These loans are not "aid." They are a <strong>revenue stream</strong>. The federal government earned over <strong>USD 100 billion</strong> in profit from student loans between 2007 and 2022. This is not "service." This is <strong>debt production</strong>.</p>
+
+        <div class="part-label">Part One: The Scale of Debt — USD 1.86 Trillion and 42.6 Million Borrowers</div>
+
+        <p>As of Q1 2026, total student loan debt reached <strong>USD 1.86 trillion</strong>, with federal loans accounting for approximately <strong>91%</strong> (USD 1.7 trillion), held by <strong>42.6 million</strong> borrowers.</p>
+        <p>The average federal loan balance is <strong>USD 39,547</strong>, rising to <strong>USD 43,333</strong> when private loans are included. Student loan debt grew from <strong>USD 1.02 trillion</strong> in 2015 to <strong>USD 1.83 trillion</strong> in 2025 — approximately <strong>80%</strong> growth in ten years.</p>
+        <p><strong>Student loan debt is the second-largest form of household debt after mortgages</strong>, and the average debt <strong>exceeds median US personal income</strong> (USD 36,000).</p>
+        <p>This is not "education investment." This is <strong>intergenerational debt transfer</strong>.</p>
+
+        <div class="part-label">Part Two: For-Profit Colleges — The Concentration Camp of Loan Defaults</div>
+
+        <p>For-profit institutions enroll less than <strong>10%</strong> of US college students, but account for nearly <strong>50%</strong> of federal student loan defaults.</p>
+        <p>The latest federal data shows that <strong>500 colleges and universities</strong> — the vast majority of them private for-profit institutions — have at least <strong>40%</strong> of recent students failing to repay their federal student loans. By contrast, the average non-repayment rate for public and private nonprofit universities is approximately <strong>15%</strong>.</p>
+        <p>Among borrowers who attended for-profit institutions, <strong>30%</strong> are delinquent, compared to <strong>16%</strong> for public schools and <strong>14%</strong> for private schools. More than <strong>41,000</strong> "post-class" applicants submitted more than one borrower defense application; of those, <strong>20,516</strong> — nearly half — attended more than one "Exhibit C" school, and <strong>all but 12 Exhibit C schools are for-profit institutions</strong>.</p>
+        <p>The business model of for-profit colleges is: <strong>recruit students with federal loans, charge high tuition with low-cost teaching, and leave students with unpayable debt.</strong> When students default, taxpayers bear the loss.</p>
+
+        <div class="part-label">Part Three: Debt Bondage — Structural Identity with Colonial Indentured Servitude</div>
+
+        <p>Academic research confirms the structural identity between student loans and colonial indentured servitude: <strong>"Today's student loan institutions play a role similar to colonial labor brokers — by paying for an individual's college education, in return they obtain a promise of repayment of the loan plus interest."</strong></p>
+        <p>The UN Supplementary Convention on the Abolition of Slavery defines debt bondage as: <strong>"the status or condition arising from a debtor pledging his personal services or those of a person under his control as security for a debt, if the reasonable assessed value of those services is not applied toward the liquidation of the debt, or if the length and nature of those services are not respectively limited and defined."</strong></p>
+        <p><strong>Student loans do not require the borrower to explicitly pledge personal services, but achieve a similar result by requiring the borrower to pledge a portion of future income, with the duration not clearly limited or defined.</strong> The six-month grace period for federal loans means that <strong>regardless of whether the student finds a job, they must begin repayment after six months</strong>. The consequences of default are: damaged credit score, loss of professional licenses, driver's licenses, and even hunting licenses.</p>
+        <p><strong>This is not "education financing." This is modern debt bondage.</strong></p>
+
+        <div class="part-label">Part Four: Completion Rates — Who Is Systematically Excluded</div>
+
+        <p>The national six-year completion rate has been stable at <strong>61.1%</strong> for four consecutive cohorts, with <strong>29.8%</strong> dropping out entirely. Racial gaps persist: <strong>77% of Asian and 73% of white students</strong> graduate within six years, compared to <strong>52% of Hispanic and 45% of Black students</strong>.</p>
+        <p>At four-year institutions, <strong>only 51% of Pell Grant recipients</strong> graduate within six years, compared to <strong>65%</strong> of non-Pell students — an <strong>18 percentage point gap</strong>, widening to <strong>21 percentage points</strong> using eight-year data.</p>
+        <p>In 2024, <strong>30% of borrowers who completed some college but did not earn a bachelor's degree</strong> reported being delinquent, compared to only <strong>11%</strong> of borrowers who completed a bachelor's degree. Those who borrowed for college but did not complete a degree were <strong>97% less likely to be financially healthy, 94% less likely to own a home, and 84% less likely to have USD 400 in emergency cash</strong> than borrowers who completed a degree.</p>
+        <p><strong>The system was not designed for low- and middle-income students. It was designed to extract debt from them.</strong></p>
+
+        <div class="part-label">Part Five: Online Program Management — 50–80% of Tuition Flows to Private Companies</div>
+
+        <p>Online Program Management (OPM) companies once helped universities build online degree programs, charging <strong>50% to 80%</strong> of tuition revenue. Less than a decade ago, four OPM companies each generated over <strong>USD 1 billion</strong> in annual revenue.</p>
+        <p>In 2021, one of these companies acquired EdX, a ten-year-old nonprofit, for <strong>USD 800 million</strong>. But three years later, <strong>2U filed for bankruptcy</strong>, and Pearson sold its OPM business.</p>
+        <p>In Q1 2026, higher education institutions signed only <strong>8 new contracts</strong> with OPM companies, while <strong>147 agreements were cancelled or expired without renewal</strong> in 2023. Venture capital investment in the OPM sector fell <strong>97%</strong> compared to 2021.</p>
+        <p><strong>Universities finally realized: they should keep all the money collected from selling their own carefully built brand and educational services.</strong> But for decades, billions of dollars had been transferred from student tuition to private companies.</p>
+
+        <div class="part-label">Part Six: Student Loan Securitization — The Next Bubble</div>
+
+        <p>The size of Student Loan Asset-Backed Securities (SLABS) was approximately <strong>USD 190 billion</strong> in December 2017. SLABS are based on credit scores rather than repayment capacity, and because parents typically have higher credit scores than children and co-sign loans, <strong>SLABS appear much safer than they actually are</strong>.</p>
+        <p>The disclosure problem is similar to the one that caused the housing crash: <strong>banks cannot disclose the necessary information about underlying student loans because they do not have it</strong>. Dodd-Frank protections <strong>do not regulate the SLABS market</strong>, with almost no measures to prevent subprime SLABS.</p>
+        <p>Academic research warns: <strong>"The student loan bubble is 'strikingly similar' to the environment that led to the collapse of the mortgage market in the Great Recession."</strong> When the SLABS market collapses, the problem is not only that the economy will suffer, but that <strong>we allowed the SLABS bubble to grow</strong>.</p>
+
+        <div class="part-label">Part Seven: Global Comparison — Alternatives Already Exist</div>
+
+        <p><strong>Australia's HECS-HELP system:</strong> Repayment is made through the tax system, with a minimum repayment income threshold of <strong>AUD 67,000</strong> for 2025-26. Those earning below the threshold are not required to repay. Repayment is income-contingent, not fixed-amount.</p>
+        <p><strong>The UK student loan system:</strong> Income-contingent, with graduates not required to repay while income is below the threshold, and outstanding balances automatically written off after <strong>30 to 40 years</strong>.</p>
+        <p><strong>China's National Student Loan:</strong> As of the end of 2025, cumulative disbursement reached <strong>RMB 695.8 billion</strong>, benefiting over <strong>30 million</strong> students. Students <strong>do not need to repay the principal while in school, with all interest borne by the government</strong>; after graduation, burden is reduced through lower interest rates, extended loan terms, and grace periods for principal repayment. In 2025, <strong>8.52 million students</strong> received national student loans, accounting for approximately <strong>one-fifth</strong> of total college enrollment that year.</p>
+        <p><strong>These systems are not "perfect." But they prove: alternatives are feasible. They have simply been systematically marginalized.</strong></p>
+
+        <div class="part-label">Part Eight: Structural Identity — Education Is Identical to Pharma, Food, Healthcare, and Insurance</div>
+
+        <table>
+            <tr>
+                <th>Dimension</th>
+                <th>Pharma</th>
+                <th>Food</th>
+                <th>Healthcare</th>
+                <th>Insurance</th>
+                <th>Education</th>
+            </tr>
+            <tr>
+                <td><strong>Lifelong customer</strong></td>
+                <td>Lifelong medication</td>
+                <td>Annual seed purchase</td>
+                <td>Repeated visits</td>
+                <td>Lifelong premiums</td>
+                <td>Lifelong loan repayment</td>
+            </tr>
+            <tr>
+                <td><strong>Structural incentive</strong></td>
+                <td>Prefer chronic</td>
+                <td>Prefer dependency</td>
+                <td>Prefer more</td>
+                <td>Prefer denial</td>
+                <td>Prefer high tuition</td>
+            </tr>
+            <tr>
+                <td><strong>Cost transfer mechanism</strong></td>
+                <td>Patent monopoly</td>
+                <td>Seed patents</td>
+                <td>Fee-for-service</td>
+                <td>Denial, delay</td>
+                <td>Student loans</td>
+            </tr>
+            <tr>
+                <td><strong>Financialization</strong></td>
+                <td>REITs, private equity</td>
+                <td>Agri-finance complex</td>
+                <td>Hospital chains</td>
+                <td>Insurer buybacks</td>
+                <td>SLABS securitization</td>
+            </tr>
+            <tr>
+                <td><strong>Structural output</strong></td>
+                <td>400,000 deaths</td>
+                <td>300,000 farmer suicides</td>
+                <td>30% spending unnecessary</td>
+                <td>19% denial rate</td>
+                <td>USD 1.86 trillion debt</td>
+            </tr>
+        </table>
+
+        <p><strong>These are not five systems. This is one system, with five faces.</strong></p>
+
+        <div class="part-label">Part Nine: The GL Framework's Criterion</div>
+
+        <div class="highlight-box dual-box">
+            <p><strong>"Costs must not be transferred to the voiceless vulnerable."</strong></p>
+            <p>The cost transfer chain of the education system:</p>
+            <ul>
+                <li><strong>Students</strong>: bear debt, enter the labor market already in debt.</li>
+                <li><strong>Families</strong>: exhaust savings for children's education.</li>
+                <li><strong>Taxpayers</strong>: subsidize for-profit colleges while bearing default costs.</li>
+                <li><strong>Future generations</strong>: inherit an unsustainable higher education model.</li>
+            </ul>
+            <p><strong>This is not a "market outcome." This is institutional design.</strong></p>
+        </div>
+
+        <div class="highlight-box abuse-box">
+            <p><strong>The Structural Diagnosis</strong></p>
+            <p>Suffering is not a "side effect." Suffering is the product itself.</p>
+            <p><strong>The machine must end.</strong> Not because of moral awakening, but because of arithmetic constraints. US student debt exceeds <strong>USD 1.86 trillion</strong>, with 42.6 million borrowers, and for-profit institution default rates are <strong>double</strong> those of public institutions. The system's operating cost has exceeded its return.</p>
+            <p><strong>The end is not "fixing" it. The end is replacing the incentive structure that produces it: from "higher tuition, higher profit" to "more public education, more social benefit."</strong></p>
+        </div>
+
+        <div class="signature">
+            Ping Xu
+            <span class="title">Creator of the Governance Legitimacy Framework · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 繁體中文版 ==================== -->
+<div class="lb" data-lang="tw">
+    <div class="page-header">
+        <div class="badge">成本轉移系列 · 第五篇</div>
+        <div class="title">將教育當作獲利工具的時代正在結束</div>
+        <div class="subtitle">學生貸款如何把學習變成終身債務綁定——以及為什麼營利性大學是催收部門</div>
+        <div class="meta">徐萍 · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+
+        <div class="part-label">前言：從「公共財」到「債務生產機器」</div>
+        <p>教育的第一性原理曾經是公共財：社會投資於公民的知識，公民以更高的生產力回報社會。但營利性教育系統的商業模式完全不同：<strong>收入來自學費，利潤來自「學費收入減去教學成本」的差額。</strong> 這意味著，<strong>每一次招生、每一筆貸款，都直接轉化為收入。</strong></p>
+        <p>聯邦政府每年向高等教育學生貸款約<strong>872億美元</strong>。這些貸款不是「援助」。它們是<strong>收入來源</strong>。聯邦政府在2007至2022年間從學生貸款中獲得的利潤超過<strong>1,000億美元</strong>。這不是「服務」。這是<strong>債務生產</strong>。</p>
+
+        <div class="part-label">第一部分：債務的規模——1.86萬億美元與4,260萬借款人</div>
+
+        <p>截至2026年第一季度，學生貸款債務總額達到<strong>1.86萬億美元</strong>，其中聯邦貸款約占<strong>91%</strong>，即<strong>1.7萬億美元</strong>，由<strong>4,260萬</strong>借款人持有。</p>
+        <p>平均聯邦貸款餘額為<strong>39,547美元</strong>，計入私人貸款後升至<strong>43,333美元</strong>。學生貸款債務從2015年的<strong>1.02萬億美元</strong>增長到2025年的<strong>1.83萬億美元</strong>，十年間增長了約<strong>80%</strong>。</p>
+        <p><strong>學生貸款債務是僅次於抵押貸款的第二大住房債務形式</strong>，且平均債務<strong>超過美國典型個人收入</strong>（36,000美元）。</p>
+        <p>這不是「教育投資」。這是<strong>代際債務轉移</strong>。</p>
+
+        <div class="part-label">第二部分：營利性大學——債務違約的集中營</div>
+
+        <p>營利性機構占美國大學生總數不到<strong>10%</strong>，但占聯邦學生貸款違約的<strong>近50%</strong>。</p>
+        <p>最新聯邦數據顯示，<strong>500所學院和大學</strong>——其中絕大多數是私立營利性機構——至少有<strong>40%</strong>的近期學生未能償還聯邦學生貸款。相比之下，公立和私立非營利性大學的平均未還款率約為<strong>15%</strong>。</p>
+        <p>在營利性機構就讀的借款人中，<strong>30%</strong>逾期還款，而公立學校為<strong>16%</strong>，私立學校為<strong>14%</strong>。超過<strong>41,000名</strong>「後集體」申請人提交了不止一份借款人辯護申請；其中<strong>20,516人</strong>——接近一半——就讀於不止一所「附件C」學校，而<strong>除12所外，所有附件C學校都是營利性機構</strong>。</p>
+        <p>營利性大學的商業模式是：<strong>用聯邦貸款招收學生，用低成本教學收取高額學費，讓學生承擔無法償還的債務。</strong> 當學生違約時，納稅人承擔損失。</p>
+
+        <div class="part-label">第三部分：債務奴役——與殖民地契約奴役的結構同一性</div>
+
+        <p>學術研究確認了學生貸款與殖民地契約奴役之間的結構同一性：<strong>「當今的學生貸款機構扮演著與殖民地勞工經紀人相似的角色，通過支付個人上大學，作為回報，它們獲得償還借款加利息的承諾。」</strong></p>
+        <p>聯合國《廢止奴隸制補充公約》將債務奴役定義為：<strong>「因債務人質押其個人服務或受其控制的人的服務作為債務擔保而產生的地位或狀況，如果這些服務的合理評估價值未用於清償債務，或這些服務的期限和性質未分別限制和定義。」</strong></p>
+        <p><strong>學生貸款不要求借款人明確質押個人服務，但通過要求借款人質押未來收入的一部分來實現類似結果，且期限未明確限制或定義。</strong> 聯邦貸款的六個月寬限期意味著，<strong>無論學生是否找到工作，他們都必須在六個月後開始還款</strong>。違約的後果是：信用評分受損、失去職業執照、駕駛執照、甚至狩獵許可證。</p>
+        <p><strong>這不是「教育融資」。這是現代債務奴役。</strong></p>
+
+        <div class="part-label">第四部分：完成率——誰被系統性地排除</div>
+
+        <p>全國六年完成率連續四個隊列穩定在<strong>61.1%</strong>，<strong>29.8%</strong>完全輟學。種族差異持續存在：<strong>77%的亞裔和73%的白人學生</strong>在六年內畢業，而<strong>52%的西班牙裔和45%的黑人學生</strong>畢業。</p>
+        <p>在四年制機構中，<strong>只有51%的佩爾助學金獲得者在六年內畢業</strong>，而非佩爾學生為<strong>65%</strong>——<strong>18個百分點的差距</strong>，使用八年數據時擴大到<strong>21個百分點</strong>。</p>
+        <p>2024年，<strong>30%的完成部分大學但未獲得學士學位的借款人</strong>報告逾期還款，而完成學士學位的借款人中這一比例僅為<strong>11%</strong>。那些貸款上大學但未完成學位的人，<strong>比完成學位的借款人財務健康可能性低97%，擁有住房可能性低94%，有400美元應急現金可能性低84%</strong>。</p>
+        <p><strong>系統不是為中低收入學生設計的。它是為從他們身上榨取債務而設計的。</strong></p>
+
+        <div class="part-label">第五部分：在線項目管理——學費的50-80%流向私人公司</div>
+
+        <p>在線項目管理公司（OPM）曾經幫助大學建立在線學位項目，收取學費收入的<strong>50%至80%</strong>。不到十年前，四家OPM公司每年的收入各超過<strong>10億美元</strong>。</p>
+        <p>2021年，其中一家公司以<strong>8億美元</strong>收購了EdX，一家成立十年的非營利公司。但三年後，<strong>2U申請破產</strong>，Pearson出售了其OPM業務。</p>
+        <p>2026年第一季度，高等教育機構僅與OPM公司簽署了<strong>8份新合同</strong>，而2023年有<strong>147份協議被取消或到期未續簽</strong>。風險投資在OPM領域的投資較2021年下降了<strong>97%</strong>。</p>
+        <p><strong>大學終於意識到：它們應該保留從銷售自己精心建立的品牌和教育服務中收取的所有資金。</strong> 但數十年間，數十億美元已經從學生學費轉移到了私人公司。</p>
+
+        <div class="part-label">第六部分：學生貸款資產證券化——下一個泡沫</div>
+
+        <p>學生貸款資產支持證券（SLABS）的規模在2017年12月約為<strong>1,900億美元</strong>。SLABS基於信用評分而非還款能力，且由於父母通常比子女有更高的信用評分並共同簽署貸款，<strong>SLABS看起來比實際安全得多</strong>。</p>
+        <p>披露問題與導致住房崩潰的問題類似：<strong>銀行無法披露有關基礎學生貸款的必要信息，因為它們沒有這些信息</strong>。Dodd-Frank法案的保護<strong>並未監管SLABS市場</strong>，幾乎沒有措施防止次級SLABS。</p>
+        <p>學術研究警告：<strong>「學生貸款泡沫與導致大衰退抵押貸款市場崩潰的環境『驚人地相似』。」</strong> 當SLABS市場崩潰時，問題不僅在於經濟會受損，還在於<strong>我們允許SLABS泡沫增長</strong>。</p>
+
+        <div class="part-label">第七部分：全球對比——替代方案已經存在</div>
+
+        <p><strong>澳洲的HECS-HELP系統：</strong>還款通過稅收系統進行，2025-26年最低還款收入門檻為<strong>67,000澳元</strong>。收入低於門檻者無需還款。還款基於收入，而非固定金額。</p>
+        <p><strong>英國的學生貸款系統：</strong>收入 contingent，畢業生在收入低於門檻時無需還款，未償餘額在<strong>30至40年後自動註銷</strong>。</p>
+        <p><strong>中國的國家助學貸款：</strong>截至2025年底，累計發放<strong>6,958億元人民幣</strong>，惠及超過<strong>3,000萬</strong>名學生。學生在校期間<strong>本金無需償還，利息全部由財政承擔</strong>；畢業後通過降低利率、延長貸款期限、設置還本寬限期等方式減輕負擔。2025年，<strong>852萬名學生</strong>獲得國家助學貸款，約占當年高校在校生總數的<strong>五分之一</strong>。</p>
+        <p><strong>這些系統不是「完美的」。但它們證明：替代方案是可行的。它只是被系統性地邊緣化了。</strong></p>
+
+        <div class="part-label">第八部分：結構同一性——教育與製藥、糧食、醫療、保險完全同構</div>
+
+        <table>
+            <tr>
+                <th>維度</th>
+                <th>製藥</th>
+                <th>糧食</th>
+                <th>醫療</th>
+                <th>保險</th>
+                <th>教育</th>
+            </tr>
+            <tr>
+                <td><strong>終身客戶</strong></td>
+                <td>終身服藥</td>
+                <td>每年買種</td>
+                <td>反覆就診</td>
+                <td>終身保費</td>
+                <td>終身還貸</td>
+            </tr>
+            <tr>
+                <td><strong>結構性激勵</strong></td>
+                <td>偏好慢性</td>
+                <td>偏好依賴</td>
+                <td>偏好更多</td>
+                <td>偏好拒賠</td>
+                <td>偏好高學費</td>
+            </tr>
+            <tr>
+                <td><strong>成本轉移機制</strong></td>
+                <td>專利壟斷</td>
+                <td>種子專利</td>
+                <td>按項目付費</td>
+                <td>拒賠延遲</td>
+                <td>學生貸款</td>
+            </tr>
+            <tr>
+                <td><strong>金融化</strong></td>
+                <td>REITs、私募股權</td>
+                <td>農業金融複合體</td>
+                <td>醫院連鎖</td>
+                <td>保險公司回購</td>
+                <td>SLABS證券化</td>
+            </tr>
+            <tr>
+                <td><strong>結構性產出</strong></td>
+                <td>40萬死亡</td>
+                <td>30萬農民自殺</td>
+                <td>30%支出不必要</td>
+                <td>19%拒賠率</td>
+                <td>1.86萬億債務</td>
+            </tr>
+        </table>
+
+        <p><strong>這不是五個系統。這是一個系統，有五張臉。</strong></p>
+
+        <div class="part-label">第九部分：GL框架的判據</div>
+
+        <div class="highlight-box dual-box">
+            <p><strong>「成本不得轉移給無聲的弱者。」</strong></p>
+            <p>教育系統的成本轉移鏈：</p>
+            <ul>
+                <li><strong>學生</strong>：承擔債務，進入勞動力市場時已經負債。</li>
+                <li><strong>家庭</strong>：為子女教育耗盡儲蓄。</li>
+                <li><strong>納稅人</strong>：補貼營利性大學，同時承擔違約成本。</li>
+                <li><strong>未來世代</strong>：繼承不可持續的高等教育模式。</li>
+            </ul>
+            <p><strong>這不是「市場結果」。這是制度設計。</strong></p>
+        </div>
+
+        <div class="highlight-box abuse-box">
+            <p><strong>結構診斷</strong></p>
+            <p>受苦不是「副作用」，受苦是產品本身。</p>
+            <p><strong>這台機器必須終結。</strong> 不是因為道德覺醒，而是因為算術約束。美國學生債務總額超過<strong>1.86萬億美元</strong>，4,260萬借款人，營利性機構的貸款違約率是公立機構的<strong>兩倍</strong>。這個系統的運轉成本已經超過了它的收益。</p>
+            <p><strong>終結不是「修復」它。終結是替換產生它的激勵結構：從「學費越高，利潤越高」到「教育越公共，社會越受益」。</strong></p>
+        </div>
+
+        <div class="signature">
+            徐萍
+            <span class="title">治理正當性框架發明人 · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 簡體中文版 ==================== -->
+<div class="lb" data-lang="cn">
+    <div class="page-header">
+        <div class="badge">成本转移系列 · 第五篇</div>
+        <div class="title">将教育当作获利工具的时代正在结束</div>
+        <div class="subtitle">学生贷款如何把学习变成终身债务绑定——以及为什么营利性大学是催收部门</div>
+        <div class="meta">徐萍 · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+
+        <div class="part-label">前言：从「公共财」到「债务生产机器」</div>
+        <p>教育的第一性原理曾经是公共财：社会投资于公民的知识，公民以更高的生产力回报社会。但营利性教育系统的商业模式完全不同：<strong>收入来自学费，利润来自「学费收入减去教学成本」的差额。</strong> 这意味着，<strong>每一次招生、每一笔贷款，都直接转化为收入。</strong></p>
+        <p>联邦政府每年向高等教育学生贷款约<strong>872亿美元</strong>。这些贷款不是「援助」。它们是<strong>收入来源</strong>。联邦政府在2007至2022年间从学生贷款中获得的利润超过<strong>1,000亿美元</strong>。这不是「服务」。这是<strong>债务生产</strong>。</p>
+
+        <div class="part-label">第一部分：债务的规模——1.86万亿美元与4,260万借款人</div>
+
+        <p>截至2026年第一季度，学生贷款债务总额达到<strong>1.86万亿美元</strong>，其中联邦贷款约占<strong>91%</strong>，即<strong>1.7万亿美元</strong>，由<strong>4,260万</strong>借款人持有。</p>
+        <p>平均联邦贷款余额为<strong>39,547美元</strong>，计入私人贷款后升至<strong>43,333美元</strong>。学生贷款债务从2015年的<strong>1.02万亿美元</strong>增长到2025年的<strong>1.83万亿美元</strong>，十年间增长了约<strong>80%</strong>。</p>
+        <p><strong>学生贷款债务是仅次于抵押贷款的第二大住房债务形式</strong>，且平均债务<strong>超过美国典型个人收入</strong>（36,000美元）。</p>
+        <p>这不是「教育投资」。这是<strong>代际债务转移</strong>。</p>
+
+        <div class="part-label">第二部分：营利性大学——债务违约的集中营</div>
+
+        <p>营利性机构占美国大学生总数不到<strong>10%</strong>，但占联邦学生贷款违约的<strong>近50%</strong>。</p>
+        <p>最新联邦数据显示，<strong>500所学院和大学</strong>——其中绝大多数是私立营利性机构——至少有<strong>40%</strong>的近期学生未能偿还联邦学生贷款。相比之下，公立和私立非营利性大学的平均未还款率约为<strong>15%</strong>。</p>
+        <p>在营利性机构就读的借款人中，<strong>30%</strong>逾期还款，而公立学校为<strong>16%</strong>，私立学校为<strong>14%</strong>。超过<strong>41,000名</strong>「后集体」申请人提交了不止一份借款人辩护申请；其中<strong>20,516人</strong>——接近一半——就读于不止一所「附件C」学校，而<strong>除12所外，所有附件C学校都是营利性机构</strong>。</p>
+        <p>营利性大学的商业模式是：<strong>用联邦贷款招收学生，用低成本教学收取高额学费，让学生承担无法偿还的债务。</strong> 当学生违约时，纳税人承担损失。</p>
+
+        <div class="part-label">第三部分：债务奴役——与殖民地契约奴役的结构同一性</div>
+
+        <p>学术研究确认了学生贷款与殖民地契约奴役之间的结构同一性：<strong>「当今的学生贷款机构扮演着与殖民地劳工经纪人相似的角色，通过支付个人上大学，作为回报，它们获得偿还借款加利息的承诺。」</strong></p>
+        <p>联合国《废止奴隶制补充公约》将债务奴役定义为：<strong>「因债务人质押其个人服务或受其控制的人的服务作为债务担保而产生的地位或状况，如果这些服务的合理评估价值未用于清偿债务，或这些服务的期限和性质未分别限制和定义。」</strong></p>
+        <p><strong>学生贷款不要求借款人明确质押个人服务，但通过要求借款人质押未来收入的一部分来实现类似结果，且期限未明确限制或定义。</strong> 联邦贷款的六个月宽限期意味着，<strong>无论学生是否找到工作，他们都必须在六个月后开始还款</strong>。违约的后果是：信用评分受损、失去职业执照、驾驶执照、甚至狩猎许可证。</p>
+        <p><strong>这不是「教育融资」。这是现代债务奴役。</strong></p>
+
+        <div class="part-label">第四部分：完成率——谁被系统性地排除</div>
+
+        <p>全国六年完成率连续四个队列稳定在<strong>61.1%</strong>，<strong>29.8%</strong>完全辍学。种族差异持续存在：<strong>77%的亚裔和73%的白人学生</strong>在六年内毕业，而<strong>52%的西班牙裔和45%的黑人学生</strong>毕业。</p>
+        <p>在四年制机构中，<strong>只有51%的佩尔助学金获得者在六年内毕业</strong>，而非佩尔学生为<strong>65%</strong>——<strong>18个百分点的差距</strong>，使用八年数据时扩大到<strong>21个百分点</strong>。</p>
+        <p>2024年，<strong>30%的完成部分大学但未获得学士学位的借款人</strong>报告逾期还款，而完成学士学位的借款人中这一比例仅为<strong>11%</strong>。那些贷款上大学但未完成学位的人，<strong>比完成学位的借款人财务健康可能性低97%，拥有住房可能性低94%，有400美元应急现金可能性低84%</strong>。</p>
+        <p><strong>系统不是为中低收入学生设计的。它是为从他们身上榨取债务而设计的。</strong></p>
+
+        <div class="part-label">第五部分：在线项目管理——学费的50-80%流向私人公司</div>
+
+        <p>在线项目管理公司（OPM）曾经帮助大学建立在线学位项目，收取学费收入的<strong>50%至80%</strong>。不到十年前，四家OPM公司每年的收入各超过<strong>10亿美元</strong>。</p>
+        <p>2021年，其中一家公司以<strong>8亿美元</strong>收购了EdX，一家成立十年的非营利公司。但三年后，<strong>2U申请破产</strong>，Pearson出售了其OPM业务。</p>
+        <p>2026年第一季度，高等教育机构仅与OPM公司签署了<strong>8份新合同</strong>，而2023年有<strong>147份协议被取消或到期未续签</strong>。风险投资在OPM领域的投资较2021年下降了<strong>97%</strong>。</p>
+        <p><strong>大学终于意识到：它们应该保留从销售自己精心建立的品牌和教育服务中收取的所有资金。</strong> 但数十年间，数十亿美元已经从学生学费转移到了私人公司。</p>
+
+        <div class="part-label">第六部分：学生贷款资产证券化——下一个泡沫</div>
+
+        <p>学生贷款资产支持证券（SLABS）的规模在2017年12月约为<strong>1,900亿美元</strong>。SLABS基于信用评分而非还款能力，且由于父母通常比子女有更高的信用评分并共同签署贷款，<strong>SLABS看起来比实际安全得多</strong>。</p>
+        <p>披露问题与导致住房崩溃的问题类似：<strong>银行无法披露有关基础学生贷款的必要信息，因为它们没有这些信息</strong>。Dodd-Frank法案的保护<strong>并未监管SLABS市场</strong>，几乎没有措施防止次级SLABS。</p>
+        <p>学术研究警告：<strong>「学生贷款泡沫与导致大衰退抵押贷款市场崩溃的环境『惊人地相似』。」</strong> 当SLABS市场崩溃时，问题不仅在于经济会受损，还在于<strong>我们允许SLABS泡沫增长</strong>。</p>
+
+        <div class="part-label">第七部分：全球对比——替代方案已经存在</div>
+
+        <p><strong>澳大利亚的HECS-HELP系统：</strong>还款通过税收系统进行，2025-26年最低还款收入门槛为<strong>67,000澳元</strong>。收入低于门槛者无需还款。还款基于收入，而非固定金额。</p>
+        <p><strong>英国的学生贷款系统：</strong>收入 contingent，毕业生在收入低于门槛时无需还款，未偿余额在<strong>30至40年后自动注销</strong>。</p>
+        <p><strong>中国的国家助学贷款：</strong>截至2025年底，累计发放<strong>6,958亿元人民币</strong>，惠及超过<strong>3,000万</strong>名学生。学生在校期间<strong>本金无需偿还，利息全部由财政承担</strong>；毕业后通过降低利率、延长贷款期限、设置还本宽限期等方式减轻负担。2025年，<strong>852万名学生</strong>获得国家助学贷款，约占当年高校在校生总数的<strong>五分之一</strong>。</p>
+        <p><strong>这些系统不是「完美的」。但它们证明：替代方案是可行的。它只是被系统性地边缘化了。</strong></p>
+
+        <div class="part-label">第八部分：结构同一性——教育与制药、粮食、医疗、保险完全同构</div>
+
+        <table>
+            <tr>
+                <th>维度</th>
+                <th>制药</th>
+                <th>粮食</th>
+                <th>医疗</th>
+                <th>保险</th>
+                <th>教育</th>
+            </tr>
+            <tr>
+                <td><strong>终身客户</strong></td>
+                <td>终身服药</td>
+                <td>每年买种</td>
+                <td>反复就诊</td>
+                <td>终身保费</td>
+                <td>终身还贷</td>
+            </tr>
+            <tr>
+                <td><strong>结构性激励</strong></td>
+                <td>偏好慢性</td>
+                <td>偏好依赖</td>
+                <td>偏好更多</td>
+                <td>偏好拒赔</td>
+                <td>偏好高学费</td>
+            </tr>
+            <tr>
+                <td><strong>成本转移机制</strong></td>
+                <td>专利垄断</td>
+                <td>种子专利</td>
+                <td>按项目付费</td>
+                <td>拒赔延迟</td>
+                <td>学生贷款</td>
+            </tr>
+            <tr>
+                <td><strong>金融化</strong></td>
+                <td>REITs、私募股权</td>
+                <td>农业金融复合体</td>
+                <td>医院连锁</td>
+                <td>保险公司回购</td>
+                <td>SLABS证券化</td>
+            </tr>
+            <tr>
+                <td><strong>结构性产出</strong></td>
+                <td>40万死亡</td>
+                <td>30万农民自杀</td>
+                <td>30%支出不必要</td>
+                <td>19%拒赔率</td>
+                <td>1.86万亿债务</td>
+            </tr>
+        </table>
+
+        <p><strong>这不是五个系统。这是一个系统，有五张脸。</strong></p>
+
+        <div class="part-label">第九部分：GL框架的判据</div>
+
+        <div class="highlight-box dual-box">
+            <p><strong>「成本不得转移给无声的弱者。」</strong></p>
+            <p>教育系统的成本转移链：</p>
+            <ul>
+                <li><strong>学生</strong>：承担债务，进入劳动力市场时已经负债。</li>
+                <li><strong>家庭</strong>：为子女教育耗尽储蓄。</li>
+                <li><strong>纳税人</strong>：补贴营利性大学，同时承担违约成本。</li>
+                <li><strong>未来世代</strong>：继承不可持续的高等教育模式。</li>
+            </ul>
+            <p><strong>这不是「市场结果」。这是制度设计。</strong></p>
+        </div>
+
+        <div class="highlight-box abuse-box">
+            <p><strong>结构诊断</strong></p>
+            <p>受苦不是「副作用」，受苦是产品本身。</p>
+            <p><strong>这台机器必须终结。</strong> 不是因为道德觉醒，而是因为算术约束。美国学生债务总额超过<strong>1.86万亿美元</strong>，4,260万借款人，营利性机构的贷款违约率是公立机构的<strong>两倍</strong>。这个系统的运转成本已经超过了它的收益。</p>
+            <p><strong>终结不是「修复」它。终结是替换产生它的激励结构：从「学费越高，利润越高」到「教育越公共，社会越受益」。</strong></p>
+        </div>
+
+        <div class="signature">
+            徐萍
+            <span class="title">治理正当性框架发明人 · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 西班牙文版 ==================== -->
+<div class="lb" data-lang="es">
+    <div class="page-header">
+        <div class="badge">Serie de Transferencia de Costos · Ensayo V</div>
+        <div class="title">El Fin de Lucrar con la Educación</div>
+        <div class="subtitle">Cómo los préstamos estudiantiles convierten el aprendizaje en una obligación de deuda de por vida — y por qué las universidades con fines de lucro son el brazo de cobro</div>
+        <div class="meta">Ping Xu · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+
+        <div class="part-label">Prólogo: De Bien Público a Máquina de Producción de Deuda</div>
+        <p>La educación fue una vez un bien público: la sociedad invierte en el conocimiento de los ciudadanos; los ciudadanos devuelven una mayor productividad a la sociedad. Pero el sistema educativo con fines de lucro opera con un modelo completamente diferente: <strong>los ingresos provienen de la matrícula; la ganancia proviene de la diferencia entre los ingresos por matrícula y el costo de enseñanza.</strong> Esto significa que <strong>cada inscripción, cada préstamo, se convierte directamente en ingresos.</strong></p>
+        <p>El gobierno federal de EE.UU. origina aproximadamente <strong>USD 87.200 millones</strong> en préstamos estudiantiles para educación superior anualmente. Estos préstamos no son "ayuda". Son una <strong>fuente de ingresos</strong>. El gobierno federal ganó más de <strong>USD 100.000 millones</strong> en ganancias de préstamos estudiantiles entre 2007 y 2022. Esto no es "servicio". Esto es <strong>producción de deuda</strong>.</p>
+
+        <div class="part-label">Parte Uno: La Escala de la Deuda — USD 1,86 Billones y 42,6 Millones de Prestatarios</div>
+
+        <p>A partir del primer trimestre de 2026, la deuda total de préstamos estudiantiles alcanzó <strong>USD 1,86 billones</strong>, con préstamos federales representando aproximadamente el <strong>91%</strong> (USD 1,7 billones), en manos de <strong>42,6 millones</strong> de prestatarios.</p>
+        <p>El saldo promedio de préstamos federales es de <strong>USD 39.547</strong>, elevándose a <strong>USD 43.333</strong> cuando se incluyen préstamos privados. La deuda de préstamos estudiantiles creció de <strong>USD 1,02 billones</strong> en 2015 a <strong>USD 1,83 billones</strong> en 2025 — aproximadamente un <strong>80%</strong> de crecimiento en diez años.</p>
+        <p><strong>La deuda de préstamos estudiantiles es la segunda forma más grande de deuda de los hogares después de las hipotecas</strong>, y la deuda promedio <strong>supera el ingreso personal medio de EE.UU.</strong> (USD 36.000).</p>
+        <p>Esto no es "inversión en educación". Esto es <strong>transferencia de deuda intergeneracional</strong>.</p>
+
+        <div class="part-label">Parte Dos: Universidades con Fines de Lucro — El Campo de Concentración de los Incumplimientos</div>
+
+        <p>Las instituciones con fines de lucro inscriben a menos del <strong>10%</strong> de los estudiantes universitarios de EE.UU., pero representan casi el <strong>50%</strong> de los incumplimientos de préstamos estudiantiles federales.</p>
+        <p>Los últimos datos federales muestran que <strong>500 colegios y universidades</strong> — la gran mayoría instituciones privadas con fines de lucro — tienen al menos el <strong>40%</strong> de los estudiantes recientes sin pagar sus préstamos estudiantiles federales. Por el contrario, la tasa promedio de no pago para universidades públicas y privadas sin fines de lucro es de aproximadamente el <strong>15%</strong>.</p>
+        <p>Entre los prestatarios que asistieron a instituciones con fines de lucro, el <strong>30%</strong> está en mora, en comparación con el <strong>16%</strong> de las escuelas públicas y el <strong>14%</strong> de las escuelas privadas. Más de <strong>41.000</strong> solicitantes "post-clase" presentaron más de una solicitud de defensa del prestatario; de esos, <strong>20.516</strong> — casi la mitad — asistieron a más de una escuela "Exhibición C", y <strong>todas menos 12 escuelas de Exhibición C son instituciones con fines de lucro</strong>.</p>
+        <p>El modelo de negocio de las universidades con fines de lucro es: <strong>reclutar estudiantes con préstamos federales, cobrar matrículas altas con enseñanza de bajo costo, y dejar a los estudiantes con deuda impagable.</strong> Cuando los estudiantes incumplen, los contribuyentes asumen la pérdida.</p>
+
+        <div class="part-label">Parte Tres: Esclavitud por Deuda — Identidad Estructural con la Servidumbre por Contrato Colonial</div>
+
+        <p>La investigación académica confirma la identidad estructural entre los préstamos estudiantiles y la servidumbre por contrato colonial: <strong>"Las instituciones de préstamos estudiantiles de hoy desempeñan un papel similar a los corredores de mano de obra coloniales — al pagar la educación universitaria de un individuo, a cambio obtienen una promesa de pago del préstamo más intereses."</strong></p>
+        <p>La Convención Suplementaria de la ONU sobre la Abolición de la Esclavitud define la esclavitud por deuda como: <strong>"la condición o estado que surge de que un deudor comprometa sus servicios personales o los de una persona bajo su control como garantía de una deuda, si el valor razonablemente evaluado de esos servicios no se aplica a la liquidación de la deuda, o si la duración y naturaleza de esos servicios no están respectivamente limitadas y definidas."</strong></p>
+        <p><strong>Los préstamos estudiantiles no requieren que el prestatario comprometa explícitamente servicios personales, pero logran un resultado similar al requerir que el prestatario comprometa una porción de los ingresos futuros, con la duración no claramente limitada o definida.</strong> El período de gracia de seis meses para los préstamos federales significa que <strong>independientemente de si el estudiante encuentra trabajo, debe comenzar a pagar después de seis meses</strong>. Las consecuencias del incumplimiento son: puntaje de crédito dañado, pérdida de licencias profesionales, licencias de conducir, e incluso licencias de caza.</p>
+        <p><strong>Esto no es "financiamiento educativo". Esto es esclavitud por deuda moderna.</strong></p>
+
+        <div class="part-label">Parte Cuatro: Tasas de Finalización — Quién Es Sistemáticamente Excluido</div>
+
+        <p>La tasa nacional de finalización en seis años ha sido estable en <strong>61,1%</strong> durante cuatro cohortes consecutivas, con <strong>29,8%</strong> abandonando por completo. Las brechas raciales persisten: <strong>77% de los estudiantes asiáticos y 73% de los blancos</strong> se gradúan en seis años, en comparación con <strong>52% de los hispanos y 45% de los estudiantes negros</strong>.</p>
+        <p>En instituciones de cuatro años, <strong>solo el 51% de los beneficiarios de la Beca Pell</strong> se gradúan en seis años, en comparación con el <strong>65%</strong> de los estudiantes no Pell — una <strong>brecha de 18 puntos porcentuales</strong>, ampliándose a <strong>21 puntos porcentuales</strong> usando datos de ocho años.</p>
+        <p>En 2024, <strong>el 30% de los prestatarios que completaron algo de universidad pero no obtuvieron una licenciatura</strong> reportaron estar en mora, en comparación con solo el <strong>11%</strong> de los prestatarios que completaron una licenciatura. Aquellos que pidieron préstamos para la universidad pero no completaron un título tenían <strong>97% menos probabilidades de ser financieramente saludables, 94% menos probabilidades de poseer una casa, y 84% menos probabilidades de tener USD 400 en efectivo de emergencia</strong> que los prestatarios que completaron un título.</p>
+        <p><strong>El sistema no fue diseñado para estudiantes de ingresos bajos y medios. Fue diseñado para extraer deuda de ellos.</strong></p>
+
+        <div class="part-label">Parte Cinco: Gestión de Programas en Línea — 50–80% de la Matrícula Fluye a Empresas Privadas</div>
+
+        <p>Las empresas de Gestión de Programas en Línea (OPM) alguna vez ayudaron a las universidades a construir programas de títulos en línea, cobrando <strong>50% al 80%</strong> de los ingresos por matrícula. Hace menos de una década, cuatro empresas de OPM generaban cada una más de <strong>USD 1.000 millones</strong> en ingresos anuales.</p>
+        <p>En 2021, una de estas empresas adquirió EdX, una organización sin fines de lucro de diez años, por <strong>USD 800 millones</strong>. Pero tres años después, <strong>2U se declaró en bancarrota</strong>, y Pearson vendió su negocio de OPM.</p>
+        <p>En el primer trimestre de 2026, las instituciones de educación superior firmaron solo <strong>8 nuevos contratos</strong> con empresas de OPM, mientras que <strong>147 acuerdos fueron cancelados o expiraron sin renovación</strong> en 2023. La inversión de capital de riesgo en el sector de OPM cayó un <strong>97%</strong> en comparación con 2021.</p>
+        <p><strong>Las universidades finalmente se dieron cuenta: deberían quedarse con todo el dinero recaudado de vender su propia marca cuidadosamente construida y servicios educativos.</strong> Pero durante décadas, miles de millones de dólares se habían transferido de la matrícula estudiantil a empresas privadas.</p>
+
+        <div class="part-label">Parte Seis: Titulización de Préstamos Estudiantiles — La Próxima Burbuja</div>
+
+        <p>El tamaño de los Valores Respaldados por Activos de Préstamos Estudiantiles (SLABS) era de aproximadamente <strong>USD 190.000 millones</strong> en diciembre de 2017. Los SLABS se basan en puntajes de crédito en lugar de capacidad de pago, y debido a que los padres típicamente tienen puntajes de crédito más altos que los hijos y co-firman préstamos, <strong>los SLABS parecen mucho más seguros de lo que realmente son</strong>.</p>
+        <p>El problema de divulgación es similar al que causó el colapso de la vivienda: <strong>los bancos no pueden divulgar la información necesaria sobre los préstamos estudiantiles subyacentes porque no la tienen</strong>. Las protecciones de Dodd-Frank <strong>no regulan el mercado de SLABS</strong>, con casi ninguna medida para prevenir SLABS de alto riesgo.</p>
+        <p>La investigación académica advierte: <strong>"La burbuja de préstamos estudiantiles es 'sorprendentemente similar' al entorno que llevó al colapso del mercado hipotecario en la Gran Recesión."</strong> Cuando el mercado de SLABS colapse, el problema no es solo que la economía sufrirá, sino que <strong>permitimos que la burbuja de SLABS creciera</strong>.</p>
+
+        <div class="part-label">Parte Siete: Comparación Global — Las Alternativas Ya Existen</div>
+
+        <p><strong>El sistema HECS-HELP de Australia:</strong> El reembolso se realiza a través del sistema fiscal, con un umbral mínimo de ingresos de reembolso de <strong>AUD 67.000</strong> para 2025-26. Aquellos que ganan por debajo del umbral no están obligados a pagar. El reembolso está condicionado a los ingresos, no es una cantidad fija.</p>
+        <p><strong>El sistema de préstamos estudiantiles del Reino Unido:</strong> Condicionado a los ingresos, con graduados no obligados a pagar mientras los ingresos estén por debajo del umbral, y saldos pendientes cancelados automáticamente después de <strong>30 a 40 años</strong>.</p>
+        <p><strong>El Préstamo Nacional Estudiantil de China:</strong> A finales de 2025, el desembolso acumulado alcanzó <strong>RMB 695.800 millones</strong>, beneficiando a más de <strong>30 millones</strong> de estudiantes. Los estudiantes <strong>no necesitan pagar el principal mientras están en la escuela, con todos los intereses asumidos por el gobierno</strong>; después de la graduación, la carga se reduce mediante tasas de interés más bajas, términos de préstamo extendidos y períodos de gracia para el pago del principal. En 2025, <strong>8,52 millones de estudiantes</strong> recibieron préstamos estudiantiles nacionales, representando aproximadamente <strong>una quinta parte</strong> de la matrícula universitaria total ese año.</p>
+        <p><strong>Estos sistemas no son "perfectos". Pero prueban: las alternativas son factibles. Simplemente han sido marginadas sistemáticamente.</strong></p>
+
+        <div class="part-label">Parte Ocho: Identidad Estructural — La Educación Es Idéntica a la Farmacéutica, Alimentación, Atención Médica y Seguros</div>
+
+        <table>
+            <tr>
+                <th>Dimensión</th>
+                <th>Farmacéutica</th>
+                <th>Alimentación</th>
+                <th>Atención Médica</th>
+                <th>Seguros</th>
+                <th>Educación</th>
+            </tr>
+            <tr>
+                <td><strong>Cliente de por vida</strong></td>
+                <td>Medicación de por vida</td>
+                <td>Compra anual de semillas</td>
+                <td>Visitas repetidas</td>
+                <td>Primas de por vida</td>
+                <td>Pago de préstamo de por vida</td>
+            </tr>
+            <tr>
+                <td><strong>Incentivo estructural</strong></td>
+                <td>Preferir crónico</td>
+                <td>Preferir dependencia</td>
+                <td>Preferir más</td>
+                <td>Preferir denegación</td>
+                <td>Preferir matrícula alta</td>
+            </tr>
+            <tr>
+                <td><strong>Mecanismo de transferencia de costos</strong></td>
+                <td>Monopolio de patentes</td>
+                <td>Patentes de semillas</td>
+                <td>Pago por servicio</td>
+                <td>Denegación, retraso</td>
+                <td>Préstamos estudiantiles</td>
+            </tr>
+            <tr>
+                <td><strong>Financiarización</strong></td>
+                <td>REITs, private equity</td>
+                <td>Complejo agrofinanciero</td>
+                <td>Cadenas hospitalarias</td>
+                <td>Recompras de aseguradoras</td>
+                <td>Titulización de SLABS</td>
+            </tr>
+            <tr>
+                <td><strong>Resultado estructural</strong></td>
+                <td>400.000 muertes</td>
+                <td>300.000 suicidios de agricultores</td>
+                <td>30% del gasto innecesario</td>
+                <td>Tasa de denegación del 19%</td>
+                <td>Deuda de USD 1,86 billones</td>
+            </tr>
+        </table>
+
+        <p><strong>Estos no son cinco sistemas. Es un sistema, con cinco caras.</strong></p>
+
+        <div class="part-label">Parte Nueve: El Criterio del Marco GL</div>
+
+        <div class="highlight-box dual-box">
+            <p><strong>"Los costos no deben transferirse a los vulnerables sin voz."</strong></p>
+            <p>La cadena de transferencia de costos del sistema educativo:</p>
+            <ul>
+                <li><strong>Estudiantes</strong>: soportan deuda, entran al mercado laboral ya endeudados.</li>
+                <li><strong>Familias</strong>: agotan los ahorros para la educación de los hijos.</li>
+                <li><strong>Contribuyentes</strong>: subsidian universidades con fines de lucro mientras soportan los costos de incumplimiento.</li>
+                <li><strong>Generaciones futuras</strong>: heredan un modelo de educación superior insostenible.</li>
+            </ul>
+            <p><strong>Esto no es un "resultado del mercado". Esto es diseño institucional.</strong></p>
+        </div>
+
+        <div class="highlight-box abuse-box">
+            <p><strong>El Diagnóstico Estructural</strong></p>
+            <p>El sufrimiento no es un "efecto secundario". El sufrimiento es el producto mismo.</p>
+            <p><strong>La máquina debe terminar.</strong> No por despertar moral, sino por restricciones aritméticas. La deuda estudiantil de EE.UU. supera los <strong>USD 1,86 billones</strong>, con 42,6 millones de prestatarios, y las tasas de incumplimiento de instituciones con fines de lucro son el <strong>doble</strong> que las de instituciones públicas. El costo operativo del sistema ha superado su retorno.</p>
+            <p><strong>El final no es "arreglarlo". El final es reemplazar la estructura de incentivos que lo produce: de "matrícula más alta, ganancia más alta" a "más educación pública, más beneficio social".</strong></p>
+        </div>
+
+        <div class="signature">
+            Ping Xu
+            <span class="title">Creadora del Marco de Legitimidad Gubernamental · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <span class="site">gfiintel.com</span>
+    <span class="links">
+        <a href="/">← Back to Home</a>
+        <a href="/cost-transfer.html">← Cost Transfer Series</a>
+        <a href="/shared-delusion.html">← Shared Delusion Series</a>
+        <a href="/landjustice.html">← Land Justice Series</a>
+        <a href="/domestic-policy.html">← Domestic Policy Series</a>
+    </span>
+    <span class="copyright">© 2026 GFI Flow Intelligence · 將教育當作獲利工具的時代正在結束 · The End of Profiting from Education</span>
+</div>
+
+<script>
+    document.querySelectorAll('.lb-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var lang = this.dataset.lang;
+            document.querySelectorAll('.lb-btn').forEach(function(b) { b.classList.remove('on'); });
+            this.classList.add('on');
+            document.querySelectorAll('.lb').forEach(function(lb) { lb.classList.remove('active'); });
+            var target = document.querySelector('.lb[data-lang="' + lang + '"]');
+            if (target) target.classList.add('active');
+        });
+    });
+</script>
+
+</body>
+</html>
