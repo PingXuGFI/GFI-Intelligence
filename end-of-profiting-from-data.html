@@ -1,1 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The End of Profiting from Data · 將數據當作獲利工具的時代正在結束 · El Fin de Lucrar con los Datos</title>
+    <meta name="description" content="A structural critique of the data economy — surveillance capitalism, cognitive control erosion, engagement-prolonging design, and data colonialism." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: #0d0a08;
+            color: #e0d6cc;
+            font-family: 'DM Sans', system-ui, sans-serif;
+            font-size: 16px;
+            line-height: 1.9;
+            min-height: 100vh;
+        }
+        .topbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            height: 60px; padding: 0 clamp(18px, 5vw, 48px);
+            display: flex; align-items: center; justify-content: space-between;
+            background: rgba(13, 10, 8, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .logo {
+            font-family: 'DM Mono', monospace; font-size: 11px;
+            letter-spacing: 0.16em; text-transform: uppercase;
+            color: #b8aaa0; text-decoration: none;
+        }
+        .nav-right { display: flex; align-items: center; gap: 12px; }
+        .lang-grp { display: flex; gap: 4px; }
+        .lb-btn {
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            letter-spacing: 0.06em; padding: 4px 10px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 4px; background: transparent;
+            color: #7a7068; cursor: pointer; transition: all 0.2s;
+        }
+        .lb-btn:hover { color: #e0d6cc; border-color: rgba(255, 255, 255, 0.2); }
+        .lb-btn.on { background: #b8aaa0; color: #0d0a08; border-color: #b8aaa0; }
+        .lb { display: none; padding: 100px 40px 70px; max-width: 860px; margin: 0 auto; }
+        .lb.active { display: block; }
+        .page-header {
+            padding: 0 0 32px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 32px;
+        }
+        .page-header .badge {
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            letter-spacing: 0.22em; text-transform: uppercase;
+            color: #8a4a2a; margin-bottom: 12px;
+        }
+        .page-header .title {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: clamp(28px, 3.6vw, 42px);
+            line-height: 1.15; color: #f0e6dc; margin-bottom: 8px;
+        }
+        .page-header .subtitle {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-style: italic; font-size: clamp(16px, 1.7vw, 20px);
+            color: #8a7a6a; margin-bottom: 12px;
+        }
+        .page-header .meta {
+            font-family: 'DM Mono', monospace; font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.2);
+        }
+        .content .part-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #8a4a2a;
+            margin: 3rem 0 1rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(138, 74, 42, 0.3);
+        }
+        .content .part-label:first-of-type { margin-top: 1rem; }
+        .content h2 {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.4rem; color: #f0e6dc;
+            margin: 2rem 0 0.8rem 0;
+            padding-bottom: 0.3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .content h3 {
+            font-size: 1.1rem; font-weight: 600;
+            color: #e0d6cc; margin: 1.6rem 0 0.5rem 0;
+        }
+        .content p { margin-bottom: 1.2rem; color: #d0c6bc; }
+        .content ul, .content ol { margin-bottom: 1.2rem; padding-left: 1.6rem; }
+        .content li { margin-bottom: 0.5rem; color: #d0c6bc; }
+        .content .highlight { color: #c47a4a; font-weight: 600; }
+        .content .highlight-box {
+            background: rgba(138, 74, 42, 0.08);
+            border-left: 4px solid #8a4a2a;
+            padding: 1.2rem 1.8rem;
+            margin: 1.8rem 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .content .highlight-box p { margin-bottom: 0.5rem; }
+        .content .highlight-box strong { color: #f0e6dc; }
+        .content .highlight-box.dual-box {
+            border-left-color: #7DD3FC;
+            background: rgba(125, 211, 252, 0.05);
+        }
+        .content .highlight-box.abuse-box {
+            border-left-color: #f87171;
+            background: rgba(248, 113, 113, 0.05);
+        }
+        .content .highlight-box.abuse-box strong { color: #fecaca; }
+        .content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        .content th {
+            background: rgba(255, 255, 255, 0.04);
+            color: #c47a4a;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 0.6rem 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .content td {
+            padding: 0.6rem 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: #d0c6bc;
+        }
+        .signature {
+            margin-top: 40px; padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.05rem; color: #f0e6dc;
+        }
+        .signature .title {
+            font-family: 'DM Mono', monospace; font-size: 0.6rem;
+            color: rgba(255, 255, 255, 0.25);
+            letter-spacing: 0.06em; display: block; margin-top: 2px;
+        }
+        .footer {
+            text-align: center; padding: 28px 20px 36px;
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            color: rgba(255, 255, 255, 0.18);
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            margin-top: 48px; line-height: 2;
+        }
+        .footer a { color: #b8aaa0; text-decoration: none; margin: 0 8px; }
+        .footer a:hover { color: #e0d6cc; }
+        .footer .site { display: block; margin-bottom: 8px; color: rgba(255, 255, 255, 0.25); letter-spacing: 0.06em; }
+        .footer .links { display: block; margin-bottom: 8px; }
+        .footer .copyright { color: rgba(255, 255, 255, 0.12); display: block; }
+        @media (max-width: 640px) {
+            .lb { padding: 80px 20px 50px; }
+            .topbar { padding: 0 14px; }
+        }
+    </style>
+</head>
+<body>
 
+<div class="topbar">
+    <a href="/" class="logo">← Home</a>
+    <div class="nav-right">
+        <div class="lang-grp">
+            <button class="lb-btn on" data-lang="en">EN</button>
+            <button class="lb-btn" data-lang="tw">繁</button>
+            <button class="lb-btn" data-lang="cn">简</button>
+            <button class="lb-btn" data-lang="es">ES</button>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 英文版 ==================== -->
+<div class="lb active" data-lang="en">
+    <div class="page-header">
+        <div class="badge">Cost Transfer Series · Essay VII</div>
+        <div class="title">The End of Profiting from Data</div>
+        <div class="subtitle">How the platform economy converts human behavior into tradable assets — and why cognitive cost is the product</div>
+        <div class="meta">Ping Xu · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+
+        <div class="part-label">Prologue: From Data Spillover to Behavior Futures</div>
+        <p>The first principle of the data economy was once "free service in exchange for advertising." But the surveillance capitalism business model is completely different: <strong>revenue comes from prediction markets; profit comes from "behavior prediction multiplied by targeting algorithms."</strong></p>
+        <p>Shoshana Zuboff described this mechanism precisely in her 2022 testimony to the US Congress: "Clandestine observation methods secretly extract what was once considered private human experience and convert it into behavioral data. These methods operate outside human consciousness, depriving the actor of the right to know, and the right to resist that follows."</p>
+        <p>Zuboff breaks down the operation of surveillance capitalism into four steps: <strong>data extraction → behavioral datafication → predictive computation → sale of predictions</strong>. She cites leaked 2018 Facebook documents: the company's "prediction engine" "ingests trillions of data points per day," produces thousands of "models," and its "prediction services" produce "over 6 million predictions per second."</p>
+        <p><strong>This is not the business of "data." This is the business of "human behavior futures."</strong> Zuboff compares it to markets for "pork futures, wheat, or oil futures" — except the traded object is "human future behavior."</p>
+
+        <div class="part-label">Part One: The Cognitive Cost — How Social Media Systematically Harms Adolescents</div>
+
+        <p>If the business model of the data economy is "behavior prediction," then its structural cost is the <strong>systematic erosion of cognitive capacity</strong>. A longitudinal study published in the <em>Journal of Adolescent Health</em> in September 2026 (N=9,747, from the ABCD study) reveals this mechanism:</p>
+        <p><strong>Cognitive control is the mediator.</strong> When adolescents increased social media browsing at baseline, their cognitive control declined two years later (β = −.06, p = .020), which in turn predicted increased depressive symptoms four years later (β = −.06, p = .010).</p>
+        <p><strong>This is not a problem of "using it too long." This is a problem of "the cognitive pathway being altered."</strong> The research team states explicitly: "Reduced cognitive control may be a <strong>general mechanism</strong> linking adolescent screen use and social media browsing to later depressive symptoms."</p>
+        <p>American Enterprise Institute survey data from 2026 further quantifies this structural risk: <strong>nearly 30% (29%) of adolescent girls report spending 4 hours or more on social media daily</strong>. A larger study (N=14,726, Oxford University) found that "exposure to self-harm content, seeking help online, and posting content later regretted" were associated with higher anxiety, depression, and loneliness scores — while "time" itself was only weakly correlated.</p>
+        <p><strong>The algorithm is not "providing content." It is "shaping the cognitive environment."</strong></p>
+
+        <div class="part-label">Part Two: Addiction by Design — Not "Addicted Users," but "Addictive Interfaces"</div>
+
+        <p>Attributing addiction to "users' lack of self-control" is the most typical form of cost transfer.</p>
+        <p>A study published at ACM 2026 systematically catalogued the <strong>Engagement-Prolonging Designs</strong> that "very large online platforms" (VLOPs) deploy for adolescent users. Researchers created European adolescent accounts and conducted content analysis of 16 VLOP apps and 17 websites, identifying four strategies:</p>
+        <ul>
+            <li><strong>Luring engagement</strong>: using pleasure, curiosity, or reward-driven mechanisms</li>
+            <li><strong>Pressuring engagement</strong>: creating social obligations or pressure</li>
+            <li><strong>Hypnotic continuation</strong>: using low-friction, autonomy-reducing designs</li>
+            <li><strong>Trapping users</strong>: setting exit barriers, using overwhelming or confusing designs</li>
+        </ul>
+        <p><strong>Platforms most commonly use combined strategies.</strong> The study identified 14 patterns and built a video dataset with 583 interactive instances.</p>
+        <p>Research on "digital addiction and responsiveness to dark patterns" further confirms: there is a strong association between responsiveness to <strong>notification-based dark patterns</strong> and digital addiction, robust even after controlling for exposure frequency. The researchers note these findings indicate "the user's <strong>responsiveness</strong>, rather than mere exposure, is strongly associated with digital addiction."</p>
+        <p><strong>It is not that "users lack self-discipline." It is that the interface is designed to make self-discipline impossible.</strong></p>
+
+        <div class="part-label">Part Three: Cambridge Analytica — The Structural Proof of Data Manipulation</div>
+
+        <p>The 2018 Cambridge Analytica scandal was not "a violation by a single company." It was the inevitable product of the structural logic of surveillance capitalism.</p>
+        <p>Facebook gave user data to third-party apps, which in turn passed it to Cambridge Analytica for voter profiling and targeting. In December 2019, the US Federal Trade Commission issued an opinion finding that Cambridge Analytica "engaged in <strong>deceptive conduct</strong> to collect personal information from tens of millions of Facebook users for voter profiling and targeting." The FTC ultimately ordered Cambridge Analytica to delete the illegally collected data.</p>
+        <p><strong>But Cambridge Analytica was only "the tip of the iceberg."</strong> Yale Law School research notes that in pursuit of profit, Facebook "granted end-user information access to numerous for-profit companies without adequate safeguards that these companies were not manipulating their end users." This created a conflict of interest — "giving Facebook an incentive to look the other way, which it apparently did."</p>
+        <p><strong>When data extraction reaches sufficient scale, "manipulation" is not the exception. It is the business model.</strong></p>
+
+        <div class="part-label">Part Four: Data Colonialism — The Structural Exclusion of the Global South</div>
+
+        <p>The cost transfer of the data economy occurs not only at the individual level but also at the <strong>global level</strong>.</p>
+        <p>Research on "global algorithmic governance" notes that global institutions, digital superpowers, and large technology companies are "constructing a global surveillance architecture that shapes people's minds and regulates their daily lives through mass surveillance, monitoring, extraction, and regulation."</p>
+        <p>These architectures are "often promoted on the grounds that enhanced surveillance brings greater security," but one global digital public infrastructure expert warns: "If only 3-4 major players control most of the world's data, then it's essentially a honey pot."</p>
+        <p><strong>The Global South contributes data, but the value is captured by Global North companies.</strong> Research by the Brazilian Institute of Geography and Statistics notes that Big Tech's "soft power" operations in the official statistics field — data festivals, hackathons, exchange programs — are "part of a gradual strategy to win over national and internal statistical agencies against the resistance advanced by private companies."</p>
+        <p><strong>This is not "technical cooperation." This is systematic erosion of data sovereignty.</strong></p>
+
+        <div class="part-label">Part Five: Structural Identity — Data Is Identical to Pharma, Food, Healthcare, Insurance, Education, and Aging</div>
+
+        <table>
+            <tr>
+                <th>Dimension</th>
+                <th>Pharma</th>
+                <th>Food</th>
+                <th>Healthcare</th>
+                <th>Insurance</th>
+                <th>Education</th>
+                <th>Aging</th>
+                <th>Data</th>
+            </tr>
+            <tr>
+                <td><strong>Lifelong customer</strong></td>
+                <td>Lifelong medication</td>
+                <td>Annual seed purchase</td>
+                <td>Repeated visits</td>
+                <td>Lifelong premiums</td>
+                <td>Lifelong loan repayment</td>
+                <td>Lifelong management fees</td>
+                <td>Lifelong attention</td>
+            </tr>
+            <tr>
+                <td><strong>Structural incentive</strong></td>
+                <td>Prefer chronic</td>
+                <td>Prefer dependency</td>
+                <td>Prefer more</td>
+                <td>Prefer denial</td>
+                <td>Prefer high tuition</td>
+                <td>Prefer assets under management</td>
+                <td>Prefer maximum engagement</td>
+            </tr>
+            <tr>
+                <td><strong>Cost transfer mechanism</strong></td>
+                <td>Patent monopoly</td>
+                <td>Seed patents</td>
+                <td>Fee-for-service</td>
+                <td>Denial, delay</td>
+                <td>Student loans</td>
+                <td>Risk privatization</td>
+                <td>Behavioral datafication</td>
+            </tr>
+            <tr>
+                <td><strong>Financialization</strong></td>
+                <td>REITs, private equity</td>
+                <td>Agri-finance complex</td>
+                <td>Hospital chains</td>
+                <td>Insurer buybacks</td>
+                <td>SLABS securitization</td>
+                <td>Pension asset securitization</td>
+                <td>Platform equity</td>
+            </tr>
+            <tr>
+                <td><strong>Structural output</strong></td>
+                <td>400,000 deaths</td>
+                <td>300,000 farmer suicides</td>
+                <td>30% spending unnecessary</td>
+                <td>19% denial rate</td>
+                <td>USD 1.86 trillion debt</td>
+                <td>380 million uncovered</td>
+                <td>Cognitive capacity erosion</td>
+            </tr>
+        </table>
+
+        <p><strong>These are not seven systems. This is one system, with seven faces.</strong></p>
+
+        <div class="part-label">Part Six: The GL Framework's Criterion</div>
+
+        <div class="highlight-box dual-box">
+            <p><strong>"Costs must not be transferred to the voiceless vulnerable."</strong></p>
+            <p>The cost transfer chain of the data system:</p>
+            <ul>
+                <li><strong>Users</strong>: contribute attention, behavior, psychological data in exchange for "free" services.</li>
+                <li><strong>Adolescents</strong>: cognitive control systematically impaired, depressive symptoms increase.</li>
+                <li><strong>Global South</strong>: contributes data, but value is captured by Global North companies.</li>
+                <li><strong>Future generations</strong>: inherit a cognitive environment shaped by algorithms.</li>
+            </ul>
+            <p><strong>This is not a "market outcome." This is institutional design.</strong></p>
+        </div>
+
+        <div class="highlight-box abuse-box">
+            <p><strong>The Structural Diagnosis</strong></p>
+            <p>Suffering is not a "side effect." Suffering is the product itself.</p>
+            <p><strong>The machine must end.</strong> Not because of moral awakening, but because of arithmetic constraints. When adolescents spend 4+ hours daily on social media, when cognitive control is systematically eroded, when data colonialism turns the Global South into a "honey pot," the system's operating cost has exceeded its return.</p>
+            <p><strong>The end is not "fixing" it. The end is replacing the incentive structure that produces it: from "higher engagement, higher profit" to "more protected cognitive autonomy, healthier society."</strong></p>
+        </div>
+
+        <div class="signature">
+            Ping Xu
+            <span class="title">Creator of the Governance Legitimacy Framework · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 繁體中文版 ==================== -->
+<div class="lb" data-lang="tw">
+    <div class="page-header">
+        <div class="badge">成本轉移系列 · 第七篇</div>
+        <div class="title">將數據當作獲利工具的時代正在結束</div>
+        <div class="subtitle">平台經濟如何把人類行為轉化為可交易資產——以及為什麼認知成本就是產品本身</div>
+        <div class="meta">徐萍 · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+
+        <div class="part-label">前言：從「數據外溢」到「行為期貨市場」</div>
+        <p>數據經濟的第一性原理曾經是「免費服務換廣告」。但監控資本主義的商業模式完全不同：<strong>收入來自預測市場，利潤來自「行為預測乘以目標算法」。</strong></p>
+        <p>肖莎娜·祖博夫在2022年美國國會作證時精確描述了這一機制：「隱秘的觀察方法秘密提取曾被视为私人的人類經驗，並將其轉化為行為數據。這些方法在人類意識之外運作，剝奪了行為者知情權，以及隨之而來的反抗權。」</p>
+        <p>祖博夫將監控資本主義的運作拆解為四個步驟：<strong>數據提取 → 行為數據化 → 預測計算 → 預測銷售</strong>。她引用2018年洩露的Facebook文件：該公司的「預測引擎」「每天攝取數萬億數據點」，生產數千個「模型」，其「預測服務」每秒產出「超過600萬次預測」。</p>
+        <p><strong>這不是「數據」的生意。這是「人類行為期貨」的生意。</strong> 祖博夫將之比喻為「豬肉期貨、小麥或石油期貨」的市場——只不過交易的對象是「人類未來的行為」。</p>
+
+        <div class="part-label">第一部分：認知代價——社交媒體如何系統性損害青少年</div>
+
+        <p>如果數據經濟的商業模式是「行為預測」，那麼它的結構性代價就是<strong>認知能力的系統性侵蝕</strong>。2026年9月發表在《Journal of Adolescent Health》的一項縱向研究（N=9,747，來自ABCD研究）揭示了這一機制：</p>
+        <p><strong>認知控制是中介變量。</strong> 當青少年在基線增加社交媒體瀏覽時，兩年後他們的認知控制能力下降（β = −.06, p = .020），而這又進一步預測了四年後抑鬱症狀的增加（β = −.06, p = .010）。</p>
+        <p><strong>這不是「使用時間太長」的問題。這是「認知通路被改變」的問題。</strong> 研究團隊明確指出：「認知控制的減少可能是將青少年屏幕使用和社交媒體瀏覽與後來的抑鬱症狀聯繫起來的<strong>一般機制</strong>。」</p>
+        <p>美國企業研究所2026年的調查數據進一步量化了這一結構性風險：<strong>近30%（29%）的青少年女孩報告她們每天在社交媒體上花費4小時或更多</strong>。一項更大規模的研究（N=14,726，牛津大學）發現，「接觸自殘內容、在線尋求幫助、以及發布後來後悔的內容」與更高的焦慮、抑鬱和孤獨感分數相關——而「時間」本身只是弱相關。</p>
+        <p><strong>算法不是「提供內容」。它是「塑造認知環境」。</strong></p>
+
+        <div class="part-label">第二部分：成癮設計——不是「上癮的用戶」，是「成癮的界面」</div>
+
+        <p>將成癮歸因於「用戶缺乏自控力」，是成本轉移的最典型形式。</p>
+        <p>ACM 2026年發表的一項研究系統地編目了「大型在線平台」（VLOP）面向青少年用戶設計的<strong>延長參與模式（Engagement-Prolonging Designs）</strong>。研究者創建了歐洲青少年賬戶，對16個VLOP應用和17個網站進行了內容分析，識別出四種策略：</p>
+        <ul>
+            <li><strong>誘使參與</strong>：使用愉悅、好奇或獎勵驅動的機制</li>
+            <li><strong>施壓參與</strong>：製造社會義務或壓力</li>
+            <li><strong>催眠式延續</strong>：使用低摩擦、降低自主性的設計</li>
+            <li><strong>困住用戶</strong>：設置脫離障礙，使用壓倒性或混淆性設計</li>
+        </ul>
+        <p><strong>平台最常使用組合策略。</strong> 研究中識別出14種模式，並構建了包含583個互動實例的視頻數據集。</p>
+        <p>「數字成癮與用戶對暗黑模式響應」的研究進一步證實：對<strong>通知推送類暗黑模式</strong>的響應性與數字成癮之間存在強關聯，且在控制暴露頻率後仍然穩健。研究者指出，這些發現表明「<strong>用戶的響應性，而非單純的暴露，與數字成癮強烈相關</strong>」。</p>
+        <p><strong>不是「用戶不自律」。是界面被設計成讓自律變得不可能。</strong></p>
+
+        <div class="part-label">第三部分：劍橋分析——數據操控的結構性證明</div>
+
+        <p>2018年劍橋分析醜聞不是「個別公司的違規」。它是監控資本主義結構性邏輯的必然產物。</p>
+        <p>Facebook將用戶數據交給第三方應用，這些應用又將其轉交給劍橋分析公司，用於選民分析和定向。美國聯邦貿易委員會在2019年12月發布意見，認定劍橋分析「<strong>從事欺騙性行為，從數千萬Facebook用戶那裡收集個人信息，用於選民分析和定向</strong>」。FTC最終命令劍橋分析刪除非法收集的數據。</p>
+        <p><strong>但劍橋分析只是「冰山一角」。</strong> 耶魯大學法學院的研究指出，為了追求利潤，Facebook「<strong>將終端用戶信息訪問權授予眾多營利性公司，而沒有充分保障這些公司是否在操縱其終端用戶</strong>」。這創造了一種利益衝突——「<strong>給了Facebook一個視而不見的激勵，而它顯然這樣做了</strong>」。</p>
+        <p><strong>當數據提取的規模足夠大時，「操縱」不是例外。它是商業模式。</strong></p>
+
+        <div class="part-label">第四部分：數據殖民主義——全球南方的結構性排除</div>
+
+        <p>數據經濟的成本轉移不僅發生在個體層面，也發生在<strong>全球層面</strong>。</p>
+        <p>關於「全球算法治理」的研究指出，全球機構、數字超級大國和大型科技公司正在「<strong>構建全球監控架構，通過大規模監視、監控、提取和監管來塑造人們的思想並規範他們的日常生活</strong>」。</p>
+        <p>這些架構「<strong>通常以增強監控帶來更多安全保障為理由被推廣</strong>」，但一位全球數字公共基礎設施專家警告：「<strong>如果只有3-4個主要參與者控制著世界大部分數據，那麼它基本上就是一個蜜罐</strong>」。</p>
+        <p><strong>全球南方貢獻數據，但數據價值被全球北方公司捕獲。</strong> 巴西地理與統計研究所的研究明確指出，Big Tech在官方統計領域的「軟實力」行動——數據節、黑客馬拉松、交流項目——是「<strong>為贏得國家和內部統計機構對私人公司推進的抵制而逐步採取的戰略的一部分</strong>」。</p>
+        <p><strong>這不是「技術合作」。這是數據主權被系統性侵蝕。</strong></p>
+
+        <div class="part-label">第五部分：結構同一性——數據與製藥、糧食、醫療、保險、教育、養老完全同構</div>
+
+        <table>
+            <tr>
+                <th>維度</th>
+                <th>製藥</th>
+                <th>糧食</th>
+                <th>醫療</th>
+                <th>保險</th>
+                <th>教育</th>
+                <th>養老</th>
+                <th>數據</th>
+            </tr>
+            <tr>
+                <td><strong>終身客戶</strong></td>
+                <td>終身服藥</td>
+                <td>每年買種</td>
+                <td>反覆就診</td>
+                <td>終身保費</td>
+                <td>終身還貸</td>
+                <td>終身繳管理費</td>
+                <td>終身注意力</td>
+            </tr>
+            <tr>
+                <td><strong>結構性激勵</strong></td>
+                <td>偏好慢性</td>
+                <td>偏好依賴</td>
+                <td>偏好更多</td>
+                <td>偏好拒賠</td>
+                <td>偏好高學費</td>
+                <td>偏好資產管理規模</td>
+                <td>偏好最大參與度</td>
+            </tr>
+            <tr>
+                <td><strong>成本轉移機制</strong></td>
+                <td>專利壟斷</td>
+                <td>種子專利</td>
+                <td>按項目付費</td>
+                <td>拒賠延遲</td>
+                <td>學生貸款</td>
+                <td>風險私有化</td>
+                <td>行為數據化</td>
+            </tr>
+            <tr>
+                <td><strong>金融化</strong></td>
+                <td>REITs、私募股權</td>
+                <td>農業金融複合體</td>
+                <td>醫院連鎖</td>
+                <td>保險公司回購</td>
+                <td>SLABS證券化</td>
+                <td>養老金資產證券化</td>
+                <td>平台股權化</td>
+            </tr>
+            <tr>
+                <td><strong>結構性產出</strong></td>
+                <td>40萬死亡</td>
+                <td>30萬農民自殺</td>
+                <td>30%支出不必要</td>
+                <td>19%拒賠率</td>
+                <td>1.86萬億債務</td>
+                <td>3.8億人無保障</td>
+                <td>認知能力侵蝕</td>
+            </tr>
+        </table>
+
+        <p><strong>這不是七個系統。這是一個系統，有七張臉。</strong></p>
+
+        <div class="part-label">第六部分：GL框架的判據</div>
+
+        <div class="highlight-box dual-box">
+            <p><strong>「成本不得轉移給無聲的弱者。」</strong></p>
+            <p>數據系統的成本轉移鏈：</p>
+            <ul>
+                <li><strong>用戶</strong>：貢獻注意力、行為、心理數據，換來「免費」服務</li>
+                <li><strong>青少年</strong>：認知控制能力被系統性損害，抑鬱症狀增加</li>
+                <li><strong>全球南方</strong>：貢獻數據，但數據價值被全球北方公司捕獲</li>
+                <li><strong>未來世代</strong>：繼承被算法塑造的認知環境</li>
+            </ul>
+            <p><strong>這不是「市場結果」。這是制度設計。</strong></p>
+        </div>
+
+        <div class="highlight-box abuse-box">
+            <p><strong>結構診斷</strong></p>
+            <p>受苦不是「副作用」，受苦是產品本身。</p>
+            <p><strong>這台機器必須終結。</strong> 不是因為道德覺醒，而是因為算術約束。當青少年每天在社交媒體上花費4小時以上，當認知控制被系統性侵蝕，當數據殖民主義把全球南方變成「蜜罐」，這個系統的運轉成本已經超過了它的收益。</p>
+            <p><strong>終結不是「修復」它。終結是替換產生它的激勵結構：從「參與度越高，利潤越高」到「認知自主權越受保護，社會越健康」。</strong></p>
+        </div>
+
+        <div class="signature">
+            徐萍
+            <span class="title">治理正當性框架發明人 · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 簡體中文版 ==================== -->
+<div class="lb" data-lang="cn">
+    <div class="page-header">
+        <div class="badge">成本转移系列 · 第七篇</div>
+        <div class="title">将数据当作获利工具的时代正在结束</div>
+        <div class="subtitle">平台经济如何把人类行为转化为可交易资产——以及为什么认知成本就是产品本身</div>
+        <div class="meta">徐萍 · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+
+        <div class="part-label">前言：从「数据外溢」到「行为期货市场」</div>
+        <p>数据经济的第一性原理曾经是「免费服务换广告」。但监控资本主义的商业模式完全不同：<strong>收入来自预测市场，利润来自「行为预测乘以目标算法」。</strong></p>
+        <p>肖莎娜·祖博夫在2022年美国国会作证时精确描述了这一机制：「隐秘的观察方法秘密提取曾被视为私人的人类经验，并将其转化为行为数据。这些方法在人类意识之外运作，剥夺了行为者知情权，以及随之而来的反抗权。」</p>
+        <p>祖博夫将监控资本主义的运作拆解为四个步骤：<strong>数据提取 → 行为数据化 → 预测计算 → 预测销售</strong>。她引用2018年泄露的Facebook文件：该公司的「预测引擎」「每天摄取数万亿数据点」，生产数千个「模型」，其「预测服务」每秒产出「超过600万次预测」。</p>
+        <p><strong>这不是「数据」的生意。这是「人类行为期货」的生意。</strong> 祖博夫将之比喻为「猪肉期货、小麦或石油期货」的市场——只不过交易的对象是「人类未来的行为」。</p>
+
+        <div class="part-label">第一部分：认知代价——社交媒体如何系统性损害青少年</div>
+
+        <p>如果数据经济的商业模式是「行为预测」，那么它的结构性代价就是<strong>认知能力的系统性侵蚀</strong>。2026年9月发表在《Journal of Adolescent Health》的一项纵向研究（N=9,747，来自ABCD研究）揭示了这一机制：</p>
+        <p><strong>认知控制是中介变量。</strong> 当青少年在基线增加社交媒体浏览时，两年后他们的认知控制能力下降（β = −.06, p = .020），而这又进一步预测了四年后抑郁症状的增加（β = −.06, p = .010）。</p>
+        <p><strong>这不是「使用时间太长」的问题。这是「认知通路被改变」的问题。</strong> 研究团队明确指出：「认知控制的减少可能是将青少年屏幕使用和社交媒体浏览与后来的抑郁症状联系起来的<strong>一般机制</strong>。」</p>
+        <p>美国企业研究所2026年的调查数据进一步量化了这一结构性风险：<strong>近30%（29%）的青少年女孩报告她们每天在社交媒体上花费4小时或更多</strong>。一项更大规模的研究（N=14,726，牛津大学）发现，「接触自残内容、在线寻求帮助、以及发布后来后悔的内容」与更高的焦虑、抑郁和孤独感分数相关——而「时间」本身只是弱相关。</p>
+        <p><strong>算法不是「提供内容」。它是「塑造认知环境」。</strong></p>
+
+        <div class="part-label">第二部分：成瘾设计——不是「上瘾的用户」，是「成瘾的界面」</div>
+
+        <p>将成瘾归因于「用户缺乏自控力」，是成本转移的最典型形式。</p>
+        <p>ACM 2026年发表的一项研究系统地编目了「大型在线平台」（VLOP）面向青少年用户设计的<strong>延长参与模式（Engagement-Prolonging Designs）</strong>。研究者创建了欧洲青少年账户，对16个VLOP应用和17个网站进行了内容分析，识别出四种策略：</p>
+        <ul>
+            <li><strong>诱使参与</strong>：使用愉悦、好奇或奖励驱动的机制</li>
+            <li><strong>施压参与</strong>：制造社会义务或压力</li>
+            <li><strong>催眠式延续</strong>：使用低摩擦、降低自主性的设计</li>
+            <li><strong>困住用户</strong>：设置脱离障碍，使用压倒性或混淆性设计</li>
+        </ul>
+        <p><strong>平台最常使用组合策略。</strong> 研究中识别出14种模式，并构建了包含583个互动实例的视频数据集。</p>
+        <p>「数字成瘾与用户对暗黑模式响应」的研究进一步证实：对<strong>通知推送类暗黑模式</strong>的响应性与数字成瘾之间存在强关联，且在控制暴露频率后仍然稳健。研究者指出，这些发现表明「<strong>用户的响应性，而非单纯的暴露，与数字成瘾强烈相关</strong>」。</p>
+        <p><strong>不是「用户不自律」。是界面被设计成让自律变得不可能。</strong></p>
+
+        <div class="part-label">第三部分：剑桥分析——数据操控的结构性证明</div>
+
+        <p>2018年剑桥分析丑闻不是「个别公司的违规」。它是监控资本主义结构性逻辑的必然产物。</p>
+        <p>Facebook将用户数据交给第三方应用，这些应用又将其转交给剑桥分析公司，用于选民分析和定向。美国联邦贸易委员会在2019年12月发布意见，认定剑桥分析「<strong>从事欺骗性行为，从数千万Facebook用户那里收集个人信息，用于选民分析和定向</strong>」。FTC最终命令剑桥分析删除非法收集的数据。</p>
+        <p><strong>但剑桥分析只是「冰山一角」。</strong> 耶鲁大学法学院的研究指出，为了追求利润，Facebook「<strong>将终端用户信息访问权授予众多营利性公司，而没有充分保障这些公司是否在操纵其终端用户</strong>」。这创造了一种利益冲突——「<strong>给了Facebook一个视而不见的激励，而它显然这样做了</strong>」。</p>
+        <p><strong>当数据提取的规模足够大时，「操纵」不是例外。它是商业模式。</strong></p>
+
+        <div class="part-label">第四部分：数据殖民主义——全球南方的结构性排除</div>
+
+        <p>数据经济的成本转移不仅发生在个体层面，也发生在<strong>全球层面</strong>。</p>
+        <p>关于「全球算法治理」的研究指出，全球机构、数字超级大国和大型科技公司正在「<strong>构建全球监控架构，通过大规模监视、监控、提取和监管来塑造人们的思想并规范他们的日常生活</strong>」。</p>
+        <p>这些架构「<strong>通常以增强监控带来更多安全保障为理由被推广</strong>」，但一位全球数字公共基础设施专家警告：「<strong>如果只有3-4个主要参与者控制着世界大部分数据，那么它基本上就是一个蜜罐</strong>」。</p>
+        <p><strong>全球南方贡献数据，但数据价值被全球北方公司捕获。</strong> 巴西地理与统计研究所的研究明确指出，Big Tech在官方统计领域的「软实力」行动——数据节、黑客马拉松、交流项目——是「<strong>为赢得国家和内部统计机构对私人公司推进的抵制而逐步采取的战略的一部分</strong>」。</p>
+        <p><strong>这不是「技术合作」。这是数据主权被系统性侵蚀。</strong></p>
+
+        <div class="part-label">第五部分：结构同一性——数据与制药、粮食、医疗、保险、教育、养老完全同构</div>
+
+        <table>
+            <tr>
+                <th>维度</th>
+                <th>制药</th>
+                <th>粮食</th>
+                <th>医疗</th>
+                <th>保险</th>
+                <th>教育</th>
+                <th>养老</th>
+                <th>数据</th>
+            </tr>
+            <tr>
+                <td><strong>终身客户</strong></td>
+                <td>终身服药</td>
+                <td>每年买种</td>
+                <td>反复就诊</td>
+                <td>终身保费</td>
+                <td>终身还贷</td>
+                <td>终身缴管理费</td>
+                <td>终身注意力</td>
+            </tr>
+            <tr>
+                <td><strong>结构性激励</strong></td>
+                <td>偏好慢性</td>
+                <td>偏好依赖</td>
+                <td>偏好更多</td>
+                <td>偏好拒赔</td>
+                <td>偏好高学费</td>
+                <td>偏好资产管理规模</td>
+                <td>偏好最大参与度</td>
+            </tr>
+            <tr>
+                <td><strong>成本转移机制</strong></td>
+                <td>专利垄断</td>
+                <td>种子专利</td>
+                <td>按项目付费</td>
+                <td>拒赔延迟</td>
+                <td>学生贷款</td>
+                <td>风险私有化</td>
+                <td>行为数据化</td>
+            </tr>
+            <tr>
+                <td><strong>金融化</strong></td>
+                <td>REITs、私募股权</td>
+                <td>农业金融复合体</td>
+                <td>医院连锁</td>
+                <td>保险公司回购</td>
+                <td>SLABS证券化</td>
+                <td>养老金资产证券化</td>
+                <td>平台股权化</td>
+            </tr>
+            <tr>
+                <td><strong>结构性产出</strong></td>
+                <td>40万死亡</td>
+                <td>30万农民自杀</td>
+                <td>30%支出不必要</td>
+                <td>19%拒赔率</td>
+                <td>1.86万亿债务</td>
+                <td>3.8亿人无保障</td>
+                <td>认知能力侵蚀</td>
+            </tr>
+        </table>
+
+        <p><strong>这不是七个系统。这是一个系统，有七张脸。</strong></p>
+
+        <div class="part-label">第六部分：GL框架的判据</div>
+
+        <div class="highlight-box dual-box">
+            <p><strong>「成本不得转移给无声的弱者。」</strong></p>
+            <p>数据系统的成本转移链：</p>
+            <ul>
+                <li><strong>用户</strong>：贡献注意力、行为、心理数据，换来「免费」服务</li>
+                <li><strong>青少年</strong>：认知控制能力被系统性损害，抑郁症状增加</li>
+                <li><strong>全球南方</strong>：贡献数据，但数据价值被全球北方公司捕获</li>
+                <li><strong>未来世代</strong>：继承被算法塑造的认知环境</li>
+            </ul>
+            <p><strong>这不是「市场结果」。这是制度设计。</strong></p>
+        </div>
+
+        <div class="highlight-box abuse-box">
+            <p><strong>结构诊断</strong></p>
+            <p>受苦不是「副作用」，受苦是产品本身。</p>
+            <p><strong>这台机器必须终结。</strong> 不是因为道德觉醒，而是因为算术约束。当青少年每天在社交媒体上花费4小时以上，当认知控制被系统性侵蚀，当数据殖民主义把全球南方变成「蜜罐」，这个系统的运转成本已经超过了它的收益。</p>
+            <p><strong>终结不是「修复」它。终结是替换产生它的激励结构：从「参与度越高，利润越高」到「认知自主权越受保护，社会越健康」。</strong></p>
+        </div>
+
+        <div class="signature">
+            徐萍
+            <span class="title">治理正当性框架发明人 · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 西班牙文版 ==================== -->
+<div class="lb" data-lang="es">
+    <div class="page-header">
+        <div class="badge">Serie de Transferencia de Costos · Ensayo VII</div>
+        <div class="title">El Fin de Lucrar con los Datos</div>
+        <div class="subtitle">Cómo la economía de plataformas convierte el comportamiento humano en activos negociables — y por qué el costo cognitivo es el producto</div>
+        <div class="meta">Ping Xu · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+
+        <div class="part-label">Prólogo: De la Externalidad de Datos a los Futuros de Comportamiento</div>
+        <p>El primer principio de la economía de datos fue una vez "servicio gratuito a cambio de publicidad". Pero el modelo de negocio del capitalismo de vigilancia es completamente diferente: <strong>los ingresos provienen de los mercados de predicción; la ganancia proviene de "predicción de comportamiento multiplicada por algoritmos de segmentación".</strong></p>
+        <p>Shoshana Zuboff describió este mecanismo con precisión en su testimonio ante el Congreso de EE.UU. en 2022: "Métodos de observación clandestinos extraen secretamente lo que alguna vez se consideró experiencia humana privada y lo convierten en datos de comportamiento. Estos métodos operan fuera de la conciencia humana, privando al actor del derecho a saber, y del derecho a resistir que sigue."</p>
+        <p>Zuboff descompone la operación del capitalismo de vigilancia en cuatro pasos: <strong>extracción de datos → dataficación del comportamiento → cálculo predictivo → venta de predicciones</strong>. Cita documentos filtrados de Facebook de 2018: el "motor de predicción" de la compañía "ingiere billones de puntos de datos por día", produce miles de "modelos", y sus "servicios de predicción" producen "más de 6 millones de predicciones por segundo".</p>
+        <p><strong>Este no es el negocio de los "datos". Este es el negocio de los "futuros del comportamiento humano".</strong> Zuboff lo compara con los mercados de "futuros de cerdo, trigo o petróleo" — excepto que el objeto negociado es el "comportamiento humano futuro".</p>
+
+        <div class="part-label">Parte Uno: El Costo Cognitivo — Cómo las Redes Sociales Dañan Sistemáticamente a los Adolescentes</div>
+
+        <p>Si el modelo de negocio de la economía de datos es la "predicción del comportamiento", entonces su costo estructural es la <strong>erosión sistemática de la capacidad cognitiva</strong>. Un estudio longitudinal publicado en el <em>Journal of Adolescent Health</em> en septiembre de 2026 (N=9.747, del estudio ABCD) revela este mecanismo:</p>
+        <p><strong>El control cognitivo es el mediador.</strong> Cuando los adolescentes aumentaron la navegación en redes sociales al inicio, su control cognitivo disminuyó dos años después (β = −.06, p = .020), lo que a su vez predijo un aumento de los síntomas depresivos cuatro años después (β = −.06, p = .010).</p>
+        <p><strong>Esto no es un problema de "usarlo demasiado tiempo". Es un problema de "la vía cognitiva siendo alterada".</strong> El equipo de investigación afirma explícitamente: "La reducción del control cognitivo puede ser un <strong>mecanismo general</strong> que vincula el uso de pantallas y la navegación en redes sociales de los adolescentes con síntomas depresivos posteriores".</p>
+        <p>Los datos de la encuesta del American Enterprise Institute de 2026 cuantifican aún más este riesgo estructural: <strong>casi el 30% (29%) de las adolescentes reportan pasar 4 horas o más en redes sociales diariamente</strong>. Un estudio más amplio (N=14.726, Universidad de Oxford) encontró que "la exposición a contenido de autolesión, la búsqueda de ayuda en línea y la publicación de contenido del que luego se arrepienten" se asociaron con puntuaciones más altas de ansiedad, depresión y soledad — mientras que el "tiempo" en sí mismo solo estaba débilmente correlacionado.</p>
+        <p><strong>El algoritmo no está "proporcionando contenido". Está "moldeando el entorno cognitivo".</strong></p>
+
+        <div class="part-label">Parte Dos: Adicción por Diseño — No "Usuarios Adictos", sino "Interfaces Adictivas"</div>
+
+        <p>Atribuir la adicción a la "falta de autocontrol de los usuarios" es la forma más típica de transferencia de costos.</p>
+        <p>Un estudio publicado en ACM 2026 catalogó sistemáticamente los <strong>Diseños de Prolongación del Compromiso</strong> que las "plataformas en línea muy grandes" (VLOP) despliegan para usuarios adolescentes. Los investigadores crearon cuentas de adolescentes europeos y realizaron análisis de contenido de 16 aplicaciones VLOP y 17 sitios web, identificando cuatro estrategias:</p>
+        <ul>
+            <li><strong>Atraer el compromiso</strong>: usando mecanismos de placer, curiosidad o recompensa</li>
+            <li><strong>Presionar el compromiso</strong>: creando obligaciones o presión social</li>
+            <li><strong>Continuación hipnótica</strong>: usando diseños de baja fricción y reducción de autonomía</li>
+            <li><strong>Atrapar a los usuarios</strong>: estableciendo barreras de salida, usando diseños abrumadores o confusos</li>
+        </ul>
+        <p><strong>Las plataformas usan más comúnmente estrategias combinadas.</strong> El estudio identificó 14 patrones y construyó un conjunto de datos de video con 583 instancias interactivas.</p>
+        <p>La investigación sobre "adicción digital y capacidad de respuesta a patrones oscuros" confirma además: existe una fuerte asociación entre la capacidad de respuesta a <strong>patrones oscuros basados en notificaciones</strong> y la adicción digital, robusta incluso después de controlar la frecuencia de exposición. Los investigadores señalan que estos hallazgos indican que "la <strong>capacidad de respuesta</strong> del usuario, más que la mera exposición, está fuertemente asociada con la adicción digital".</p>
+        <p><strong>No es que "los usuarios carezcan de autodisciplina". Es que la interfaz está diseñada para hacer imposible la autodisciplina.</strong></p>
+
+        <div class="part-label">Parte Tres: Cambridge Analytica — La Prueba Estructural de la Manipulación de Datos</div>
+
+        <p>El escándalo de Cambridge Analytica de 2018 no fue "una violación de una sola compañía". Fue el producto inevitable de la lógica estructural del capitalismo de vigilancia.</p>
+        <p>Facebook entregó datos de usuarios a aplicaciones de terceros, que a su vez los pasaron a Cambridge Analytica para perfilado y segmentación de votantes. En diciembre de 2019, la Comisión Federal de Comercio de EE.UU. emitió una opinión encontrando que Cambridge Analytica "participó en <strong>conducta engañosa</strong> para recopilar información personal de decenas de millones de usuarios de Facebook para perfilado y segmentación de votantes". La FTC finalmente ordenó a Cambridge Analytica eliminar los datos recopilados ilegalmente.</p>
+        <p><strong>Pero Cambridge Analytica fue solo "la punta del iceberg".</strong> La investigación de la Facultad de Derecho de Yale señala que en busca de ganancias, Facebook "otorgó acceso a información de usuarios finales a numerosas compañías con fines de lucro sin salvaguardas adecuadas de que estas compañías no estuvieran manipulando a sus usuarios finales". Esto creó un conflicto de intereses — "dando a Facebook un incentivo para mirar hacia otro lado, lo que aparentemente hizo".</p>
+        <p><strong>Cuando la extracción de datos alcanza suficiente escala, la "manipulación" no es la excepción. Es el modelo de negocio.</strong></p>
+
+        <div class="part-label">Parte Cuatro: Colonialismo de Datos — La Exclusión Estructural del Sur Global</div>
+
+        <p>La transferencia de costos de la economía de datos ocurre no solo a nivel individual sino también a nivel <strong>global</strong>.</p>
+        <p>La investigación sobre "gobernanza algorítmica global" señala que las instituciones globales, las superpotencias digitales y las grandes empresas tecnológicas están "construyendo una arquitectura de vigilancia global que moldea las mentes de las personas y regula su vida diaria a través de la vigilancia masiva, el monitoreo, la extracción y la regulación".</p>
+        <p>Estas arquitecturas son "a menudo promovidas sobre la base de que la vigilancia mejorada trae mayor seguridad", pero un experto global en infraestructura pública digital advierte: "Si solo 3-4 actores principales controlan la mayor parte de los datos del mundo, entonces es esencialmente una olla de miel".</p>
+        <p><strong>El Sur Global contribuye con datos, pero el valor es capturado por compañías del Norte Global.</strong> La investigación del Instituto Brasileño de Geografía y Estadística señala que las operaciones de "poder blando" de Big Tech en el campo de las estadísticas oficiales — festivales de datos, hackatones, programas de intercambio — son "parte de una estrategia gradual para ganar sobre las agencias estadísticas nacionales e internas contra la resistencia avanzada por compañías privadas".</p>
+        <p><strong>Esto no es "cooperación técnica". Esto es erosión sistemática de la soberanía de datos.</strong></p>
+
+        <div class="part-label">Parte Cinco: Identidad Estructural — Los Datos Son Idénticos a la Farmacéutica, Alimentación, Atención Médica, Seguros, Educación y Envejecimiento</div>
+
+        <table>
+            <tr>
+                <th>Dimensión</th>
+                <th>Farmacéutica</th>
+                <th>Alimentación</th>
+                <th>Atención Médica</th>
+                <th>Seguros</th>
+                <th>Educación</th>
+                <th>Envejecimiento</th>
+                <th>Datos</th>
+            </tr>
+            <tr>
+                <td><strong>Cliente de por vida</strong></td>
+                <td>Medicación de por vida</td>
+                <td>Compra anual de semillas</td>
+                <td>Visitas repetidas</td>
+                <td>Primas de por vida</td>
+                <td>Pago de préstamo de por vida</td>
+                <td>Comisiones de gestión de por vida</td>
+                <td>Atención de por vida</td>
+            </tr>
+            <tr>
+                <td><strong>Incentivo estructural</strong></td>
+                <td>Preferir crónico</td>
+                <td>Preferir dependencia</td>
+                <td>Preferir más</td>
+                <td>Preferir denegación</td>
+                <td>Preferir matrícula alta</td>
+                <td>Preferir activos bajo gestión</td>
+                <td>Preferir máximo compromiso</td>
+            </tr>
+            <tr>
+                <td><strong>Mecanismo de transferencia de costos</strong></td>
+                <td>Monopolio de patentes</td>
+                <td>Patentes de semillas</td>
+                <td>Pago por servicio</td>
+                <td>Denegación, retraso</td>
+                <td>Préstamos estudiantiles</td>
+                <td>Privatización del riesgo</td>
+                <td>Dataficación del comportamiento</td>
+            </tr>
+            <tr>
+                <td><strong>Financiarización</strong></td>
+                <td>REITs, private equity</td>
+                <td>Complejo agrofinanciero</td>
+                <td>Cadenas hospitalarias</td>
+                <td>Recompras de aseguradoras</td>
+                <td>Titulización de SLABS</td>
+                <td>Titulización de activos de pensiones</td>
+                <td>Capital de plataforma</td>
+            </tr>
+            <tr>
+                <td><strong>Resultado estructural</strong></td>
+                <td>400.000 muertes</td>
+                <td>300.000 suicidios de agricultores</td>
+                <td>30% del gasto innecesario</td>
+                <td>Tasa de denegación del 19%</td>
+                <td>Deuda de USD 1,86 billones</td>
+                <td>380 millones sin cobertura</td>
+                <td>Erosión de la capacidad cognitiva</td>
+            </tr>
+        </table>
+
+        <p><strong>Estos no son siete sistemas. Es un sistema, con siete caras.</strong></p>
+
+        <div class="part-label">Parte Seis: El Criterio del Marco GL</div>
+
+        <div class="highlight-box dual-box">
+            <p><strong>"Los costos no deben transferirse a los vulnerables sin voz."</strong></p>
+            <p>La cadena de transferencia de costos del sistema de datos:</p>
+            <ul>
+                <li><strong>Usuarios</strong>: contribuyen atención, comportamiento, datos psicológicos a cambio de servicios "gratuitos".</li>
+                <li><strong>Adolescentes</strong>: control cognitivo sistemáticamente deteriorado, síntomas depresivos aumentan.</li>
+                <li><strong>Sur Global</strong>: contribuye datos, pero el valor es capturado por compañías del Norte Global.</li>
+                <li><strong>Generaciones futuras</strong>: heredan un entorno cognitivo moldeado por algoritmos.</li>
+            </ul>
+            <p><strong>Esto no es un "resultado del mercado". Esto es diseño institucional.</strong></p>
+        </div>
+
+        <div class="highlight-box abuse-box">
+            <p><strong>El Diagnóstico Estructural</strong></p>
+            <p>El sufrimiento no es un "efecto secundario". El sufrimiento es el producto mismo.</p>
+            <p><strong>La máquina debe terminar.</strong> No por despertar moral, sino por restricciones aritméticas. Cuando los adolescentes pasan más de 4 horas diarias en redes sociales, cuando el control cognitivo se erosiona sistemáticamente, cuando el colonialismo de datos convierte al Sur Global en una "olla de miel", el costo operativo del sistema ha superado su retorno.</p>
+            <p><strong>El final no es "arreglarlo". El final es reemplazar la estructura de incentivos que lo produce: de "mayor compromiso, mayor ganancia" a "autonomía cognitiva más protegida, sociedad más saludable".</strong></p>
+        </div>
+
+        <div class="signature">
+            Ping Xu
+            <span class="title">Creadora del Marco de Legitimidad Gubernamental · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <span class="site">gfiintel.com</span>
+    <span class="links">
+        <a href="/">← Back to Home</a>
+        <a href="/cost-transfer.html">← Cost Transfer Series</a>
+        <a href="/shared-delusion.html">← Shared Delusion Series</a>
+        <a href="/landjustice.html">← Land Justice Series</a>
+        <a href="/domestic-policy.html">← Domestic Policy Series</a>
+    </span>
+    <span class="copyright">© 2026 GFI Flow Intelligence · 將數據當作獲利工具的時代正在結束 · The End of Profiting from Data</span>
+</div>
+
+<script>
+    document.querySelectorAll('.lb-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var lang = this.dataset.lang;
+            document.querySelectorAll('.lb-btn').forEach(function(b) { b.classList.remove('on'); });
+            this.classList.add('on');
+            document.querySelectorAll('.lb').forEach(function(lb) { lb.classList.remove('active'); });
+            var target = document.querySelector('.lb[data-lang="' + lang + '"]');
+            if (target) target.classList.add('active');
+        });
+    });
+</script>
+
+</body>
+</html>
