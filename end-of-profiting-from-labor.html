@@ -1,1 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The End of Profiting from Labor · 將勞動當作獲利工具的時代正在結束 · El Fin de Lucrar con el Trabajo</title>
+    <meta name="description" content="A structural critique of the gig economy — worker classification, risk outsourcing, social security gaps, and the systematic weakening of collective bargaining." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: #0d0a08;
+            color: #e0d6cc;
+            font-family: 'DM Sans', system-ui, sans-serif;
+            font-size: 16px;
+            line-height: 1.9;
+            min-height: 100vh;
+        }
+        .topbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            height: 60px; padding: 0 clamp(18px, 5vw, 48px);
+            display: flex; align-items: center; justify-content: space-between;
+            background: rgba(13, 10, 8, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .logo {
+            font-family: 'DM Mono', monospace; font-size: 11px;
+            letter-spacing: 0.16em; text-transform: uppercase;
+            color: #b8aaa0; text-decoration: none;
+        }
+        .nav-right { display: flex; align-items: center; gap: 12px; }
+        .lang-grp { display: flex; gap: 4px; }
+        .lb-btn {
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            letter-spacing: 0.06em; padding: 4px 10px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 4px; background: transparent;
+            color: #7a7068; cursor: pointer; transition: all 0.2s;
+        }
+        .lb-btn:hover { color: #e0d6cc; border-color: rgba(255, 255, 255, 0.2); }
+        .lb-btn.on { background: #b8aaa0; color: #0d0a08; border-color: #b8aaa0; }
+        .lb { display: none; padding: 100px 40px 70px; max-width: 860px; margin: 0 auto; }
+        .lb.active { display: block; }
+        .page-header {
+            padding: 0 0 32px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 32px;
+        }
+        .page-header .badge {
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            letter-spacing: 0.22em; text-transform: uppercase;
+            color: #8a4a2a; margin-bottom: 12px;
+        }
+        .page-header .title {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: clamp(28px, 3.6vw, 42px);
+            line-height: 1.15; color: #f0e6dc; margin-bottom: 8px;
+        }
+        .page-header .subtitle {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-style: italic; font-size: clamp(16px, 1.7vw, 20px);
+            color: #8a7a6a; margin-bottom: 12px;
+        }
+        .page-header .meta {
+            font-family: 'DM Mono', monospace; font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.2);
+        }
+        .content .part-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #8a4a2a;
+            margin: 3rem 0 1rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(138, 74, 42, 0.3);
+        }
+        .content .part-label:first-of-type { margin-top: 1rem; }
+        .content h2 {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.4rem; color: #f0e6dc;
+            margin: 2rem 0 0.8rem 0;
+            padding-bottom: 0.3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .content h3 {
+            font-size: 1.1rem; font-weight: 600;
+            color: #e0d6cc; margin: 1.6rem 0 0.5rem 0;
+        }
+        .content p { margin-bottom: 1.2rem; color: #d0c6bc; }
+        .content ul, .content ol { margin-bottom: 1.2rem; padding-left: 1.6rem; }
+        .content li { margin-bottom: 0.5rem; color: #d0c6bc; }
+        .content .highlight { color: #c47a4a; font-weight: 600; }
+        .content .highlight-box {
+            background: rgba(138, 74, 42, 0.08);
+            border-left: 4px solid #8a4a2a;
+            padding: 1.2rem 1.8rem;
+            margin: 1.8rem 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .content .highlight-box p { margin-bottom: 0.5rem; }
+        .content .highlight-box strong { color: #f0e6dc; }
+        .content .highlight-box.dual-box {
+            border-left-color: #7DD3FC;
+            background: rgba(125, 211, 252, 0.05);
+        }
+        .content .highlight-box.abuse-box {
+            border-left-color: #f87171;
+            background: rgba(248, 113, 113, 0.05);
+        }
+        .content .highlight-box.abuse-box strong { color: #fecaca; }
+        .content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        .content th {
+            background: rgba(255, 255, 255, 0.04);
+            color: #c47a4a;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 0.6rem 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .content td {
+            padding: 0.6rem 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: #d0c6bc;
+        }
+        .signature {
+            margin-top: 40px; padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.05rem; color: #f0e6dc;
+        }
+        .signature .title {
+            font-family: 'DM Mono', monospace; font-size: 0.6rem;
+            color: rgba(255, 255, 255, 0.25);
+            letter-spacing: 0.06em; display: block; margin-top: 2px;
+        }
+        .footer {
+            text-align: center; padding: 28px 20px 36px;
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            color: rgba(255, 255, 255, 0.18);
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            margin-top: 48px; line-height: 2;
+        }
+        .footer a { color: #b8aaa0; text-decoration: none; margin: 0 8px; }
+        .footer a:hover { color: #e0d6cc; }
+        .footer .site { display: block; margin-bottom: 8px; color: rgba(255, 255, 255, 0.25); letter-spacing: 0.06em; }
+        .footer .links { display: block; margin-bottom: 8px; }
+        .footer .copyright { color: rgba(255, 255, 255, 0.12); display: block; }
+        @media (max-width: 640px) {
+            .lb { padding: 80px 20px 50px; }
+            .topbar { padding: 0 14px; }
+        }
+    </style>
+</head>
+<body>
 
+<div class="topbar">
+    <a href="/" class="logo">← Home</a>
+    <div class="nav-right">
+        <div class="lang-grp">
+            <button class="lb-btn on" data-lang="en">EN</button>
+            <button class="lb-btn" data-lang="tw">繁</button>
+            <button class="lb-btn" data-lang="cn">简</button>
+            <button class="lb-btn" data-lang="es">ES</button>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 英文版 ==================== -->
+<div class="lb active" data-lang="en">
+    <div class="page-header">
+        <div class="badge">Cost Transfer Series · Essay VIII</div>
+        <div class="title">The End of Profiting from Labor</div>
+        <div class="subtitle">How the gig economy converts employment into independent contracting — and why workers bear all the risk</div>
+        <div class="meta">Ping Xu · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+
+        <div class="part-label">Prologue: From Employment to Contracting</div>
+        <p>The first principle of labor was once the employment relationship: employers bear business risk; workers receive wages and protections. But the gig economy operates on a completely different model: <strong>revenue comes from transaction commissions; profit comes from "externalizing employment costs."</strong> This means <strong>every time a worker is classified as an "independent contractor," it directly converts into profit.</strong></p>
+        <p>Global gig economy gross volume reached <strong>USD 582.2 billion</strong> in 2025 and is projected to reach <strong>USD 1.88 trillion</strong> by 2033. But the arithmetic foundation of this system is collapsing: <strong>workers bear all the risk, platforms capture all the revenue.</strong></p>
+        <p><strong>This is not "flexible employment." This is risk outsourcing.</strong></p>
+
+        <div class="part-label">Part One: Legal Classification — The Central Battlefield</div>
+
+        <p>Legal classification is the central battlefield of this struggle. California's AB5 (2019) adopted the "ABC test," <strong>presuming workers are employees</strong> unless the hiring entity proves the worker is free from control, performs work outside the hiring entity's usual course of business, and is customarily engaged in an independently established trade.</p>
+        <p>If this test applied, Uber, Lyft, DoorDash and other platforms would be forced to bear the full cost of employment.</p>
+        <p><strong>The platforms' choice was to spend USD 200 million buying a legal exemption.</strong></p>
+        <p>In 2020, Uber, Lyft, DoorDash and others spent <strong>over USD 200 million</strong> promoting the Prop 22 ballot initiative — the most expensive ballot campaign in California history. Prop 22 passed with approximately 58% of the vote, exempting gig platforms from AB5 and allowing them to continue classifying drivers as independent contractors. In 2026, the California Supreme Court <strong>upheld Prop 22</strong>, and the platforms won.</p>
+        <p><strong>This is not "voter will." This is capital buying legal exemption with advertising dollars.</strong></p>
+
+        <div class="part-label">Part Two: The Quantification of Risk Outsourcing — Workers Bear All Risk</div>
+
+        <p>When workers are classified as "independent contractors," the risk transfer is comprehensive:</p>
+        <p><strong>Income risk:</strong> Gig workers lack minimum wage protection. Economic Policy Institute's 2022 report found that <strong>14% of gig workers earn below minimum wage</strong>, <strong>62% lost money due to platform/app issues</strong>, <strong>19% went hungry because they couldn't afford food</strong>, and <strong>31% couldn't pay their full utility bill the previous month</strong>.</p>
+        <p><strong>Health risk:</strong> As independent contractors, gig workers lack benefits such as paid sick leave or health insurance. World Economic Forum reports note that because they are classified as independent contractors, <strong>gig workers lack benefits such as paid sick leave or health insurance, further deepening economic vulnerability</strong>.</p>
+        <p><strong>Injury risk:</strong> No workers' compensation. A delivery worker with 5 years of experience had a traffic accident during delivery; medical costs approached RMB 30,000, <strong>the platform subsidized only RMB 5,000, and the rest was borne entirely by the worker</strong>.</p>
+        <p><strong>Rest under algorithmic control:</strong> Platforms use precise calculations of delivery time and order volume, setting "overtime penalty" mechanisms that force workers to work overtime. <strong>Some delivery riders work over 12 hours per day, with no rest days all year</strong>.</p>
+
+        <div class="part-label">Part Three: China's Scale — 84 Million New Employment Form Workers</div>
+
+        <p>China's gig economy scale reveals the depth of the structural problem.</p>
+        <p>In 2026, China's "flexible employment" workforce reached <strong>320 million, accounting for 44% of the total labor force</strong>. Among them, <strong>couriers, delivery riders, ride-hailing drivers and other new employment form workers number 84 million, accounting for 21% of total employees</strong>.</p>
+        <p><strong>Social security coverage is extremely low.</strong> Although JD.com and Meituan began providing social security and pension protection for delivery workers in 2025, <strong>coverage is less than 1 million workers</strong>. Against a total of nearly <strong>16 million delivery riders</strong> in 2025, coverage is less than <strong>7%</strong>.</p>
+        <p><strong>Status determination is the pivot.</strong> In 2021, eight ministries issued the "Guiding Opinions on Safeguarding the Labor Rights and Interests of Workers in New Employment Forms," classifying platform employment into three categories: <strong>labor relations, circumstances not fully meeting labor relations, and civil relations</strong>. This classification acknowledged the grey zone of "not fully meeting labor relations," but <strong>did not set mandatory social security obligations for this category</strong>.</p>
+        <p>In 2026, seven ministries jointly promoted flexible workers joining employee medical insurance, proposing a "individual contribution + platform subsidy" model. But legal experts note: <strong>"should" is a mandatory norm; "encourage" is a promotional norm</strong>. For gig workers not recognized as having labor relations, participation is "encouraged" rather than "mandatory" — <strong>platforms have no legal obligation to contribute</strong>.</p>
+
+        <div class="part-label">Part Four: India's "Empty Plate" — Legal Recognition and Enforcement Gap</div>
+
+        <p>India's 2020 Social Security Code formally recognized gig and platform workers — a legal breakthrough. But scholars note it is more like <strong>"reserving a seat at an empty table."</strong></p>
+        <p><strong>The Code requires aggregators to contribute 1-2% of annual turnover</strong> (capped at 5% of payments to gig/platform workers) to a social security fund. Workers can self-register on the e-Shram portal, obtaining an <strong>Aadhaar-linked unique ID with benefits portable across platforms</strong>.</p>
+        <p><strong>But the problem is "the menu is empty."</strong> For informal workers, <strong>most benefits — including benefit amounts, eligibility, and funding — are left to future scheme determination</strong>, depending on authority drafting and implementation. Workers <strong>must wait for schemes to be issued to determine whether they qualify</strong>, leaving them in uncertainty.</p>
+        <p><strong>Core protections remain missing.</strong> Despite recognition, gig workers <strong>remain separately classified, allowing legislatures and platforms to deny them core employment protections</strong> such as guaranteed working hours, collective bargaining rights, and standard dismissal protections.</p>
+
+        <div class="part-label">Part Five: The Systematic Weakening of Collective Bargaining</div>
+
+        <p>When workers are classified as "independent contractors," they lose the legal basis for collective bargaining.</p>
+        <p>US union membership rate in 2025 was <strong>10.0%</strong>. <strong>Private sector union membership rate was only 5.9%</strong>, while public sector was <strong>32.9%</strong> — public sector is <strong>more than five times</strong> private sector.</p>
+        <p><strong>The industries with the lowest unionization rates are precisely those where the gig economy is concentrated:</strong> finance 1.5%, professional and business services 2.1%, leisure and hospitality (including food service) 3.0%.</p>
+        <p><strong>Gig workers are excluded from the protections of the National Labor Relations Act.</strong> As "independent contractors," they cannot legally form unions for collective bargaining, cannot strike, and cannot demand platform recognition of unions.</p>
+
+        <div class="part-label">Part Six: Structural Identity — Labor Is Identical to Pharma, Food, Healthcare, Insurance, Education, Aging, and Data</div>
+
+        <table>
+            <tr>
+                <th>Dimension</th>
+                <th>Pharma</th>
+                <th>Food</th>
+                <th>Healthcare</th>
+                <th>Insurance</th>
+                <th>Education</th>
+                <th>Aging</th>
+                <th>Data</th>
+                <th>Labor</th>
+            </tr>
+            <tr>
+                <td><strong>Lifelong customer</strong></td>
+                <td>Lifelong medication</td>
+                <td>Annual seed purchase</td>
+                <td>Repeated visits</td>
+                <td>Lifelong premiums</td>
+                <td>Lifelong loan repayment</td>
+                <td>Lifelong management fees</td>
+                <td>Lifelong attention</td>
+                <td>Lifelong gig work</td>
+            </tr>
+            <tr>
+                <td><strong>Structural incentive</strong></td>
+                <td>Prefer chronic</td>
+                <td>Prefer dependency</td>
+                <td>Prefer more</td>
+                <td>Prefer denial</td>
+                <td>Prefer high tuition</td>
+                <td>Prefer assets under management</td>
+                <td>Prefer maximum engagement</td>
+                <td>Prefer "independent contractor"</td>
+            </tr>
+            <tr>
+                <td><strong>Cost transfer mechanism</strong></td>
+                <td>Patent monopoly</td>
+                <td>Seed patents</td>
+                <td>Fee-for-service</td>
+                <td>Denial, delay</td>
+                <td>Student loans</td>
+                <td>Risk privatization</td>
+                <td>Behavioral datafication</td>
+                <td>Employment relationship outsourcing</td>
+            </tr>
+            <tr>
+                <td><strong>Financialization</strong></td>
+                <td>REITs, private equity</td>
+                <td>Agri-finance complex</td>
+                <td>Hospital chains</td>
+                <td>Insurer buybacks</td>
+                <td>SLABS securitization</td>
+                <td>Pension asset securitization</td>
+                <td>Platform equity</td>
+                <td>Gig platform equity</td>
+            </tr>
+            <tr>
+                <td><strong>Structural output</strong></td>
+                <td>400,000 deaths</td>
+                <td>300,000 farmer suicides</td>
+                <td>30% spending unnecessary</td>
+                <td>19% denial rate</td>
+                <td>USD 1.86 trillion debt</td>
+                <td>380 million uncovered</td>
+                <td>Cognitive capacity erosion</td>
+                <td>Systematic erosion of worker rights</td>
+            </tr>
+        </table>
+
+        <p><strong>These are not eight systems. This is one system, with eight faces.</strong></p>
+
+        <div class="part-label">Part Seven: The GL Framework's Criterion</div>
+
+        <div class="highlight-box dual-box">
+            <p><strong>"Costs must not be transferred to the voiceless vulnerable."</strong></p>
+            <p>The cost transfer chain of the labor system:</p>
+            <ul>
+                <li><strong>Gig workers</strong>: bear income volatility, social security gaps, injury risk, algorithmic control.</li>
+                <li><strong>Women, immigrants, minorities</strong>: over-concentrated in low-wage, unstable gig positions. World Economic Forum reports note that <strong>on one major platform, women's earnings are only 68% of men's</strong>.</li>
+                <li><strong>Future generations</strong>: inherit weakened labor rights.</li>
+                <li><strong>Taxpayers</strong>: pay for the social security gap of platform workers.</li>
+            </ul>
+            <p><strong>This is not a "market outcome." This is institutional design.</strong></p>
+        </div>
+
+        <div class="highlight-box abuse-box">
+            <p><strong>The Structural Diagnosis</strong></p>
+            <p>Suffering is not a "side effect." Suffering is the product itself.</p>
+            <p><strong>The machine must end.</strong> Not because of moral awakening, but because of arithmetic constraints. Global gig economy gross volume reached <strong>USD 582.2 billion</strong> in 2025, projected to reach <strong>USD 1.88 trillion</strong> by 2033. But <strong>workers bear all the risk, and platforms capture all the revenue</strong>.</p>
+            <p><strong>The end is not "fixing" it. The end is replacing the incentive structure that produces it: from "lower employment cost, higher profit" to "more worker protection, more stable economy."</strong></p>
+        </div>
+
+        <div class="signature">
+            Ping Xu
+            <span class="title">Creator of the Governance Legitimacy Framework · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 繁體中文版 ==================== -->
+<div class="lb" data-lang="tw">
+    <div class="page-header">
+        <div class="badge">成本轉移系列 · 第八篇</div>
+        <div class="title">將勞動當作獲利工具的時代正在結束</div>
+        <div class="subtitle">零工經濟如何把雇傭關係轉化為獨立承包關係——以及為什麼工人承擔全部風險</div>
+        <div class="meta">徐萍 · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+
+        <div class="part-label">前言：從「雇傭」到「承包」</div>
+        <p>勞動的第一性原理曾經是雇傭關係：雇主承擔經營風險，工人獲得工資和保障。但零工經濟的商業模式完全不同：<strong>收入來自交易佣金，利潤來自「將雇傭成本外部化」。</strong> 這意味著，<strong>每一次將工人歸類為「獨立承包商」，都直接轉化為利潤。</strong></p>
+        <p>全球零工經濟總量在2025年達到<strong>5,822億美元</strong>，預計2033年達到<strong>1.88萬億美元</strong>。但這個系統的算術基礎正在崩潰：<strong>工人承擔全部風險，平台捕獲全部收益。</strong></p>
+        <p><strong>這不是「靈活就業」。這是風險外包。</strong></p>
+
+        <div class="part-label">第一部分：法律分類——核心戰場</div>
+
+        <p>法律分類是這場博弈的核心戰場。加州AB5法案（2019年）採用「ABC測試」，<strong>推定工人為雇員</strong>，除非雇傭方證明工人不受控制、從事雇傭方主營業務之外的工作、且通常從事獨立行業。</p>
+        <p>如果這一測試適用，Uber、Lyft、DoorDash等平台將被迫承擔雇主的全部成本。</p>
+        <p><strong>平台的選擇是花2億美元買法律豁免。</strong></p>
+        <p>2020年，Uber、Lyft、DoorDash等公司花費<strong>超過2億美元</strong>推動Prop 22公投，這是加州歷史上最昂貴的公投戰役。Prop 22以約58%的票數通過，豁免了零工平台適用AB5，允許它們繼續將司機歸類為獨立承包商。2026年，加州最高法院<strong>維持了Prop 22</strong>，平台勝訴。</p>
+        <p><strong>這不是「選民意願」。這是資本用廣告費購買的法律豁免。</strong></p>
+
+        <div class="part-label">第二部分：風險外包的量化——工人承擔全部風險</div>
+
+        <p>當工人被歸類為「獨立承包商」時，風險轉移是全面的：</p>
+        <p><strong>收入風險：</strong>零工工人缺乏最低工資保障。經濟政策研究所2022年的報告顯示，<strong>14%的零工工人收入低於最低工資</strong>，<strong>62%因平台/應用問題而損失金錢</strong>，<strong>19%因無力購買食物而挨餓</strong>，<strong>31%無法支付上個月的全部水電費</strong>。</p>
+        <p><strong>健康風險：</strong>作為獨立承包商，零工工人沒有帶薪病假或健康保險等福利。世界經濟論壇的報告指出，由於被歸類為獨立承包商，<strong>零工工作者缺少帶薪病假或健康保險等福利，這進一步加深了經濟脆弱性</strong>。</p>
+        <p><strong>工傷風險：</strong>沒有工傷保險。一位從事外賣配送工作5年的李師傅在配送途中發生交通事故，醫療費用花了近3萬元，<strong>平台僅補貼了5,000元，其餘費用全部自行承擔</strong>。</p>
+        <p><strong>算法控制下的休息權：</strong>平台通過精準計算配送時長、訂單量，設置「超時罰扣」機制，迫使勞動者超時工作。<strong>部分外賣騎手日均工作時長超12小時，全年無休成為常態</strong>。</p>
+
+        <div class="part-label">第三部分：中國的規模——8,400萬新就業形態勞動者</div>
+
+        <p>中國零工經濟的規模揭示了結構性問題的深度。</p>
+        <p>2026年，中國「靈活就業」人員數量達到<strong>3.2億人，占全國勞動力總數的44%</strong>。其中，<strong>快遞員、外賣騎手、網約車司機等新就業形態勞動者數量達8,400萬人，占職工總數的21%</strong>。</p>
+        <p><strong>社保覆蓋率極低。</strong> 儘管京東和美團自2025年開始為配送員提供社保與養老保障，但<strong>僅覆蓋不足100萬員工</strong>。對比2025年外賣配送員總數<strong>近1,600萬人</strong>，保障覆蓋率不到<strong>7%</strong>。</p>
+        <p><strong>身份認定是樞紐。</strong> 2021年，人力資源社會保障部等八部門發布《關於維護新就業形態勞動者勞動保障權益的指導意見》，首次將平台用工分為三類：<strong>勞動關係、不完全符合確立勞動關係情形、民事關係</strong>。這一分類承認了「不完全符合勞動關係」的灰色地帶，但<strong>沒有為這一類別設定強制性的社保義務</strong>。</p>
+        <p>2026年，七部門聯合推動靈活就業人員參加職工醫保，提出「個人繳費+平台補貼」模式。但法律專家指出：<strong>「應當」是強制性規範，「鼓勵」是倡導性規範</strong>。對於未被認定為勞動關係的零工工人，參保是「鼓勵」而非「應當」——<strong>平台沒有法定義務繳費</strong>。</p>
+
+        <div class="part-label">第四部分：印度的「空盤」——法律承認與執行落差</div>
+
+        <p>印度2020年《社會保障法典》正式承認了零工和平台工人，這是法律上的突破。但學者指出，這更像<strong>「在空桌前占了一個座位」</strong>。</p>
+        <p><strong>法典規定聚合平台須貢獻年營業額的1-2%</strong>（上限為支付給零工/平台工人款項的5%）至社會保障基金。工人可在e-Shram門戶自我註冊，獲得<strong>Aadhaar關聯的唯一ID，福利可在平台間轉移</strong>。</p>
+        <p><strong>但問題在於「菜單是空的」。</strong> 對於非正規勞動力，<strong>大多數福利（包括福利金額、資格和資金）都留待未來計劃確定</strong>，取決於當局的起草和實施。工人<strong>必須等待計劃出台，才能確定自己是否有資格</strong>，這讓他們處於不確定性中。</p>
+        <p><strong>核心保護仍然缺失。</strong> 儘管獲得承認，零工工人<strong>仍被單獨分類，這使得立法機構和平台可以拒絕給予他們核心就業保護</strong>，如保證工作時間、集體談判權和標準解雇保障。</p>
+
+        <div class="part-label">第五部分：集體談判權的系統性削弱</div>
+
+        <p>當工人被歸類為「獨立承包商」時，他們失去了集體談判的法律基礎。</p>
+        <p>美國工會會員率在2025年為<strong>10.0%</strong>。<strong>私營部門工會會員率僅為5.9%</strong>，而公共部門為<strong>32.9%</strong>——公共部門是私營部門的<strong>五倍以上</strong>。</p>
+        <p><strong>最低工會化率的行業恰恰是零工經濟集中的領域：</strong>金融活動1.5%、專業和商業服務2.1%、休閒和酒店業（包括餐飲服務）3.0%。</p>
+        <p><strong>零工工人被排除在《國家勞動關係法》的保護之外。</strong> 作為「獨立承包商」，他們不能合法組建工會進行集體談判，不能罷工，不能要求平台承認工會。</p>
+
+        <div class="part-label">第六部分：結構同一性——勞動與製藥、糧食、醫療、保險、教育、養老、數據完全同構</div>
+
+        <table>
+            <tr>
+                <th>維度</th>
+                <th>製藥</th>
+                <th>糧食</th>
+                <th>醫療</th>
+                <th>保險</th>
+                <th>教育</th>
+                <th>養老</th>
+                <th>數據</th>
+                <th>勞動</th>
+            </tr>
+            <tr>
+                <td><strong>終身客戶</strong></td>
+                <td>終身服藥</td>
+                <td>每年買種</td>
+                <td>反覆就診</td>
+                <td>終身保費</td>
+                <td>終身還貸</td>
+                <td>終身繳管理費</td>
+                <td>終身注意力</td>
+                <td>終身零工</td>
+            </tr>
+            <tr>
+                <td><strong>結構性激勵</strong></td>
+                <td>偏好慢性</td>
+                <td>偏好依賴</td>
+                <td>偏好更多</td>
+                <td>偏好拒賠</td>
+                <td>偏好高學費</td>
+                <td>偏好資產管理規模</td>
+                <td>偏好最大參與度</td>
+                <td>偏好「獨立承包商」</td>
+            </tr>
+            <tr>
+                <td><strong>成本轉移機制</strong></td>
+                <td>專利壟斷</td>
+                <td>種子專利</td>
+                <td>按項目付費</td>
+                <td>拒賠延遲</td>
+                <td>學生貸款</td>
+                <td>風險私有化</td>
+                <td>行為數據化</td>
+                <td>雇傭關係外包</td>
+            </tr>
+            <tr>
+                <td><strong>金融化</strong></td>
+                <td>REITs、私募股權</td>
+                <td>農業金融複合體</td>
+                <td>醫院連鎖</td>
+                <td>保險公司回購</td>
+                <td>SLABS證券化</td>
+                <td>養老金資產證券化</td>
+                <td>平台股權化</td>
+                <td>零工平台股權化</td>
+            </tr>
+            <tr>
+                <td><strong>結構性產出</strong></td>
+                <td>40萬死亡</td>
+                <td>30萬農民自殺</td>
+                <td>30%支出不必要</td>
+                <td>19%拒賠率</td>
+                <td>1.86萬億債務</td>
+                <td>3.8億人無保障</td>
+                <td>認知能力侵蝕</td>
+                <td>工人權利系統性侵蝕</td>
+            </tr>
+        </table>
+
+        <p><strong>這不是八個系統。這是一個系統，有八張臉。</strong></p>
+
+        <div class="part-label">第七部分：GL框架的判據</div>
+
+        <div class="highlight-box dual-box">
+            <p><strong>「成本不得轉移給無聲的弱者。」</strong></p>
+            <p>勞動系統的成本轉移鏈：</p>
+            <ul>
+                <li><strong>零工工人</strong>：承擔收入波動、社保缺失、工傷風險、算法控制</li>
+                <li><strong>女性、移民、少數族裔</strong>：被過度集中在低薪、不穩定的零工崗位。世界經濟論壇報告指出，<strong>在某個主流平台上，女性的收入僅為男性的68%</strong></li>
+                <li><strong>未來世代</strong>：繼承被削弱的勞工權利</li>
+                <li><strong>納稅人</strong>：為平台工人的社保缺口買單</li>
+            </ul>
+            <p><strong>這不是「市場結果」。這是制度設計。</strong></p>
+        </div>
+
+        <div class="highlight-box abuse-box">
+            <p><strong>結構診斷</strong></p>
+            <p>受苦不是「副作用」，受苦是產品本身。</p>
+            <p><strong>這台機器必須終結。</strong> 不是因為道德覺醒，而是因為算術約束。全球零工經濟總量在2025年達到<strong>5,822億美元</strong>，預計2033年達到<strong>1.88萬億美元</strong>。但<strong>工人承擔全部風險，平台捕獲全部收益</strong>。</p>
+            <p><strong>終結不是「修復」它。終結是替換產生它的激勵結構：從「雇傭成本越低，利潤越高」到「工人保障越充分，經濟越穩定」。</strong></p>
+        </div>
+
+        <div class="signature">
+            徐萍
+            <span class="title">治理正當性框架發明人 · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 簡體中文版 ==================== -->
+<div class="lb" data-lang="cn">
+    <div class="page-header">
+        <div class="badge">成本转移系列 · 第八篇</div>
+        <div class="title">将劳动当作获利工具的时代正在结束</div>
+        <div class="subtitle">零工经济如何把雇佣关系转化为独立承包关系——以及为什么工人承担全部风险</div>
+        <div class="meta">徐萍 · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+
+        <div class="part-label">前言：从「雇佣」到「承包」</div>
+        <p>劳动的第一性原理曾经是雇佣关系：雇主承担经营风险，工人获得工资和保障。但零工经济的商业模式完全不同：<strong>收入来自交易佣金，利润来自「将雇佣成本外部化」。</strong> 这意味着，<strong>每一次将工人归类为「独立承包商」，都直接转化为利润。</strong></p>
+        <p>全球零工经济总量在2025年达到<strong>5,822亿美元</strong>，预计2033年达到<strong>1.88万亿美元</strong>。但这个系统的算术基础正在崩溃：<strong>工人承担全部风险，平台捕获全部收益。</strong></p>
+        <p><strong>这不是「灵活就业」。这是风险外包。</strong></p>
+
+        <div class="part-label">第一部分：法律分类——核心战场</div>
+
+        <p>法律分类是这场博弈的核心战场。加州AB5法案（2019年）采用「ABC测试」，<strong>推定工人为雇员</strong>，除非雇佣方证明工人不受控制、从事雇佣方主营业务之外的工作、且通常从事独立行业。</p>
+        <p>如果这一测试适用，Uber、Lyft、DoorDash等平台将被迫承担雇主的全部成本。</p>
+        <p><strong>平台的选择是花2亿美元买法律豁免。</strong></p>
+        <p>2020年，Uber、Lyft、DoorDash等公司花费<strong>超过2亿美元</strong>推动Prop 22公投，这是加州历史上最昂贵的公投战役。Prop 22以约58%的票数通过，豁免了零工平台适用AB5，允许它们继续将司机归类为独立承包商。2026年，加州最高法院<strong>维持了Prop 22</strong>，平台胜诉。</p>
+        <p><strong>这不是「选民意愿」。这是资本用广告费购买的法律豁免。</strong></p>
+
+        <div class="part-label">第二部分：风险外包的量化——工人承担全部风险</div>
+
+        <p>当工人被归类为「独立承包商」时，风险转移是全面的：</p>
+        <p><strong>收入风险：</strong>零工工人缺乏最低工资保障。经济政策研究所2022年的报告显示，<strong>14%的零工工人收入低于最低工资</strong>，<strong>62%因平台/应用问题而损失金钱</strong>，<strong>19%因无力购买食物而挨饿</strong>，<strong>31%无法支付上个月的全部水电费</strong>。</p>
+        <p><strong>健康风险：</strong>作为独立承包商，零工工人没有带薪病假或健康保险等福利。世界经济论坛的报告指出，由于被归类为独立承包商，<strong>零工工作者缺少带薪病假或健康保险等福利，这进一步加深了经济脆弱性</strong>。</p>
+        <p><strong>工伤风险：</strong>没有工伤保险。一位从事外卖配送工作5年的李师傅在配送途中发生交通事故，医疗费用花了近3万元，<strong>平台仅补贴了5,000元，其余费用全部自行承担</strong>。</p>
+        <p><strong>算法控制下的休息权：</strong>平台通过精准计算配送时长、订单量，设置「超时罚扣」机制，迫使劳动者超时工作。<strong>部分外卖骑手日均工作时长超12小时，全年无休成为常态</strong>。</p>
+
+        <div class="part-label">第三部分：中国的规模——8,400万新就业形态劳动者</div>
+
+        <p>中国零工经济的规模揭示了结构性问题的深度。</p>
+        <p>2026年，中国「灵活就业」人员数量达到<strong>3.2亿人，占全国劳动力总数的44%</strong>。其中，<strong>快递员、外卖骑手、网约车司机等新就业形态劳动者数量达8,400万人，占职工总数的21%</strong>。</p>
+        <p><strong>社保覆盖率极低。</strong> 尽管京东和美团自2025年开始为配送员提供社保与养老保障，但<strong>仅覆盖不足100万员工</strong>。对比2025年外卖配送员总数<strong>近1,600万人</strong>，保障覆盖率不到<strong>7%</strong>。</p>
+        <p><strong>身份认定是枢纽。</strong> 2021年，人力资源社会保障部等八部门发布《关于维护新就业形态劳动者劳动保障权益的指导意见》，首次将平台用工分为三类：<strong>劳动关系、不完全符合确立劳动关系情形、民事关系</strong>。这一分类承认了「不完全符合劳动关系」的灰色地带，但<strong>没有为这一类别设定强制性的社保义务</strong>。</p>
+        <p>2026年，七部门联合推动灵活就业人员参加职工医保，提出「个人缴费+平台补贴」模式。但法律专家指出：<strong>「应当」是强制性规范，「鼓励」是倡导性规范</strong>。对于未被认定为劳动关系的零工工人，参保是「鼓励」而非「应当」——<strong>平台没有法定义务缴费</strong>。</p>
+
+        <div class="part-label">第四部分：印度的「空盘」——法律承认与执行落差</div>
+
+        <p>印度2020年《社会保障法典》正式承认了零工和平台工人，这是法律上的突破。但学者指出，这更像<strong>「在空桌前占了一个座位」</strong>。</p>
+        <p><strong>法典规定聚合平台须贡献年营业额的1-2%</strong>（上限为支付给零工/平台工人款项的5%）至社会保障基金。工人可在e-Shram门户自我注册，获得<strong>Aadhaar关联的唯一ID，福利可在平台间转移</strong>。</p>
+        <p><strong>但问题在于「菜单是空的」。</strong> 对于非正规劳动力，<strong>大多数福利（包括福利金额、资格和资金）都留待未来计划确定</strong>，取决于当局的起草和实施。工人<strong>必须等待计划出台，才能确定自己是否有资格</strong>，让他们处于不确定性中。</p>
+        <p><strong>核心保护仍然缺失。</strong> 尽管获得承认，零工工人<strong>仍被单独分类，这使得立法机构和平台可以拒绝给予他们核心就业保护</strong>，如保证工作时间、集体谈判权和标准解雇保障。</p>
+
+        <div class="part-label">第五部分：集体谈判权的系统性削弱</div>
+
+        <p>当工人被归类为「独立承包商」时，他们失去了集体谈判的法律基础。</p>
+        <p>美国工会会员率在2025年为<strong>10.0%</strong>。<strong>私营部门工会会员率仅为5.9%</strong>，而公共部门为<strong>32.9%</strong>——公共部门是私营部门的<strong>五倍以上</strong>。</p>
+        <p><strong>最低工会化率的行业恰恰是零工经济集中的领域：</strong>金融活动1.5%、专业和商业服务2.1%、休闲和酒店业（包括餐饮服务）3.0%。</p>
+        <p><strong>零工工人被排除在《国家劳动关系法》的保护之外。</strong> 作为「独立承包商」，他们不能合法组建工会进行集体谈判，不能罢工，不能要求平台承认工会。</p>
+
+        <div class="part-label">第六部分：结构同一性——劳动与制药、粮食、医疗、保险、教育、养老、数据完全同构</div>
+
+        <table>
+            <tr>
+                <th>维度</th>
+                <th>制药</th>
+                <th>粮食</th>
+                <th>医疗</th>
+                <th>保险</th>
+                <th>教育</th>
+                <th>养老</th>
+                <th>数据</th>
+                <th>劳动</th>
+            </tr>
+            <tr>
+                <td><strong>终身客户</strong></td>
+                <td>终身服药</td>
+                <td>每年买种</td>
+                <td>反复就诊</td>
+                <td>终身保费</td>
+                <td>终身还贷</td>
+                <td>终身缴管理费</td>
+                <td>终身注意力</td>
+                <td>终身零工</td>
+            </tr>
+            <tr>
+                <td><strong>结构性激励</strong></td>
+                <td>偏好慢性</td>
+                <td>偏好依赖</td>
+                <td>偏好更多</td>
+                <td>偏好拒赔</td>
+                <td>偏好高学费</td>
+                <td>偏好资产管理规模</td>
+                <td>偏好最大参与度</td>
+                <td>偏好「独立承包商」</td>
+            </tr>
+            <tr>
+                <td><strong>成本转移机制</strong></td>
+                <td>专利垄断</td>
+                <td>种子专利</td>
+                <td>按项目付费</td>
+                <td>拒赔延迟</td>
+                <td>学生贷款</td>
+                <td>风险私有化</td>
+                <td>行为数据化</td>
+                <td>雇佣关系外包</td>
+            </tr>
+            <tr>
+                <td><strong>金融化</strong></td>
+                <td>REITs、私募股权</td>
+                <td>农业金融复合体</td>
+                <td>医院连锁</td>
+                <td>保险公司回购</td>
+                <td>SLABS证券化</td>
+                <td>养老金资产证券化</td>
+                <td>平台股权化</td>
+                <td>零工平台股权化</td>
+            </tr>
+            <tr>
+                <td><strong>结构性产出</strong></td>
+                <td>40万死亡</td>
+                <td>30万农民自杀</td>
+                <td>30%支出不必要</td>
+                <td>19%拒赔率</td>
+                <td>1.86万亿债务</td>
+                <td>3.8亿人无保障</td>
+                <td>认知能力侵蚀</td>
+                <td>工人权利系统性侵蚀</td>
+            </tr>
+        </table>
+
+        <p><strong>这不是八个系统。这是一个系统，有八张脸。</strong></p>
+
+        <div class="part-label">第七部分：GL框架的判据</div>
+
+        <div class="highlight-box dual-box">
+            <p><strong>「成本不得转移给无声的弱者。」</strong></p>
+            <p>劳动系统的成本转移链：</p>
+            <ul>
+                <li><strong>零工工人</strong>：承担收入波动、社保缺失、工伤风险、算法控制</li>
+                <li><strong>女性、移民、少数族裔</strong>：被过度集中在低薪、不稳定的零工岗位。世界经济论坛报告指出，<strong>在某个主流平台上，女性的收入仅为男性的68%</strong></li>
+                <li><strong>未来世代</strong>：继承被削弱的劳工权利</li>
+                <li><strong>纳税人</strong>：为平台工人的社保缺口买单</li>
+            </ul>
+            <p><strong>这不是「市场结果」。这是制度设计。</strong></p>
+        </div>
+
+        <div class="highlight-box abuse-box">
+            <p><strong>结构诊断</strong></p>
+            <p>受苦不是「副作用」，受苦是产品本身。</p>
+            <p><strong>这台机器必须终结。</strong> 不是因为道德觉醒，而是因为算术约束。全球零工经济总量在2025年达到<strong>5,822亿美元</strong>，预计2033年达到<strong>1.88万亿美元</strong>。但<strong>工人承担全部风险，平台捕获全部收益</strong>。</p>
+            <p><strong>终结不是「修复」它。终结是替换产生它的激励结构：从「雇佣成本越低，利润越高」到「工人保障越充分，经济越稳定」。</strong></p>
+        </div>
+
+        <div class="signature">
+            徐萍
+            <span class="title">治理正当性框架发明人 · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 西班牙文版 ==================== -->
+<div class="lb" data-lang="es">
+    <div class="page-header">
+        <div class="badge">Serie de Transferencia de Costos · Ensayo VIII</div>
+        <div class="title">El Fin de Lucrar con el Trabajo</div>
+        <div class="subtitle">Cómo la economía gig convierte el empleo en contratación independiente — y por qué los trabajadores asumen todo el riesgo</div>
+        <div class="meta">Ping Xu · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+
+        <div class="part-label">Prólogo: Del Empleo a la Contratación</div>
+        <p>El primer principio del trabajo era una vez la relación de empleo: los empleadores asumen el riesgo empresarial; los trabajadores reciben salarios y protecciones. Pero la economía gig opera con un modelo completamente diferente: <strong>los ingresos provienen de comisiones de transacción; la ganancia proviene de "externalizar los costos de empleo".</strong> Esto significa que <strong>cada vez que un trabajador es clasificado como "contratista independiente", se convierte directamente en ganancia.</strong></p>
+        <p>El volumen bruto global de la economía gig alcanzó <strong>USD 582.200 millones</strong> en 2025 y se proyecta que alcance <strong>USD 1,88 billones</strong> para 2033. Pero la base aritmética de este sistema está colapsando: <strong>los trabajadores asumen todo el riesgo, las plataformas capturan todos los ingresos.</strong></p>
+        <p><strong>Esto no es "empleo flexible". Esto es externalización de riesgos.</strong></p>
+
+        <div class="part-label">Parte Uno: Clasificación Legal — El Campo de Batalla Central</div>
+
+        <p>La clasificación legal es el campo de batalla central de esta lucha. La AB5 de California (2019) adoptó la "prueba ABC", <strong>presumiendo que los trabajadores son empleados</strong> a menos que la entidad contratante pruebe que el trabajador está libre de control, realiza trabajo fuera del curso habitual del negocio de la entidad contratante, y se dedica habitualmente a un oficio establecido independientemente.</p>
+        <p>Si esta prueba se aplicara, Uber, Lyft, DoorDash y otras plataformas se verían obligadas a asumir el costo total del empleo.</p>
+        <p><strong>La elección de las plataformas fue gastar USD 200 millones comprando una exención legal.</strong></p>
+        <p>En 2020, Uber, Lyft, DoorDash y otros gastaron <strong>más de USD 200 millones</strong> promoviendo la iniciativa electoral Prop 22 — la campaña electoral más costosa en la historia de California. Prop 22 pasó con aproximadamente el 58% de los votos, eximiendo a las plataformas gig de la AB5 y permitiéndoles continuar clasificando a los conductores como contratistas independientes. En 2026, la Corte Suprema de California <strong>confirmó la Prop 22</strong>, y las plataformas ganaron.</p>
+        <p><strong>Esto no es "voluntad del votante". Esto es capital comprando exención legal con dólares publicitarios.</strong></p>
+
+        <div class="part-label">Parte Dos: La Cuantificación de la Externalización de Riesgos — Los Trabajadores Asumen Todo el Riesgo</div>
+
+        <p>Cuando los trabajadores son clasificados como "contratistas independientes", la transferencia de riesgo es integral:</p>
+        <p><strong>Riesgo de ingresos:</strong> Los trabajadores gig carecen de protección de salario mínimo. El informe de 2022 del Economic Policy Institute encontró que <strong>el 14% de los trabajadores gig ganan por debajo del salario mínimo</strong>, <strong>el 62% perdió dinero debido a problemas de plataforma/aplicación</strong>, <strong>el 19% pasó hambre porque no podía pagar comida</strong>, y <strong>el 31% no pudo pagar su factura de servicios completa el mes anterior</strong>.</p>
+        <p><strong>Riesgo de salud:</strong> Como contratistas independientes, los trabajadores gig carecen de beneficios como licencia por enfermedad pagada o seguro de salud. Los informes del Foro Económico Mundial señalan que debido a que están clasificados como contratistas independientes, <strong>los trabajadores gig carecen de beneficios como licencia por enfermedad pagada o seguro de salud, profundizando aún más la vulnerabilidad económica</strong>.</p>
+        <p><strong>Riesgo de lesiones:</strong> Sin compensación laboral. Un trabajador de reparto con 5 años de experiencia tuvo un accidente de tráfico durante el reparto; los costos médicos se acercaron a RMB 30.000, <strong>la plataforma subsidió solo RMB 5.000, y el resto fue asumido íntegramente por el trabajador</strong>.</p>
+        <p><strong>Descanso bajo control algorítmico:</strong> Las plataformas utilizan cálculos precisos del tiempo de entrega y el volumen de pedidos, estableciendo mecanismos de "penalización por horas extra" que obligan a los trabajadores a trabajar horas extra. <strong>Algunos repartidores trabajan más de 12 horas al día, sin días de descanso todo el año</strong>.</p>
+
+        <div class="part-label">Parte Tres: La Escala de China — 84 Millones de Trabajadores de Nuevas Formas de Empleo</div>
+
+        <p>La escala de la economía gig de China revela la profundidad del problema estructural.</p>
+        <p>En 2026, la fuerza laboral de "empleo flexible" de China alcanzó <strong>320 millones, representando el 44% de la fuerza laboral total</strong>. Entre ellos, <strong>mensajeros, repartidores, conductores de ride-hailing y otros trabajadores de nuevas formas de empleo suman 84 millones, representando el 21% del total de empleados</strong>.</p>
+        <p><strong>La cobertura de seguridad social es extremadamente baja.</strong> Aunque JD.com y Meituan comenzaron a proporcionar seguridad social y protección de pensiones para trabajadores de reparto en 2025, <strong>la cobertura es inferior a 1 millón de trabajadores</strong>. Frente a un total de casi <strong>16 millones de repartidores</strong> en 2025, la cobertura es inferior al <strong>7%</strong>.</p>
+        <p><strong>La determinación del estatus es el pivote.</strong> En 2021, ocho ministerios emitieron las "Opiniones Rectrices sobre la Protección de los Derechos e Intereses Laborales de los Trabajadores en Nuevas Formas de Empleo", clasificando el empleo en plataformas en tres categorías: <strong>relaciones laborales, circunstancias que no cumplen plenamente las relaciones laborales, y relaciones civiles</strong>. Esta clasificación reconoció la zona gris de "no cumplir plenamente las relaciones laborales", pero <strong>no estableció obligaciones obligatorias de seguridad social para esta categoría</strong>.</p>
+        <p>En 2026, siete ministerios promovieron conjuntamente que los trabajadores flexibles se unieran al seguro médico de empleados, proponiendo un modelo de "contribución individual + subsidio de plataforma". Pero los expertos legales señalan: <strong>"deber" es una norma obligatoria; "alentar" es una norma promocional</strong>. Para los trabajadores gig no reconocidos como teniendo relaciones laborales, la participación es "alentada" en lugar de "obligatoria" — <strong>las plataformas no tienen obligación legal de contribuir</strong>.</p>
+
+        <div class="part-label">Parte Cuatro: El "Plato Vacío" de India — Reconocimiento Legal y Brecha de Aplicación</div>
+
+        <p>El Código de Seguridad Social de India de 2020 reconoció formalmente a los trabajadores gig y de plataforma — un avance legal. Pero los académicos señalan que es más como <strong>"reservar un asiento en una mesa vacía".</strong></p>
+        <p><strong>El Código requiere que los agregadores contribuyan con el 1-2% de la facturación anual</strong> (limitado al 5% de los pagos a trabajadores gig/plataforma) a un fondo de seguridad social. Los trabajadores pueden auto-registrarse en el portal e-Shram, obteniendo una <strong>ID única vinculada a Aadhaar con beneficios portables entre plataformas</strong>.</p>
+        <p><strong>Pero el problema es que "el menú está vacío".</strong> Para los trabajadores informales, <strong>la mayoría de los beneficios — incluyendo montos de beneficios, elegibilidad y financiamiento — se dejan a la determinación futura del esquema</strong>, dependiendo de la redacción e implementación de la autoridad. Los trabajadores <strong>deben esperar a que se emitan los esquemas para determinar si califican</strong>, dejándolos en incertidumbre.</p>
+        <p><strong>Las protecciones centrales siguen faltando.</strong> A pesar del reconocimiento, los trabajadores gig <strong>permanecen clasificados por separado, lo que permite a las legislaturas y plataformas negarles protecciones laborales centrales</strong> como horas de trabajo garantizadas, derechos de negociación colectiva y protecciones estándar contra el despido.</p>
+
+        <div class="part-label">Parte Cinco: El Debilitamiento Sistemático de la Negociación Colectiva</div>
+
+        <p>Cuando los trabajadores son clasificados como "contratistas independientes", pierden la base legal para la negociación colectiva.</p>
+        <p>La tasa de afiliación sindical en EE.UU. en 2025 fue del <strong>10,0%</strong>. <strong>La tasa de afiliación sindical del sector privado fue solo del 5,9%</strong>, mientras que la del sector público fue del <strong>32,9%</strong> — el sector público es <strong>más de cinco veces</strong> el sector privado.</p>
+        <p><strong>Las industrias con las tasas de sindicalización más bajas son precisamente aquellas donde se concentra la economía gig:</strong> finanzas 1,5%, servicios profesionales y comerciales 2,1%, ocio y hostelería (incluido el servicio de alimentos) 3,0%.</p>
+        <p><strong>Los trabajadores gig están excluidos de las protecciones de la Ley Nacional de Relaciones Laborales.</strong> Como "contratistas independientes", no pueden formar legalmente sindicatos para la negociación colectiva, no pueden hacer huelga, y no pueden exigir el reconocimiento sindical de la plataforma.</p>
+
+        <div class="part-label">Parte Seis: Identidad Estructural — El Trabajo Es Idéntico a la Farmacéutica, Alimentación, Atención Médica, Seguros, Educación, Envejecimiento y Datos</div>
+
+        <table>
+            <tr>
+                <th>Dimensión</th>
+                <th>Farmacéutica</th>
+                <th>Alimentación</th>
+                <th>Atención Médica</th>
+                <th>Seguros</th>
+                <th>Educación</th>
+                <th>Envejecimiento</th>
+                <th>Datos</th>
+                <th>Trabajo</th>
+            </tr>
+            <tr>
+                <td><strong>Cliente de por vida</strong></td>
+                <td>Medicación de por vida</td>
+                <td>Compra anual de semillas</td>
+                <td>Visitas repetidas</td>
+                <td>Primas de por vida</td>
+                <td>Pago de préstamo de por vida</td>
+                <td>Comisiones de gestión de por vida</td>
+                <td>Atención de por vida</td>
+                <td>Trabajo gig de por vida</td>
+            </tr>
+            <tr>
+                <td><strong>Incentivo estructural</strong></td>
+                <td>Preferir crónico</td>
+                <td>Preferir dependencia</td>
+                <td>Preferir más</td>
+                <td>Preferir denegación</td>
+                <td>Preferir matrícula alta</td>
+                <td>Preferir activos bajo gestión</td>
+                <td>Preferir máximo compromiso</td>
+                <td>Preferir "contratista independiente"</td>
+            </tr>
+            <tr>
+                <td><strong>Mecanismo de transferencia de costos</strong></td>
+                <td>Monopolio de patentes</td>
+                <td>Patentes de semillas</td>
+                <td>Pago por servicio</td>
+                <td>Denegación, retraso</td>
+                <td>Préstamos estudiantiles</td>
+                <td>Privatización del riesgo</td>
+                <td>Dataficación del comportamiento</td>
+                <td>Externalización de la relación laboral</td>
+            </tr>
+            <tr>
+                <td><strong>Financiarización</strong></td>
+                <td>REITs, private equity</td>
+                <td>Complejo agrofinanciero</td>
+                <td>Cadenas hospitalarias</td>
+                <td>Recompras de aseguradoras</td>
+                <td>Titulización de SLABS</td>
+                <td>Titulización de activos de pensiones</td>
+                <td>Capital de plataforma</td>
+                <td>Capital de plataforma gig</td>
+            </tr>
+            <tr>
+                <td><strong>Resultado estructural</strong></td>
+                <td>400.000 muertes</td>
+                <td>300.000 suicidios de agricultores</td>
+                <td>30% del gasto innecesario</td>
+                <td>Tasa de denegación del 19%</td>
+                <td>Deuda de USD 1,86 billones</td>
+                <td>380 millones sin cobertura</td>
+                <td>Erosión de la capacidad cognitiva</td>
+                <td>Erosión sistemática de los derechos de los trabajadores</td>
+            </tr>
+        </table>
+
+        <p><strong>Estos no son ocho sistemas. Es un sistema, con ocho caras.</strong></p>
+
+        <div class="part-label">Parte Siete: El Criterio del Marco GL</div>
+
+        <div class="highlight-box dual-box">
+            <p><strong>"Los costos no deben transferirse a los vulnerables sin voz."</strong></p>
+            <p>La cadena de transferencia de costos del sistema laboral:</p>
+            <ul>
+                <li><strong>Trabajadores gig</strong>: asumen volatilidad de ingresos, brechas de seguridad social, riesgo de lesiones, control algorítmico.</li>
+                <li><strong>Mujeres, inmigrantes, minorías</strong>: sobrerrepresentados en puestos gig de bajos salarios e inestables. Los informes del Foro Económico Mundial señalan que <strong>en una plataforma importante, los ingresos de las mujeres son solo el 68% de los de los hombres</strong>.</li>
+                <li><strong>Generaciones futuras</strong>: heredan derechos laborales debilitados.</li>
+                <li><strong>Contribuyentes</strong>: pagan por la brecha de seguridad social de los trabajadores de plataforma.</li>
+            </ul>
+            <p><strong>Esto no es un "resultado del mercado". Esto es diseño institucional.</strong></p>
+        </div>
+
+        <div class="highlight-box abuse-box">
+            <p><strong>El Diagnóstico Estructural</strong></p>
+            <p>El sufrimiento no es un "efecto secundario". El sufrimiento es el producto mismo.</p>
+            <p><strong>La máquina debe terminar.</strong> No por despertar moral, sino por restricciones aritméticas. El volumen bruto global de la economía gig alcanzó <strong>USD 582.200 millones</strong> en 2025, proyectado a <strong>USD 1,88 billones</strong> para 2033. Pero <strong>los trabajadores asumen todo el riesgo, y las plataformas capturan todos los ingresos</strong>.</p>
+            <p><strong>El final no es "arreglarlo". El final es reemplazar la estructura de incentivos que lo produce: de "menor costo de empleo, mayor ganancia" a "mayor protección de los trabajadores, economía más estable".</strong></p>
+        </div>
+
+        <div class="signature">
+            Ping Xu
+            <span class="title">Creadora del Marco de Legitimidad Gubernamental · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <span class="site">gfiintel.com</span>
+    <span class="links">
+        <a href="/">← Back to Home</a>
+        <a href="/cost-transfer.html">← Cost Transfer Series</a>
+        <a href="/shared-delusion.html">← Shared Delusion Series</a>
+        <a href="/landjustice.html">← Land Justice Series</a>
+        <a href="/domestic-policy.html">← Domestic Policy Series</a>
+    </span>
+    <span class="copyright">© 2026 GFI Flow Intelligence · 將勞動當作獲利工具的時代正在結束 · The End of Profiting from Labor</span>
+</div>
+
+<script>
+    document.querySelectorAll('.lb-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var lang = this.dataset.lang;
+            document.querySelectorAll('.lb-btn').forEach(function(b) { b.classList.remove('on'); });
+            this.classList.add('on');
+            document.querySelectorAll('.lb').forEach(function(lb) { lb.classList.remove('active'); });
+            var target = document.querySelector('.lb[data-lang="' + lang + '"]');
+            if (target) target.classList.add('active');
+        });
+    });
+</script>
+
+</body>
+</html>
