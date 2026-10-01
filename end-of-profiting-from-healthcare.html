@@ -1,1 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The End of Profiting from Healthcare · 將醫療當作獲利工具的時代正在結束 · El Fin de Lucrar con la Atención Médica</title>
+    <meta name="description" content="A structural critique of the healthcare delivery system — fee-for-service incentives, overtreatment, ineffective treatment, insurance denial, and the financialization of care." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: #0d0a08;
+            color: #e0d6cc;
+            font-family: 'DM Sans', system-ui, sans-serif;
+            font-size: 16px;
+            line-height: 1.9;
+            min-height: 100vh;
+        }
+        .topbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            height: 60px; padding: 0 clamp(18px, 5vw, 48px);
+            display: flex; align-items: center; justify-content: space-between;
+            background: rgba(13, 10, 8, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .logo {
+            font-family: 'DM Mono', monospace; font-size: 11px;
+            letter-spacing: 0.16em; text-transform: uppercase;
+            color: #b8aaa0; text-decoration: none;
+        }
+        .nav-right { display: flex; align-items: center; gap: 12px; }
+        .lang-grp { display: flex; gap: 4px; }
+        .lb-btn {
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            letter-spacing: 0.06em; padding: 4px 10px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 4px; background: transparent;
+            color: #7a7068; cursor: pointer; transition: all 0.2s;
+        }
+        .lb-btn:hover { color: #e0d6cc; border-color: rgba(255, 255, 255, 0.2); }
+        .lb-btn.on { background: #b8aaa0; color: #0d0a08; border-color: #b8aaa0; }
+        .lb { display: none; padding: 100px 40px 70px; max-width: 860px; margin: 0 auto; }
+        .lb.active { display: block; }
+        .page-header {
+            padding: 0 0 32px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 32px;
+        }
+        .page-header .badge {
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            letter-spacing: 0.22em; text-transform: uppercase;
+            color: #8a4a2a; margin-bottom: 12px;
+        }
+        .page-header .title {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: clamp(28px, 3.6vw, 42px);
+            line-height: 1.15; color: #f0e6dc; margin-bottom: 8px;
+        }
+        .page-header .subtitle {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-style: italic; font-size: clamp(16px, 1.7vw, 20px);
+            color: #8a7a6a; margin-bottom: 12px;
+        }
+        .page-header .meta {
+            font-family: 'DM Mono', monospace; font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.2);
+        }
+        .content .part-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #8a4a2a;
+            margin: 3rem 0 1rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(138, 74, 42, 0.3);
+        }
+        .content .part-label:first-of-type { margin-top: 1rem; }
+        .content h2 {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.4rem; color: #f0e6dc;
+            margin: 2rem 0 0.8rem 0;
+            padding-bottom: 0.3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .content h3 {
+            font-size: 1.1rem; font-weight: 600;
+            color: #e0d6cc; margin: 1.6rem 0 0.5rem 0;
+        }
+        .content p { margin-bottom: 1.2rem; color: #d0c6bc; }
+        .content ul, .content ol { margin-bottom: 1.2rem; padding-left: 1.6rem; }
+        .content li { margin-bottom: 0.5rem; color: #d0c6bc; }
+        .content .highlight { color: #c47a4a; font-weight: 600; }
+        .content .highlight-box {
+            background: rgba(138, 74, 42, 0.08);
+            border-left: 4px solid #8a4a2a;
+            padding: 1.2rem 1.8rem;
+            margin: 1.8rem 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .content .highlight-box p { margin-bottom: 0.5rem; }
+        .content .highlight-box strong { color: #f0e6dc; }
+        .content .highlight-box.dual-box {
+            border-left-color: #7DD3FC;
+            background: rgba(125, 211, 252, 0.05);
+        }
+        .content .highlight-box.abuse-box {
+            border-left-color: #f87171;
+            background: rgba(248, 113, 113, 0.05);
+        }
+        .content .highlight-box.abuse-box strong { color: #fecaca; }
+        .content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        .content th {
+            background: rgba(255, 255, 255, 0.04);
+            color: #c47a4a;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 0.6rem 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .content td {
+            padding: 0.6rem 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: #d0c6bc;
+        }
+        .signature {
+            margin-top: 40px; padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.05rem; color: #f0e6dc;
+        }
+        .signature .title {
+            font-family: 'DM Mono', monospace; font-size: 0.6rem;
+            color: rgba(255, 255, 255, 0.25);
+            letter-spacing: 0.06em; display: block; margin-top: 2px;
+        }
+        .footer {
+            text-align: center; padding: 28px 20px 36px;
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            color: rgba(255, 255, 255, 0.18);
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            margin-top: 48px; line-height: 2;
+        }
+        .footer a { color: #b8aaa0; text-decoration: none; margin: 0 8px; }
+        .footer a:hover { color: #e0d6cc; }
+        .footer .site { display: block; margin-bottom: 8px; color: rgba(255, 255, 255, 0.25); letter-spacing: 0.06em; }
+        .footer .links { display: block; margin-bottom: 8px; }
+        .footer .copyright { color: rgba(255, 255, 255, 0.12); display: block; }
+        @media (max-width: 640px) {
+            .lb { padding: 80px 20px 50px; }
+            .topbar { padding: 0 14px; }
+        }
+    </style>
+</head>
+<body>
 
+<div class="topbar">
+    <a href="/" class="logo">← Home</a>
+    <div class="nav-right">
+        <div class="lang-grp">
+            <button class="lb-btn on" data-lang="en">EN</button>
+            <button class="lb-btn" data-lang="tw">繁</button>
+            <button class="lb-btn" data-lang="cn">简</button>
+            <button class="lb-btn" data-lang="es">ES</button>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 英文版 ==================== -->
+<div class="lb active" data-lang="en">
+    <div class="page-header">
+        <div class="badge">Cost Transfer Series · Essay III</div>
+        <div class="title">The End of Profiting from Healthcare</div>
+        <div class="subtitle">How the delivery system converts patients into revenue streams — and why overtreatment is rational behavior</div>
+        <div class="meta">Ping Xu · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+
+        <div class="part-label">Prologue: A Different Machine, the Same Logic</div>
+        <p>The pharmaceutical industry manufactures lifelong customers through patented drugs. The healthcare delivery system manufactures revenue streams through <strong>volume</strong>. The structure is the same: identify a group with no bargaining power (patients), convert their need (treatment) into a "service that must be purchased," block alternatives (prevention, lifestyle, cheaper options), profit from their continued dependence, and transfer the cost to future generations.</p>
+        <p>The numbers confirm it. The US Congressional Budget Office reports that <strong>up to 30% of US healthcare spending may be unnecessary</strong>. Former Chinese Vice Minister of Health Huang Jiefu publicly stated that the proportion of ineffective treatment <strong>reaches 20%–40%</strong>. The structure is not a "market failure." It is the market working exactly as designed.</p>
+
+        <div class="part-label">Part One: Fee-for-Service — When Income Is Tied to Volume</div>
+
+        <p><strong>The first structural principle of healthcare delivery is identical to every other cost transfer system: income must be tied to volume, not to outcome.</strong></p>
+        <p>Under "fee-for-service," a doctor or hospital is paid for each test, each procedure, each visit, each prescription. This is not a design flaw. It is the design. <strong>When income is tied to tests, drugs, and surgeries, overtreatment ceases to be an anomaly and becomes "rational behavior."</strong></p>
+        <p>The classic documentation is from <em>The Healing Myth</em> by German physician Jörg Blech. <strong>"Discectomy has been proven to fail in 40% of cases"</strong> — yet of 220 British doctors surveyed, <strong>not a single one would accept surgery for their own back pain</strong>. At the Leipzig University Hospital, an experiment with 100 patients with 75% coronary artery stenosis found that <strong>the surgery group's one-year recovery rate was 70%, while the control group — no surgery, just exercise — had a recovery rate of 88%</strong>.</p>
+        <p>These are not "individual doctor errors." They are the logical output of a system where <strong>the more you do, the more you get paid</strong>.</p>
+
+        <div class="part-label">Part Two: Ineffective Treatment — The Systematic Consumption of Patients</div>
+
+        <p><strong>Former Vice Minister of Health Huang Jiefu's public characterization is the most direct: "Many drugs shouldn't be taken but are; many treatments aren't needed but are done; many surgeries make patients suffer more, yet are still performed."</strong> The proportion of ineffective treatment <strong>reaches 20%–40%</strong>.</p>
+        <p>In China, ineffective hospitalization rates reach <strong>14.62%</strong>, and ineffective hospital days reach <strong>24.88%</strong>. In the US, the Congressional Budget Office estimates <strong>up to 30% of healthcare spending may be unnecessary</strong>. The UK's NHS, Australia's Medicare, Germany's statutory insurance — the numbers vary, but the structure is the same.</p>
+        <p>A 2023 systematic review found that <strong>94% of testosterone replacement therapy prescriptions fell outside guideline recommendations</strong>, and <strong>61% of diabetic patients were being treated to potentially harmful low blood sugar levels</strong> (below 7%). Neither of these is "medicine." Both are <strong>volume-driven treatment</strong>.</p>
+
+        <div class="part-label">Part Three: The Evidence — What Academic Research Actually Shows</div>
+
+        <p>Academic research does not support the claim that more treatment equals better outcomes. It supports the opposite.</p>
+        <p>The most comprehensive study of overtreatment in modern healthcare systems was published in <em>The Lancet</em> in 2017. The authors — a global consortium of medical researchers — analyzed the gap between evidence and practice across seven countries and concluded: <strong>"The proportion of patients receiving unnecessary care is substantial and represents a significant source of waste and harm."</strong> The study identified three structural drivers:</p>
+        <ul>
+            <li><strong>Financial incentives:</strong> Fee-for-service payment models reward volume over value.</li>
+            <li><strong>Defensive medicine:</strong> Fear of litigation drives unnecessary testing.</li>
+            <li><strong>Information asymmetry:</strong> Patients cannot evaluate whether a treatment is necessary.</li>
+        </ul>
+        <p>These three drivers are not "individual doctor failures." They are <strong>structural properties of the delivery system</strong>. The Lancet study's conclusion is unambiguous: <strong>the problem is the payment model, not the physician.</strong></p>
+
+        <div class="part-label">Part Four: Insurance Denial — The Second Layer of Extraction</div>
+
+        <p>If fee-for-service is the first layer, insurance denial is the second. <strong>You are first charged for treatments you may not need, then denied coverage for treatments you do need.</strong></p>
+        <p>In the US, a 2023 KFF investigation found that <strong>17% of in-network claims were denied by ACA marketplace insurers</strong>, and fewer than <strong>0.2%</strong> of those denials were formally appealed. The reason: <strong>the appeal process is deliberately difficult</strong>. For patients in the middle of treatment, navigating a complex appeals system is not an option. They pay out of pocket, or they go without.</p>
+        <p>The 2024 murder of UnitedHealthcare CEO Brian Thompson was condemned across the political spectrum. But the public reaction was not just condemnation. A <strong>Bloomberg poll</strong> found that a significant portion of Americans expressed <em>understanding</em> of the motive. The reason: <strong>UnitedHealthcare had a 32% denial rate for in-network claims</strong> — the highest in the industry. The company was valued at over <strong>USD 500 billion</strong>, and had spent over <strong>USD 10 billion</strong> on stock buybacks in the previous decade.</p>
+        <p>The "delayed claim" is the insurance industry's most effective tool. <strong>Most denials are overturned on appeal — but the patient must first survive the delay.</strong></p>
+
+        <div class="part-label">Part Five: Financialization — When Hospitals Become Asset Classes</div>
+
+        <p><strong>The third layer is financialization.</strong> Hospitals and clinics, once public or non-profit institutions, are increasingly owned by private equity firms, REITs, and hospital chains with shareholder obligations.</p>
+        <p>Steward Health Care is the clearest case. The company, owned by private equity firm Cerberus, <strong>sold its hospital real estate to a REIT, then leased it back</strong>. When the REIT raised rents, Steward could not pay. The company filed for bankruptcy in May 2024, and <strong>two hospitals in Massachusetts closed within a year</strong>. The patients had no say in the transaction.</p>
+        <p>In the US, <strong>the share of hospitals owned by private equity has grown from near zero in 2000 to over 10% today</strong>. In the UK, <strong>over 10% of NHS-funded care is delivered by private providers</strong>. In Australia, <strong>private hospital operators control over 40% of hospital beds</strong>.</p>
+        <p>The structural effect is identical across jurisdictions: <strong>the hospital is no longer a public good; it is an asset class. Its purpose is not to treat patients; it is to generate returns.</strong></p>
+
+        <div class="part-label">Part Six: The C-Section Rate — A Case Study in Structural Distortion</div>
+
+        <p>The cesarean section rate is the clearest single indicator of the structural distortion in healthcare delivery.</p>
+        <p>The WHO recommends a C-section rate of <strong>10–15%</strong>. In 2021, the rate was <strong>32.1% in the US</strong>, <strong>34.4% in Australia</strong>, <strong>32.4% in Germany</strong>, and over <strong>50% in Brazil</strong>. China's rate, after decades of increase, has stabilized at around <strong>36%</strong>.</p>
+        <p>Why? Because a C-section is <strong>billable, predictable, and fast</strong>. A vaginal delivery is <strong>unpredictable and time-intensive</strong>. Under fee-for-service payment, the hospital is financially incentivized to choose the C-section. <strong>The patient's clinical need is secondary to the payment structure.</strong></p>
+        <p>The rate does not reflect "medical necessity." It reflects the <strong>payment model</strong>.</p>
+
+        <div class="part-label">Part Seven: Wait Times — The Cost Transfer to the Patient</div>
+
+        <p><strong>The cost of the delivery system is not just financial. It is temporal.</strong></p>
+        <p>Canada's Fraser Institute reports that the median wait time from GP referral to specialist treatment in 2024 was <strong>30 weeks</strong> — <strong>three times longer than the 1993 benchmark</strong>. In the UK, the NHS waiting list reached <strong>7.6 million</strong> in 2024, with <strong>over 300,000 waiting more than a year</strong>. In Australia, the median wait for elective surgery is <strong>over 40 days</strong>, with some specialties exceeding <strong>250 days</strong>.</p>
+        <p><strong>These wait times are not "capacity problems." They are the structural output of underinvestment in public delivery.</strong> When public systems are deliberately starved of resources, patients are pushed into private systems — where they pay, again.</p>
+        <p>The cost transfer chain is clear: <strong>the patient pays in taxes, then pays in wait time, then pays again out of pocket.</strong></p>
+
+        <div class="part-label">Part Eight: Structural Identity — Healthcare Is Not Different from Pharmaceuticals</div>
+
+        <table>
+            <tr>
+                <th>Dimension</th>
+                <th>Pharmaceuticals</th>
+                <th>Healthcare</th>
+            </tr>
+            <tr>
+                <td><strong>Revenue driver</strong></td>
+                <td>Lifelong medication</td>
+                <td>Volume of tests, procedures, visits</td>
+            </tr>
+            <tr>
+                <td><strong>Structural incentive</strong></td>
+                <td>Prefer chronic over curable</td>
+                <td>Prefer more over less</td>
+            </tr>
+            <tr>
+                <td><strong>Overtreatment</strong></td>
+                <td>Off-label prescribing</td>
+                <td>Unnecessary tests, procedures</td>
+            </tr>
+            <tr>
+                <td><strong>Cost transfer mechanism</strong></td>
+                <td>Patent monopoly</td>
+                <td>Fee-for-service, insurance denial</td>
+            </tr>
+            <tr>
+                <td><strong>Evidence manipulation</strong></td>
+                <td>Ghostwriting</td>
+                <td>Surrogate endpoints, defensive medicine</td>
+            </tr>
+            <tr>
+                <td><strong>Financialization</strong></td>
+                <td>REITs, private equity</td>
+                <td>Hospital chains, private equity</td>
+            </tr>
+            <tr>
+                <td><strong>Structural output</strong></td>
+                <td>400,000 opioid deaths</td>
+                <td>30% of spending unnecessary</td>
+            </tr>
+        </table>
+
+        <p><strong>These are not two systems. They are one system, with two faces.</strong></p>
+
+        <div class="part-label">Part Nine: The Counterfactual — What Works</div>
+
+        <p><strong>The argument that "there is no alternative" is falsified by the existence of alternatives.</strong></p>
+        <ul>
+            <li><strong>Taiwan's single-payer system</strong> delivers universal coverage at <strong>6.6% of GDP</strong> — less than half the US rate. Wait times are longer than in the US, but <strong>no one is denied care for inability to pay</strong>.</li>
+            <li><strong>Cuba's family doctor system</strong>, despite severe resource constraints, produces <strong>life expectancy comparable to the US</strong> at a fraction of the cost.</li>
+            <li><strong>Costa Rica's public health system</strong> achieves <strong>life expectancy higher than the US</strong> at <strong>less than one-tenth the per-capita cost</strong>.</li>
+            <li><strong>China's barefoot doctor system</strong> (1960s–1980s) achieved dramatic reductions in infant mortality and infectious disease through <strong>prevention and basic care</strong>, before being dismantled by market reforms.</li>
+        </ul>
+        <p><strong>These are not "developing country exceptions." They are proofs that the structural distortion is a choice, not a necessity.</strong></p>
+
+        <div class="part-label">Part Ten: The GL Framework's Criterion</div>
+
+        <div class="highlight-box dual-box">
+            <p><strong>"Costs must not be transferred to the voiceless vulnerable."</strong></p>
+            <p>The cost transfer chain of the healthcare delivery system:</p>
+            <ul>
+                <li><strong>Patients</strong>: charged for unnecessary care, denied coverage for necessary care, denied time by waiting lists.</li>
+                <li><strong>Healthcare workers</strong>: forced to practice defensive medicine, exhausted by administrative burden.</li>
+                <li><strong>Taxpayers</strong>: fund public systems, then pay again out of pocket when public systems are underfunded.</li>
+                <li><strong>Future generations</strong>: inherit the debt of today's spending.</li>
+            </ul>
+            <p><strong>This is not a "market outcome." This is institutional design.</strong></p>
+        </div>
+
+        <div class="highlight-box abuse-box">
+            <p><strong>The Structural Diagnosis</strong></p>
+            <p>The healthcare delivery system is not "broken." It is working exactly as designed. When income is tied to volume, volume increases. When insurance denials are profitable, denials increase. When hospitals become asset classes, patients become cost items.</p>
+            <p><strong>This machine must end.</strong> Not because of moral awakening, but because of arithmetic constraints. The US spends <strong>17.8% of GDP on healthcare</strong> — more than any other country — with outcomes that rank <strong>below dozens of countries that spend a fraction as much</strong>. The system's operating cost has exceeded its return.</p>
+            <p><strong>The end is not "fixing" it. The end is replacing the payment model that produces it.</strong></p>
+        </div>
+
+        <div class="signature">
+            Ping Xu
+            <span class="title">Creator of the Governance Legitimacy Framework · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 繁體中文版 ==================== -->
+<div class="lb" data-lang="tw">
+    <div class="page-header">
+        <div class="badge">成本轉移系列 · 第三篇</div>
+        <div class="title">將醫療當作獲利工具的時代正在結束</div>
+        <div class="subtitle">交付系統如何把病人變成收入來源——以及為什麼過度醫療是理性行為</div>
+        <div class="meta">徐萍 · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+
+        <div class="part-label">前言：不同的機器，同樣的邏輯</div>
+        <p>製藥業用專利藥物製造終身客戶。醫療交付系統用<strong>數量</strong>製造收入來源。結構是一樣的：識別沒有議價能力的群體（病人），把他們的需求（治療）轉化為「必須購買的服務」，阻斷替代方案（預防、生活方式、更便宜的選項），從他們的持續依賴中獲利，並把成本轉移給未來世代。</p>
+        <p>數字證實了這一點。美國國會預算辦公室報告指出，<strong>高達30%的美國醫療支出可能是不必要的</strong>。中國原衛生部副部長黃潔夫公開表示，無效治療的比例<strong>達到20%-40%</strong>。這不是「市場失靈」。這是市場按設計運作。</p>
+
+        <div class="part-label">第一部分：按項目付費——當收入與數量掛鉤</div>
+
+        <p><strong>醫療交付的第一個結構性原理，與所有其他成本轉移系統完全一致：收入必須與數量掛鉤，而不是與結果掛鉤。</strong></p>
+        <p>在「按項目付費」下，醫生或醫院為每一項檢查、每一個程序、每一次就診、每一張處方收費。這不是設計缺陷。這就是設計。<strong>當收入與檢查、藥品、手術量掛鉤時，過度醫療就不再是異常，而是「理性行為」。</strong></p>
+        <p>經典文獻來自德國醫生尤格·布來克的《無效的醫療》。<strong>「椎間盤切除術已被證實有四成失敗」</strong>——但英國調查的220位醫生中，<strong>沒有一位願意因腰痛而接受手術治療</strong>。德國萊比錫醫院的實驗顯示，100位冠狀動脈狹窄達75%的患者，<strong>手術組一年後康復率70%，而不做手術、僅鍛鍊的對照組康復率卻達到88%</strong>。</p>
+        <p>這些不是「個別醫生的失誤」。它們是一個系統的邏輯產出，在這個系統裡，<strong>你做得越多，拿得越多</strong>。</p>
+
+        <div class="part-label">第二部分：無效治療——系統性地消耗病人</div>
+
+        <p><strong>原衛生部副部長黃潔夫的公開定性是最直接的：「很多藥不該吃卻在吃，很多治療不需要卻在做，很多手術會使病人更痛苦，卻也在做。」</strong>無效治療的比例<strong>達到20%-40%</strong>。</p>
+        <p>在中國，無效住院比例達<strong>14.62%</strong>，無效住院日達<strong>24.88%</strong>。在美國，國會預算辦公室估計<strong>高達30%的醫療支出可能是不必要的</strong>。英國的NHS、澳洲的Medicare、德國的法定保險——數字不同，但結構是一樣的。</p>
+        <p>一項2023年的系統性綜述發現，<strong>94%的睾酮替代療法超出了指南推薦</strong>，<strong>61%的糖尿病患者被治療到可能有害的低血糖水平</strong>（低於7%）。這兩者都不是「醫學」。兩者都是<strong>數量驅動的治療</strong>。</p>
+
+        <div class="part-label">第三部分：證據——學術研究實際顯示了什麼</div>
+
+        <p>學術研究不支持「更多治療等於更好結果」的主張。它支持相反的結論。</p>
+        <p>關於現代醫療系統中過度醫療的最全面研究，發表在2017年的《刺胳針》（The Lancet）。作者——一個全球醫學研究者聯盟——分析了七個國家的證據與實踐之間的差距，結論是：<strong>「接受不必要照護的患者比例是巨大的，代表了浪費和傷害的重要來源。」</strong>該研究確定了三個結構性驅動因素：</p>
+        <ul>
+            <li><strong>財務激勵：</strong> 按項目付費的支付模式獎勵數量而非價值。</li>
+            <li><strong>防禦性醫療：</strong> 對訴訟的恐懼驅動不必要的檢查。</li>
+            <li><strong>資訊不對稱：</strong> 患者無法評估治療是否必要。</li>
+        </ul>
+        <p>這三個驅動因素不是「個別醫生的失敗」。它們是<strong>交付系統的結構性屬性</strong>。《刺胳針》研究的結論是明確的：<strong>問題在支付模式，不在醫生。</strong></p>
+
+        <div class="part-label">第四部分：保險拒賠——第二層榨取</div>
+
+        <p>如果按項目付費是第一層，保險拒賠就是第二層。<strong>你先為可能不需要的治療被收費，然後為確實需要的治療被拒賠。</strong></p>
+        <p>在美國，2023年KFF的調查發現，<strong>17%的網路內索賠被ACA市場保險公司拒賠</strong>，而這些拒賠中只有不到<strong>0.2%</strong>被正式上訴。原因是：<strong>上訴程序被刻意設計得很困難</strong>。對於正在治療中的患者，駕馭複雜的上訴系統不是一個選項。他們自費，或者放棄治療。</p>
+        <p>2024年UnitedHealthcare CEO Brian Thompson被謀殺，受到政治光譜各方的譴責。但公眾的反應不僅僅是譴責。一項<strong>彭博社民調</strong>發現，相當一部分美國人對動機表示<em>理解</em>。原因是：<strong>UnitedHealthcare對網路內索賠的拒賠率達32%</strong>——業內最高。該公司估值超過<strong>5000億美元</strong>，並在過去十年花費超過<strong>100億美元</strong>回購股票。</p>
+        <p>「延遲索賠」是保險業最有效的工具。<strong>大多數拒賠在上訴後被推翻——但患者必須先度過延遲期。</strong></p>
+
+        <div class="part-label">第五部分：金融化——當醫院變成資產類別</div>
+
+        <p><strong>第三層是金融化。</strong>醫院和診所，曾經是公共或非營利機構，越來越多地被私募股權公司、REITs和對股東有義務的醫院連鎖擁有。</p>
+        <p>Steward Health Care是最清晰的案例。該公司由私募股權公司Cerberus擁有，<strong>將醫院房地產出售給REIT，然後回租</strong>。當REIT提高租金時，Steward無法支付。該公司於2024年5月申請破產，<strong>麻薩諸塞州兩家醫院在一年內關閉</strong>。病人對這筆交易沒有任何發言權。</p>
+        <p>在美國，<strong>私募股權擁有的醫院比例從2000年的接近零增長到今天的超過10%</strong>。在英國，<strong>超過10%的NHS資助照護由私人提供者交付</strong>。在澳洲，<strong>私人醫院運營商控制超過40%的醫院床位</strong>。</p>
+        <p>結構性效果在各個司法管轄區完全相同：<strong>醫院不再是公共財；它是資產類別。它的目的不是治療病人；是產生回報。</strong></p>
+
+        <div class="part-label">第六部分：剖腹產率——結構性扭曲的案例研究</div>
+
+        <p>剖腹產率是醫療交付中結構性扭曲最清晰的單一指標。</p>
+        <p>WHO建議的剖腹產率是<strong>10-15%</strong>。2021年，美國的比率是<strong>32.1%</strong>，澳洲是<strong>34.4%</strong>，德國是<strong>32.4%</strong>，巴西超過<strong>50%</strong>。中國的比率在數十年的增長後，穩定在約<strong>36%</strong>。</p>
+        <p>為什麼？因為剖腹產是<strong>可計費的、可預測的、快速的</strong>。陰道分娩是<strong>不可預測的、耗時的</strong>。在按項目付費下，醫院在財務上被激勵選擇剖腹產。<strong>病人的臨床需求次於支付結構。</strong></p>
+        <p>這個比率不反映「醫療必要性」。它反映<strong>支付模式</strong>。</p>
+
+        <div class="part-label">第七部分：等待時間——成本向病人的轉移</div>
+
+        <p><strong>交付系統的成本不僅是財務的。它是時間的。</strong></p>
+        <p>加拿大Fraser Institute報告指出，2024年從全科醫生轉診到專科治療的中位等待時間為<strong>30週</strong>——<strong>是1993年基準的三倍</strong>。在英國，NHS等待名單在2024年達到<strong>760萬</strong>，其中<strong>超過30萬人等待超過一年</strong>。在澳洲，選擇性手術的中位等待時間<strong>超過40天</strong>，某些專科超過<strong>250天</strong>。</p>
+        <p><strong>這些等待時間不是「容量問題」。它們是公共交付投資不足的結構性產出。</strong>當公共系統被刻意剝奪資源時，病人被推向私人系統——在那裡他們再次付費。</p>
+        <p>成本轉移鏈是清晰的：<strong>病人先以稅收支付，再以等待時間支付，然後再次自費支付。</strong></p>
+
+        <div class="part-label">第八部分：結構同一性——醫療與製藥沒有不同</div>
+
+        <table>
+            <tr>
+                <th>維度</th>
+                <th>製藥</th>
+                <th>醫療</th>
+            </tr>
+            <tr>
+                <td><strong>收入驅動</strong></td>
+                <td>終身用藥</td>
+                <td>檢查、程序、就診的數量</td>
+            </tr>
+            <tr>
+                <td><strong>結構性激勵</strong></td>
+                <td>偏好慢性而非可治癒</td>
+                <td>偏好更多而非更少</td>
+            </tr>
+            <tr>
+                <td><strong>過度治療</strong></td>
+                <td>標籤外處方</td>
+                <td>不必要的檢查、程序</td>
+            </tr>
+            <tr>
+                <td><strong>成本轉移機制</strong></td>
+                <td>專利壟斷</td>
+                <td>按項目付費、保險拒賠</td>
+            </tr>
+            <tr>
+                <td><strong>證據操控</strong></td>
+                <td>幽靈作者</td>
+                <td>替代終點、防禦性醫療</td>
+            </tr>
+            <tr>
+                <td><strong>金融化</strong></td>
+                <td>REITs、私募股權</td>
+                <td>醫院連鎖、私募股權</td>
+            </tr>
+            <tr>
+                <td><strong>結構性產出</strong></td>
+                <td>40萬阿片類藥物死亡</td>
+                <td>30%支出不必要</td>
+            </tr>
+        </table>
+
+        <p><strong>這不是兩個系統。這是一個系統，有兩張臉。</strong></p>
+
+        <div class="part-label">第九部分：反事實——什麼有效</div>
+
+        <p><strong>「沒有替代方案」的論點，被替代方案的存在所否證。</strong></p>
+        <ul>
+            <li><strong>台灣的單一支付者系統</strong>以<strong>GDP的6.6%</strong>提供全民覆蓋——不到美國比率的一半。等待時間比美國長，但<strong>沒有人因無力支付而被拒絕照護</strong>。</li>
+            <li><strong>古巴的家庭醫生系統</strong>，儘管資源嚴重受限，卻以極低的成本產生<strong>與美國相當的預期壽命</strong>。</li>
+            <li><strong>哥斯大黎加的公共衛生系統</strong>以<strong>不到美國人均成本的十分之一</strong>實現<strong>高於美國的預期壽命</strong>。</li>
+            <li><strong>中國的赤腳醫生系統</strong>（1960-1980年代）通過<strong>預防和基本照護</strong>實現了嬰兒死亡率和傳染病的急劇下降，直到被市場改革拆解。</li>
+        </ul>
+        <p><strong>這些不是「發展中國家的例外」。它們是證明：結構性扭曲是一種選擇，不是必然。</strong></p>
+
+        <div class="part-label">第十部分：GL框架的判據</div>
+
+        <div class="highlight-box dual-box">
+            <p><strong>「成本不得轉移給無聲的弱者。」</strong></p>
+            <p>醫療交付系統的成本轉移鏈：</p>
+            <ul>
+                <li><strong>病人</strong>：為不必要的照護被收費，為必要的照護被拒賠，被等待名單剝奪時間。</li>
+                <li><strong>醫療工作者</strong>：被迫實行防禦性醫療，被行政負擔耗盡。</li>
+                <li><strong>納稅人</strong>：資助公共系統，然後在公共系統資金不足時再次自費支付。</li>
+                <li><strong>未來世代</strong>：繼承今天支出的債務。</li>
+            </ul>
+            <p><strong>這不是「市場結果」。這是制度設計。</strong></p>
+        </div>
+
+        <div class="highlight-box abuse-box">
+            <p><strong>結構診斷</strong></p>
+            <p>醫療交付系統不是「壞了」。它正是按設計運作。當收入與數量掛鉤時，數量就會增加。當保險拒賠有利可圖時，拒賠就會增加。當醫院變成資產類別時，病人就變成成本項目。</p>
+            <p><strong>這台機器必須終結。</strong> 不是因為道德覺醒，而是因為算術約束。美國將<strong>GDP的17.8%用於醫療</strong>——比任何其他國家都多——但結果排名<strong>低於數十個支出僅為其零頭的國家</strong>。系統的運轉成本已經超過了它的收益。</p>
+            <p><strong>終結不是「修復」它。終結是替換產生它的支付模式。</strong></p>
+        </div>
+
+        <div class="signature">
+            徐萍
+            <span class="title">治理正當性框架發明人 · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 簡體中文版 ==================== -->
+<div class="lb" data-lang="cn">
+    <div class="page-header">
+        <div class="badge">成本转移系列 · 第三篇</div>
+        <div class="title">将医疗当作获利工具的时代正在结束</div>
+        <div class="subtitle">交付系统如何把病人变成收入来源——以及为什么过度医疗是理性行为</div>
+        <div class="meta">徐萍 · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+
+        <div class="part-label">前言：不同的机器，同样的逻辑</div>
+        <p>制药业用专利药物制造终身客户。医疗交付系统用<strong>数量</strong>制造收入来源。结构是一样的：识别没有议价能力的群体（病人），把他们的需求（治疗）转化为「必须购买的服务」，阻断替代方案（预防、生活方式、更便宜的选项），从他们的持续依赖中获利，并把成本转移给未来世代。</p>
+        <p>数字证实了这一点。美国国会预算办公室报告指出，<strong>高达30%的美国医疗支出可能是不必要的</strong>。中国原卫生部副部长黄洁夫公开表示，无效治疗的比例<strong>达到20%-40%</strong>。这不是「市场失灵」。这是市场按设计运作。</p>
+
+        <div class="part-label">第一部分：按项目付费——当收入与数量挂钩</div>
+
+        <p><strong>医疗交付的第一个结构性原理，与所有其他成本转移系统完全一致：收入必须与数量挂钩，而不是与结果挂钩。</strong></p>
+        <p>在「按项目付费」下，医生或医院为每一项检查、每一个程序、每一次就诊、每一张处方收费。这不是设计缺陷。这就是设计。<strong>当收入与检查、药品、手术量挂钩时，过度医疗就不再是异常，而是「理性行为」。</strong></p>
+        <p>经典文献来自德国医生尤格·布来克的《无效的医疗》。<strong>「椎间盘切除术已被证实有四成失败」</strong>——但英国调查的220位医生中，<strong>没有一位愿意因腰痛而接受手术治疗</strong>。德国莱比锡医院的实验显示，100位冠状动脉狭窄达75%的患者，<strong>手术组一年后康复率70%，而不做手术、仅锻炼的对照组康复率却达到88%</strong>。</p>
+        <p>这些不是「个别医生的失误」。它们是一个系统的逻辑产出，在这个系统里，<strong>你做得越多，拿得越多</strong>。</p>
+
+        <div class="part-label">第二部分：无效治疗——系统性地消耗病人</div>
+
+        <p><strong>原卫生部副部长黄洁夫的公开定性是最直接的：「很多药不该吃却在吃，很多治疗不需要却在做，很多手术会使病人更痛苦，却也在做。」</strong>无效治疗的比例<strong>达到20%-40%</strong>。</p>
+        <p>在中国，无效住院比例达<strong>14.62%</strong>，无效住院日达<strong>24.88%</strong>。在美国，国会预算办公室估计<strong>高达30%的医疗支出可能是不必要的</strong>。英国的NHS、澳大利亚的Medicare、德国的法定保险——数字不同，但结构是一样的。</p>
+        <p>一项2023年的系统性综述发现，<strong>94%的睾酮替代疗法超出了指南推荐</strong>，<strong>61%的糖尿病患者被治疗到可能有害的低血糖水平</strong>（低于7%）。这两者都不是「医学」。两者都是<strong>数量驱动的治疗</strong>。</p>
+
+        <div class="part-label">第三部分：证据——学术研究实际显示了什么</div>
+
+        <p>学术研究不支持「更多治疗等于更好结果」的主张。它支持相反的结论。</p>
+        <p>关于现代医疗系统中过度医疗的最全面研究，发表在2017年的《柳叶刀》（The Lancet）。作者——一个全球医学研究者联盟——分析了七个国家的证据与实践之间的差距，结论是：<strong>「接受不必要照护的患者比例是巨大的，代表了浪费和伤害的重要来源。」</strong>该研究确定了三个结构性驱动因素：</p>
+        <ul>
+            <li><strong>财务激励：</strong> 按项目付费的支付模式奖励数量而非价值。</li>
+            <li><strong>防御性医疗：</strong> 对诉讼的恐惧驱动不必要的检查。</li>
+            <li><strong>信息不对称：</strong> 患者无法评估治疗是否必要。</li>
+        </ul>
+        <p>这三个驱动因素不是「个别医生的失败」。它们是<strong>交付系统的结构性属性</strong>。《柳叶刀》研究的结论是明确的：<strong>问题在支付模式，不在医生。</strong></p>
+
+        <div class="part-label">第四部分：保险拒赔——第二层榨取</div>
+
+        <p>如果按项目付费是第一层，保险拒赔就是第二层。<strong>你先为可能不需要的治疗被收费，然后为确实需要的治疗被拒赔。</strong></p>
+        <p>在美国，2023年KFF的调查发现，<strong>17%的网络内索赔被ACA市场保险公司拒赔</strong>，而这些拒赔中只有不到<strong>0.2%</strong>被正式上诉。原因是：<strong>上诉程序被刻意设计得很困难</strong>。对于正在治疗中的患者，驾驭复杂的上诉系统不是一个选项。他们自费，或者放弃治疗。</p>
+        <p>2024年UnitedHealthcare CEO Brian Thompson被谋杀，受到政治光谱各方的谴责。但公众的反应不仅仅是谴责。一项<strong>彭博社民调</strong>发现，相当一部分美国人对动机表示<em>理解</em>。原因是：<strong>UnitedHealthcare对网络内索赔的拒赔率达32%</strong>——业内最高。该公司估值超过<strong>5000亿美元</strong>，并在过去十年花费超过<strong>100亿美元</strong>回购股票。</p>
+        <p>「延迟索赔」是保险业最有效的工具。<strong>大多数拒赔在上诉后被推翻——但患者必须先度过延迟期。</strong></p>
+
+        <div class="part-label">第五部分：金融化——当医院变成资产类别</div>
+
+        <p><strong>第三层是金融化。</strong>医院和诊所，曾经是公共或非营利机构，越来越多地被私募股权公司、REITs和对股东有义务的医院连锁拥有。</p>
+        <p>Steward Health Care是最清晰的案例。该公司由私募股权公司Cerberus拥有，<strong>将医院房地产出售给REIT，然后回租</strong>。当REIT提高租金时，Steward无法支付。该公司于2024年5月申请破产，<strong>马萨诸塞州两家医院在一年内关闭</strong>。病人对这笔交易没有任何发言权。</p>
+        <p>在美国，<strong>私募股权拥有的医院比例从2000年的接近零增长到今天的超过10%</strong>。在英国，<strong>超过10%的NHS资助照护由私人提供者交付</strong>。在澳大利亚，<strong>私人医院运营商控制超过40%的医院床位</strong>。</p>
+        <p>结构性效果在各个司法管辖区完全相同：<strong>医院不再是公共财；它是资产类别。它的目的不是治疗病人；是产生回报。</strong></p>
+
+        <div class="part-label">第六部分：剖腹产率——结构性扭曲的案例研究</div>
+
+        <p>剖腹产率是医疗交付中结构性扭曲最清晰的单一指标。</p>
+        <p>WHO建议的剖腹产率是<strong>10-15%</strong>。2021年，美国的比率是<strong>32.1%</strong>，澳大利亚是<strong>34.4%</strong>，德国是<strong>32.4%</strong>，巴西超过<strong>50%</strong>。中国的比率在数十年的增长后，稳定在约<strong>36%</strong>。</p>
+        <p>为什么？因为剖腹产是<strong>可计费的、可预测的、快速的</strong>。阴道分娩是<strong>不可预测的、耗时的</strong>。在按项目付费下，医院在财务上被激励选择剖腹产。<strong>病人的临床需求次于支付结构。</strong></p>
+        <p>这个比率不反映「医疗必要性」。它反映<strong>支付模式</strong>。</p>
+
+        <div class="part-label">第七部分：等待时间——成本向病人的转移</div>
+
+        <p><strong>交付系统的成本不仅是财务的。它是时间的。</strong></p>
+        <p>加拿大Fraser Institute报告指出，2024年从全科医生转诊到专科治疗的中位等待时间为<strong>30周</strong>——<strong>是1993年基准的三倍</strong>。在英国，NHS等待名单在2024年达到<strong>760万</strong>，其中<strong>超过30万人等待超过一年</strong>。在澳大利亚，选择性手术的中位等待时间<strong>超过40天</strong>，某些专科超过<strong>250天</strong>。</p>
+        <p><strong>这些等待时间不是「容量问题」。它们是公共交付投资不足的结构性产出。</strong>当公共系统被刻意剥夺资源时，病人被推向私人系统——在那里他们再次付费。</p>
+        <p>成本转移链是清晰的：<strong>病人先以税收支付，再以等待时间支付，然后再次自费支付。</strong></p>
+
+        <div class="part-label">第八部分：结构同一性——医疗与制药没有不同</div>
+
+        <table>
+            <tr>
+                <th>维度</th>
+                <th>制药</th>
+                <th>医疗</th>
+            </tr>
+            <tr>
+                <td><strong>收入驱动</strong></td>
+                <td>终身用药</td>
+                <td>检查、程序、就诊的数量</td>
+            </tr>
+            <tr>
+                <td><strong>结构性激励</strong></td>
+                <td>偏好慢性而非可治愈</td>
+                <td>偏好更多而非更少</td>
+            </tr>
+            <tr>
+                <td><strong>过度治疗</strong></td>
+                <td>标签外处方</td>
+                <td>不必要的检查、程序</td>
+            </tr>
+            <tr>
+                <td><strong>成本转移机制</strong></td>
+                <td>专利垄断</td>
+                <td>按项目付费、保险拒赔</td>
+            </tr>
+            <tr>
+                <td><strong>证据操控</strong></td>
+                <td>幽灵作者</td>
+                <td>替代终点、防御性医疗</td>
+            </tr>
+            <tr>
+                <td><strong>金融化</strong></td>
+                <td>REITs、私募股权</td>
+                <td>医院连锁、私募股权</td>
+            </tr>
+            <tr>
+                <td><strong>结构性产出</strong></td>
+                <td>40万阿片类药物死亡</td>
+                <td>30%支出不必要</td>
+            </tr>
+        </table>
+
+        <p><strong>这不是两个系统。这是一个系统，有两张脸。</strong></p>
+
+        <div class="part-label">第九部分：反事实——什么有效</div>
+
+        <p><strong>「没有替代方案」的论点，被替代方案的存在所否证。</strong></p>
+        <ul>
+            <li><strong>台湾的单一支付者系统</strong>以<strong>GDP的6.6%</strong>提供全民覆盖——不到美国比率的一半。等待时间比美国长，但<strong>没有人因无力支付而被拒绝照护</strong>。</li>
+            <li><strong>古巴的家庭医生系统</strong>，尽管资源严重受限，却以极低的成本产生<strong>与美国相当的预期寿命</strong>。</li>
+            <li><strong>哥斯达黎加的公共卫生系统</strong>以<strong>不到美国人均成本的十分之一</strong>实现<strong>高于美国的预期寿命</strong>。</li>
+            <li><strong>中国的赤脚医生系统</strong>（1960-1980年代）通过<strong>预防和基本照护</strong>实现了婴儿死亡率和传染病的急剧下降，直到被市场改革拆解。</li>
+        </ul>
+        <p><strong>这些不是「发展中国家的例外」。它们是证明：结构性扭曲是一种选择，不是必然。</strong></p>
+
+        <div class="part-label">第十部分：GL框架的判据</div>
+
+        <div class="highlight-box dual-box">
+            <p><strong>「成本不得转移给无声的弱者。」</strong></p>
+            <p>医疗交付系统的成本转移链：</p>
+            <ul>
+                <li><strong>病人</strong>：为不必要的照护被收费，为必要的照护被拒赔，被等待名单剥夺时间。</li>
+                <li><strong>医疗工作者</strong>：被迫实行防御性医疗，被行政负担耗尽。</li>
+                <li><strong>纳税人</strong>：资助公共系统，然后在公共系统资金不足时再次自费支付。</li>
+                <li><strong>未来世代</strong>：继承今天支出的债务。</li>
+            </ul>
+            <p><strong>这不是「市场结果」。这是制度设计。</strong></p>
+        </div>
+
+        <div class="highlight-box abuse-box">
+            <p><strong>结构诊断</strong></p>
+            <p>医疗交付系统不是「坏了」。它正是按设计运作。当收入与数量挂钩时，数量就会增加。当保险拒赔有利可图时，拒赔就会增加。当医院变成资产类别时，病人就变成成本项目。</p>
+            <p><strong>这台机器必须终结。</strong> 不是因为道德觉醒，而是因为算术约束。美国将<strong>GDP的17.8%用于医疗</strong>——比任何其他国家都多——但结果排名<strong>低于数十个支出仅为其零头的国家</strong>。系统的运转成本已经超过了它的收益。</p>
+            <p><strong>终结不是「修复」它。终结是替换产生它的支付模式。</strong></p>
+        </div>
+
+        <div class="signature">
+            徐萍
+            <span class="title">治理正当性框架发明人 · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 西班牙文版 ==================== -->
+<div class="lb" data-lang="es">
+    <div class="page-header">
+        <div class="badge">Serie de Transferencia de Costos · Ensayo III</div>
+        <div class="title">El Fin de Lucrar con la Atención Médica</div>
+        <div class="subtitle">Cómo el sistema de entrega convierte a los pacientes en flujos de ingresos — y por qué el sobretratamiento es un comportamiento racional</div>
+        <div class="meta">Ping Xu · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+
+        <div class="part-label">Prólogo: Una Máquina Diferente, la Misma Lógica</div>
+        <p>La industria farmacéutica fabrica clientes de por vida mediante medicamentos patentados. El sistema de entrega de atención médica fabrica flujos de ingresos mediante el <strong>volumen</strong>. La estructura es la misma: identificar un grupo sin poder de negociación (pacientes), convertir su necesidad (tratamiento) en un "servicio que debe comprarse", bloquear alternativas (prevención, estilo de vida, opciones más baratas), lucrar con su dependencia continua y transferir el costo a las generaciones futuras.</p>
+        <p>Los números lo confirman. La Oficina de Presupuesto del Congreso de EE.UU. informa que <strong>hasta el 30% del gasto sanitario estadounidense puede ser innecesario</strong>. El ex Viceministro de Salud de China, Huang Jiefu, declaró públicamente que la proporción de tratamiento ineficaz <strong>alcanza el 20%–40%</strong>. La estructura no es un "fallo del mercado". Es el mercado funcionando exactamente como fue diseñado.</p>
+
+        <div class="part-label">Parte Uno: Pago por Servicio — Cuando los Ingresos Están Vinculados al Volumen</div>
+
+        <p><strong>El primer principio estructural de la entrega de atención médica es idéntico al de todos los demás sistemas de transferencia de costos: los ingresos deben estar vinculados al volumen, no al resultado.</strong></p>
+        <p>Bajo el "pago por servicio", un médico u hospital es pagado por cada prueba, cada procedimiento, cada visita, cada receta. Esto no es un defecto de diseño. Es el diseño. <strong>Cuando los ingresos están vinculados a pruebas, medicamentos y cirugías, el sobretratamiento deja de ser una anomalía y se convierte en "comportamiento racional".</strong></p>
+        <p>La documentación clásica proviene de <em>El Mito de la Curación</em> del médico alemán Jörg Blech. <strong>"Se ha demostrado que la discectomía fracasa en el 40% de los casos"</strong> — sin embargo, de 220 médicos británicos encuestados, <strong>ni uno solo aceptaría cirugía por su propio dolor de espalda</strong>. En el Hospital Universitario de Leipzig, un experimento con 100 pacientes con estenosis coronaria del 75% encontró que <strong>la tasa de recuperación a un año del grupo de cirugía fue del 70%, mientras que el grupo de control — sin cirugía, solo ejercicio — tuvo una tasa de recuperación del 88%</strong>.</p>
+        <p>Estos no son "errores individuales de médicos". Son el resultado lógico de un sistema donde <strong>cuanto más haces, más te pagan</strong>.</p>
+
+        <div class="part-label">Parte Dos: Tratamiento Ineficaz — El Consumo Sistemático de Pacientes</div>
+
+        <p><strong>La caracterización pública del ex Viceministro de Salud Huang Jiefu es la más directa: "Muchos medicamentos no deberían tomarse pero se toman; muchos tratamientos no son necesarios pero se hacen; muchas cirugías hacen sufrir más a los pacientes, pero aún se realizan."</strong> La proporción de tratamiento ineficaz <strong>alcanza el 20%–40%</strong>.</p>
+        <p>En China, las tasas de hospitalización ineficaz alcanzan el <strong>14,62%</strong>, y los días de hospitalización ineficaz alcanzan el <strong>24,88%</strong>. En EE.UU., la Oficina de Presupuesto del Congreso estima que <strong>hasta el 30% del gasto sanitario puede ser innecesario</strong>. El NHS del Reino Unido, Medicare de Australia, el seguro estatutario de Alemania — los números varían, pero la estructura es la misma.</p>
+        <p>Una revisión sistemática de 2023 encontró que <strong>el 94% de las prescripciones de terapia de reemplazo de testosterona quedaron fuera de las recomendaciones de las guías</strong>, y <strong>el 61% de los pacientes diabéticos estaban siendo tratados a niveles de azúcar en sangre potencialmente dañinos</strong> (por debajo del 7%). Ninguno de estos es "medicina". Ambos son <strong>tratamiento impulsado por volumen</strong>.</p>
+
+        <div class="part-label">Parte Tres: La Evidencia — Lo Que Realmente Muestra la Investigación Académica</div>
+
+        <p>La investigación académica no respalda la afirmación de que más tratamiento equivale a mejores resultados. Respalda lo contrario.</p>
+        <p>El estudio más completo sobre el sobretratamiento en los sistemas de salud modernos fue publicado en <em>The Lancet</em> en 2017. Los autores — un consorcio global de investigadores médicos — analizaron la brecha entre la evidencia y la práctica en siete países y concluyeron: <strong>"La proporción de pacientes que reciben atención innecesaria es sustancial y representa una fuente significativa de desperdicio y daño."</strong> El estudio identificó tres impulsores estructurales:</p>
+        <ul>
+            <li><strong>Incentivos financieros:</strong> Los modelos de pago por servicio recompensan el volumen sobre el valor.</li>
+            <li><strong>Medicina defensiva:</strong> El miedo a litigios impulsa pruebas innecesarias.</li>
+            <li><strong>Asimetría de información:</strong> Los pacientes no pueden evaluar si un tratamiento es necesario.</li>
+        </ul>
+        <p>Estos tres impulsores no son "fallos individuales de médicos". Son <strong>propiedades estructurales del sistema de entrega</strong>. La conclusión del estudio de The Lancet es inequívoca: <strong>el problema es el modelo de pago, no el médico.</strong></p>
+
+        <div class="part-label">Parte Cuatro: Denegación de Seguros — La Segunda Capa de Extracción</div>
+
+        <p>Si el pago por servicio es la primera capa, la denegación de seguros es la segunda. <strong>Primero se le cobra por tratamientos que puede no necesitar, luego se le niega la cobertura de tratamientos que sí necesita.</strong></p>
+        <p>En EE.UU., una investigación de KFF de 2023 encontró que <strong>el 17% de las reclamaciones dentro de la red fueron denegadas por aseguradoras del mercado de ACA</strong>, y menos del <strong>0,2%</strong> de esas denegaciones fueron apeladas formalmente. La razón: <strong>el proceso de apelación está deliberadamente diseñado para ser difícil</strong>. Para los pacientes en medio del tratamiento, navegar un sistema de apelaciones complejo no es una opción. Pagan de su bolsillo, o se quedan sin tratamiento.</p>
+        <p>El asesinato en 2024 del CEO de UnitedHealthcare, Brian Thompson, fue condenado en todo el espectro político. Pero la reacción pública no fue solo condena. Una <strong>encuesta de Bloomberg</strong> encontró que una parte significativa de los estadounidenses expresó <em>comprensión</em> del motivo. La razón: <strong>UnitedHealthcare tenía una tasa de denegación del 32% para reclamaciones dentro de la red</strong> — la más alta de la industria. La compañía estaba valorada en más de <strong>500.000 millones de dólares</strong>, y había gastado más de <strong>10.000 millones de dólares</strong> en recompras de acciones en la década anterior.</p>
+        <p>La "reclamación retrasada" es la herramienta más efectiva de la industria de seguros. <strong>La mayoría de las denegaciones son anuladas en apelación — pero el paciente primero debe sobrevivir al retraso.</strong></p>
+
+        <div class="part-label">Parte Cinco: Financiarización — Cuando los Hospitales Se Convierten en Clases de Activos</div>
+
+        <p><strong>La tercera capa es la financiarización.</strong> Los hospitales y clínicas, antes instituciones públicas o sin fines de lucro, son cada vez más propiedad de firmas de private equity, REITs y cadenas hospitalarias con obligaciones hacia los accionistas.</p>
+        <p>Steward Health Care es el caso más claro. La compañía, propiedad de la firma de private equity Cerberus, <strong>vendió sus bienes raíces hospitalarios a un REIT, luego los arrendó de vuelta</strong>. Cuando el REIT aumentó los alquileres, Steward no pudo pagar. La compañía se declaró en bancarrota en mayo de 2024, y <strong>dos hospitales en Massachusetts cerraron en un año</strong>. Los pacientes no tuvieron voz en la transacción.</p>
+        <p>En EE.UU., <strong>la proporción de hospitales propiedad de private equity ha crecido de casi cero en 2000 a más del 10% hoy</strong>. En el Reino Unido, <strong>más del 10% de la atención financiada por el NHS es entregada por proveedores privados</strong>. En Australia, <strong>los operadores de hospitales privados controlan más del 40% de las camas hospitalarias</strong>.</p>
+        <p>El efecto estructural es idéntico en todas las jurisdicciones: <strong>el hospital ya no es un bien público; es una clase de activo. Su propósito no es tratar pacientes; es generar retornos.</strong></p>
+
+        <div class="part-label">Parte Seis: La Tasa de Cesáreas — Un Estudio de Caso en Distorsión Estructural</div>
+
+        <p>La tasa de cesáreas es el indicador único más claro de la distorsión estructural en la entrega de atención médica.</p>
+        <p>La OMS recomienda una tasa de cesáreas del <strong>10–15%</strong>. En 2021, la tasa era del <strong>32,1% en EE.UU.</strong>, <strong>34,4% en Australia</strong>, <strong>32,4% en Alemania</strong>, y más del <strong>50% en Brasil</strong>. La tasa de China, después de décadas de aumento, se ha estabilizado en alrededor del <strong>36%</strong>.</p>
+        <p>¿Por qué? Porque una cesárea es <strong>facturable, predecible y rápida</strong>. Un parto vaginal es <strong>impredecible y consume tiempo</strong>. Bajo el pago por servicio, el hospital está financieramente incentivado a elegir la cesárea. <strong>La necesidad clínica del paciente es secundaria a la estructura de pago.</strong></p>
+        <p>La tasa no refleja "necesidad médica". Refleja el <strong>modelo de pago</strong>.</p>
+
+        <div class="part-label">Parte Siete: Tiempos de Espera — La Transferencia de Costos al Paciente</div>
+
+        <p><strong>El costo del sistema de entrega no es solo financiero. Es temporal.</strong></p>
+        <p>El Fraser Institute de Canadá informa que el tiempo de espera medio desde la derivación del médico general hasta el tratamiento especializado en 2024 fue de <strong>30 semanas</strong> — <strong>tres veces más largo que el punto de referencia de 1993</strong>. En el Reino Unido, la lista de espera del NHS alcanzó <strong>7,6 millones</strong> en 2024, con <strong>más de 300.000 esperando más de un año</strong>. En Australia, la espera media para cirugía electiva es de <strong>más de 40 días</strong>, con algunas especialidades superando los <strong>250 días</strong>.</p>
+        <p><strong>Estos tiempos de espera no son "problemas de capacidad". Son el resultado estructural de la subinversión en la entrega pública.</strong> Cuando los sistemas públicos son deliberadamente privados de recursos, los pacientes son empujados a sistemas privados — donde pagan, de nuevo.</p>
+        <p>La cadena de transferencia de costos es clara: <strong>el paciente paga en impuestos, luego paga en tiempo de espera, luego paga de nuevo de su bolsillo.</strong></p>
+
+        <div class="part-label">Parte Ocho: Identidad Estructural — La Atención Médica No Es Diferente de la Farmacéutica</div>
+
+        <table>
+            <tr>
+                <th>Dimensión</th>
+                <th>Farmacéutica</th>
+                <th>Atención Médica</th>
+            </tr>
+            <tr>
+                <td><strong>Impulsor de ingresos</strong></td>
+                <td>Medicación de por vida</td>
+                <td>Volumen de pruebas, procedimientos, visitas</td>
+            </tr>
+            <tr>
+                <td><strong>Incentivo estructural</strong></td>
+                <td>Preferir crónico sobre curable</td>
+                <td>Preferir más sobre menos</td>
+            </tr>
+            <tr>
+                <td><strong>Sobretratamiento</strong></td>
+                <td>Prescripción fuera de etiqueta</td>
+                <td>Pruebas, procedimientos innecesarios</td>
+            </tr>
+            <tr>
+                <td><strong>Mecanismo de transferencia de costos</strong></td>
+                <td>Monopolio de patentes</td>
+                <td>Pago por servicio, denegación de seguros</td>
+            </tr>
+            <tr>
+                <td><strong>Manipulación de evidencia</strong></td>
+                <td>Autoría fantasma</td>
+                <td>Puntos finales subrogados, medicina defensiva</td>
+            </tr>
+            <tr>
+                <td><strong>Financiarización</strong></td>
+                <td>REITs, private equity</td>
+                <td>Cadenas hospitalarias, private equity</td>
+            </tr>
+            <tr>
+                <td><strong>Resultado estructural</strong></td>
+                <td>400.000 muertes por opioides</td>
+                <td>30% del gasto innecesario</td>
+            </tr>
+        </table>
+
+        <p><strong>Estos no son dos sistemas. Son un sistema, con dos caras.</strong></p>
+
+        <div class="part-label">Parte Nueve: El Contrafactual — Lo Que Funciona</div>
+
+        <p><strong>El argumento de que "no hay alternativa" es falsificado por la existencia de alternativas.</strong></p>
+        <ul>
+            <li><strong>El sistema de pagador único de Taiwán</strong> ofrece cobertura universal al <strong>6,6% del PIB</strong> — menos de la mitad de la tasa de EE.UU. Los tiempos de espera son más largos que en EE.UU., pero <strong>nadie es denegado por incapacidad de pago</strong>.</li>
+            <li><strong>El sistema de médicos de familia de Cuba</strong>, a pesar de severas restricciones de recursos, produce <strong>esperanza de vida comparable a la de EE.UU.</strong> a una fracción del costo.</li>
+            <li><strong>El sistema de salud público de Costa Rica</strong> logra <strong>una esperanza de vida superior a la de EE.UU.</strong> a <strong>menos de una décima parte del costo per cápita</strong>.</li>
+            <li><strong>El sistema de médicos descalzos de China</strong> (1960s–1980s) logró reducciones dramáticas en la mortalidad infantil y las enfermedades infecciosas a través de la <strong>prevención y la atención básica</strong>, antes de ser desmantelado por las reformas de mercado.</li>
+        </ul>
+        <p><strong>Estas no son "excepciones de países en desarrollo". Son pruebas de que la distorsión estructural es una elección, no una necesidad.</strong></p>
+
+        <div class="part-label">Parte Diez: El Criterio del Marco GL</div>
+
+        <div class="highlight-box dual-box">
+            <p><strong>"Los costos no deben transferirse a los vulnerables sin voz."</strong></p>
+            <p>La cadena de transferencia de costos del sistema de entrega de atención médica:</p>
+            <ul>
+                <li><strong>Pacientes</strong>: cobrados por atención innecesaria, denegados por atención necesaria, privados de tiempo por listas de espera.</li>
+                <li><strong>Trabajadores de la salud</strong>: obligados a practicar medicina defensiva, agotados por la carga administrativa.</li>
+                <li><strong>Contribuyentes</strong>: financian sistemas públicos, luego pagan de nuevo de su bolsillo cuando los sistemas públicos están subfinanciados.</li>
+                <li><strong>Generaciones futuras</strong>: heredan la deuda del gasto actual.</li>
+            </ul>
+            <p><strong>Esto no es un "resultado del mercado". Esto es diseño institucional.</strong></p>
+        </div>
+
+        <div class="highlight-box abuse-box">
+            <p><strong>El Diagnóstico Estructural</strong></p>
+            <p>El sistema de entrega de atención médica no está "roto". Está funcionando exactamente como fue diseñado. Cuando los ingresos están vinculados al volumen, el volumen aumenta. Cuando las denegaciones de seguros son rentables, las denegaciones aumentan. Cuando los hospitales se convierten en clases de activos, los pacientes se convierten en partidas de costo.</p>
+            <p><strong>Esta máquina debe terminar.</strong> No por despertar moral, sino por restricciones aritméticas. EE.UU. gasta el <strong>17,8% del PIB en atención médica</strong> — más que cualquier otro país — con resultados que se clasifican <strong>por debajo de docenas de países que gastan una fracción</strong>. El costo operativo del sistema ha superado su retorno.</p>
+            <p><strong>El final no es "arreglarlo". El final es reemplazar el modelo de pago que lo produce.</strong></p>
+        </div>
+
+        <div class="signature">
+            Ping Xu
+            <span class="title">Creadora del Marco de Legitimidad Gubernamental · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <span class="site">gfiintel.com</span>
+    <span class="links">
+        <a href="/">← Back to Home</a>
+        <a href="/cost-transfer.html">← Cost Transfer Series</a>
+        <a href="/shared-delusion.html">← Shared Delusion Series</a>
+        <a href="/landjustice.html">← Land Justice Series</a>
+        <a href="/domestic-policy.html">← Domestic Policy Series</a>
+    </span>
+    <span class="copyright">© 2026 GFI Flow Intelligence · 將醫療當作獲利工具的時代正在結束 · The End of Profiting from Healthcare</span>
+</div>
+
+<script>
+    document.querySelectorAll('.lb-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var lang = this.dataset.lang;
+            document.querySelectorAll('.lb-btn').forEach(function(b) { b.classList.remove('on'); });
+            this.classList.add('on');
+            document.querySelectorAll('.lb').forEach(function(lb) { lb.classList.remove('active'); });
+            var target = document.querySelector('.lb[data-lang="' + lang + '"]');
+            if (target) target.classList.add('active');
+        });
+    });
+</script>
+
+</body>
+</html>
