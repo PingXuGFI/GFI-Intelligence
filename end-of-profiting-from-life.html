@@ -113,6 +113,28 @@
             background: rgba(248, 113, 113, 0.05);
         }
         .content .highlight-box.abuse-box strong { color: #fecaca; }
+        .content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        .content th {
+            background: rgba(255, 255, 255, 0.04);
+            color: #c47a4a;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 0.6rem 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .content td {
+            padding: 0.6rem 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: #d0c6bc;
+        }
         .signature {
             margin-top: 40px; padding-top: 24px;
             border-top: 1px solid rgba(255, 255, 255, 0.06);
@@ -123,6 +145,46 @@
             font-family: 'DM Mono', monospace; font-size: 0.6rem;
             color: rgba(255, 255, 255, 0.25);
             letter-spacing: 0.06em; display: block; margin-top: 2px;
+        }
+        .series-nav {
+            max-width: 860px;
+            margin: 48px auto 0;
+            padding: 24px 40px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .series-nav-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #8a4a2a;
+            margin-bottom: 12px;
+        }
+        .series-nav-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .series-nav-item {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: #b8aaa0;
+            text-decoration: none;
+            padding: 4px 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .series-nav-item:hover {
+            color: #e0d6cc;
+            border-color: rgba(196, 122, 74, 0.3);
+            background: rgba(255, 255, 255, 0.04);
+        }
+        .series-nav-item.current {
+            color: #facc15;
+            border-color: rgba(250, 204, 21, 0.3);
+            background: rgba(250, 204, 21, 0.05);
+            pointer-events: none;
         }
         .footer {
             text-align: center; padding: 28px 20px 36px;
@@ -139,6 +201,7 @@
         @media (max-width: 640px) {
             .lb { padding: 80px 20px 50px; }
             .topbar { padding: 0 14px; }
+            .series-nav { padding: 24px 20px 0; }
         }
     </style>
 </head>
@@ -159,7 +222,7 @@
 <!-- ==================== 英文版 ==================== -->
 <div class="lb active" data-lang="en">
     <div class="page-header">
-        <div class="badge">Structural Critique · Pharmaceutical Value System</div>
+        <div class="badge">Cost Transfer Series · Essay I</div>
         <div class="title">The End of Profiting from Human Life</div>
         <div class="subtitle">How the pharmaceutical value system is being dismantled — and how Chinese biopharmaceuticals are building a parallel access system</div>
         <div class="meta">Ping Xu · GFI Flow Intelligence · 2026</div>
@@ -297,7 +360,7 @@
 <!-- ==================== 繁體中文版 ==================== -->
 <div class="lb" data-lang="tw">
     <div class="page-header">
-        <div class="badge">結構批判 · 製藥價值體系</div>
+        <div class="badge">成本轉移系列 · 第一篇</div>
         <div class="title">將人命當作獲利工具的時代正在結束</div>
         <div class="subtitle">製藥價值體系如何被拆解——以及中國生物醫藥如何建立平行的准入體系</div>
         <div class="meta">徐萍 · GFI Flow Intelligence · 2026</div>
@@ -435,7 +498,7 @@
 <!-- ==================== 簡體中文版 ==================== -->
 <div class="lb" data-lang="cn">
     <div class="page-header">
-        <div class="badge">结构批判 · 制药价值体系</div>
+        <div class="badge">成本转移系列 · 第一篇</div>
         <div class="title">将人命当作获利工具的时代正在结束</div>
         <div class="subtitle">制药价值体系如何被拆解——以及中国生物医药如何建立平行的准入体系</div>
         <div class="meta">徐萍 · GFI Flow Intelligence · 2026</div>
@@ -573,7 +636,7 @@
 <!-- ==================== 西班牙文版 ==================== -->
 <div class="lb" data-lang="es">
     <div class="page-header">
-        <div class="badge">Crítica Estructural · Sistema de Valores Farmacéuticos</div>
+        <div class="badge">Serie de Transferencia de Costos · Ensayo I</div>
         <div class="title">El Fin de Lucrar con la Vida Humana</div>
         <div class="subtitle">Cómo el sistema de valores farmacéuticos está siendo desmantelado — y cómo la biofarmacéutica china está construyendo un sistema de acceso paralelo</div>
         <div class="meta">Ping Xu · GFI Flow Intelligence · 2026</div>
@@ -708,13 +771,31 @@
     </div>
 </div>
 
+<!-- ==================== 同系列导航 ==================== -->
+<div class="series-nav">
+    <div class="series-nav-label">同系列文章 · Series Articles</div>
+    <div class="series-nav-grid">
+        <a href="/end-of-profiting-from-life.html" class="series-nav-item current">I · Pharmaceutical</a>
+        <a href="/end-of-profiting-from-food.html" class="series-nav-item">II · Food &amp; Agriculture</a>
+        <a href="/end-of-profiting-from-healthcare.html" class="series-nav-item">III · Healthcare</a>
+        <a href="/end-of-profiting-from-insurance.html" class="series-nav-item">IV · Insurance</a>
+        <a href="/end-of-profiting-from-education.html" class="series-nav-item">V · Education</a>
+        <a href="/end-of-profiting-from-aging.html" class="series-nav-item">VI · Aging &amp; Pensions</a>
+        <a href="/end-of-profiting-from-data.html" class="series-nav-item">VII · Data &amp; Attention</a>
+        <a href="/end-of-profiting-from-labor.html" class="series-nav-item">VIII · Labor</a>
+        <a href="/cost-transfer-synthesis.html" class="series-nav-item">Synthesis</a>
+        <a href="/cost-transfer-conclusion.html" class="series-nav-item">Conclusion</a>
+    </div>
+</div>
+
 <div class="footer">
     <span class="site">gfiintel.com</span>
     <span class="links">
         <a href="/">← Back to Home</a>
-        <a href="/domestic-policy.html">← Domestic Policy Series</a>
+        <a href="/cost-transfer.html">← Cost Transfer Series</a>
         <a href="/shared-delusion.html">← Shared Delusion Series</a>
         <a href="/landjustice.html">← Land Justice Series</a>
+        <a href="/domestic-policy.html">← Domestic Policy Series</a>
     </span>
     <span class="copyright">© 2026 GFI Flow Intelligence · 將人命當作獲利工具的時代正在結束 · The End of Profiting from Human Life</span>
 </div>
