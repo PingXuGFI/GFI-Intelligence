@@ -1,1 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Boundary of Transnational Capital · 跨國資本的邊界 · El Límite del Capital Transnacional</title>
+    <meta name="description" content="Capital does not have an infinite ability to transfer cost. There is a boundary. The boundary is not moral — it is arithmetic. When the cost of maintaining the system exceeds the cost of abandoning it, the system collapses." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: #0d0a08;
+            color: #e0d6cc;
+            font-family: 'DM Sans', system-ui, sans-serif;
+            font-size: 16px;
+            line-height: 1.9;
+            min-height: 100vh;
+        }
+        .topbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            height: 60px; padding: 0 clamp(18px, 5vw, 48px);
+            display: flex; align-items: center; justify-content: space-between;
+            background: rgba(13, 10, 8, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .logo {
+            font-family: 'DM Mono', monospace; font-size: 11px;
+            letter-spacing: 0.16em; text-transform: uppercase;
+            color: #b8aaa0; text-decoration: none;
+        }
+        .nav-right { display: flex; align-items: center; gap: 12px; }
+        .lang-grp { display: flex; gap: 4px; }
+        .lb-btn {
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            letter-spacing: 0.06em; padding: 4px 10px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 4px; background: transparent;
+            color: #7a7068; cursor: pointer; transition: all 0.2s;
+        }
+        .lb-btn:hover { color: #e0d6cc; border-color: rgba(255, 255, 255, 0.2); }
+        .lb-btn.on { background: #b8aaa0; color: #0d0a08; border-color: #b8aaa0; }
+        .lb { display: none; padding: 100px 40px 70px; max-width: 860px; margin: 0 auto; }
+        .lb.active { display: block; }
+        .page-header {
+            padding: 0 0 32px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 32px;
+        }
+        .page-header .badge {
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            letter-spacing: 0.22em; text-transform: uppercase;
+            color: #8a4a2a; margin-bottom: 12px;
+        }
+        .page-header .title {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: clamp(28px, 3.6vw, 42px);
+            line-height: 1.15; color: #f0e6dc; margin-bottom: 8px;
+        }
+        .page-header .subtitle {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-style: italic; font-size: clamp(16px, 1.7vw, 20px);
+            color: #8a7a6a; margin-bottom: 12px;
+        }
+        .page-header .meta {
+            font-family: 'DM Mono', monospace; font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.2);
+        }
+        .content .part-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #8a4a2a;
+            margin: 3rem 0 1rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(138, 74, 42, 0.3);
+        }
+        .content .part-label:first-of-type { margin-top: 1rem; }
+        .content h2 {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.4rem; color: #f0e6dc;
+            margin: 2rem 0 0.8rem 0;
+            padding-bottom: 0.3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .content h3 {
+            font-size: 1.1rem; font-weight: 600;
+            color: #e0d6cc; margin: 1.6rem 0 0.5rem 0;
+        }
+        .content p { margin-bottom: 1.2rem; color: #d0c6bc; }
+        .content ul, .content ol { margin-bottom: 1.2rem; padding-left: 1.6rem; }
+        .content li { margin-bottom: 0.5rem; color: #d0c6bc; }
+        .content .highlight { color: #c47a4a; font-weight: 600; }
+        .content .highlight-box {
+            background: rgba(138, 74, 42, 0.08);
+            border-left: 4px solid #8a4a2a;
+            padding: 1.2rem 1.8rem;
+            margin: 1.8rem 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .content .highlight-box p { margin-bottom: 0.5rem; }
+        .content .highlight-box strong { color: #f0e6dc; }
+        .content .highlight-box.dual-box {
+            border-left-color: #7DD3FC;
+            background: rgba(125, 211, 252, 0.05);
+        }
+        .content .highlight-box.abuse-box {
+            border-left-color: #f87171;
+            background: rgba(248, 113, 113, 0.05);
+        }
+        .content .highlight-box.abuse-box strong { color: #fecaca; }
+        .content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        .content th {
+            background: rgba(255, 255, 255, 0.04);
+            color: #c47a4a;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 0.6rem 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .content td {
+            padding: 0.6rem 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: #d0c6bc;
+        }
+        .signature {
+            margin-top: 40px; padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.05rem; color: #f0e6dc;
+        }
+        .signature .title {
+            font-family: 'DM Mono', monospace; font-size: 0.6rem;
+            color: rgba(255, 255, 255, 0.25);
+            letter-spacing: 0.06em; display: block; margin-top: 2px;
+        }
+        .series-nav {
+            max-width: 860px;
+            margin: 48px auto 0;
+            padding: 24px 40px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .series-nav-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #8a4a2a;
+            margin-bottom: 12px;
+        }
+        .series-nav-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .series-nav-item {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: #b8aaa0;
+            text-decoration: none;
+            padding: 4px 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .series-nav-item:hover {
+            color: #e0d6cc;
+            border-color: rgba(196, 122, 74, 0.3);
+            background: rgba(255, 255, 255, 0.04);
+        }
+        .series-nav-item.current {
+            color: #facc15;
+            border-color: rgba(250, 204, 21, 0.3);
+            background: rgba(250, 204, 21, 0.05);
+            pointer-events: none;
+        }
+        .footer {
+            text-align: center; padding: 28px 20px 36px;
+            font-family: 'DM Mono', monospace; font-size: 10px;
+            color: rgba(255, 255, 255, 0.18);
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            margin-top: 48px; line-height: 2;
+        }
+        .footer a { color: #b8aaa0; text-decoration: none; margin: 0 8px; }
+        .footer a:hover { color: #e0d6cc; }
+        .footer .site { display: block; margin-bottom: 8px; color: rgba(255, 255, 255, 0.25); letter-spacing: 0.06em; }
+        .footer .links { display: block; margin-bottom: 8px; }
+        .footer .copyright { color: rgba(255, 255, 255, 0.12); display: block; }
+        @media (max-width: 640px) {
+            .lb { padding: 80px 20px 50px; }
+            .topbar { padding: 0 14px; }
+            .series-nav { padding: 24px 20px 0; }
+        }
+    </style>
+</head>
+<body>
 
+<div class="topbar">
+    <a href="/" class="logo">← Home</a>
+    <div class="nav-right">
+        <div class="lang-grp">
+            <button class="lb-btn on" data-lang="en">EN</button>
+            <button class="lb-btn" data-lang="tw">繁</button>
+            <button class="lb-btn" data-lang="cn">简</button>
+            <button class="lb-btn" data-lang="es">ES</button>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 英文版 ==================== -->
+<div class="lb active" data-lang="en">
+    <div class="page-header">
+        <div class="badge">Cost Transfer Series · Conclusion</div>
+        <div class="title">The Boundary of Transnational Capital</div>
+        <div class="subtitle">Capital is not infinite. Its boundary is not moral — it is arithmetic.</div>
+        <div class="meta">Ping Xu · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+
+        <div class="part-label">Part One: Capital Is Not Infinite</div>
+
+        <p>Surveillance capitalism, financial capitalism, platform capitalism — these names suggest an infinite power. But capital is not infinite. Its boundary is not moral. It is <strong>arithmetic</strong>.</p>
+
+        <p>Cost transfer is a business model. It works because <strong>those who bear the transferred cost have no voice and no alternative</strong>. When those conditions change, cost transfer fails.</p>
+
+        <p><strong>Capital does not have the ability to keep the voiceless silent forever.</strong></p>
+
+        <div class="part-label">Part Two: Eight Boundaries</div>
+
+        <p>Each of the eight domains has an arithmetic boundary. At that boundary, the cost of maintaining the system exceeds the cost of abandoning it.</p>
+
+        <h2>Pharma — the patent cliff</h2>
+        <p>By 2033, drugs generating approximately <strong>USD 400 billion</strong> in annual revenue will lose patent exclusivity. Among the top 20 pharmaceutical companies, the top ten expiring products alone will impact over <strong>USD 126 billion</strong> in revenue. Meanwhile, Chinese pharmaceutical companies' clinical data is breaking the premise that "the best drugs are in the West." <strong>When alternative drugs exist, patent pricing power collapses.</strong></p>
+
+        <h2>Food — public reserves</h2>
+        <p>When global rice prices spiked <strong>75%</strong> between 2007 and 2008, India's wholesale rice prices rose only <strong>14%</strong> — because India had a public reserve system that purchased grain directly from farmers and distributed it at subsidized prices to nearly two-thirds of the population. <strong>When alternative supply chains exist, price manipulation fails.</strong></p>
+
+        <h2>Healthcare — alternative payment models</h2>
+        <p>The US spends <strong>over USD 370 billion</strong> on healthcare administrative costs, <strong>more than half of which is wasted</strong>. Taiwan's single-payer system delivers universal coverage at <strong>6.6% of GDP</strong>. <strong>When alternative payment models exist, fee-for-service superiority disappears.</strong></p>
+
+        <h2>Insurance — administrative waste exceeding medical costs</h2>
+        <p>The US spends <strong>over USD 370 billion</strong> annually on healthcare administrative costs, nearly 10% of total spending — and research shows that <strong>more than half is wasted</strong>. <strong>When the cost of running the system exceeds the cost of serving it, the system loses its reason to exist.</strong></p>
+
+        <h2>Education — student debt exceeding USD 1.86 trillion</h2>
+        <p>US student loan debt reached <strong>USD 1.86 trillion</strong>, and for-profit institution default rates are <strong>double</strong> those of public institutions. China's national student loan covered <strong>8.52 million students</strong> in 2025, at relatively low interest rates. <strong>When alternative financing systems exist, debt bondage fails.</strong></p>
+
+        <h2>Aging — 60% of privatized countries returning to public systems</h2>
+        <p>The ILO's 2018 report — covering 30 countries that adopted privatized pension systems — <strong>concluded the system failed</strong>. <strong>60% of countries decided to return to public pension financing systems</strong>. <strong>When a model is proven to fail, it cannot continue to pretend to succeed.</strong></p>
+
+        <h2>Data — cognitive erosion</h2>
+        <p>A study published in the <em>Journal of Adolescent Health</em> in September 2026 found that when adolescents increase social media browsing, their cognitive control declines two years later, and depressive symptoms increase four years later. <strong>When cognitive erosion becomes a measurable systemic consequence, the attention economy loses its legitimacy.</strong></p>
+
+        <h2>Labor — workers bear all risk, platforms capture all revenue</h2>
+        <p>Global gig economy gross volume reached <strong>USD 582.2 billion</strong> in 2025, projected to reach <strong>USD 1.88 trillion</strong> by 2033. But <strong>workers bear all the risk, platforms capture all the revenue</strong>. <strong>When a system transfers all risk to one side and concentrates all revenue on the other, it is arithmetically unstable.</strong></p>
+
+        <div class="part-label">Part Three: The Boundary Is Arithmetic, Not Moral</div>
+
+        <p>These eight boundaries are not moral appeals. They are <strong>arithmetic constraints</strong>.</p>
+
+        <p>Each boundary can be described with a simple formula:</p>
+
+        <div class="highlight-box dual-box">
+            <p><strong>System operating cost > System return → System collapses</strong></p>
+        </div>
+
+        <p><strong>Pharma:</strong> R&D cost + marketing cost + legal cost > patent pricing power return (when alternative drugs exist)<br>
+        <strong>Food:</strong> Ecological cost + farmer debt cost + consumer price increase cost > price manipulation return (when alternative supply chains exist)<br>
+        <strong>Healthcare:</strong> Administrative cost + ineffective treatment cost + waiting time cost > fee-for-service return (when alternative payment models exist)<br>
+        <strong>Insurance:</strong> Administrative cost + denial appeal cost + doctor overturn cost > denial return (when payout is more profitable than denial)<br>
+        <strong>Education:</strong> Student debt cost + default cost + taxpayer cost > high tuition return (when public education alternatives exist)<br>
+        <strong>Aging:</strong> Management fee cost + longevity risk cost + coverage gap cost > assets under management return (when public pension alternatives exist)<br>
+        <strong>Data:</strong> Cognitive erosion cost + data colonialism cost + adolescent mental health cost > engagement return (when cognitive health becomes a policy priority)<br>
+        <strong>Labor:</strong> Worker rights erosion cost + social security gap cost + taxpayer cost > independent contractor return (when worker protection becomes a political demand)</p>
+
+        <p><strong>When "system operating cost > system return" becomes a measurable fact, cost transfer stops.</strong></p>
+
+        <div class="part-label">Part Four: Capital's Boundary Is the GL Framework's Boundary</div>
+
+        <p>The GL Framework's core criterion is: <strong>"Costs must not be transferred to the voiceless vulnerable."</strong></p>
+
+        <p>This criterion is not moral. It is <strong>arithmetic</strong>.</p>
+
+        <p>Because when a system transfers costs to the voiceless vulnerable, it is doing three things:</p>
+
+        <p><strong>First, it externalizes costs.</strong> But externalized costs do not disappear. They accumulate. They return in the future at higher cost.</p>
+
+        <p><strong>Second, it transfers costs to those without bargaining power.</strong> But those people will not remain without bargaining power forever. When they organize, cost transfer fails.</p>
+
+        <p><strong>Third, it transfers costs to the future.</strong> But the future is not an empty account. The future is today's people.</p>
+
+        <p><strong>Capital's boundary is the point at which externalized costs return. When externalized costs return, cost transfer terminates.</strong></p>
+
+        <div class="part-label">Part Five: The End Is Not "Defeating" Capital</div>
+
+        <p><strong>The end is not "defeating" capital.</strong> The end is letting capital discover for itself: the cost of maintaining that value system has exceeded the cost of abandoning it.</p>
+
+        <ul>
+            <li>Pharma is not being "defeated." Patent cliffs + clinical data superiority transfer + alternative drug existence mean the foundation of high drug prices has collapsed.</li>
+            <li>Food is not being "defeated." Public reserves + alternative supply chains + farmer organization mean price manipulation has failed.</li>
+            <li>Healthcare is not being "defeated." Alternative payment models + administrative waste + patient organization mean fee-for-service has lost legitimacy.</li>
+            <li>Insurance is not being "defeated." Administrative costs exceeding medical costs + denial appeals + doctor collective action mean denial is no longer profitable.</li>
+            <li>Education is not being "defeated." Student debt crisis + public education alternatives + intergenerational injustice mean debt bondage has lost its political base.</li>
+            <li>Aging is not being "defeated." Privatization failure + longevity risk + coverage gap mean 60% of countries have returned to public systems.</li>
+            <li>Data is not being "defeated." Cognitive erosion + adolescent mental health + parent collective action mean the engagement economy has lost its social license.</li>
+            <li>Labor is not being "defeated." Worker organization + social security gap + public opinion mean "independent contractor" is no longer acceptable.</li>
+        </ul>
+
+        <p><strong>The end is not confrontation. The end is arithmetic.</strong></p>
+
+        <div class="part-label">Part Six: The Silenced Are Speaking</div>
+
+        <p>The premise of cost transfer is that <strong>those who bear the transferred cost have no voice</strong>. But this premise is being broken.</p>
+
+        <p><strong>Pharma:</strong> Chinese clinical data is being cited by the global medical community. India, Brazil, and South Africa are pushing for drug accessibility.<br>
+        <strong>Food:</strong> Indian farmers are organizing protests. Brazil's Landless Workers' Movement has been active for decades. The global food sovereignty movement is growing.<br>
+        <strong>Healthcare:</strong> Taiwan's single-payer system, Cuba's family doctor system, Costa Rica's public health system — all prove alternatives are feasible.<br>
+        <strong>Insurance:</strong> After the UnitedHealthcare CEO's murder, public reaction was not condemnation — it was understanding.<br>
+        <strong>Education:</strong> The student debt movement is forcing governments to propose forgiveness plans. China's national student loan system is covering more students.<br>
+        <strong>Aging:</strong> Chile's 2025 reform, ILO's report, the global failure of pension privatization — all prove public systems are the alternative.<br>
+        <strong>Data:</strong> Parents, teachers, and adolescents are demanding social media regulation. Australia has banned social media for those under 16.<br>
+        <strong>Labor:</strong> Global gig workers are organizing. California's AB5, the Prop 22 controversy, India's Social Security Code — each step is the silenced beginning to speak.</p>
+
+        <p><strong>Capital's boundary is the moment the silenced begin to speak.</strong></p>
+
+        <div class="part-label">Part Seven: Conclusion</div>
+
+        <div class="highlight-box abuse-box">
+            <p><strong>Transnational capital's boundary is not moral. It is arithmetic.</strong></p>
+            <p>Each boundary is the same boundary: when the cost of cost transfer exceeds its return, it stops.</p>
+            <p><strong>This is not "the end of capitalism." This is "the end of cost transfer."</strong></p>
+            <p><strong>This is not "defeating capital." This is letting capital discover for itself: the cost of maintaining that value system has exceeded the cost of abandoning it.</strong></p>
+            <p><strong>This is not "ideology." This is mathematics.</strong></p>
+            <p>Suffering is not a "side effect." Suffering is the product itself. And the product must be replaced.</p>
+        </div>
+
+        <div class="highlight-box dual-box">
+            <p><strong>Eight essays. One structure. One criterion. One boundary.</strong></p>
+            <p>The next step is to translate "replacing the incentive structure" from an abstract judgment into an executable program — the Domestic Policy Series, where the fiscal foundation is designed for each domain.</p>
+        </div>
+
+        <div class="signature">
+            Ping Xu
+            <span class="title">Creator of the Governance Legitimacy Framework · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 繁體中文版 ==================== -->
+<div class="lb" data-lang="tw">
+    <div class="page-header">
+        <div class="badge">成本轉移系列 · 結論</div>
+        <div class="title">跨國資本的邊界</div>
+        <div class="subtitle">資本不是無限的。它的邊界不是道德的——是算術的。</div>
+        <div class="meta">徐萍 · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+
+        <div class="part-label">第一部分：資本不是無限的</div>
+
+        <p>監控資本主義、金融資本主義、平台資本主義——這些名字暗示了一種無限的力量。但資本不是無限的。它的邊界不是道德的。它是<strong>算術的</strong>。</p>
+
+        <p>成本轉移是一種商業模式。它之所以能運轉，是因為<strong>被轉移成本的人沒有聲音、沒有替代選擇</strong>。當那些條件改變時，成本轉移就會失敗。</p>
+
+        <p><strong>資本沒有能力永遠讓無聲的人保持無聲。</strong></p>
+
+        <div class="part-label">第二部分：八條邊界</div>
+
+        <p>八個領域，每一條邊界都是同一個結構的輸出。在邊界上，維護系統的成本超過放棄系統的成本。</p>
+
+        <h2>製藥——專利懸崖</h2>
+        <p>到 2033 年，全球將有約 <strong>4,000 億美元</strong> 年收入的藥物失去專利獨占權。前 20 大藥企中，僅前十大到期產品就將衝擊超 <strong>1,260 億美元</strong> 的收入。同時，中國藥企的臨床數據正在擊穿「最好的藥在西方」這個前提。<strong>當替代藥物存在時，專利定價權就崩了。</strong></p>
+
+        <h2>糧食——公共儲備</h2>
+        <p>當全球大米價格在 2007-2008 年間飆升 <strong>75%</strong> 時，印度的批發大米價格僅上漲了 <strong>14%</strong>——因為印度有一個直接從農民手中購買糧食、並以補貼價格分配給近三分之二人口的公共儲備系統。<strong>當替代供應鏈存在時，價格操縱就失效了。</strong></p>
+
+        <h2>醫療——替代支付模式</h2>
+        <p>美國在醫療行政成本上花費 <strong>超過 3,700 億美元</strong>，其中 <strong>超過一半是浪費的</strong>。而台灣的單一支付者系統以 <strong>GDP 的 6.6%</strong> 提供全民覆蓋。<strong>當替代支付模式存在時，按項目付費的優越性就消失了。</strong></p>
+
+        <h2>保險——行政浪費超過醫療成本</h2>
+        <p>美國每年在醫療行政成本上花費 <strong>超過 3,700 億美元</strong>，占總支出的近 10%，而研究表明其中 <strong>超過一半是浪費的</strong>。<strong>當系統運轉的成本超過它服務的成本時，它就失去了存在理由。</strong></p>
+
+        <h2>教育——學生債務超過 1.86 萬億美元</h2>
+        <p>美國學生貸款債務總額達到 <strong>1.86 萬億美元</strong>，營利性機構的貸款違約率是公立機構的 <strong>兩倍</strong>。而中國的國家助學貸款在 2025 年覆蓋 <strong>852 萬名學生</strong>，利率相對較低。<strong>當替代融資系統存在時，債務奴役就失效了。</strong></p>
+
+        <h2>養老——60% 的私有化國家回歸公共系統</h2>
+        <p>ILO 2018 年的報告——涵蓋 30 個採納私有化養老金制度的國家——<strong>得出結論：該制度失敗了</strong>。<strong>60% 的國家決定回歸公共養老金融資系統</strong>。<strong>當模式被證明失敗時，它就不能繼續假裝成功。</strong></p>
+
+        <h2>數據——認知侵蝕</h2>
+        <p>2026 年 9 月發表在《Journal of Adolescent Health》的研究發現：當青少年增加社交媒體瀏覽時，兩年後他們的認知控制能力下降，四年後抑鬱症狀增加。<strong>當認知侵蝕成為可測量的系統性後果時，注意力經濟就失去了正當性。</strong></p>
+
+        <h2>勞動——工人承擔全部風險，平台捕獲全部收益</h2>
+        <p>全球零工經濟總量在 2025 年達到 <strong>5,822 億美元</strong>，預計 2033 年達到 <strong>1.88 萬億美元</strong>。但 <strong>工人承擔全部風險，平台捕獲全部收益</strong>。<strong>當一個系統把風險全部轉移給一方，把收益全部集中給另一方時，它在算術上是不穩定的。</strong></p>
+
+        <div class="part-label">第三部分：邊界是算術的，不是道德的</div>
+
+        <p>這八條邊界不是道德的呼籲。它們是<strong>算術約束</strong>。</p>
+
+        <p>每一條邊界都可以用一個簡單公式描述：</p>
+
+        <div class="highlight-box dual-box">
+            <p><strong>系統運轉成本 &gt; 系統收益 → 系統崩潰</strong></p>
+        </div>
+
+        <p><strong>製藥：</strong>研發成本 + 營銷成本 + 法律成本 &gt; 專利定價權收益（當替代藥物存在時）<br>
+        <strong>糧食：</strong>生態成本 + 農民債務成本 + 消費者價格上漲成本 &gt; 價格操縱收益（當替代供應鏈存在時）<br>
+        <strong>醫療：</strong>行政成本 + 無效治療成本 + 等待時間成本 &gt; 按項目付費收益（當替代支付模式存在時）<br>
+        <strong>保險：</strong>行政成本 + 拒賠上訴成本 + 醫生推翻拒賠成本 &gt; 拒賠收益（當賠付比拒賠更賺錢時）<br>
+        <strong>教育：</strong>學生債務成本 + 違約成本 + 納稅人成本 &gt; 高學費收益（當公共教育替代存在時）<br>
+        <strong>養老：</strong>管理費成本 + 長壽風險成本 + 覆蓋缺口成本 &gt; 資產管理規模收益（當公共養老金替代存在時）<br>
+        <strong>數據：</strong>認知侵蝕成本 + 數據殖民主義成本 + 青少年心理健康成本 &gt; 參與度收益（當認知健康成為政策優先時）<br>
+        <strong>勞動：</strong>工人權利侵蝕成本 + 社保缺口成本 + 納稅人成本 &gt; 獨立承包商收益（當工人保障成為政治要求時）</p>
+
+        <p><strong>當「系統運轉成本 &gt; 系統收益」成為可測量的事實時，成本轉移就停止了。</strong></p>
+
+        <div class="part-label">第四部分：資本的邊界就是 GL 框架的邊界</div>
+
+        <p>GL 框架的核心判據是：<strong>「成本不得轉移給無聲的弱者。」</strong></p>
+
+        <p>這條判據不是道德的。它是<strong>算術的</strong>。</p>
+
+        <p>因為當一個系統把成本轉移給無聲的弱者時，它就在做三件事：</p>
+
+        <p><strong>第一，它把成本外部化。</strong> 但外部化的成本不會消失。它會積累。它會在未來以更高的成本回來。</p>
+
+        <p><strong>第二，它把成本轉移給沒有議價能力的人。</strong> 但那些人不會永遠沒有議價能力。當他們組織起來時，成本轉移就會失敗。</p>
+
+        <p><strong>第三，它把成本轉移給未來。</strong> 但未來不是一個空賬戶。未來是今天的人。</p>
+
+        <p><strong>資本的邊界就是「外部化成本返回」的那一點。當外部化的成本返回時，成本轉移就終止了。</strong></p>
+
+        <div class="part-label">第五部分：終結不是「打敗」資本</div>
+
+        <p><strong>終結不是「打敗」資本。</strong> 終結是讓資本自己發現：繼續維護那套價值體系的成本，已經超過了放棄它的成本。</p>
+
+        <ul>
+            <li>製藥不是在「被打敗」。是專利懸崖 + 臨床數據優勢轉移 + 替代藥物存在，讓高藥價的基礎崩了。</li>
+            <li>糧食不是在「被打敗」。是公共儲備 + 替代供應鏈 + 農民組織，讓價格操縱失效了。</li>
+            <li>醫療不是在「被打敗」。是替代支付模式 + 行政浪費 + 患者組織，讓按項目付費失去了正當性。</li>
+            <li>保險不是在「被打敗」。是行政成本超過醫療成本 + 拒賠上訴 + 醫生集體行動，讓拒賠不再盈利。</li>
+            <li>教育不是在「被打敗」。是學生債務危機 + 公共教育替代 + 代際不公，讓債務奴役失去了政治基礎。</li>
+            <li>養老不是在「被打敗」。是私有化失敗 + 長壽風險 + 覆蓋缺口，讓 60% 的國家回歸公共系統。</li>
+            <li>數據不是在「被打敗」。是認知侵蝕 + 青少年心理健康 + 家長集體行動，讓參與度經濟失去了社會許可。</li>
+            <li>勞動不是在「被打敗」。是工人組織 + 社保缺口 + 公共輿論，讓「獨立承包商」不再可接受。</li>
+        </ul>
+
+        <p><strong>終結不是對抗。終結是算術。</strong></p>
+
+        <div class="part-label">第六部分：被沉默的人正在說話</div>
+
+        <p>成本轉移的前提是<strong>被轉移成本的人沒有聲音</strong>。但這個前提正在被打破。</p>
+
+        <p><strong>製藥：</strong>中國的臨床數據正在被全球醫學界引用。印度、巴西、南非正在推動藥品可及性。<br>
+        <strong>糧食：</strong>印度農民正在組織抗議。巴西的無地農民運動已經持續了幾十年。全球糧食主權運動正在增長。<br>
+        <strong>醫療：</strong>台灣的單一支付者系統、古巴的家庭醫生系統、哥斯大黎加的公共健康系統——證明替代方案是可行的。<br>
+        <strong>保險：</strong>UnitedHealthcare CEO 被謀殺後，公眾的反應不是譴責，而是理解。<br>
+        <strong>教育：</strong>學生債務運動正在迫使政府提出減免方案。中國的助學貸款系統正在覆蓋更多學生。<br>
+        <strong>養老：</strong>智利 2025 年的改革、ILO 的報告、全球養老金私有化的失敗——證明公共系統是替代方案。<br>
+        <strong>數據：</strong>家長、教師、青少年正在要求對社交媒體進行監管。澳大利亞已經禁止 16 歲以下青少年使用社交媒體。<br>
+        <strong>勞動：</strong>全球零工工人正在組織。加州 AB5、Prop 22 的爭議、印度的社會保障法典——每一步都是被沉默的人正在說話。</p>
+
+        <p><strong>資本的邊界就是被沉默的人開始說話的那一刻。</strong></p>
+
+        <div class="part-label">第七部分：結論</div>
+
+        <div class="highlight-box abuse-box">
+            <p><strong>跨國資本的邊界不是道德的，是算術的。</strong></p>
+            <p>每一條邊界都是同一條邊界：當成本轉移的成本超過收益時，它就會停止。</p>
+            <p><strong>這不是「資本主義的終結」。這是「成本轉移的終結」。</strong></p>
+            <p><strong>這不是「打敗資本」。這是讓資本自己發現：繼續維護那套價值體系的成本，已經超過了放棄它的成本。</strong></p>
+            <p><strong>這不是「意識形態」。這是數學。</strong></p>
+            <p>受苦不是「副作用」，受苦是產品本身。而產品必須被替換。</p>
+        </div>
+
+        <div class="highlight-box dual-box">
+            <p><strong>八篇文章，一個結構，一個判據，一條邊界。</strong></p>
+            <p>下一步，我們要把「替換激勵結構」從抽象的判斷，變成可執行的方案——內政篇系列，為每一個領域設計財政基礎。</p>
+        </div>
+
+        <div class="signature">
+            徐萍
+            <span class="title">治理正當性框架發明人 · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 簡體中文版 ==================== -->
+<div class="lb" data-lang="cn">
+    <div class="page-header">
+        <div class="badge">成本转移系列 · 结论</div>
+        <div class="title">跨国资本的边界</div>
+        <div class="subtitle">资本不是无限的。它的边界不是道德的——是算术的。</div>
+        <div class="meta">徐萍 · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+
+        <div class="part-label">第一部分：资本不是无限的</div>
+
+        <p>监控资本主义、金融资本主义、平台资本主义——这些名字暗示了一种无限的力量。但资本不是无限的。它的边界不是道德的。它是<strong>算术的</strong>。</p>
+
+        <p>成本转移是一种商业模式。它之所以能运转，是因为<strong>被转移成本的人没有声音、没有替代选择</strong>。当那些条件改变时，成本转移就会失败。</p>
+
+        <p><strong>资本没有能力永远让无声的人保持无声。</strong></p>
+
+        <div class="part-label">第二部分：八条边界</div>
+
+        <p>八个领域，每一条边界都是同一个结构的输出。在边界上，维护系统的成本超过放弃系统的成本。</p>
+
+        <h2>制药——专利悬崖</h2>
+        <p>到 2033 年，全球将有约 <strong>4,000 亿美元</strong> 年收入的药物失去专利独占权。前 20 大药企中，仅前十大到期产品就将冲击超 <strong>1,260 亿美元</strong> 的收入。同时，中国药企的临床数据正在击穿「最好的药在西方」这个前提。<strong>当替代药物存在时，专利定价权就崩了。</strong></p>
+
+        <h2>粮食——公共储备</h2>
+        <p>当全球大米价格在 2007-2008 年间飙升 <strong>75%</strong> 时，印度的批发大米价格仅上涨了 <strong>14%</strong>——因为印度有一个直接从农民手中购买粮食、并以补贴价格分配给近三分之二人口的公共储备系统。<strong>当替代供应链存在时，价格操纵就失效了。</strong></p>
+
+        <h2>医疗——替代支付模式</h2>
+        <p>美国在医疗行政成本上花费 <strong>超过 3,700 亿美元</strong>，其中 <strong>超过一半是浪费的</strong>。而台湾的单一支付者系统以 <strong>GDP 的 6.6%</strong> 提供全民覆盖。<strong>当替代支付模式存在时，按项目付费的优越性就消失了。</strong></p>
+
+        <h2>保险——行政浪费超过医疗成本</h2>
+        <p>美国每年在医疗行政成本上花费 <strong>超过 3,700 亿美元</strong>，占总支出的近 10%，而研究表明其中 <strong>超过一半是浪费的</strong>。<strong>当系统运转的成本超过它服务的成本时，它就失去了存在理由。</strong></p>
+
+        <h2>教育——学生债务超过 1.86 万亿美元</h2>
+        <p>美国学生贷款债务总额达到 <strong>1.86 万亿美元</strong>，营利性机构的贷款违约率是公立机构的 <strong>两倍</strong>。而中国的国家助学贷款在 2025 年覆盖 <strong>852 万名学生</strong>，利率相对较低。<strong>当替代融资系统存在时，债务奴役就失效了。</strong></p>
+
+        <h2>养老——60% 的私有化国家回归公共系统</h2>
+        <p>ILO 2018 年的报告——涵盖 30 个采纳私有化养老金制度的国家——<strong>得出结论：该制度失败了</strong>。<strong>60% 的国家决定回归公共养老金融资系统</strong>。<strong>当模式被证明失败时，它就不能继续假装成功。</strong></p>
+
+        <h2>数据——认知侵蚀</h2>
+        <p>2026 年 9 月发表在《Journal of Adolescent Health》的研究发现：当青少年增加社交媒体浏览时，两年后他们的认知控制能力下降，四年后抑郁症状增加。<strong>当认知侵蚀成为可测量的系统性后果时，注意力经济就失去了正当性。</strong></p>
+
+        <h2>劳动——工人承担全部风险，平台捕获全部收益</h2>
+        <p>全球零工经济总量在 2025 年达到 <strong>5,822 亿美元</strong>，预计 2033 年达到 <strong>1.88 万亿美元</strong>。但 <strong>工人承担全部风险，平台捕获全部收益</strong>。<strong>当一个系统把风险全部转移给一方，把收益全部集中给另一方时，它在算术上是不稳定的。</strong></p>
+
+        <div class="part-label">第三部分：边界是算术的，不是道德的</div>
+
+        <p>这八条边界不是道德的呼吁。它们是<strong>算术约束</strong>。</p>
+
+        <p>每一条边界都可以用一个简单公式描述：</p>
+
+        <div class="highlight-box dual-box">
+            <p><strong>系统运转成本 &gt; 系统收益 → 系统崩溃</strong></p>
+        </div>
+
+        <p><strong>制药：</strong>研发成本 + 营销成本 + 法律成本 &gt; 专利定价权收益（当替代药物存在时）<br>
+        <strong>粮食：</strong>生态成本 + 农民债务成本 + 消费者价格上涨成本 &gt; 价格操纵收益（当替代供应链存在时）<br>
+        <strong>医疗：</strong>行政成本 + 无效治疗成本 + 等待时间成本 &gt; 按项目付费收益（当替代支付模式存在时）<br>
+        <strong>保险：</strong>行政成本 + 拒赔上诉成本 + 医生推翻拒赔成本 &gt; 拒赔收益（当赔付比拒赔更赚钱时）<br>
+        <strong>教育：</strong>学生债务成本 + 违约成本 + 纳税人成本 &gt; 高学费收益（当公共教育替代存在时）<br>
+        <strong>养老：</strong>管理费成本 + 长寿风险成本 + 覆盖缺口成本 &gt; 资产管理规模收益（当公共养老金替代存在时）<br>
+        <strong>数据：</strong>认知侵蚀成本 + 数据殖民主义成本 + 青少年心理健康成本 &gt; 参与度收益（当认知健康成为政策优先时）<br>
+        <strong>劳动：</strong>工人权利侵蚀成本 + 社保缺口成本 + 纳税人成本 &gt; 独立承包商收益（当工人保障成为政治要求时）</p>
+
+        <p><strong>当「系统运转成本 &gt; 系统收益」成为可测量的事实时，成本转移就停止了。</strong></p>
+
+        <div class="part-label">第四部分：资本的边界就是 GL 框架的边界</div>
+
+        <p>GL 框架的核心判据是：<strong>「成本不得转移给无声的弱者。」</strong></p>
+
+        <p>这条判据不是道德的。它是<strong>算术的</strong>。</p>
+
+        <p>因为当一个系统把成本转移给无声的弱者时，它就在做三件事：</p>
+
+        <p><strong>第一，它把成本外部化。</strong> 但外部化的成本不会消失。它会积累。它会在未来以更高的成本回来。</p>
+
+        <p><strong>第二，它把成本转移给没有议价能力的人。</strong> 但那些人不会永远没有议价能力。当他们组织起来时，成本转移就会失败。</p>
+
+        <p><strong>第三，它把成本转移给未来。</strong> 但未来不是一个空账户。未来是今天的人。</p>
+
+        <p><strong>资本的边界就是「外部化成本返回」的那一点。当外部化的成本返回时，成本转移就终止了。</strong></p>
+
+        <div class="part-label">第五部分：终结不是「打败」资本</div>
+
+        <p><strong>终结不是「打败」资本。</strong> 终结是让资本自己发现：继续维护那套价值体系的成本，已经超过了放弃它的成本。</p>
+
+        <ul>
+            <li>制药不是在「被打败」。是专利悬崖 + 临床数据优势转移 + 替代药物存在，让高药价的基础崩了。</li>
+            <li>粮食不是在「被打败」。是公共储备 + 替代供应链 + 农民组织，让价格操纵失效了。</li>
+            <li>医疗不是在「被打败」。是替代支付模式 + 行政浪费 + 患者组织，让按项目付费失去了正当性。</li>
+            <li>保险不是在「被打败」。是行政成本超过医疗成本 + 拒赔上诉 + 医生集体行动，让拒赔不再盈利。</li>
+            <li>教育不是在「被打败」。是学生债务危机 + 公共教育替代 + 代际不公，让债务奴役失去了政治基础。</li>
+            <li>养老不是在「被打败」。是私有化失败 + 长寿风险 + 覆盖缺口，让 60% 的国家回归公共系统。</li>
+            <li>数据不是在「被打败」。是认知侵蚀 + 青少年心理健康 + 家长集体行动，让参与度经济失去了社会许可。</li>
+            <li>劳动不是在「被打败」。是工人组织 + 社保缺口 + 公共舆论，让「独立承包商」不再可接受。</li>
+        </ul>
+
+        <p><strong>终结不是对抗。终结是算术。</strong></p>
+
+        <div class="part-label">第六部分：被沉默的人正在说话</div>
+
+        <p>成本转移的前提是<strong>被转移成本的人没有声音</strong>。但这个前提正在被打破。</p>
+
+        <p><strong>制药：</strong>中国的临床数据正在被全球医学界引用。印度、巴西、南非正在推动药品可及性。<br>
+        <strong>粮食：</strong>印度农民正在组织抗议。巴西的无地农民运动已经持续了几十年。全球粮食主权运动正在增长。<br>
+        <strong>医疗：</strong>台湾的单一支付者系统、古巴的家庭医生系统、哥斯达黎加的公共健康系统——证明替代方案是可行的。<br>
+        <strong>保险：</strong>UnitedHealthcare CEO 被谋杀后，公众的反应不是谴责，而是理解。<br>
+        <strong>教育：</strong>学生债务运动正在迫使政府提出减免方案。中国的助学贷款系统正在覆盖更多学生。<br>
+        <strong>养老：</strong>智利 2025 年的改革、ILO 的报告、全球养老金私有化的失败——证明公共系统是替代方案。<br>
+        <strong>数据：</strong>家长、教师、青少年正在要求对社交媒体进行监管。澳大利亚已经禁止 16 岁以下青少年使用社交媒体。<br>
+        <strong>劳动：</strong>全球零工工人正在组织。加州 AB5、Prop 22 的争议、印度的社会保障法典——每一步都是被沉默的人正在说话。</p>
+
+        <p><strong>资本的边界就是被沉默的人开始说话的那一刻。</strong></p>
+
+        <div class="part-label">第七部分：结论</div>
+
+        <div class="highlight-box abuse-box">
+            <p><strong>跨国资本的边界不是道德的，是算术的。</strong></p>
+            <p>每一条边界都是同一条边界：当成本转移的成本超过收益时，它就会停止。</p>
+            <p><strong>这不是「资本主义的终结」。这是「成本转移的终结」。</strong></p>
+            <p><strong>这不是「打败资本」。这是让资本自己发现：继续维护那套价值体系的成本，已经超过了放弃它的成本。</strong></p>
+            <p><strong>这不是「意识形态」。这是数学。</strong></p>
+            <p>受苦不是「副作用」，受苦是产品本身。而产品必须被替换。</p>
+        </div>
+
+        <div class="highlight-box dual-box">
+            <p><strong>八篇文章，一个结构，一个判据，一条边界。</strong></p>
+            <p>下一步，我们要把「替换激励结构」从抽象的判断，变成可执行的方案——内政篇系列，为每一个领域设计财政基础。</p>
+        </div>
+
+        <div class="signature">
+            徐萍
+            <span class="title">治理正当性框架发明人 · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 西班牙文版 ==================== -->
+<div class="lb" data-lang="es">
+    <div class="page-header">
+        <div class="badge">Serie de Transferencia de Costos · Conclusión</div>
+        <div class="title">El Límite del Capital Transnacional</div>
+        <div class="subtitle">El capital no es infinito. Su límite no es moral — es aritmético.</div>
+        <div class="meta">Ping Xu · GFI Flow Intelligence · 2026</div>
+    </div>
+
+    <div class="content">
+
+        <div class="part-label">Parte Uno: El Capital No Es Infinito</div>
+
+        <p>Capitalismo de vigilancia, capitalismo financiero, capitalismo de plataformas — estos nombres sugieren un poder infinito. Pero el capital no es infinito. Su límite no es moral. Es <strong>aritmético</strong>.</p>
+
+        <p>La transferencia de costos es un modelo de negocio. Funciona porque <strong>quienes soportan el costo transferido no tienen voz ni alternativa</strong>. Cuando esas condiciones cambian, la transferencia de costos falla.</p>
+
+        <p><strong>El capital no tiene la capacidad de mantener a los sin voz en silencio para siempre.</strong></p>
+
+        <div class="part-label">Parte Dos: Ocho Límites</div>
+
+        <p>Cada uno de los ocho dominios tiene un límite aritmético. En ese límite, el costo de mantener el sistema supera el costo de abandonarlo.</p>
+
+        <h2>Farmacéutica — el acantilado de patentes</h2>
+        <p>Para 2033, los medicamentos que generan aproximadamente <strong>USD 400.000 millones</strong> en ingresos anuales perderán la exclusividad de patente. Entre las 20 principales compañías farmacéuticas, solo los diez principales productos que expiran impactarán más de <strong>USD 126.000 millones</strong> en ingresos. Mientras tanto, los datos clínicos de las compañías farmacéuticas chinas están rompiendo la premisa de que "los mejores medicamentos están en Occidente". <strong>Cuando existen medicamentos alternativos, el poder de fijación de precios de patentes colapsa.</strong></p>
+
+        <h2>Alimentación — reservas públicas</h2>
+        <p>Cuando los precios globales del arroz se dispararon un <strong>75%</strong> entre 2007 y 2008, los precios mayoristas del arroz en India subieron solo un <strong>14%</strong> — porque India tenía un sistema de reserva pública que compraba grano directamente a los agricultores y lo distribuía a precios subsidiados a casi dos tercios de la población. <strong>Cuando existen cadenas de suministro alternativas, la manipulación de precios falla.</strong></p>
+
+        <h2>Atención Médica — modelos de pago alternativos</h2>
+        <p>EE.UU. gasta <strong>más de USD 370.000 millones</strong> en costos administrativos de atención médica, <strong>más de la mitad de los cuales se desperdicia</strong>. El sistema de pagador único de Taiwán ofrece cobertura universal al <strong>6,6% del PIB</strong>. <strong>Cuando existen modelos de pago alternativos, la superioridad del pago por servicio desaparece.</strong></p>
+
+        <h2>Seguros — desperdicio administrativo que supera los costos médicos</h2>
+        <p>EE.UU. gasta <strong>más de USD 370.000 millones</strong> anuales en costos administrativos de atención médica, casi el 10% del gasto total — y la investigación muestra que <strong>más de la mitad se desperdicia</strong>. <strong>Cuando el costo de operar el sistema supera el costo de servirlo, el sistema pierde su razón de existir.</strong></p>
+
+        <h2>Educación — deuda estudiantil que supera USD 1,86 billones</h2>
+        <p>La deuda de préstamos estudiantiles de EE.UU. alcanzó <strong>USD 1,86 billones</strong>, y las tasas de incumplimiento de las instituciones con fines de lucro son el <strong>doble</strong> que las de las instituciones públicas. El préstamo estudiantil nacional de China cubrió a <strong>8,52 millones de estudiantes</strong> en 2025, a tasas de interés relativamente bajas. <strong>Cuando existen sistemas de financiamiento alternativos, la esclavitud por deuda falla.</strong></p>
+
+        <h2>Envejecimiento — 60% de los países privatizados volviendo a sistemas públicos</h2>
+        <p>El informe de 2018 de la OIT — que cubre 30 países que adoptaron sistemas de pensiones privatizados — <strong>concluyó que el sistema fracasó</strong>. <strong>El 60% de los países decidió volver a los sistemas públicos de financiamiento de pensiones</strong>. <strong>Cuando un modelo se prueba fallido, no puede seguir pretendiendo tener éxito.</strong></p>
+
+        <h2>Datos — erosión cognitiva</h2>
+        <p>Un estudio publicado en el <em>Journal of Adolescent Health</em> en septiembre de 2026 encontró que cuando los adolescentes aumentan la navegación en redes sociales, su control cognitivo disminuye dos años después, y los síntomas depresivos aumentan cuatro años después. <strong>Cuando la erosión cognitiva se convierte en una consecuencia sistémica medible, la economía de la atención pierde su legitimidad.</strong></p>
+
+        <h2>Trabajo — los trabajadores asumen todo el riesgo, las plataformas capturan todos los ingresos</h2>
+        <p>El volumen bruto global de la economía gig alcanzó <strong>USD 582.200 millones</strong> en 2025, proyectado a <strong>USD 1,88 billones</strong> para 2033. Pero <strong>los trabajadores asumen todo el riesgo, las plataformas capturan todos los ingresos</strong>. <strong>Cuando un sistema transfiere todo el riesgo a un lado y concentra todos los ingresos en el otro, es aritméticamente inestable.</strong></p>
+
+        <div class="part-label">Parte Tres: El Límite Es Aritmético, No Moral</div>
+
+        <p>Estos ocho límites no son apelaciones morales. Son <strong>restricciones aritméticas</strong>.</p>
+
+        <p>Cada límite puede describirse con una fórmula simple:</p>
+
+        <div class="highlight-box dual-box">
+            <p><strong>Costo operativo del sistema &gt; Retorno del sistema → El sistema colapsa</strong></p>
+        </div>
+
+        <p><strong>Farmacéutica:</strong> Costo de I+D + costo de marketing + costo legal &gt; retorno del poder de fijación de precios de patentes (cuando existen medicamentos alternativos)<br>
+        <strong>Alimentación:</strong> Costo ecológico + costo de deuda agrícola + costo de aumento de precios al consumidor &gt; retorno de manipulación de precios (cuando existen cadenas de suministro alternativas)<br>
+        <strong>Atención Médica:</strong> Costo administrativo + costo de tratamiento ineficaz + costo de tiempo de espera &gt; retorno de pago por servicio (cuando existen modelos de pago alternativos)<br>
+        <strong>Seguros:</strong> Costo administrativo + costo de apelación de denegación + costo de anulación de médicos &gt; retorno de denegación (cuando el pago es más rentable que la denegación)<br>
+        <strong>Educación:</strong> Costo de deuda estudiantil + costo de incumplimiento + costo para contribuyentes &gt; retorno de matrícula alta (cuando existen alternativas de educación pública)<br>
+        <strong>Envejecimiento:</strong> Costo de comisión de gestión + costo de riesgo de longevidad + costo de brecha de cobertura &gt; retorno de activos bajo gestión (cuando existen alternativas de pensión pública)<br>
+        <strong>Datos:</strong> Costo de erosión cognitiva + costo de colonialismo de datos + costo de salud mental adolescente &gt; retorno de compromiso (cuando la salud cognitiva se convierte en prioridad política)<br>
+        <strong>Trabajo:</strong> Costo de erosión de derechos laborales + costo de brecha de seguridad social + costo para contribuyentes &gt; retorno de contratista independiente (cuando la protección del trabajador se convierte en demanda política)</p>
+
+        <p><strong>Cuando "costo operativo del sistema &gt; retorno del sistema" se convierte en un hecho medible, la transferencia de costos se detiene.</strong></p>
+
+        <div class="part-label">Parte Cuatro: El Límite del Capital Es el Límite del Marco GL</div>
+
+        <p>El criterio central del Marco GL es: <strong>"Los costos no deben transferirse a los vulnerables sin voz."</strong></p>
+
+        <p>Este criterio no es moral. Es <strong>aritmético</strong>.</p>
+
+        <p>Porque cuando un sistema transfiere costos a los vulnerables sin voz, está haciendo tres cosas:</p>
+
+        <p><strong>Primero, externaliza costos.</strong> Pero los costos externalizados no desaparecen. Se acumulan. Regresan en el futuro a un costo mayor.</p>
+
+        <p><strong>Segundo, transfiere costos a quienes no tienen poder de negociación.</strong> Pero esas personas no permanecerán sin poder de negociación para siempre. Cuando se organizan, la transferencia de costos falla.</p>
+
+        <p><strong>Tercero, transfiere costos al futuro.</strong> Pero el futuro no es una cuenta vacía. El futuro son las personas de hoy.</p>
+
+        <p><strong>El límite del capital es el punto en el que los costos externalizados regresan. Cuando los costos externalizados regresan, la transferencia de costos termina.</strong></p>
+
+        <div class="part-label">Parte Cinco: El Final No Es "Derrotar" al Capital</div>
+
+        <p><strong>El final no es "derrotar" al capital.</strong> El final es dejar que el capital descubra por sí mismo: el costo de mantener ese sistema de valores ha superado el costo de abandonarlo.</p>
+
+        <ul>
+            <li>La farmacéutica no está siendo "derrotada". Acantilados de patentes + transferencia de superioridad de datos clínicos + existencia de medicamentos alternativos significan que la base de los precios altos de medicamentos ha colapsado.</li>
+            <li>La alimentación no está siendo "derrotada". Reservas públicas + cadenas de suministro alternativas + organización de agricultores significan que la manipulación de precios ha fallado.</li>
+            <li>La atención médica no está siendo "derrotada". Modelos de pago alternativos + desperdicio administrativo + organización de pacientes significan que el pago por servicio ha perdido legitimidad.</li>
+            <li>Los seguros no están siendo "derrotados". Costos administrativos que superan los costos médicos + apelaciones de denegación + acción colectiva de médicos significan que la denegación ya no es rentable.</li>
+            <li>La educación no está siendo "derrotada". Crisis de deuda estudiantil + alternativas de educación pública + injusticia intergeneracional significan que la esclavitud por deuda ha perdido su base política.</li>
+            <li>El envejecimiento no está siendo "derrotado". Fracaso de la privatización + riesgo de longevidad + brecha de cobertura significan que el 60% de los países han vuelto a sistemas públicos.</li>
+            <li>Los datos no están siendo "derrotados". Erosión cognitiva + salud mental adolescente + acción colectiva de padres significan que la economía del compromiso ha perdido su licencia social.</li>
+            <li>El trabajo no está siendo "derrotado". Organización de trabajadores + brecha de seguridad social + opinión pública significan que "contratista independiente" ya no es aceptable.</li>
+        </ul>
+
+        <p><strong>El final no es confrontación. El final es aritmética.</strong></p>
+
+        <div class="part-label">Parte Seis: Los Silenciados Están Hablando</div>
+
+        <p>La premisa de la transferencia de costos es que <strong>quienes soportan el costo transferido no tienen voz</strong>. Pero esta premisa está siendo rota.</p>
+
+        <p><strong>Farmacéutica:</strong> Los datos clínicos chinos están siendo citados por la comunidad médica global. India, Brasil y Sudáfrica están impulsando la accesibilidad a los medicamentos.<br>
+        <strong>Alimentación:</strong> Los agricultores indios están organizando protestas. El Movimiento de los Trabajadores Sin Tierra de Brasil ha estado activo durante décadas. El movimiento global de soberanía alimentaria está creciendo.<br>
+        <strong>Atención Médica:</strong> El sistema de pagador único de Taiwán, el sistema de médicos de familia de Cuba, el sistema de salud pública de Costa Rica — todos prueban que las alternativas son factibles.<br>
+        <strong>Seguros:</strong> Después del asesinato del CEO de UnitedHealthcare, la reacción pública no fue condena — fue comprensión.<br>
+        <strong>Educación:</strong> El movimiento de deuda estudiantil está forzando a los gobiernos a proponer planes de condonación. El sistema de préstamos estudiantiles nacionales de China está cubriendo a más estudiantes.<br>
+        <strong>Envejecimiento:</strong> La reforma de Chile de 2025, el informe de la OIT, el fracaso global de la privatización de pensiones — todos prueban que los sistemas públicos son la alternativa.<br>
+        <strong>Datos:</strong> Padres, maestros y adolescentes están exigiendo regulación de las redes sociales. Australia ha prohibido las redes sociales para menores de 16 años.<br>
+        <strong>Trabajo:</strong> Los trabajadores gig globales se están organizando. La AB5 de California, la controversia de la Prop 22, el Código de Seguridad Social de India — cada paso es el silenciado comenzando a hablar.</p>
+
+        <p><strong>El límite del capital es el momento en que los silenciados comienzan a hablar.</strong></p>
+
+        <div class="part-label">Parte Siete: Conclusión</div>
+
+        <div class="highlight-box abuse-box">
+            <p><strong>El límite del capital transnacional no es moral. Es aritmético.</strong></p>
+            <p>Cada límite es el mismo límite: cuando el costo de la transferencia de costos supera su retorno, se detiene.</p>
+            <p><strong>Esto no es "el fin del capitalismo". Esto es "el fin de la transferencia de costos".</strong></p>
+            <p><strong>Esto no es "derrotar al capital". Esto es dejar que el capital descubra por sí mismo: el costo de mantener ese sistema de valores ha superado el costo de abandonarlo.</strong></p>
+            <p><strong>Esto no es "ideología". Esto es matemáticas.</strong></p>
+            <p>El sufrimiento no es un "efecto secundario". El sufrimiento es el producto mismo. Y el producto debe ser reemplazado.</p>
+        </div>
+
+        <div class="highlight-box dual-box">
+            <p><strong>Ocho ensayos. Una estructura. Un criterio. Un límite.</strong></p>
+            <p>El siguiente paso es traducir "reemplazar la estructura de incentivos" de un juicio abstracto a un programa ejecutable — la Serie de Política Interior, donde la base fiscal se diseña para cada dominio.</p>
+        </div>
+
+        <div class="signature">
+            Ping Xu
+            <span class="title">Creadora del Marco de Legitimidad Gubernamental · GFI Flow Intelligence</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 同系列导航 ==================== -->
+<div class="series-nav">
+    <div class="series-nav-label">同系列文章 · Series Articles</div>
+    <div class="series-nav-grid">
+        <a href="/end-of-profiting-from-life.html" class="series-nav-item">I · Pharmaceutical</a>
+        <a href="/end-of-profiting-from-food.html" class="series-nav-item">II · Food &amp; Agriculture</a>
+        <a href="/end-of-profiting-from-healthcare.html" class="series-nav-item">III · Healthcare</a>
+        <a href="/end-of-profiting-from-insurance.html" class="series-nav-item">IV · Insurance</a>
+        <a href="/end-of-profiting-from-education.html" class="series-nav-item">V · Education</a>
+        <a href="/end-of-profiting-from-aging.html" class="series-nav-item">VI · Aging &amp; Pensions</a>
+        <a href="/end-of-profiting-from-data.html" class="series-nav-item">VII · Data &amp; Attention</a>
+        <a href="/end-of-profiting-from-labor.html" class="series-nav-item">VIII · Labor</a>
+        <a href="/cost-transfer-synthesis.html" class="series-nav-item">Synthesis</a>
+        <a href="/cost-transfer-conclusion.html" class="series-nav-item current">Conclusion</a>
+    </div>
+</div>
+
+<div class="footer">
+    <span class="site">gfiintel.com</span>
+    <span class="links">
+        <a href="/">← Back to Home</a>
+        <a href="/cost-transfer.html">← Cost Transfer Series</a>
+        <a href="/shared-delusion.html">← Shared Delusion Series</a>
+        <a href="/landjustice.html">← Land Justice Series</a>
+        <a href="/domestic-policy.html">← Domestic Policy Series</a>
+    </span>
+    <span class="copyright">© 2026 GFI Flow Intelligence · 跨國資本的邊界 · The Boundary of Transnational Capital</span>
+</div>
+
+<script>
+    document.querySelectorAll('.lb-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var lang = this.dataset.lang;
+            document.querySelectorAll('.lb-btn').forEach(function(b) { b.classList.remove('on'); });
+            this.classList.add('on');
+            document.querySelectorAll('.lb').forEach(function(lb) { lb.classList.remove('active'); });
+            var target = document.querySelector('.lb[data-lang="' + lang + '"]');
+            if (target) target.classList.add('active');
+        });
+    });
+</script>
+
+</body>
+</html>
