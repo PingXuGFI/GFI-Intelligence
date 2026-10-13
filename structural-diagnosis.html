@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>結構性診斷系列 · Structural Diagnosis Series | Governance Flow Intelligence</title>
+<meta name="description" content="七個問題，一個財源。財政管理、就業率、養老基金、醫療、主權債務、住房、AI 失業、氣候轉型、全球南方債務——九篇結構性診斷，指向同一個結構性重構。">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Structural Diagnosis Series",
+  "description": "Seven problems, one source of revenue. Nine structural diagnoses pointing to the same structural reconstruction.",
+  "inLanguage": ["zh-Hant", "zh-Hans", "en", "es"]
+}
+</script>
+
+<style>
+  :root{
+    --bg:#0b1220; --bg2:#0d1526; --card:#121a2b;
+    --text:#f8fbff; --muted:#c7d2e3; --sub:#9fb0c8;
+    --green:#9FE870; --blue:#7DD3FC; --gold:#fbbf24; --red:#f87171;
+    --dim:rgba(255,255,255,.06);
+    --serif:'DM Serif Display', Georgia, 'Noto Serif TC', serif;
+    --mono:'DM Mono', ui-monospace, monospace;
+    --sans:'DM Sans', system-ui, -apple-system, 'Noto Sans TC', sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:
+      radial-gradient(ellipse 55% 40% at 82% 8%, rgba(159,232,112,.05), transparent),
+      radial-gradient(ellipse 45% 45% at 5% 85%, rgba(125,211,252,.04), transparent),
+      var(--bg);
+    color:var(--text); font-family:var(--sans); font-size:15px; line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  /* ── 頂部語言切換 ── */
+  .topbar{
+    position:sticky; top:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:16px; flex-wrap:wrap;
+    height:62px; padding:0 clamp(18px,5vw,52px);
+    background:rgba(11,18,32,.92); backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--dim);
+  }
+  .topbar .brand{
+    color:#fff; text-decoration:none;
+    font-family:var(--mono); font-size:13px;
+    letter-spacing:.16em; text-transform:uppercase;
+  }
+  .topbar .nav-right{display:flex; align-items:center; gap:16px; flex-wrap:wrap}
+  .topbar .nav-wellness{
+    color:var(--green); text-decoration:none;
+    font-family:var(--mono); font-size:11px; letter-spacing:.08em;
+  }
+  .topbar .nav-wellness:hover{color:#fff; opacity:.8}
+  .lang-grp{display:flex; gap:6px}
+  .lb-btn{
+    font-family:var(--mono); font-size:11px; letter-spacing:.08em;
+    padding:5px 10px; border-radius:5px; cursor:pointer;
+    border:1px solid rgba(255,255,255,.1); background:0 0; color:var(--sub);
+    transition:all .2s;
+  }
+  .lb-btn:hover{color:var(--text); border-color:rgba(255,255,255,.2)}
+  .lb-btn.on{color:var(--green); border-color:rgba(159,232,112,.35); background:rgba(159,232,112,.07)}
+
+  .lb{display:none}
+  .lb.active{display:block}
+
+  /* ── 頁面容器 ── */
+  .wrap{max-width:1080px; margin:0 auto; padding:clamp(40px,6vw,72px) clamp(18px,5vw,32px) 80px}
+
+  /* ── 頁首 ── */
+  .hero-head{margin-bottom:clamp(32px,5vw,56px); text-align:center}
+  .hero-eyebrow{
+    font-family:var(--mono); font-size:10px; letter-spacing:.22em;
+    text-transform:uppercase; color:rgba(248,113,113,.7);
+    display:inline-flex; align-items:center; gap:14px; margin-bottom:18px;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after{
+    content:''; width:36px; height:1px; background:rgba(255,255,255,.1);
+  }
+  .hero-head h1{
+    font-family:var(--serif); font-weight:700;
+    font-size:clamp(1.8rem,4vw,2.8rem); line-height:1.2;
+    color:#f4f9ff; margin-bottom:16px;
+  }
+  .hero-head .lede{
+    font-size:1.05rem; color:var(--green); font-weight:500;
+    max-width:720px; margin:0 auto 16px;
+  }
+  .hero-head .sub{
+    font-size:.9rem; color:var(--muted);
+    max-width:680px; margin:0 auto;
+  }
+
+  /* ── 小結統計條 ── */
+  .meta-strip{
+    display:flex; align-items:center; justify-content:center;
+    gap:clamp(16px,4vw,40px); flex-wrap:wrap;
+    margin:28px 0 0; padding:18px 24px;
+    background:linear-gradient(145deg, rgba(159,232,112,.05), rgba(125,211,252,.03));
+    border:1px solid rgba(159,232,112,.15); border-radius:16px;
+  }
+  .meta-strip .item{text-align:center}
+  .meta-strip .item .num{
+    font-family:var(--mono); font-size:1.5rem; font-weight:700; color:var(--green);
+  }
+  .meta-strip .item .lbl{
+    font-family:var(--mono); font-size:.55rem; letter-spacing:.12em;
+    text-transform:uppercase; color:rgba(255,255,255,.35);
+    margin-top:2px;
+  }
+
+  /* ── 診斷卡片 ── */
+  .diag-list{display:flex; flex-direction:column; gap:18px}
+
+  .diag-card{
+    display:block; text-decoration:none; color:inherit;
+    border-radius:20px; padding:clamp(22px,3vw,32px) clamp(22px,3vw,36px);
+    border:1px solid rgba(255,255,255,.09);
+    transition:all .28s;
+    position:relative; overflow:hidden;
+  }
+  .diag-card:hover{transform:translateY(-3px); box-shadow:0 14px 42px rgba(0,0,0,.3)}
+  .diag-card::before{
+    content:''; position:absolute; inset:0;
+    background-image:radial-gradient(circle at top right, rgba(255,255,255,.04), transparent 45%);
+    pointer-events:none;
+  }
+
+  .diag-num{
+    font-family:var(--mono); font-size:11px; letter-spacing:.18em;
+    color:rgba(255,255,255,.28); margin-bottom:10px;
+  }
+  .diag-title{
+    font-family:var(--serif); font-weight:600;
+    font-size:clamp(1.15rem,2vw,1.5rem); line-height:1.3;
+    margin-bottom:8px;
+  }
+  .diag-desc{
+    font-size:.9rem; color:rgba(255,255,255,.5); line-height:1.7;
+    margin-bottom:14px; max-width:820px;
+  }
+  .diag-meta{
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+    font-family:var(--mono); font-size:.65rem; letter-spacing:.06em;
+    text-transform:uppercase;
+  }
+  .diag-meta .tag{
+    padding:.2rem .7rem; border-radius:20px;
+    border:1px solid rgba(255,255,255,.12); color:rgba(255,255,255,.45);
+  }
+  .diag-cta{
+    margin-left:auto; display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--mono); font-size:.7rem; letter-spacing:.1em;
+    text-transform:uppercase;
+  }
+  .diag-cta .arrow{transition:transform .2s; display:inline-block}
+  .diag-card:hover .diag-cta .arrow{transform:translateX(4px)}
+
+  /* ── 各卡片配色 ── */
+  .diag-general{background:radial-gradient(circle at top right, rgba(248,113,113,.09), transparent 45%),linear-gradient(160deg,#1f1216,#170e12); border-color:rgba(248,113,113,.22)}
+  .diag-general:hover{border-color:rgba(248,113,113,.45)}
+  .diag-general .diag-title{color:#f5d0d0}
+  .diag-general .diag-cta{color:#f87171}
+
+  .diag-labor{background:radial-gradient(circle at top right, rgba(251,146,60,.09), transparent 45%),linear-gradient(160deg,#1f1a10,#18140c); border-color:rgba(251,146,60,.22)}
+  .diag-labor:hover{border-color:rgba(251,146,60,.45)}
+  .diag-labor .diag-title{color:#f5e0c8}
+  .diag-labor .diag-cta{color:#fb923c}
+
+  .diag-pension{background:radial-gradient(circle at top right, rgba(125,211,252,.09), transparent 45%),linear-gradient(160deg,#101a28,#0c141e); border-color:rgba(125,211,252,.22)}
+  .diag-pension:hover{border-color:rgba(125,211,252,.45)}
+  .diag-pension .diag-title{color:#d8eeff}
+  .diag-pension .diag-cta{color:#7DD3FC}
+
+  .diag-health{background:radial-gradient(circle at top right, rgba(159,232,112,.09), transparent 45%),linear-gradient(160deg,#121e14,#0d160f); border-color:rgba(159,232,112,.22)}
+  .diag-health:hover{border-color:rgba(159,232,112,.45)}
+  .diag-health .diag-title{color:#e0f0d0}
+  .diag-health .diag-cta{color:#9FE870}
+
+  .diag-debt{background:radial-gradient(circle at top right, rgba(251,191,36,.09), transparent 45%),linear-gradient(160deg,#1f1a10,#16120b); border-color:rgba(251,191,36,.22)}
+  .diag-debt:hover{border-color:rgba(251,191,36,.45)}
+  .diag-debt .diag-title{color:#f5e8c8}
+  .diag-debt .diag-cta{color:#fbbf24}
+
+  .diag-housing{background:radial-gradient(circle at top right, rgba(196,122,74,.1), transparent 45%),linear-gradient(160deg,#1c1610,#14100c); border-color:rgba(196,122,74,.25)}
+  .diag-housing:hover{border-color:rgba(196,122,74,.5)}
+  .diag-housing .diag-title{color:#f0e6dc}
+  .diag-housing .diag-cta{color:#c47a4a}
+
+  .diag-ai{background:radial-gradient(circle at top right, rgba(159,232,112,.08), transparent 45%),linear-gradient(160deg,#131a14,#0e130f); border-color:rgba(159,232,112,.2)}
+  .diag-ai:hover{border-color:rgba(159,232,112,.45)}
+  .diag-ai .diag-title{color:#e0f0d0}
+  .diag-ai .diag-cta{color:#9FE870}
+
+  .diag-climate{background:radial-gradient(circle at top right, rgba(125,211,252,.08), transparent 45%),linear-gradient(160deg,#101c22,#0b1418); border-color:rgba(125,211,252,.22)}
+  .diag-climate:hover{border-color:rgba(125,211,252,.45)}
+  .diag-climate .diag-title{color:#d8f0ff}
+  .diag-climate .diag-cta{color:#7DD3FC}
+
+  .diag-south{background:radial-gradient(circle at top right, rgba(251,191,36,.09), transparent 45%),linear-gradient(160deg,#1c180e,#13100a); border-color:rgba(251,191,36,.25)}
+  .diag-south:hover{border-color:rgba(251,191,36,.5)}
+  .diag-south .diag-title{color:#f5e8c8}
+  .diag-south .diag-cta{color:#fbbf24}
+
+  /* ── 收束區塊 ── */
+  .closing{
+    margin-top:clamp(40px,6vw,64px); padding:clamp(32px,5vw,48px);
+    background:linear-gradient(145deg, rgba(159,232,112,.06), rgba(125,211,252,.03));
+    border:1px solid rgba(159,232,112,.2); border-radius:24px;
+    text-align:center;
+  }
+  .closing .label{
+    font-family:var(--mono); font-size:10px; letter-spacing:.22em;
+    text-transform:uppercase; color:rgba(159,232,112,.55); margin-bottom:14px;
+  }
+  .closing h2{
+    font-family:var(--serif); font-size:clamp(1.3rem,2.6vw,1.9rem);
+    color:#f4f9ff; line-height:1.3; margin-bottom:14px;
+  }
+  .closing p{
+    font-size:.9rem; color:var(--muted); max-width:680px; margin:0 auto 12px;
+  }
+  .closing .final{
+    font-family:var(--serif); font-size:clamp(1.05rem,2vw,1.35rem);
+    color:var(--green); font-weight:500; margin-top:20px;
+  }
+
+  /* ── 導覽回首頁 ── */
+  .back-home{
+    display:inline-flex; align-items:center; gap:10px;
+    margin-top:32px; padding:12px 28px; border-radius:40px;
+    text-decoration:none; font-family:var(--mono);
+    font-size:12px; letter-spacing:.1em; text-transform:uppercase;
+    border:1px solid rgba(159,232,112,.4);
+    background:rgba(159,232,112,.08); color:var(--green);
+    transition:all .22s;
+  }
+  .back-home:hover{background:rgba(159,232,112,.18); border-color:var(--green); transform:translateY(-2px)}
+
+  @media(max-width:640px){
+    .diag-meta{font-size:.55rem}
+    .diag-cta{margin-left:0; margin-top:8px}
+    .meta-strip .item .num{font-size:1.2rem}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="/" class="brand">Governance Flow Intelligence</a>
+  <div class="nav-right">
+    <a href="/wellness/index.html" class="nav-wellness">🌿 Wellness</a>
+    <div class="lang-grp">
+      <button class="lb-btn on" data-lang="tw">繁</button>
+      <button class="lb-btn" data-lang="cn">简</button>
+      <button class="lb-btn" data-lang="en">EN</button>
+      <button class="lb-btn" data-lang="es">ES</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ 繁體中文 ══════════════ -->
+<div class="lb active" data-lang="tw">
+  <div class="wrap">
+    <div class="hero-head">
+      <div class="hero-eyebrow">結構性診斷系列</div>
+      <h1>七個問題，一個財源</h1>
+      <p class="lede">當工資稅的稅基坍塌，唯一還在膨脹、又完全游離於公共財政之外的財源，就是土地增值。這九篇診斷，指向同一個結構性重構。</p>
+      <p class="sub">從財政管理到全球南方債務，每一篇都拆解一個「現有框架無解」的結構性危機，並指出同一條出路。</p>
+    </div>
+
+    <div class="meta-strip">
+      <div class="item"><div class="num">9</div><div class="lbl">結構性診斷</div></div>
+      <div class="item"><div class="num">7</div><div class="lbl">共享同一財源</div></div>
+      <div class="item"><div class="num">4</div><div class="lbl">語言版本</div></div>
+      <div class="item"><div class="num">1</div><div class="lbl">結構性重構</div></div>
+    </div>
+
+    <div class="diag-list" style="margin-top:clamp(32px,5vw,56px)">
+
+      <a href="/fiscal-management-lie.html" class="diag-card diag-general">
+        <div class="diag-num">01 · 總論</div>
+        <div class="diag-title">財政管理的集體謊言：當全球政府已經無財可理</div>
+        <div class="diag-desc">「財政管理」預設了國庫還有財可理。但現實是：全球絕大多數國家，稅基已被跨國資本系統性掏空。這不是管理不善，是稅基的結構性坍塌。</div>
+        <div class="diag-meta">
+          <span class="tag">財政</span><span class="tag">總論</span>
+          <span class="diag-cta">閱讀全文 <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="/employment-fiscal-illusion.html" class="diag-card diag-labor">
+        <div class="diag-num">02 · 勞動面</div>
+        <div class="diag-title">就業率的財政幻覺：當「工作換收入」成為過期的盲腸</div>
+        <div class="diag-desc">就業率指標的數學結構，從一開始就把結構性失業排除在視野之外。當工作不再保證收入，以就業率為核心的社福與財政體系已經失靈。</div>
+        <div class="diag-meta">
+          <span class="tag">就業</span><span class="tag">社福</span>
+          <span class="diag-cta">閱讀全文 <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="/pension-land-value.html" class="diag-card diag-pension">
+        <div class="diag-num">03 · 人口面</div>
+        <div class="diag-title">養老基金的破產與土地增值的當務之急</div>
+        <div class="diag-desc">養老基金的破產不是財務問題，而是「財源選擇」問題。全球退休金缺口約 400 兆美元，而唯一還在膨脹、又無法離岸的財源，就是土地增值。</div>
+        <div class="diag-meta">
+          <span class="tag">養老</span><span class="tag">人口</span>
+          <span class="diag-cta">閱讀全文 <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="/medical-fiscal-collapse.html" class="diag-card diag-health">
+        <div class="diag-num">04 · 醫療面</div>
+        <div class="diag-title">醫療財政的結構性破產：與養老同源，卻更急</div>
+        <div class="diag-desc">美國 Medicare 的信託基金預計 2031 年破產，比 Social Security 更早。醫療與養老是同一人口結構的兩面——它們需要的是同一個財源。</div>
+        <div class="diag-meta">
+          <span class="tag">醫療</span><span class="tag">人口</span>
+          <span class="diag-cta">閱讀全文 <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="/sovereign-debt-crisis.html" class="diag-card diag-debt">
+        <div class="diag-num">05 · 總體面</div>
+        <div class="diag-title">主權債務的結構性不可持續</div>
+        <div class="diag-desc">全球政府債務已超過 100 兆美元。這些債務的償還基礎，還是同一個正在坍塌的稅基。土地增值是唯一還在膨脹、卻未被計入國家資產負債表的資產池。</div>
+        <div class="diag-meta">
+          <span class="tag">債務</span><span class="tag">總體</span>
+          <span class="diag-cta">閱讀全文 <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="/housing-structural-crisis.html" class="diag-card diag-housing">
+        <div class="diag-num">06 · 土地面</div>
+        <div class="diag-title">住房危機的結構性根源：補貼最終被地主吸收</div>
+        <div class="diag-desc">住房危機的核心不是供給不足，而是土地增值被私有化。租金補貼最終被地主以漲租吸收——等於用納稅人的錢補貼地主。</div>
+        <div class="diag-meta">
+          <span class="tag">住房</span><span class="tag">土地</span>
+          <span class="diag-cta">閱讀全文 <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="/ai-unemployment-ubi.html" class="diag-card diag-ai">
+        <div class="diag-num">07 · 勞動面</div>
+        <div class="diag-title">AI 失業與 UBI 的財源：當工作本身消失</div>
+        <div class="diag-desc">AI 不是取代部分工作，而是取代整個職業類別。「再培訓」假設有新工作可轉，但新工作本身也在被 AI 取代。UBI 的財源，只能是土地增值與跨國資本捕獲。</div>
+        <div class="diag-meta">
+          <span class="tag">AI</span><span class="tag">UBI</span>
+          <span class="diag-cta">閱讀全文 <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="/climate-fiscal-gap.html" class="diag-card diag-climate">
+        <div class="diag-num">08 · 投資面</div>
+        <div class="diag-title">氣候轉型的財政缺口：被低估的結構性危機</div>
+        <div class="diag-desc">全球淨零轉型需要每年 4–6 兆美元投資。但各國財政已被養老、醫療、債務三重擠壓。氣候轉型與它們共享同一個財源池。</div>
+        <div class="diag-meta">
+          <span class="tag">氣候</span><span class="tag">投資</span>
+          <span class="diag-cta">閱讀全文 <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="/global-south-debt-trap.html" class="diag-card diag-south">
+        <div class="diag-num">09 · 國際面</div>
+        <div class="diag-title">全球南方的主權債務陷阱</div>
+        <div class="diag-desc">全球南方國家陷入借美元債 → 貨幣貶值 → 債務膨脹 → 緊縮 → 社會動盪的循環。它們真正的資產，是長期被跨國資本與本地精英捕獲的土地與自然資源。</div>
+        <div class="diag-meta">
+          <span class="tag">全球南方</span><span class="tag">國際</span>
+          <span class="diag-cta">閱讀全文 <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="closing">
+      <div class="label">收束</div>
+      <h2>七個問題，一個財源</h2>
+      <p>把這九篇診斷攤開來看，它們共享同一個結構：現有財源（工資稅、未來稅基、補貼、勞動所得、碳稅、美元債）全部失效，而唯一還在膨脹、又完全游離於公共財政之外的財源，就是土地增值。</p>
+      <p>這不是「九個解方」，而是<strong style="color:#f4f9ff;">一個結構性重構</strong>：把土地增值從私有捕獲，轉為公共財源。其他所有問題，都是這個重構的下游應用。</p>
+      <div class="final">而這場重構的底層作業系統，已經被 GL 框架定義。</div>
+      <a href="/" class="back-home">← 返回首頁</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ 簡體中文 ══════════════ -->
+<div class="lb" data-lang="cn">
+  <div class="wrap">
+    <div class="hero-head">
+      <div class="hero-eyebrow">结构性诊断系列</div>
+      <h1>七个问题，一个财源</h1>
+      <p class="lede">当工资税的税基坍塌，唯一还在膨胀、又完全游离于公共财政之外的财源，就是土地增值。这九篇诊断，指向同一个结构性重构。</p>
+      <p class="sub">从财政管理到全球南方债务，每一篇都拆解一个「现有框架无解」的结构性危机，并指出同一条出路。</p>
+    </div>
+
+    <div class="meta-strip">
+      <div class="item"><div class="num">9</div><div class="lbl">结构性诊断</div></div>
+      <div class="item"><div class="num">7</div><div class="lbl">共享同一财源</div></div>
+      <div class="item"><div class="num">4</div><div class="lbl">语言版本</div></div>
+      <div class="item"><div class="num">1</div><div class="lbl">结构性重构</div></div>
+    </div>
+
+    <div class="diag-list" style="margin-top:clamp(32px,5vw,56px)">
+
+      <a href="/fiscal-management-lie.html" class="diag-card diag-general">
+        <div class="diag-num">01 · 总论</div>
+        <div class="diag-title">财政管理的集体谎言：当全球政府已经无财可理</div>
+        <div class="diag-desc">「财政管理」预设了国库还有财可理。但现实是：全球绝大多数国家，税基已被跨国资本系统性掏空。这不是管理不善，是税基的结构性坍塌。</div>
+        <div class="diag-meta">
+          <span class="tag">财政</span><span class="tag">总论</span>
+          <span class="diag-cta">阅读全文 <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="/employment-fiscal-illusion.html" class="diag-card diag-labor">
+        <div class="diag-num">02 · 劳动面</div>
+        <div class="diag-title">就业率的财政幻觉：当「工作换收入」成为过期的盲肠</div>
+        <div class="diag-desc">就业率指标的数学结构，从一开始就把结构性失业排除在视野之外。当工作不再保证收入，以就业率为核心的社福与财政体系已经失灵。</div>
+        <div class="diag-meta">
+          <span class="tag">就业</span><span class="tag">社福</span>
+          <span class="diag-cta">阅读全文 <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="/pension-land-value.html" class="diag-card diag-pension">
+        <div class="diag-num">03 · 人口面</div>
+        <div class="diag-title">养老基金的破产与土地增值的当务之急</div>
+        <div class="diag-desc">养老基金的破产不是财务问题，而是「财源选择」问题。全球退休金缺口约 400 兆美元，而唯一还在膨胀、又无法离岸的财源，就是土地增值。</div>
+        <div class="diag-meta">
+          <span class="tag">养老</span><span class="tag">人口</span>
+          <span class="diag-cta">阅读全文 <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="/medical-fiscal-collapse.html" class="diag-card diag-health">
+        <div class="diag-num">04 · 医疗面</div>
+        <div class="diag-title">医疗财政的结构性破产：与养老同源，却更急</div>
+        <div class="diag-desc">美国 Medicare 的信托基金预计 2031 年破产，比 Social Security 更早。医疗与养老是同一人口结构的两面——它们需要的是同一个财源。</div>
+        <div class="diag-meta">
+          <span class="tag">医疗</span><span class="tag">人口</span>
+          <span class="diag-cta">阅读全文 <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="/sovereign-debt-crisis.html" class="diag-card diag-debt">
+        <div class="diag-num">05 · 总体面</div>
+        <div class="diag-title">主权债务的结构性不可持续</div>
+        <div class="diag-desc">全球政府债务已超过 100 兆美元。这些债务的偿还基础，还是同一个正在坍塌的税基。土地增值是唯一还在膨胀、却未被计入国家资产负债表的资产池。</div>
+        <div class="diag-meta">
+          <span class="tag">债务</span><span class="tag">总体</span>
+          <span class="diag-cta">阅读全文 <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="/housing-structural-crisis.html" class="diag-card diag-housing">
+        <div class="diag-num">06 · 土地面</div>
+        <div class="diag-title">住房危机的结构性根源：补贴最终被地主吸收</div>
+        <div class="diag-desc">住房危机的核心不是供给不足，而是土地增值被私有化。租金补贴最终被地主以涨租吸收——等于用纳税人的钱补贴地主。</div>
+        <div class="diag-meta">
+          <span class="tag">住房</span><span class="tag">土地</span>
+          <span class="diag-cta">阅读全文 <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="/ai-unemployment-ubi.html" class="diag-card diag-ai">
+        <div class="diag-num">07 · 劳动面</div>
+        <div class="diag-title">AI 失业与 UBI 的财源：当工作本身消失</div>
+        <div class="diag-desc">AI 不是取代部分工作，而是取代整个职业类别。「再培训」假设有新工作可转，但新工作本身也在被 AI 取代。UBI 的财源，只能是土地增值与跨国资本捕获。</div>
+        <div class="diag-meta">
+          <span class="tag">AI</span><span class="tag">UBI</span>
+          <span class="diag-cta">阅读全文 <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="/climate-fiscal-gap.html" class="diag-card diag-climate">
+        <div class="diag-num">08 · 投资面</div>
+        <div class="diag-title">气候转型的财政缺口：被低估的结构性危机</div>
+        <div class="diag-desc">全球净零转型需要每年 4–6 兆美元投资。但各国财政已被养老、医疗、债务三重挤压。气候转型与它们共享同一个财源池。</div>
+        <div class="diag-meta">
+          <span class="tag">气候</span><span class="tag">投资</span>
+          <span class="diag-cta">阅读全文 <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="/global-south-debt-trap.html" class="diag-card diag-south">
+        <div class="diag-num">09 · 国际面</div>
+        <div class="diag-title">全球南方的主权债务陷阱</div>
+        <div class="diag-desc">全球南方国家陷入借美元债 → 货币贬值 → 债务膨胀 → 紧缩 → 社会动荡的循环。它们真正的资产，是长期被跨国资本与本地精英捕获的土地与自然资源。</div>
+        <div class="diag-meta">
+          <span class="tag">全球南方</span><span class="tag">国际</span>
+          <span class="diag-cta">阅读全文 <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="closing">
+      <div class="label">收束</div>
+      <h2>七个问题，一个财源</h2>
+      <p>把这九篇诊断摊开来看，它们共享同一个结构：现有财源（工资税、未来税基、补贴、劳动所得、碳税、美元债）全部失效，而唯一还在膨胀、又完全游离于公共财政之外的财源，就是土地增值。</p>
+      <p>这不是「九个解方」，而是<strong style="color:#f4f9ff;">一个结构性重构</strong>：把土地增值从私有捕获，转为公共财源。其他所有问题，都是这个重构的下游应用。</p>
+      <div class="final">而这场重构的底层操作系统，已经被 GL 框架定义。</div>
+      <a href="/" class="back-home">← 返回首页</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ English ══════════════ -->
+<div class="lb" data-lang="en">
+  <div class="wrap">
+    <div class="hero-head">
+      <div class="hero-eyebrow">Structural Diagnosis Series</div>
+      <h1>Seven Problems, One Source of Revenue</h1>
+      <p class="lede">When the payroll tax base collapses, the only source still expanding — and entirely outside public finance — is land value. These nine diagnoses point to the same structural reconstruction.</p>
+      <p class="sub">From fiscal management to Global South debt, each piece dismantles a structural crisis that the existing framework cannot solve — and points to the same way out.</p>
+    </div>
+
+    <div class="meta-strip">
+      <div class="item"><div class="num">9</div><div class="lbl">Structural Diagnoses</div></div>
+      <div class="item"><div class="num">7</div><div class="lbl">Shared Revenue Source</div></div>
+      <div class="item"><div class="num">4</div><div class="lbl">Languages</div></div>
+      <div class="item"><div class="num">1</div><div class="lbl">Structural Reconstruction</div></div>
+    </div>
+
+    <div class="diag-list" style="margin-top:clamp(32px,5vw,56px)">
+
+      <a href="/fiscal-management-lie.html" class="diag-card diag-general">
+        <div class="diag-num">01 · Overview</div>
+        <div class="diag-title">The Collective Lie of Fiscal Management: When Governments Have Nothing Left to Manage</div>
+        <div class="diag-desc">"Fiscal management" assumes there is still wealth in the treasury. But in most countries, the tax base has been systematically hollowed out by transnational capital. This is not mismanagement — it is the structural collapse of the tax base.</div>
+        <div class="diag-meta">
+          <span class="tag">Fiscal</span><span class="tag">Overview</span>
+          <span class="diag-cta">Read Article <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="/employment-fiscal-illusion.html" class="diag-card diag-labor">
+        <div class="diag-num">02 · Labor</div>
+        <div class="diag-title">The Fiscal Illusion of Employment: When "Work for Income" Becomes an Expired Appendix</div>
+        <div class="diag-desc">The mathematical structure of the employment rate excludes structural unemployment from view from the very beginning. When work no longer guarantees income, welfare and fiscal systems anchored to employment have already failed.</div>
+        <div class="diag-meta">
+          <span class="tag">Employment</span><span class="tag">Welfare</span>
+          <span class="diag-cta">Read Article <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="/pension-land-value.html" class="diag-card diag-pension">
+        <div class="diag-num">03 · Demographics</div>
+        <div class="diag-title">Pension Fund Insolvency and the Urgency of Land Value Capture</div>
+        <div class="diag-desc">The pension crisis is not a financial management problem. It is a "choice of revenue source" problem. The global retirement gap is ~$400 trillion — and the only source still expanding, and impossible to offshore, is land value.</div>
+        <div class="diag-meta">
+          <span class="tag">Pensions</span><span class="tag">Demographics</span>
+          <span class="diag-cta">Read Article <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="/medical-fiscal-collapse.html" class="diag-card diag-health">
+        <div class="diag-num">04 · Healthcare</div>
+        <div class="diag-title">The Structural Collapse of Healthcare Finance: Same Root as Pensions, More Urgent</div>
+        <div class="diag-desc">The U.S. Medicare trust fund is projected to be insolvent by 2031 — earlier than Social Security. Healthcare and pensions are two faces of the same demographic structure — and they need the same revenue source.</div>
+        <div class="diag-meta">
+          <span class="tag">Healthcare</span><span class="tag">Demographics</span>
+          <span class="diag-cta">Read Article <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="/sovereign-debt-crisis.html" class="diag-card diag-debt">
+        <div class="diag-num">05 · Macro</div>
+        <div class="diag-title">The Structural Unsustainability of Sovereign Debt</div>
+        <div class="diag-desc">Global government debt now exceeds $100 trillion. Its repayment base is the same collapsing tax base. Land value is the only asset pool still expanding — yet never entered onto national balance sheets.</div>
+        <div class="diag-meta">
+          <span class="tag">Debt</span><span class="tag">Macro</span>
+          <span class="diag-cta">Read Article <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="/housing-structural-crisis.html" class="diag-card diag-housing">
+        <div class="diag-num">06 · Land</div>
+        <div class="diag-title">The Structural Root of the Housing Crisis: Subsidies Ultimately Absorbed by Landlords</div>
+        <div class="diag-desc">The core of the housing crisis is not insufficient supply — it is the privatization of land value. Rent subsidies are ultimately absorbed by landlords through rent increases — taxpayer money subsidizing landlords.</div>
+        <div class="diag-meta">
+          <span class="tag">Housing</span><span class="tag">Land</span>
+          <span class="diag-cta">Read Article <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="/ai-unemployment-ubi.html" class="diag-card diag-ai">
+        <div class="diag-num">07 · Labor</div>
+        <div class="diag-title">AI Unemployment and the Funding Source for UBI: When Work Itself Disappears</div>
+        <div class="diag-desc">AI does not replace some jobs — it replaces entire occupational categories. "Retraining" assumes new jobs exist to retrain into, but those new jobs are themselves being replaced. UBI's only funding source is land value and transnational capital capture.</div>
+        <div class="diag-meta">
+          <span class="tag">AI</span><span class="tag">UBI</span>
+          <span class="diag-cta">Read Article <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="/climate-fiscal-gap.html" class="diag-card diag-climate">
+        <div class="diag-num">08 · Investment</div>
+        <div class="diag-title">The Fiscal Gap of Climate Transition: An Underestimated Structural Crisis</div>
+        <div class="diag-desc">Global net-zero transition requires $4–6 trillion in annual investment. But public finances are already squeezed by pensions, healthcare, and debt. Climate transition shares the same revenue pool as all of them.</div>
+        <div class="diag-meta">
+          <span class="tag">Climate</span><span class="tag">Investment</span>
+          <span class="diag-cta">Read Article <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="/global-south-debt-trap.html" class="diag-card diag-south">
+        <div class="diag-num">09 · International</div>
+        <div class="diag-title">The Sovereign Debt Trap of the Global South</div>
+        <div class="diag-desc">Global South nations are trapped in a cycle of dollar borrowing → currency depreciation → debt inflation → austerity → social unrest. Their real asset is land and natural resources — long captured by transnational capital and local elites.</div>
+        <div class="diag-meta">
+          <span class="tag">Global South</span><span class="tag">International</span>
+          <span class="diag-cta">Read Article <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="closing">
+      <div class="label">Conclusion</div>
+      <h2>Seven Problems, One Source of Revenue</h2>
+      <p>Laid out side by side, these nine diagnoses share the same structure: every existing revenue source — payroll tax, future tax base, subsidies, labor income, carbon tax, dollar debt — has failed. And the only source still expanding, yet entirely outside public finance, is land value.</p>
+      <p>This is not "nine solutions." It is <strong style="color:#f4f9ff;">one structural reconstruction</strong>: converting land value from private capture to public revenue. Every other problem is a downstream application of this reconstruction.</p>
+      <div class="final">And the underlying operating system of this reconstruction has already been defined by the GL Framework.</div>
+      <a href="/" class="back-home">← Back to Home</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ Español ══════════════ -->
+<div class="lb" data-lang="es">
+  <div class="wrap">
+    <div class="hero-head">
+      <div class="hero-eyebrow">Serie de Diagnóstico Estructural</div>
+      <h1>Siete Problemas, Una Fuente de Ingresos</h1>
+      <p class="lede">Cuando la base del impuesto sobre la nómina colapsa, la única fuente que sigue expandiéndose — y totalmente fuera de las finanzas públicas — es el valor del suelo. Estos nueve diagnósticos apuntan a la misma reconstrucción estructural.</p>
+      <p class="sub">Desde la gestión fiscal hasta la deuda del Sur Global, cada pieza desmonta una crisis estructural que el marco existente no puede resolver — y señala la misma salida.</p>
+    </div>
+
+    <div class="meta-strip">
+      <div class="item"><div class="num">9</div><div class="lbl">Diagnósticos Estructurales</div></div>
+      <div class="item"><div class="num">7</div><div class="lbl">Fuente Compartida</div></div>
+      <div class="item"><div class="num">4</div><div class="lbl">Idiomas</div></div>
+      <div class="item"><div class="num">1</div><div class="lbl">Reconstrucción Estructural</div></div>
+    </div>
+
+    <div class="diag-list" style="margin-top:clamp(32px,5vw,56px)">
+
+      <a href="/fiscal-management-lie.html" class="diag-card diag-general">
+        <div class="diag-num">01 · Visión General</div>
+        <div class="diag-title">La Mentira Colectiva de la Gestión Fiscal: Cuando los Gobiernos Ya No Tienen Nada que Gestionar</div>
+        <div class="diag-desc">La "gestión fiscal" asume que todavía hay riqueza en el tesoro. Pero en la mayoría de los países, la base impositiva ha sido vaciada sistemáticamente por el capital transnacional. Esto no es mala gestión — es el colapso estructural de la base impositiva.</div>
+        <div class="diag-meta">
+          <span class="tag">Fiscal</span><span class="tag">Visión General</span>
+          <span class="diag-cta">Leer Artículo <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="/employment-fiscal-illusion.html" class="diag-card diag-labor">
+        <div class="diag-num">02 · Laboral</div>
+        <div class="diag-title">La Ilusión Fiscal del Empleo: Cuando el «Trabajo por Ingreso» se Convierte en un Apéndice Caducado</div>
+        <div class="diag-desc">La estructura matemática de la tasa de empleo excluye el desempleo estructural de la vista desde el principio. Cuando el trabajo ya no garantiza ingresos, los sistemas de bienestar y fiscales anclados al empleo ya han fallado.</div>
+        <div class="diag-meta">
+          <span class="tag">Empleo</span><span class="tag">Bienestar</span>
+          <span class="diag-cta">Leer Artículo <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="/pension-land-value.html" class="diag-card diag-pension">
+        <div class="diag-num">03 · Demografía</div>
+        <div class="diag-title">La Insolvencia de los Fondos de Pensiones y la Urgencia de Capturar el Valor del Suelo</div>
+        <div class="diag-desc">La crisis de las pensiones no es un problema de gestión financiera. Es un problema de "elección de fuente de ingresos". La brecha global de jubilación es de ~400 billones de dólares — y la única fuente que sigue expandiéndose, e imposible de deslocalizar, es el valor del suelo.</div>
+        <div class="diag-meta">
+          <span class="tag">Pensiones</span><span class="tag">Demografía</span>
+          <span class="diag-cta">Leer Artículo <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="/medical-fiscal-collapse.html" class="diag-card diag-health">
+        <div class="diag-num">04 · Salud</div>
+        <div class="diag-title">El Colapso Estructural de las Finanzas Sanitarias: Misma Raíz que las Pensiones, Más Urgente</div>
+        <div class="diag-desc">Se proyecta que el fondo fiduciario de Medicare de EE.UU. sea insolvente para 2031 — antes que el Seguro Social. La sanidad y las pensiones son dos caras de la misma estructura demográfica — y necesitan la misma fuente de ingresos.</div>
+        <div class="diag-meta">
+          <span class="tag">Sanidad</span><span class="tag">Demografía</span>
+          <span class="diag-cta">Leer Artículo <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="/sovereign-debt-crisis.html" class="diag-card diag-debt">
+        <div class="diag-num">05 · Macro</div>
+        <div class="diag-title">La Insostenibilidad Estructural de la Deuda Soberana</div>
+        <div class="diag-desc">La deuda pública global supera ahora los 100 billones de dólares. Su base de pago es la misma base impositiva en colapso. El valor del suelo es el único conjunto de activos que sigue expandiéndose — y nunca entró en los balances nacionales.</div>
+        <div class="diag-meta">
+          <span class="tag">Deuda</span><span class="tag">Macro</span>
+          <span class="diag-cta">Leer Artículo <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="/housing-structural-crisis.html" class="diag-card diag-housing">
+        <div class="diag-num">06 · Suelo</div>
+        <div class="diag-title">La Raíz Estructural de la Crisis de la Vivienda: Los Subsidios Acaban Absorbidos por los Terratenientes</div>
+        <div class="diag-desc">El núcleo de la crisis de la vivienda no es la oferta insuficiente — es la privatización del valor del suelo. Los subsidios de alquiler acaban siendo absorbidos por los terratenientes mediante subidas de renta — dinero de los contribuyentes subsidiando a los terratenientes.</div>
+        <div class="diag-meta">
+          <span class="tag">Vivienda</span><span class="tag">Suelo</span>
+          <span class="diag-cta">Leer Artículo <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="/ai-unemployment-ubi.html" class="diag-card diag-ai">
+        <div class="diag-num">07 · Laboral</div>
+        <div class="diag-title">El Desempleo por IA y la Fuente de Financiación de la UBI: Cuando el Trabajo Mismo Desaparece</div>
+        <div class="diag-desc">La IA no sustituye algunos empleos — sustituye categorías ocupacionales enteras. La "recualificación" asume que existen nuevos empleos a los que recualificarse, pero esos nuevos empleos están siendo sustituidos. La única fuente de financiación de la UBI es el valor del suelo y la captura del capital transnacional.</div>
+        <div class="diag-meta">
+          <span class="tag">IA</span><span class="tag">UBI</span>
+          <span class="diag-cta">Leer Artículo <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="/climate-fiscal-gap.html" class="diag-card diag-climate">
+        <div class="diag-num">08 · Inversión</div>
+        <div class="diag-title">La Brecha Fiscal de la Transición Climática: Una Crisis Estructural Subestimada</div>
+        <div class="diag-desc">La transición global hacia cero emisiones netas requiere de 4 a 6 billones de dólares en inversión anual. Pero las finanzas públicas ya están presionadas por pensiones, sanidad y deuda. La transición climática comparte el mismo fondo de ingresos que todas ellas.</div>
+        <div class="diag-meta">
+          <span class="tag">Clima</span><span class="tag">Inversión</span>
+          <span class="diag-cta">Leer Artículo <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="/global-south-debt-trap.html" class="diag-card diag-south">
+        <div class="diag-num">09 · Internacional</div>
+        <div class="diag-title">La Trampa de la Deuda Soberana del Sur Global</div>
+        <div class="diag-desc">Las naciones del Sur Global están atrapadas en un ciclo de préstamos en dólares → depreciación monetaria → inflación de la deuda → austeridad → disturbios sociales. Su activo real es la tierra y los recursos naturales — capturados durante mucho tiempo por el capital transnacional y las élites locales.</div>
+        <div class="diag-meta">
+          <span class="tag">Sur Global</span><span class="tag">Internacional</span>
+          <span class="diag-cta">Leer Artículo <span class="arrow">→</span></span>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="closing">
+      <div class="label">Conclusión</div>
+      <h2>Siete Problemas, Una Fuente de Ingresos</h2>
+      <p>Puestos uno al lado del otro, estos nueve diagnósticos comparten la misma estructura: toda fuente de ingresos existente — impuesto sobre la nómina, base impositiva futura, subsidios, ingreso laboral, impuesto al carbono, deuda en dólares — ha fallado. Y la única fuente que sigue expandiéndose, pero totalmente fuera de las finanzas públicas, es el valor del suelo.</p>
+      <p>Esto no es "nueve soluciones". Es <strong style="color:#f4f9ff;">una reconstrucción estructural</strong>: convertir el valor del suelo de captura privada a ingreso público. Todos los demás problemas son aplicaciones derivadas de esta reconstrucción.</p>
+      <div class="final">Y el sistema operativo subyacente de esta reconstrucción ya ha sido definido por el Marco GL.</div>
+      <a href="/" class="back-home">← Volver al Inicio</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.lb-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var lang = this.dataset.lang;
+      document.querySelectorAll('.lb-btn').forEach(function(b) { b.classList.remove('on'); });
+      this.classList.add('on');
+      document.querySelectorAll('.lb').forEach(function(lb) { lb.classList.remove('active'); });
+      var target = document.querySelector('.lb[data-lang="' + lang + '"]');
+      if (target) target.classList.add('active');
+      document.documentElement.lang = lang === 'tw' ? 'zh-Hant' : lang === 'cn' ? 'zh-Hans' : lang;
+    });
+  });
+</script>
+
+</body>
+</html>
