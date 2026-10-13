@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Election Cycles and the Structural Impossibility of Long-Term Governance | Governance Flow Intelligence</title>
+<meta name="description" content="Politicians do not ignore the long term because they are short-sighted. They ignore it because election mathematics structurally rewards only the short term. A structural analysis of political feasibility.">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Election Cycles and the Structural Impossibility of Long-Term Governance",
+  "description": "Politicians do not ignore the long term because they are short-sighted. Election mathematics structurally rewards only the short term.",
+  "author": { "@type": "Organization", "name": "GL Framework" },
+  "inLanguage": ["en", "zh-Hant", "zh-Hans", "es"]
+}
+</script>
+
+<style>
+  :root{
+    --bg:#0b1220; --bg2:#0d1526;
+    --text:#f8fbff; --muted:#c7d2e3; --sub:#9fb0c8;
+    --green:#9FE870; --blue:#7DD3FC; --gold:#fbbf24; --red:#f87171;
+    --dim:rgba(255,255,255,.06);
+    --serif:'DM Serif Display', Georgia, 'Noto Serif TC', serif;
+    --mono:'DM Mono', ui-monospace, monospace;
+    --sans:'DM Sans', system-ui, -apple-system, 'Noto Sans TC', sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:
+      radial-gradient(ellipse 55% 45% at 78% 20%, rgba(251,191,36,.06), transparent),
+      radial-gradient(ellipse 45% 50% at 8% 85%, rgba(159,232,112,.04), transparent),
+      var(--bg);
+    color:var(--text); font-family:var(--sans); font-size:15px; line-height:1.6;
+    overflow-x:hidden; padding-bottom:60px;
+  }
+
+  .topbar{
+    position:sticky; top:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:16px; flex-wrap:wrap;
+    min-height:62px; padding:10px clamp(18px,5vw,52px);
+    background:rgba(11,18,32,.92); backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--dim);
+  }
+  .topbar .brand{
+    color:#fff; text-decoration:none;
+    font-family:var(--mono); font-size:13px;
+    letter-spacing:.16em; text-transform:uppercase;
+  }
+  .topbar .nav-right{display:flex; align-items:center; gap:16px; flex-wrap:wrap}
+  .topbar .nav-wellness{
+    color:var(--green); text-decoration:none;
+    font-family:var(--mono); font-size:11px; letter-spacing:.08em;
+  }
+  .topbar .nav-wellness:hover{color:#fff; opacity:.8}
+  .lang-grp{display:flex; gap:6px}
+  .lb-btn{
+    font-family:var(--mono); font-size:11px; letter-spacing:.08em;
+    padding:5px 10px; border-radius:5px; cursor:pointer;
+    border:1px solid rgba(255,255,255,.1); background:0 0; color:var(--sub);
+    transition:all .2s;
+  }
+  .lb-btn:hover{color:var(--text); border-color:rgba(255,255,255,.2)}
+  .lb-btn.on{color:var(--green); border-color:rgba(159,232,112,.35); background:rgba(159,232,112,.07)}
+
+  .lb{display:none}
+  .lb.active{display:block}
+
+  .wrap{max-width:880px; margin:0 auto; padding:clamp(40px,6vw,72px) clamp(18px,5vw,32px)}
+
+  .article-label{
+    font-family:var(--mono); font-size:10px; letter-spacing:.22em;
+    text-transform:uppercase; color:rgba(251,191,36,.7);
+    margin-bottom:14px; display:flex; align-items:center; gap:14px;
+  }
+  .article-label::after{content:''; flex:1; height:1px; background:rgba(255,255,255,.07)}
+
+  .article-body h1{
+    font-family:var(--serif); color:#f0f8f0;
+    font-size:clamp(1.6rem,3.2vw,2.4rem); line-height:1.25;
+    margin-bottom:1.2rem;
+  }
+  .article-body h2{
+    font-family:var(--serif); color:var(--green);
+    font-size:clamp(1.15rem,2vw,1.45rem);
+    margin-top:2.4rem; margin-bottom:.9rem;
+    padding-bottom:.5rem; border-bottom:1px solid rgba(255,255,255,.07);
+  }
+  .article-body h3{
+    font-family:var(--serif); color:#eaf4ff;
+    font-size:1.05rem; margin-top:1.6rem; margin-bottom:.5rem;
+  }
+  .article-body p{
+    color:var(--muted); font-size:.95rem; line-height:1.85;
+    margin-bottom:1rem; text-align:justify;
+  }
+  .article-body strong{color:#f0f8f0}
+  .article-body em{color:var(--blue); font-style:normal}
+  .article-body ul, .article-body ol{color:var(--muted); margin:0 0 1rem 1.3rem}
+  .article-body li{margin-bottom:.5rem}
+  .article-body li::marker{color:var(--green)}
+
+  .article-body .lede{
+    font-size:1.05rem; color:var(--green); font-weight:500;
+    border-left:3px solid rgba(159,232,112,.5);
+    padding-left:16px; margin:0 0 28px;
+  }
+  .article-body .highlight{
+    background:rgba(248,113,113,.07);
+    border-left:4px solid rgba(248,113,113,.6);
+    padding:1rem 1.4rem; border-radius:6px; margin:1.4rem 0;
+  }
+  .article-body .highlight strong{color:#ffe8e8}
+  .article-body .closing{
+    background:rgba(159,232,112,.06);
+    border-left:4px solid rgba(159,232,112,.55);
+    padding:1rem 1.4rem; border-radius:6px; margin:1.4rem 0;
+  }
+  .article-body .closing strong{color:#e8ffe0}
+  .article-body table{width:100%; border-collapse:collapse; margin:1.2rem 0; font-size:.85rem}
+  .article-body th{background:rgba(159,232,112,.08); color:#e8ffe0; font-weight:600; text-align:left; padding:.6rem .8rem; border:1px solid rgba(255,255,255,.08)}
+  .article-body td{padding:.6rem .8rem; border:1px solid rgba(255,255,255,.08); color:var(--muted); vertical-align:top}
+
+  .regime{
+    border-radius:14px; padding:1.2rem 1.5rem; margin:1.2rem 0;
+    border-left:4px solid rgba(255,255,255,.15);
+    background:rgba(255,255,255,.015);
+  }
+  .regime .rg-label{
+    font-family:var(--mono); font-size:9px; letter-spacing:.18em;
+    text-transform:uppercase; margin-bottom:6px;
+    color:rgba(255,255,255,.4);
+  }
+  .regime .rg-title{
+    font-family:var(--serif); font-size:1.05rem; color:#eaf4ff;
+    margin-bottom:8px;
+  }
+  .regime .rg-body{font-size:.88rem; color:var(--muted); line-height:1.75}
+  .regime.rg-1{border-left-color:rgba(125,211,252,.55); background:rgba(125,211,252,.03)}
+  .regime.rg-1 .rg-label{color:#7DD3FC}
+  .regime.rg-2{border-left-color:rgba(159,232,112,.55); background:rgba(159,232,112,.03)}
+  .regime.rg-2 .rg-label{color:#9FE870}
+  .regime.rg-3{border-left-color:rgba(248,113,113,.55); background:rgba(248,113,113,.03)}
+  .regime.rg-3 .rg-label{color:#f87171}
+  .regime.rg-4{border-left-color:rgba(251,191,36,.55); background:rgba(251,191,36,.03)}
+  .regime.rg-4 .rg-label{color:#fbbf24}
+
+  .back-nav{
+    max-width:880px; margin:48px auto 0;
+    padding:24px clamp(18px,5vw,32px) 0;
+    border-top:1px solid var(--dim);
+    display:flex; gap:14px; flex-wrap:wrap; justify-content:center;
+  }
+  .back-nav a{
+    display:inline-flex; align-items:center; gap:10px;
+    padding:11px 26px; border-radius:40px; text-decoration:none;
+    font-family:var(--mono); font-size:11px; letter-spacing:.1em;
+    text-transform:uppercase; transition:all .22s;
+  }
+  .back-nav a.primary{
+    border:1px solid rgba(251,191,36,.45);
+    background:rgba(251,191,36,.1); color:#fbbf24;
+  }
+  .back-nav a.primary:hover{background:rgba(251,191,36,.2); border-color:#fbbf24; transform:translateY(-2px)}
+  .back-nav a.secondary{
+    border:1px solid rgba(159,232,112,.35);
+    background:rgba(159,232,112,.08); color:var(--green);
+  }
+  .back-nav a.secondary:hover{background:rgba(159,232,112,.18); border-color:var(--green); transform:translateY(-2px)}
+
+  @media(max-width:600px){
+    .article-body p{font-size:.9rem}
+    .article-body table{font-size:.75rem}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="/" class="brand">Governance Flow Intelligence</a>
+  <div class="nav-right">
+    <a href="/wellness/index.html" class="nav-wellness">🌿 Wellness</a>
+    <div class="lang-grp">
+      <button class="lb-btn on" data-lang="en">EN</button>
+      <button class="lb-btn" data-lang="tw">繁</button>
+      <button class="lb-btn" data-lang="cn">简</button>
+      <button class="lb-btn" data-lang="es">ES</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ English ══════════════ -->
+<div class="lb active" data-lang="en">
+  <div class="wrap">
+    <div class="article-label">📄 Structural Supplement · Political Feasibility</div>
+    <div class="article-body">
+      <h1>Election Cycles and the Structural Impossibility of Long-Term Governance</h1>
+      <p class="lede">Politicians do not ignore the long term because they are short-sighted. They ignore it because election mathematics structurally rewards only the short term.</p>
+
+      <p><strong>Every structural diagnosis assumes one thing: that there is a rational governor willing to choose the long-term correct solution. Democratic elections structurally prevent this.</strong></p>
+      <p>This is the weakest point of the entire GL Framework — and it deserves to be stated plainly. It is not enough to prove that land value capture is the only revenue source still expanding. A harder question must also be answered: <em>under what political conditions could such a policy ever be enacted?</em></p>
+
+      <h2>I. The Structural Mismatch</h2>
+      <p>Land value capture has a fatal political property: <strong>its costs are immediate, and its benefits are distant.</strong></p>
+      <table>
+        <tr><th>Dimension</th><th>Land Value Capture</th></tr>
+        <tr><td>Visible benefits</td><td>10–20 years later</td></tr>
+        <tr><td>Visible costs</td><td>Immediate (landlord backlash, capital flight, property price volatility, media attack)</td></tr>
+        <tr><td>Election cycle</td><td>2–4 years</td></tr>
+      </table>
+      <p>The benefit and cost are structurally misaligned in time. This is not a matter of courage. It is the <strong>mathematical structure of the election cycle itself</strong> — the same kind of structural exclusion that the employment rate indicator performs on structural unemployment.</p>
+      <div class="highlight">
+        <strong>It is not that policy has "shifted" its focus. It is that the mathematical structure of the election cycle excludes long-term consequences from view from the very beginning.</strong>
+      </div>
+
+      <h2>II. Four Regime Types, Four Responses</h2>
+
+      <div class="regime rg-1">
+        <div class="rg-label">Regime Type 1</div>
+        <div class="rg-title">Two-Party Alternation (US, UK)</div>
+        <div class="rg-body">Term: 4–5 years. Re-election pressure begins after 2 years. Year 1: honeymoon, may push "unpopular but correct" policy. Year 2: midterm elections, must deliver short-term results. Years 3–4: re-election campaign, any long-term cost will be weaponized by the opponent. <strong>Result: land value capture — with 20-year payoff and street protests tomorrow — never reaches the agenda.</strong> Not because politicians don't understand, but because those who understand cannot get elected.</div>
+      </div>
+
+      <div class="regime rg-2">
+        <div class="rg-label">Regime Type 2</div>
+        <div class="rg-title">Multi-Party Coalition (Germany, France, Italy)</div>
+        <div class="rg-body">Term: 4–5 years. But average coalition lifespan: 2–3 years. Any long-term reform requires cross-term commitment — but coalitions change frequently, and the next government may simply reverse what the previous one did. Policy discontinuity becomes routine. <strong>Result: politicians cannot even guarantee 5 years. How could they push 20?</strong> Not unwilling — institutionally impossible.</div>
+      </div>
+
+      <div class="regime rg-3">
+        <div class="rg-label">Regime Type 3</div>
+        <div class="rg-title">Single-Party Long-Term Rule (China, Vietnam)</div>
+        <div class="rg-body">Term: no fixed election cycle, but internal performance evaluation exists. Has long-term planning capacity — this is an advantage. But <strong>evaluation metrics remain short-term GDP, employment, stability</strong>. Land finance (land sale revenue) is the primary source of local government revenue — <strong>this is itself a form of public capture of land value, but the cost is housing prices, debt, and farmers</strong>. Result: long-term capacity exists, but <strong>metric misalignment</strong>. Land value capture here is not "impossible" — it is "held hostage by the vested interests of land finance."</div>
+      </div>
+
+      <div class="regime rg-4">
+        <div class="rg-label">Regime Type 4</div>
+        <div class="rg-title">Hybrid (Singapore, Switzerland)</div>
+        <div class="rg-body">Term: 4–5 years, but with a strong technocratic layer. Policy continuity is higher. But <strong>voters still react to short-term pain</strong>. Singapore's HDB and CPF system was a <strong>one-time institutional dividend at the founding moment</strong>. No reform of comparable scale has occurred since. Result: the window for institutional dividends is extremely short. <strong>Miss it once, and there is no second time.</strong></div>
+      </div>
+
+      <h2>III. Four Types of "Rational Inaction"</h2>
+      <p>Not all politicians are short-sighted. Some genuinely understand the long term — and still do nothing. Why?</p>
+
+      <h3>Type 1: Genuinely Doesn't Understand</h3>
+      <p>Most politicians are lawyers, journalists, or local cadres by training — with no fiscal-structure education. They genuinely believe "fiscal management" still works, because that is what their textbooks told them.</p>
+
+      <h3>Type 2: Understands, But Doesn't Dare</h3>
+      <p>Politicians who understand land value capture know: push it, and the landlord class, real estate sector, financial industry, and media will all retaliate. The opponent will say "you're confiscating my home." The election is lost. <strong>So those who understand choose silence</strong> — not cowardice, but a rational choice under election mathematics.</p>
+
+      <h3>Type 3: Dares, But Cannot Push Through</h3>
+      <p>Some politicians genuinely tried (partial land tax reforms in Nordic countries, in Taiwan region). But: the parliament blocks, courts stall, media smears, the next term reverses. <strong>Not a failure of people — a failure of institutions.</strong></p>
+
+      <h3>Type 4: Pushes Through, But Gets Diluted</h3>
+      <p>Some reforms passed — but were <strong>diluted by vested interests during the legislative process</strong>: the tax rate dropped from 80% to 20%, exemption clauses stacked layer upon layer, enforcement mechanisms hollowed out. <strong>Passed, but useless.</strong></p>
+
+      <h2>IV. How the GL Framework Responds</h2>
+      <p>If the GL Framework only said "land value capture is the only solution," it would be just another academic framework that ignores politics. Its full response has three layers:</p>
+
+      <h3>Layer 1: Crisis Precedes Reform</h3>
+      <p>Reform does not happen in peacetime. <strong>Reform happens only at the point of crisis.</strong> After 2008, nations accepted unconventional monetary policy. After 2020, nations accepted large-scale fiscal stimulus. <strong>Land value capture will be forced onto the negotiating table when pension funds functionally default, healthcare systems collapse, and sovereign debt defaults.</strong> This is not optimism — it is historical pattern: <em>systems do not reform voluntarily; systems are forced to reform at the edge of collapse.</em></p>
+
+      <h3>Layer 2: International Coordination Bypasses Domestic Politics</h3>
+      <p>A single nation pushing land value capture will be defeated by capital flight. But if <strong>multiple nations coordinate</strong> (G7 first, Global South later), the individual politician's electoral pressure is <strong>absorbed by the international framework</strong>: "This isn't me raising taxes — this is a global standard." "This isn't me confiscating — this is a G20 agreement." <strong>Political cost is externalized</strong> — this is the real purpose of the GL Framework's G20 containment strategy.</p>
+
+      <h3>Layer 3: Redefining the Indicator Itself</h3>
+      <p>This is the deepest layer. Politicians care about the short term because <strong>voters evaluate them by short-term indicators</strong>. If civil society begins to evaluate governments by "whether land value is publicly captured," politicians will start to care. <strong>Indicators determine behavior; behavior determines policy.</strong> This is why the GL Framework does not want to be merely a "policy proposal" but an "evaluation standard" — <em>change the indicator, change the politics.</em></p>
+
+      <h2>V. The Honest Position</h2>
+      <p>Under pure election cycles, structurally correct long-term policies are <strong>structurally hard to pass</strong>. This is a known defect of democratic systems. But "hard to pass" is not "impossible to pass" — it only means that reform will not emerge from the normal political process. It must emerge from the three paths that bypass it.</p>
+      <ul>
+        <li><strong>Crisis is the only entry point for reform</strong> — not because crisis is good, but because peacetime reform is impossible;</li>
+        <li><strong>International coordination is the tool for bypassing domestic election cycles</strong> — externalizing political cost;</li>
+        <li><strong>Indicator redefinition is the long-term change</strong> — making voters start to care about long-term consequences.</li>
+      </ul>
+      <p>None of these three layers is about "persuading politicians to be brave." All three are about <strong>changing the constraints politicians face</strong>.</p>
+
+      <div class="closing">
+        <strong>Politicians do not ignore the ten-year horizon because they are short-sighted. They ignore it because election mathematics structurally rewards only the short term. To make them care about the ten-year horizon, you do not rely on moral persuasion — you rely on three things: crisis forcing, international coordination absorbing political cost, and indicator redefinition making voters care. The GL Framework is not "a smarter policy." It is "changing the rules of the game politicians face."</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ 繁體中文 ══════════════ -->
+<div class="lb" data-lang="tw">
+  <div class="wrap">
+    <div class="article-label">📄 結構補充 · 政治可行性</div>
+    <div class="article-body">
+      <h1>選舉周期與長期治理的結構性不可能</h1>
+      <p class="lede">政客不在乎十年後，不是因為他們短視，而是因為選舉數學結構性地只獎勵短期。</p>
+
+      <p><strong>每一個結構性診斷都預設了一件事：有一個「理性治理者」，會選擇長期正確的方案。但民主選舉體制，結構上阻止了這件事。</strong></p>
+      <p>這是整個 GL 框架最弱的一點——而它值得被誠實說出來。光證明「土地增值是唯一還在膨脹的財源」是不夠的。還必須回答一個更難的問題：<em>在什麼樣的政治條件下，這種政策才可能被通過？</em></p>
+
+      <h2>一、結構性錯配</h2>
+      <p>土地增值捕捉有一個致命的政治特性：<strong>成本立即，收益遙遠。</strong></p>
+      <table>
+        <tr><th>維度</th><th>土地增值捕捉</th></tr>
+        <tr><td>可見收益</td><td>10–20 年後</td></tr>
+        <tr><td>可見成本</td><td>立即（地主反彈、資本外逃、房價波動、媒體攻擊）</td></tr>
+        <tr><td>選舉周期</td><td>2–4 年</td></tr>
+      </table>
+      <p>收益與成本在時間上完全錯配。這不是「政客不夠勇敢」，而是<strong>選舉體制的數學結構</strong>——就像就業率指標對結構性失業所做的結構性排除。</p>
+      <div class="highlight">
+        <strong>不是政策「轉移」了焦點，而是選舉周期的數學結構，從一開始就把長期後果排除在視野之外。</strong>
+      </div>
+
+      <h2>二、四種政治體制，四種反應</h2>
+
+      <div class="regime rg-1">
+        <div class="rg-label">體制類型 1</div>
+        <div class="rg-title">兩黨輪替制（美、英）</div>
+        <div class="rg-body">任期：4–5 年。連任壓力：2 年後就開始。第 1 年：蜜月期，可以推「不受歡迎但正確」的政策。第 2 年：期中選舉，必須交出短期成績。第 3–4 年：連任競選，任何長期成本都會被對手放大。<strong>結果：土地增值捕捉這種「20 年後才見效、明天就上街抗議」的政策，永遠排不進議程。</strong>不是因為政客不懂，而是因為懂的人選不上。</div>
+      </div>
+
+      <div class="regime rg-2">
+        <div class="rg-label">體制類型 2</div>
+        <div class="rg-title">多黨聯合制（德、法、義）</div>
+        <div class="rg-body">任期：4–5 年。但聯合政府平均壽命 2–3 年。任何長期改革都需要跨屆承諾——但聯合政府換屆頻繁，下一屆可能直接推翻上一屆。政策不連續性成為常態。<strong>結果：政客連 5 年都保證不了，怎麼可能推 20 年？</strong>不是不想，是制度上做不到。</div>
+      </div>
+
+      <div class="regime rg-3">
+        <div class="rg-label">體制類型 3</div>
+        <div class="rg-title">一黨長期執政（中、越）</div>
+        <div class="rg-body">任期：無固定選舉周期，但內部有政績考核。有長期規劃能力——這是優勢。但<strong>考核指標仍是短期 GDP、就業、維穩</strong>。土地財政（賣地收入）是地方政府的主要財源——<strong>這本身就是土地增值被公共捕捉的一種形式，但代價是房價、債務、農民</strong>。結果：有長期能力，但<strong>考核指標錯配</strong>。土地增值捕捉在這裡不是「不可能」，而是「被土地財政的既得利益綁架」。</div>
+      </div>
+
+      <div class="regime rg-4">
+        <div class="rg-label">體制類型 4</div>
+        <div class="rg-title">混合制（新加坡、瑞士）</div>
+        <div class="rg-body">任期：4–5 年，但有強技術官僚層。政策連續性較高。但<strong>選民仍會在短期痛感時反彈</strong>。新加坡的組屋、公積金制度是<strong>建國初期一次性的制度紅利</strong>。之後再無同等規模改革。結果：制度紅利窗口極短，<strong>一次錯過，就再也沒有第二次</strong>。</div>
+      </div>
+
+      <h2>三、四種「理性不作為」</h2>
+      <p>不是所有政客都短視。有些確實<strong>看得懂長期</strong>，但他們仍然不行動。為什麼？</p>
+
+      <h3>類型 1：真心不懂</h3>
+      <p>多數政客是律師、記者、地方幹部出身，<strong>沒有財政結構訓練</strong>。他們真心相信「財政管理」還有效，因為他們讀的教科書就是這樣寫的。</p>
+
+      <h3>類型 2：懂，但不敢</h3>
+      <p>懂土地增值捕捉的政客，知道：一推，地主階級、房地產業、金融業、媒體全部反彈。對手會說「你要沒收我的房子」。選舉一定輸。<strong>所以懂的人選擇沉默</strong>——這不是懦弱，這是<strong>選舉數學下的理性選擇</strong>。</p>
+
+      <h3>類型 3：敢，但推不動</h3>
+      <p>有些政客真的推了（如部分北歐國家、台灣地區的部分土地稅改革）。但：議會不過、法院卡住、媒體抹黑、下一屆推翻。<strong>不是人不行，是制度不行。</strong></p>
+
+      <h3>類型 4：推得動，但被稀釋</h3>
+      <p>有些改革通過了，但<strong>在立法過程中被既得利益稀釋</strong>：稅率從 80% 降到 20%、豁免條款層層疊加、執行機制被架空。<strong>通過了，但沒用。</strong></p>
+
+      <h2>四、GL 框架怎麼回應這個問題？</h2>
+      <p>GL 框架如果只是說「土地增值捕捉是唯一解方」，那它就是<strong>又一個不懂政治的學術框架</strong>。但 GL 框架的完整回應其實有三層：</p>
+
+      <h3>第一層：危機先於改革</h3>
+      <p>改革不會在太平時期發生。<strong>改革只會在危機臨界點發生。</strong>2008 金融危機後，各國才願意推非常規貨幣政策。2020 疫情後，各國才願意推大規模財政刺激。<strong>土地增值捕捉，會在養老基金實質破產、醫療系統崩潰、主權債務違約時，被逼上談判桌。</strong>這不是樂觀，這是歷史規律：<em>體制不會主動改革，體制只會在崩潰邊緣被迫改革。</em></p>
+
+      <h3>第二層：國際協調繞過本國政治</h3>
+      <p>單一國家推土地增值捕捉，會被資本外逃打敗。但如果<strong>多國協調</strong>（G7 先、全球南方後），單一政客的選舉壓力就被<strong>國際框架吸收</strong>：「這不是我在加稅，這是全球標準。」「這不是我在沒收，這是 G20 協議。」<strong>政治成本被外部化</strong>——這是 GL 框架 G20 圍堵策略的真正用意。</p>
+
+      <h3>第三層：指標本身的重新定義</h3>
+      <p>這是最深的一層。政客在乎短期，是因為<strong>選民用短期指標評價他們</strong>。如果公民社會開始用「土地增值是否被公共捕捉」來評價政府，政客就會在乎。<strong>指標決定行為，行為決定政策。</strong>這就是為什麼 GL 框架不只想當「政策建議」，而想當「評價標準」——<em>改變指標，就改變政治。</em></p>
+
+      <h2>五、誠實的立場</h2>
+      <p>在純粹的選舉周期下，長期正確的政策<strong>結構上難以通過</strong>。這是民主體制的已知缺陷。但「難以通過」不等於「不可能通過」——它只意味著，改革不會從正常的政治程序中產生，而必須從三條繞過它的路徑中產生。</p>
+      <ul>
+        <li><strong>危機是改革的唯一入口</strong>——不是因為危機好，而是因為太平時期改革不可能；</li>
+        <li><strong>國際協調是繞過本國選舉周期的工具</strong>——把政治成本外部化；</li>
+        <li><strong>指標重定義是長期改變</strong>——讓選民開始在乎長期後果。</li>
+      </ul>
+      <p>這三層都不是「說服政客變勇敢」，而是<strong>改變政客面對的約束條件</strong>。</p>
+
+      <div class="closing">
+        <strong>政客不在乎十年後，不是因為他們短視，而是因為選舉數學結構性地只獎勵短期。要讓他們在乎十年後，不是靠道德勸說，而是靠三件事：危機迫使、國際協調吸收政治成本、指標重定義讓選民開始在乎。GL 框架不是「更聰明的政策」，而是「改變政客面對的遊戲規則」。</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ 简体中文 ══════════════ -->
+<div class="lb" data-lang="cn">
+  <div class="wrap">
+    <div class="article-label">📄 结构补充 · 政治可行性</div>
+    <div class="article-body">
+      <h1>选举周期与长期治理的结构性不可能</h1>
+      <p class="lede">政客不在乎十年后，不是因为他们短视，而是因为选举数学结构性地只奖励短期。</p>
+
+      <p><strong>每一个结构性诊断都预设了一件事：有一个「理性治理者」，会选择长期正确的方案。但民主选举体制，结构上阻止了这件事。</strong></p>
+      <p>这是整个 GL 框架最弱的一点——而它值得被诚实说出来。光证明「土地增值是唯一还在膨胀的财源」是不够的。还必须回答一个更难的问题：<em>在什么样的政治条件下，这种政策才可能被通过？</em></p>
+
+      <h2>一、结构性错配</h2>
+      <p>土地增值捕获有一个致命的政治特性：<strong>成本立即，收益遥远。</strong></p>
+      <table>
+        <tr><th>维度</th><th>土地增值捕获</th></tr>
+        <tr><td>可见收益</td><td>10–20 年后</td></tr>
+        <tr><td>可见成本</td><td>立即（地主反弹、资本外逃、房价波动、媒体攻击）</td></tr>
+        <tr><td>选举周期</td><td>2–4 年</td></tr>
+      </table>
+      <p>收益与成本在时间上完全错配。这不是「政客不够勇敢」，而是<strong>选举体制的数学结构</strong>——就像就业率指标对结构性失业所做的结构性排除。</p>
+      <div class="highlight">
+        <strong>不是政策「转移」了焦点，而是选举周期的数学结构，从一开始就把长期后果排除在视野之外。</strong>
+      </div>
+
+      <h2>二、四种政治体制，四种反应</h2>
+
+      <div class="regime rg-1">
+        <div class="rg-label">体制类型 1</div>
+        <div class="rg-title">两党轮替制（美、英）</div>
+        <div class="rg-body">任期：4–5 年。连任压力：2 年后就开始。第 1 年：蜜月期，可以推「不受欢迎但正确」的政策。第 2 年：期中选举，必须交出短期成绩。第 3–4 年：连任竞选，任何长期成本都会被对手放大。<strong>结果：土地增值捕获这种「20 年后才见效、明天就上街抗议」的政策，永远排不进议程。</strong>不是因为政客不懂，而是因为懂的人选不上。</div>
+      </div>
+
+      <div class="regime rg-2">
+        <div class="rg-label">体制类型 2</div>
+        <div class="rg-title">多党联合制（德、法、意）</div>
+        <div class="rg-body">任期：4–5 年。但联合政府平均寿命 2–3 年。任何长期改革都需要跨届承诺——但联合政府换届频繁，下一届可能直接推翻上一届。政策不连续性成为常态。<strong>结果：政客连 5 年都保证不了，怎么可能推 20 年？</strong>不是不想，是制度上做不到。</div>
+      </div>
+
+      <div class="regime rg-3">
+        <div class="rg-label">体制类型 3</div>
+        <div class="rg-title">一党长期执政（中、越）</div>
+        <div class="rg-body">任期：无固定选举周期，但内部有政绩考核。有长期规划能力——这是优势。但<strong>考核指标仍是短期 GDP、就业、维稳</strong>。土地财政（卖地收入）是地方政府的主要财源——<strong>这本身就是土地增值被公共捕获的一种形式，但代价是房价、债务、农民</strong>。结果：有长期能力，但<strong>考核指标错配</strong>。土地增值捕获在这里不是「不可能」，而是「被土地财政的既得利益绑架」。</div>
+      </div>
+
+      <div class="regime rg-4">
+        <div class="rg-label">体制类型 4</div>
+        <div class="rg-title">混合制（新加坡、瑞士）</div>
+        <div class="rg-body">任期：4–5 年，但有强技术官僚层。政策连续性较高。但<strong>选民仍会在短期痛感时反弹</strong>。新加坡的组屋、公积金制度是<strong>建国初期一次性的制度红利</strong>。之后再无同等规模改革。结果：制度红利窗口极短，<strong>一次错过，就再也没有第二次</strong>。</div>
+      </div>
+
+      <h2>三、四种「理性不作为」</h2>
+      <p>不是所有政客都短视。有些确实<strong>看得懂长期</strong>，但他们仍然不行动。为什么？</p>
+
+      <h3>类型 1：真心不懂</h3>
+      <p>多数政客是律师、记者、地方干部出身，<strong>没有财政结构训练</strong>。他们真心相信「财政管理」还有效，因为他们读的教科书就是这样写的。</p>
+
+      <h3>类型 2：懂，但不敢</h3>
+      <p>懂土地增值捕获的政客，知道：一推，地主阶级、房地产业、金融业、媒体全部反弹。对手会说「你要没收我的房子」。选举一定输。<strong>所以懂的人选择沉默</strong>——这不是懦弱，这是<strong>选举数学下的理性选择</strong>。</p>
+
+      <h3>类型 3：敢，但推不动</h3>
+      <p>有些政客真的推了（如部分北欧国家、台湾地区的部分土地税改革）。但：议会不过、法院卡住、媒体抹黑、下一届推翻。<strong>不是人不行，是制度不行。</strong></p>
+
+      <h3>类型 4：推得动，但被稀释</h3>
+      <p>有些改革通过了，但<strong>在立法过程中被既得利益稀释</strong>：税率从 80% 降到 20%、豁免条款层层叠加、执行机制被架空。<strong>通过了，但没用。</strong></p>
+
+      <h2>四、GL 框架怎么回应这个问题？</h2>
+      <p>GL 框架如果只是说「土地增值捕获是唯一解方」，那它就是<strong>又一个不懂政治的学术框架</strong>。但 GL 框架的完整回应其实有三层：</p>
+
+      <h3>第一层：危机先于改革</h3>
+      <p>改革不会在太平时期发生。<strong>改革只会在危机临界点发生。</strong>2008 金融危机后，各国才愿意推非常规货币政策。2020 疫情后，各国才愿意推大规模财政刺激。<strong>土地增值捕获，会在养老基金实质破产、医疗系统崩溃、主权债务违约时，被逼上谈判桌。</strong>这不是乐观，这是历史规律：<em>体制不会主动改革，体制只会在崩溃边缘被迫改革。</em></p>
+
+      <h3>第二层：国际协调绕过本国政治</h3>
+      <p>单一国家推土地增值捕获，会被资本外逃打败。但如果<strong>多国协调</strong>（G7 先、全球南方后），单一政客的选举压力就被<strong>国际框架吸收</strong>：「这不是我在加税，这是全球标准。」「这不是我在没收，这是 G20 协议。」<strong>政治成本被外部化</strong>——这是 GL 框架 G20 围堵策略的真正用意。</p>
+
+      <h3>第三层：指标本身的重新定义</h3>
+      <p>这是最深的一层。政客在乎短期，是因为<strong>选民用短期指标评价他们</strong>。如果公民社会开始用「土地增值是否被公共捕获」来评价政府，政客就会在乎。<strong>指标决定行为，行为决定政策。</strong>这就是为什么 GL 框架不只想当「政策建议」，而想当「评价标准」——<em>改变指标，就改变政治。</em></p>
+
+      <h2>五、诚实的立场</h2>
+      <p>在纯粹的选举周期下，长期正确的政策<strong>结构上难以通过</strong>。这是民主体制的已知缺陷。但「难以通过」不等于「不可能通过」——它只意味着，改革不会从正常的政治程序中产生，而必须从三条绕过它的路径中产生。</p>
+      <ul>
+        <li><strong>危机是改革的唯一入口</strong>——不是因为危机好，而是因为太平时期改革不可能；</li>
+        <li><strong>国际协调是绕过本国选举周期的工具</strong>——把政治成本外部化；</li>
+        <li><strong>指标重定义是长期改变</strong>——让选民开始在乎长期后果。</li>
+      </ul>
+      <p>这三层都不是「说服政客变勇敢」，而是<strong>改变政客面对的约束条件</strong>。</p>
+
+      <div class="closing">
+        <strong>政客不在乎十年后，不是因为他们短视，而是因为选举数学结构性地只奖励短期。要让他们在乎十年后，不是靠道德劝说，而是靠三件事：危机迫使、国际协调吸收政治成本、指标重定义让选民开始在乎。GL 框架不是「更聪明的政策」，而是「改变政客面对的游戏规则」。</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ Español ══════════════ -->
+<div class="lb" data-lang="es">
+  <div class="wrap">
+    <div class="article-label">📄 Suplemento Estructural · Viabilidad Política</div>
+    <div class="article-body">
+      <h1>Ciclos Electorales y la Imposibilidad Estructural de la Gobernanza a Largo Plazo</h1>
+      <p class="lede">Los políticos no ignoran el largo plazo porque sean cortos de miras. Lo ignoran porque la matemática electoral recompensa estructuralmente solo el corto plazo.</p>
+
+      <p><strong>Todo diagnóstico estructural asume una cosa: que existe un gobernante racional dispuesto a elegir la solución correcta a largo plazo. La democracia electoral lo impide estructuralmente.</strong></p>
+      <p>Este es el punto más débil de todo el Marco GL — y merece ser dicho con claridad. No basta con probar que la captura del valor del suelo es la única fuente de ingresos que sigue expandiéndose. También hay que responder una pregunta más difícil: <em>¿bajo qué condiciones políticas podría aprobarse tal política?</em></p>
+
+      <h2>I. El Desajuste Estructural</h2>
+      <p>La captura del valor del suelo tiene una propiedad política fatal: <strong>sus costos son inmediatos, sus beneficios distantes.</strong></p>
+      <table>
+        <tr><th>Dimensión</th><th>Captura del Valor del Suelo</th></tr>
+        <tr><td>Beneficios visibles</td><td>10–20 años después</td></tr>
+        <tr><td>Costos visibles</td><td>Inmediatos (reacción de terratenientes, fuga de capitales, volatilidad inmobiliaria, ataque mediático)</td></tr>
+        <tr><td>Ciclo electoral</td><td>2–4 años</td></tr>
+      </table>
+      <p>El beneficio y el costo están estructuralmente desalineados en el tiempo. No es una cuestión de valentía. Es la <strong>estructura matemática del ciclo electoral mismo</strong> — el mismo tipo de exclusión estructural que el indicador de la tasa de empleo realiza sobre el desempleo estructural.</p>
+      <div class="highlight">
+        <strong>No es que la política haya "desplazado" su foco. Es que la estructura matemática del ciclo electoral excluye las consecuencias a largo plazo desde el principio.</strong>
+      </div>
+
+      <h2>II. Cuatro Tipos de Régimen, Cuatro Respuestas</h2>
+
+      <div class="regime rg-1">
+        <div class="rg-label">Tipo de Régimen 1</div>
+        <div class="rg-title">Alternancia Bipartidista (EE.UU., Reino Unido)</div>
+        <div class="rg-body">Mandato: 4–5 años. La presión por la reelección comienza tras 2 años. Año 1: luna de miel, puede impulsar políticas "impopulares pero correctas". Año 2: elecciones de medio mandato, hay que entregar resultados a corto plazo. Años 3–4: campaña de reelección, cualquier costo a largo plazo será utilizado por el oponente. <strong>Resultado: la captura del valor del suelo — con rentabilidad a 20 años y protestas callejeras mañana — nunca llega a la agenda.</strong> No porque los políticos no entiendan, sino porque quienes entienden no pueden ser elegidos.</div>
+      </div>
+
+      <div class="regime rg-2">
+        <div class="rg-label">Tipo de Régimen 2</div>
+        <div class="rg-title">Coalición Multipartidista (Alemania, Francia, Italia)</div>
+        <div class="rg-body">Mandato: 4–5 años. Pero vida media de coalición: 2–3 años. Toda reforma a largo plazo requiere compromiso entre mandatos — pero las coaliciones cambian con frecuencia, y el próximo gobierno puede revertir lo que hizo el anterior. La discontinuidad política se vuelve rutina. <strong>Resultado: los políticos no pueden garantizar ni 5 años. ¿Cómo van a impulsar 20?</strong> No es falta de voluntad — es imposibilidad institucional.</div>
+      </div>
+
+      <div class="regime rg-3">
+        <div class="rg-label">Tipo de Régimen 3</div>
+        <div class="rg-title">Partido Único a Largo Plazo (China, Vietnam)</div>
+        <div class="rg-body">Mandato: sin ciclo electoral fijo, pero con evaluación interna de desempeño. Tiene capacidad de planificación a largo plazo — esta es una ventaja. Pero <strong>las métricas de evaluación siguen siendo PIB, empleo y estabilidad a corto plazo</strong>. Las finanzas del suelo (ingresos por venta de suelo) son la principal fuente de ingresos de los gobiernos locales — <strong>esto es en sí mismo una forma de captura pública del valor del suelo, pero el costo son los precios de la vivienda, la deuda y los agricultores</strong>. Resultado: existe capacidad a largo plazo, pero <strong>desalineación de métricas</strong>. La captura del valor del suelo aquí no es "imposible" — está "secuestrada por los intereses creados de las finanzas del suelo".</div>
+      </div>
+
+      <div class="regime rg-4">
+        <div class="rg-label">Tipo de Régimen 4</div>
+        <div class="rg-title">Híbrido (Singapur, Suiza)</div>
+        <div class="rg-body">Mandato: 4–5 años, pero con una capa tecnocrática fuerte. Mayor continuidad política. Pero <strong>los votantes siguen reaccionando al dolor a corto plazo</strong>. El sistema HDB y CPF de Singapur fue un <strong>dividendo institucional único en el momento fundacional</strong>. No ha ocurrido ninguna reforma de escala comparable desde entonces. Resultado: la ventana para dividendos institucionales es extremadamente corta. <strong>Piérdela una vez, y no hay segunda.</strong></div>
+      </div>
+
+      <h2>III. Cuatro Tipos de "Inacción Racional"</h2>
+      <p>No todos los políticos son cortos de miras. Algunos entienden genuinamente el largo plazo — y aun así no hacen nada. ¿Por qué?</p>
+
+      <h3>Tipo 1: Genuinamente No Entiende</h3>
+      <p>La mayoría de los políticos son abogados, periodistas o cuadros locales de formación — sin educación en estructura fiscal. Creen genuinamente que la "gestión fiscal" aún funciona, porque eso les dijeron sus libros de texto.</p>
+
+      <h3>Tipo 2: Entiende, Pero No Se Atreve</h3>
+      <p>Los políticos que entienden la captura del valor del suelo saben: si la impulsan, la clase terrateniente, el sector inmobiliario, la industria financiera y los medios se volverán contra ellos. El oponente dirá "estás confiscando mi casa". La elección está perdida. <strong>Así que quienes entienden eligen el silencio</strong> — no cobardía, sino elección racional bajo la matemática electoral.</p>
+
+      <h3>Tipo 3: Se Atreve, Pero No Puede Impulsarlo</h3>
+      <p>Algunos políticos lo intentaron genuinamente (reformas parciales del impuesto al suelo en países nórdicos, en la región de Taiwán). Pero: el parlamento bloquea, los tribunales frenan, los medios difaman, el siguiente mandato revierte. <strong>No un fallo de personas — un fallo de instituciones.</strong></p>
+
+      <h3>Tipo 4: Lo Impulsa, Pero Se Diluye</h3>
+      <p>Algunas reformas pasaron — pero fueron <strong>diluidas por intereses creados durante el proceso legislativo</strong>: la tasa bajó del 80% al 20%, cláusulas de exención apiladas capa tras capa, mecanismos de aplicación vaciados. <strong>Aprobadas, pero inútiles.</strong></p>
+
+      <h2>IV. Cómo Responde el Marco GL</h2>
+      <p>Si el Marco GL solo dijera "la captura del valor del suelo es la única solución", sería otro marco académico que ignora la política. Su respuesta completa tiene tres capas:</p>
+
+      <h3>Capa 1: La Crisis Precede a la Reforma</h3>
+      <p>La reforma no ocurre en tiempos de paz. <strong>La reforma ocurre solo en el punto de crisis.</strong> Después de 2008, las naciones aceptaron política monetaria no convencional. Después de 2020, las naciones aceptaron estímulo fiscal a gran escala. <strong>La captura del valor del suelo será forzada a la mesa de negociación cuando los fondos de pensiones incumplan funcionalmente, los sistemas sanitarios colapsen y las deudas soberanas entren en default.</strong> Esto no es optimismo — es patrón histórico: <em>los sistemas no se reforman voluntariamente; son forzados a reformarse al borde del colapso.</em></p>
+
+      <h3>Capa 2: La Coordinación Internacional Evita la Política Doméstica</h3>
+      <p>Una sola nación que impulse la captura del valor del suelo será derrotada por la fuga de capitales. Pero si <strong>múltiples naciones coordinan</strong> (primero el G7, luego el Sur Global), la presión electoral del político individual es <strong>absorbida por el marco internacional</strong>: "No soy yo subiendo impuestos — es un estándar global." "No soy yo confiscando — es un acuerdo del G20." <strong>El costo político se externaliza</strong> — este es el verdadero propósito de la estrategia de contención del G20 del Marco GL.</p>
+
+      <h3>Capa 3: Redefinir el Propio Indicador</h3>
+      <p>Esta es la capa más profunda. Los políticos se preocupan por el corto plazo porque <strong>los votantes los evalúan con indicadores de corto plazo</strong>. Si la sociedad civil comienza a evaluar a los gobiernos por "si el valor del suelo es capturado públicamente", los políticos empezarán a preocuparse. <strong>Los indicadores determinan el comportamiento; el comportamiento determina la política.</strong> Por eso el Marco GL no quiere ser solo una "propuesta de política" sino un "estándar de evaluación" — <em>cambia el indicador, cambia la política.</em></p>
+
+      <h2>V. La Posición Honesta</h2>
+      <p>Bajo ciclos electorales puros, las políticas correctas a largo plazo son <strong>estructuralmente difíciles de aprobar</strong>. Este es un defecto conocido de los sistemas democráticos. Pero "difícil de aprobar" no es "imposible de aprobar" — solo significa que la reforma no surgirá del proceso político normal. Debe surgir de los tres caminos que lo evitan.</p>
+      <ul>
+        <li><strong>La crisis es el único punto de entrada para la reforma</strong> — no porque la crisis sea buena, sino porque la reforma en tiempos de paz es imposible;</li>
+        <li><strong>La coordinación internacional es la herramienta para evitar los ciclos electorales domésticos</strong> — externalizando el costo político;</li>
+        <li><strong>La redefinición del indicador es el cambio a largo plazo</strong> — haciendo que los votantes empiecen a preocuparse por las consecuencias a largo plazo.</li>
+      </ul>
+      <p>Ninguna de estas tres capas trata de "persuadir a los políticos de ser valientes". Las tres tratan de <strong>cambiar las restricciones que enfrentan los políticos</strong>.</p>
+
+      <div class="closing">
+        <strong>Los políticos no ignoran el horizonte de diez años porque sean cortos de miras. Lo ignoran porque la matemática electoral recompensa estructuralmente solo el corto plazo. Para hacerles preocuparse por el horizonte de diez años, no te apoyas en la persuasión moral — te apoyas en tres cosas: la crisis forzando, la coordinación internacional absorbiendo el costo político, y la redefinición de indicadores haciendo que los votantes se preocupen. El Marco GL no es "una política más inteligente". Es "cambiar las reglas del juego que enfrentan los políticos".</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="back-nav">
+  <a href="/structural-diagnosis.html" class="primary">← Back to Series</a>
+  <a href="/" class="secondary">← Back to Home</a>
+</div>
+
+<script>
+  document.querySelectorAll('.lb-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var lang = this.dataset.lang;
+      document.querySelectorAll('.lb-btn').forEach(function(b) { b.classList.remove('on'); });
+      this.classList.add('on');
+      document.querySelectorAll('.lb').forEach(function(lb) { lb.classList.remove('active'); });
+      var target = document.querySelector('.lb[data-lang="' + lang + '"]');
+      if (target) target.classList.add('active');
+      document.documentElement.lang = (lang === 'tw') ? 'zh-Hant' : (lang === 'cn') ? 'zh-Hans' : lang;
+    });
+  });
+</script>
+
+</body>
+</html>
