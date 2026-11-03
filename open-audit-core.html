@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Open Audit Core · Penetration Verification Engine</title>
+<meta name="description" content="An open, browser-based verification engine that lets any government check the books independently of the Big Four — upload ledger data, run penetration checks, and get a findings report.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230B1220'/%3E%3Cpath d='M20 44 V26 l8 -8 v26 M36 44 V26 l8 -8 v26' stroke='%239FE870' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b1220;--bg2:#0d1526;--text:#f8fbff;--muted:#c7d2e3;--sub:#9fb0c8;--dim:rgba(255,255,255,.06);--green:#9FE870;--blue:#7DD3FC;--gold:#fbbf24;--red:#f87171;--serif:'DM Serif Display',Georgia,serif;--mono:'DM Mono',monospace;--sans:'DM Sans',system-ui,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.7;overflow-x:hidden}
+.nav{position:fixed;inset:0 0 auto 0;z-index:100;height:62px;padding:0 clamp(16px,5vw,48px);display:flex;align-items:center;justify-content:space-between;background:rgba(11,18,32,0.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--dim)}
+.logo{color:#fff;text-decoration:none;font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase}
+.nav-right{display:flex;align-items:center;gap:14px}
+.lang-grp{display:flex;gap:6px}
+.lb-btn{font-family:var(--mono);font-size:11px;letter-spacing:.08em;padding:5px 10px;border:1px solid rgba(255,255,255,.1);border-radius:5px;background:0 0;color:var(--sub);cursor:pointer;transition:all .2s}
+.lb-btn:hover{color:var(--text);border-color:rgba(255,255,255,.2)}
+.lb-btn.on{color:var(--green);border-color:rgba(159,232,112,.35);background:rgba(159,232,112,.07)}
+.page{padding-top:62px}
+.wrap{max-width:880px;margin:0 auto;padding:clamp(40px,5vw,64px) clamp(16px,4vw,36px) 56px}
+.hero-badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(251,191,36,.4);padding:6px 16px;border-radius:40px;margin-bottom:20px;background:rgba(251,191,36,.1)}
+h1{font-family:var(--serif);font-size:clamp(1.9rem,4vw,2.8rem);line-height:1.15;color:#fff;margin-bottom:14px}
+.sub{font-size:1.08rem;color:var(--sub);max-width:760px;margin-bottom:28px}
+.license-line{font-family:var(--mono);font-size:11px;color:var(--green);margin-bottom:40px;display:flex;gap:14px;flex-wrap:wrap}
+.license-line span{display:inline-flex;align-items:center;gap:6px}
+.license-line .dot{width:6px;height:6px;border-radius:50%;background:var(--green);display:inline-block}
+.card{background:var(--bg2);border:1px solid var(--dim);border-radius:14px;padding:24px;margin-bottom:18px}
+.card h2{font-family:var(--serif);font-size:1.3rem;color:var(--green);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.card h2 .step{font-family:var(--mono);font-size:11px;color:var(--gold);background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.3);width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex:none}
+.drag-zone{border:1.5px dashed rgba(255,255,255,.18);border-radius:10px;padding:26px;text-align:center;cursor:pointer;transition:all .2s;background:rgba(255,255,255,.02)}
+.drag-zone:hover,.drag-zone.over{border-color:var(--green);background:rgba(159,232,112,.05)}
+.drag-zone .main{font-family:var(--serif);font-size:1.15rem;color:var(--text);margin-bottom:6px}
+.drag-zone .hint{font-family:var(--mono);font-size:11px;color:var(--sub)}
+.row-btns{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
+.btn{font-family:var(--mono);font-size:12px;letter-spacing:.06em;padding:11px 22px;border-radius:8px;border:1px solid rgba(159,232,112,.45);background:rgba(159,232,112,.1);color:var(--green);cursor:pointer;transition:all .2s}
+.btn:hover{background:rgba(159,232,112,.2);transform:translateY(-1px)}
+.btn.ghost{border-color:rgba(255,255,255,.15);background:rgba(255,255,255,.03);color:var(--sub)}
+.btn.ghost:hover{color:var(--text);border-color:rgba(255,255,255,.3)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.status-line{font-family:var(--mono);font-size:12px;color:var(--sub);margin-top:12px;min-height:18px}
+.meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:18px 0}
+.meta{background:rgba(255,255,255,.03);border:1px solid var(--dim);border-radius:8px;padding:14px}
+.meta .k{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--sub);margin-bottom:6px}
+.meta .v{font-family:var(--serif);font-size:1.5rem;color:var(--text)}
+.meta .v.warn{color:var(--gold)}
+.meta .v.bad{color:var(--red)}
+.find-group{border:1px solid var(--dim);border-radius:10px;margin-bottom:14px;overflow:hidden}
+.find-head{display:flex;align-items:center;gap:10px;padding:14px 18px;font-family:var(--mono);font-size:12px;letter-spacing:.04em;border-bottom:1px solid var(--dim)}
+.find-head .sev{width:10px;height:10px;border-radius:50%;flex:none}
+.find-head .sev.hi{background:var(--red)}
+.find-head .sev.mid{background:var(--gold)}
+.find-head .sev.lo{background:var(--blue)}
+.find-head .name{color:var(--text);font-weight:500}
+.find-head .count{margin-left:auto;color:var(--sub)}
+.find-body{padding:6px 0}
+.find-row{display:flex;gap:12px;padding:9px 18px;border-top:1px solid rgba(255,255,255,.04);align-items:baseline;font-family:var(--mono);font-size:12px}
+.find-row:first-child{border-top:none}
+.find-row .d{color:var(--muted);flex:1;word-break:break-word}
+.find-row .a{color:var(--gold);white-space:nowrap}
+.clear-banner{background:rgba(159,232,112,.08);border:1px solid rgba(159,232,112,.3);color:var(--green);border-radius:10px;padding:18px 22px;font-family:var(--serif);font-size:1.1rem;text-align:center;margin-bottom:14px}
+table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12px;min-width:620px;margin:0}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--dim);border-radius:8px;padding:0}
+th,td{padding:8px 10px;border-bottom:1px solid var(--dim);text-align:left;color:var(--muted)}
+th{color:var(--sub);font-size:10px;letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.12)}
+td.neg{color:var(--red)}
+td.pos{color:var(--green)}
+.section-title{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--sub);margin:34px 0 12px}
+.footer{text-align:center;padding:20px 16px 34px;font-family:var(--mono);font-size:11px;color:rgba(255,255,255,.25)}
+.footer a{color:var(--green);text-decoration:none}
+.footer a:hover{text-decoration:underline}
+.hidden{display:none!important}
+@media(max-width:640px){.find-row{flex-direction:column;gap:4px}.find-row .a{white-space:normal}h1{font-size:1.7rem}}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <a href="/" class="logo">Open Audit Core</a>
+  <div class="nav-right">
+    <div class="lang-grp">
+      <button class="lb-btn on" data-lang="en">EN</button>
+      <button class="lb-btn" data-lang="zh-Hant">繁中</button>
+      <button class="lb-btn" data-lang="zh-Hans">简中</button>
+      <button class="lb-btn" data-lang="es">ES</button>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+<div class="wrap">
+
+  <div class="hero-badge" data-i18n="badge">Open Source · Browser-Native</div>
+  <h1 data-i18n="title">Open Audit Core — Penetration Verification Engine</h1>
+  <p class="sub" data-i18n="sub">An open, browser-based verification engine that lets any government check the books independently of the Big Four — upload ledger data, run penetration checks, and get a findings report.</p>
+
+  <div class="license-line">
+    <span><i class="dot"></i><span data-i18n="license">MIT License</span></span>
+    <span><i class="dot"></i><span data-i18n="version">v0.1.0</span></span>
+    <span><i class="dot"></i><span data-i18n="src">Source visible — this page is the source</span></span>
+  </div>
+
+  <!-- ===== STEP 1 : INPUT ===== -->
+  <div class="card">
+    <h2><span class="step">1</span><span data-i18n="s1t">Load the Ledger</span></h2>
+    <div class="drag-zone" id="dropZone">
+      <div class="main" data-i18n="dropMain">Drop a CSV ledger here, or click to choose a file</div>
+      <div class="hint" data-i18n="dropHint">columns: date, description, amount, counterparty, category, reference</div>
+      <input type="file" id="fileInput" accept=".csv,text/csv" class="hidden">
+    </div>
+    <div class="row-btns">
+      <button class="btn" id="loadExample" data-i18n="example">Load Example Ledger</button>
+      <button class="btn ghost" id="clearBtn" data-i18n="clear">Clear</button>
+    </div>
+    <div class="status-line" id="statusLine"></div>
+  </div>
+
+  <!-- ===== STEP 2 : RUN ===== -->
+  <div class="card">
+    <h2><span class="step">2</span><span data-i18n="s2t">Run Penetration Checks</span></h2>
+    <div class="row-btns">
+      <button class="btn" id="runBtn" disabled data-i18n="run">Run Verification</button>
+    </div>
+    <div class="status-line" id="runStatus"></div>
+  </div>
+
+  <!-- ===== STEP 3 : REPORT ===== -->
+  <div class="card" id="reportCard">
+    <h2><span class="step">3</span><span data-i18n="s3t">Findings Report</span></h2>
+    <div id="reportBody"></div>
+  </div>
+
+  <div class="section-title" data-i18n="rulesTitle">Verification Rules</div>
+  <div id="rulesDesc"></div>
+
+  <div class="section-title" data-i18n="colTitle">CSV Columns</div>
+  <div class="table-scroll">
+  <table>
+    <thead><tr><th data-i18n="cDate">date</th><th data-i18n="cDesc">description</th><th data-i18n="cAmt">amount</th><th data-i18n="cCtr">counterparty</th><th data-i18n="cCat">category</th><th data-i18n="cRef">reference</th></tr></thead>
+    <tbody>
+      <tr><td data-i18n="exDate">2026-10-01</td><td data-i18n="exDesc">Payment to contractor</td><td data-i18n="exAmt">-12,400.00</td><td data-i18n="exCtr">Acme Constructions</td><td data-i18n="exCat">Infrastructure</td><td data-i18n="exRef">PO-88213</td></tr>
+      <tr><td data-i18n="exDate2">2026-10-03</td><td data-i18n="exDesc2">Tax revenue received</td><td data-i18n="exAmt2">+48,000.00</td><td data-i18n="exCtr2">Citizens</td><td data-i18n="exCat2">Revenue</td><td data-i18n="exRef2">—</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="section-title" data-i18n="footTitle">Open-Source Statement</div>
+  <div id="footerText"></div>
+
+</div>
+</div>
+
+<div class="footer">
+  <span data-i18n="foot">Open Audit Core is part of the Big Four Exit series — return oversight to the public.</span>
+  <span> · <a href="/" data-i18n="home">Home</a></span>
+</div>
+
+<script>
+/* =====================================================================
+   OPEN AUDIT CORE v0.1.0 — Penetration Verification Engine
+   MIT License. Source is this file — auditable by anyone, by design.
+   Run entirely in the browser. No data leaves this machine.
+   ===================================================================== */
+
+const I18N = {
+  "en": {
+    badge:"Open Source · Browser-Native", title:"Open Audit Core — Penetration Verification Engine",
+    sub:"An open, browser-based verification engine that lets any government check the books independently of the Big Four — upload ledger data, run penetration checks, and get a findings report.",
+    license:"MIT License", version:"v0.1.0", src:"Source visible — this page is the source",
+    s1t:"Load the Ledger", dropMain:"Drop a CSV ledger here, or click to choose a file",
+    dropHint:"columns: date, description, amount, counterparty, category, reference",
+    example:"Load Example Ledger", clear:"Clear", s2t:"Run Penetration Checks", run:"Run Verification",
+    s3t:"Findings Report", rulesTitle:"Verification Rules", colTitle:"CSV Columns",
+    cDate:"date", cDesc:"description", cAmt:"amount", cCtr:"counterparty", cCat:"category", cRef:"reference",
+    exDate:"2026-10-01", exDesc:"Payment to contractor", exAmt:"-12,400.00", exCtr:"Acme Constructions", exCat:"Infrastructure", exRef:"PO-88213",
+    exDate2:"2026-10-03", exDesc2:"Tax revenue received", exAmt2:"+48,000.00", exCtr2:"Citizens", exCat2:"Revenue", exRef2:"—",
+    footTitle:"Open-Source Statement", foot:"Open Audit Core is part of the Big Four Exit series — return oversight to the public.", home:"Home",
+    stLoaded:"Ledger loaded: {n} transactions. Click Run Verification.", stEmpty:"No ledger loaded.",
+    stRun:"Checks complete. {n} findings across {k} rules.", stClear:"Cleared.",
+    metaTx:"Transactions", metaBal:"Net balance", metaRound:"Round-amount share", metaFlags:"Findings",
+    gBalance:"Balance check", gRound:"Round-number concentration", gDup:"Duplicate transactions", gJump:"Abnormal jumps", gRef:"Reference gaps",
+    fBalanceOk:"Ledger balances: debits equal credits. No hidden imbalance at this level.",
+    fBalance:"Imbalance detected: credits minus debits = {v}. A balanced ledger should close to zero.",
+    fRound:"{p}% of amounts are round numbers (no decimals) — a classic sign of fabricated or estimated entries, where real transactions carry cents.",
+    fDupNone:"No exact duplicate transactions found.",
+    fDup:"{n} exact duplicate transaction(s) — identical amount, date and description. Duplicate postings can double-count revenue or mask repeated payouts.",
+    fJumpNone:"No abnormal jumps between consecutive amounts.",
+    fJump:"{n} consecutive jump(s) exceeding {t}x between dates — sudden swings warrant the counterparty's supporting contract.",
+    fRefNone:"Every large transaction carries a reference. Good.",
+    fRef:"{n} large transaction(s) lack a reference — an unattached payment cannot be traced to a purchase order or contract. This is exactly the 'hundred-dollar guard for ten' seam.",
+    sevHi:"HIGH", sevMid:"MEDIUM", sevLo:"LOW", ok:"No findings.",
+    rulesBody:"1. Balance — the ledger must close to zero. 2. Round-number concentration — a high share of whole amounts flags fabrication. 3. Duplicate detection — exact repeats are double-posting red flags. 4. Abnormal jumps — consecutive swings beyond a threshold need a supporting contract. 5. Reference gaps — large unattached payments cannot be traced.",
+    footerBody:"Open Audit Core is released under the MIT License. The verification logic is written in plain JavaScript in this single file, visible to anyone — a government, a regulator, a journalist, or the public. This is the 'regulator builds its own audit capacity' chapter of the Big Four Exit series, made executable. No data leaves your browser; the engine runs entirely locally."
+  },
+  "zh-Hant": {
+    badge:"開源 · 純瀏覽器運行", title:"開源審計核心 · 穿透核驗引擎",
+    sub:"一個開源、純瀏覽器運行的核驗引擎，讓任何政府都能獨立查帳、不必依賴四大——上傳帳目、執行穿透核驗、得到差異報告。",
+    license:"MIT 許可", version:"v0.1.0", src:"源碼可見——這個頁面本身就是源碼",
+    s1t:"載入帳目", dropMain:"把 CSV 帳目拖到這裡，或點擊選擇檔案",
+    dropHint:"欄位：date, description, amount, counterparty, category, reference",
+    example:"載入示例帳目", clear:"清除", s2t:"執行穿透核驗", run:"執行核驗",
+    s3t:"差異報告", rulesTitle:"核驗規則", colTitle:"CSV 欄位",
+    cDate:"日期", cDesc:"說明", cAmt:"金額", cCtr:"往來對象", cCat:"類別", cRef:"參考號",
+    exDate:"2026-10-01", exDesc:"支付承包商", exAmt:"-12,400.00", exCtr:"Acme 建設", exCat:"基建", exRef:"PO-88213",
+    exDate2:"2026-10-03", exDesc2:"稅收入帳", exAmt2:"+48,000.00", exCtr2:"公民", exCat2:"收入", exRef2:"—",
+    footTitle:"開源聲明", foot:"開源審計核心隸屬「擺脫四大」系列——把監督還給公眾。", home:"回到首頁",
+    stLoaded:"帳目已載入：{n} 筆交易。點擊執行核驗。", stEmpty:"尚未載入帳目。", stRun:"核驗完成：{k} 條規則共發現 {n} 項。", stClear:"已清除。",
+    metaTx:"交易筆數", metaBal:"淨差額", metaRound:"整數金額佔比", metaFlags:"發現數",
+    gBalance:"勾稽平衡", gRound:"整數金額集中", gDup:"重複交易", gJump:"異常跳變", gRef:"參考號缺口",
+    fBalanceOk:"帳目平衡：借貸相抵。此層未見隱藏失衡。",
+    fBalance:"勾稽失衡：貸方減借方 = {v}。平衡帳目應收斂到零。",
+    fRound:"{p}% 的金額是整數（無小數）——偽造或估算帳目的典型特徵，真實交易通常帶零頭。",
+    fDupNone:"未發現完全相同的重複交易。",
+    fDup:"發現 {n} 筆完全相同的重複交易——金額、日期、說明一致。重複入帳可能重複計算收入或掩蓋反覆支出。",
+    fJumpNone:"未發現相鄰金額的異常跳變。",
+    fJump:"發現 {n} 處連續跳變超過 {t} 倍——劇烈變動需核對往來對象的合約。",
+    fRefNone:"所有大額交易都帶參考號。良好。",
+    fRef:"發現 {n} 筆大額交易缺參考號——無法追溯到訂單或合約的付款，正是「百元護十元」的縫隙所在。",
+    sevHi:"高", sevMid:"中", sevLo:"低", ok:"無發現。",
+    rulesBody:"1. 勾稽平衡——帳目必須收斂到零。2. 整數金額集中——整數佔比高即偽造紅旗。3. 重複偵測——完全相同即重複入帳紅旗。4. 異常跳變——連續劇變需合約佐證。5. 參考號缺口——大額無主付款無法追溯。",
+    footerBody:"開源審計核心以 MIT 許可發布。核驗邏輯以純 JavaScript 寫在這個單一檔案裡，任何人都能看見——政府、監管者、記者或公眾。這就是「擺脫四大」系列裡「監管自建審計能力」一章的可執行版本。資料不會離開你的瀏覽器，引擎完全本地運行。"
+  },
+  "zh-Hans": {
+    badge:"开源 · 纯浏览器运行", title:"开源审计核心 · 穿透核验引擎",
+    sub:"一个开源、纯浏览器运行的核验引擎，让任何政府都能独立查账、不必依赖四大——上传账目、执行穿透核验、得到差异报告。",
+    license:"MIT 许可", version:"v0.1.0", src:"源码可见——这个页面本身就是源码",
+    s1t:"载入账目", dropMain:"把 CSV 账目拖到这里，或点击选择文件",
+    dropHint:"字段：date, description, amount, counterparty, category, reference",
+    example:"载入示例账目", clear:"清除", s2t:"执行穿透核验", run:"执行核验",
+    s3t:"差异报告", rulesTitle:"核验规则", colTitle:"CSV 字段",
+    cDate:"日期", cDesc:"说明", cAmt:"金额", cCtr:"往来对象", cCat:"类别", cRef:"参考号",
+    exDate:"2026-10-01", exDesc:"支付承包商", exAmt:"-12,400.00", exCtr:"Acme 建设", exCat:"基建", exRef:"PO-88213",
+    exDate2:"2026-10-03", exDesc2:"税收入账", exAmt2:"+48,000.00", exCtr2:"公民", exCat2:"收入", exRef2:"—",
+    footTitle:"开源声明", foot:"开源审计核心隶属「摆脱四大」系列——把监督还给公众。", home:"回到首页",
+    stLoaded:"账目已载入：{n} 笔交易。点击执行核验。", stEmpty:"尚未载入账目。", stRun:"核验完成：{k} 条规则共发现 {n} 项。", stClear:"已清除。",
+    metaTx:"交易笔数", metaBal:"净差额", metaRound:"整数金额占比", metaFlags:"发现数",
+    gBalance:"勾稽平衡", gRound:"整数金额集中", gDup:"重复交易", gJump:"异常跳变", gRef:"参考号缺口",
+    fBalanceOk:"账目平衡：借贷相抵。此层未见隐藏失衡。",
+    fBalance:"勾稽失衡：贷方减借方 = {v}。平衡账目应收敛到零。",
+    fRound:"{p}% 的金额是整数（无小数）——伪造或估算账目的典型特征，真实交易通常带零头。",
+    fDupNone:"未发现完全相同的重复交易。",
+    fDup:"发现 {n} 笔完全相同的重复交易——金额、日期、说明一致。重复入账可能重复计算收入或掩盖反复支出。",
+    fJumpNone:"未发现相邻金额的异常跳变。",
+    fJump:"发现 {n} 处连续跳变超过 {t} 倍——剧烈变动需核对往来对象的合约。",
+    fRefNone:"所有大额交易都带参考号。良好。",
+    fRef:"发现 {n} 笔大额交易缺参考号——无法追溯到订单或合约的付款，正是「百元护十元」的缝隙所在。",
+    sevHi:"高", sevMid:"中", sevLo:"低", ok:"无发现。",
+    rulesBody:"1. 勾稽平衡——账目必须收敛到零。2. 整数金额集中——整数占比高即伪造红旗。3. 重复侦测——完全相同即重复入账红旗。4. 异常跳变——连续剧变需合约佐证。5. 参考号缺口——大额无主付款无法追溯。",
+    footerBody:"开源审计核心以 MIT 许可发布。核验逻辑以纯 JavaScript 写在这个单一文件里，任何人都能看见——政府、监管者、记者或公众。这就是「摆脱四大」系列里「监管自建审计能力」一章的可执行版本。数据不会离开你的浏览器，引擎完全本地运行。"
+  },
+  "es": {
+    badge:"Código Abierto · En Navegador", title:"Núcleo de Auditoría Abierta — Motor de Verificación de Penetración",
+    sub:"Un motor de verificación abierto, basado en navegador, que permite a cualquier gobierno auditar los libros de forma independiente de las Cuatro Grandes — sube los datos del libro mayor, ejecuta las comprobaciones y obtén un informe de hallazgos.",
+    license:"Licencia MIT", version:"v0.1.0", src:"Código visible — esta página es el código",
+    s1t:"Cargar el Libro Mayor", dropMain:"Suelta aquí un CSV del libro mayor, o haz clic para elegir un archivo",
+    dropHint:"columnas: date, description, amount, counterparty, category, reference",
+    example:"Cargar Libro de Ejemplo", clear:"Limpiar", s2t:"Ejecutar Comprobaciones de Penetración", run:"Ejecutar Verificación",
+    s3t:"Informe de Hallazgos", rulesTitle:"Reglas de Verificación", colTitle:"Columnas CSV",
+    cDate:"fecha", cDesc:"descripción", cAmt:"importe", cCtr:"contraparte", cCat:"categoría", cRef:"referencia",
+    exDate:"2026-10-01", exDesc:"Pago a contratista", exAmt:"-12,400.00", exCtr:"Acme Construcciones", exCat:"Infraestructura", exRef:"PO-88213",
+    exDate2:"2026-10-03", exDesc2:"Ingreso de impuestos", exAmt2:"+48,000.00", exCtr2:"Ciudadanos", exCat2:"Ingresos", exRef2:"—",
+    footTitle:"Declaración de Código Abierto", foot:"Núcleo de Auditoría Abierta es parte de la serie Salida de las Cuatro Grandes — devuelve la supervisión al público.", home:"Inicio",
+    stLoaded:"Libro cargado: {n} transacciones. Haz clic en Ejecutar Verificación.", stEmpty:"No hay libro cargado.", stRun:"Comprobaciones completas. {n} hallazgos en {k} reglas.", stClear:"Limpiado.",
+    metaTx:"Transacciones", metaBal:"Saldo neto", metaRound:"Cuota de importes redondos", metaFlags:"Hallazgos",
+    gBalance:"Comprobación de saldo", gRound:"Concentración de importes redondos", gDup:"Transacciones duplicadas", gJump:"Saltos anormales", gRef:"Huecos de referencia",
+    fBalanceOk:"El libro cuadra: los débitos igualan los créditos. Sin desequilibrio oculto en este nivel.",
+    fBalance:"Desequilibrio detectado: créditos menos débitos = {v}. Un libro balanceado debe cerrar a cero.",
+    fRound:"El {p}% de los importes son números redondos (sin decimales) — un signo clásico de asientos fabricados o estimados; las transacciones reales llevan céntimos.",
+    fDupNone:"No se encontraron transacciones duplicadas exactas.",
+    fDup:"Se encontraron {n} transacción(es) duplicada(s) exacta(s) — mismo importe, fecha y descripción. Las duplicaciones pueden doblar ingresos o enmascarar pagos repetidos.",
+    fJumpNone:"No se encontraron saltos anormales entre importes consecutivos.",
+    fJump:"Se encontraron {n} salto(s) consecutivo(s) que superan {t}x entre fechas — los cambios bruscos exigen el contrato de respaldo de la contraparte.",
+    fRefNone:"Toda transacción grande lleva referencia. Bien.",
+    fRef:"Se encontraron {n} transacción(es) grande(s) sin referencia — un pago no vinculado no puede rastrearse hasta una orden o contrato. Esta es exactamente la costura del 'guardián de cien por diez'.",
+    sevHi:"ALTO", sevMid:"MEDIO", sevLo:"BAJO", ok:"Sin hallazgos.",
+    rulesBody:"1. Saldo — el libro debe cerrar a cero. 2. Concentración de importes redondos — una alta cuota de enteros delata fabricación. 3. Detección de duplicados — los repetidos exactos son banderas rojas de doble asiento. 4. Saltos anormales — cambios bruscos consecutivos requieren contrato de respaldo. 5. Huecos de referencia — pagos grandes no vinculados no pueden rastrearse.",
+    footerBody:"Núcleo de Auditoría Abierta se publica bajo la Licencia MIT. La lógica de verificación está escrita en JavaScript puro en este único archivo, visible para cualquiera — un gobierno, un regulador, un periodista o el público. Este es el capítulo 'el regulador construye su propia capacidad de auditoría' de la serie Salida de las Cuatro Grandes, hecho ejecutable. Ningún dato sale de tu navegador; el motor corre íntegramente en local."
+  }
+};
+
+let LANG = "en";
+let rows = [];
+let currentLang = null;
+
+const el = function(id){ return document.getElementById(id); };
+
+function t(key, vars){
+  let s = (I18N[LANG] && I18N[LANG][key]) || I18N["en"][key] || key;
+  if (vars) Object.keys(vars).forEach(function(k){ s = s.split("{"+k+"}").join(String(vars[k])); });
+  return s;
+}
+
+function setLang(lang){
+  LANG = lang;
+  document.documentElement.lang = lang;
+  document.querySelectorAll(".lb-btn").forEach(function(b){ b.classList.toggle("on", b.dataset.lang===lang); });
+  document.querySelectorAll("[data-i18n]").forEach(function(n){
+    n.textContent = t(n.getAttribute("data-i18n"));
+  });
+  renderStatic();
+  if (rows.length) renderReport();
+}
+
+/* ---------- CSV parsing ---------- */
+function parseCSV(text){
+  const lines = text.split(/\r?\n/).filter(function(l){ return l.trim().length>0; });
+  if (lines.length < 2) return [];
+  const header = lines[0].toLowerCase();
+  const hasHeader = /date|desc|amount|counterpart|reference/.test(header);
+  const start = hasHeader ? 1 : 0;
+  const out = [];
+  for (let i=start; i<lines.length; i++){
+    const c = splitLine(lines[i]);
+    if (c.length < 3) continue;
+    const amount = parseFloat(String(c[2]||"").replace(/[,\s]/g,""));
+    if (isNaN(amount)) continue;
+    out.push({
+      date: (c[0]||"").trim(),
+      description: (c[1]||"").trim(),
+      amount: amount,
+      counterparty: (c[3]||"").trim(),
+      category: (c[4]||"").trim(),
+      reference: (c[5]||"").trim()
+    });
+  }
+  return out;
+}
+function splitLine(line){
+  const out=[]; let cur="", inQ=false;
+  for (let i=0;i<line.length;i++){
+    const ch=line[i];
+    if (ch==='"'){ inQ=!inQ; continue; }
+    if (ch===',' && !inQ){ out.push(cur); cur=""; continue; }
+    cur+=ch;
+  }
+  out.push(cur);
+  return out;
+}
+
+function fmt(n){ return n.toLocaleString(LANG==="zh-Hant"||LANG==="zh-Hans" ? "zh-CN" : LANG==="es" ? "es-ES" : "en-US", {minimumFractionDigits:2, maximumFractionDigits:2}); }
+
+/* ---------- example ledger (seeded with deliberate seams) ---------- */
+const EXAMPLE = [
+  ["2026-10-01","Contractor payment",-12400.00,"Acme Constructions","Infrastructure","PO-88213"],
+  ["2026-10-03","Tax revenue",48000.00,"Citizens","Revenue",""],
+  ["2026-10-05","Consulting retainer",-30000.00,"Meridian Advisors","Consulting",""],
+  ["2026-10-05","Consulting retainer",-30000.00,"Meridian Advisors","Consulting",""],
+  ["2026-10-08","Public works advance",-75000.00,"BuildRight Ltd","Infrastructure","GR-00114"],
+  ["2026-10-08","Public works advance",-75000.00,"BuildRight Ltd","Infrastructure","GR-00114"],
+  ["2026-10-10","Payroll",-186000.00,"Employees","Salaries","PAY-2209"],
+  ["2026-10-12","Vendor settlement",-9500.00,"Silk Road Imports","Procurement",""],
+  ["2026-10-15","Fuel subsidy",-4120.35,"Citizens","Subsidies","SUB-77"],
+  ["2026-10-17","Grants received",45000.00,"EU Trust Fund","Grants","GT-5566"],
+  ["2026-10-20","Bridge phase 2",-420000.00,"BuildRight Ltd","Infrastructure","GR-00233"],
+  ["2026-10-22","Vehicle fleet",-25000.00,"MotoCorp","Assets","RFQ-31"]
+];
+
+/* ---------- verification engine ---------- */
+function runChecks(data){
+  const findings = [];
+
+  // 1. Balance
+  const sum = data.reduce(function(a,r){ return a + r.amount; }, 0);
+  if (Math.abs(sum) > 0.005){
+    findings.push({ id:"balance", sev:"hi", title:t("gBalance"), detail:t("fBalance",{v:fmt(sum)}), items:[] });
+  } else {
+    findings.push({ id:"balance", sev:"lo", title:t("gBalance"), detail:t("fBalanceOk"), items:[] });
+  }
+
+  // 2. Round-number concentration
+  const roundCount = data.filter(function(r){ return Math.abs(r.amount) % 1 === 0; }).length;
+  const roundPct = data.length ? Math.round(roundCount/data.length*100) : 0;
+  findings.push({
+    id:"round", sev: roundPct>=60 ? "hi" : (roundPct>=35 ? "mid" : "lo"),
+    title:t("gRound"), detail:t("fRound",{p:roundPct}),
+    items: []
+  });
+
+  // 3. Duplicates
+  const seen={}; const dups=[];
+  data.forEach(function(r){
+    const k = r.date+"|"+r.description+"|"+r.amount;
+    if (seen[k]) dups.push({d: r.date+" — "+r.description, a: fmt(r.amount)});
+    else seen[k]=true;
+  });
+  findings.push({
+    id:"dup", sev: dups.length ? "hi" : "lo",
+    title:t("gDup"), detail: dups.length ? t("fDup",{n:dups.length}) : t("fDupNone"),
+    items: dups
+  });
+
+  // 4. Abnormal jumps
+  const sorted = data.slice().sort(function(a,b){ return (a.date||"").localeCompare(b.date||""); });
+  const jumps=[];
+  for (let i=1;i<sorted.length;i++){
+    const p=Math.abs(sorted[i-1].amount), c=Math.abs(sorted[i].amount);
+    const ratio = p>0 ? c/p : (c>0?99:0);
+    if (ratio > 4 && c>10000){
+      jumps.push({ d: sorted[i-1].date+" → "+sorted[i].date+" ("+sorted[i].description+")", a: ratio.toFixed(1)+"×" });
+    }
+  }
+  findings.push({
+    id:"jump", sev: jumps.length ? "mid" : "lo",
+    title:t("gJump"), detail: jumps.length ? t("fJump",{n:jumps.length,t:4}) : t("fJumpNone"),
+    items: jumps
+  });
+
+  // 5. Reference gaps on large amounts
+  const bigRef=[];
+  data.forEach(function(r){
+    if (Math.abs(r.amount) >= 5000 && !r.reference){
+      bigRef.push({ d: r.date+" — "+r.description+" ("+r.counterparty+")", a: fmt(r.amount) });
+    }
+  });
+  findings.push({
+    id:"ref", sev: bigRef.length ? "mid" : "lo",
+    title:t("gRef"), detail: bigRef.length ? t("fRef",{n:bigRef.length}) : t("fRefNone"),
+    items: bigRef
+  });
+
+  return { findings:findings, sum:sum, roundPct:roundPct, tx:data.length };
+}
+
+function renderReport(){
+  if (!rows.length) return;
+  const res = runChecks(rows);
+  const flags = res.findings.reduce(function(a,f){ return a + f.items.length; },0);
+  const flagCount = res.findings.filter(function(f){ return f.items.length>0 || f.sev==="hi"; }).length;
+  const sevBad = res.findings.some(function(f){ return f.sev==="hi"; });
+
+  let html = '<div class="meta-grid">'
+    + '<div class="meta"><div class="k">'+t("metaTx")+'</div><div class="v">'+res.tx+'</div></div>'
+    + '<div class="meta"><div class="k">'+t("metaBal")+'</div><div class="v '+(Math.abs(res.sum)>0.005?'bad':'')+'">'+fmt(res.sum)+'</div></div>'
+    + '<div class="meta"><div class="k">'+t("metaRound")+'</div><div class="v '+(res.roundPct>=60?'warn':'')+'">'+res.roundPct+'%</div></div>'
+    + '<div class="meta"><div class="k">'+t("metaFlags")+'</div><div class="v '+(sevBad?'bad':'')+'">'+flags+'</div></div>'
+    + '</div>';
+
+  if (flagCount===0){
+    html += '<div class="clear-banner">'+t("ok")+'</div>';
+  }
+
+  res.findings.forEach(function(f){
+    html += '<div class="find-group">'
+      + '<div class="find-head"><span class="sev '+f.sev+'"></span><span class="name">'+f.title+'</span><span class="count">'+t("sev"+f.sev.charAt(0).toUpperCase()+f.sev.slice(1))+'</span></div>'
+      + '<div class="find-body">';
+    if (f.items.length){
+      f.items.forEach(function(it){
+        html += '<div class="find-row"><span class="d">'+it.d+'</span><span class="a">'+it.a+'</span></div>';
+      });
+    } else {
+      html += '<div class="find-row" style="padding:12px 18px;border:none;color:var(--muted)">'+f.detail+'</div>';
+    }
+    html += '</div></div>';
+  });
+
+  el("reportBody").innerHTML = html;
+  el("reportCard").classList.remove("hidden");
+  el("runStatus").textContent = t("stRun",{n:flags,k:flagCount});
+  currentLang = LANG;
+}
+
+/* ---------- wiring ---------- */
+const dz = el("dropZone"), fi = el("fileInput");
+dz.addEventListener("click", function(){ fi.click(); });
+dz.addEventListener("dragover", function(e){ e.preventDefault(); dz.classList.add("over"); });
+dz.addEventListener("dragleave", function(){ dz.classList.remove("over"); });
+dz.addEventListener("drop", function(e){
+  e.preventDefault(); dz.classList.remove("over");
+  if (e.dataTransfer.files && e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
+});
+fi.addEventListener("change", function(){
+  if (fi.files && fi.files[0]) loadFile(fi.files[0]);
+});
+
+function loadFile(file){
+  const reader = new FileReader();
+  reader.onload = function(e){
+    rows = parseCSV(e.target.result);
+    if (!rows.length){ el("statusLine").textContent = t("stEmpty"); return; }
+    el("statusLine").textContent = t("stLoaded",{n:rows.length});
+    el("runBtn").disabled = false;
+    renderReport();
+  };
+  reader.readAsText(file, "utf-8");
+}
+
+el("loadExample").addEventListener("click", function(){
+  rows = EXAMPLE.map(function(r){ return {date:r[0],description:r[1],amount:r[2],counterparty:r[3],category:r[4],reference:r[5]}; });
+  el("statusLine").textContent = t("stLoaded",{n:rows.length});
+  el("runBtn").disabled = false;
+  renderReport();
+});
+
+el("clearBtn").addEventListener("click", function(){
+  rows=[]; el("runBtn").disabled = true;
+  el("statusLine").textContent = t("stClear");
+  el("reportCard").classList.add("hidden");
+  el("reportBody").innerHTML = "";
+  el("runStatus").textContent = "";
+  fi.value="";
+});
+
+el("runBtn").addEventListener("click", function(){
+  if (rows.length){ renderReport(); }
+});
+
+/* language switch */
+document.querySelectorAll(".lb-btn").forEach(function(b){
+  b.addEventListener("click", function(){ setLang(b.dataset.lang); });
+});
+
+/* static rule/footer descriptions per language */
+function renderStatic(){
+  document.querySelectorAll("#rulesDesc").forEach(function(n){ n.innerHTML = t("rulesBody"); });
+  document.querySelectorAll("#footerText").forEach(function(n){ n.innerHTML = t("footerBody"); });
+}
+renderStatic();
+</script>
+
+</body>
+</html>
