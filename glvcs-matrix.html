@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GLVCS Regional Adoption Matrix · Governance Flow Intelligence</title>
+<meta name="description" content="Technical comparison of GLVCS adoption by jurisdiction group: tenure and cadastral conditions, core gains, main resistance, entry route and time horizon. Four languages: EN / 繁 / 简 / ES.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b1220;--bg2:#0d1526;--text:#f8fbff;--muted:#c7d2e3;--sub:#9fb0c8;--dim:rgba(255,255,255,.06);--green:#9FE870;--blue:#7DD3FC;--gold:#fbbf24;--red:#f87171;--serif:'DM Serif Display',Georgia,serif;--mono:'DM Mono',monospace;--sans:'DM Sans',system-ui,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.6;overflow-x:hidden}
+.nav{position:fixed;inset:0 0 auto 0;z-index:100;height:62px;padding:0 clamp(18px,5vw,52px);display:flex;align-items:center;justify-content:space-between;background:rgba(11,18,32,0.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--dim)}
+.logo{color:#fff;text-decoration:none;font-family:var(--mono);font-size:13px;letter-spacing:.16em;text-transform:uppercase}
+.nav-right{display:flex;align-items:center;gap:16px}
+.nav-wellness{color:#9FE870;text-decoration:none;font-family:var(--mono);font-size:11px;letter-spacing:.08em;transition:all .2s}
+.nav-wellness:hover{color:#fff;opacity:.8}
+.lang-grp{display:flex;gap:6px}
+.lb-btn{font-family:var(--mono);font-size:11px;letter-spacing:.08em;padding:5px 10px;border:1px solid rgba(255,255,255,.1);border-radius:5px;background:0 0;color:var(--sub);cursor:pointer;transition:all .2s}
+.lb-btn:hover{color:var(--text);border-color:rgba(255,255,255,.2)}
+.lb-btn.on{color:var(--green);border-color:rgba(159,232,112,.35);background:rgba(159,232,112,.07)}
+.lb{display:none}
+.lb.active{display:block}
+.page{padding-top:62px}
+section{width:100%;padding:clamp(72px,9vw,112px) clamp(20px,6vw,80px)}
+.inner{max-width:1100px;margin:0 auto}
+/* ========== GLVCS 地区对照表 · 站点原生样式（命名空间 gx-，与站内 .lb / .entry-card 不冲突） ========== */
+.gx-page .inner{max-width:1240px}
+.gx-eyebrow{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.gx-title{font-family:var(--serif);font-size:clamp(24px,3.4vw,34px);line-height:1.22;color:var(--text);margin-bottom:16px}
+.gx-lede{font-size:14px;line-height:1.85;color:var(--sub);max-width:84ch}
+.gx-scroll{margin-top:26px;border:1px solid var(--dim);border-radius:10px;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.2) transparent}
+.gx-scroll::-webkit-scrollbar{height:8px}
+.gx-scroll::-webkit-scrollbar-track{background:rgba(255,255,255,.04)}
+.gx-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.18);border-radius:8px}
+.gx-scroll:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+/* 表格用 CSS Grid 实现：首列 sticky 在 grid item 上稳定置顶，避免 table-cell 绘制层导致的透字 */
+.gx-grid{display:grid;grid-template-columns:180px repeat(5,minmax(190px,1fr)) 96px;min-width:1120px}
+.gx-cell{padding:15px 13px;border-bottom:1px solid rgba(255,255,255,.05);font-size:12.8px;line-height:1.62;color:var(--muted)}
+.gx-hcell{background:var(--bg2);color:var(--text);font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:13px;border-bottom:1px solid var(--dim);display:flex;align-items:flex-end}
+.gx-grid .gx-gcell{position:sticky;left:0;z-index:2;background:var(--bg2);border-right:1px solid var(--dim);box-shadow:10px 0 14px -10px rgba(0,0,0,.75);border-left:2px solid transparent}
+.gx-grid .gx-hcell.gx-gcell{z-index:3}
+.gx-grid .gx-gcell.gx-atlantic{border-left-color:var(--blue)}
+.gx-grid .gx-gcell.gx-gulf{border-left-color:var(--gold)}
+.gx-grid .gx-gcell.gx-india{border-left-color:var(--red)}
+.gx-grid .gx-gcell.gx-nl{border-left-color:var(--green)}
+.gx-grid .gx-gcell.gx-us{border-left-color:#8a9fd0}
+.gx-grid .gx-gcell.gx-cn{border-left-color:#b08ec9}
+.gx-gname{display:block;font-size:13.5px;font-weight:700;color:var(--text);line-height:1.45}
+.gx-gtag{display:block;margin-top:7px;font-family:var(--mono);font-size:10px;letter-spacing:.03em;color:var(--sub);line-height:1.5}
+.gx-time{white-space:nowrap;font-family:var(--mono);font-size:11.5px;color:var(--gold);font-weight:500}
+.gx-hint{display:none;margin-top:10px;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--sub)}
+.gx-notes{margin-top:30px;padding-top:22px;border-top:1px solid var(--dim)}
+.gx-notes-t{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.gx-notes ol{margin:0;padding-left:19px;color:var(--muted);font-size:13px;line-height:1.8}
+.gx-notes ol li{margin-bottom:10px}
+.gx-notes ol li strong{color:var(--text);font-weight:600}
+.gx-metrics{margin-top:26px;display:grid;grid-template-columns:repeat(auto-fit,minmax(206px,1fr));gap:10px}
+.gx-metric{border:1px solid var(--dim);border-radius:8px;padding:12px 14px;background:rgba(255,255,255,.02);font-size:12px;line-height:1.6;color:var(--muted)}
+.gx-metric b{display:block;font-family:var(--mono);font-size:9.5px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:6px}
+.gx-back{display:inline-block;margin-top:34px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--sub);text-decoration:none;border-bottom:1px solid rgba(255,255,255,.16);padding-bottom:3px;transition:.2s}
+.gx-back:hover{color:var(--green);border-color:rgba(159,232,112,.4)}
+@media (max-width:900px){
+ .gx-grid{grid-template-columns:140px repeat(5,minmax(170px,1fr)) 82px;min-width:960px}
+ .gx-cell{font-size:12.2px;padding:13px 12px}
+ .gx-hcell{padding:11px 12px;font-size:9.5px}
+ .gx-gname{font-size:12.5px}
+ .gx-gtag{font-size:9.5px}
+ .gx-time{font-size:10.5px}
+ .gx-hint{display:block}
+ .gx-metrics{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body class="gx-page">
+<div class="nav">
+  <a href="index.html" class="logo">Governance Flow Intelligence</a>
+  <div class="nav-right">
+    <a href="/wellness/index.html" class="nav-wellness">🌿 Wellness</a>
+    <div class="lang-grp">
+      <button class="lb-btn on" data-lang="en" aria-pressed="true">EN</button>
+      <button class="lb-btn" data-lang="tw" aria-pressed="false">繁</button>
+      <button class="lb-btn" data-lang="cn" aria-pressed="false">简</button>
+      <button class="lb-btn" data-lang="es" aria-pressed="false">ES</button>
+    </div>
+  </div>
+</div>
+
+<div class="lb active page" data-lang="en">
+  <section>
+    <div class="inner">
+      <span class="gx-eyebrow">Global Land Value Capture Standard · Regional Matrix</span>
+      <h1 class="gx-title">GLVCS Regional Adoption Matrix</h1>
+      <p class="gx-lede">This matrix compares technical conditions, gains, resistance and entry routes only; it makes no judgement on the merits of any governing arrangement. Divergence in outcome stems from three variables: concentration of land tenure, cadastral baseline, and existing fiscal reliance.</p>
+      <div class="gx-scroll" role="region" tabindex="0" aria-label="GLVCS regional adoption matrix — scroll horizontally for more columns">
+        <div class="gx-grid" role="table">
+          <div role="row" style="display:contents">
+            <div class="gx-cell gx-hcell gx-gcell" role="columnheader">Jurisdiction group</div>
+            <div class="gx-cell gx-hcell" role="columnheader">Property &amp; cadastral conditions</div>
+            <div class="gx-cell gx-hcell" role="columnheader">Current fiscal reliance</div>
+            <div class="gx-cell gx-hcell" role="columnheader">Core gains from GLVCS</div>
+            <div class="gx-cell gx-hcell" role="columnheader">Main resistance</div>
+            <div class="gx-cell gx-hcell" role="columnheader">Entry route</div>
+            <div class="gx-cell gx-hcell" role="columnheader">Time horizon</div>
+          </div>
+          <div role="row" style="display:contents">
+            <div class="gx-cell gx-gcell gx-atlantic" role="rowheader"><span class="gx-gname">Switzerland / Finland</span><span class="gx-gtag">High autonomy, decentralised</span></div>
+            <div class="gx-cell" role="cell">In Switzerland, federal cadastral registers are precise and fully covered; Finland maintains municipal land reserves and a public long-lease tradition.</div>
+            <div class="gx-cell" role="cell">Income, value-added and property taxes dominate; deficits are low; municipalities rely on transfers.</div>
+            <div class="gx-cell" role="cell">Exposes a structural blind spot: procedural completeness does not block rent-seeking groups from shaping the agenda. Municipal level can quantify infrastructure- and planning-induced increments as checkable indicators.</div>
+            <div class="gx-cell" role="cell">A high share of owner-occupiers makes capture measures easy to frame as expropriation; federal–municipal division fragments the rules.</div>
+            <div class="gx-cell" role="cell">Start with municipal-level diagnosis: increment accounting and public disclosure first, recovery ratios later.</div>
+            <div class="gx-cell gx-time" role="cell">3–5 yrs</div>
+          </div>
+          <div role="row" style="display:contents">
+            <div class="gx-cell gx-gcell gx-gulf" role="rowheader"><span class="gx-gname">Gulf city-states</span><span class="gx-gtag">UAE · Qatar · resource-rent</span></div>
+            <div class="gx-cell" role="cell">Land ownership rests with public entities; development proceeds by long lease or concession; the cadastre is centralised at state level.</div>
+            <div class="gx-cell" role="cell">Hydrocarbon rents dominate; the fiscal position is procyclical; there is no broad-based, recurring land rent tax.</div>
+            <div class="gx-cell" role="cell">Builds a second fiscal pillar independent of commodity cycles; concentrated tenure lowers the cost of institutional change, with no prior tenure restructuring required.</div>
+            <div class="gx-cell" role="cell">Special-zone developers and affiliated stakeholders resist mandatory recapture; path dependence on rent waivers as an investment incentive.</div>
+            <div class="gx-cell" role="cell">Sovereign funds and statistical offices standardise the increment methodology first, then embed it in new-city, port and special-zone development agreements.</div>
+            <div class="gx-cell gx-time" role="cell">2–4 yrs</div>
+          </div>
+          <div role="row" style="display:contents">
+            <div class="gx-cell gx-gcell gx-india" role="rowheader"><span class="gx-gname">India</span><span class="gx-gtag">Highly fragmented land tenure</span></div>
+            <div class="gx-cell" role="cell">Land jurisdiction is devolved to states; private tenure is highly fragmented; cadastral records are incomplete and informal tenure is widespread.</div>
+            <div class="gx-cell" role="cell">Indirect taxes such as GST dominate; the base is narrow and regressive; land acquisition carries high negotiation and litigation costs.</div>
+            <div class="gx-cell" role="cell">Provides a common increment methodology across states for reconciliation and comparison; restructures infrastructure bargaining from one-off high compensation toward increment sharing.</div>
+            <div class="gx-cell" role="cell">Local parties are deeply tied to land interests; cadastral standardisation is costly.</div>
+            <div class="gx-cell" role="cell">Cadastral digitisation and standardisation first; city-level increment accounting pilots alongside; national tax reform deferred.</div>
+            <div class="gx-cell gx-time" role="cell">10+ yrs</div>
+          </div>
+          <div role="row" style="display:contents">
+            <div class="gx-cell gx-gcell gx-nl" role="rowheader"><span class="gx-gname">Netherlands</span><span class="gx-gtag">Public leasehold · mature planning</span></div>
+            <div class="gx-cell" role="cell">Municipal land reserves and public long-lease traditions are mature; spatial planning is comprehensive.</div>
+            <div class="gx-cell" role="cell">Property and local taxes dominate; some planning increments are already captured.</div>
+            <div class="gx-cell" role="cell">Shifts existing instruments from price- or area-based levies to precise measurement of public-input increments, remaining neutral on building improvements.</div>
+            <div class="gx-cell" role="cell">Existing leases and valuation systems need recalibration; central–municipal mandates need redefinition.</div>
+            <div class="gx-cell" role="cell">Use existing lease renewal points as the entry, embedding increment clauses into contracts.</div>
+            <div class="gx-cell gx-time" role="cell">2–3 yrs</div>
+          </div>
+          <div role="row" style="display:contents">
+            <div class="gx-cell gx-gcell gx-us" role="rowheader"><span class="gx-gname">United States</span><span class="gx-gtag">Local autonomy · property-tax led</span></div>
+            <div class="gx-cell" role="cell">Private tenure dominates; state and local autonomy; rules vary markedly across states.</div>
+            <div class="gx-cell" role="cell">Local finance relies heavily on property tax levied on total value.</div>
+            <div class="gx-cell" role="cell">Corrects the deterrent effect of conventional property tax on improvements and renovation; captures only land increments generated by public input.</div>
+            <div class="gx-cell" role="cell">Property tax is the fiscal lifeline of local government; reform touches the entire revenue structure; interstate legal frameworks diverge.</div>
+            <div class="gx-cell" role="cell">Run partial substitution pilots in growth cities using existing instruments such as increment financing districts.</div>
+            <div class="gx-cell gx-time" role="cell">5–10 yrs</div>
+          </div>
+          <div role="row" style="display:contents">
+            <div class="gx-cell gx-gcell gx-cn" role="rowheader"><span class="gx-gname">China</span><span class="gx-gtag">Public urban land · grant system</span></div>
+            <div class="gx-cell" role="cell">Urban land is state-owned and rural land collectively owned; construction land is mainly allocated through the grant system; unified real-estate registration now covers the whole country.</div>
+            <div class="gx-cell" role="cell">Land grant revenue is a major local fiscal source, collected largely as an upfront one-off.</div>
+            <div class="gx-cell" role="cell">Moves from upfront grant prices to long-term tracked increment capture, linking public revenue to the continuing appreciation of urban services and reducing dependence on grant cycles.</div>
+            <div class="gx-cell" role="cell">Local budgets are path-dependent on grant revenue; the statistical definition of the public-input increment needs redefinition.</div>
+            <div class="gx-cell" role="cell">Building on existing cadastral and registration systems, pilot annual revaluation and increment-accounting mechanisms.</div>
+            <div class="gx-cell gx-time" role="cell">3–5 yrs</div>
+          </div>
+        </div>
+      </div>
+      <p class="gx-hint">Swipe horizontally for all columns.</p>
+      <div class="gx-notes">
+        <div class="gx-notes-t">Reading the matrix</div>
+        <ol>
+            <li><strong>Difficulty tracks tenure concentration, not procedural type.</strong> Where tenure is concentrated and cadastral coverage is complete, design cost is low; where tenure is fragmented and records are incomplete, the cadastral groundwork must come first.</li>
+            <li><strong>Momentum follows whether the old fiscal base is eroding.</strong> Where rent has long been held by a fixed group, resistance is highest; where the old base is destabilising, the incentive to adopt is strongest.</li>
+            <li><strong>Integration with existing instruments differs.</strong> Economies with a consolidated property tax perform instrument substitution and definitional correction; economies without such a base build one from the ground up.</li>
+        </ol>
+      </div>
+      <div class="gx-metrics">
+            <div class="gx-metric"><b>M1 · Valuation</b>Annual valuation of land increments produced by public investment</div>
+            <div class="gx-metric"><b>M2 · Recovery</b>Share of increments returned to public finance</div>
+            <div class="gx-metric"><b>M3 · Distribution</b>Share of returned funds allocated to universal distribution</div>
+            <div class="gx-metric"><b>M4 · Cadastre</b>Cadastral coverage and update frequency</div>
+            <div class="gx-metric"><b>M5 · Verifiability</b>Share of audit samples independently verifiable</div>
+      </div>
+      <a class="gx-back" href="index.html">← Back to Home</a>
+    </div>
+  </section>
+</div>
+
+<div class="lb page" data-lang="tw">
+  <section>
+    <div class="inner">
+      <span class="gx-eyebrow">全球土地增值捕捉標準 · 地區對照</span>
+      <h1 class="gx-title">GLVCS 地區導入對照表</h1>
+      <p class="gx-lede">本表僅就技術條件、改革收益、主要阻力與切入路線作比較，不對任何治理體制作優劣評價。同一標準在不同地區的效果差異，源於三項變數：土地產權集中程度、地籍基礎、既有財政依賴結構。</p>
+      <div class="gx-scroll" role="region" tabindex="0" aria-label="GLVCS 地區導入對照表，可橫向滑動檢視更多欄位">
+        <div class="gx-grid" role="table">
+          <div role="row" style="display:contents">
+            <div class="gx-cell gx-hcell gx-gcell" role="columnheader">地區分組</div>
+            <div class="gx-cell gx-hcell" role="columnheader">產權與地籍條件</div>
+            <div class="gx-cell gx-hcell" role="columnheader">現行財政依賴</div>
+            <div class="gx-cell gx-hcell" role="columnheader">導入核心收益</div>
+            <div class="gx-cell gx-hcell" role="columnheader">主要阻力</div>
+            <div class="gx-cell gx-hcell" role="columnheader">切入路線</div>
+            <div class="gx-cell gx-hcell" role="columnheader">時間尺度</div>
+          </div>
+          <div role="row" style="display:contents">
+            <div class="gx-cell gx-gcell gx-atlantic" role="rowheader"><span class="gx-gname">瑞士 / 芬蘭</span><span class="gx-gtag">高自治與分權架構</span></div>
+            <div class="gx-cell" role="cell">瑞士聯邦制下地籍登記精度高、覆蓋完整；芬蘭保有市政土地儲備與公有長租傳統。</div>
+            <div class="gx-cell" role="cell">以所得稅、增值稅與不動產稅為主，赤字水準低，地方依賴轉移支付。</div>
+            <div class="gx-cell" role="cell">揭示結構性盲點：決策程序完備，並不等於已阻隔租值群體對議程的影響；市鎮層級可把基建與規劃催生的增量租值量化為可核查指標。</div>
+            <div class="gx-cell" role="cell">選民結構中自持房產者比例高，增值回收易被簡化為財產剝奪；聯邦與市鎮分權使規則難以統一。</div>
+            <div class="gx-cell" role="cell">從市鎮層級診斷起步，先做增量核算與公開披露，再討論回收比例。</div>
+            <div class="gx-cell gx-time" role="cell">3–5 年</div>
+          </div>
+          <div role="row" style="display:contents">
+            <div class="gx-cell gx-gcell gx-gulf" role="rowheader"><span class="gx-gname">海灣城邦</span><span class="gx-gtag">阿聯酋 · 卡塔爾 · 資源租值</span></div>
+            <div class="gx-cell" role="cell">土地所有權歸公共主體，開發以長期租約或特許為主，地籍集中於國家。</div>
+            <div class="gx-cell" role="cell">油氣租值主導，財政順周期波動，缺乏常態化的廣基土地租稅。</div>
+            <div class="gx-cell" role="cell">建立獨立於大宗商品周期的第二財政支柱；產權集中使制度改造門檻較低，無須先完成產權重整。</div>
+            <div class="gx-cell" role="cell">特區開發方與關聯權益主體不願開發紅利強制回流；既有以租金減免招商的路徑依賴。</div>
+            <div class="gx-cell" role="cell">主權基金與統計部門先行統一增量核算口徑，再嵌入新城、港口、特區的開發協議。</div>
+            <div class="gx-cell gx-time" role="cell">2–4 年</div>
+          </div>
+          <div role="row" style="display:contents">
+            <div class="gx-cell gx-gcell gx-india" role="rowheader"><span class="gx-gname">印度</span><span class="gx-gtag">產權高度碎片化</span></div>
+            <div class="gx-cell" role="cell">土地管轄權下放各邦，私有產權高度碎片化，地籍資料殘缺，非正式地權普遍。</div>
+            <div class="gx-cell" role="cell">以 GST 等間接稅為主，稅基窄且具累退性；徵地談判與訴訟成本極高。</div>
+            <div class="gx-cell" role="cell">提供跨邦統一的增量核算語言，可供對帳比較；重構基建博弈，由一次性高額補償轉向增值分潤。</div>
+            <div class="gx-cell" role="cell">地方政黨與土地利益深度綁定；地籍標準化成本極高。</div>
+            <div class="gx-cell" role="cell">地籍數位化與標準化先行，配套城市級增量核算試點，暫不觸及全國稅制。</div>
+            <div class="gx-cell gx-time" role="cell">10 年以上</div>
+          </div>
+          <div role="row" style="display:contents">
+            <div class="gx-cell gx-gcell gx-nl" role="rowheader"><span class="gx-gname">荷蘭</span><span class="gx-gtag">公有長租 · 規劃體系成熟</span></div>
+            <div class="gx-cell" role="cell">市政土地儲備與公有長租傳統成熟，空間規劃體系完備。</div>
+            <div class="gx-cell" role="cell">以不動產稅與地方稅為主，部分規劃增值已有回收工具。</div>
+            <div class="gx-cell" role="cell">把既有工具由按總價或面積計徵，轉為按公共投入增量精確計量，對建築改良維持中性。</div>
+            <div class="gx-cell" role="cell">既有租約與估價體系需重新校準；中央與市政權責需重新界定。</div>
+            <div class="gx-cell" role="cell">以既有土地租約的續約節點為切口，在合同中嵌入增量條款。</div>
+            <div class="gx-cell gx-time" role="cell">2–3 年</div>
+          </div>
+          <div role="row" style="display:contents">
+            <div class="gx-cell gx-gcell gx-us" role="rowheader"><span class="gx-gname">美國</span><span class="gx-gtag">地方自治 · 房產稅主導</span></div>
+            <div class="gx-cell" role="cell">私人產權為主，州與地方自治，各州規則差異顯著。</div>
+            <div class="gx-cell" role="cell">地方財政高度依賴按總價課徵的房產稅。</div>
+            <div class="gx-cell" role="cell">修正傳統房產稅對建築改良與翻新的抑制效應，只捕捉公共投入催生的土地增量。</div>
+            <div class="gx-cell" role="cell">房產稅是地方財政命脈，改革牽動全部收入結構；州際法律框架差異大。</div>
+            <div class="gx-cell" role="cell">在增長型城市以既有增量融資區等工具為載體，做局部替換試點。</div>
+            <div class="gx-cell gx-time" role="cell">5–10 年</div>
+          </div>
+          <div role="row" style="display:contents">
+            <div class="gx-cell gx-gcell gx-cn" role="rowheader"><span class="gx-gname">中國</span><span class="gx-gtag">城市土地公有 · 出讓制</span></div>
+            <div class="gx-cell" role="cell">城市土地國家所有，農村土地集體所有；建設用地以出讓制為主，不動產統一登記已全國覆蓋。</div>
+            <div class="gx-cell" role="cell">土地出讓收入為地方重要財源，以前置一次性收取為主。</div>
+            <div class="gx-cell" role="cell">由一次性出讓價轉向長期跟蹤式增值捕捉，使公共收入與城市服務的持續增值綁定，降低對出讓周期的依賴。</div>
+            <div class="gx-cell" role="cell">地方財政對出讓收入存在路徑依賴；需重新界定「公共投入增量」的統計口徑。</div>
+            <div class="gx-cell" role="cell">在既有地籍與登記基礎上，先行建立年度重估與增量核算機制試點。</div>
+            <div class="gx-cell gx-time" role="cell">3–5 年</div>
+          </div>
+        </div>
+      </div>
+      <p class="gx-hint">窄螢幕請橫向滑動以檢視完整欄位。</p>
+      <div class="gx-notes">
+        <div class="gx-notes-t">讀表要點</div>
+        <ol>
+            <li><strong>難度取決於產權集中度，而非治理程序。</strong> 產權集中、地籍完整的經濟體，制度設計成本低；產權碎片、地籍殘缺的經濟體，必須先補齊地籍基礎。</li>
+            <li><strong>動力強弱取決於舊財政底座是否動搖。</strong> 租值已由固定群體長期佔有的地方，阻力最大；舊底座正在鬆動的地方，導入意願最強。</li>
+            <li><strong>與現行稅制的接合方式不同。</strong> 已有不動產稅的經濟體，做的是工具替換與口徑修正；尚無此類稅基的經濟體，做的是從零建立。</li>
+        </ol>
+      </div>
+      <div class="gx-metrics">
+            <div class="gx-metric"><b>M1 · 估值</b>公共投入所生土地增量的年度估值</div>
+            <div class="gx-metric"><b>M2 · 回收</b>增量回流公共財政的比例</div>
+            <div class="gx-metric"><b>M3 · 分配</b>回流資金投向普惠分配的比例</div>
+            <div class="gx-metric"><b>M4 · 地籍</b>地籍覆蓋率與更新頻率</div>
+            <div class="gx-metric"><b>M5 · 可複核</b>審計樣本可獨立複核的比例</div>
+      </div>
+      <a class="gx-back" href="index.html">← 返回首頁</a>
+    </div>
+  </section>
+</div>
+
+<div class="lb page" data-lang="cn">
+  <section>
+    <div class="inner">
+      <span class="gx-eyebrow">全球土地增值捕捉标准 · 地区对照</span>
+      <h1 class="gx-title">GLVCS 地区导入对照表</h1>
+      <p class="gx-lede">本表仅就技术条件、改革收益、主要阻力与切入路线作比较，不对任何治理体制作优劣评价。同一标准在不同地区的效果差异，源于三项变量：土地产权集中程度、地籍基础、既有财政依赖结构。</p>
+      <div class="gx-scroll" role="region" tabindex="0" aria-label="GLVCS 地区导入对照表，可横向滑动查看更多字段">
+        <div class="gx-grid" role="table">
+          <div role="row" style="display:contents">
+            <div class="gx-cell gx-hcell gx-gcell" role="columnheader">地区分组</div>
+            <div class="gx-cell gx-hcell" role="columnheader">产权与地籍条件</div>
+            <div class="gx-cell gx-hcell" role="columnheader">现行财政依赖</div>
+            <div class="gx-cell gx-hcell" role="columnheader">导入核心收益</div>
+            <div class="gx-cell gx-hcell" role="columnheader">主要阻力</div>
+            <div class="gx-cell gx-hcell" role="columnheader">切入路线</div>
+            <div class="gx-cell gx-hcell" role="columnheader">时间尺度</div>
+          </div>
+          <div role="row" style="display:contents">
+            <div class="gx-cell gx-gcell gx-atlantic" role="rowheader"><span class="gx-gname">瑞士 / 芬兰</span><span class="gx-gtag">高自治与分权架构</span></div>
+            <div class="gx-cell" role="cell">瑞士联邦制下地籍登记精度高、覆盖完整；芬兰保有市政土地储备与公有长租传统。</div>
+            <div class="gx-cell" role="cell">以所得税、增值税与不动产税为主，赤字水平低，地方依赖转移支付。</div>
+            <div class="gx-cell" role="cell">揭示结构性盲点：决策程序完备，并不等于已阻隔租值群体对议程的影响；市镇层级可把基建与规划催生的增量租值量化为可核查指标。</div>
+            <div class="gx-cell" role="cell">选民结构中自持房产者比例高，增值回收易被简化为财产剥夺；联邦与市镇分权使规则难以统一。</div>
+            <div class="gx-cell" role="cell">从市镇层级诊断起步，先做增量核算与公开披露，再讨论回收比例。</div>
+            <div class="gx-cell gx-time" role="cell">3–5 年</div>
+          </div>
+          <div role="row" style="display:contents">
+            <div class="gx-cell gx-gcell gx-gulf" role="rowheader"><span class="gx-gname">海湾城邦</span><span class="gx-gtag">阿联酋 · 卡塔尔 · 资源租值</span></div>
+            <div class="gx-cell" role="cell">土地所有权归公共主体，开发以长期租约或特许为主，地籍集中于国家。</div>
+            <div class="gx-cell" role="cell">油气租值主导，财政顺周期波动，缺乏常态化的广基土地租税。</div>
+            <div class="gx-cell" role="cell">建立独立于大宗商品周期的第二财政支柱；产权集中使制度改造门槛较低，无须先完成产权重整。</div>
+            <div class="gx-cell" role="cell">特区开发方与关联权益主体不愿开发红利强制回流；既有以租金减免招商的路径依赖。</div>
+            <div class="gx-cell" role="cell">主权基金与统计部门先行统一增量核算口径，再嵌入新城、港口、特区的开发协议。</div>
+            <div class="gx-cell gx-time" role="cell">2–4 年</div>
+          </div>
+          <div role="row" style="display:contents">
+            <div class="gx-cell gx-gcell gx-india" role="rowheader"><span class="gx-gname">印度</span><span class="gx-gtag">产权高度碎片化</span></div>
+            <div class="gx-cell" role="cell">土地管辖权下放各邦，私有产权高度碎片化，地籍资料残缺，非正式地权普遍。</div>
+            <div class="gx-cell" role="cell">以 GST 等间接税为主，税基窄且具累退性；征地谈判与诉讼成本极高。</div>
+            <div class="gx-cell" role="cell">提供跨邦统一的增量核算语言，可供对账比较；重构基建博弈，由一次性高额补偿转向增值分润。</div>
+            <div class="gx-cell" role="cell">地方政党与土地利益深度绑定；地籍标准化成本极高。</div>
+            <div class="gx-cell" role="cell">地籍数字化与标准化先行，配套城市级增量核算试点，暂不触及全国税制。</div>
+            <div class="gx-cell gx-time" role="cell">10 年以上</div>
+          </div>
+          <div role="row" style="display:contents">
+            <div class="gx-cell gx-gcell gx-nl" role="rowheader"><span class="gx-gname">荷兰</span><span class="gx-gtag">公有长租 · 规划体系成熟</span></div>
+            <div class="gx-cell" role="cell">市政土地储备与公有长租传统成熟，空间规划体系完备。</div>
+            <div class="gx-cell" role="cell">以不动产税与地方税为主，部分规划增值已有回收工具。</div>
+            <div class="gx-cell" role="cell">把既有工具由按总价或面积计征，转为按公共投入增量精确计量，对建筑改良维持中性。</div>
+            <div class="gx-cell" role="cell">既有租约与估价体系需重新校准；中央与市政权责需重新界定。</div>
+            <div class="gx-cell" role="cell">以既有土地租约的续约节点为切口，在合同中嵌入增量条款。</div>
+            <div class="gx-cell gx-time" role="cell">2–3 年</div>
+          </div>
+          <div role="row" style="display:contents">
+            <div class="gx-cell gx-gcell gx-us" role="rowheader"><span class="gx-gname">美国</span><span class="gx-gtag">地方自治 · 房产税主导</span></div>
+            <div class="gx-cell" role="cell">私人产权为主，州与地方自治，各州规则差异显著。</div>
+            <div class="gx-cell" role="cell">地方财政高度依赖按总价课征的房产税。</div>
+            <div class="gx-cell" role="cell">修正传统房产税对建筑改良与翻新的抑制效应，只捕捉公共投入催生的土地增量。</div>
+            <div class="gx-cell" role="cell">房产税是地方财政命脉，改革牵动全部收入结构；州际法律框架差异大。</div>
+            <div class="gx-cell" role="cell">在增长型城市以既有增量融资区等工具为载体，做局部替换试点。</div>
+            <div class="gx-cell gx-time" role="cell">5–10 年</div>
+          </div>
+          <div role="row" style="display:contents">
+            <div class="gx-cell gx-gcell gx-cn" role="rowheader"><span class="gx-gname">中国</span><span class="gx-gtag">城市土地公有 · 出让制</span></div>
+            <div class="gx-cell" role="cell">城市土地国家所有，农村土地集体所有；建设用地以出让制为主，不动产统一登记已全国覆盖。</div>
+            <div class="gx-cell" role="cell">土地出让收入为地方重要财源，以前置一次性收取为主。</div>
+            <div class="gx-cell" role="cell">由一次性出让价转向长期跟踪式增值捕捉，使公共收入与城市服务的持续增值绑定，降低对出让周期的依赖。</div>
+            <div class="gx-cell" role="cell">地方财政对出让收入存在路径依赖；需重新界定“公共投入增量”的统计口径。</div>
+            <div class="gx-cell" role="cell">在既有地籍与登记基础上，先行建立年度重估与增量核算机制试点。</div>
+            <div class="gx-cell gx-time" role="cell">3–5 年</div>
+          </div>
+        </div>
+      </div>
+      <p class="gx-hint">窄屏请横向滑动以查看完整字段。</p>
+      <div class="gx-notes">
+        <div class="gx-notes-t">读表要点</div>
+        <ol>
+            <li><strong>难度取决于产权集中度，而非治理程序。</strong> 产权集中、地籍完整的经济体，制度设计成本低；产权碎片、地籍残缺的经济体，必须先把地籍基础补齐。</li>
+            <li><strong>动力强弱取决于旧财政底座是否动摇。</strong> 租值已由固定群体长期占有的地方，阻力最大；旧底座正在松动的地方，导入意愿最强。</li>
+            <li><strong>与现行税制的接合方式不同。</strong> 已有不动产税的经济体，做的是工具替换与口径修正；尚无此类税基的经济体，做的是从零建立。</li>
+        </ol>
+      </div>
+      <div class="gx-metrics">
+            <div class="gx-metric"><b>M1 · 估值</b>公共投入所生土地增量的年度估值</div>
+            <div class="gx-metric"><b>M2 · 回收</b>增量回流公共财政的比例</div>
+            <div class="gx-metric"><b>M3 · 分配</b>回流资金投向普惠分配的比例</div>
+            <div class="gx-metric"><b>M4 · 地籍</b>地籍覆盖率与更新频率</div>
+            <div class="gx-metric"><b>M5 · 可复核</b>审计样本可独立复核的比例</div>
+      </div>
+      <a class="gx-back" href="index.html">← 返回首页</a>
+    </div>
+  </section>
+</div>
+
+<div class="lb page" data-lang="es">
+  <section>
+    <div class="inner">
+      <span class="gx-eyebrow">Estándar Global de Captura del Valor del Suelo · Matriz Regional</span>
+      <h1 class="gx-title">Matriz de adopción regional del GLVCS</h1>
+      <p class="gx-lede">Esta matriz compara únicamente condiciones técnicas, beneficios, resistencia y rutas de entrada; no emite juicios sobre los méritos de ningún arreglo de gobierno. La divergencia de resultados depende de tres variables: concentración de la tenencia, base catastral y dependencia fiscal existente.</p>
+      <div class="gx-scroll" role="region" tabindex="0" aria-label="Matriz de adopción regional del GLVCS; desplace horizontalmente para más columnas">
+        <div class="gx-grid" role="table">
+          <div role="row" style="display:contents">
+            <div class="gx-cell gx-hcell gx-gcell" role="columnheader">Grupo jurisdiccional</div>
+            <div class="gx-cell gx-hcell" role="columnheader">Propiedad y condiciones catastrales</div>
+            <div class="gx-cell gx-hcell" role="columnheader">Dependencia fiscal actual</div>
+            <div class="gx-cell gx-hcell" role="columnheader">Beneficios centrales del GLVCS</div>
+            <div class="gx-cell gx-hcell" role="columnheader">Resistencia principal</div>
+            <div class="gx-cell gx-hcell" role="columnheader">Ruta de entrada</div>
+            <div class="gx-cell gx-hcell" role="columnheader">Horizonte temporal</div>
+          </div>
+          <div role="row" style="display:contents">
+            <div class="gx-cell gx-gcell gx-atlantic" role="rowheader"><span class="gx-gname">Suiza / Finlandia</span><span class="gx-gtag">Alta autonomía, descentralizado</span></div>
+            <div class="gx-cell" role="cell">En Suiza los registros catastrales federales son precisos y completos; Finlandia mantiene reservas municipales de suelo y una tradición de arrendamiento público de largo plazo.</div>
+            <div class="gx-cell" role="cell">Predominan el impuesto sobre la renta, el IVA y los impuestos inmobiliarios; el déficit es bajo; los municipios dependen de transferencias.</div>
+            <div class="gx-cell" role="cell">Revela un punto ciego estructural: la plenitud procedimental no impide que grupos rentistas moldeen la agenda. El nivel municipal puede cuantificar los incrementos inducidos por infraestructura y planificación como indicadores verificables.</div>
+            <div class="gx-cell" role="cell">Una alta proporción de propietarios ocupantes facilita presentar las medidas de captura como expropiación; la división federal-municipal fragmenta las reglas.</div>
+            <div class="gx-cell" role="cell">Comenzar con diagnóstico a nivel municipal: primero contabilidad de incrementos y divulgación pública, después las tasas de recuperación.</div>
+            <div class="gx-cell gx-time" role="cell">3–5 años</div>
+          </div>
+          <div role="row" style="display:contents">
+            <div class="gx-cell gx-gcell gx-gulf" role="rowheader"><span class="gx-gname">Ciudades-Estado del Golfo</span><span class="gx-gtag">EAU · Catar · renta de recursos</span></div>
+            <div class="gx-cell" role="cell">La propiedad del suelo reside en entidades públicas; el desarrollo avanza por arrendamiento largo o concesión; el catastro está centralizado en el Estado.</div>
+            <div class="gx-cell" role="cell">Dominan las rentas de hidrocarburos; la posición fiscal es procíclica; no existe un impuesto amplio y recurrente sobre la renta del suelo.</div>
+            <div class="gx-cell" role="cell">Construye un segundo pilar fiscal independiente de los ciclos de materias primas; la tenencia concentrada reduce el costo del cambio institucional, sin necesidad de reestructurar la tenencia.</div>
+            <div class="gx-cell" role="cell">Los desarrolladores de zonas especiales y partes afiliadas resisten la captura obligatoria; dependencia de trayectoria de las exenciones de renta como incentivo.</div>
+            <div class="gx-cell" role="cell">Los fondos soberanos y las oficinas estadísticas unifican primero la metodología de incrementos y luego la incorporan en los acuerdos de nuevas ciudades, puertos y zonas especiales.</div>
+            <div class="gx-cell gx-time" role="cell">2–4 años</div>
+          </div>
+          <div role="row" style="display:contents">
+            <div class="gx-cell gx-gcell gx-india" role="rowheader"><span class="gx-gname">India</span><span class="gx-gtag">Tenencia altamente fragmentada</span></div>
+            <div class="gx-cell" role="cell">La jurisdicción sobre el suelo se delega a los estados; la tenencia privada está muy fragmentada; los registros catastrales son incompletos y la tenencia informal es generalizada.</div>
+            <div class="gx-cell" role="cell">Predominan impuestos indirectos como el GST; la base es estrecha y regresiva; la adquisición de suelo implica altos costos de negociación y litigio.</div>
+            <div class="gx-cell" role="cell">Proporciona una metodología común de incrementos entre estados para conciliar y comparar; reestructura la negociación de infraestructura desde una compensación única elevada hacia el reparto de plusvalías.</div>
+            <div class="gx-cell" role="cell">Los partidos locales están profundamente ligados a intereses del suelo; la estandarización catastral es costosa.</div>
+            <div class="gx-cell" role="cell">Primero digitalización y estandarización catastral; en paralelo, pilotos de contabilidad de incrementos a nivel de ciudad; la reforma fiscal nacional se pospone.</div>
+            <div class="gx-cell gx-time" role="cell">10+ años</div>
+          </div>
+          <div role="row" style="display:contents">
+            <div class="gx-cell gx-gcell gx-nl" role="rowheader"><span class="gx-gname">Países Bajos</span><span class="gx-gtag">Arrendamiento público · planificación madura</span></div>
+            <div class="gx-cell" role="cell">Las reservas municipales de suelo y la tradición de arrendamiento público son maduras; la planificación espacial es integral.</div>
+            <div class="gx-cell" role="cell">Predominan los impuestos inmobiliarios y locales; parte de los incrementos por planificación ya se captura.</div>
+            <div class="gx-cell" role="cell">Desplaza los instrumentos existentes de gravámenes sobre precio o superficie hacia la medición precisa de incrementos por inversión pública, manteniéndose neutral ante las mejoras construidas.</div>
+            <div class="gx-cell" role="cell">Los arrendamientos y sistemas de valoración existentes requieren recalibración; los mandatos centro-municipales deben redefinirse.</div>
+            <div class="gx-cell" role="cell">Utilizar los puntos de renovación de los arrendamientos existentes como entrada, incorporando cláusulas de incremento en los contratos.</div>
+            <div class="gx-cell gx-time" role="cell">2–3 años</div>
+          </div>
+          <div role="row" style="display:contents">
+            <div class="gx-cell gx-gcell gx-us" role="rowheader"><span class="gx-gname">Estados Unidos</span><span class="gx-gtag">Autonomía local · impuesto predial</span></div>
+            <div class="gx-cell" role="cell">Predomina la tenencia privada; autonomía estatal y local; las reglas varían notablemente entre estados.</div>
+            <div class="gx-cell" role="cell">Las finanzas locales dependen en gran medida del impuesto predial calculado sobre el valor total.</div>
+            <div class="gx-cell" role="cell">Corrige el efecto disuasivo del impuesto predial convencional sobre mejoras y renovaciones; captura solo los incrementos de suelo generados por inversión pública.</div>
+            <div class="gx-cell" role="cell">El impuesto predial es la base vital de las finanzas locales; la reforma afecta toda la estructura de ingresos; los marcos legales estatales divergen.</div>
+            <div class="gx-cell" role="cell">Ejecutar pilotos de sustitución parcial en ciudades en crecimiento usando instrumentos existentes como los distritos de financiamiento por incremento.</div>
+            <div class="gx-cell gx-time" role="cell">5–10 años</div>
+          </div>
+          <div role="row" style="display:contents">
+            <div class="gx-cell gx-gcell gx-cn" role="rowheader"><span class="gx-gname">China</span><span class="gx-gtag">Suelo urbano público · concesión</span></div>
+            <div class="gx-cell" role="cell">El suelo urbano es de propiedad estatal y el rural de propiedad colectiva; el suelo para construcción se asigna principalmente por el sistema de concesión; el registro unificado de inmuebles ya cubre todo el país.</div>
+            <div class="gx-cell" role="cell">Los ingresos por concesión de suelo son una fuente fiscal local importante, recaudados en gran parte por adelantado y de una sola vez.</div>
+            <div class="gx-cell" role="cell">Pasa de precios de concesión por adelantado a una captura de incrementos de seguimiento a largo plazo, vinculando los ingresos públicos a la apreciación continua de los servicios urbanos y reduciendo la dependencia de los ciclos de concesión.</div>
+            <div class="gx-cell" role="cell">Los presupuestos locales dependen por trayectoria de los ingresos por concesión; la definición estadística del incremento por inversión pública requiere redefinición.</div>
+            <div class="gx-cell" role="cell">Sobre la base de los sistemas catastrales y de registro existentes, pilotar mecanismos anuales de revalorización y contabilidad de incrementos.</div>
+            <div class="gx-cell gx-time" role="cell">3–5 años</div>
+          </div>
+        </div>
+      </div>
+      <p class="gx-hint">Desplace horizontalmente para ver todas las columnas.</p>
+      <div class="gx-notes">
+        <div class="gx-notes-t">Cómo leer la matriz</div>
+        <ol>
+            <li><strong>La dificultad depende de la concentración de la tenencia, no del tipo de procedimiento.</strong> Donde la tenencia está concentrada y la cobertura catastral es completa, el costo de diseño es bajo; donde es fragmentada y los registros incompletos, primero debe construirse la base catastral.</li>
+            <li><strong>El impulso depende de si la base fiscal antigua se está erosionando.</strong> Donde la renta ha sido retenida durante largo tiempo por un grupo fijo, la resistencia es máxima; donde la base antigua se desestabiliza, el incentivo es mayor.</li>
+            <li><strong>La integración con los instrumentos existentes difiere.</strong> Las economías con impuesto inmobiliario consolidado realizan sustitución de instrumentos y corrección de definiciones; las que carecen de esa base la construyen desde cero.</li>
+        </ol>
+      </div>
+      <div class="gx-metrics">
+            <div class="gx-metric"><b>M1 · Valoración</b>Valoración anual de los incrementos de suelo por inversión pública</div>
+            <div class="gx-metric"><b>M2 · Recuperación</b>Proporción de incrementos devueltos a las finanzas públicas</div>
+            <div class="gx-metric"><b>M3 · Distribución</b>Proporción de los fondos devueltos destinada a distribución universal</div>
+            <div class="gx-metric"><b>M4 · Catastro</b>Cobertura catastral y frecuencia de actualización</div>
+            <div class="gx-metric"><b>M5 · Verificabilidad</b>Proporción de muestras de auditoría verificables de forma independiente</div>
+      </div>
+      <a class="gx-back" href="index.html">← Volver al inicio</a>
+    </div>
+  </section>
+</div>
+
+<script>
+(function(){
+  var MAP = { en:'en', tw:'zh-Hant', cn:'zh-Hans', es:'es' };
+  var btns = document.querySelectorAll('.lb-btn');
+  var panes = document.querySelectorAll('.lb');
+
+  function setLang(lang){
+    if(!MAP[lang]) lang = 'en';
+    for (var i=0;i<btns.length;i++){
+      var on = btns[i].getAttribute('data-lang') === lang;
+      btns[i].classList.toggle('on', on);
+      btns[i].setAttribute('aria-pressed', on ? 'true' : 'false');
+    }
+    for (var j=0;j<panes.length;j++){
+      panes[j].classList.toggle('active', panes[j].getAttribute('data-lang') === lang);
+    }
+    document.documentElement.lang = MAP[lang];
+    try { localStorage.setItem('gfi_lang', lang); } catch(e){}
+  }
+
+  for (var k=0;k<btns.length;k++){
+    btns[k].addEventListener('click', function(){ setLang(this.getAttribute('data-lang')); });
+  }
+
+  document.addEventListener('click', function(e){
+    if(!e.target.closest) return;
+    var t = e.target.closest('[data-lang]');
+    if (!t || t.classList.contains('lb-btn')) return;
+    var l = t.getAttribute('data-lang');
+    if (MAP[l]) setLang(l);
+  });
+
+  var q = (location.search.match(/[?&]lang=(en|tw|cn|es)/) || [])[1];
+  var saved = null;
+  try { saved = localStorage.getItem('gfi_lang'); } catch(e){}
+  setLang(q || saved || 'en');
+})();
+</script>
+</body>
+</html>
