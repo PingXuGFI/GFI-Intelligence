@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GLVCS · 地區導入對照表 / Regional Adoption Matrix</title>
+<style>
+/* ============================================================
+   GLVCS Regional Adoption Matrix
+   Namespaced CSS — 不影響站內既有樣式
+   深色底 · 首列 Sticky · 窄螢幕橫向滑動 · 四語切換
+   ============================================================ */
+
+.glvcs-matrix{
+  --glv-bg:        #0a1019;
+  --glv-bg-alt:    #0e1626;
+  --glv-bg-sticky: #101b2e;
+  --glv-line:      rgba(148,178,220,.16);
+  --glv-line-soft: rgba(148,178,220,.08);
+  --glv-text:      #dbe3ef;
+  --glv-text-dim:  #a8b6cc;
+  --glv-muted:     #7e8da6;
+  --glv-gold:      #d8b45a;
+  --glv-teal:      #5fb3c9;
+  --glv-green:     #8fbf7a;
+
+  background: var(--glv-bg);
+  border: 1px solid var(--glv-line);
+  border-radius: 14px;
+  padding: 28px 24px 24px;
+  margin: 32px 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  color: var(--glv-text);
+  box-sizing: border-box;
+}
+
+.glvcs-matrix *{ box-sizing: border-box; }
+
+/* ---------- 四語顯示控制 ---------- */
+.glvcs-matrix .l-en,
+.glvcs-matrix .l-hant,
+.glvcs-matrix .l-hans,
+.glvcs-matrix .l-es{ display: none; }
+
+.glvcs-matrix[data-lang="en"]   .l-en   { display: inline; }
+.glvcs-matrix[data-lang="hant"] .l-hant { display: inline; }
+.glvcs-matrix[data-lang="hans"] .l-hans { display: inline; }
+.glvcs-matrix[data-lang="es"]   .l-es   { display: inline; }
+
+/* ---------- 標題區 ---------- */
+.glvcs-head{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.glvcs-head-text{ min-width: 0; }
+
+/* ---------- 四語切換列 ---------- */
+.glvcs-langbar{
+  display: inline-flex;
+  gap: 6px;
+  flex-shrink: 0;
+  padding: 4px;
+  border: 1px solid var(--glv-line);
+  border-radius: 10px;
+  background: rgba(148,178,220,.04);
+}
+
+.glvcs-lang-btn{
+  appearance: none;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--glv-muted);
+  font: inherit;
+  font-size: 12px;
+  letter-spacing: .04em;
+  padding: 6px 12px;
+  border-radius: 7px;
+  cursor: pointer;
+  min-width: 44px;
+  text-align: center;
+  transition: color .15s ease, background .15s ease, border-color .15s ease;
+}
+
+.glvcs-lang-btn:hover{ color: var(--glv-text); }
+
+.glvcs-lang-btn.is-active{
+  color: var(--glv-green);
+  border-color: var(--glv-green);
+  background: rgba(143,191,122,.12);
+}
+
+.glvcs-lang-btn:focus-visible{
+  outline: 2px solid var(--glv-teal);
+  outline-offset: 1px;
+}
+
+.glvcs-eyebrow{
+  display: block;
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--glv-gold);
+  margin-bottom: 10px;
+}
+
+.glvcs-title{
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: .01em;
+  margin: 0 0 10px;
+  color: #f2f6fc;
+  line-height: 1.35;
+}
+
+.glvcs-intro{
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: var(--glv-text-dim);
+  margin: 0;
+  max-width: 78ch;
+}
+
+/* ---------- 橫向滑動容器 ---------- */
+.glvcs-scroll{
+  overflow-x: auto;
+  overflow-y: visible;
+  margin-top: 20px;
+  border: 1px solid var(--glv-line);
+  border-radius: 10px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148,178,220,.35) transparent;
+}
+
+.glvcs-scroll::-webkit-scrollbar{ height: 8px; }
+.glvcs-scroll::-webkit-scrollbar-track{ background: rgba(148,178,220,.06); }
+.glvcs-scroll::-webkit-scrollbar-thumb{
+  background: rgba(148,178,220,.30);
+  border-radius: 8px;
+}
+.glvcs-scroll:focus-visible{ outline: 2px solid var(--glv-teal); outline-offset: 2px; }
+
+/* ---------- 表格 ---------- */
+.glvcs-table{
+  width: 100%;
+  min-width: 1180px;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.glvcs-table thead th{
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background: var(--glv-bg-alt);
+  color: #eaf1fb;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-align: left;
+  padding: 13px 14px;
+  border-bottom: 1px solid var(--glv-line);
+  white-space: normal;
+  vertical-align: bottom;
+}
+
+.glvcs-table tbody td{
+  padding: 15px 14px;
+  vertical-align: top;
+  border-bottom: 1px solid var(--glv-line-soft);
+  color: var(--glv-text-dim);
+}
+
+.glvcs-table tbody tr:nth-child(even) td{ background: rgba(148,178,220,.022); }
+.glvcs-table tbody tr:hover td{ background: rgba(148,178,220,.05); }
+.glvcs-table tbody tr:last-child td{ border-bottom: none; }
+
+/* ---------- 首列固定 ---------- */
+.glvcs-table th.col-group,
+.glvcs-table td.col-group{
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  width: 176px;
+  min-width: 176px;
+  max-width: 176px;
+  background: var(--glv-bg-sticky);
+  border-right: 1px solid var(--glv-line);
+  box-shadow: 8px 0 12px -8px rgba(0,0,0,.65);
+}
+
+.glvcs-table thead th.col-group{
+  z-index: 4;
+  background: var(--glv-bg-sticky);
+}
+
+/* 首列必須維持不透明底色，否則橫向滑動時下層內容會透出
+   —— 以下兩條以更高特異度覆蓋斑馬紋與 hover 規則 */
+.glvcs-matrix .glvcs-table tbody tr td.col-group{
+  background: var(--glv-bg-sticky);
+}
+.glvcs-matrix .glvcs-table tbody tr:hover td.col-group{
+  background: var(--glv-bg-sticky);
+}
+/* 首列內容樣式 */
+.col-group .grp-name{
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #f0f5fd;
+  line-height: 1.45;
+}
+
+.col-group .grp-tag{
+  display: block;
+  margin-top: 7px;
+  font-size: 11px;
+  letter-spacing: .04em;
+  color: var(--glv-muted);
+  line-height: 1.5;
+}
+
+/* 分組色彩標記（左側細條） */
+.glvcs-table tbody tr td.col-group{ border-left: 3px solid transparent; }
+.glvcs-table tbody tr.r-atlantic td.col-group{ border-left-color: var(--glv-teal); }
+.glvcs-table tbody tr.r-gulf     td.col-group{ border-left-color: var(--glv-gold); }
+.glvcs-table tbody tr.r-india    td.col-group{ border-left-color: #c77b6b; }
+.glvcs-table tbody tr.r-nl       td.col-group{ border-left-color: var(--glv-green); }
+.glvcs-table tbody tr.r-us       td.col-group{ border-left-color: #8a9fd0; }
+.glvcs-table tbody tr.r-cn       td.col-group{ border-left-color: #b08ec9; }
+
+/* ---------- 時間尺度欄 ---------- */
+.glvcs-table td.col-time{
+  white-space: nowrap;
+  color: var(--glv-gold);
+  font-weight: 600;
+  font-size: 12.5px;
+}
+
+/* ---------- 讀表要點 ---------- */
+.glvcs-notes{
+  margin-top: 26px;
+  padding-top: 20px;
+  border-top: 1px solid var(--glv-line);
+}
+
+.glvcs-notes-title{
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--glv-gold);
+  margin: 0 0 14px;
+}
+
+.glvcs-notes ol{
+  margin: 0;
+  padding-left: 20px;
+  color: var(--glv-text-dim);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.glvcs-notes ol li{ margin-bottom: 8px; }
+.glvcs-notes ol li strong{ color: #eaf1fb; font-weight: 600; }
+
+/* ---------- 指標卡 ---------- */
+.glvcs-metrics{
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 10px;
+}
+
+.glvcs-metrics .m-item{
+  border: 1px solid var(--glv-line);
+  border-radius: 8px;
+  padding: 12px 14px;
+  background: rgba(148,178,220,.03);
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--glv-text-dim);
+}
+
+.glvcs-metrics .m-item span{
+  display: block;
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--glv-teal);
+  margin-bottom: 6px;
+}
+
+/* ---------- 滑動提示（窄螢幕） ---------- */
+.glvcs-hint{
+  display: none;
+  margin-top: 10px;
+  font-size: 11.5px;
+  color: var(--glv-muted);
+  letter-spacing: .02em;
+}
+
+/* ---------- 響應式 ---------- */
+@media (max-width: 900px){
+  .glvcs-matrix{ padding: 20px 14px 18px; border-radius: 10px; margin: 22px 0; }
+  .glvcs-head{ flex-direction: column; gap: 12px; }
+  .glvcs-langbar{ align-self: flex-start; }
+  .glvcs-title{ font-size: 18px; }
+  .glvcs-intro{ font-size: 13px; line-height: 1.7; }
+  .glvcs-table{ font-size: 12.5px; min-width: 1020px; }
+  .glvcs-table thead th{ padding: 11px 12px; font-size: 11px; }
+  .glvcs-table tbody td{ padding: 13px 12px; }
+  .glvcs-table th.col-group,
+  .glvcs-table td.col-group{ width: 138px; min-width: 138px; max-width: 138px; }
+  .col-group .grp-name{ font-size: 12.5px; }
+  .col-group .grp-tag{ font-size: 10px; }
+  .glvcs-hint{ display: block; }
+  .glvcs-scroll{ scroll-behavior: smooth; }
+}
+
+@media (max-width: 480px){
+  .glvcs-table{ min-width: 960px; }
+  .glvcs-metrics{ grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     可直接貼進 GLVCS 頁面：從此處 <section> 開始複製
+     data-lang 可選值：en | hant | hans | es
+     ============================================================ -->
+
+<section class="glvcs-matrix" data-lang="hant">
+
+  <header class="glvcs-head">
+    <div class="glvcs-head-text">
+    <span class="glvcs-eyebrow">
+      <span class="l-en">Global Land Value Capture Standard · Regional Matrix</span>
+      <span class="l-hant">全球土地增值捕捉標準 · 地區對照</span>
+      <span class="l-hans">全球土地增值捕捉标准 · 地区对照</span>
+      <span class="l-es">Estándar Global de Captura del Valor del Suelo · Matriz Regional</span>
+    </span>
+
+    <h2 class="glvcs-title">
+      <span class="l-en">GLVCS Regional Adoption Matrix</span>
+      <span class="l-hant">GLVCS 地區導入對照表</span>
+      <span class="l-hans">GLVCS 地区导入对照表</span>
+      <span class="l-es">Matriz de adopción regional del GLVCS</span>
+    </h2>
+
+    <p class="glvcs-intro">
+      <span class="l-en">This matrix compares technical conditions, gains, resistance and entry routes only; it makes no judgement on the merits of any governing arrangement. Divergence in outcome stems from three variables: concentration of land tenure, cadastral baseline, and existing fiscal reliance.</span>
+      <span class="l-hant">本表僅就技術條件、改革收益、主要阻力與切入路線作比較，不涉及體制優劣評價。同一標準在不同地區的效果差異，源於三項變數：土地產權集中程度、地籍基礎、既有財政依賴結構。</span>
+      <span class="l-hans">本表仅就技术条件、改革收益、主要阻力与切入路线作比较，不涉及体制优劣评价。同一标准在不同地区的效果差异，源于三项变量：土地产权集中程度、地籍基础、既有财政依赖结构。</span>
+      <span class="l-es">Esta matriz compara únicamente condiciones técnicas, beneficios, resistencia y rutas de entrada; no emite juicios sobre los méritos de ningún arreglo de gobierno. La divergencia de resultados depende de tres variables: concentración de la tenencia, base catastral y dependencia fiscal existente.</span>
+    </p>
+    </div>
+
+    <nav class="glvcs-langbar" aria-label="Language / 語言">
+      <button type="button" class="glvcs-lang-btn" data-lang="en"  aria-pressed="false">EN</button>
+      <button type="button" class="glvcs-lang-btn" data-lang="hant" aria-pressed="true">繁</button>
+      <button type="button" class="glvcs-lang-btn" data-lang="hans" aria-pressed="false">簡</button>
+      <button type="button" class="glvcs-lang-btn" data-lang="es"  aria-pressed="false">ES</button>
+    </nav>
+  </header>
+
+  <div class="glvcs-scroll" role="region" tabindex="0"
+       aria-label="GLVCS regional adoption matrix, scroll horizontally for more columns">
+    <table class="glvcs-table">
+      <thead>
+        <tr>
+          <th class="col-group" scope="col">
+            <span class="l-en">Jurisdiction group</span>
+            <span class="l-hant">地區分組</span>
+            <span class="l-hans">地区分组</span>
+            <span class="l-es">Grupo jurisdiccional</span>
+          </th>
+          <th scope="col">
+            <span class="l-en">Property &amp; cadastral conditions</span>
+            <span class="l-hant">產權與地籍條件</span>
+            <span class="l-hans">产权与地籍条件</span>
+            <span class="l-es">Propiedad y condiciones catastrales</span>
+          </th>
+          <th scope="col">
+            <span class="l-en">Current fiscal reliance</span>
+            <span class="l-hant">現行財政依賴</span>
+            <span class="l-hans">现行财政依赖</span>
+            <span class="l-es">Dependencia fiscal actual</span>
+          </th>
+          <th scope="col">
+            <span class="l-en">Core gains from GLVCS</span>
+            <span class="l-hant">導入核心收益</span>
+            <span class="l-hans">导入核心收益</span>
+            <span class="l-es">Beneficios centrales del GLVCS</span>
+          </th>
+          <th scope="col">
+            <span class="l-en">Main resistance</span>
+            <span class="l-hant">主要阻力</span>
+            <span class="l-hans">主要阻力</span>
+            <span class="l-es">Resistencia principal</span>
+          </th>
+          <th scope="col">
+            <span class="l-en">Entry route</span>
+            <span class="l-hant">切入路線</span>
+            <span class="l-hans">切入路线</span>
+            <span class="l-es">Ruta de entrada</span>
+          </th>
+          <th scope="col">
+            <span class="l-en">Time horizon</span>
+            <span class="l-hant">時間尺度</span>
+            <span class="l-hans">时间尺度</span>
+            <span class="l-es">Horizonte temporal</span>
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <!-- ── 瑞士 / 芬蘭 ── -->
+        <tr class="r-atlantic">
+          <td class="col-group">
+            <span class="grp-name">
+              <span class="l-en">Switzerland / Finland</span>
+              <span class="l-hant">瑞士 / 芬蘭</span>
+              <span class="l-hans">瑞士 / 芬兰</span>
+              <span class="l-es">Suiza / Finlandia</span>
+            </span>
+            <span class="grp-tag">
+              <span class="l-en">High autonomy, decentralised</span>
+              <span class="l-hant">高自治與分權架構</span>
+              <span class="l-hans">高自治与分权架构</span>
+              <span class="l-es">Alta autonomía, descentralizado</span>
+            </span>
+          </td>
+          <td>
+            <span class="l-en">In Switzerland, federal cadastral registers are precise and fully covered; Finland maintains municipal land reserves and a public long-lease tradition.</span>
+            <span class="l-hant">瑞士聯邦制下地籍登記精度高、覆蓋完整；芬蘭保有市政土地儲備與公有長租傳統。</span>
+            <span class="l-hans">瑞士联邦制下地籍登记精度高、覆盖完整；芬兰保有市政土地储备与公有长租传统。</span>
+            <span class="l-es">En Suiza los registros catastrales federales son precisos y completos; Finlandia mantiene reservas municipales de suelo y una tradición de arrendamiento público de largo plazo.</span>
+          </td>
+          <td>
+            <span class="l-en">Income, value-added and property taxes dominate; deficits are low; municipalities rely on transfers.</span>
+            <span class="l-hant">以所得稅、增值稅與不動產稅為主，赤字水準低，地方依賴轉移支付。</span>
+            <span class="l-hans">以所得税、增值税与不动产税为主，赤字水平低，地方依赖转移支付。</span>
+            <span class="l-es">Predominan el impuesto sobre la renta, el IVA y los impuestos inmobiliarios; el déficit es bajo; los municipios dependen de transferencias.</span>
+          </td>
+          <td>
+            <span class="l-en">Exposes a structural blind spot: procedural completeness does not block rent-seeking groups from shaping the agenda. Municipal level can quantify infrastructure- and planning-induced increments as checkable indicators.</span>
+            <span class="l-hant">揭示結構性盲點：決策程序完備，並不等於已阻隔租值群體對議程的影響；市鎮層級可把基建與規劃催生的增量租值量化為可核查指標。</span>
+            <span class="l-hans">揭示结构性盲点：决策程序完备，并不等于已阻隔租值群体对议程的影响；市镇层级可把基建与规划催生的增量租值量化为可核查指标。</span>
+            <span class="l-es">Revela un punto ciego estructural: la plenitud procedimental no impide que grupos rentistas moldeen la agenda. El nivel municipal puede cuantificar los incrementos inducidos por infraestructura y planificación como indicadores verificables.</span>
+          </td>
+          <td>
+            <span class="l-en">A high share of owner-occupiers makes capture measures easy to frame as expropriation; federal–municipal division fragments the rules.</span>
+            <span class="l-hant">選民結構中自持房產者比例高，增值回收易被簡化為財產剝奪；聯邦與市鎮分權使規則難以統一。</span>
+            <span class="l-hans">选民结构中自持房产者比例高，增值回收易被简化为财产剥夺；联邦与市镇分权使规则难以统一。</span>
+            <span class="l-es">Una alta proporción de propietarios ocupantes facilita presentar las medidas de captura como expropiación; la división federal-municipal fragmenta las reglas.</span>
+          </td>
+          <td>
+            <span class="l-en">Start with municipal-level diagnosis: increment accounting and public disclosure first, recovery ratios later.</span>
+            <span class="l-hant">從市鎮層級診斷起步，先做增量核算與公開披露，再討論回收比例。</span>
+            <span class="l-hans">从市镇层级诊断起步，先做增量核算与公开披露，再讨论回收比例。</span>
+            <span class="l-es">Comenzar con diagnóstico a nivel municipal: primero contabilidad de incrementos y divulgación pública, después las tasas de recuperación.</span>
+          </td>
+          <td class="col-time">
+            <span class="l-en">3–5 yrs</span>
+            <span class="l-hant">3–5 年</span>
+            <span class="l-hans">3–5 年</span>
+            <span class="l-es">3–5 años</span>
+          </td>
+        </tr>
+
+        <!-- ── 海灣城邦 ── -->
+        <tr class="r-gulf">
+          <td class="col-group">
+            <span class="grp-name">
+              <span class="l-en">Gulf city-states</span>
+              <span class="l-hant">海灣城邦</span>
+              <span class="l-hans">海湾城邦</span>
+              <span class="l-es">Ciudades-Estado del Golfo</span>
+            </span>
+            <span class="grp-tag">
+              <span class="l-en">UAE · Qatar · resource-rent</span>
+              <span class="l-hant">阿聯酋 · 卡塔爾 · 資源租值</span>
+              <span class="l-hans">阿联酋 · 卡塔尔 · 资源租值</span>
+              <span class="l-es">EAU · Catar · renta de recursos</span>
+            </span>
+          </td>
+          <td>
+            <span class="l-en">Land ownership rests with public entities; development proceeds by long lease or concession; the cadastre is centralised at state level.</span>
+            <span class="l-hant">土地所有權歸公共主體，開發以長期租約或特許為主，地籍集中於國家。</span>
+            <span class="l-hans">土地所有权归公共主体，开发以长期租约或特许为主，地籍集中于国家。</span>
+            <span class="l-es">La propiedad del suelo reside en entidades públicas; el desarrollo avanza por arrendamiento largo o concesión; el catastro está centralizado en el Estado.</span>
+          </td>
+          <td>
+            <span class="l-en">Hydrocarbon rents dominate; the fiscal position is procyclical; there is no broad-based, recurring land rent tax.</span>
+            <span class="l-hant">油氣租值主導，財政順周期波動，缺乏常態化的廣基土地租稅。</span>
+            <span class="l-hans">油气租值主导，财政顺周期波动，缺乏常态化的广基土地租税。</span>
+            <span class="l-es">Dominan las rentas de hidrocarburos; la posición fiscal es procíclica; no existe un impuesto amplio y recurrente sobre la renta del suelo.</span>
+          </td>
+          <td>
+            <span class="l-en">Builds a second fiscal pillar independent of commodity cycles; concentrated tenure lowers the cost of institutional change, with no prior tenure restructuring required.</span>
+            <span class="l-hant">建立獨立於大宗商品周期的第二財政支柱；產權集中使制度改造門檻較低，無須先完成產權重整。</span>
+            <span class="l-hans">建立独立于大宗商品周期的第二财政支柱；产权集中使制度改造门槛较低，无须先完成产权重整。</span>
+            <span class="l-es">Construye un segundo pilar fiscal independiente de los ciclos de materias primas; la tenencia concentrada reduce el costo del cambio institucional, sin necesidad de reestructurar la tenencia.</span>
+          </td>
+          <td>
+            <span class="l-en">Special-zone developers and affiliated stakeholders resist mandatory recapture; path dependence on rent waivers as an investment incentive.</span>
+            <span class="l-hant">特區開發方與關聯權益主體不願開發紅利強制回流；既有以租金減免招商的路徑依賴。</span>
+            <span class="l-hans">特区开发方与关联权益主体不愿开发红利强制回流；既有以租金减免招商的路径依赖。</span>
+            <span class="l-es">Los desarrolladores de zonas especiales y partes afiliadas resisten la captura obligatoria; dependencia de trayectoria de las exenciones de renta como incentivo.</span>
+          </td>
+          <td>
+            <span class="l-en">Sovereign funds and statistical offices standardise the increment methodology first, then embed it in new-city, port and special-zone development agreements.</span>
+            <span class="l-hant">主權基金與統計部門先行統一增量核算口徑，再嵌入新城、港口、特區的開發協議。</span>
+            <span class="l-hans">主权基金与统计部门先行统一增量核算口径，再嵌入新城、港口、特区的开发协议。</span>
+            <span class="l-es">Los fondos soberanos y las oficinas estadísticas unifican primero la metodología de incrementos y luego la incorporan en los acuerdos de nuevas ciudades, puertos y zonas especiales.</span>
+          </td>
+          <td class="col-time">
+            <span class="l-en">2–4 yrs</span>
+            <span class="l-hant">2–4 年</span>
+            <span class="l-hans">2–4 年</span>
+            <span class="l-es">2–4 años</span>
+          </td>
+        </tr>
+
+        <!-- ── 印度 ── -->
+        <tr class="r-india">
+          <td class="col-group">
+            <span class="grp-name">
+              <span class="l-en">India</span>
+              <span class="l-hant">印度</span>
+              <span class="l-hans">印度</span>
+              <span class="l-es">India</span>
+            </span>
+            <span class="grp-tag">
+              <span class="l-en">Highly fragmented land tenure</span>
+              <span class="l-hant">產權高度碎片化</span>
+              <span class="l-hans">产权高度碎片化</span>
+              <span class="l-es">Tenencia altamente fragmentada</span>
+            </span>
+          </td>
+          <td>
+            <span class="l-en">Land jurisdiction is devolved to states; private tenure is highly fragmented; cadastral records are incomplete and informal tenure is widespread.</span>
+            <span class="l-hant">土地管轄權下放各邦，私有產權高度碎片化，地籍資料殘缺，非正式地權普遍。</span>
+            <span class="l-hans">土地管辖权下放各邦，私有产权高度碎片化，地籍资料残缺，非正式地权普遍。</span>
+            <span class="l-es">La jurisdicción sobre el suelo se delega a los estados; la tenencia privada está muy fragmentada; los registros catastrales son incompletos y la tenencia informal es generalizada.</span>
+          </td>
+          <td>
+            <span class="l-en">Indirect taxes such as GST dominate; the base is narrow and regressive; land acquisition carries high negotiation and litigation costs.</span>
+            <span class="l-hant">以 GST 等間接稅為主，稅基窄且具累退性；徵地談判與訴訟成本極高。</span>
+            <span class="l-hans">以 GST 等间接税为主，税基窄且具累退性；征地谈判与诉讼成本极高。</span>
+            <span class="l-es">Predominan impuestos indirectos como el GST; la base es estrecha y regresiva; la adquisición de suelo implica altos costos de negociación y litigio.</span>
+          </td>
+          <td>
+            <span class="l-en">Provides a common increment methodology across states for reconciliation and comparison; restructures infrastructure bargaining from one-off high compensation toward increment sharing.</span>
+            <span class="l-hant">提供跨邦統一的增量核算語言，可供對帳比較；重構基建博弈，由一次性高額補償轉向增值分潤。</span>
+            <span class="l-hans">提供跨邦统一的增量核算语言，可供对账比较；重构基建博弈，由一次性高额补偿转向增值分润。</span>
+            <span class="l-es">Proporciona una metodología común de incrementos entre estados para conciliar y comparar; reestructura la negociación de infraestructura desde una compensación única elevada hacia el reparto de plusvalías.</span>
+          </td>
+          <td>
+            <span class="l-en">Local parties are deeply tied to land interests; cadastral standardisation is costly.</span>
+            <span class="l-hant">地方政黨與土地利益深度綁定；地籍標準化成本極高。</span>
+            <span class="l-hans">地方政党与土地利益深度绑定；地籍标准化成本极高。</span>
+            <span class="l-es">Los partidos locales están profundamente ligados a intereses del suelo; la estandarización catastral es costosa.</span>
+          </td>
+          <td>
+            <span class="l-en">Cadastral digitisation and standardisation first; city-level increment accounting pilots alongside; national tax reform deferred.</span>
+            <span class="l-hant">地籍數位化與標準化先行，配套城市級增量核算試點，暫不觸及全國稅制。</span>
+            <span class="l-hans">地籍数字化与标准化先行，配套城市级增量核算试点，暂不触及全国税制。</span>
+            <span class="l-es">Primero digitalización y estandarización catastral; en paralelo, pilotos de contabilidad de incrementos a nivel de ciudad; la reforma fiscal nacional se pospone.</span>
+          </td>
+          <td class="col-time">
+            <span class="l-en">10+ yrs</span>
+            <span class="l-hant">10 年以上</span>
+            <span class="l-hans">10 年以上</span>
+            <span class="l-es">10+ años</span>
+          </td>
+        </tr>
+
+        <!-- ── 荷蘭 ── -->
+        <tr class="r-nl">
+          <td class="col-group">
+            <span class="grp-name">
+              <span class="l-en">Netherlands</span>
+              <span class="l-hant">荷蘭</span>
+              <span class="l-hans">荷兰</span>
+              <span class="l-es">Países Bajos</span>
+            </span>
+            <span class="grp-tag">
+              <span class="l-en">Public leasehold · mature planning</span>
+              <span class="l-hant">公有長租 · 規劃體系成熟</span>
+              <span class="l-hans">公有长租 · 规划体系成熟</span>
+              <span class="l-es">Arrendamiento público · planificación madura</span>
+            </span>
+          </td>
+          <td>
+            <span class="l-en">Municipal land reserves and public long-lease traditions are mature; spatial planning is comprehensive.</span>
+            <span class="l-hant">市政土地儲備與公有長租傳統成熟，空間規劃體系完備。</span>
+            <span class="l-hans">市政土地储备与公有长租传统成熟，空间规划体系完备。</span>
+            <span class="l-es">Las reservas municipales de suelo y la tradición de arrendamiento público son maduras; la planificación espacial es integral.</span>
+          </td>
+          <td>
+            <span class="l-en">Property and local taxes dominate; some planning increments are already captured.</span>
+            <span class="l-hant">以不動產稅與地方稅為主，部分規劃增值已有回收工具。</span>
+            <span class="l-hans">以不动产税与地方税为主，部分规划增值已有回收工具。</span>
+            <span class="l-es">Predominan los impuestos inmobiliarios y locales; parte de los incrementos por planificación ya se captura.</span>
+          </td>
+          <td>
+            <span class="l-en">Shifts existing instruments from price- or area-based levies to precise measurement of public-input increments, remaining neutral on building improvements.</span>
+            <span class="l-hant">把既有工具由按總價或面積計徵，轉為按公共投入增量精確計量，對建築改良維持中性。</span>
+            <span class="l-hans">把既有工具由按总价或面积计征，转为按公共投入增量精确计量，对建筑改良维持中性。</span>
+            <span class="l-es">Desplaza los instrumentos existentes de gravámenes sobre precio o superficie hacia la medición precisa de incrementos por inversión pública, manteniéndose neutral ante las mejoras construidas.</span>
+          </td>
+          <td>
+            <span class="l-en">Existing leases and valuation systems need recalibration; central–municipal mandates need redefinition.</span>
+            <span class="l-hant">既有租約與估價體系需重新校準；中央與市政權責需重新界定。</span>
+            <span class="l-hans">既有租约与估价体系需重新校准；中央与市政权责需重新界定。</span>
+            <span class="l-es">Los arrendamientos y sistemas de valoración existentes requieren recalibración; los mandatos centro-municipales deben redefinirse.</span>
+          </td>
+          <td>
+            <span class="l-en">Use existing lease renewal points as the entry, embedding increment clauses into contracts.</span>
+            <span class="l-hant">以既有土地租約的續約節點為切口，在合同中嵌入增量條款。</span>
+            <span class="l-hans">以既有土地租约的续约节点为切口，在合同中嵌入增量条款。</span>
+            <span class="l-es">Utilizar los puntos de renovación de los arrendamientos existentes como entrada, incorporando cláusulas de incremento en los contratos.</span>
+          </td>
+          <td class="col-time">
+            <span class="l-en">2–3 yrs</span>
+            <span class="l-hant">2–3 年</span>
+            <span class="l-hans">2–3 年</span>
+            <span class="l-es">2–3 años</span>
+          </td>
+        </tr>
+
+        <!-- ── 美國 ── -->
+        <tr class="r-us">
+          <td class="col-group">
+            <span class="grp-name">
+              <span class="l-en">United States</span>
+              <span class="l-hant">美國</span>
+              <span class="l-hans">美国</span>
+              <span class="l-es">Estados Unidos</span>
+            </span>
+            <span class="grp-tag">
+              <span class="l-en">Local autonomy · property-tax led</span>
+              <span class="l-hant">地方自治 · 房產稅主導</span>
+              <span class="l-hans">地方自治 · 房产税主导</span>
+              <span class="l-es">Autonomía local · impuesto predial</span>
+            </span>
+          </td>
+          <td>
+            <span class="l-en">Private tenure dominates; state and local autonomy; rules vary markedly across states.</span>
+            <span class="l-hant">私人產權為主，州與地方自治，各州規則差異顯著。</span>
+            <span class="l-hans">私人产权为主，州与地方自治，各州规则差异显著。</span>
+            <span class="l-es">Predomina la tenencia privada; autonomía estatal y local; las reglas varían notablemente entre estados.</span>
+          </td>
+          <td>
+            <span class="l-en">Local finance relies heavily on property tax levied on total value.</span>
+            <span class="l-hant">地方財政高度依賴按總價課徵的房產稅。</span>
+            <span class="l-hans">地方财政高度依赖按总价课征的房产税。</span>
+            <span class="l-es">Las finanzas locales dependen en gran medida del impuesto predial calculado sobre el valor total.</span>
+          </td>
+          <td>
+            <span class="l-en">Corrects the deterrent effect of conventional property tax on improvements and renovation; captures only land increments generated by public input.</span>
+            <span class="l-hant">修正傳統房產稅對建築改良與翻新的抑制效應，只捕捉公共投入催生的土地增量。</span>
+            <span class="l-hans">修正传统房产税对建筑改良与翻新的抑制效应，只捕捉公共投入催生的土地增量。</span>
+            <span class="l-es">Corrige el efecto disuasivo del impuesto predial convencional sobre mejoras y renovaciones; captura solo los incrementos de suelo generados por inversión pública.</span>
+          </td>
+          <td>
+            <span class="l-en">Property tax is the fiscal lifeline of local government; reform touches the entire revenue structure; interstate legal frameworks diverge.</span>
+            <span class="l-hant">房產稅是地方財政命脈，改革牽動全部收入結構；州際法律框架差異大。</span>
+            <span class="l-hans">房产税是地方财政命脉，改革牵动全部收入结构；州际法律框架差异大。</span>
+            <span class="l-es">El impuesto predial es la base vital de las finanzas locales; la reforma afecta toda la estructura de ingresos; los marcos legales estatales divergen.</span>
+          </td>
+          <td>
+            <span class="l-en">Run partial substitution pilots in growth cities using existing instruments such as increment financing districts.</span>
+            <span class="l-hant">在增長型城市以既有增量融資區等工具為載體，做局部替換試點。</span>
+            <span class="l-hans">在增长型城市以既有增量融资区等工具为载体，做局部替换试点。</span>
+            <span class="l-es">Ejecutar pilotos de sustitución parcial en ciudades en crecimiento usando instrumentos existentes como los distritos de financiamiento por incremento.</span>
+          </td>
+          <td class="col-time">
+            <span class="l-en">5–10 yrs</span>
+            <span class="l-hant">5–10 年</span>
+            <span class="l-hans">5–10 年</span>
+            <span class="l-es">5–10 años</span>
+          </td>
+        </tr>
+
+        <!-- ── 中國 ── -->
+        <tr class="r-cn">
+          <td class="col-group">
+            <span class="grp-name">
+              <span class="l-en">China</span>
+              <span class="l-hant">中國</span>
+              <span class="l-hans">中国</span>
+              <span class="l-es">China</span>
+            </span>
+            <span class="grp-tag">
+              <span class="l-en">Public urban land · grant system</span>
+              <span class="l-hant">城市土地公有 · 出讓制</span>
+              <span class="l-hans">城市土地公有 · 出让制</span>
+              <span class="l-es">Suelo urbano público · concesión</span>
+            </span>
+          </td>
+          <td>
+            <span class="l-en">Urban land is state-owned and rural land collectively owned; construction land is mainly allocated through the grant system; unified real-estate registration now covers the whole country.</span>
+            <span class="l-hant">城市土地國家所有，農村土地集體所有；建設用地以出讓制為主，不動產統一登記已全國覆蓋。</span>
+            <span class="l-hans">城市土地国家所有，农村土地集体所有；建设用地以出让制为主，不动产统一登记已全国覆盖。</span>
+            <span class="l-es">El suelo urbano es de propiedad estatal y el rural de propiedad colectiva; el suelo para construcción se asigna principalmente por el sistema de concesión; el registro unificado de inmuebles ya cubre todo el país.</span>
+          </td>
+          <td>
+            <span class="l-en">Land grant revenue is a major local fiscal source, collected largely as an upfront one-off.</span>
+            <span class="l-hant">土地出讓收入為地方重要財源，以前置一次性收取為主。</span>
+            <span class="l-hans">土地出让收入为地方重要财源，以前置一次性收取为主。</span>
+            <span class="l-es">Los ingresos por concesión de suelo son una fuente fiscal local importante, recaudados en gran parte por adelantado y de una sola vez.</span>
+          </td>
+          <td>
+            <span class="l-en">Moves from upfront grant prices to long-term tracked increment capture, linking public revenue to the continuing appreciation of urban services and reducing dependence on grant cycles.</span>
+            <span class="l-hant">由一次性出讓價轉向長期跟蹤式增值捕捉，使公共收入與城市服務的持續增值綁定，降低對出讓周期的依賴。</span>
+            <span class="l-hans">由一次性出让价转向长期跟踪式增值捕捉，使公共收入与城市服务的持续增值绑定，降低对出让周期的依赖。</span>
+            <span class="l-es">Pasa de precios de concesión por adelantado a una captura de incrementos de seguimiento a largo plazo, vinculando los ingresos públicos a la apreciación continua de los servicios urbanos y reduciendo la dependencia de los ciclos de concesión.</span>
+          </td>
+          <td>
+            <span class="l-en">Local budgets are path-dependent on grant revenue; the statistical definition of the public-input increment needs redefinition.</span>
+            <span class="l-hant">地方財政對出讓收入存在路徑依賴；需重新界定「公共投入增量」的統計口徑。</span>
+            <span class="l-hans">地方财政对出让收入存在路径依赖；需重新界定“公共投入增量”的统计口径。</span>
+            <span class="l-es">Los presupuestos locales dependen por trayectoria de los ingresos por concesión; la definición estadística del incremento por inversión pública requiere redefinición.</span>
+          </td>
+          <td>
+            <span class="l-en">Building on existing cadastral and registration systems, pilot annual revaluation and increment-accounting mechanisms.</span>
+            <span class="l-hant">在既有地籍與登記基礎上，先行建立年度重估與增量核算機制試點。</span>
+            <span class="l-hans">在既有地籍与登记基础上，先行建立年度重估与增量核算机制试点。</span>
+            <span class="l-es">Sobre la base de los sistemas catastrales y de registro existentes, pilotar mecanismos anuales de revalorización y contabilidad de incrementos.</span>
+          </td>
+          <td class="col-time">
+            <span class="l-en">3–5 yrs</span>
+            <span class="l-hant">3–5 年</span>
+            <span class="l-hans">3–5 年</span>
+            <span class="l-es">3–5 años</span>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <p class="glvcs-hint">
+    <span class="l-en">Swipe horizontally to see all columns.</span>
+    <span class="l-hant">窄螢幕請橫向滑動以檢視完整欄位。</span>
+    <span class="l-hans">窄屏请横向滑动以查看完整字段。</span>
+    <span class="l-es">Desplace horizontalmente para ver todas las columnas.</span>
+  </p>
+
+  <!-- ── 讀表要點 ── -->
+  <div class="glvcs-notes">
+    <p class="glvcs-notes-title">
+      <span class="l-en">Reading the matrix</span>
+      <span class="l-hant">讀表要點</span>
+      <span class="l-hans">读表要点</span>
+      <span class="l-es">Cómo leer la matriz</span>
+    </p>
+    <ol>
+      <li>
+        <span class="l-en"><strong>Difficulty tracks tenure concentration, not procedural type.</strong> Where tenure is concentrated and cadastral coverage is complete, the design cost is low; where tenure is fragmented and records are incomplete, the cadastral groundwork must come first.</span>
+        <span class="l-hant"><strong>難度取決於產權集中度，而非治理程序。</strong>產權集中、地籍完整的經濟體，制度設計成本低；產權碎片、地籍殘缺的經濟體，必須先把地籍基礎打好。</span>
+        <span class="l-hans"><strong>难度取决于产权集中度，而非治理程序。</strong>产权集中、地籍完整的经济体，制度设计成本低；产权碎片、地籍残缺的经济体，必须先把地籍基础打好。</span>
+        <span class="l-es"><strong>La dificultad depende de la concentración de la tenencia, no del tipo de procedimiento.</strong> Donde la tenencia está concentrada y la cobertura catastral es completa, el costo de diseño es bajo; donde es fragmentada y los registros incompletos, primero debe construirse la base catastral.</span>
+      </li>
+      <li>
+        <span class="l-en"><strong>Momentum follows whether the old fiscal base is eroding.</strong> Where rent has long been held by a fixed group, resistance is highest; where the old base is destabilising, the incentive to adopt is strongest.</span>
+        <span class="l-hant"><strong>動力強弱取決於舊財政底座是否動搖。</strong>租值已由固定群體長期佔有的地方，阻力最大；舊底座正在鬆動的地方，導入意願最強。</span>
+        <span class="l-hans"><strong>动力强弱取决于旧财政底座是否动摇。</strong>租值已由固定群体长期占有的地方，阻力最大；旧底座正在松动的地方，导入意愿最强。</span>
+        <span class="l-es"><strong>El impulso depende de si la base fiscal antigua se está erosionando.</strong> Donde la renta ha sido retenida largo tiempo por un grupo fijo, la resistencia es máxima; donde la base antigua se desestabiliza, el incentivo es mayor.</span>
+      </li>
+      <li>
+        <span class="l-en"><strong>Integration with existing tax instruments differs.</strong> Economies with an established property tax undertake instrument substitution and definitional correction; economies without such a base build one from the ground up.</span>
+        <span class="l-hant"><strong>與現行稅制的接合方式不同。</strong>已有不動產稅的經濟體，做的是工具替換與口徑修正；尚無此類稅基的經濟體，做的是從零建立。</span>
+        <span class="l-hans"><strong>与现行税制的接合方式不同。</strong>已有不动产税的经济体，做的是工具替换与口径修正；尚无此类税基的经济体，做的是从零建立。</span>
+        <span class="l-es"><strong>La integración con los instrumentos fiscales existentes difiere.</strong> Las economías con impuesto inmobiliario consolidado realizan sustitución de instrumentos y corrección de definiciones; las que carecen de esa base la construyen desde cero.</span>
+      </li>
+    </ol>
+  </div>
+
+  <!-- ── 可核查指標 ── -->
+  <div class="glvcs-metrics">
+    <div class="m-item">
+      <span>
+        <span class="l-en">M1 · Valuation</span>
+        <span class="l-hant">M1 · 估值</span>
+        <span class="l-hans">M1 · 估值</span>
+        <span class="l-es">M1 · Valoración</span>
+      </span>
+      <span class="l-en">Annual valuation of public-input land increments</span>
+      <span class="l-hant">公共投入增量租值的年度估值</span>
+      <span class="l-hans">公共投入增量租值的年度估值</span>
+      <span class="l-es">Valoración anual de los incrementos de suelo por inversión pública</span>
+    </div>
+    <div class="m-item">
+      <span>
+        <span class="l-en">M2 · Recovery</span>
+        <span class="l-hant">M2 · 回收</span>
+        <span class="l-hans">M2 · 回收</span>
+        <span class="l-es">M2 · Recuperación</span>
+      </span>
+      <span class="l-en">Share of increments returned to public finance</span>
+      <span class="l-hant">增量回流公共財政的比例</span>
+      <span class="l-hans">增量回流公共财政的比例</span>
+      <span class="l-es">Proporción de incrementos devueltos a las finanzas públicas</span>
+    </div>
+    <div class="m-item">
+      <span>
+        <span class="l-en">M3 · Distribution</span>
+        <span class="l-hant">M3 · 分配</span>
+        <span class="l-hans">M3 · 分配</span>
+        <span class="l-es">M3 · Distribución</span>
+      </span>
+      <span class="l-en">Share of returned funds allocated to universal distribution</span>
+      <span class="l-hant">回流資金投向普惠分配的比例</span>
+      <span class="l-hans">回流资金投向普惠分配的比例</span>
+      <span class="l-es">Proporción de los fondos devueltos destinada a distribución universal</span>
+    </div>
+    <div class="m-item">
+      <span>
+        <span class="l-en">M4 · Cadastre</span>
+        <span class="l-hant">M4 · 地籍</span>
+        <span class="l-hans">M4 · 地籍</span>
+        <span class="l-es">M4 · Catastro</span>
+      </span>
+      <span class="l-en">Cadastral coverage and update frequency</span>
+      <span class="l-hant">地籍覆蓋率與更新頻率</span>
+      <span class="l-hans">地籍覆盖率与更新频率</span>
+      <span class="l-es">Cobertura catastral y frecuencia de actualización</span>
+    </div>
+    <div class="m-item">
+      <span>
+        <span class="l-en">M5 · Verifiability</span>
+        <span class="l-hant">M5 · 可複核</span>
+        <span class="l-hans">M5 · 可复核</span>
+        <span class="l-es">M5 · Verificabilidad</span>
+      </span>
+      <span class="l-en">Share of audit samples independently verifiable</span>
+      <span class="l-hant">審計樣本可獨立複核的比例</span>
+      <span class="l-hans">审计样本可独立复核的比例</span>
+      <span class="l-es">Proporción de muestras de auditoría verificables de forma independiente</span>
+    </div>
+  </div>
+
+</section>
+
+<!-- ============================================================
+     複製到此為止
+     ============================================================ -->
+
+<script>
+/* ------------------------------------------------------------------
+   四語切換控制器（EN / 繁 / 簡 / ES）
+   ------------------------------------------------------------------
+   1. 本片段自帶語言列：點擊 .glvcs-lang-btn 即切換當前矩陣。
+   2. 若站內已有全域切換按鈕（帶 data-lang 或呼叫 window.glvcsSetLang），
+      本片段會自動同步；站內舊 handler 只需追加：
+
+        window.glvcsSetLang && window.glvcsSetLang(LANG);
+        // LANG = en | hant | hans | es
+
+   3. 語言值與站內命名一致：en / hant / hans / es。
+   ------------------------------------------------------------------ */
+(function () {
+  var matrices = document.querySelectorAll('.glvcs-matrix');
+  if (!matrices.length) return;
+
+  var LANGS = ['en', 'hant', 'hans', 'es'];
+
+  function setLang(lang) {
+    if (LANGS.indexOf(lang) === -1) return;
+    matrices.forEach(function (m) {
+      m.setAttribute('data-lang', lang);
+      m.querySelectorAll('.glvcs-lang-btn').forEach(function (btn) {
+        var on = btn.getAttribute('data-lang') === lang;
+        btn.classList.toggle('is-active', on);
+        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+    });
+  }
+
+  // 本片段語言列綁定
+  matrices.forEach(function (m) {
+    m.querySelectorAll('.glvcs-lang-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        setLang(btn.getAttribute('data-lang'));
+      });
+    });
+    // 依 section 初始 data-lang 還原按鈕態
+    setLang(m.getAttribute('data-lang') || 'hant');
+  });
+
+  // 同步站內全域切換：外部任意帶 data-lang 的元素被點擊時生效
+  document.addEventListener('click', function (e) {
+    var ext = e.target.closest && e.target.closest('[data-lang]');
+    if (!ext) return;
+    if (ext.classList.contains('glvcs-matrix')) return;
+    if (ext.closest('.glvcs-langbar')) return;
+    setLang(ext.getAttribute('data-lang'));
+  });
+
+  // 暴露給站內既有 handler 呼叫
+  window.glvcsSetLang = setLang;
+})();
+</script>
+
+</body>
+</html>
